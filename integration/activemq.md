@@ -8,12 +8,12 @@
 
 ## Step 1: Enabling JMX and Log Aggregator
 
-1. Login into ActiveMQ server via SSH.
-2. Change to ActiveMQ installation directory.
+* Login into ActiveMQ server via SSH.
+* Change to ActiveMQ installation directory.
 ```sh
 cd /opt/apache-activemq-5.13.1
 ```
-3.  Download log aggregation filter .jar files to the ActiveMQ lib directory:
+*  Download log aggregation filter .jar files to the ActiveMQ lib directory:
 
 ```sh
 wget --content-disposition -P ./lib/ \
@@ -21,7 +21,7 @@ wget --content-disposition -P ./lib/ \
 wget --content-disposition -P ./lib/ \
    "https://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=com.axibase&a=aggregation-log-filter-log4j&v=LATEST"
 ```
-4. Append aggregation filter settings to ActiveMQ log4j.properties file. Replace atsd_hostname with the hostname of the ATSD server:
+* Append aggregation filter settings to ActiveMQ log4j.properties file. Replace atsd_hostname with the hostname of the ATSD server:
 ```sh
 cat <<EOF >> ./conf/log4j.properties
 log4j.appender.logfile.filter.COLLECTOR=com.axibase.tsd.collector.log4j.Log4jCollector
@@ -29,7 +29,7 @@ log4j.appender.logfile.filter.COLLECTOR.writerHost=atsd_hostname
 EOF
 ```
 See [Aggregation Log Filter](https://github.com/axibase/aggregation-log-filter) for additional configuration options.
-5. Modify JMX settings in ActiveMQ JVM launch options.
+* Modify JMX settings in ActiveMQ JVM launch options.
 Search for ACTIVEMQ_SUNJMX_START setting and change it as specified below.
 Replace activemq_hostname with full hostname or IP address of the ActiveMQ server.
 This should be the same hostname that Axibase Collector will be using when connecting to ActiveMQ server.
@@ -64,7 +64,7 @@ ACTIVEMQ_SUNJMX_START="-Dcom.sun.management.jmxremote \
 The result should be as shown on the image below:
 
 ![SUN_JMX_START_IMAGE](https://axibase.com/wp-content/uploads/2016/03/very_new_screen.png)
-7. Modify JMX security credential files in ./conf directory.
+* Modify JMX security credential files in ./conf directory.
 
 jmx.access:
 ```
@@ -77,13 +77,25 @@ jmx.password:
 monitorRole abc123
 ```
 
-8. Secure access to jmx.password file by restricting permissions: 
+* Secure access to jmx.password file by restricting permissions: 
 ```sh
 chmod 600 ./conf/jmx.password
 ```
 
-9. Restart ActiveMQ server.
+* Restart ActiveMQ server.
 ```sh
 ./bin/activemq stop
 ./bin/activemq start
 ```
+
+## Step 2: Viewing Collected Logs in ATSD
+
+* Login into ATSD web interface at https://atsd_hostname:8443
+* Click Entities tab in the top menu.
+* Locate ActiveMQ host in the Entities list or enter its name in Name Mask field at the bottom of the list.
+* Click the Portals icon next to the host
+![](https://axibase.com/wp-content/uploads/2016/03/enitites_list_full.png)
+
+An example of the collected log data displayed in the ATSD portal is shown on the image below:
+
+![](https://axibase.com/wp-content/uploads/2016/03/logging_portal_example.png)
