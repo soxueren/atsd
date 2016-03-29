@@ -1,4 +1,5 @@
 #Monitoring ActiveMQ with Axibase Time Series Database
+This document describes the process of configuring ActiveMQ for monitoring with Axibase Time Series Database.
 ## Requirements
 
 * ActiveMQ version 5.x.+
