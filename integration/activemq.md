@@ -90,12 +90,54 @@ chmod 600 ./conf/jmx.password
 
 ## Step 2: Viewing Collected Logs in ATSD
 
-* Login into ATSD web interface at https://atsd_hostname:8443
-* Click Entities tab in the top menu.
-* Locate ActiveMQ host in the Entities list or enter its name in Name Mask field at the bottom of the list.
-* Click the Portals icon next to the host
+1. Login into ATSD web interface at https://atsd_hostname:8443
+1. Click Entities tab in the top menu.
+1. Locate ActiveMQ host in the Entities list or enter its name in Name Mask field at the bottom of the list.
+1. Click the Portals icon next to the host
 ![](https://axibase.com/wp-content/uploads/2016/03/enitites_list_full.png)
 
 An example of the collected log data displayed in the ATSD portal is shown on the image below:
 
 ![](https://axibase.com/wp-content/uploads/2016/03/logging_portal_example.png)
+
+# Configuring Statistics Collection
+
+## Before You Begin
+
+Login into Axibase Collector via SSH and verify that ActiveMQ server can be reached on activemq_hostname, specified in Step 1.6 above.
+If activemq_hostname cannot be resolved, add it to /etc/hosts manually.
+
+
+
+## Step 3: Configuring ActiveMQ JMX Job
+
+1. Login into Axibase Collector at https://collector_hostname:9443
+1. Click Jobs tab in the top menu.
+1. Locate jmx-activemq job.
+1. On the JMX Job page, enable its status by checking on Enabled check box.
+1. Adjust cron expression if required. By default, the job will be executed every 10 seconds. For more information on cron expressions, see [Scheduling](http://axibase.com/products/axibase-time-series-database/writing-data/collector/set_schedule/).  
+![JMX_JOB](https://axibase.com/wp-content/uploads/2016/03/jmx_job_to_configuration.png)
+
+## Configuring activemq-series
+
+1. Select activemq-series configuration.
+1. On the JMX Configuration page, enter JMX connection parameters as specified in Step 1.6 above:
+
+   **Host** — ActiveMQ hostname. Must be the same as activemq_hostname.  
+   **Port** — JMX port.  
+   **User Name** — JMX user name such as monitorRole. Read-only permissions are sufficient.  
+   **Password** — Password for JMX user.  
+   **Entity** — Optionally, specify output of the hostname command on the ActiveMQ server if it’s different from activemq_hostname, for example if activemq_hostname represents a fully qualified name.  
+Other parameters are optional. For more information on JMX configuration, see JMX.   
+
+1. Click Test to validate the configuration.  
+If the specified configuration is correct, there must be no errors or empty fields in the test results.
+1. Click Save.
+    ![](https://axibase.com/wp-content/uploads/2016/03/series_config_85.png)
+
+## Configuring activemq-property
+
+1. From the table on the JMX Job page, click Edit next to activemq-property configuration.
+1. Set Host, Port, User Name, Password, and Entity fields as described in the previous section.
+1. Click Test to validate the configuration.
+1. Click Save.
