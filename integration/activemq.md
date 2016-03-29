@@ -4,6 +4,7 @@
 * ActiveMQ version 5.x.+
 * Axibase Time Series Database. For installation instructions, see [Axibase Time Series Database Download Options](http://axibase.com/products/axibase-time-series-database/download-atsd/).
 * Axibase Collector. For installation instructions, see [Axibase Collector Installation](http://axibase.com/products/axibase-time-series-database/writing-data/collector/axibase-collector-installation/).
+
 # Configuring ActiveMQ Server
 
 ## Step 1: Enabling JMX and Log Aggregator
@@ -141,3 +142,16 @@ If the specified configuration is correct, there must be no errors or empty fiel
 1. Set Host, Port, User Name, Password, and Entity fields as described in the previous section.
 1. Click Test to validate the configuration.
 1. Click Save.
+
+## Step 4: Viewing Collected Statistics in ATSD
+
+
+1. Login into ATSD web interface at https://atsd_hostname:8443
+1. Click Entities tab in the top menu.
+1. Locate ActiveMQ host in the Entities list or enter its name in Name Mask field at the bottom of the list.
+1. Click the Portals icon next to the host  
+![](https://axibase.com/wp-content/uploads/2016/03/enitites_list_full-450x132.png)
+
+An example of the collected log data displayed in the ATSD portal is shown on the image below:
+
+![](https://axibase.com/wp-content/uploads/2016/03/log_portal_example.png)
