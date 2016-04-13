@@ -31,8 +31,10 @@ Example:
 
 Returns true if property tags have changed except for `name` tag, any tags that end with `time`, and any previous tags with value containing `Xloggc`.
 For instance, pattern `*Xloggc*` would ignore changes such as 
-`{inputarguments_19='-Xloggc:/home/axibase/axibase-collector/logs/gc_29286.log' 
-                 -> '-Xloggc:/home/axibase/axibase-collector/logs/gc_13091.log'}`
+
+```{inputarguments_19='-Xloggc:/home/axibase/axibase-collector/logs/gc_29286.log' 
+                   -> '-Xloggc:/home/axibase/axibase-collector/logs/gc_13091.log'}
+                 ```
 
 ```java
 NOT property_compare_except(['name', '*time'], ['*Xloggc*']).isEmpty()
