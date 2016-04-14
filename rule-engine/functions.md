@@ -63,12 +63,9 @@ entity_tags(tags.hardware_node).location = 'NUR'
 
 ### property_values(String propertySearch) 
 
-Returns a list of property tag values for the current entity given the property search string.
+Returns a list of property tag values for the current entity given the [property search string](../property-search-syntax.md).
+
 The list is empty if property or tag is not found.
-
-Property search syntax is as follows:
-
-`<property_type>:[<property_key>=<property_value>[,]]:<tag_name>`.
 
 _Example_
 
