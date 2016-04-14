@@ -52,7 +52,7 @@ entity_tags.location = 'NUR'
 
 ### property_values(String propertySearch) 
 
-Returns a list of property tag values given the property search string.
+Returns a list of property tag values for the current entity given the property search string.
 Property search syntax is as follows:
 
 `<property_type>:[<property_key>=<property_value>[,]]:<tag_name>`.
@@ -65,6 +65,20 @@ property_values('docker.container::image').contains('atsd/latest')
 
 ```java
 property_values('linux.disk:fstype=ext4:mount_point').contains('/')
+```
+
+### property_values(String entity, String propertySearch) 
+
+Same as property_values(String propertySearch) but for an explicitly specified entity.
+
+> Example:
+
+```java
+property_values('nurswgvml007', 'docker.container::image').contains('atsd/latest')
+```
+
+```java
+property_values(entity_tags.image, 'docker.image.config::name').contains('atsd/latest')
 ```
 
 ### matches(String pattern, Collection\<String> values)
