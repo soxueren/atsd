@@ -18,8 +18,7 @@ tags.image-name = 'collector'
 tags['image-name'] like '*collector*'
 ```
 
-### entity.tags
-### entity_tags
+### entity_tags (also entity.tags)
 
 Returns a map containing entity tags for the current entity.
 
