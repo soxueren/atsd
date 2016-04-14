@@ -15,7 +15,7 @@ The map includes tags that are not present in new property tags and tags that we
 If the difference map is empty, no changes were identified.
 Comparision is case-insensitive.
 
-> Example:
+_Example_
 
 ```java
 NOT property_compare_except (['name', '*time']).isEmpty()
@@ -27,7 +27,7 @@ Returns true if property tags have changed except for `name` tag and any tags th
 
 Same as `property_compare_except(keys)` with a list of previous values that are excluded from difference map.
 
-> Example:
+_Example_
 
 ```java
 NOT property_compare_except(['name', '*time'], ['*Xloggc*']).isEmpty()
@@ -42,26 +42,41 @@ Returns true if property tags have changed except for `name` tag, any tags that 
 
 ### entity_tags
 
-Returns a map containing entity tags.
+Returns a map containing entity tags for the current entity.
 
-> Example:
+_Example_
 
 ```java
 entity_tags.location = 'NUR'
 ```
 
+### entity_tags(String entityName)
+
+Returns a map containing entity tags for the specified entity.
+The map is empty if entity is not found.
+
+_Example_
+
+```java
+entity_tags(tags.hardware_node).location = 'NUR'
+```
+
 ### property_values(String propertySearch) 
 
 Returns a list of property tag values for the current entity given the property search string.
+The list is empty if property or tag is not found.
+
 Property search syntax is as follows:
 
 `<property_type>:[<property_key>=<property_value>[,]]:<tag_name>`.
 
-> Examples:
+_Example_
 
 ```java
 property_values('docker.container::image').contains('atsd/latest')
 ```
+
+_Example_
 
 ```java
 property_values('linux.disk:fstype=ext4:mount_point').contains('/')
@@ -71,11 +86,13 @@ property_values('linux.disk:fstype=ext4:mount_point').contains('/')
 
 Same as property_values(String propertySearch) but for an explicitly specified entity.
 
-> Example:
+_Example_
 
 ```java
 property_values('nurswgvml007', 'docker.container::image').contains('atsd/latest')
 ```
+
+_Example_
 
 ```java
 property_values(entity_tags.image, 'docker.image.config::name').contains('atsd/latest')
@@ -85,7 +102,7 @@ property_values(entity_tags.image, 'docker.image.config::name').contains('atsd/l
 
 Returns true if one of collection items matches the specified pattern.
 
-> Example:
+_Example_
 
 ```java
 matches('*atsd*', property_values('docker.container::image'))
