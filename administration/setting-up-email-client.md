@@ -18,3 +18,5 @@ Client and configure the following properties to enable notifications:
 | Password | Password of mailbox user |
 | Message Header | Plain text or HTML markup that will appear at the top of sent messages |
 | Message Footer | Plain text or HTML markup that will appear at the bottom of sent messages |
+
+![](images/mail_client_atsd1.png "mail_client_atsd")
