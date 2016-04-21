@@ -18,14 +18,9 @@ them back up on system reboot.
 
 | Name | Description | Example |
 | --- | --- | --- |
-| atsd-all.sh | Start, stop and status of ATSD and all components.
-Possible commands: start, stop, status | /opt/atsd/bin/atsd-all.sh stop |
-| atsd-hbase.sh | Start, stop and status of HBase.
-Possible commands: start, stop, status | /opt/atsd/bin/atsd-hbase.sh status |
-| atsd-tsd.sh | Start, stop and status of ATSD.
-Possible commands: start, stop, status | /opt/atsd/bin/atsd-tsd.sh start |
-| atsd-dfs.sh | Start, stop and status of Hadoop.
-Possible commands: start, stop, status | /opt/atsd/bin/atsd-dfs.sh status |
-| update.sh | Update ATSD.
-[View the Update ATSD guide](/products/axibase-time-series-database/download-atsd/update-atsd/ "Update ATSD") | /opt/atsd/bin/update.sh |
+| atsd-all.sh | Start, stop and status of ATSD and all components.Possible commands: start, stop, status | /opt/atsd/bin/atsd-all.sh stop |
+| atsd-hbase.sh | Start, stop and status of HBase. Possible commands: start, stop, status | /opt/atsd/bin/atsd-hbase.sh status |
+| atsd-tsd.sh | Start, stop and status of ATSD. Possible commands: start, stop, status | /opt/atsd/bin/atsd-tsd.sh start |
+| atsd-dfs.sh | Start, stop and status of Hadoop. Possible commands: start, stop, status | /opt/atsd/bin/atsd-dfs.sh status |
+| update.sh | Update ATSD. [View the Update ATSD guide](/products/axibase-time-series-database/download-atsd/update-atsd/ "Update ATSD") | /opt/atsd/bin/update.sh |
 
