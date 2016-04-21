@@ -17,7 +17,7 @@ them back up on system reboot.
 ##### Scripts:
 
 | Name | Description | Example |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | atsd-all.sh | Start, stop and status of ATSD and all components.
 Possible commands: start, stop, status | /opt/atsd/bin/atsd-all.sh stop |
 | atsd-hbase.sh | Start, stop and status of HBase.
