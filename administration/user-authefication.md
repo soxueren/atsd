@@ -58,4 +58,3 @@ hashcode matches the stored value.
     `api.anonymous.access.enabled=false` in server.properties file.
 -   There is no user authentication implemented for network command
     received via TCP/UDP.
-s

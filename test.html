@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0099)http://axibase.com/products/axibase-time-series-database/download-atsd/administration/email-client/ -->
-<html lang="en-US" prefix="og: http://ogp.me/ns#" class="html_boxed responsive av-preloader-disabled av-default-lightbox  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_mobile_menu_tablet html_disabled html_header_searchicon html_content_align_center html_header_unstick_top_disabled html_header_stretch html_entry_id_9210  avia_desktop  js_active  avia_transform  avia_transform3d  avia_transform  avia_transform3d  avia-webkit avia-webkit-50 avia-chrome avia-chrome-50 avia-linux"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- saved from url=(0105)http://axibase.com/products/axibase-time-series-database/download-atsd/administration/user-authorization/ -->
+<html lang="en-US" prefix="og: http://ogp.me/ns#" class="html_boxed responsive av-preloader-disabled av-default-lightbox  html_header_top html_logo_left html_main_nav_header html_menu_right html_slim html_header_sticky html_header_shrinking html_mobile_menu_tablet html_disabled html_header_searchicon html_content_align_center html_header_unstick_top_disabled html_header_stretch html_entry_id_10366  avia_desktop  js_active  avia_transform  avia_transform3d  avia_transform  avia_transform3d  avia-webkit avia-webkit-50 avia-chrome avia-chrome-50 avia-linux"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
 <!-- page title, displayed in your browser bar -->
-<title>Setting up the Email Client - Axibase</title>
+<title>User Authorization - Axibase</title>
 
 <link rel="icon" href="http://axibase.com/wp-content/uploads/2014/12/favicon.png" type="image/png">
 
@@ -14,16 +14,19 @@
 <!-- Scripts/CSS and wp_head hook -->
 
 <!-- This site is optimized with the Yoast SEO plugin v3.0.7 - https://yoast.com/wordpress/plugins/seo/ -->
-<link rel="canonical" href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/email-client/">
+<link rel="canonical" href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/user-authorization/">
 <meta property="og:locale" content="en_US">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Setting up the Email Client - Axibase">
-<meta property="og:url" content="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/email-client/">
+<meta property="og:title" content="User Authorization - Axibase">
+<meta property="og:url" content="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/user-authorization/">
 <meta property="og:site_name" content="Axibase">
 <meta property="article:publisher" content="https://www.facebook.com/pages/Axibase/1412960418999597">
+<meta property="og:image" content="http://axibase.com/wp-content/uploads/2016/01/entity_group_permission.png">
+<meta property="og:image" content="http://axibase.com/wp-content/uploads/2016/01/atsd_role_hierarchy-2.png">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Setting up the Email Client - Axibase">
+<meta name="twitter:title" content="User Authorization - Axibase">
 <meta name="twitter:site" content="@axibase">
+<meta name="twitter:image" content="http://axibase.com/wp-content/uploads/2016/01/entity_group_permission.png">
 <meta name="twitter:creator" content="@axibase">
 <!-- / Yoast SEO plugin. -->
 
@@ -35,7 +38,7 @@
 		<script async="" src="./test_files/analytics.js"></script><script type="text/javascript">
 			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/axibase.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4.1"}};
 			!function(a,b,c){function d(a){var c,d=b.createElement("canvas"),e=d.getContext&&d.getContext("2d");return e&&e.fillText?(e.textBaseline="top",e.font="600 32px Arial","flag"===a?(e.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),d.toDataURL().length>3e3):"diversity"===a?(e.fillText(String.fromCharCode(55356,57221),0,0),c=e.getImageData(16,16,1,1).data.toString(),e.fillText(String.fromCharCode(55356,57221,55356,57343),0,0),c!==e.getImageData(16,16,1,1).data.toString()):("simple"===a?e.fillText(String.fromCharCode(55357,56835),0,0):e.fillText(String.fromCharCode(55356,57135),0,0),0!==e.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8"),diversity:d("diversity")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8&&c.supports.diversity||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
-		</script><script src="./test_files/wp-emoji-release.min.js" type="text/javascript"></script>
+		</script><style type="text/css"></style><script src="./test_files/wp-emoji-release.min.js" type="text/javascript"></script>
 		<style type="text/css">
 img.wp-smiley,
 img.emoji {
@@ -53,16 +56,16 @@ img.emoji {
 <link rel="stylesheet" id="wp-syntax-css-group-css" href="./test_files/saved_resource" type="text/css" media="all">
 <link rel="stylesheet" id="avia-popup-css-group-css" href="./test_files/saved_resource(1)" type="text/css" media="screen">
 <link rel="stylesheet" id="avia-print-group-css" href="./test_files/saved_resource(2)" type="text/css" media="print">
-<script type="text/javascript" src="./test_files/jquery.js"></script><style type="text/css"></style>
+<script type="text/javascript" src="./test_files/jquery.js"></script>
 <script type="text/javascript" src="./test_files/jquery-migrate.min.js"></script>
 <script type="text/javascript" src="./test_files/saved_resource(3)"></script>
 <link rel="https://api.w.org/" href="http://axibase.com/wp-json/">
 <link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://axibase.com/xmlrpc.php?rsd">
 <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://axibase.com/wp-includes/wlwmanifest.xml"> 
 <meta name="generator" content="WordPress 4.4.1">
-<link rel="shortlink" href="http://axibase.com/?p=9210">
-<link rel="alternate" type="application/json+oembed" href="http://axibase.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Faxibase.com%2Fproducts%2Faxibase-time-series-database%2Fdownload-atsd%2Fadministration%2Femail-client%2F">
-<link rel="alternate" type="text/xml+oembed" href="http://axibase.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Faxibase.com%2Fproducts%2Faxibase-time-series-database%2Fdownload-atsd%2Fadministration%2Femail-client%2F&amp;format=xml">
+<link rel="shortlink" href="http://axibase.com/?p=10366">
+<link rel="alternate" type="application/json+oembed" href="http://axibase.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Faxibase.com%2Fproducts%2Faxibase-time-series-database%2Fdownload-atsd%2Fadministration%2Fuser-authorization%2F">
+<link rel="alternate" type="text/xml+oembed" href="http://axibase.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Faxibase.com%2Fproducts%2Faxibase-time-series-database%2Fdownload-atsd%2Fadministration%2Fuser-authorization%2F&amp;format=xml">
 		<style>
 		.gist table {
 			margin-bottom: 0 !important;
@@ -709,15 +712,128 @@ url('http://axibase.com/wp-content/themes/enfold/config-templatebuilder/avia-tem
 .en-markup-crop-options div div:first-of-type {
     margin-left: 0px !important;
 }
-</style></head>
+</style><style type="text/css" id="lleo_css_enjoyContentControls">#lleo_enjoyContentControls,
+#lleo_enjoyContentControls * {
+    color: #000 !important;
+    font: normal 13px Arial, Helvetica !important;
+    line-height: 15px !important;
+    margin: 0 !important;
+	padding: 0 !important;
+	background: none !important;
+	border: none 0 !important;
+	position: static !important;
+	vertical-align: baseline !important;
+	overflow: visible !important;
+	width: auto !important;
+	height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+	float: none !important;
+	visibility: visible !important;
+	text-align: left !important;
+    text-transform: none !important;
+	border-collapse: separate !important;
+	border-spacing: 2px !important;
+    box-sizing: content-box !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    text-shadow: none !important;
+}
+
+#lleo_enjoyContentControls {
+    background: #f7c875 !important;
+    position: fixed !important;
+    right: 0 !important;
+    top: -40px !important;
+    width: 39px !important;
+    height: 34px !important;
+    opacity: 0.85 !important;
+    border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+    box-shadow: 2px 4px 12px rgba(0,0,0,0.3) !important;
+    z-index: 9999999999999 !important;
+    overflow: hidden !important;
+}
+
+    #lleo_enjoyContentControls.lleo_show {
+        top: 130px !important;
+
+        -webkit-transition: top 0.8s ease-out !important;
+        -moz-transition: top 0.8s ease-out !important;
+        -ms-transition: top 0.8s ease-out !important;
+        -o-transition: top 0.8s ease-out !important;
+        transition: top 0.8s ease-out !important;
+    }
+
+    #lleo_enjoyContentControls:hover {
+        opacity: 1 !important;
+        /*width: 220px !important;*/
+        
+        -webkit-transition: opacity 0.4s linear, width 0.4s ease-out 1.2s  !important;
+        -moz-transition: opacity 0.4s linear, width 0.4s ease-out 1.2s  !important;
+        -ms-transition: opacity 0.4s linear, width 0.4s ease-out 1.2s  !important;
+        -o-transition: opacity 0.4s linear, width 0.4s ease-out 1.2s  !important;
+        transition: opacity 0.4s linear, width 0.4s linear 1.2s  !important;
+    }
+
+    #lleo_enjoyContentControls.lleo_hiding {
+        opacity: 0 !important;
+        -webkit-transition: opacity 3s linear !important;
+        -moz-transition: opacity 3s linear !important;
+        -ms-transition: opacity 3s linear !important;
+        transition: opacity 3s linear !important;
+    }
+
+    #lleo_enjoyContentControls #lleo_enjoyContentPanel {
+        white-space: nowrap !important;
+        margin: 9px 44px 0 10px !important;
+        opacity: 0 !important;
+
+        -webkit-transition: all 0.4s linear 1.2s !important;
+        -moz-transition: all 0.4s linear 1.2s !important;
+        -ms-transition: all 0.4s linear 1.2s !important;
+        -o-transition: all 0.4s linear 1.2s !important;
+        transition: all 0.4s linear 1.2s !important;
+    }
+        #lleo_enjoyContentControls:hover #lleo_enjoyContentPanel {
+            opacity: 1 !important;
+        }
+
+    #lleo_enjoyContentControls #lleo_enjoyContentPanel input {
+        margin-right: 5px !important;
+    }
+
+
+#lleo_enjoyContentButton {
+    background: #fff center center no-repeat !important;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAAk6AAAJOgHwZJJKAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAADBQTFRF////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAL92gewAAAA90Uk5TAA0PEhUcLS9CxszS29z1M86yOAAAAFVJREFUCFtjYIADduMCMGZgvmsAxggGUFgELMXAwDq7AaI8MnULmGY9pTYRzIj5vzIALHD+/1Gw4pj/fwJA2kECYHNkgAJgK/yAAmDA8QasBQgcIRQA12YesqxFXfcAAAAASUVORK5CYII8850aa0afe766ff5b5bb3697b8de32f7) !important;
+    background-size: 16px 16px !important;
+    width: 36px !important;
+    height: 34px !important;
+    cursor: pointer !important;
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+}
+
+
+@media only screen and (min--moz-device-pixel-ratio: 2),
+only screen and (-webkit-min-device-pixel-ratio: 2),
+only screen and (min-device-pixel-ratio: 2) {
+
+    #lleo_enjoyContentButton {
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAABJ0AAASdAHeZh94AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAD9QTFRF////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAxQXeHgAAABR0Uk5TAAQFDRkcNz1PcHSIrK6ws7/b8P5ZkzdFAAAAo0lEQVQ4y62RzQ6DMAyDTSkjpfy04Pd/1h12WAtpKk3zzfosJXGAP2l0AODGloc7BJDDtTwgTInS9kAik+W7gd6I7pLFWRK9cuZXgcyT0VjguliJwG1AYPZNvjsAC2OLXzOAYa07LPfj+YLbGJqcPOfd5OTV4WSAVlTNn1Xf+ONZD357t8KrgMbLERovlxSFV2dGhVfy2ebAlG3+SVgc8FHws96B8RE8rjk+bwAAAABJRU5ErkJggga9a50a0b337b82ef5c0bda0f6d6960d3) !important;
+    }
+
+}</style><style type="text/css">#lleo_enjoyContentControls:hover {width: 224px !important}</style></head>
 
 
 
 
-<body id="top" class="page page-id-9210 page-child parent-pageid-6722 page-template-default boxed open_sans " itemscope="itemscope" itemtype="https://schema.org/WebPage">
+<body id="top" class="page page-id-10366 page-child parent-pageid-6722 page-template-default boxed open_sans " itemscope="itemscope" itemtype="https://schema.org/WebPage">
 
 	
-	<div id="wrap_all"><a id="advanced_menu_hide" href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/email-client/#" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></a><ul id="mobile-advanced" class=""><li id="menu-item-3345" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-top-level menu-item-top-level-1"><a href="http://axibase.com/" itemprop="url"><span class="avia-bullet"></span><span class="avia-menu-text">Home</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a></li>
+	<div id="wrap_all"><a id="advanced_menu_hide" href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/user-authorization/#" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></a><ul id="mobile-advanced" class=""><li id="menu-item-3345" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-top-level menu-item-top-level-1"><a href="http://axibase.com/" itemprop="url"><span class="avia-bullet"></span><span class="avia-menu-text">Home</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a></li>
 <li id="menu-item-1867" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-top-level menu-item-top-level-2"><a href="http://axibase.com/customers/" itemprop="url"><span class="avia-bullet"></span><span class="avia-menu-text">Customers</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a></li>
 <li id="menu-item-1343" class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor menu-item-has-children menu-item-top-level menu-item-top-level-3"><a href="http://axibase.com/products/" itemprop="url"><span class="avia-bullet"></span><span class="avia-menu-text">Products</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a>
 
@@ -754,7 +870,7 @@ url('http://axibase.com/wp-content/themes/enfold/config-templatebuilder/avia-tem
 
 		<div id="header_main" class="container_wrap container_wrap_logo">
 	
-        <div class="container av-logo-container" style="height: 44px; line-height: 44px;"><div class="inner-container"><strong class="logo"><a href="http://axibase.com/" style="max-height: 44px;"><img height="100" width="300" src="./test_files/axibase_logo_orange-2.png" alt="Axibase" style="max-height: 44px;"></a></strong><a id="advanced_menu_toggle" href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/email-client/#" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></a><nav class="main_menu" data-selectname="Select a page" role="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement"><div class="avia-menu av-main-nav-wrap"><ul id="avia-menu" class="menu av-main-nav"><li id="menu-item-3345" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-top-level menu-item-top-level-1"><a href="http://axibase.com/" itemprop="url" style="height: 44px; line-height: 44px;"><span class="avia-bullet"></span><span class="avia-menu-text">Home</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a></li>
+        <div class="container av-logo-container" style="height: 44px; line-height: 44px;"><div class="inner-container"><strong class="logo"><a href="http://axibase.com/" style="max-height: 44px;"><img height="100" width="300" src="./test_files/axibase_logo_orange-2.png" alt="Axibase" style="max-height: 44px;"></a></strong><a id="advanced_menu_toggle" href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/user-authorization/#" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello"></a><nav class="main_menu" data-selectname="Select a page" role="navigation" itemscope="itemscope" itemtype="https://schema.org/SiteNavigationElement"><div class="avia-menu av-main-nav-wrap"><ul id="avia-menu" class="menu av-main-nav"><li id="menu-item-3345" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-top-level menu-item-top-level-1"><a href="http://axibase.com/" itemprop="url" style="height: 44px; line-height: 44px;"><span class="avia-bullet"></span><span class="avia-menu-text">Home</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a></li>
 <li id="menu-item-1867" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-top-level menu-item-top-level-2"><a href="http://axibase.com/customers/" itemprop="url" style="height: 44px; line-height: 44px;"><span class="avia-bullet"></span><span class="avia-menu-text">Customers</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a></li>
 <li id="menu-item-1343" class="menu-item menu-item-type-post_type menu-item-object-page current-page-ancestor menu-item-has-children menu-item-top-level menu-item-top-level-3 dropdown_ul_available"><a href="http://axibase.com/products/" itemprop="url" style="height: 44px; line-height: 44px;"><span class="avia-bullet"></span><span class="avia-menu-text">Products</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span><span class="dropdown_available"></span></a>
 
@@ -785,7 +901,7 @@ url('http://axibase.com/wp-content/themes/enfold/config-templatebuilder/avia-tem
 </li>
 <li id="menu-item-1098" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-top-level menu-item-top-level-8"><a href="http://axibase.com/feedback/" itemprop="url" style="height: 44px; line-height: 44px;"><span class="avia-bullet"></span><span class="avia-menu-text">Contact Us</span><span class="avia-menu-fx"><span class="avia-arrow-wrap"><span class="avia-arrow"></span></span></span></a></li>
 <li id="menu-item-search" class="noMobile menu-item menu-item-search-dropdown">
-							<a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/email-client/?s=" rel="nofollow" data-avia-search-tooltip="
+							<a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/user-authorization/?s=" rel="nofollow" data-avia-search-tooltip="
 
 &lt;form action=&quot;http://axibase.com/&quot; id=&quot;searchform&quot; method=&quot;get&quot; class=&quot;&quot;&gt;
 	&lt;div&gt;
@@ -804,18 +920,74 @@ url('http://axibase.com/wp-content/themes/enfold/config-templatebuilder/avia-tem
 		
 	<div id="main" data-scroll-offset="88">
 
-	<div class="stretch_full container_wrap alternate_color light_bg_color title_container"><div class="container"><h1 class="main-title entry-title"><a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/email-client/" rel="bookmark" title="Permanent Link: Setting up the Email Client" itemprop="headline">Setting up the Email Client</a></h1><div class="breadcrumb breadcrumbs avia-breadcrumbs"><div class="breadcrumb-trail" xmlns:v="http://rdf.data-vocabulary.org/#"><span class="trail-before"><span class="breadcrumb-title">You are here:</span></span> <a href="http://axibase.com/" title="Axibase" rel="home" class="trail-begin">Home</a> <span class="sep">/</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="http://axibase.com/products/" title="Products">Products</a></span> <span class="sep">/</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="http://axibase.com/products/axibase-time-series-database/" title="Axibase Time Series Database">Axibase Time Series Database</a></span> <span class="sep">/</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="http://axibase.com/products/axibase-time-series-database/download-atsd/" title="Download Axibase Time Series Database">Download Axibase Time Series Database</a></span> <span class="sep">/</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/" title="Administration">Administration</a></span> <span class="sep">/</span> <span class="trail-end">Setting up the Email Client</span></div></div></div></div><div class="main_color container_wrap_first container_wrap sidebar_left"><div class="container"><main role="main" itemprop="mainContentOfPage" class="template-page content  av-content-small units"><div class="post-entry post-entry-type-page post-entry-9210"><div class="entry-content-wrapper clearfix"><section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><h1>Setting up the Email&nbsp;Client</h1>
+	<div class="stretch_full container_wrap alternate_color light_bg_color title_container"><div class="container"><h1 class="main-title entry-title"><a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/user-authorization/" rel="bookmark" title="Permanent Link: User Authorization" itemprop="headline">User Authorization</a></h1><div class="breadcrumb breadcrumbs avia-breadcrumbs"><div class="breadcrumb-trail" xmlns:v="http://rdf.data-vocabulary.org/#"><span class="trail-before"><span class="breadcrumb-title">You are here:</span></span> <a href="http://axibase.com/" title="Axibase" rel="home" class="trail-begin">Home</a> <span class="sep">/</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="http://axibase.com/products/" title="Products">Products</a></span> <span class="sep">/</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="http://axibase.com/products/axibase-time-series-database/" title="Axibase Time Series Database">Axibase Time Series Database</a></span> <span class="sep">/</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="http://axibase.com/products/axibase-time-series-database/download-atsd/" title="Download Axibase Time Series Database">Download Axibase Time Series Database</a></span> <span class="sep">/</span> <span typeof="v:Breadcrumb"><a rel="v:url" property="v:title" href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/" title="Administration">Administration</a></span> <span class="sep">/</span> <span class="trail-end">User Authorization</span></div></div></div></div><div class="main_color container_wrap_first container_wrap sidebar_left"><div class="container"><main role="main" itemprop="mainContentOfPage" class="template-page content  av-content-small units"><div class="post-entry post-entry-type-page post-entry-10366"><div class="entry-content-wrapper clearfix"><section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><h1>User Authorization</h1>
 </div></section>
-<div class="hr hr-default  avia-builder-el-1  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
-<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><p>To setup Email Notifications, open ATSD UI, navigate to Admin -&gt; Mail Client and configure the following properties to enable notifications:</p>
+<div style="height:20px" class="hr hr-invisible  avia-builder-el-1  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><p>Axibase Time Series Database implements Role Based Access Control (RBAC) and Entity Permissions (EP) to restrict user access to protected information.</p>
 </div></section>
-<div class="avia-data-table-wrap avia_responsive_table"><table class="avia-table avia-data-table avia-table-1  avia-builder-el-3  el_after_av_textblock  el_before_av_image " itemscope="itemscope" itemtype="https://schema.org/Table"><tbody><tr class="avia-heading-row"><th class="">Field</th><th class="">Description</th></tr><tr class=""><td class="">Enabled</td><td class="">Set this property to true in order to enable email notifications</td></tr><tr class=""><td class="">Server Name</td><td class="">Server specified in the “from” field. For example: <code>My ATSD Server</code></td></tr><tr class=""><td class="">Server</td><td class="">Hostname or IP address of your mail server. For example: <code>smtp.mail_server.com</code></td></tr><tr class=""><td class="">Port</td><td class="">Mail server port</td></tr><tr class=""><td class="">Sender Address</td><td class="">Address specified in the “from” field. For example: <code>notify@mail_server.com</code></td></tr><tr class=""><td class="">Authentication</td><td class="">Set this property to true in order to use authentication</td></tr><tr class=""><td class="">SSL</td><td class="">Set this property to true in order to use SSL encryption</td></tr><tr class=""><td class="">User</td><td class="">Username of mailbox user</td></tr><tr class=""><td class="">Password</td><td class="">Password of mailbox user</td></tr><tr class=""><td class="">Message Header</td><td class="">Plain text or HTML markup that will appear at the top of sent messages</td></tr><tr class=""><td class="">Message Footer</td><td class="">Plain text or HTML markup that will appear at the bottom of sent messages</td></tr></tbody></table></div><style type="text/css">.avia-table-1 td:nth-of-type(1):before { content: 'Field'; } .avia-table-1 td:nth-of-type(2):before { content: 'Description'; } </style>
-<div class="avia-image-container  av-styling-   avia-builder-el-4  el_after_av_table  el_before_av_hr  avia-align-left " itemscope="itemscope" itemtype="https://schema.org/ImageObject"><div class="avia-image-container-inner"><img class="avia_image " src="administration/images/mail_client_atsd1.png" alt="" title="mail_client_atsd" itemprop="contentURL"></div></div>
-<div class="hr hr-default  avia-builder-el-5  el_after_av_image  avia-builder-el-last "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<div style="height:20px" class="hr hr-invisible  avia-builder-el-3  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><h3>Role Based Access Control</h3>
+</div></section>
+<div style="height:10px" class="hr hr-invisible  avia-builder-el-5  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><p>Authenticated users are allowed to access protected resources based on their role.<br>
+The role specifies which URLs and HTTP methods the user can access. Each user can be assigned multiple roles.</p>
+<p><strong>Available API roles:</strong></p>
+<ul>
+<li>ROLE_API_DATA_READ – Query Data API to read series, properties, messages, alerts from the database.</li>
+<li>ROLE_API_DATA_WRITE – Submit Data API requests to insert series, properties, messages into the database.</li>
+<li>ROLE_API_META_READ – Query Meta Data API to read metric, entity, and entity group settings.</li>
+<li>ROLE_API_META_WRITE – Submit Meta Data API requests to change metric and entity settings.<br>
+API requests to change entity groups or add/remove their members require ROLE_ENTITY_GROUP_ADMIN role.</li>
+</ul>
+<p><strong>Available User Interface roles:</strong></p>
+<ul>
+<li>ROLE_USER – View information on all pages except Configuration,&nbsp;Entity Group, and Admin pages.<br>
+Includes ROLE_API_DATA_READ and ROLE_API_META_READ.</li>
+<li>ROLE_EDITOR – View and edit information on all pages except Admin and Entity Group pages.<br>
+Includes ROLE_USER.</li>
+<li>ROLE_ENTITY_GROUP_ADMIN – Edit entity groups.<br>
+Includes ROLE_USER.</li>
+<li>ROLE_ADMIN – View and edit information on all pages.<br>
+Includes all roles.</li>
+</ul>
+</div></section>
+<div class="hr hr-default  avia-builder-el-7  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><h3>Entity Permissions</h3>
+</div></section>
+<div style="height:10px" class="hr hr-invisible  avia-builder-el-9  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><p>Permissions to read and write data are granted to User Groups at the Entity Group level.</p>
+<p>In order to read data for an entity the user must have ROLE_API_DATA_READ role. In addition, one of the user’s User Groups must be granted a Read permission to an Entity Group containing the entity.</p>
+<p>In order to write data for an entity the user must have ROLE_API_DATA_WRITE role. In addition, one of the user’s User Groups must be granted a Write permission to an Entity Group containing the entity.</p>
+<p>Effective user permissions are calculated as a union of all User Groups permissions to which the user belongs.</p>
+</div></section>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><p><img class="alignnone size-full wp-image-10470" src="administration/images/entity_group_permission.png" alt="entity_group_permission" width="253" height="189"></p>
+</div></section>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><p><em>In the following diagram, to read data for entity-30 the user must be either added to user-group-C as a member or entity-group-3 must be assigned to user-group-B or user-group-A.</em></p>
+</div></section>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><p><img class="alignnone size-full wp-image-10397" src="administration/images/atsd_role_hierarchy-2.png" alt="atsd_role_hierarchy" width="615" height="327" srcset="http://axibase.com/wp-content/uploads/2016/01/atsd_role_hierarchy-2-300x160.png 300w, http://axibase.com/wp-content/uploads/2016/01/atsd_role_hierarchy-2-450x239.png 450w, http://axibase.com/wp-content/uploads/2016/01/atsd_role_hierarchy-2.png 615w" sizes="(max-width: 615px) 100vw, 615px"></p>
+</div></section>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><p><strong>All Entities Permissions</strong></p>
+<p>In addition to specific Entity Group permissions user groups can be granted a special ‘All Entities: Read’ or ‘All Entities: Write’ permission which allows reading or writing data to any entity, including entities that do not belong to any Entity Group. Users inherit ‘All Entities’ permissions from User Groups to which they belong.</p>
+</div></section>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><p><strong>Inserting Data for New Entities</strong></p>
+<p>Since non-existent entities cannot be assigned to a group, ‘All Entities: Write’ permission is required to create entities either in the user interface or by inserting data via API.<br>
+User with ROLE_API_DATA_WRITE role but without ‘All Entities: Write’ permission will be able to insert data only for existing entities.</p>
+</div></section>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><p><strong>Wildcard Requests<br>
+</strong></p>
+<p>Users without ‘All Entities: Read’ permission are allowed to query Data API using wildcards as part of entity name as well as execute SQL queries without entity name conditions. In both cases, the results will be filtered based on user’s effective permissions therefore different users may see different results for the same API request or SQL query depending on their entity permissions.</p>
+</div></section>
+<div class="hr hr-default  avia-builder-el-17  el_after_av_textblock  el_before_av_textblock "><span class="hr-inner "><span class="hr-inner-style"></span></span></div>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><h3>Implementation Notes</h3>
+</div></section>
+<section class="av_textblock_section" itemscope="itemscope" itemtype="https://schema.org/CreativeWork"><div class="avia_textblock " itemprop="text"><ul>
+<li>User’s role, group membership, and entity permissions are cached while the session is active or until it times out. In order to apply changes, the user must re-login into the application.</li>
+</ul>
+</div></section>
 </div></div></main><!-- close content main element --> <!-- section close by builder template --><aside class="sidebar sidebar_left smartphones_sidebar_active alpha units" role="complementary" itemscope="itemscope" itemtype="https://schema.org/WPSideBar"><div class="inner_sidebar extralight-border"><div id="nav_menu-47" class="widget clearfix widget_nav_menu"><h3 class="widgettitle">Administration</h3><div class="menu-atsd-admin-container"><ul id="menu-atsd-admin" class="menu"><li id="menu-item-7966" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7966"><a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/deployment/">Deployment</a></li>
-<li id="menu-item-9214" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-9210 current_page_item menu-item-9214"><a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/email-client/">Setting up the Email Client</a></li>
+<li id="menu-item-9214" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9214"><a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/email-client/">Setting up the Email Client</a></li>
 <li id="menu-item-10376" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10376"><a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/user-authentication/">User Authentication</a></li>
-<li id="menu-item-10375" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10375"><a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/user-authorization/">User Authorization</a></li>
+<li id="menu-item-10375" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-10366 current_page_item menu-item-10375"><a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/user-authorization/">User Authorization</a></li>
 <li id="menu-item-6733" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6733"><a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/restarting-atsd/">Restarting ATSD</a></li>
 <li id="menu-item-6732" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-6732"><a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/uninstalling-atsd/">Uninstalling ATSD</a></li>
 <li id="menu-item-10259" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10259"><a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/migrate-to-java7/">Migrate ATSD to Java 7</a></li>
@@ -905,9 +1077,14 @@ var _wpmejsSettings = {"pluginPath":"\/wp-includes\/js\/mediaelement\/"};
 </script>
 <script type="text/javascript" src="./test_files/saved_resource(4)"></script>
 <script type="text/javascript" src="./test_files/devicepx-jetpack.js"></script>
-<a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/email-client/#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello" class="avia_pop_class"><span class="avia_hidden_link_text">Scroll to top</span></a>
+<a href="http://axibase.com/products/axibase-time-series-database/download-atsd/administration/user-authorization/#top" title="Scroll to top" id="scroll-top-link" aria-hidden="true" data-av_icon="" data-av_iconfont="entypo-fontello" class="avia_pop_class"><span class="avia_hidden_link_text">Scroll to top</span></a>
 
 <div id="fb-root"></div>
 
 
-</body></html>
+<div id="lleo_enjoyContentControls" class=" lleo_show">
+    <div id="lleo_enjoyContentPanel">
+        <label id="lleo_enjoyContentLabel"><input id="lleo_enjoyContentCheckbox" type="checkbox" checked="">Show this icon if possible</label>
+    </div>
+    <div id="lleo_enjoyContentButton" title="Enjoy Content!"></div>
+</div></body></html>
