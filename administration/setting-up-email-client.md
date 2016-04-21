@@ -5,8 +5,9 @@ Setting up the Email Client
 To setup Email Notifications, open ATSD UI, navigate to Admin -\> Mail
 Client and configure the following properties to enable notifications:
 
-| Field   | Description                                                             |
-| Enabled     | Set this property to true in order to enable email notifications        |
+| Field | Description |
+| --- | --- |
+| Enabled | Set this property to true in order to enable email notifications |
 | Server Name | Server specified in the “from” field. For example: `My ATSD Server` |
 | Server | Hostname or IP address of your mail server. For example: `smtp.mail_server.com` |
 | Port | Mail server port |
