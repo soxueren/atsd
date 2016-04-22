@@ -1,7 +1,7 @@
 # Manual update
 
 
-#### Login with the Axibase user:
+#### Login with the Axibase user
 
 ```sh
  su axibase                                                               
