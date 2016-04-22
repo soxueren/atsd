@@ -1,0 +1,5 @@
+<property>
+    <name>hadoop.tmp.dir</name>
+    <value>/data/hdfs-cache</value>
+    <description>A base for other temporary directories.</description>
+</property>
