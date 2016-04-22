@@ -1,4 +1,4 @@
-# Restarting ATSD
+# Restarting
 
 
 ATSD comes with a set of wrapper scripts that control the start, stop
