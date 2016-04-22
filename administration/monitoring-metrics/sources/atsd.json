@@ -1,0 +1,709 @@
+{
+  "beans" : [ {
+    "name" : "java.lang:type=Memory",
+    "type" : "sun.management.MemoryImpl",
+    "Verbose" : true,
+    "ObjectPendingFinalizationCount" : 0,
+    "HeapMemoryUsage" : {
+      "committed" : 370176000,
+      "init" : 30761984,
+      "max" : 1037959168,
+      "used" : 197194280
+    },
+    "NonHeapMemoryUsage" : {
+      "committed" : 77398016,
+      "init" : 24313856,
+      "max" : 224395264,
+      "used" : 76582280
+    }
+  }, {
+    "name" : "java.lang:type=GarbageCollector,name=Copy",
+    "type" : "sun.management.GarbageCollectorImpl",
+    "LastGcInfo" : {
+      "GcThreadCount" : 1,
+      "duration" : 12,
+      "endTime" : 55239581,
+      "id" : 17984,
+      "memoryUsageAfterGc" : [ {
+        "key" : "Perm Gen",
+        "value" : {
+          "committed" : 61210624,
+          "init" : 21757952,
+          "max" : 174063616,
+          "used" : 61040456
+        }
+      }, {
+        "key" : "Tenured Gen",
+        "value" : {
+          "committed" : 254767104,
+          "init" : 20578304,
+          "max" : 715849728,
+          "used" : 115659136
+        }
+      }, {
+        "key" : "Eden Space",
+        "value" : {
+          "committed" : 102629376,
+          "init" : 8257536,
+          "max" : 286326784,
+          "used" : 0
+        }
+      }, {
+        "key" : "Code Cache",
+        "value" : {
+          "committed" : 16187392,
+          "init" : 2555904,
+          "max" : 50331648,
+          "used" : 15509248
+        }
+      }, {
+        "key" : "Survivor Space",
+        "value" : {
+          "committed" : 12779520,
+          "init" : 983040,
+          "max" : 35782656,
+          "used" : 3251208
+        }
+      } ],
+      "memoryUsageBeforeGc" : [ {
+        "key" : "Perm Gen",
+        "value" : {
+          "committed" : 61210624,
+          "init" : 21757952,
+          "max" : 174063616,
+          "used" : 61040456
+        }
+      }, {
+        "key" : "Tenured Gen",
+        "value" : {
+          "committed" : 254767104,
+          "init" : 20578304,
+          "max" : 715849728,
+          "used" : 114889808
+        }
+      }, {
+        "key" : "Eden Space",
+        "value" : {
+          "committed" : 102629376,
+          "init" : 8257536,
+          "max" : 286326784,
+          "used" : 102629376
+        }
+      }, {
+        "key" : "Code Cache",
+        "value" : {
+          "committed" : 16187392,
+          "init" : 2555904,
+          "max" : 50331648,
+          "used" : 15509248
+        }
+      }, {
+        "key" : "Survivor Space",
+        "value" : {
+          "committed" : 12779520,
+          "init" : 983040,
+          "max" : 35782656,
+          "used" : 3897736
+        }
+      } ],
+      "startTime" : 55239569
+    },
+    "CollectionCount" : 17984,
+    "CollectionTime" : 173925,
+    "Name" : "Copy",
+    "Valid" : true,
+    "MemoryPoolNames" : [ "Eden Space", "Survivor Space" ]
+  }, {
+    "name" : "java.lang:type=MemoryPool,name=Code Cache",
+    "type" : "sun.management.MemoryPoolImpl",
+    "Name" : "Code Cache",
+    "Type" : "NON_HEAP",
+    "Valid" : true,
+    "Usage" : {
+      "committed" : 16187392,
+      "init" : 2555904,
+      "max" : 50331648,
+      "used" : 15541824
+    },
+    "CollectionUsage" : "",
+    "CollectionUsageThresholdSupported" : false,
+    "MemoryManagerNames" : [ "CodeCacheManager" ],
+    "UsageThresholdExceeded" : false,
+    "UsageThresholdCount" : 0,
+    "UsageThresholdSupported" : true,
+    "PeakUsage" : {
+      "committed" : 16187392,
+      "init" : 2555904,
+      "max" : 50331648,
+      "used" : 15968768
+    },
+    "UsageThreshold" : 0
+  }, {
+    "name" : "java.lang:type=Runtime",
+    "type" : "sun.management.RuntimeImpl",
+    "Name" : "30944@NURSWGVML007",
+    "ClassPath" : "/home/axibase/atsd/conf:/home/axibase/atsd/bin/atsd-executable.jar",
+    "SystemProperties" : [ {
+      "key" : "java.ext.dirs",
+      "value" : "/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/ext:/usr/java/packages/lib/ext"
+    }, {
+      "key" : "java.vm.specification.vendor",
+      "value" : "Sun Microsystems Inc."
+    }, {
+      "key" : "user.timezone",
+      "value" : "Etc/GMT"
+    }, {
+      "key" : "java.vm.vendor",
+      "value" : "Sun Microsystems Inc."
+    }, {
+      "key" : "user.name",
+      "value" : "axibase"
+    }, {
+      "key" : "java.vm.specification.name",
+      "value" : "Java Virtual Machine Specification"
+    }, {
+      "key" : "user.dir",
+      "value" : "/home/axibase/atsd/bin"
+    }, {
+      "key" : "user.country",
+      "value" : "US"
+    }, {
+      "key" : "user.language",
+      "value" : "en"
+    }, {
+      "key" : "java.specification.version",
+      "value" : "1.6"
+    }, {
+      "key" : "sun.cpu.endian",
+      "value" : "little"
+    }, {
+      "key" : "java.home",
+      "value" : "/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre"
+    }, {
+      "key" : "sun.jnu.encoding",
+      "value" : "UTF-8"
+    }, {
+      "key" : "file.separator",
+      "value" : "/"
+    }, {
+      "key" : "java.vendor.url",
+      "value" : "http://java.sun.com/"
+    }, {
+      "key" : "java.awt.graphicsenv",
+      "value" : "sun.awt.X11GraphicsEnvironment"
+    }, {
+      "key" : "os.arch",
+      "value" : "amd64"
+    }, {
+      "key" : "sun.nio.ch.bugLevel",
+      "value" : ""
+    }, {
+      "key" : "java.io.tmpdir",
+      "value" : "/tmp"
+    }, {
+      "key" : "java.runtime.name",
+      "value" : "OpenJDK Runtime Environment"
+    }, {
+      "key" : "java.awt.printerjob",
+      "value" : "sun.print.PSPrinterJob"
+    }, {
+      "key" : "file.encoding",
+      "value" : "UTF-8"
+    }, {
+      "key" : "java.version",
+      "value" : "1.6.0_32"
+    }, {
+      "key" : "java.vendor.url.bug",
+      "value" : "http://java.sun.com/cgi-bin/bugreport.cgi"
+    }, {
+      "key" : "java.vm.specification.version",
+      "value" : "1.0"
+    }, {
+      "key" : "file.encoding.pkg",
+      "value" : "sun.io"
+    }, {
+      "key" : "sun.java.command",
+      "value" : "com.axibase.tsd.Server"
+    }, {
+      "key" : "sun.java.launcher",
+      "value" : "SUN_STANDARD"
+    }, {
+      "key" : "path.separator",
+      "value" : ":"
+    }, {
+      "key" : "java.runtime.version",
+      "value" : "1.6.0_32-b32"
+    }, {
+      "key" : "java.class.path",
+      "value" : "/home/axibase/atsd/conf:/home/axibase/atsd/bin/atsd-executable.jar"
+    }, {
+      "key" : "os.name",
+      "value" : "Linux"
+    }, {
+      "key" : "line.separator",
+      "value" : "n"
+    }, {
+      "key" : "os.version",
+      "value" : "2.6.32-358.11.1.el6.x86_64"
+    }, {
+      "key" : "sun.arch.data.model",
+      "value" : "64"
+    }, {
+      "key" : "java.class.version",
+      "value" : "50.0"
+    }, {
+      "key" : "sun.io.unicode.encoding",
+      "value" : "UnicodeLittle"
+    }, {
+      "key" : "java.vendor",
+      "value" : "Sun Microsystems Inc."
+    }, {
+      "key" : "sun.boot.class.path",
+      "value" : "/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/netx.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/plugin.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/rhino.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/classes"
+    }, {
+      "key" : "java.vm.info",
+      "value" : "mixed mode"
+    }, {
+      "key" : "java.specification.name",
+      "value" : "Java Platform API Specification"
+    }, {
+      "key" : "java.vm.name",
+      "value" : "OpenJDK 64-Bit Server VM"
+    }, {
+      "key" : "java.vm.version",
+      "value" : "23.25-b01"
+    }, {
+      "key" : "sun.boot.library.path",
+      "value" : "/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/amd64"
+    }, {
+      "key" : "java.endorsed.dirs",
+      "value" : "/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/endorsed"
+    }, {
+      "key" : "sun.os.patch.level",
+      "value" : "unknown"
+    }, {
+      "key" : "sun.cpu.isalist",
+      "value" : ""
+    }, {
+      "key" : "user.home",
+      "value" : "/home/axibase"
+    }, {
+      "key" : "java.library.path",
+      "value" : "/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/amd64/server:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/amd64:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"
+    }, {
+      "key" : "java.specification.vendor",
+      "value" : "Sun Microsystems Inc."
+    }, {
+      "key" : "sun.management.compiler",
+      "value" : "HotSpot 64-Bit Tiered Compilers"
+    } ],
+    "SpecName" : "Java Virtual Machine Specification",
+    "StartTime" : 1437407992039,
+    "BootClassPathSupported" : true,
+    "VmName" : "OpenJDK 64-Bit Server VM",
+    "VmVendor" : "Sun Microsystems Inc.",
+    "VmVersion" : "23.25-b01",
+    "LibraryPath" : "/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/amd64/server:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/amd64:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/../lib/amd64:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib",
+    "BootClassPath" : "/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/netx.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/plugin.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/lib/rhino.jar:/usr/lib/jvm/java-1.6.0-openjdk-1.6.0.0.x86_64/jre/classes",
+    "ManagementSpecVersion" : "1.2",
+    "SpecVendor" : "Sun Microsystems Inc.",
+    "SpecVersion" : "1.0",
+    "InputArguments" : [ "-Xmx1024M", "-Xloggc:/home/axibase/atsd/logs/gc.log", "-verbose:gc", "-XX:+PrintGCDetails", "-XX:+PrintGCDateStamps", "-XX:+PrintGCTimeStamps", "-XX:+PrintGC", "-XX:+HeapDumpOnOutOfMemoryError", "-XX:HeapDumpPath=/home/axibase/atsd/logs" ],
+    "Uptime" : 55247884
+  }, {
+    "name" : "java.lang:type=ClassLoading",
+    "type" : "sun.management.ClassLoadingImpl",
+    "LoadedClassCount" : 10445,
+    "UnloadedClassCount" : 156,
+    "TotalLoadedClassCount" : 10601,
+    "Verbose" : false
+  }, {
+    "name" : "java.lang:type=Threading",
+    "type" : "sun.management.ThreadImpl",
+    "CurrentThreadCpuTime" : 12370000000,
+    "CurrentThreadCpuTimeSupported" : true,
+    "ThreadContentionMonitoringSupported" : true,
+    "ObjectMonitorUsageSupported" : true,
+    "SynchronizerUsageSupported" : true,
+    "ThreadContentionMonitoringEnabled" : false,
+    "ThreadCpuTimeEnabled" : true,
+    "PeakThreadCount" : 172,
+    "DaemonThreadCount" : 16,
+    "ThreadCount" : 157,
+    "TotalStartedThreadCount" : 104546,
+    "ThreadCpuTimeSupported" : true,
+    "AllThreadIds" : [ 43840, 43839, 6379, 6378, 6377, 6376, 6375, 6374, 6373, 6372, 6371, 6370, 929, 818, 742, 661, 560, 453, 342, 221, 220, 219, 218, 217, 216, 215, 214, 213, 212, 211, 210, 209, 208, 207, 206, 205, 204, 203, 202, 201, 200, 199, 198, 197, 196, 195, 194, 193, 192, 191, 190, 189, 188, 187, 186, 184, 183, 182, 181, 179, 178, 176, 175, 174, 172, 171, 170, 169, 168, 167, 166, 165, 164, 163, 162, 161, 160, 159, 158, 157, 156, 155, 154, 153, 152, 151, 150, 149, 148, 147, 146, 145, 144, 143, 142, 141, 140, 139, 138, 137, 136, 135, 134, 133, 132, 131, 130, 129, 128, 127, 126, 125, 124, 123, 122, 121, 120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110, 108, 107, 106, 105, 104, 103, 102, 101, 100, 99, 98, 96, 95, 94, 93, 92, 91, 89, 88, 87, 86, 85, 84, 83, 82, 81, 79, 4, 3, 2 ],
+    "CurrentThreadUserTime" : 10940000000
+  }, {
+    "name" : "java.util.logging:type=Logging",
+    "type" : "java.util.logging.Logging",
+    "LoggerNames" : [ "sun.rmi.client.call", "global", "javax.activation", "javax.management.monitor", "sun.rmi.loader", "com.sun.mail.smtp", "javax.management.remote.misc", "javax.management", "javax.mail", "com.sun.mail.smtp.protocol", "javax.management.snmp", "sun.rmi.transport.tcp", "javax.management.notification", "sun.rmi.server.ref", "javax.management.snmp.daemon", "org.aspectj.weaver.World", "freemarker.runtime.attempt", "sun.rmi.client.ref", "sun.rmi.dgc", "javax.management.modelmbean", "freemarker.runtime", "javax.management.remote.rmi", "javax.management.misc", "org.aspectj.weaver.CrosscuttingMembersSet", "javax.management.mlet", "freemarker.security", "sun.rmi.server.call", "org.aspectj.weaver.Lint", "javax.management.timer", "sun.rmi.transport.tcp.proxy", "freemarker.cache", "sun.rmi.runtime", "sun.rmi.transport.misc", "freemarker.beans", "freemarker.jsp", "javax.management.relation", "com.sun.mail.util.socket", "javax.mail.internet", "", "javax.management.mbeanserver" ]
+  }, {
+    "name" : "java.lang:type=Compilation",
+    "type" : "sun.management.CompilationImpl",
+    "Name" : "HotSpot 64-Bit Tiered Compilers",
+    "CompilationTimeMonitoringSupported" : true,
+    "TotalCompilationTime" : 174555
+  }, {
+    "name" : "java.lang:type=MemoryPool,name=Eden Space",
+    "type" : "sun.management.MemoryPoolImpl",
+    "Name" : "Eden Space",
+    "Type" : "HEAP",
+    "Valid" : true,
+    "Usage" : {
+      "committed" : 102629376,
+      "init" : 8257536,
+      "max" : 286326784,
+      "used" : 78496128
+    },
+    "CollectionUsage" : {
+      "committed" : 102629376,
+      "init" : 8257536,
+      "max" : 286326784,
+      "used" : 0
+    },
+    "CollectionUsageThresholdSupported" : true,
+    "MemoryManagerNames" : [ "MarkSweepCompact", "Copy" ],
+    "UsageThresholdSupported" : false,
+    "CollectionUsageThreshold" : 0,
+    "CollectionUsageThresholdExceeded" : false,
+    "CollectionUsageThresholdCount" : 0,
+    "PeakUsage" : {
+      "committed" : 102629376,
+      "init" : 8257536,
+      "max" : 286326784,
+      "used" : 102629376
+    }
+  }, {
+    "name" : "com.sun.management:type=HotSpotDiagnostic",
+    "type" : "sun.management.HotSpotDiagnostic",
+    "DiagnosticOptions" : [ {
+      "name" : "HeapDumpBeforeFullGC",
+      "origin" : "DEFAULT",
+      "value" : "false",
+      "writeable" : true
+    }, {
+      "name" : "HeapDumpAfterFullGC",
+      "origin" : "DEFAULT",
+      "value" : "false",
+      "writeable" : true
+    }, {
+      "name" : "HeapDumpOnOutOfMemoryError",
+      "origin" : "VM_CREATION",
+      "value" : "true",
+      "writeable" : true
+    }, {
+      "name" : "HeapDumpPath",
+      "origin" : "VM_CREATION",
+      "value" : "/home/axibase/atsd/logs",
+      "writeable" : true
+    }, {
+      "name" : "CMSAbortablePrecleanWaitMillis",
+      "origin" : "DEFAULT",
+      "value" : "100",
+      "writeable" : true
+    }, {
+      "name" : "CMSWaitDuration",
+      "origin" : "DEFAULT",
+      "value" : "2000",
+      "writeable" : true
+    }, {
+      "name" : "PrintGC",
+      "origin" : "VM_CREATION",
+      "value" : "true",
+      "writeable" : true
+    }, {
+      "name" : "PrintGCDetails",
+      "origin" : "VM_CREATION",
+      "value" : "true",
+      "writeable" : true
+    }, {
+      "name" : "PrintGCDateStamps",
+      "origin" : "VM_CREATION",
+      "value" : "true",
+      "writeable" : true
+    }, {
+      "name" : "PrintGCTimeStamps",
+      "origin" : "VM_CREATION",
+      "value" : "true",
+      "writeable" : true
+    }, {
+      "name" : "PrintClassHistogramBeforeFullGC",
+      "origin" : "DEFAULT",
+      "value" : "false",
+      "writeable" : true
+    }, {
+      "name" : "PrintClassHistogramAfterFullGC",
+      "origin" : "DEFAULT",
+      "value" : "false",
+      "writeable" : true
+    }, {
+      "name" : "PrintClassHistogram",
+      "origin" : "DEFAULT",
+      "value" : "false",
+      "writeable" : true
+    }, {
+      "name" : "PrintConcurrentLocks",
+      "origin" : "DEFAULT",
+      "value" : "false",
+      "writeable" : true
+    } ]
+  }, {
+    "name" : "java.lang:type=GarbageCollector,name=MarkSweepCompact",
+    "type" : "sun.management.GarbageCollectorImpl",
+    "LastGcInfo" : {
+      "GcThreadCount" : 1,
+      "duration" : 426,
+      "endTime" : 54218053,
+      "id" : 57,
+      "memoryUsageAfterGc" : [ {
+        "key" : "Perm Gen",
+        "value" : {
+          "committed" : 61145088,
+          "init" : 21757952,
+          "max" : 174063616,
+          "used" : 60829312
+        }
+      }, {
+        "key" : "Tenured Gen",
+        "value" : {
+          "committed" : 254767104,
+          "init" : 20578304,
+          "max" : 715849728,
+          "used" : 89752552
+        }
+      }, {
+        "key" : "Eden Space",
+        "value" : {
+          "committed" : 102629376,
+          "init" : 8257536,
+          "max" : 286326784,
+          "used" : 0
+        }
+      }, {
+        "key" : "Code Cache",
+        "value" : {
+          "committed" : 16187392,
+          "init" : 2555904,
+          "max" : 50331648,
+          "used" : 15953344
+        }
+      }, {
+        "key" : "Survivor Space",
+        "value" : {
+          "committed" : 12779520,
+          "init" : 983040,
+          "max" : 35782656,
+          "used" : 0
+        }
+      } ],
+      "memoryUsageBeforeGc" : [ {
+        "key" : "Perm Gen",
+        "value" : {
+          "committed" : 61145088,
+          "init" : 21757952,
+          "max" : 174063616,
+          "used" : 60829312
+        }
+      }, {
+        "key" : "Tenured Gen",
+        "value" : {
+          "committed" : 254767104,
+          "init" : 20578304,
+          "max" : 715849728,
+          "used" : 144511888
+        }
+      }, {
+        "key" : "Eden Space",
+        "value" : {
+          "committed" : 102629376,
+          "init" : 8257536,
+          "max" : 286326784,
+          "used" : 9068392
+        }
+      }, {
+        "key" : "Code Cache",
+        "value" : {
+          "committed" : 16187392,
+          "init" : 2555904,
+          "max" : 50331648,
+          "used" : 15953344
+        }
+      }, {
+        "key" : "Survivor Space",
+        "value" : {
+          "committed" : 12779520,
+          "init" : 983040,
+          "max" : 35782656,
+          "used" : 3190488
+        }
+      } ],
+      "startTime" : 54217627
+    },
+    "CollectionCount" : 57,
+    "CollectionTime" : 17257,
+    "Name" : "MarkSweepCompact",
+    "Valid" : true,
+    "MemoryPoolNames" : [ "Eden Space", "Survivor Space", "Tenured Gen", "Perm Gen" ]
+  }, {
+    "name" : "java.lang:type=MemoryPool,name=Survivor Space",
+    "type" : "sun.management.MemoryPoolImpl",
+    "Name" : "Survivor Space",
+    "Type" : "HEAP",
+    "Valid" : true,
+    "Usage" : {
+      "committed" : 12779520,
+      "init" : 983040,
+      "max" : 35782656,
+      "used" : 3251208
+    },
+    "CollectionUsage" : {
+      "committed" : 12779520,
+      "init" : 983040,
+      "max" : 35782656,
+      "used" : 3251208
+    },
+    "CollectionUsageThresholdSupported" : true,
+    "MemoryManagerNames" : [ "MarkSweepCompact", "Copy" ],
+    "UsageThresholdSupported" : false,
+    "CollectionUsageThreshold" : 0,
+    "CollectionUsageThresholdExceeded" : false,
+    "CollectionUsageThresholdCount" : 0,
+    "PeakUsage" : {
+      "committed" : 12779520,
+      "init" : 983040,
+      "max" : 35782656,
+      "used" : 12779520
+    }
+  }, {
+    "name" : "com.axibase.tsd:name=metrics",
+    "type" : "com.axibase.tsd.service.monitoring.JmxBean",
+    "MetricsMap" : {
+      "web_service_notifications_per_minute" : 15.973377703826955,
+      "gc_invocations_per_minute_MarkSweepCompact" : 0.0,
+      "gc_time_percent_Copy" : 0.35169011267417827,
+      "jvm_memory_used" : 120928720,
+      "email_notifications_per_minute" : 0.0,
+      "message_received_per_second" : 0.0,
+      "metric_reads_per_second" : 4.792013311148087,
+      "property_reads_per_second" : 28.885191347753743,
+      "gc_invocations_per_minute_Copy" : 19.00126675111674,
+      "invalid_message_received_per_second" : 0.0,
+      "alert_log_writes_per_minute" : 0.0,
+      "property_received_per_second" : 20.16638935108153,
+      "expired_metric_received_per_second" : 27.554076539101498,
+      "jvm_memory_used_percent" : 11.650624006049533,
+      "hbase_scans_per_second" : 4.658901830282862,
+      "metric_received_per_second" : 328.78535773710485,
+      "actions_per_minute" : 19.966722129783694,
+      "property_gets_per_second" : 0.06655574043261231,
+      "metric_gets_per_second" : 1.9966722129783694,
+      "jvm_memory_free" : 917030448,
+      "metric_writes_per_second" : 304.891846921797,
+      "message_writes_per_second" : 0.0,
+      "property_writes_per_second" : 20.16638935108153,
+      "jvm_memory_max" : 1037959168,
+      "gc_time_percent_MarkSweepCompact" : 0.0,
+      "forward_metric_received_per_second" : 78.53577371048253,
+      "ws_simple_msg_per_second" : 0.5324459234608985
+    }
+  }, {
+    "name" : "java.lang:type=MemoryPool,name=Perm Gen",
+    "type" : "sun.management.MemoryPoolImpl",
+    "Name" : "Perm Gen",
+    "Type" : "NON_HEAP",
+    "Valid" : true,
+    "Usage" : {
+      "committed" : 61210624,
+      "init" : 21757952,
+      "max" : 174063616,
+      "used" : 61040456
+    },
+    "CollectionUsage" : {
+      "committed" : 61145088,
+      "init" : 21757952,
+      "max" : 174063616,
+      "used" : 60829312
+    },
+    "CollectionUsageThresholdSupported" : true,
+    "MemoryManagerNames" : [ "MarkSweepCompact" ],
+    "UsageThresholdExceeded" : false,
+    "UsageThresholdCount" : 0,
+    "UsageThresholdSupported" : true,
+    "CollectionUsageThreshold" : 0,
+    "CollectionUsageThresholdExceeded" : false,
+    "CollectionUsageThresholdCount" : 0,
+    "PeakUsage" : {
+      "committed" : 61210624,
+      "init" : 21757952,
+      "max" : 174063616,
+      "used" : 61040456
+    },
+    "UsageThreshold" : 0
+  }, {
+    "name" : "java.lang:type=MemoryPool,name=Tenured Gen",
+    "type" : "sun.management.MemoryPoolImpl",
+    "Name" : "Tenured Gen",
+    "Type" : "HEAP",
+    "Valid" : true,
+    "Usage" : {
+      "committed" : 254767104,
+      "init" : 20578304,
+      "max" : 715849728,
+      "used" : 115659136
+    },
+    "CollectionUsage" : {
+      "committed" : 254767104,
+      "init" : 20578304,
+      "max" : 715849728,
+      "used" : 89752552
+    },
+    "CollectionUsageThresholdSupported" : true,
+    "MemoryManagerNames" : [ "MarkSweepCompact" ],
+    "UsageThresholdExceeded" : false,
+    "UsageThresholdCount" : 0,
+    "UsageThresholdSupported" : true,
+    "CollectionUsageThreshold" : 0,
+    "CollectionUsageThresholdExceeded" : false,
+    "CollectionUsageThresholdCount" : 0,
+    "PeakUsage" : {
+      "committed" : 258965504,
+      "init" : 20578304,
+      "max" : 715849728,
+      "used" : 256736048
+    },
+    "UsageThreshold" : 0
+  }, {
+    "name" : "java.lang:type=OperatingSystem",
+    "type" : "com.sun.management.UnixOperatingSystem",
+    "OpenFileDescriptorCount" : 212,
+    "MaxFileDescriptorCount" : 32768,
+    "TotalSwapSpaceSize" : 2113921024,
+    "FreeSwapSpaceSize" : 2084700160,
+    "ProcessCpuTime" : 10044730000000,
+    "CommittedVirtualMemorySize" : 2194927616,
+    "FreePhysicalMemorySize" : 270094336,
+    "TotalPhysicalMemorySize" : 1968766976,
+    "Name" : "Linux",
+    "Version" : "2.6.32-358.11.1.el6.x86_64",
+    "AvailableProcessors" : 1,
+    "Arch" : "amd64",
+    "SystemLoadAverage" : 0.71
+  }, {
+    "name" : "JMImplementation:type=MBeanServerDelegate",
+    "type" : "javax.management.MBeanServerDelegate",
+    "MBeanServerId" : "NURSWGVML007_1437408026107",
+    "SpecificationName" : "Java Management Extensions",
+    "SpecificationVersion" : "1.4",
+    "SpecificationVendor" : "Sun Microsystems",
+    "ImplementationName" : "JMX",
+    "ImplementationVersion" : "1.6.0_32-b32",
+    "ImplementationVendor" : "Sun Microsystems"
+  }, {
+    "name" : "java.lang:type=MemoryManager,name=CodeCacheManager",
+    "type" : "sun.management.MemoryManagerImpl",
+    "Name" : "CodeCacheManager",
+    "Valid" : true,
+    "MemoryPoolNames" : [ "Code Cache" ]
+  } ]
+}
