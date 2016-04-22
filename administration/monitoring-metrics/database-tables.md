@@ -4,7 +4,7 @@
 Database Tables statistics can be viewed directly in the ATSD UI under
 Admin -\> Database Tables.
 
-Direct url: `atsd_server:8088/admin/database-tables`
+Direct url: `atsd_hostname:8088/admin/database-tables`
 
 Database Tables allows to:
 

@@ -30,8 +30,7 @@ Auto Test Example Results:
 | Metric prefix | Metric name prefix |
 | Entities count | Number of entities that will be written |
 | Metrics count | Number of metrics that will be written |
-| Tags count | Number of tags that will be assigned to each series.
-Tag count should represent a realistic number of tags that are normally assigned to your series for the results to be accurate. |
+| Tags count | Number of tags that will be assigned to each series.Tag count should represent a realistic number of tags that are normally assigned to your series for the results to be accurate. |
 | Series count | Total number of series that will be stored. |
 | Batch size | Size of each test batch. |
 | Thread count | Number of threads used for each test. |
