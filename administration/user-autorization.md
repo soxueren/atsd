@@ -12,7 +12,7 @@ their role.\
  The role specifies which URLs and HTTP methods the user can access.
 Each user can be assigned multiple roles.
 
-### Available API roles:
+### Available API roles
 
 -   ROLE\_API\_DATA\_READ – Query Data API to read series, properties,
     messages, alerts from the database.
@@ -25,7 +25,7 @@ Each user can be assigned multiple roles.
      API requests to change entity groups or add/remove their members
     require ROLE\_ENTITY\_GROUP\_ADMIN role.
 
-### Available User Interface roles:
+### Available User Interface roles
 
 -   ROLE\_USER – View information on all pages except
     Configuration, Entity Group, and Admin pages.\
