@@ -17,12 +17,12 @@ You can retrieve, test or view the metrics using the following methods:
 -   [Ingestion
     Statistics](monitoring-metrics/ingestion-statistics.md  "ATSD Metrics – Ingestion Statistics")
 -   [Database
-    Tables](monitoring-metrics/json.md  "ATSD Metrics – Database Tables")
+    Tables](monitoring-metrics/database-tables.md  "ATSD Metrics – Database Tables")
 -   [I/O
-    Tests](monitoring-metrics/json.md  "ATSD Metrics – I/O Tests")
+    Tests](monitoring-metrics/io-tests.md  "ATSD Metrics – I/O Tests")
 -   [HBase Write
-    Test](monitoring-metrics/json.md  "ATSD Metrics – HBase Write Test")
--   [Portals](monitoring-metrics/json.md  "ATSD Metrics – Portals")
+    Test](monitoring-metrics/hbase-write-test.md  "ATSD Metrics – HBase Write Test")
+-   [Portals](monitoring-metrics/portals.md  "ATSD Metrics – Portals")
 
 ## Collected Metrics
 
