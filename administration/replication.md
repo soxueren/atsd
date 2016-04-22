@@ -1,5 +1,5 @@
-ATSD Replication
-================
+# Replication
+
 
 This article describes how to configure replication for Axibase Time
 Series Database.

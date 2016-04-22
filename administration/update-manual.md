@@ -1,4 +1,4 @@
-# Update ATSD
+# Manual update
 
 
 #### Login with the Axibase user:

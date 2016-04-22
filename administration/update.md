@@ -1,4 +1,4 @@
-# Update ATSD
+# Update
 
 
 Updating ATSD to the latest version is done using by running an update
@@ -11,7 +11,7 @@ connection.
 
 If the target machine does not have direct internet connection, please
 use the [manual update
-guide](update-atsd-manual.md "Update ATSD").
+guide](update-manual.md "Update ATSD").
 
 ## Update command:
 
