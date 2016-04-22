@@ -11,9 +11,9 @@ You can retrieve, test or view the metrics using the following methods:
 
 -   [JSON](monitoring-metrics/json.md "ATSD Metrics – JSON")
 -   [JMX](monitoring-metrics/jmx.md "ATSD Metrics – JMX")
--   [File](monitoring-metrics/json.md  "ATSD Metrics – File")
+-   [File](monitoring-metrics/file.md  "ATSD Metrics – File")
 -   [Rule
-    Engine](monitoring-metrics/json.md  "ATSD Metrics – Rule Engine")
+    Engine](monitoring-metrics/rule-engine.md  "ATSD Metrics – Rule Engine")
 -   [Ingestion
     Statistics](monitoring-metrics/json.md  "ATSD Metrics – Ingestion Statistics")
 -   [Database

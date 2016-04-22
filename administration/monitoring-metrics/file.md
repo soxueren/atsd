@@ -1,4 +1,4 @@
-# ATSD Metrics – File
+# Monitoring Metrics : File
 
 
 The ATSD metrics can be retrieved from the `metrics.txt` file. This file
