@@ -31,7 +31,7 @@ nano /opt/atsd/hbase/conf/hbase-env.sh
 export HBASE_HEAPSIZE=4096
 ```
 
-###### Change maximum HDFS process memory
+##### Change maximum HDFS process memory
 
 Open HDFS environment file and uncomment `export HADOOP_HEAPSIZE` line.
 Set new maximum memory size in megabytes:
