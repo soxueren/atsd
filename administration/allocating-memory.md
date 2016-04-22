@@ -11,10 +11,10 @@ nano /opt/atsd/atsd/bin/start-atsd.sh
 ```
 
 ```sh
- if grep -qi "arm" /proc/cpuinfo; then
-     "$java_command" -server  -Xmx512M -XX:+PrintCommandLineFlags -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="$atsd_home"/logs $DParams -$
+if grep -qi "arm" /proc/cpuinfo; then
+ "$java_command" -server  -Xmx512M -XX:+PrintCommandLineFlags -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="$atsd_home"/logs $DParams -$
 else
-     "$java_command" -server  -Xmx4096M -XX:+HeapDumpOnOutOfMemoryError XX:HeapDumpPath="$atsd_home"/logs $DParams -classpath "$atsd_home"/con$
+ "$java_command" -server  -Xmx4096M -XX:+HeapDumpOnOutOfMemoryError XX:HeapDumpPath="$atsd_home"/logs $DParams -classpath "$atsd_home"/con$
 fi
 ```
 
