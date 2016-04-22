@@ -25,7 +25,7 @@ Both master and slave machines must have static a IP addresses in the
 local network.
 
 Both machines must have identical hardware configurations. [See ATSD
-requirements.](http://axibase.com/products/axibase-time-series-database/download-atsd/requirements-atsd/ "ATSD Requirements")
+requirements.](requirements.md "ATSD Requirements")
 
 The same versions of ATSD must be installed on both machines. [See ATSD
 installation
