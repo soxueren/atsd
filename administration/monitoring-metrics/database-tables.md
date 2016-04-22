@@ -1,4 +1,4 @@
-# Monitoring Metrics : Database Tables
+# Monitoring metrics : Database Tables
 
 
 Database Tables statistics can be viewed directly in the ATSD UI under

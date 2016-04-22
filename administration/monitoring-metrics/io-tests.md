@@ -1,4 +1,4 @@
-# Monitoring Metrics : I/O Tests
+# Monitoring metrics : I/O Tests
 
 
 I/O Tests can be run directly from the ATSD UI under Admin -\> I/O

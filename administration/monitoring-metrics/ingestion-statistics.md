@@ -1,4 +1,4 @@
-# Monitoring Metrics : Ingestion Statistics
+# Monitoring metrics : Ingestion Statistics
 
 
 ATSD ingestion statistics can be viewed directly from the UI, under

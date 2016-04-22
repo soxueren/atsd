@@ -1,4 +1,4 @@
-# Monitoring Metrics : JSON
+# Monitoring metrics : JSON
 
 Retrieve ATSD and HBase metrics and outputs in JSON:
 

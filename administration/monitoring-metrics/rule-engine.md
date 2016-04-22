@@ -1,4 +1,4 @@
-# Monitoting Metrics : Rule Engine
+# Monitoting metrics : Rule Engine
 
 
 Rule Engine can monitor ATSD metrics to raise alerts in case of abnormal
