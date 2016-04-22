@@ -1,5 +1,5 @@
-Deployment
-==========
+# Deployment
+
 
 ATSD Community Edition can be installed on a single Linux virtual
 machine or bare-metal server.

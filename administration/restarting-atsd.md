@@ -1,5 +1,5 @@
-Restarting ATSD
-===============
+# Restarting ATSD
+
 
 ATSD comes with a set of wrapper scripts that control the start, stop
 and status of ATSD and components. Use these scripts to start and stop
@@ -8,13 +8,13 @@ ATSD.
 ATSD uses these scripts to safely stop ATSD and components and start
 them back up on system reboot.
 
-##### Script directory:
+## Script directory:
 
 ```sh
  /opt/atsd/bin
 ```
 
-##### Scripts:
+## Scripts:
 
 | Name | Description | Example |
 | --- | --- | --- |

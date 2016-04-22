@@ -1,6 +1,4 @@
-Monitoring ATSD & the Database
-==============================
-
+# Monitoring ATSD & the Database
 ATSD performance metrics can be retrieved via JMX, file or http/JSON
 request.
 
@@ -25,7 +23,7 @@ You can retrieve, test or view the metrics using the following methods:
     Test](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/monitoring-atsd/hbase-write-test/ "ATSD Metrics – HBase Write Test")
 -   [Portals](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/monitoring-atsd/atsd-metrics-portals/ "ATSD Metrics – Portals")
 
-#### Collected Metrics
+## Collected Metrics
 
 Retrieve a full list of collected metrics in JSON:
 

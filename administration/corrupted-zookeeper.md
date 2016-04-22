@@ -1,5 +1,5 @@
-Restoring a corrupted zookeeper
-===============================
+# Restoring a corrupted zookeeper
+
 
 If the HBase server did not start correctly and the file
 `/opt/atsd/hbase/logs/hbase-axibase-zookeeper-{hostname}.out` contains:
@@ -33,7 +33,7 @@ If the HBase server did not start correctly and the file
 ```
 Then execute the following steps to fix the issue:
 
-*NOTE: If your ATSD installation has replication setup [according to our
+> Note: If your ATSD installation has replication setup [according to our
 guide](atsd-replication.md "ATSD Replication"),
 be sure to execute the `add_peer` commands on the master machine again
 to restart replication after you have restored the corrupted zookeeper

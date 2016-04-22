@@ -1,7 +1,7 @@
-Allocating Memory to Axibase Time Series Database Components
-============================================================
+# Allocating Memory to Axibase Time Series Database Components
 
-**Change maximum ATSD process memory**
+
+## Change maximum ATSD process memory
 
 Open ATSD start-up script and locate java command line. Set new maximum
 memory size (-Xmx parameter) in megabytes:
@@ -18,7 +18,7 @@ else
 fi
 ```
 
-**Change maximum HBase process memory**
+## Change maximum HBase process memory
 
 Open HBase environment file and uncomment `export HBASE_HEAPSIZE` line.
 Set new maximum memory size in megabytes:
@@ -31,7 +31,7 @@ nano /opt/atsd/hbase/conf/hbase-env.sh
 export HBASE_HEAPSIZE=4096
 ```
 
-**Change maximum HDFS process memory**
+## Change maximum HDFS process memory
 
 Open HDFS environment file and uncomment `export HADOOP_HEAPSIZE` line.
 Set new maximum memory size in megabytes:

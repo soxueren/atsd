@@ -1,13 +1,12 @@
+# User Authentication
 
-User Authentication
-===================
 
 User authentication mechanisms implemented in Axibase Time Series
 Database specify the way users are granted access to protected
 application resources such as UI views and API URLs. The database
 supports the following authentication mechanisms:
 
-**Form-based Authentication for UI views**:
+## Form-based Authentication for UI views:
 
 When an unauthenticated user requests access to a protected view, the
 server redirects the user to a login page containing username and
@@ -15,7 +14,7 @@ password input fields. If the hashcode for the submitted password
 matches the stored hashcode for the specified username, the user is
 granted access.
 
-**Basic Authentication for API URLs**:
+## Basic Authentication for API URLs:
 
 HTTP requests to an API URL are required to include ‘Authorization’
 header, type Basic.\
@@ -23,7 +22,7 @@ header, type Basic.\
 username and password. The API request is executed if the password
 hashcode matches the stored value.
 
-### Password Requirements
+## Password Requirements
 
 -   Passwords are case-sensitive.
 -   Password must contain at least 6 characters. The default minimum
@@ -34,7 +33,7 @@ hashcode matches the stored value.
 – Unicode character categorized as an alphanumeric character\
  – Special characters: \~!@\#\$%\^&\*\_-+=\`|\\(){}[]:;”‘\<\>,.?/
 
-### Implementation Notes
+## Implementation Notes
 
 -   The database doesn’t store user passwords in plain text, instead
     storing a hashcode of the password in order to protect user

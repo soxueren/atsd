@@ -1,6 +1,5 @@
-Network Settings
-================
-
+# Network Settings
+\
 If you’re anticipating high data insertion rate with bursts of 100000
 packets per second or more, increase maximum receiving buffer on Linux
 OS as follows and restart ATSD:

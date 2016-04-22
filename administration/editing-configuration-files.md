@@ -1,5 +1,5 @@
-Editing Configuration Files
-===========================
+# Editing Configuration Files
+
 
 The Configuration File Editor allows the editing of ATSD configuration
 files directly in the UI. Only files that are located in the

@@ -1,5 +1,4 @@
-Logging
-=======
+# Logging
 
 Axibase Time Series Database collects a set of logs, all of which are
 available directly in the ATSD UI.

@@ -10,11 +10,11 @@ cluster are replayed on the slave cluster.
 In the guide `atsd_master` is the hostname of the master host and
 `atsd_slave` is the hostname of the slave host.
 
-**NOTE: This guide should be executed only on new ATSD installations.
+> Note: This guide should be executed only on new ATSD installations.
 Executing this guide on an existing ATSD installation will lead to the
 loss of all stored data on both the Master and Slave machines.**
 
-NOTE: If master loses connection with slave, it will accumulate all the
+> Note: If master loses connection with slave, it will accumulate all the
 data and events for the duration of the connection loss and will start
 transferring the accumulated data once connection with salve is
 re-established. No data should be lost the process.
@@ -168,7 +168,7 @@ add_peer '1', "atsd_slave:2181:/hbase"
 ```
 
 
-*NOTE: If your ATSD installation has suffered an unexpected shutdown or
+> Note:: If your ATSD installation has suffered an unexpected shutdown or
 ungraceful stop and your Zookeeper is corrupted, [after solving this
 issue using our
 guide](corrupted-zookeeper.md "Restoring a corrupted zookeeper"),

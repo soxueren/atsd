@@ -1,5 +1,4 @@
-Compaction
-==========
+# Compaction
 
 Compaction is a scheduled procedure to store data for each time series
 in the most efficient schema.

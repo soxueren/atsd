@@ -1,5 +1,5 @@
-Entity Lookup
-=============
+# Entity Lookup
+
 
 When entities are parsed by ATSD or stored in ATSD their names can be
 looked up in the Entity Lookup mappings.

@@ -1,5 +1,5 @@
-User Authorization
-==================
+# User Authorization
+
 
 Axibase Time Series Database implements Role Based Access Control (RBAC)
 and Entity Permissions (EP) to restrict user access to protected

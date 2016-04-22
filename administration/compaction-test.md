@@ -1,5 +1,5 @@
-Compaction Test
-===============
+# Compaction Test
+
 
 The purpose of this guide is to compute ATSD storage efficiency for a
 custom dataset in order to identify optimal compression and data
@@ -7,16 +7,16 @@ encoding settings and produce sizing estimates. Please note that
 compression and encoding options are supported only in ATSD Standard and
 Enterprise Edition.
 
-**NOTE: it is recommended that this test is performed on a test ATSD
-instance, not a production instance. **
+> Note: it is recommended that this test is performed on a test ATSD
+instance, not a production instance.
 
 Open the Metrics page found on the main menu, click CREATE button on the
 bottom of the page to create new `metrics` that you are planning to load
 into ATSD with the correct data type (short, float, integer, double or
 long, depending on the type of data you would like to store).
 
-**NOTE: the default data type is float. This step is not necessary if
-you will be writing data with the float data type.**
+> Note: the default data type is float. This step is not necessary if
+you will be writing data with the float data type.
 
 ![](images/compaction_test_metric.png "compaction_test_metric")
 

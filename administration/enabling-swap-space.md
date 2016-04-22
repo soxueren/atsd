@@ -1,5 +1,5 @@
-Enabling Swap Space
-===================
+# Enabling Swap Space
+
 
 Linux divides its physical RAM (physical memory) into blocks of memory
 called pages. Swapping is the process when a page of memory is copied to

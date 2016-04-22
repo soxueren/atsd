@@ -1,5 +1,5 @@
-Migrate ATSD to JAVA 7
-======================
+# Migrate ATSD to JAVA 7
+
 
 **This migration procedure from Java 6 to Java 7 applies to Axibase Time
 Series Database revision 11938 and earlier.**

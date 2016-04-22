@@ -1,5 +1,5 @@
-Metric Persistence Filter
-=========================
+# Metric Persistence Filter
+
 
 Metric Persistence Filter field in metric editor is used to discard
 inserts based on a filter expression, similar to the filter expressions

@@ -1,6 +1,5 @@
+# Setting up the Email Client
 
-Setting up the Email Client
-===========================
 
 To setup Email Notifications, open ATSD UI, navigate to Admin -\> Mail
 Client and configure the following properties to enable notifications:
