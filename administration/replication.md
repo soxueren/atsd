@@ -54,7 +54,7 @@ sudo nano /etc/hosts
  slave_ip     slave_hostname
  ```
 
-*NOTE: the following lines should not be contained in the `hosts` file.
+> Note: the following lines should not be contained in the `hosts` file.
 This is the case for both master and slave.*
 
 ```sh
