@@ -1,6 +1,6 @@
 # Monitoring metrics : JSON
 
-Retrieve ATSD and HBase metrics and outputs in JSON:
+Retrieve ATSD and HBase JMX metrics and outputs in JSON:
 
 | Method Name | URL | Response |
 | --- | --- | --- |

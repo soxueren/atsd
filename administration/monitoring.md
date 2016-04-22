@@ -9,7 +9,7 @@ amount of data received, memory usage, and read/write activity.
 
 You can retrieve, test or view the metrics using the following methods:
 
--   [JMX in JSON Format](monitoring-metrics/json.md "ATSD Metrics – JSON")
+-   [JMX in JSON format](monitoring-metrics/json.md "ATSD Metrics – JSON")
 -   [JMX](monitoring-metrics/jmx.md "ATSD Metrics – JMX")
 -   [File](monitoring-metrics/file.md  "ATSD Metrics – File")
 -   [Rule Engine](monitoring-metrics/rule-engine.md  "ATSD Metrics – Rule Engine")
