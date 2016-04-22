@@ -7,7 +7,7 @@ reinstall please use the commands below:
 *These commands will not remove any data stored in ATSD and any log
 files, they will remain in the /opt/atsd directory.*
 
-**Debian Package:**
+#### Debian Package
 
 To remove ATSD, components and configuration files use:
 
@@ -23,7 +23,7 @@ sudo dpkg -r atsd
 
 In both cases, follow on screen instructions to uninstall ATSD.
 
-**RPM Package:**
+#### RPM Package
 
 To remove ATSD and components use:
 
