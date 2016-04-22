@@ -1,4 +1,5 @@
-# Monitoring ATSD & the Database
+# Monitoring
+
 ATSD performance metrics can be retrieved via JMX, file or http/JSON
 request.
 
