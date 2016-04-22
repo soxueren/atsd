@@ -65,7 +65,7 @@ example: atsd\_9972.tar.gz
  /opt/atsd/bin/atsd-all.sh start                                          
 ```
 
-#### Navigate to the ATSD user interface in your browser:
+#### Navigate to the ATSD user interface in your browser
 
 ```sh
  http://"ip or hostname of ATSD server":8088/                             
