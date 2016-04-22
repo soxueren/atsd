@@ -1,0 +1,132 @@
+# ATSD Metrics – File
+
+
+The ATSD metrics can be retrieved from the `metrics.txt` file. This file
+can be downloaded from the Server Logs page located under the Admin tab
+on the main menu of ATSD.
+
+![atsd metrics
+file](images/server_logs_metrics.png "server_logs_metrics")
+
+Example `metrics.txt` file:
+
+```sh
+ actions_per_minute=19.986675549633578                                    
+ alert_log_writes_per_minute=0.0                                          
+ com.axibase.tsd.hbase.dao.ForecastDaoImpl.findForecastValue:java_method_ 
+ invoke_average=3.5                                                       
+ com.axibase.tsd.hbase.dao.ForecastDaoImpl.findForecastValue:java_method_ 
+ invoke_count_per_second=0.13334222281485433                              
+ com.axibase.tsd.hbase.dao.ForecastDaoImpl.findForecastValue:java_method_ 
+ invoke_last=2.0                                                          
+ com.axibase.tsd.hbase.dao.ForecastDaoImpl.getForecastValue:java_method_i 
+ nvoke_average=13.75                                                      
+ com.axibase.tsd.hbase.dao.ForecastDaoImpl.getForecastValue:java_method_i 
+ nvoke_count_per_second=0.26666666666666666                               
+ com.axibase.tsd.hbase.dao.ForecastDaoImpl.getForecastValue:java_method_i 
+ nvoke_last=42.0                                                          
+ com.axibase.tsd.hbase.dao.MessageDaoImpl.putBatch:java_method_invoke_ave 
+ rage=0.03333333333333333                                                 
+ com.axibase.tsd.hbase.dao.MessageDaoImpl.putBatch:java_method_invoke_cou 
+ nt_per_second=2.0                                                        
+ com.axibase.tsd.hbase.dao.MessageDaoImpl.putBatch:java_method_invoke_las 
+ t=0.0                                                                    
+ com.axibase.tsd.hbase.dao.PropertyDaoImpl.save:java_method_invoke_averag 
+ e=21.285714285714285                                                     
+ com.axibase.tsd.hbase.dao.PropertyDaoImpl.save:java_method_invoke_count_ 
+ per_second=0.4666666666666667                                            
+ com.axibase.tsd.hbase.dao.PropertyDaoImpl.save:java_method_invoke_last=1 
+ 3.0                                                                      
+ com.axibase.tsd.hbase.dao.PropertyDaoImpl.search:java_method_invoke_aver 
+ age=0.9114648879939592                                                   
+ com.axibase.tsd.hbase.dao.PropertyDaoImpl.search:java_method_invoke_coun 
+ t_per_second=1059.4666666666667                                          
+ com.axibase.tsd.hbase.dao.PropertyDaoImpl.search:java_method_invoke_last 
+ =0.0                                                                     
+ com.axibase.tsd.hbase.dao.TimeSeriesDaoImpl.putBatch:java_method_invoke_ 
+ average=6.78125                                                          
+ com.axibase.tsd.hbase.dao.TimeSeriesDaoImpl.putBatch:java_method_invoke_ 
+ count_per_second=2.1333333333333333                                      
+ com.axibase.tsd.hbase.dao.TimeSeriesDaoImpl.putBatch:java_method_invoke_ 
+ last=2.0                                                                 
+ com.axibase.tsd.hbase.dao.TimeSeriesDaoImpl.scan:java_method_invoke_aver 
+ age=30.35483870967742                                                    
+ com.axibase.tsd.hbase.dao.TimeSeriesDaoImpl.scan:java_method_invoke_coun 
+ t_per_second=2.066666666666667                                           
+ com.axibase.tsd.hbase.dao.TimeSeriesDaoImpl.scan:java_method_invoke_last 
+ =3.0                                                                     
+ com.axibase.tsd.service.TimeSeriesCallbackImpl.processRow:java_method_in 
+ voke_average=0.3235294117647059                                          
+ com.axibase.tsd.service.TimeSeriesCallbackImpl.processRow:java_method_in 
+ voke_count_per_second=2.2666666666666666                                 
+ com.axibase.tsd.service.TimeSeriesCallbackImpl.processRow:java_method_in 
+ voke_last=0.0                                                            
+ com.axibase.tsd.service.TimeSeriesServiceImpl.getTimeSeries:java_method_ 
+ invoke_average=30.516129032258064                                        
+ com.axibase.tsd.service.TimeSeriesServiceImpl.getTimeSeries:java_method_ 
+ invoke_count_per_second=2.066666666666667                                
+ com.axibase.tsd.service.TimeSeriesServiceImpl.getTimeSeries:java_method_ 
+ invoke_last=3.0                                                          
+ com.axibase.tsd.service.TimeSeriesServiceImpl.putBatch:java_method_invok 
+ e_average=6.8125                                                         
+ com.axibase.tsd.service.TimeSeriesServiceImpl.putBatch:java_method_invok 
+ e_count_per_second=2.1333333333333333                                    
+ com.axibase.tsd.service.TimeSeriesServiceImpl.putBatch:java_method_invok 
+ e_last=2.0                                                               
+ com.axibase.tsd.service.subscription.SimpleSubscriptionService.isActive: 
+ java_method_invoke_average=0.0                                           
+ com.axibase.tsd.service.subscription.SimpleSubscriptionService.isActive: 
+ java_method_invoke_count_per_second=0.4666666666666667                   
+ com.axibase.tsd.service.subscription.SimpleSubscriptionService.isActive: 
+ java_method_invoke_last=0.0                                              
+ com.axibase.tsd.service.subscription.SimpleSubscriptionService.isListene 
+ d:java_method_invoke_average=8.176614881439084E-4                        
+ com.axibase.tsd.service.subscription.SimpleSubscriptionService.isListene 
+ d:java_method_invoke_count_per_second=326.1333333333333                  
+ com.axibase.tsd.service.subscription.SimpleSubscriptionService.isListene 
+ d:java_method_invoke_last=0.0                                            
+ com.axibase.tsd.service.subscription.SimpleSubscriptionService.send:java 
+ _method_invoke_average=0.14285714285714285                               
+ com.axibase.tsd.service.subscription.SimpleSubscriptionService.send:java 
+ _method_invoke_count_per_second=0.4666666666666667                       
+ com.axibase.tsd.service.subscription.SimpleSubscriptionService.send:java 
+ _method_invoke_last=0.0                                                  
+ com.axibase.tsd.web.api.v1.series:java_method_invoke_average=74.07692307 
+ 692308                                                                   
+ com.axibase.tsd.web.api.v1.series:java_method_invoke_count_per_second=0. 
+ 8666666666666667                                                         
+ com.axibase.tsd.web.api.v1.series:java_method_invoke_last=46.0           
+ email_notifications_per_minute=0.0                                       
+ expired_metric_received_per_second=1.798800799467022                     
+ forward_metric_received_per_second=142.4383744170553                     
+ gc_invocations_per_minute_Copy=28.0                                      
+ gc_invocations_per_minute_MarkSweepCompact=0.0                           
+ gc_time_percent_Copy=0.405                                               
+ gc_time_percent_MarkSweepCompact=0.0                                     
+ hbase_scans_per_second=2.0652898067954695                                
+ invalid_message_received_per_second=0.0                                  
+ invalid_property_received_per_second=0.0                                 
+ jvm_memory_free=923607560                                                
+ jvm_memory_max=1037959168                                                
+ jvm_memory_used=114351608                                                
+ jvm_memory_used_percent=11.016965939068617                               
+ message_reads_per_second=0.0                                             
+ message_received_per_second=0.0                                          
+ message_writes_per_second=0.0                                            
+ metric_gets_per_second=0.866089273817455                                 
+ metric_reads_per_second=2.2651565622918053                               
+ metric_received_per_second=341.9720186542305                             
+ metric_writes_per_second=316.2558294470353                               
+ properties_pool_active_count=1                                           
+ properties_queue_size=0                                                  
+ properties_rejected_count=0                                              
+ property_deleted_per_second=0.0                                          
+ property_reads_per_second=31.51232511658894                              
+ property_received_per_second=31.312458361092606                          
+ property_writes_per_second=31.312458361092606                            
+ series_pool_active_count=1                                               
+ series_queue_size=0                                                      
+ series_rejected_count=0                                                  
+ web_service_notifications_per_minute=19.986675549633578                  
+ ws_simple_msg_per_second=0.5329780146568954                              
+```
