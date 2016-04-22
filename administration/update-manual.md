@@ -59,7 +59,7 @@ example: atsd\_9972.tar.gz
  cp atsd-executable.jar /opt/atsd/atsd/bin                                
 ```
 
-#### **Start ATSD:**
+#### Start ATSD
 
 ```sh
  /opt/atsd/bin/atsd-all.sh start                                          
