@@ -1,4 +1,4 @@
-# ATSD Metrics – JMX
+# Monitoring Metrics: JMX
 
 JMX tools can be used to fetch ATSD metrics, for example:
 [JConsole](https://docs.oracle.com/javase/7/docs/technotes/guides/management/jconsole.html "jconsole"), [jmxterm](http://wiki.cyclopsgroup.org/jmxterm/ "jmxterm") or
