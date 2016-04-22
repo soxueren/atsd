@@ -1,4 +1,4 @@
-# ATSD Metrics – JMX
+# Monitoring Metrics: JMX
 
 JMX tools can be used to fetch ATSD metrics, for example:
 [JConsole](https://docs.oracle.com/javase/7/docs/technotes/guides/management/jconsole.html "jconsole"), [jmxterm](http://wiki.cyclopsgroup.org/jmxterm/ "jmxterm") or
@@ -15,7 +15,7 @@ the `/opt/atsd/atsd/conf/` directory: `jmx.access` and `jmx.password`
 Add the following lines to the `/opt/atsd/atsd/conf/server.properties`
 file:
 
-```sh
+```properties
  jmx.port=1099                                                            
  jmx.host=192.168.1.178                                                   
  jmx.access.file=/opt/atsd/atsd/conf/jmx.access                           
