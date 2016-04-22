@@ -16,5 +16,5 @@ There are four different logs collect in ATSD by default:
 | metrics.txt | Storage performance methods log, [learn more here](/products/axibase-time-series-database/download-atsd/administration/monitoring-atsd/ "Internal Metrics"). |
 | err.log | operating system level error log |
 
-### Server Logs
+
 ![server logs](images/server_logs_atsd.png "server_logs_atsd")
