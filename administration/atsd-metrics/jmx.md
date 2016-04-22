@@ -15,7 +15,7 @@ the `/opt/atsd/atsd/conf/` directory: `jmx.access` and `jmx.password`
 Add the following lines to the `/opt/atsd/atsd/conf/server.properties`
 file:
 
-```sh
+```properties
  jmx.port=1099                                                            
  jmx.host=192.168.1.178                                                   
  jmx.access.file=/opt/atsd/atsd/conf/jmx.access                           
