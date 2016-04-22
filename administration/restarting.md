@@ -22,5 +22,5 @@ them back up on system reboot.
 | atsd-hbase.sh | Start, stop and status of HBase. Possible commands: start, stop, status | /opt/atsd/bin/atsd-hbase.sh status |
 | atsd-tsd.sh | Start, stop and status of ATSD. Possible commands: start, stop, status | /opt/atsd/bin/atsd-tsd.sh start |
 | atsd-dfs.sh | Start, stop and status of Hadoop. Possible commands: start, stop, status | /opt/atsd/bin/atsd-dfs.sh status |
-| update.sh | Update ATSD. [View the Update ATSD guide](update-atsd.md "Update ATSD") | /opt/atsd/bin/update.sh |
+| update.sh | Update ATSD. [View the Update ATSD guide](update.md "Update ATSD") | /opt/atsd/bin/update.sh |
 
