@@ -1,5 +1,5 @@
-REQUIREMENTS
-============
+# REQUIREMENTS
+
 
 | Edition | Community – FREE | Enterprise |
 | --- | --- | --- |
@@ -7,7 +7,7 @@ REQUIREMENTS
 | Processor | 2 CPU, 2+ GHz | 4 CPU, 2+ GHz |
 | Memory | 4 GB (2 GB for JVM) | 16 GB (8 GB for JVM) |
 
-**Operating Systems**
+## Operating Systems
 
 -   Ubuntu 14.x, 15.x
 -   RedHat Enterprise Linux 6.x, 7.x
@@ -17,13 +17,13 @@ REQUIREMENTS
 -   Oracle Linux 6, 7
 -   Oracle UEK 2, 3
 
-**Production Environment:**
+## Production Environment:
 
 -   Bare Metal
 -   VMware ESXi Server
 -   VMware vSphere
 
-**Staging/Testing Environment:**
+## Staging/Testing Environment:
 
 -   VMware ESXi Server
 -   VMware vSphere
