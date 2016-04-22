@@ -8,20 +8,20 @@ amount of data received, memory usage, and read/write activity.
 
 You can retrieve, test or view the metrics using the following methods:
 
--   [JSON](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/monitoring-atsd/atsd-metrics-json/ "ATSD Metrics – JSON")
--   [JMX](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/monitoring-atsd/atsd-metrics-jmx/ "ATSD Metrics – JMX")
--   [File](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/monitoring-atsd/atsd-metrics-file/ "ATSD Metrics – File")
+-   [JSON](atsd-metrics/json.md "ATSD Metrics – JSON")
+-   [JMX](atsd-metrics/jmx.md "ATSD Metrics – JMX")
+-   [File](atsd-metrics/json.md  "ATSD Metrics – File")
 -   [Rule
-    Engine](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/monitoring-atsd/atsd-metrics-rule-engine/ "ATSD Metrics – Rule Engine")
+    Engine](atsd-metrics/json.md  "ATSD Metrics – Rule Engine")
 -   [Ingestion
-    Statistics](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/monitoring-atsd/ingestion-statistics/ "ATSD Metrics – Ingestion Statistics")
+    Statistics](atsd-metrics/json.md  "ATSD Metrics – Ingestion Statistics")
 -   [Database
-    Tables](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/monitoring-atsd/database-tables/ "ATSD Metrics – Database Tables")
+    Tables](atsd-metrics/json.md  "ATSD Metrics – Database Tables")
 -   [I/O
-    Tests](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/monitoring-atsd/io-tests/ "ATSD Metrics – I/O Tests")
+    Tests](atsd-metrics/json.md  "ATSD Metrics – I/O Tests")
 -   [HBase Write
-    Test](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/monitoring-atsd/hbase-write-test/ "ATSD Metrics – HBase Write Test")
--   [Portals](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/monitoring-atsd/atsd-metrics-portals/ "ATSD Metrics – Portals")
+    Test](atsd-metrics/json.md  "ATSD Metrics – HBase Write Test")
+-   [Portals](atsd-metrics/json.md  "ATSD Metrics – Portals")
 
 ## Collected Metrics
 
