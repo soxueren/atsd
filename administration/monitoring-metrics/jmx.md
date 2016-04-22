@@ -6,7 +6,7 @@ any other application that support JMX.
 
 #### Setup JMX in ATSD:
 
-In `/etc/hosts` change `127.0.1.1 atsd_server` to `atsd_ip atsd_server`
+In `/etc/hosts` change `127.0.1.1 atsd_hostname` to `atsd_ip atsd_hostname`
 where `atsd_ip` is ip v4 adress of the ATSD host.
 
 Configure the jmx username and password in two separate files located in
@@ -17,7 +17,7 @@ file:
 
 ```properties
  jmx.port=1099                                                            
- jmx.host=192.168.1.178                                                   
+ jmx.host=atsd_ip
  jmx.access.file=/opt/atsd/atsd/conf/jmx.access                           
  jmx.password.file=/opt/atsd/atsd/conf/jmx.password                       
  jmx.enabled=true                                                         
@@ -34,7 +34,7 @@ Restart ATSD:
 ```
 
 Now you can access ATSD on
-`service:jmx:rmi:///jndi/rmi://192.168.1.178:1099/atsd`, with the
+`service:jmx:rmi:///jndi/rmi://atsd_ip:1099/atsd`, with the
 username and password set earlier in the guide.
 
 #### Connect to JMX server with jvisualvm:

@@ -4,7 +4,7 @@
 I/O Tests can be run directly from the ATSD UI under Admin -\> I/O
 Tests.
 
-Direct url: `atsd_server:8088/admin/io-tests`
+Direct url: `atsd_hostname:8088/admin/io-tests`
 
 I/O Tests allow to:
 

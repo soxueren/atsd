@@ -4,7 +4,7 @@
 HBase Write Test can be run directly from the ATSD UI under Admin -\>
 HBase Test.
 
-Direct url: `atsd_server:8088/admin/hbase-test`
+Direct url: `atsd_hostname:8088/admin/hbase-test`
 
 HBase Write Test allows to:
 

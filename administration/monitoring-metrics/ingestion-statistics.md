@@ -4,7 +4,7 @@
 ATSD ingestion statistics can be viewed directly from the UI, under
 Admin -\> Receive Statistics.
 
-Direct url: `atsd_server:8088/admin/receive-statistics?n=20`
+Direct url: `atsd_hostname:8088/admin/receive-statistics?n=20`
 
 The number of top-N rows displayed can be adjusted by changing `n`
 parameter in the request URL.
