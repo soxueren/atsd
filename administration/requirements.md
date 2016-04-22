@@ -1,7 +1,7 @@
-# REQUIREMENTS
+# Requirements
 
 
-| Edition | Community – FREE | Enterprise |
+| Edition | Community | Enterprise |
 | --- | --- | --- |
 | Nodes | 1 | > 5 |
 | Processor | 2 CPU, 2+ GHz | 4 CPU, 2+ GHz |
@@ -17,13 +17,13 @@
 -   Oracle Linux 6, 7
 -   Oracle UEK 2, 3
 
-## Production Environment:
+## Production Environment
 
 -   Bare Metal
 -   VMware ESXi Server
 -   VMware vSphere
 
-## Staging/Testing Environment:
+## Staging/Testing Environment
 
 -   VMware ESXi Server
 -   VMware vSphere
