@@ -44,7 +44,7 @@ nano /opt/atsd/hadoop/conf/hadoop-env.sh
 export HADOOP_HEAPSIZE=4096
 ```
 
-###### Restart all components
+##### Restart all components
 
 ```sh
 /opt/atsd/bin/atsd-all.sh stop
@@ -53,7 +53,7 @@ export HADOOP_HEAPSIZE=4096
 /opt/atsd/bin/atsd-all.sh start
 ```
 
-###### Verify that -Xmx parameter is set accordingly:
+##### Verify that -Xmx parameter is set accordingly:
 
 
 ```
