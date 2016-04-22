@@ -13,7 +13,7 @@ If the target machine does not have direct internet connection, please
 use the [manual update
 guide](update-manual.md "Update ATSD").
 
-## Update command:
+Update command:
 
 ```sh
 /opt/atsd/bin/update.sh
@@ -21,7 +21,7 @@ guide](update-manual.md "Update ATSD").
 
 The update process can take a while.
 
-## To verify that ATSD is working correctly, navigate to the ATSD user interface in your browser:
+To verify that ATSD is working correctly, navigate to the ATSD user interface in your browser:
 
 ```sh
  http://"ip or hostname of ATSD server":8088/                             
