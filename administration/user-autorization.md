@@ -80,8 +80,7 @@ user interface or by inserting data via API.\
  User with ROLE\_API\_DATA\_WRITE role but without ‘All Entities: Write’
 permission will be able to insert data only for existing entities.
 
-**Wildcard Requests\
-**
+**Wildcard Requests**
 
 Users without ‘All Entities: Read’ permission are allowed to query Data
 API using wildcards as part of entity name as well as execute SQL
