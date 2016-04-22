@@ -7,14 +7,14 @@
  su axibase                                                               
 ```
 
-#### Download the latest ATSD update file:
+#### Download the latest ATSD update file
 
 **[atsd\_latest.tar.gz](http://axibase.com/public/atsd_ce_update_latest.htm "ATSD Update")**
 
 The download will contain an archive with the latest ATSD release. For
 example: atsd\_9972.tar.gz
 
-#### Unpack the archive:
+#### Unpack the archive
 
 ```sh
  tar xzf atsd_9972.tar.gz                                                 
@@ -25,20 +25,20 @@ example: atsd\_9972.tar.gz
  ls                                                                       
 ```
 
-#### View downloaded jar files:
+#### View downloaded jar files
 
 ```sh
  atsd-executable.jar                                                      
  atsd.jar                                                                 
 ```
 
-#### Stop ATSD:
+#### Stop ATSD
 
 ```sh
  /opt/atsd/bin/atsd-all.sh stop                                           
 ```
 
-#### Backup previous versions:
+#### Backup previous versions
 
 ```sh
  cp /opt/atsd/hbase/lib/atsd.jar /opt/atsd/hbase/lib/atsd.jar_old         
@@ -49,7 +49,7 @@ example: atsd\_9972.tar.gz
  able.jar_old                                                             
 ```
 
-#### **Copy new versions:**
+#### Copy new versions
 
 ```sh
  cp atsd.jar /opt/atsd/hbase/lib                                          
@@ -71,6 +71,6 @@ example: atsd\_9972.tar.gz
  http://"ip or hostname of ATSD server":8088/                             
 ```
 
-#### Open Admin -\> Build Info page and verify that the Revision Number is the same as the revision number of the installed ATSD update.
+Open Admin -\> Build Info page and verify that the Revision Number is the same as the revision number of the installed ATSD update.
 
 ![](images/ATSD_build_info.png "ATSD_build_info")
