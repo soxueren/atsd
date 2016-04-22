@@ -11,7 +11,7 @@ connection.
 
 If the target machine does not have direct internet connection, please
 use the [manual update
-guide](http://axibase.com/products/axibase-time-series-database/download-atsd/update-atsd/updating-atsd/ "Update ATSD").
+guide](update-atsd-manual.md "Update ATSD").
 
 ## Update command:
 
