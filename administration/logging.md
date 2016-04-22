@@ -10,7 +10,7 @@ Logs.
 There are four different logs collect in ATSD by default:
 
 | Log Name | Description |
-| === | === |
+| --- | --- |
 | gc.log | garbage collection log |
 | atsd.log | ATSD database log.
 By default `atsd.log` is retained for 60 days, has a maximum file size of 10MB and a maximum of 20 log files are kept at once.
