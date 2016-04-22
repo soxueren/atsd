@@ -167,6 +167,7 @@ Execute the `add_peer` command:
 add_peer '1', "atsd_slave:2181:/hbase"
 ```
 
+
 *NOTE: If your ATSD installation has suffered an unexpected shutdown or
 ungraceful stop and your Zookeeper is corrupted, [after solving this
 issue using our
