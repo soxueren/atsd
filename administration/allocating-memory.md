@@ -1,7 +1,7 @@
-Allocating Memory to Axibase Time Series Database Components
-============================================================
+# Allocating Memory
 
-**Change maximum ATSD process memory**
+
+## Change maximum ATSD process memory
 
 Open ATSD start-up script and locate java command line. Set new maximum
 memory size (-Xmx parameter) in megabytes:
