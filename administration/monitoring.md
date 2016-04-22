@@ -1,4 +1,4 @@
-# Monitoring
+# Monitoring ATSD & the Database
 
 ATSD performance metrics can be retrieved via JMX, file or http/JSON
 request.
@@ -9,20 +9,20 @@ amount of data received, memory usage, and read/write activity.
 
 You can retrieve, test or view the metrics using the following methods:
 
--   [JSON](atsd-metrics/json.md "ATSD Metrics – JSON")
--   [JMX](atsd-metrics/jmx.md "ATSD Metrics – JMX")
--   [File](atsd-metrics/json.md  "ATSD Metrics – File")
+-   [JSON](monitoring-metrics/json.md "ATSD Metrics – JSON")
+-   [JMX](monitoring-metrics/jmx.md "ATSD Metrics – JMX")
+-   [File](monitoring-metrics/json.md  "ATSD Metrics – File")
 -   [Rule
-    Engine](atsd-metrics/json.md  "ATSD Metrics – Rule Engine")
+    Engine](monitoring-metrics/json.md  "ATSD Metrics – Rule Engine")
 -   [Ingestion
-    Statistics](atsd-metrics/json.md  "ATSD Metrics – Ingestion Statistics")
+    Statistics](monitoring-metrics/json.md  "ATSD Metrics – Ingestion Statistics")
 -   [Database
-    Tables](atsd-metrics/json.md  "ATSD Metrics – Database Tables")
+    Tables](monitoring-metrics/json.md  "ATSD Metrics – Database Tables")
 -   [I/O
-    Tests](atsd-metrics/json.md  "ATSD Metrics – I/O Tests")
+    Tests](monitoring-metrics/json.md  "ATSD Metrics – I/O Tests")
 -   [HBase Write
-    Test](atsd-metrics/json.md  "ATSD Metrics – HBase Write Test")
--   [Portals](atsd-metrics/json.md  "ATSD Metrics – Portals")
+    Test](monitoring-metrics/json.md  "ATSD Metrics – HBase Write Test")
+-   [Portals](monitoring-metrics/json.md  "ATSD Metrics – Portals")
 
 ## Collected Metrics
 
