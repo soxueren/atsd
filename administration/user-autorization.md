@@ -5,14 +5,14 @@ Axibase Time Series Database implements Role Based Access Control (RBAC)
 and Entity Permissions (EP) to restrict user access to protected
 information.
 
-### Role Based Access Control
+## Role Based Access Control
 
 Authenticated users are allowed to access protected resources based on
 their role.\
  The role specifies which URLs and HTTP methods the user can access.
 Each user can be assigned multiple roles.
 
-**Available API roles:**
+### Available API roles:
 
 -   ROLE\_API\_DATA\_READ – Query Data API to read series, properties,
     messages, alerts from the database.
@@ -25,7 +25,7 @@ Each user can be assigned multiple roles.
      API requests to change entity groups or add/remove their members
     require ROLE\_ENTITY\_GROUP\_ADMIN role.
 
-**Available User Interface roles:**
+### Available User Interface roles:
 
 -   ROLE\_USER – View information on all pages except
     Configuration, Entity Group, and Admin pages.\
@@ -38,7 +38,7 @@ Each user can be assigned multiple roles.
 -   ROLE\_ADMIN – View and edit information on all pages.\
      Includes all roles.
 
-### Entity Permissions
+## Entity Permissions
 
 Permissions to read and write data are granted to User Groups at the
 Entity Group level.
@@ -64,7 +64,7 @@ assigned to user-group-B or user-group-A.*
 
 ![atsd\_role\_hierarchy](images/atsd_role_hierarchy-2.png)
 
-**All Entities Permissions**
+### All Entities Permissions
 
 In addition to specific Entity Group permissions user groups can be
 granted a special ‘All Entities: Read’ or ‘All Entities: Write’
@@ -72,7 +72,7 @@ permission which allows reading or writing data to any entity, including
 entities that do not belong to any Entity Group. Users inherit ‘All
 Entities’ permissions from User Groups to which they belong.
 
-**Inserting Data for New Entities**
+### Inserting Data for New Entities
 
 Since non-existent entities cannot be assigned to a group, ‘All
 Entities: Write’ permission is required to create entities either in the
@@ -80,7 +80,7 @@ user interface or by inserting data via API.\
  User with ROLE\_API\_DATA\_WRITE role but without ‘All Entities: Write’
 permission will be able to insert data only for existing entities.
 
-**Wildcard Requests**
+### Wildcard Requests
 
 Users without ‘All Entities: Read’ permission are allowed to query Data
 API using wildcards as part of entity name as well as execute SQL
@@ -89,7 +89,7 @@ be filtered based on user’s effective permissions therefore different
 users may see different results for the same API request or SQL query
 depending on their entity permissions.
 
-### Implementation Notes
+## Implementation Notes
 
 -   User’s role, group membership, and entity permissions are cached
     while the session is active or until it times out. In order to apply
