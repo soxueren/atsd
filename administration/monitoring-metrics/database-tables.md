@@ -14,4 +14,4 @@ Database Tables allows to:
     spots – regions of the table receiving a disproportional amount of
     queries.
 
-![](images/database_tables_atsd-300x77.png "database_tables_atsd")
+![](images/atsd_data_tables "database_tables_atsd")
