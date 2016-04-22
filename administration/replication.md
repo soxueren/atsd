@@ -173,7 +173,7 @@ ungraceful stop and your Zookeeper is corrupted, [after solving this
 issue using our
 guide](corrupted-zookeeper.md "Restoring a corrupted zookeeper"),
 be sure to execute these `add_peer` commands again to restart
-replication.*
+replication.
 
 Make sure that the peer has been added:
 
