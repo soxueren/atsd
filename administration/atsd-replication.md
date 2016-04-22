@@ -170,7 +170,7 @@ add_peer '1', "atsd_slave:2181:/hbase"
 *NOTE: If your ATSD installation has suffered an unexpected shutdown or
 ungraceful stop and your Zookeeper is corrupted, [after solving this
 issue using our
-guide](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/restoring-corrupted-zookeeper/ "Restoring a corrupted zookeeper"),
+guide](corrupted-zookeeper.md "Restoring a corrupted zookeeper"),
 be sure to execute these `add_peer` commands again to restart
 replication.*
 
