@@ -15,7 +15,7 @@ You can retrieve, test or view the metrics using the following methods:
 -   [Rule
     Engine](monitoring-metrics/rule-engine.md  "ATSD Metrics – Rule Engine")
 -   [Ingestion
-    Statistics](monitoring-metrics/json.md  "ATSD Metrics – Ingestion Statistics")
+    Statistics](monitoring-metrics/ingestion-statistics.md  "ATSD Metrics – Ingestion Statistics")
 -   [Database
     Tables](monitoring-metrics/json.md  "ATSD Metrics – Database Tables")
 -   [I/O
