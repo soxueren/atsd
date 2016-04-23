@@ -68,7 +68,7 @@ example: atsd\_9972.tar.gz
 #### Navigate to the ATSD user interface in your browser
 
 ```sh
- http://"ip or hostname of ATSD server":8088/                             
+ http://"ip or hostname of ATSD_hostname":8088/                             
 ```
 
 Open Admin -\> Build Info page and verify that the Revision Number is the same as the revision number of the installed ATSD update.
