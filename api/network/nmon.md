@@ -24,11 +24,3 @@ nmon p:default e:nurswgvml007 f:nurswgvml007_141014_2000.nmon z:PST
 
 `f` nmon file name is used to re-read file header from its copy on the server in case of disconnect.
 
-## Command: `ping`
-
-```
-ping
-```
-
-This command can be sent by clients to maintain an open connection by preventing an inactivity timeout.
-The server responds `ok` to the ping command.
