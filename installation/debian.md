@@ -30,7 +30,7 @@ guide](installing-from-repository.md "Install ATSD Using Axibase Repositories").
 ```
 
 *If there are any issues with installing the dependencies, [check the
-repositories](http://axibase.com/products/axibase-time-series-database/download-atsd/install-atsd/modifying-repositories/ "Modifying Repositories").*
+repositories](modifying-ubuntu-debian-repositories.md "Modifying Repositories").*
 Then try installing the dependencies again.
 
 
