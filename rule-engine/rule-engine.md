@@ -202,37 +202,15 @@ in email notifications.
 
 ## Analytical Functions
 
-Name
-
-Example
-
-AVG
-
-`avg(value) > 50`
-
-MIN
-
-`min(value) < 20`
-
-MAX
-
-`max(value) > 100`
-
-STDEV
-
-`stdev(value) > 2.5`
-
-PERCENTILE (rank)
-
-`percentile(value, 95) > 80`
-
-COUNT
-
-`count(value) > 100`
-
-FORECAST (time)
-
-`forecast(value, ’30 min’) < 25`
+| Name | Example |
+| --- | --- |
+| AVG | `avg(value) > 50` |
+| MIN | `min(value) < 20` |
+| MAX | `max(value) > 100` |
+| STDEV | `stdev(value) > 2.5` |
+| PERCENTILE (rank) | `percentile(value, 95) > 80` |
+| COUNT | `count(value) > 100` |
+| FORECAST (time) | `forecast(value, ’30 min’) < 25` |
 
 ## Calendar Functions
 
