@@ -1,5 +1,5 @@
-RULE ENGINE
-===========
+# Rule engine
+
 
 Rule Engine implemented in Axibase Time-Series Database enables
 automation of repetitive tasks based on analysis of incoming data. Such
@@ -181,7 +181,7 @@ Alert exceptions can be created directly in the alerts table.
 Alert exceptions can be also created using the 'Exception' link received
 in email notifications.
 
-# RULE REFERENCE
+# Rule reference
 
 ## Rule Types
 
