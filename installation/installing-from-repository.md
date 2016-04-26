@@ -1,4 +1,4 @@
-# Installation from Debian Package
+# Installing from Repository
 
 
 This installation guide applies to Ubuntu OS version 14.x, 15.x and
@@ -8,31 +8,27 @@ Make sure that the target machine has at least 1 GB of RAM. For
 production installations see
 [Requirements](../administration/requirements.md "ATSD Requirements")
 
-If the target machine is not connected to public or private repositories
-to install dependencies with apt-get, use the [Manual ATSD Installation
-guide](../administration/update-manual.md "Manual ATSD Installation").
-
-**If you would like to install ATSD from repositories with apt-get, use
-the: [Install ATSD Using Axibase Repositories
-guide](installing-from-repository.md "Install ATSD Using Axibase Repositories").**
+Add Axibase repository on the target machine:
 
 ```sh
- sudo apt-get update                                                      
+sudo apt-get update
+```
+
+```SH
+ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 2 
+ 6AEE425A57967CFB323846008796A6514F3CB79                                  
 ```
 
 ```sh
- sudo apt-get install openjdk-7-jdk sysstat openssh-server cron debconf l 
- ibc6 passwd adduser iproute net-tools curl
+ sudo echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./ 
+ " >> /etc/apt/sources.list.d/axibase.list                                
 ```
+
+Update repositories and follow the prompts to install ATSD:
 
 ```sh
- sudo dpkg -i atsd_ce_8645_amd64.deb
+ sudo apt-get update && sudo apt-get install atsd                         
 ```
-
-*If there are any issues with installing the dependencies, [check the
-repositories](modifying-ubuntu-debian-repositories.md "Modifying Repositories").*
-Then try installing the dependencies again.
-
 
 ## Verifying Installation
 
@@ -46,7 +42,7 @@ Open your browser and navigate to port `8088` on the target machine.
 When accessing the ATSD web interface for the first time, you will need
 to setup an administrator account.
 
-## Verifying Portals
+#### Verifying ATSD Portals
 
 Click on Portals tab in the ATSD web interface.
 
@@ -55,7 +51,7 @@ metrics.
 
 ![](images/fresh_atsd_portal21.png "ATSD Host")
 
-## Installation Troubleshooting {#portals}
+## Installation Troubleshooting
 
 If ATSD web interface is not accessible, open its log file and review it
 for errors.
@@ -64,7 +60,7 @@ Send the log file to Axibase support in case the problem is persistent
 and cannot be fixed with a restart.
 
 ```sh
- tail -f /opt/atsd/atsd/logs/atsd.log
+ tail -f /opt/atsd/atsd/logs/atsd.log                                     
 ```
 
 ## Optional Steps
@@ -94,7 +90,7 @@ guide](../administration/setting-up-email-client.md "Email Client").
 ### Updating ATSD
 
 ```sh
- /opt/atsd/bin/update.sh                                                  
+ /opt/atsd/bin/update.sh
 ```
 
 See [Updating ATSD
