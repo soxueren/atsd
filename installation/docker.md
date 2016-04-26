@@ -1,4 +1,4 @@
-# Install ATSD on Docker
+# Install on Docker
 
 This installation requires Docker 1.6+. [Use the official Docker
 installation guides to install Docker on your target
