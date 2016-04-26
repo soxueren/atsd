@@ -1,17 +1,13 @@
-# Install on VMware ESXi Server/vSphere
+# Install ATSD on VMware
 
 
-ATSD can be installed by importing an .ova image in VMware ESXi Server,
-VMware vSphere Hypervisor, VMware Fusion, VMware Workstation and VMware
-Player. This method automatically creates a virtual machine running
-Ubuntu 14.04 64bit LTS with ATSD and dependencies pre-installed and
-fully configured. The process take a few minutes with minimal input
+ATSD can be installed by importing an .ova image in VMware Fusion,
+VMware Workstation, VMware ESXi Server, VMware vSphere Hypervisor and
+VMware Player. This method automatically creates a virtual machine
+running Ubuntu 14.04 64bit LTS with ATSD and dependencies pre-installed
+and fully configured. The process take a few minutes with minimal input
 required from the user, this is the easiest and fastest way to install
 ATSD.
-
-[If you will be installing ATSD in VMware player, please use our
-separate guide for this installation
-method.](http://axibase.com/products/axibase-time-series-database/download-atsd/install-vmware/install-atsd-on-vmware/ "Install ATSD on VMware")
 
 ## Prerequisites
 
@@ -28,63 +24,43 @@ Requirements:
 -   At least 4 GB of RAM on Host Machine and at least 1 GB of RAM
     allocated to the Virtual Machine.
 
-## Installing ATSD in VMware ESXi Server/vSphere
+## Installing ATSD in VMware Player
 
-​1. Connect to a vCenter Server with the vSphere Web Client, then
-navigate to File –\> Deploy OVF Template.
+​1. Open VMware
 
-![](images/Screenshot_1.png "Screenshot_1")
+![](images/open.png "open")
 
-​2. Click on Browse, then select the atsd\_ce\_8760.ova file.
+​2. Click on: Open a Virtual Machine. Then select the atsd\_ce\_8760.ova
+file.
 
-![](images/Screenshot_3.png "Screenshot_3")
+![](images/select-ova1.png "select ova")
 
-​3. Click next on the OVF Template Details window, then read and accept
-the End User License Agreement.
+​3. Click: Import. Read and accept the License Agreement for ATSD in the
+popup window.
 
-![](images/Screenshot_5.png "Screenshot_5")
+![](images/accept.png "accept")
 
-​4. Give a name to the virtual machine and select the inventory
-location.
+​4. Wait for the virtual machine to be imported into VMware.
 
-![](images/Screenshot_7.png "Screenshot_7")
+![](images/wait.png "wait")
 
-​5. Select a host for the virtual machine from the list.
+​5. Navigate to: Edit virtual machine settings. Allocate at least 1 GB
+of RAM and at least 1 CPU to the virtual machine.
 
-![](images/Screenshot_8.png "Screenshot_8")
+![](images/ram1.png "ram")
 
-​6. Select Disk Format, we recommend either Thick Provision Lazy Zeroed
-or Thick Provision Eager Zeroed.
+​6. Under Network Adapter select Bridged, if the virtual machine does
+not start with this setting, then change this setting to Host-only.
+Click on Advanced and generate a new MAC address for the VM.
 
-![](images/Screenshot_9.png "Screenshot_9")
+![](images/mac.png "mac")
 
-​7. Choose the Network Mapping (network to which the adapter of the
-virtual machine will be attached to).
+​7. Start the virtual machine by clicking on: Play virtual machine. Wait
+for ATSD and Components to start.
 
-![](images/Screenshot_10_attention.png "Screenshot_10_attention")
+![](images/atsd-start1.png "atsd start")
 
-​8. Confirm the virtual machine configuration.
-
-![](images/Screenshot_11.png "Screenshot_11")
-
-​9. Wait for the virtual machine to be created.
-
-![](images/Screenshot_12.png "Screenshot_12")
-
-​10. Power on the virtual machine.
-
-![](images/Screenshot_13.png "Screenshot_13")
-
-​11. Wait for ATSD and Components to start.
-
-ATTENTION: The machine is configured to receive the IP address by DHCP.
-If there is no DHCP server in the network, the loading will slow down at
-this point. This is normal since DHCP is not used. After loading is
-complete, you will need to setup a static IP in /etc/network/interfaces.
-
-![](images/Screenshot_14_attention.png "Screenshot_14_attention")
-
-​12. Login to the virtual machine:
+​8. Login to the virtual machine:
 
 **username = `axibase`**
 
@@ -92,15 +68,25 @@ complete, you will need to setup a static IP in /etc/network/interfaces.
 
 **`axibase` user is a sudoer.**
 
-![](images/Screenshot_17.png "Screenshot_17")
+![](images/vm-login.png "vm login")
 
-​13. Use your browser to navigate to atsd\_server:8088. For example:
+​9. Check the IP address of the VM:
+
++--------------------------------------------------------------------------+
+| ~~~~ {.javascript style="font-family:monospace;"}                        |
+| ip addr                                                                  |
+| ~~~~                                                                     |
++--------------------------------------------------------------------------+
+
+![](images/screenshot_280415_15-22-59.png "screenshot_280415_15-22-59")
+
+​10. Use your browser to navigate to atsd\_server:8088. For example:
 192.168.137.128:8088. Login to ATSD, username = axibase and password =
 axibase.
 
 ![](images/atsd-login1.png "atsd login")
 
-#### Verifying ATSD Portals 
+## Verifying ATSD Portals
 
 Using your browser, navigate to the Portals tab in the ATSD web
 interface.
@@ -111,11 +97,11 @@ ATSD is installed.
 
 Be sure to check server time after installation. If server time is
 incorrect, portals may be empty. See [Optional
-Steps](http://axibase.com/products/axibase-time-series-database/download-atsd/install-vmware/#optional).
+Steps](http://axibase.com/products/axibase-time-series-database/download-atsd/install-vmware/install-atsd-on-vmware/#optional).
 
 ![](images/fresh_atsd_portal21.png "ATSD Host")
 
-
+<a name="optional></a>
 ## Optional Steps
 
 Verifying System Time
@@ -157,4 +143,3 @@ guide](../administration/restarting.md "Restarting ATSD").
 ### Uninstalling ATSD
 
 See [Uninstalling ATSD
-guide](../administration/uninstalling.md "Uninstalling ATSD").
