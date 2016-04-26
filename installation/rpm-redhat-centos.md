@@ -9,7 +9,7 @@ production installations see
 [Requirements](../administration/requirements.md "ATSD Requirements")
 
 If the target machine does not have Internet connection to download
-dependencies, use the [Manual ATSD Installation guide](../administration/update-manual.md "Manual ATSD Installation").ll-rpm-package/manual-rpm-package/ "Manual ATSD Installation from RPM Package").
+dependencies, use the [Manual ATSD Installation guide](../administration/update-manual.md "Manual ATSD Installation").
 
 ```sh
  sudo yum install java-1.7.0-openjdk-devel openssh-server cronie sysstat  
