@@ -1,4 +1,4 @@
-# ATSD Installation on SLES
+# Installation on SLES
 
 
 This installation requires SUSE Linux Enterprise Server version 11 SP3
