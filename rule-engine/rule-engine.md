@@ -154,11 +154,7 @@ Example: `cpu_busy.high.ERP-production`. |
 | Tags | Comma separated list of tags for grouping windows by each tag in addition to entities. Required for metrics that collect tagged data, for example `df.disk_used` metric that collects data for multiple `file_systems` each identified with `file_system` and `disk_name tags`. |
 | Window | Two types of windows are supported: count (length) and time (duration).
 Count-based window contains up to N (length) samples.
-When the count-based window becomes full, the oldest sample is replaced with the newly arrived sample.
-Time-based window contains all samples, regardless how many, inserted within the specified period of time (duration).
-As the time goes on, time-based window automatically removes samples that become outside of the time interval.
-Aggregate functions applied to windows are equivalent to moving averages.
-For example, `avg()` function for `count(10)` window, return an average value of the 10 most recent samples. |
+When the count-based window becomes full, the oldest sample is replaced with the newly arrived sample. Time-based window contains all samples, regardless how many, inserted within the specified period of time (duration). As the time goes on, time-based window automatically removes samples that become outside of the time interval. Aggregate functions applied to windows are equivalent to moving averages. For example, `avg()` function for `count(10)` window, return an average value of the 10 most recent samples. |
 | Minimum Interval | Interval between the first and last samples in the window. If Minimum Interval is set, the expression evaluates to false until there is enough data in the window.
 This condition is useful for time-based windows to prevent alerts on database restart or whenever there is a restart of the data flow process. |
 | Expression | Expression is a condition which is evaluated each time a data sample is received by the window. For example, expression ‘`value > 50`‘ checks if received value is greater than 50.
