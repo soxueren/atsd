@@ -5,7 +5,7 @@ Rule Engine implemented in Axibase Time-Series Database enables
 automation of repetitive tasks based on analysis of incoming data. Such
 tasks may include raising a support ticket if power usage is abnormal or
 [sending an
-email](http://axibase.com/products/axibase-time-series-database/rule-engine/email-action/ "Email Action")
+email](email-action.md "Email Action")
 and executing a system command to clear /tmp directory if free disk
 space is low.
 
