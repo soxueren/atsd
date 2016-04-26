@@ -82,12 +82,12 @@ packets per second or more, increase maximum receiving buffer on Linux
 OS: [Read Network Settings
 Guide](../administration/networking-settings.md "Network Settings")
 
-## Setting up the Email Client
+### Setting up the Email Client
 
 See [Setting up the Email Client
 guide](../administration/setting-up-email-client.md "Email Client").
 
-## Updating ATSD
+### Updating ATSD
 
 ```sh
  /opt/atsd/bin/update.sh
@@ -96,12 +96,12 @@ guide](../administration/setting-up-email-client.md "Email Client").
 See [Updating ATSD
 guide](../administration/update.md "Update ATSD").
 
-## Restarting ATSD
+### Restarting ATSD
 
 See [Restarting ATSD
 guide](../administration/restarting.md "Restarting ATSD").
 
-## Uninstalling ATSD
+### Uninstalling ATSD
 
 See [Uninstalling ATSD
 guide](../administration/uninstalling.md "Uninstalling ATSD").
