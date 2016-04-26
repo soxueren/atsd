@@ -1,4 +1,4 @@
-# Install ATSD in Oracle VirtualBox
+# Install in Oracle VirtualBox
 
 
 ATSD can be installed by importing an .ova image in VirtualBox. This
