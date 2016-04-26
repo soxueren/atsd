@@ -7,7 +7,7 @@ subscribers on window status changes based on incoming data.
 | Window Status | Description |
 | --- | --- |
 | OPEN | Expression value changes from FALSE to TRUE |
-| REPEAT | Expression value confirmed at TRUE on new data received or old data removed from the window. |
+| REPEAT | Expression value confirmed at TRUE on new data received or old data removed  from the window. |
 | CANCEL | Expression value changes from FALSE to TRUE |
 
 **Creating a Rule**
@@ -60,81 +60,20 @@ The default Subject text is
 
 ##### Email Notification Settings
 
-Setting
-
-Description
-
-Name
-
-User-defined email configuration name. Each rule can have multiple
-configurations which are executed independently on status changes.
-
-Recipients
-
-One or multiple email subscribers receiving the message. Use comma or
-semi-colon to separate multiple addresses.
-
-Enabled
-
-Enable or disable this configuration.
-
-Use In Thresholds Only
-
-If set to yes, this configuration will be activated only for override
-expressions specified under Thresholds tab.
-
-Schedule
-
-Cron expression to conditionally enable the configuration based on
-calendar. For example to activate the configuration during business
-hours, enter `* 8-18 * * MON-FRI`.
-
-First Delay
-
-Delay interval for sending notification for OPEN status. If the window
-changes to CANCEL status within the specified delay interval, no OPEN
-status email will be sent. Set this interval to prevent emails on
-short-lived spikes.
-
-Repeat Interval
-
-Interval for sending REPEAT status notifications. If Repeat Interval is
-set in time units, the exact interval may vary because the REPEAT
-notifications are triggered by incoming data. In particular, REPEAT
-notifications will not be sent If the data stops flowing in.
-
-Merge
-
-Merge multiple notifications from different rules into one email for the
-same subscriber to prevent too many emails arriving within a short time
-span. Note that message Subject is redefined for merged emails and
-reflects rule names, metric names and the total number of merged
-notifications in the given message, for example: Alerts(2)-cpu\_busy:
-statistical-time, nmon\_cpu
-
-Priority
-
-Message priority field to differentiate messages in common email
-clients: Low, Normal, High,
-
-Message: Subject
-
-Custom subject text for each status separately. List of supported
-placeholders is provided below. In addition to built-in placeholders you
-can use expressions containing built-in functions, for example:
-`${round(threshold_linear_time(99))/60}` or `${round(avg())}`
-
-Message: Details
-
-Embed a table containing series statistics and action links into the
-message text.
-
-Message: Text
-
-Custom message text for each status separately. List of supported
-placeholders is provided below. In addition to built-in placeholders you
-can use expressions containing built-in functions, for example:
-`${round(threshold_linear_time(99))/60}` or `${round(avg())}`
+| Setting | Description |
+| --- | --- |
+| Name | User-defined email configuration name. Each rule can have multiple configurations which are executed independently on status changes. |
+| Recipients | One or multiple email subscribers receiving the message. Use comma or semi-colon to separate multiple addresses. |
+| Enabled | Enable or disable this configuration. |
+| Use In Thresholds Only | If set to yes, this configuration will be activated only for override expressions specified under Thresholds tab. |
+| Schedule | Cron expression to conditionally enable the configuration based on calendar. For example to activate the configuration during business hours, enter `* 8-18 * * MON-FRI`. |
+| First Delay | Delay interval for sending notification for OPEN status. If the window changes to CANCEL status within the specified delay interval, no OPEN status email will be sent. Set this interval to prevent emails on short-lived spikes. |
+| Repeat Interval | Interval for sending REPEAT status notifications. If Repeat Interval is set in time units, the exact interval may vary because the REPEAT notifications are triggered by incoming data. In particular, REPEAT notifications will not be sent If the data stops flowing in. |
+| Merge | Merge multiple notifications from different rules into one email for the same subscriber to prevent too many emails arriving within a short time span. Note that message Subject is redefined for merged emails and reflects rule names, metric names and the total number of merged notifications in the given message, for example: Alerts(2)-cpu_busy: statistical-time, nmon_cpu |
+| Priority | Message priority field to differentiate messages in common email clients: Low, Normal, High, |
+| Message: Subject | Custom subject text for each status separately. List of supported placeholders is provided below. In addition to built-in placeholders you can use expressions containing built-in functions, for example: `${round(threshold_linear_time(99))/60}` or `${round(avg())}` |
+| Message: Details | Embed a table containing series statistics and action links into the message text. |
+| Message: Text | Custom message text for each status separately. List of supported placeholders is provided below. In addition to built-in placeholders you can use expressions containing built-in functions, for example: `${round(threshold_linear_time(99))/60}` or `${round(avg())}` |
 
 ##### Email Message Placeholders
 
