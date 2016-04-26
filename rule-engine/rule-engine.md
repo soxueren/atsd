@@ -147,14 +147,8 @@ Example: `cpu_busy.high.ERP-production`. |
 | Last Update | date and time when the rule was last modified. |
 | Author | Optional user identifier to facilitate controlled changes in multi-user environments. |
 | Description | description of the rule. |
-| Schedule | One or multiple cron expressions to control when the rule is active.
-The rule is active by default if no cron expressions are defined.
-The schedule is evaluated based on local server time.
-Multiple cron expressions can be combined using AND and OR operators and each expression must be enclosed within single quotes.
-Cron fields are specified in the following order: minute hour day-of-month month day-of-week.
-Examples:
-`* 8-18 * * MON-FRI` (Active between 08:00 and 18:59 on workdays)
-`'* 0-7,19-23 * * MON-FRI' OR '* * * * SUN,SAT'` (Active on weekends and non-working hours) |
+| Schedule | One or multiple cron expressions to control when the rule is active. The rule is active by default if no cron expressions are defined. The schedule is evaluated based on local server time. Multiple cron expressions can be combined using AND and OR operators and each expression must be enclosed within single quotes.
+Cron fields are specified in the following order: minute hour day-of-month month day-of-week. Examples: `* 8-18 * * MON-FRI` (Active between 08:00 and 18:59 on workdays) `'* 0-7,19-23 * * MON-FRI' OR '* * * * SUN,SAT'` (Active on weekends and non-working hours) |
 | Dont Group by Entity | Incoming data samples are grouped by entity (and by tags for multi-tag metrics) and therefore the expressions are evaluated for each entity/tags combination separately. If Entity Grouping is disabled, data samples are accumulated into a single window. This is typically useful for controlling data flow by raising an alert if window is empty, `count() < 0`, for all entities collecting this metric. |
 | Leaving Events | This setting applies to time-based windows. Rule expression is re-evaluated whenever new sample enter the window. If the data flow is irregular or if samples stop coming in, it may cause the window to become stale by not evaluating expression for the remaining samples. If 'Leaving Events' is enabled, the expression is evaluated twice for each sample: when it enters the window and when it exits the window. This causes increased load on the server and is not recommended for high-frequency metrics with regular and reliable data flow. |
 | Metric | Enter metric name from the auto-complete drop-down. For alerting on messages, enter 'message' as the metric name. |
