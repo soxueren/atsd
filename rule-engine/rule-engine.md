@@ -181,7 +181,7 @@ Alert exceptions can be created directly in the alerts table.
 Alert exceptions can be also created using the 'Exception' link received
 in email notifications.
 
-# RULE REFERENCE
+# Rule reference
 
 ## Rule Types
 
