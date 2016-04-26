@@ -1,4 +1,4 @@
-# Axibase Time-Series Database Client for Java
+# Client for Java
 
 
     Check out our [GitHub](https://github.com/axibase/atsd-api-java) for

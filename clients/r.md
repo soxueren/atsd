@@ -10,4 +10,4 @@ Axibase has created an R package for ATSD. The R package provides
 functionality to communicate with ATSD.
 
 [Learn more about the ATSD R package on
-GitHub.](https://github.com/axibase/atsd-api-r)
+GitHub.](https://github.com/axibase/atsd-api-r )
