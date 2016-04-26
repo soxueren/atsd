@@ -162,12 +162,9 @@ In this example a forecast is generated for the
 `metric_received_per_second` metric using built-in Forecasts, then based
 on the forecast a rule is created with the following expression:
 
-+--------------------------------------------------------------------------+
-| ~~~~ {.javascript style="font-family:monospace;"}                        |
-| abs(forecast_deviation(wavg())) > 2                                      |
-| ~~~~                                                                     |
-+--------------------------------------------------------------------------+
-
+```
+abs(forecast_deviation(wavg())) > 2
+```
 This rule will raise an alert if the absolute forecast deviates from the
 15 minute weighted average by more than 2 standard deviations.
 
@@ -188,118 +185,20 @@ in email notifications.
 
 ## Rule Types
 
-Type
-
-Window
-
-Example
-
-Description
-
-threshold
-
-none
-
-`value > 75`
-
-Raise an alert if last metric value exceeds threshold
-
-range
-
-none
-
-`value > 50 AND value <= 75`
-
-Raise an alert if value is outside of specified range
-
-statistical-count
-
-count(10)
-
-`avg(value) > 75`
-
-Raise an alert if average value of the last 10 samples exceeds threshold
-
-statistical-time
-
-time('15min')
-
-`avg(value) > 75`
-
-Raise an alert if average value for the last 15 minutes exceeds
-threshold
-
-statistical-deviation
-
-time('15min')
-
-`avg(value) / avg(value(time: ‘1 hour’)) > 1.25`
-
-Raise an alert if 15-minute average exceeds 1-hour average by more than
-25%
-
-statistical-ungrouped
-
-time('15min')
-
-`avg(value) > 75`
-
-Raise an alert if 15-minute average values for all entities in the group
-exceeds threshold
-
-metric correlation
-
-time('15min')
-
-`avg(value) > 75 AND avg(value(metric: ‘loadavg.1m’)) > 0.5`
-
-Raise an alert if average values for two separate metrics for the last
-15 minutes exceed predefined thresholds
-
-entity correlation
-
-time('15min')
-
-`avg(value) > 75 AND avg(value(entity: ‘host2′)) > 75`
-
-Raise an alert if average values for two entities for the last 15
-minutes exceed thresholds
-
-threshold override
-
-time('15min')
-
-`avg(value) >= entity.groupTag(‘cpu _avg’).min()`
-
-Raise an alert if 15-minute average value exceeds minimum threshold
-specified for groups to which the entity belongs
-
-log match
-
-count(1)
-
-`message LIKE ‘%Invalid user%from%’`
-
-Raise an alert if invalid user message is written into authentication
-log
-
-log frequency
-
-time('15min')
-
-`count(message) > 10 message LIKE ‘%Invalid user%from%’`
-
-Raise an alert if more than 10 occurrences of invalid user message are
-written into authentication log over 15 minutes
-
-log correlation
-
-time('15min')
-
-`avg(value) > 75 message NOT LIKE ‘%compaction started%’`
-
-Raise an alert if 15-minute average exceeds threshold except when
-database compaction has been started
+| Type | Window | Example | Description |
+| --- | --- | --- | --- |
+| threshold | none | `value > 75` | Raise an alert if last metric value exceeds threshold |
+| range | none | `value > 50 AND value <= 75` | Raise an alert if value is outside of specified range |
+| statistical-count | count(10) | `avg(value) > 75` | Raise an alert if average value of the last 10 samples exceeds threshold |
+| statistical-time | time('15min') | `avg(value) > 75` | Raise an alert if average value for the last 15 minutes exceeds threshold |
+| statistical-deviation | time('15min') | `avg(value) / avg(value(time: ‘1 hour’)) > 1.25` | Raise an alert if 15-minute average exceeds 1-hour average by more than 25% |
+| statistical-ungrouped | time('15min') | `avg(value) > 75` | Raise an alert if 15-minute average values for all entities in the group exceeds threshold |
+| metric correlation | time('15min') | `avg(value) > 75 AND avg(value(metric: ‘loadavg.1m’)) > 0.5` | Raise an alert if average values for two separate metrics for the last 15 minutes exceed predefined thresholds |
+| entity correlation | time('15min') | `avg(value) > 75 AND avg(value(entity: ‘host2′)) > 75` | Raise an alert if average values for two entities for the last 15 minutes exceed thresholds |
+| threshold override | time('15min') | `avg(value) >= entity.groupTag(‘cpu _avg’).min()` | Raise an alert if 15-minute average value exceeds minimum threshold specified for groups to which the entity belongs |
+| log match | count(1) | `message LIKE ‘%Invalid user%from%’` | Raise an alert if invalid user message is written into authentication log |
+| log frequency | time('15min') | `count(message) > 10 message LIKE ‘%Invalid user%from%’` | Raise an alert if more than 10 occurrences of invalid user message are written into authentication log over 15 minutes |
+| log correlation | time('15min') | `avg(value) > 75 message NOT LIKE ‘%compaction started%’` | Raise an alert if 15-minute average exceeds threshold except when database compaction has been started |
 
 ## Analytical Functions
 
