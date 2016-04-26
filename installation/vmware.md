@@ -101,7 +101,6 @@ Steps](http://axibase.com/products/axibase-time-series-database/download-atsd/in
 
 ![](images/fresh_atsd_portal21.png "ATSD Host")
 
-<a name="optional></a>
 ## Optional Steps
 
 Verifying System Time
