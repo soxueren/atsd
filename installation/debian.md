@@ -83,7 +83,7 @@ Network Settings
 If you’re anticipating high data insertion rate with bursts of 100000
 packets per second or more, increase maximum receiving buffer on Linux
 OS: [Read Network Settings
-Guide](../administration/network-settings.md "Network Settings")
+Guide](../administration/networking-settings.md "Network Settings")
 
 ## Setting up the Email Client
 
