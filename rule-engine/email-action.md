@@ -77,32 +77,32 @@ The default Subject text is
 
 ##### Email Message Placeholders
 
--   \${entity}
--   \${metric}
--   \${value}
--   \${message}
--   \${severity}
--   \${rule}
--   \${expression}
--   \${rule\_filter}
--   \${repeat\_count}
--   \${repeat\_interval}
--   \${alert\_open\_time}
--   \${alert\_duration}
--   \${window}
--   \${schedule}
--   \${status}
--   \${received\_time}
--   \${event\_time}
--   \${open\_value}
--   \${alert\_type}
--   \${min\_interval\_expired}
--   \${window\_first\_time}
--   \${threshold}
--   \${tags} and \${tags.tag\_name}
--   \${entity\_tags} and \${entity\_tags.tag\_name}
--   \${properties} and \${properties.key\_name} or
-    \${properties.tag\_name}
+-   ${entity}
+-   ${metric}
+-   ${value}
+-   ${message}
+-   ${severity}
+-   ${rule}
+-   ${expression}
+-   ${rule_filter}
+-   ${repeat_count}
+-   ${repeat_interval}
+-   ${alert_open_time}
+-   ${alert_duration}
+-   ${window}
+-   ${schedule}
+-   ${status}
+-   ${received_time}
+-   ${event_time}
+-   ${open_value}
+-   ${alert_type}
+-   ${min_interval_expired}
+-   ${window_first_time}
+-   ${threshold}
+-   ${tags} and ${tags.tag_name}
+-   ${entity_tags} and ${entity_tags.tag_name}
+-   ${properties} and ${properties.key_name} or
+    ${properties.tag_name}
 
 ##### Email Alert Content Example:
 
