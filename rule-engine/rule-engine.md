@@ -239,12 +239,12 @@ in email notifications.
 
 ## De-duplication Functions
 
- | Type | Example | Description |
- | --- | --- | --- |
- | ALL | `All` | Raise alert every time when expression is true |
- | NONE | `None` | Do not raise any alerts |
- | EVERY N EVENTS | `count(10)` | Raise alert every 10 times when expression is true |
- | EVERY N MINUTES | `time('15 min')` | Raise alert no more often than 15 minutes when expression is true |
+| Type | Example | Description |
+| --- | --- | --- |
+| ALL | `All` | Raise alert every time when expression is true |
+| NONE | `None` | Do not raise any alerts |
+| EVERY N EVENTS | `count(10)` | Raise alert every 10 times when expression is true |
+| EVERY N MINUTES | `time('15 min')` | Raise alert no more often than 15 minutes when expression is true |
 ## Historical Data Queries
 
 | Type | Example | Description |
