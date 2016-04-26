@@ -33,56 +33,56 @@ Requirements:
 ​1. Connect to a vCenter Server with the vSphere Web Client, then
 navigate to File –\> Deploy OVF Template.
 
-![](./test_files/Screenshot_1.png "Screenshot_1")
+![](images/Screenshot_1.png "Screenshot_1")
 
 ​2. Click on Browse, then select the atsd\_ce\_8760.ova file.
 
-![](./test_files/Screenshot_3.png "Screenshot_3")
+![](images/Screenshot_3.png "Screenshot_3")
 
 ​3. Click next on the OVF Template Details window, then read and accept
 the End User License Agreement.
 
-![](./test_files/Screenshot_5.png "Screenshot_5")
+![](images/Screenshot_5.png "Screenshot_5")
 
 ​4. Give a name to the virtual machine and select the inventory
 location.
 
-![](./test_files/Screenshot_7.png "Screenshot_7")
+![](images/Screenshot_7.png "Screenshot_7")
 
 ​5. Select a host for the virtual machine from the list.
 
-![](./test_files/Screenshot_8.png "Screenshot_8")
+![](images/Screenshot_8.png "Screenshot_8")
 
 ​6. Select Disk Format, we recommend either Thick Provision Lazy Zeroed
 or Thick Provision Eager Zeroed.
 
-![](./test_files/Screenshot_9.png "Screenshot_9")
+![](images/Screenshot_9.png "Screenshot_9")
 
 ​7. Choose the Network Mapping (network to which the adapter of the
 virtual machine will be attached to).
 
-![](./test_files/Screenshot_10_attention.png "Screenshot_10_attention")
+![](images/Screenshot_10_attention.png "Screenshot_10_attention")
 
 ​8. Confirm the virtual machine configuration.
 
-![](./test_files/Screenshot_11.png "Screenshot_11")
+![](images/Screenshot_11.png "Screenshot_11")
 
 ​9. Wait for the virtual machine to be created.
 
-![](./test_files/Screenshot_12.png "Screenshot_12")
+![](images/Screenshot_12.png "Screenshot_12")
 
 ​10. Power on the virtual machine.
 
-![](./test_files/Screenshot_13.png "Screenshot_13")
+![](images/Screenshot_13.png "Screenshot_13")
 
 ​11. Wait for ATSD and Components to start.
 
-> ATTENTION: The machine is configured to receive the IP address by DHCP.
+ATTENTION: The machine is configured to receive the IP address by DHCP.
 If there is no DHCP server in the network, the loading will slow down at
 this point. This is normal since DHCP is not used. After loading is
 complete, you will need to setup a static IP in /etc/network/interfaces.
 
-![](./test_files/Screenshot_14_attention.png "Screenshot_14_attention")
+![](images/Screenshot_14_attention.png "Screenshot_14_attention")
 
 ​12. Login to the virtual machine:
 
@@ -92,15 +92,15 @@ complete, you will need to setup a static IP in /etc/network/interfaces.
 
 **`axibase` user is a sudoer.**
 
-![](./test_files/Screenshot_17.png "Screenshot_17")
+![](images/Screenshot_17.png "Screenshot_17")
 
 ​13. Use your browser to navigate to atsd\_server:8088. For example:
 192.168.137.128:8088. Login to ATSD, username = axibase and password =
 axibase.
 
-![](./test_files/atsd-login1.png "atsd login")
+![](images/atsd-login1.png "atsd login")
 
-## Verifying ATSD Portals
+#### Verifying ATSD Portals 
 
 Using your browser, navigate to the Portals tab in the ATSD web
 interface.
@@ -113,7 +113,7 @@ Be sure to check server time after installation. If server time is
 incorrect, portals may be empty. See [Optional
 Steps](http://axibase.com/products/axibase-time-series-database/download-atsd/install-vmware/#optional).
 
-![](./test_files/fresh_atsd_portal21.png "ATSD Host")
+![](images/fresh_atsd_portal21.png "ATSD Host")
 
 
 ## Optional Steps
