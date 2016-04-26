@@ -1,4 +1,4 @@
-# Axibase Time Series Database Installation from RPM Package
+# Installation from RPM Package
 
 
 This installation requires RedHat Enterprise Linux, CentOS, and Amazon
