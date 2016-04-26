@@ -142,8 +142,7 @@ Window](images/count_based_window3.png "count_based_window")
 | Setting | Description |
 | --- | --- |
 | Enabled | is the rule active or not. |
-| Name | Rule name must be unique. Multiple rules can be created for the same metric. Rule names cannot be modified once a rule is created so it’s advisable to establish a naming convention, for example `{metric}.{condition}.{application/service}`.
-Example: `cpu_busy.high.ERP-production`. |
+| Name | Rule name must be unique. Multiple rules can be created for the same metric. Rule names cannot be modified once a rule is created so it’s advisable to establish a naming convention, for example `{metric}.{condition}.{application/service}`. Example: `cpu_busy.high.ERP-production`. |
 | Last Update | date and time when the rule was last modified. |
 | Author | Optional user identifier to facilitate controlled changes in multi-user environments. |
 | Description | description of the rule. |
