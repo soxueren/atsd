@@ -1,4 +1,4 @@
-# ATSD Installation from Debian Package
+# Installation from Debian Package
 
 
 This installation guide applies to Ubuntu OS version 14.x, 15.x and
