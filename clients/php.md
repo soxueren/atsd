@@ -1,7 +1,5 @@
 # Client for PHP
 
-
-
     Check out our [GitHub](https://github.com/axibase/atsd-api-php) for
     more Axibase developments.
 
