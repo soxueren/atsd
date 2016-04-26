@@ -1,5 +1,5 @@
-RULE ENGINE
-===========
+# Rule engine
+
 
 Rule Engine implemented in Axibase Time-Series Database enables
 automation of repetitive tasks based on analysis of incoming data. Such
