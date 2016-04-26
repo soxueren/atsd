@@ -1,4 +1,4 @@
-# Install ATSD on VMware ESXi Server/vSphere
+# Install on VMware ESXi Server/vSphere
 
 
 ATSD can be installed by importing an .ova image in VMware ESXi Server,
