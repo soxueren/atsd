@@ -14,7 +14,7 @@ guide](../administration/update-manual.md "Manual ATSD Installation").
 
 **If you would like to install ATSD from repositories with apt-get, use
 the: [Install ATSD Using Axibase Repositories
-guide](installing-from-repsitory.md "Install ATSD Using Axibase Repositories").**
+guide](installing-from-repository.md "Install ATSD Using Axibase Repositories").**
 
 ```sh
  sudo apt-get update                                                      
