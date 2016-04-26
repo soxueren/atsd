@@ -214,123 +214,40 @@ in email notifications.
 
 ## Calendar Functions
 
-Name
-
-Example
-
-cron
-
-`* 8-18 * * MON-FRI`
-
-cron AND
-
-`‘* 8-10 * * MON-FRI’ AND ‘* 16-18 * * MON-FRI’`
-
-cron OR
-
-`‘* 0-7,19-23 * * MON-FRI’ OR ‘* * * * SUN, SAT’`
+| Name | Example |
+| --- | --- |
+| cron | `* 8-18 * * MON-FRI` |
+| cron AND | `‘* 8-10 * * MON-FRI’ AND ‘* 16-18 * * MON-FRI’` |
+| cron OR | `‘* 0-7,19-23 * * MON-FRI’ OR ‘* * * * SUN, SAT’` |
 
 ## Tag Functions
 
-Name
-
-Example
-
-Description
-
-tags(name)
-
-`tags(‘file_system’) = ‘/’`
-
-Tags (custom key-value pairs) can be added to any data sample and used
-in filters and groupings
-
-entity.tag(name)
-
-`entity.tag(‘environment’) = ‘prod’`
-
-Tags defined for entities can be used in filters, groupings, and alerts
-
-metric.tag(name)
-
-`metric.tag(‘type’) = ‘availability’`
-
-Tags defined for metrics can be used in filters, groupings, and alerts
-
-entity.groupTag(name)
-
-`entity. groupTag(‘email’, ‘;’)`
-
-Tags defined for entity groups can be used in filters, groupings, and
-alerts
+| Name | Example | Description |
+| --- | --- | --- |
+| tags(name) | `tags(‘file_system’) = ‘/’` | Tags (custom key-value pairs) can be added to any data sample and used in filters and groupings |
+| entity.tag(name) | `entity.tag(‘environment’) = ‘prod’` | Tags defined for entities can be used in filters, groupings, and alerts |
+| metric.tag(name) | `metric.tag(‘type’) = ‘availability’` | Tags defined for metrics can be used in filters, groupings, and alerts |
+| entity.groupTag(name) | `entity. groupTag(‘email’, ‘;’)` | Tags defined for entity groups can be used in filters, groupings, and alerts |
 
 ## Data Windows
 
-Type
-
-Example
-
-Count
-
-`count(10)`
-
-Time
-
-`time('30 minute')`
-
-Time (external)
-
-`ext_timed('30 minute')`
+| Type | Example |
+| --- | --- |
+| Count | `count(10)` |
+| Time | `time('30 minute')` |
+| Time (external) | `ext_timed('30 minute')` |
 
 ## De-duplication Functions
 
-Type
-
-Example
-
-Description
-
-ALL
-
-`All`
-
-Raise alert every time when expression is true
-
-NONE
-
-`None`
-
-Do not raise any alerts
-
-EVERY N EVENTS
-
-`count(10)`
-
-Raise alert every 10 times when expression is true
-
-EVERY N MINUTES
-
-`time('15 min')`
-
-Raise alert no more often than 15 minutes when expression is true
-
+ | Type | Example | Description |
+ | --- | --- | --- |
+ | ALL | `All` | Raise alert every time when expression is true |
+ | NONE | `None` | Do not raise any alerts |
+ | EVERY N EVENTS | `count(10)` | Raise alert every 10 times when expression is true |
+ | EVERY N MINUTES | `time('15 min')` | Raise alert no more often than 15 minutes when expression is true |
 ## Historical Data Queries
 
-Type
-
-Example
-
-Description
-
-atsd\_last
-
-`atsd_last(metric: 'transq')`
-
-Query historical database for last value
-
-atsd\_values
-
-`avg(atsd_values(entity: 'e1', metric: 'm1', type: 'avg', interval: '5-minute', shift: '1-day', duration: '3-hour'))`
-
-Query historical database for a range of values. Apply analytical
-functions to the result set.
+| Type | Example | Description |
+| --- | --- | --- |
+| atsd_last | `atsd_last(metric: 'transq')` | Query historical database for last value |
+| atsd_values | `avg(atsd_values(entity: 'e1', metric: 'm1', type: 'avg', interval: '5-minute', shift: '1-day', duration: '3-hour'))` | Query historical database for a range of values. Apply analytical functions to the result set. |
