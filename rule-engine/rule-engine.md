@@ -159,8 +159,7 @@ This condition is useful for time-based windows to prevent alerts on database re
 If the expression evaluates to ‘true’, it raises an alert, followed by execution of triggers such as system command or email notification. Once the expression returns ‘false’, the alert is closed and another set of triggers is invoked.
 The expression consists of one or multiple checks combined with OR and AND operators. Exceptions specified in the Thresholds table take precedence over expression.
 [Learn more about Expression here.](/products/axibase-time-series-database/rule-engine/expression/ "Expression") |
-| Columns | List of custom fields with optional aliases. These fields can be written to alert log and accessed with placeholders in alert messages. For example:
-`Math.round(avg(value)) as avgValue` |
+| Columns | List of custom fields with optional aliases. These fields can be written to alert log and accessed with placeholders in alert messages. For example: `Math.round(avg(value)) as avgValue` |
 
 ## Rule Configuration Example
 
