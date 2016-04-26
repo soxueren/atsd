@@ -18,7 +18,7 @@ multiple automation procedures are triggered. For instance:
 
     IF avg(value) > 75 THEN send_email
 
-![](./test_files/atsd_rule_engine.png "atsd_rule_engine")
+![](images/atsd_rule_engine.png "atsd_rule_engine")
 
 **In-Memory Processing**
 
@@ -107,7 +107,7 @@ an entity group by adding an exception to the Thresholds table. The
 exception can be also added by clicking on Exception link in alert
 console or email alert.
 
-![](./test_files/threshold.png "threshold")
+![](images/threshold.png "threshold")
 
 ##### Sliding Windows
 
@@ -124,7 +124,7 @@ the list, however it automatically removes data samples that become
 outside of the time interval as time passes.
 
 ![Axibase Time Series Database Rule Engine Time Based
-Window](./test_files/time_based_window3.png "time_based_window")
+Window](images/time_based_window3.png "time_based_window")
 
 **Count Based Windows – 3 event window example**
 
@@ -135,7 +135,7 @@ count window becomes full, the oldest (last) data sample is removed to
 free up space for a new sample.
 
 ![Axibase Time Series Database Rule Engine Count Based
-Window](./test_files/count_based_window3.png "count_based_window")
+Window](images/count_based_window3.png "count_based_window")
 
 ##### Rule Editor Settings:
 
@@ -277,15 +277,15 @@ on the forecast a rule is created with the following expression:
 This rule will raise an alert if the absolute forecast deviates from the
 15 minute weighted average by more than 2 standard deviations.
 
-![](./test_files/rule_engine_atsd_jmx1.png "rule_engine_atsd_jmx")
+![](images/rule_engine_atsd_jmx1.png "rule_engine_atsd_jmx")
 
-![](./test_files/alert_rules_rule_engine.png "alert_rules_rule_engine")
+![](images/alert_rules_rule_engine.png "alert_rules_rule_engine")
 
-![](./test_files/open_alerts_by_entity.png "open_alerts_by_entity")
+![](images/open_alerts_by_entity.png "open_alerts_by_entity")
 
 Alert exceptions can be created directly in the alerts table.
 
-![](./test_files/alert_exceptions.png "alert_exceptions")
+![](images/alert_exceptions.png "alert_exceptions")
 
 Alert exceptions can be also created using the 'Exception' link received
 in email notifications.
