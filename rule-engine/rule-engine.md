@@ -151,8 +151,7 @@ Example: `cpu_busy.high.ERP-production`. |
 | Dont Group by Entity | Incoming data samples are grouped by entity (and by tags for multi-tag metrics) and therefore the expressions are evaluated for each entity/tags combination separately. If Entity Grouping is disabled, data samples are accumulated into a single window. This is typically useful for controlling data flow by raising an alert if window is empty, `count() < 0`, for all entities collecting this metric. |
 | Leaving Events | This setting applies to time-based windows. Rule expression is re-evaluated whenever new sample enter the window. If the data flow is irregular or if samples stop coming in, it may cause the window to become stale by not evaluating expression for the remaining samples. If 'Leaving Events' is enabled, the expression is evaluated twice for each sample: when it enters the window and when it exits the window. This causes increased load on the server and is not recommended for high-frequency metrics with regular and reliable data flow. |
 | Metric | Enter metric name from the auto-complete drop-down. For alerting on messages, enter 'message' as the metric name. |
-| Tags | Comma separated list of tags for grouping windows by each tag in addition to entities.
-Required for metrics that collect tagged data, for example `df.disk_used` metric that collects data for multiple `file_systems` each identified with `file_system` and `disk_name tags`. |
+| Tags | Comma separated list of tags for grouping windows by each tag in addition to entities. Required for metrics that collect tagged data, for example `df.disk_used` metric that collects data for multiple `file_systems` each identified with `file_system` and `disk_name tags`. |
 | Window | Two types of windows are supported: count (length) and time (duration).
 Count-based window contains up to N (length) samples.
 When the count-based window becomes full, the oldest sample is replaced with the newly arrived sample.
