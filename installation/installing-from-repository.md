@@ -1,4 +1,4 @@
-# Installing Axibase Time Series Database from Repository
+# Installing from Repository
 
 
 This installation guide applies to Ubuntu OS version 14.x, 15.x and
