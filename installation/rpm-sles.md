@@ -47,7 +47,7 @@ or `ip addr` command.
 When accessing the ATSD web interface for the first time, you will need
 to setup an administrator account.
 
-#### Verifying ATSD Portals {#portals}
+## Verifying ATSD Portals
 
 Click on Portals tab in the ATSD web interface. A pre-defined ‘ATSD’
 portal consisting of 12 widgets should be visible. This portal displays
