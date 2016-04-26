@@ -109,7 +109,7 @@ console or email alert.
 
 ![](images/threshold.png "threshold")
 
-##### Sliding Windows
+## Sliding Windows
 
 ATSD Rule Engine uses two types of windows when ingesting statistics:
 count and time. These windows are used to calculate aggregations and
@@ -137,7 +137,7 @@ free up space for a new sample.
 ![Axibase Time Series Database Rule Engine Count Based
 Window](images/count_based_window3.png "count_based_window")
 
-##### Rule Editor Settings:
+## Rule Editor Settings
 
 Setting
 
@@ -262,7 +262,7 @@ to alert log and accessed with placeholders in alert messages. For
 example:\
  `Math.round(avg(value)) as avgValue`
 
-##### Rule Configuration Example:
+## Rule Configuration Example
 
 In this example a forecast is generated for the
 `metric_received_per_second` metric using built-in Forecasts, then based
@@ -290,10 +290,9 @@ Alert exceptions can be created directly in the alerts table.
 Alert exceptions can be also created using the 'Exception' link received
 in email notifications.
 
-RULE REFERENCE {#ref}
-==============
+# RULE REFERENCE
 
-##### Rule Types
+## Rule Types
 
 Type
 
@@ -408,7 +407,7 @@ time('15min')
 Raise an alert if 15-minute average exceeds threshold except when
 database compaction has been started
 
-##### Analytical Functions
+## Analytical Functions
 
 Name
 
@@ -442,7 +441,7 @@ FORECAST (time)
 
 `forecast(value, ’30 min’) < 25`
 
-##### Calendar Functions
+## Calendar Functions
 
 Name
 
@@ -460,7 +459,7 @@ cron OR
 
 `‘* 0-7,19-23 * * MON-FRI’ OR ‘* * * * SUN, SAT’`
 
-##### Tag Functions
+## Tag Functions
 
 Name
 
@@ -494,7 +493,7 @@ entity.groupTag(name)
 Tags defined for entity groups can be used in filters, groupings, and
 alerts
 
-##### Data Windows
+## Data Windows
 
 Type
 
@@ -512,7 +511,7 @@ Time (external)
 
 `ext_timed('30 minute')`
 
-##### De-duplication Functions
+## De-duplication Functions
 
 Type
 
@@ -544,7 +543,7 @@ EVERY N MINUTES
 
 Raise alert no more often than 15 minutes when expression is true
 
-##### Historical Data Queries
+## Historical Data Queries
 
 Type
 
