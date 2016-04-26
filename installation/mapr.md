@@ -1,4 +1,4 @@
-# Installing Axibase Time-Series Database on MapR
+# Installing on MapR
 
 
 Download the MapR M3 distribution and follow the installation
