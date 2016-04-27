@@ -10,7 +10,7 @@ subscribers on window status changes based on incoming data.
 | REPEAT | Expression value confirmed at TRUE on new data received or old data removed  from the window. |
 | CANCEL | Expression value changes from FALSE to TRUE |
 
-**Creating a Rule**
+## Creating a Rule
 
 To enable email notifications for a metric of interest, create a new
 rule on the Rule Engine tab.
@@ -29,7 +29,7 @@ the data has been received and check the expression formula.
 Note that windows are reset to OPEN status whenever the rule is saved
 from the editor.
 
-**Partitioning Windows**
+## Partitioning Windows
 
 By default, windows are partitioned by entity, which means that email
 notifications will be generated for each entity separately.
@@ -41,7 +41,7 @@ tags.
 
 ![email\_alert\_tags](images/email_alert_tags.png)
 
-**Configuring Notifications**
+## Configuring Notifications
 
 To enable notifications for the selected rule, open Email Notifications
 tab, assign a name to the new configuration and specify one or multiple
@@ -58,7 +58,7 @@ The default Subject text is
 
 ![email\_config](images/email_config1.png)
 
-##### Email Notification Settings
+## Email Notification Settings
 
 | Setting | Description |
 | --- | --- |
@@ -75,7 +75,7 @@ The default Subject text is
 | Message: Details | Embed a table containing series statistics and action links into the message text. |
 | Message: Text | Custom message text for each status separately. List of supported placeholders is provided below. In addition to built-in placeholders you can use expressions containing built-in functions, for example: `${round(threshold_linear_time(99))/60}` or `${round(avg())}` |
 
-##### Email Message Placeholders
+## Email Message Placeholders
 
 -   ${entity}
 -   ${metric}
@@ -104,10 +104,10 @@ The default Subject text is
 -   ${properties} and ${properties.key_name} or
     ${properties.tag_name}
 
-##### Email Alert Content Example:
+## Email Alert Content Example
 
 ![](images/alert_message_email.png "alert_message_email")
 
-##### An alert exception can be created using the ‘Exception’ link received in email notifications:
+> An alert exception can be created using the ‘Exception’ link received in email notifications:
 
 ![](images/alert_exception.png "alert_exception")
