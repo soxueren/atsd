@@ -26,4 +26,3 @@ You can use any programming language that lets you issue HTTP requests and parse
 ### Compression
 
 * Clients may send compressed data by specifying Content-Encoding: gzip
-
