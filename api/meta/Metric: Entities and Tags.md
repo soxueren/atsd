@@ -11,7 +11,7 @@ GET /api/v1/metrics/{metric}/entity-and-tags
 > Request
 
 ```
-http://atsd_server.com:8088/api/v1/metrics/disk_used/entity-and-tags
+http://atsd_server:8088/api/v1/metrics/disk_used/entity-and-tags?timeFormat=iso
 ```
 
 | **Parameter** | **Required** | **Description**                 |
