@@ -1,4 +1,4 @@
-## Entity Group: List
+## Entity Group: Get
 
 ```
 GET /api/v1/entity-groups/{group}
@@ -7,7 +7,7 @@ GET /api/v1/entity-groups/{group}
 > Request
 
 ```
-http://atsd_server.com:8088/api/v1/entity-groups/nmon-aix
+http://atsd_server:8088/api/v1/entity-groups/nmon-aix
 ```
 
 > Response
@@ -25,4 +25,4 @@ Displays entity group properties and all tags.
 
 **Response Fields:**
 
-See: [Entity Groups](#entity-groups:-get)
+See: [Entity Groups: Get](#entity-groups:-get
