@@ -7,28 +7,24 @@ GET /api/v1/metrics/{metric}
 > Request
 
 ```
-http://atsd_server.com:8088/api/v1/metrics/cpu_busy
+http://atsd_server:8088/api/v1/metrics/mpstat.cpu_busy?timeFormat=iso
 ```
 
 > Response
 
 ```json
 {
-    "name": "cpu_busy",
+    "name": "mpstat.cpu_busy",
     "enabled": true,
     "dataType": "FLOAT",
     "counter": false,
     "persistent": true,
-    "tags": {
-        "source": "iostat",
-        "table": "System"
-    },
+    "tags": {},
     "timePrecision": "MILLISECONDS",
     "retentionInterval": 0,
-    "minValue": 0.0,
-    "maxValue": 100.0,
-    "invalidAction": "TRANSFORM",
-    "lastInsertTime": 1423662246000
+    "invalidAction": "NONE",
+    "lastInsertDate": "2015-10-20T12:13:26.000Z",
+    "versioned": false
 }
 ```
 
@@ -36,4 +32,4 @@ Displays metric properties and its tags.
 
 **Response Fields:**
 
-See: [Get Metrics](#metrics:-list)
+See: [Metrics: List](#metrics:-list)
