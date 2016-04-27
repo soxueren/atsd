@@ -11,7 +11,7 @@ GET /api/v1/entities/{entity}/property-types
 > Request
 
 ```
-http://atsd_server.com:8088/api/v1/entities/nurswgvml007/property-types
+http://atsd_server:8088/api/v1/entities/nurswgvml007/property-types
 ```
 
 | **Parameter** | **Required** | **Description**                 |
@@ -30,6 +30,6 @@ http://atsd_server.com:8088/api/v1/entities/nurswgvml007/property-types
 ]
 ```
 
-| **Name**       | **Description**                                                                                        |
+| **Field**       | **Description**                                                                                        |
 |----------------|--------------------------------------------------------------------------------------------------------|
 | type | Property type name                                                                                            |
