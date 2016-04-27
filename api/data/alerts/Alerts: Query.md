@@ -1,6 +1,6 @@
 ## Alerts: Query
 
-### Request Parameters
+### Request Fields
 
 ```
 POST /api/v1/alerts
@@ -14,6 +14,7 @@ POST /api/v1/alerts
    {
       "metrics": ["loadavg.5m", "message"],
       "entities" : ["awsswgvml001"],
+      "timeFormat": "iso",
       "minSeverity" : 2,
       "severities": [2, 6, 7]
    }
@@ -24,51 +25,49 @@ POST /api/v1/alerts
 > Response
 
 ```json
-[{
-    "value": 0.05,
-    "message": null,
-    "id": 7,
-    "tags": {
-
-    },
-    "textValue": "0.05",
-    "metric": "loadavg.5m",
-    "entity": "awsswgvml001",
-    "severity": 3,
-    "rule": "loadavg - min.interval",
-    "repeatCount": 1323,
-    "openTime": 1423669251150,
-    "lastEventTime": 1423689085375,
-    "acknowledged": false,
-    "openValue": 0.05
-},
-{
-    "value": 0.0,
-    "message": "nodejs app.js 8888 > saver.log &",
-    "id": 10,
-    "tags": {
-
-    },
-    "textValue": "nodejs app.js 8888 > saver.log &",
-    "metric": "message",
-    "entity": "awsswgvml001",
-    "severity": 2,
-    "rule": "alert-app",
-    "repeatCount": 4,
-    "openTime": 1423669500060,
-    "lastEventTime": 1423670078855,
-    "acknowledged": false,
-    "openValue": 0.0
-    }]
+[
+    {
+        "value": 0,
+        "message": "",
+        "id": 6,
+        "textValue": "",
+        "tags":
+        {
+        },
+        "metric": "message",
+        "entity": "awsswgvml001",
+        "severity": 2,
+        "rule": "alert-app",
+        "repeatCount": 15,
+        "acknowledged": false,
+        "openValue": 0,
+        "lastEventDate": "2015-05-12T14:57:42Z",
+        "openDate": "2015-05-12T13:39:37Z"
+    }
+]
 ```
 
 | Field       | Required | Description              |
 |-------------|----|----------------------|
 | metrics     | no | an array of metric names |
+| entity      | no* | an entity name, such as server name, or a entity name pattern with ? and * wildcards |
 | entities    | no | an array of entity names |
+| entityGroup | no | If `entityGroup` field is specified in the query, alerts for all entities in this group are returned. entityGroup is used only if `entity` or `entities` fields are missing or if entity field is an empty string. If entityGroup is not found or contains no entities an empty resultset will be returned. |
 | rules       | no | an array of rules        |
 | severities  | no | an array of severities   |
 | minSeverity | no | Minimal severity filter  |
+
+<aside class="notice">
+If the entity field only contains a wildcard (*), then alerts for all entities are returned.
+</aside>
+
+<aside class="notice">
+* If entity, entities, entityGroup is not defined, then data is returned for all entities (subject to remaining conditions).
+</aside>
+
+<aside class="notice">
+If queries[] array is empty, then all alerts are returned.
+</aside>
 
 **Severity codes**
 
