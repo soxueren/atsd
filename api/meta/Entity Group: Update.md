@@ -9,7 +9,7 @@ This method updates specified properties and tags for an existing entity group.
 
 ### Request Fields
 
-See: [Entity Groups](#entity-groups:-get)
+See: [Entity Group: Create or Replace](#entity-group:-create-or-replace)
 
 <aside class="notice">
 Properties and tags that are not specified are left unchanged.
