@@ -20,7 +20,7 @@ multiple automation procedures are triggered. For instance:
 
 ![](images/atsd_rule_engine.png "atsd_rule_engine")
 
-**In-Memory Processing**
+### In-Memory Processing
 
 The data is processed by the Rule Engine in-memory which operates
 independently of storage, messaging, and replication channels. If the
@@ -33,7 +33,7 @@ unless it is required by functions specified in the expression. For
 example, except for percentile() function, summary statistics for each
 window can be re-computed without maintaining input data in memory.
 
-**Window Types**
+### Window Types
 
 Windows can be count-based or time-based. A count-based window maintains
 an ordered array of elements. Once the array reaches the specified
@@ -45,7 +45,7 @@ elements that arrived over the last 5 minutes. As the current time
 increases, the start time is incremented accordingly as if the window is
 ‘sliding’ along the timeline.
 
-**Window Status**
+### Window Status
 
 Windows are stateful. Once the expression for the given window evaluates
 to TRUE, it is maintained in memory with status OPEN. On subsequent TRUE
@@ -57,7 +57,7 @@ is TRUE enables deduplication and supports flexible action programming.
 For example, some actions can be configured to execute only on OPEN
 status, while others can run on every n-th REPEAT occurrence.
 
-**Expressions**
+### Expressions
 
 Expressions represent statements that return a boolean value: TRUE or
 FALSE.
@@ -70,7 +70,7 @@ to fit into application memory. The list of functions and operators is
 specific to the type of received data: time-series, properties, or
 message.
 
-**Developing Rules**
+### Developing Rules
 
 Rules are typically developed by system engineers with specialized
 knowledge in their respective subject matter domains. Rules can be also
@@ -86,7 +86,7 @@ Rule Engine provides the following capabilities:
 -   Automated thresholding using forecast() function
 -   Override tables with support for wildcards
 
-**Thresholds**
+### Thresholds
 
 Thresholds specified in expressions can be set manually or using the
 forecast function. For example, the following rule fires if observed
@@ -116,7 +116,7 @@ count and time. These windows are used to calculate aggregations and
 only the statistics present in these windows are analyzed by the Rule
 Engine.
 
-**Time Based Windows – 3 second window example**
+### Time Based Windows – 3 second window example
 
 Time based windows analyze statistics that occurred in the last N
 seconds. The time windows doesn’t limit how many samples can be held in
@@ -126,7 +126,7 @@ outside of the time interval as time passes.
 ![Axibase Time Series Database Rule Engine Time Based
 Window](images/time_based_window3.png "time_based_window")
 
-**Count Based Windows – 3 event window example**
+### Count Based Windows – 3 event window example
 
 Count based windows analyze the last N events (data points) regardless
 of when they occurred. The count window holds up to N data samples which
