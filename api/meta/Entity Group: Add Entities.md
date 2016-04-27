@@ -2,7 +2,7 @@
 
 Add specified entities to entity group.
 
-### `add` action parameters
+ ### `add` action fields
 
 ```
 PATCH /api/v1/entity-groups/{group}/entities
@@ -24,7 +24,7 @@ PATCH /api/v1/entity-groups/{group}/entities
 ]
 ```
 
-| **Parameter**  | **Required** | **Description**                                                                                |
+| **Field**  | **Required** | **Description**                                                                                |
 |----------------|--------------|-------------------|------------------------------------------------------------------------------------------------|
 | createEntities | no       | Automatically create new entities from the submitted list if such entities don't already exist. Default value: true |
 
