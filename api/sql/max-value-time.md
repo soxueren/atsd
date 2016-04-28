@@ -6,8 +6,8 @@ Time when the metric value reached its maximum over the last hour
 
 ```sql
 SELECT entity, MAX(value),
-date_format(MAX_VALUE_TIME(value), 'yyyy-MM-dd HH:mm:ss') AS "Max Time"
-FROM mpstat.cpu_busy WHERE time > current_hour GROUP BY entity
+ date_format(MAX_VALUE_TIME(value), 'yyyy-MM-dd HH:mm:ss') AS "Max Time"
+ FROM mpstat.cpu_busy WHERE time > current_hour GROUP BY entity
 ```
 
 > Response
