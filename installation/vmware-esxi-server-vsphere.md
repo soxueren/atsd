@@ -5,9 +5,7 @@ ATSD can be installed by importing an .ova image in VMware ESXi Server,
 VMware vSphere Hypervisor, VMware Fusion, VMware Workstation and VMware
 Player. This method automatically creates a virtual machine running
 Ubuntu 14.04 64bit LTS with ATSD and dependencies pre-installed and
-fully configured. The process take a few minutes with minimal input
-required from the user, this is the easiest and fastest way to install
-ATSD.
+fully configured.
 
 [If you will be installing ATSD in VMware player, please use our
 separate guide for this installation
@@ -17,8 +15,6 @@ method.](vmware.md "Install ATSD on VMware")
 
 To setup the ATSD virtual machine in VMware you must have the following
 resources available to you:
-
-Requirements:
 
 -   A 64-bit machine with a processor that supports virtualization. Note
     that not all 64-bit processors have this capability.
