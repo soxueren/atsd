@@ -3,11 +3,11 @@
 Add specified entities to entity group.
 
  ### `add` action fields
-
+### Method 
 ```
 PATCH /api/v1/entity-groups/{group}/entities
 ```
-
+### Basic Example
 > Request
 
 ```json
@@ -23,7 +23,7 @@ PATCH /api/v1/entity-groups/{group}/entities
   }
 ]
 ```
-
+### Request Fields
 | **Field**  | **Required** | **Description**                                                                                |
 |----------------|--------------|-------------------|------------------------------------------------------------------------------------------------|
 | createEntities | no       | Automatically create new entities from the submitted list if such entities don't already exist. Default value: true |
