@@ -75,7 +75,7 @@ SELECT count(*), entity, tags.*, period (30 minute) FROM df.disk_used
 
 ```sql
 SELECT entity, avg(value), count(*) FROM mpstat.cpu_busy 
-WHERE time > now - 1* hour GROUP BY entity HAVING avg(value) > 10 AND count(*) > 200
+ WHERE time > now - 1* hour GROUP BY entity HAVING avg(value) > 10 AND count(*) > 200
 ```
 
 > Response
