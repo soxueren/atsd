@@ -74,7 +74,7 @@ Start ATSD:
  /opt/atsd/atsd/bin/start-atsd.sh                                         
 ```
 
-Verify that ATSD web interface is available at http://atsd\_server:8099
+Verify that ATSD web interface is available at http://atsd_hostname:8099
 
 ## Verifying Data Insertion
 
@@ -82,7 +82,7 @@ Open the SSH console on a computer, other than ATSD, and insert the data
 into the ATSD via telnet:
 
 ```sh
- telnet "atsd_server" 8081                                                
+ telnet "atsd_hostname" 8081
 ```
 
 For example:

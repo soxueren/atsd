@@ -84,7 +84,7 @@ generate a new MAC address for the VM.
 
 ![](images/screenshot_280415_15-22-59.png "screenshot_280415_15-22-59")
 
-​11. Use your browser to navigate to atsd\_server:8088. For example:
+​11. Use your browser to navigate to atsd_hostname:8088. For example:
 192.168.1.191:8088. Login to ATSD, username = axibase and password =
 axibase.
 

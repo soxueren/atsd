@@ -7,7 +7,7 @@ GET /api/v1/entities/{entity}
 > Request
 
 ```
-http://atsd_server:8088/api/v1/entities/nurswgvml006?timeFormat=iso
+http://atsd_hostname:8088/api/v1/entities/nurswgvml006?timeFormat=iso
 ```
 
 > Response
@@ -40,7 +40,7 @@ GET /api/v1/entities/{entity}/groups
 > Request
 
 ```
-http://atsd_server:8088/api/v1/entities/nurswgvml007/groups
+http://atsd_hostname:8088/api/v1/entities/nurswgvml007/groups
 ```
 
 > Resonse

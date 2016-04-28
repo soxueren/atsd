@@ -80,7 +80,7 @@ for ATSD and Components to start.
 
 ![](images/screenshot_280415_15-22-59.png "screenshot_280415_15-22-59")
 
-​10. Use your browser to navigate to atsd\_server:8088. For example:
+​10. Use your browser to navigate to atsd_hostname:8088. For example:
 192.168.137.128:8088. Login to ATSD, username = axibase and password =
 axibase.
 

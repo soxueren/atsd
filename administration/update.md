@@ -24,7 +24,7 @@ The update process can take a while.
 To verify that ATSD is working correctly, navigate to the ATSD user interface in your browser:
 
 ```sh
- http://"ip or hostname of ATSD server":8088/                             
+ http://atsd_hostname:8088/
 ```
 
 Navigate to the Admin -\> Build Info page, verify that the Revision

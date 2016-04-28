@@ -9,7 +9,7 @@ GET /api/v1/entities
 > Request
 
 ```
-http://atsd_server:8088/api/v1/entities?timeFormat=iso&limit=2&expression=name%20like%20%27nurs*%27
+http://atsd_hostname:8088/api/v1/entities?timeFormat=iso&limit=2&expression=name%20like%20%27nurs*%27
 ```
 
 |**Parameter**|**Required**|**Description**|
@@ -58,7 +58,7 @@ If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returne
 **Fetch entities starting with `nur` and containing any tags.**
 
 ```
-http://atsd_server:8088/api/v1/entities?tags=*&expression=name%20like%20%27nur*%27
+http://atsd_hostname:8088/api/v1/entities?tags=*&expression=name%20like%20%27nur*%27
 ```
 
 > Response
@@ -151,7 +151,7 @@ http://atsd_server:8088/api/v1/entities?tags=*&expression=name%20like%20%27nur*%
 **Fetch entities starting with `nur` and with tag `app` containing `hbase` (case insensitive)**
 
 ```
-http://atsd_server:8088/api/v1/entities?timeFormat=iso&limit=2&tags=app&expression=name%20like%20%27nur%27%20and%20lower%28tags.app%29%20like%20%27hbase%27
+http://atsd_hostname:8088/api/v1/entities?timeFormat=iso&limit=2&tags=app&expression=name%20like%20%27nur%27%20and%20lower%28tags.app%29%20like%20%27hbase%27
 ```
 
 > Expression
@@ -219,7 +219,7 @@ Note: 'lower(text)' is a utility function. Alternatively, any Java string functi
 > Request
 
 ```
-http://atsd_server:8088/api/v1/entities?timeFormat=iso&expression=name%20like%20%27nurswgvml00*%27&tags=*
+http://atsd_hostname:8088/api/v1/entities?timeFormat=iso&expression=name%20like%20%27nurswgvml00*%27&tags=*
 ```
 
 > Response

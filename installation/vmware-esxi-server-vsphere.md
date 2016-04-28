@@ -94,7 +94,7 @@ complete, you will need to setup a static IP in /etc/network/interfaces.
 
 ![](images/Screenshot_17.png "Screenshot_17")
 
-​13. Use your browser to navigate to atsd\_server:8088. For example:
+​13. Use your browser to navigate to atsd_hostname:8088. For example:
 192.168.137.128:8088. Login to ATSD, username = axibase and password =
 axibase.
 

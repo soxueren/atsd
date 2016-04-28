@@ -55,7 +55,7 @@ metrics.
 
 ![](images/fresh_atsd_portal21.png "ATSD Host")
 
-## Installation Troubleshooting {#portals}
+## Installation Troubleshooting
 
 If ATSD web interface is not accessible, open its log file and review it
 for errors.

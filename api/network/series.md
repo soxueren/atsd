@@ -31,7 +31,7 @@ series e:server001 m:disk_used_percent=20.5 m:disk_size_mb=10240 t:mount_point=/
 > UDP command
 
 ```
-echo series e:DL1866 m:speed=1950 | nc -u -w1 atsd_server 8082
+echo series e:DL1866 m:speed=1950 | nc -u -w1 atsd_hostname 8082
 ```
 
 ```
