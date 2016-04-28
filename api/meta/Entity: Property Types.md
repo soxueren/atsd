@@ -2,24 +2,17 @@
 
 Returns an array of property types for the entity. 
 
-### Request Parameters
 
+### Method
 ```
 GET /api/v1/entities/{entity}/property-types
 ```
-
+### Basic Example
 > Request
 
 ```
 http://atsd_server:8088/api/v1/entities/nurswgvml007/property-types
 ```
-
-| **Parameter** | **Required** | **Description**                 |
-|---------------|--------------|---------------------------------|
-| startTime        | no        | Return only property types that have been collected after the specified time. |
-
-### Response Fields
-
 > Response
 
 ```json
@@ -29,6 +22,14 @@ http://atsd_server:8088/api/v1/entities/nurswgvml007/property-types
    "process"
 ]
 ```
+### Request Parameters
+| **Parameter** | **Required** | **Description**                 |
+|---------------|--------------|---------------------------------|
+| startTime        | no        | Return only property types that have been collected after the specified time. |
+
+### Response Fields
+
+
 
 | **Field**       | **Description**                                                                                        |
 |----------------|--------------------------------------------------------------------------------------------------------|
