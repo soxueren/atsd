@@ -1,5 +1,5 @@
 ## Metric: Update
-
+### Method
 ```
 PATCH /api/v1/metrics/{metric}
 ```
