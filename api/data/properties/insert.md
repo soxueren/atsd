@@ -1,9 +1,9 @@
 ## Properties: Insert
-
+### Method
 ```
 POST /api/v1/properties/insert
 ```
-
+### Basic Example
 > Request
 
 ```json
