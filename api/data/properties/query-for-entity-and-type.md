@@ -82,12 +82,12 @@ http://atsd_server:8088/api/v1/entities/i-943a8878/property-types/aws_ec2.instan
     }
 ]
 ```
-
+### Request Fields
 | **Parameter**  | **Required** | **Description**  |
 |---|---|---|---|---|
 |timeFormat|	no|	response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 
-### RESPONSE FIELDS
+### Response Fields
 
 | **Field**       | **Description**                                                                                        |
 |----------------|--------------------------------------------------------------------------------------------------------|
