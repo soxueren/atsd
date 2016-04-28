@@ -1,9 +1,9 @@
 ## Metrics: Entity
-
+### Method
 ```
 GET /api/v1/entities/{entity}/metrics
 ```
-
+### Basic Example
 > Request
 
 ```
@@ -12,7 +12,6 @@ http://atsd_server:8088/api/v1/entities/nurswgvml007/metrics?timeFormat=iso&limi
 
 Returns a list of metrics collected by the entity. The list is based on memory cache which is rebuilt on ATSD restart.
 
-### Request Parameters
 
 > Response
 
