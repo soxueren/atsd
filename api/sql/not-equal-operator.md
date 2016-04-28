@@ -5,16 +5,16 @@ In this example the "not equal" operator `!=`, is used to exclude values equal t
 > Request
 
 ```sql
-SELECT entity, tags.mount_point AS mp, tags.file_system as FS,
-    MIN(disk_used.value), MAX(disk_used.value),
-    FIRST(disk_used.value), LAST(disk_used.value),
-    DELTA(disk_used.value), COUNT(disk_used.value),
-    AVG(cpu_busy.value) FROM cpu_busy
-JOIN USING entity disk_used
-    WHERE time > now - 60 * minute
-    GROUP BY entity, tags.mount_point, tags.file_system
-HAVING DELTA(disk_used.value) != 0
-    ORDER BY DELTA(disk_used.value) DESC
+SELECT entity, tags.mount_point AS mp, tags.file_system AS FS,
+ MIN(disk_used.value), MAX(disk_used.value),
+ FIRST(disk_used.value), LAST(disk_used.value),
+ DELTA(disk_used.value), COUNT(disk_used.value),
+ AVG(cpu_busy.value) FROM cpu_busy
+ JOIN USING entity disk_used
+ WHERE time > now - 60 * minute
+ GROUP BY entity, tags.mount_point, tags.file_system
+ HAVING DELTA(disk_used.value) != 0
+ ORDER BY DELTA(disk_used.value) DESC
 ```
 
 > Response
