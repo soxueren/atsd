@@ -6,9 +6,9 @@ Inner join + tables rows that is not belonging to inner join table with null val
 
 ```sql
 SELECT *
-FROM cpu_busy
-OUTER JOIN disk_used
-WHERE time > now - 1 * hour
+ FROM cpu_busy
+ OUTER JOIN disk_used
+ WHERE time > now - 1 * hour
 ```
 
 > Response
