@@ -1,9 +1,9 @@
 ## Metric: Get
-
+### Method 
 ```
 GET /api/v1/metrics/{metric}
 ```
-
+### Basic Example
 > Request
 
 ```
@@ -30,6 +30,6 @@ http://atsd_server:8088/api/v1/metrics/mpstat.cpu_busy?timeFormat=iso
 
 Displays metric properties and its tags.
 
-**Response Fields:**
+###Response Fields
 
 See: [Metrics: List](#metrics:-list)
