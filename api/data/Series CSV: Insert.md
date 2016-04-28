@@ -1,5 +1,5 @@
 ## Series CSV: Insert
-
+### Method
 ```
 POST /api/v1/series/csv/{entity}?tag1=value1&tag2=value2
 ```
@@ -11,7 +11,7 @@ Payload - CSV containing time column and one or multiple metric columns.
 * Time column must be first, name of the time column could be arbitrary.
 * Content-type: text/plain or text/csv
 
-### Request Parameters
+### Basic Examples
 
 > Example
 
