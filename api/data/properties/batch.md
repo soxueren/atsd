@@ -1,12 +1,13 @@
 ## Properties: Batch
 
+### Method
 ```
 PATCH /api/v1/properties
 ```
 
 Insert keys and delete keys by id or by partial key match in one request.
 
-### Actions
+### Basic Example
 
 > Request
 
@@ -51,7 +52,7 @@ Insert keys and delete keys by id or by partial key match in one request.
     ]
 }]
 ```
-
+### Request Fields
 | **Name**     | **Description**                                                                   |
 |---|---|
 | insert       | Insert an array of properties for a given entity, type                            |
