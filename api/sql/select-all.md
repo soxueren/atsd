@@ -4,7 +4,8 @@
 
 ```sql
 SELECT * FROM mpstat.cpu_busy 
- WHERE entity = 'nurswgvml007' AND time between now - 1 * hour AND now
+ WHERE entity = 'nurswgvml007' 
+ AND time between now - 1 * hour AND now
 ```
 
 > Response
