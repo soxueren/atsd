@@ -11,7 +11,7 @@ Payload - CSV containing time column and one or multiple metric columns.
 * Time column must be first, name of the time column could be arbitrary.
 * Content-type: text/plain or text/csv
 
-### Basic Examples
+### Basic Example
 
 > Example
 
