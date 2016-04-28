@@ -113,7 +113,8 @@ Query for one metric, one entity and detailed values for time range
 > Request
 
 ```sql
-SELECT time, value, entity FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' AND time >= previous_day AND time < now
+SELECT time, value, entity FROM mpstat.cpu_busy 
+ WHERE entity = 'nurswgvml007' AND time >= previous_day AND time < now
 ```
 
 > Response
@@ -189,7 +190,8 @@ Average value for one metric, one entity
 > Request
 
 ```sql
-SELECT avg(value) AS CPU_Avg FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' AND time >= previous_day AND time < now
+SELECT avg(value) AS CPU_Avg FROM mpstat.cpu_busy 
+ WHERE entity = 'nurswgvml007' AND time >= previous_day AND time < now
 ```
 
 > Response
@@ -312,7 +314,7 @@ FROM mpstat.cpu_busy WHERE time > current_hour GROUP BY entity
 
 ```sql
 SELECT entity, period(5 MINUTE) AS "period", avg(value) AS CPU_Avg FROM mpstat.cpu_busy 
-  WHERE entity IN ('nurswgvml007', 'nurswgvml011') AND time between now - 1 * hour and now 
+  WHERE entity IN ('nurswgvml007', 'nurswgvml011') AND time between now - 1 * hour AND now 
   GROUP BY entity, period(5 MINUTE)
 ```
 
@@ -385,8 +387,10 @@ SELECT entity, period(5 MINUTE) AS "period", avg(value) AS CPU_Avg FROM mpstat.c
 > Request
 
 ```sql
-select datetime, count(value), max(value), counter(value) from log_event_total_counter where entity = 'nurswgvml201' and tags.level = 'ERROR' 
-and datetime >= '2015-09-30T09:00:00Z' and datetime < '2015-09-30T10:00:00Z' GROUP by period(5 minute)
+SELECT datetime, count(value), max(value), counter(value) FROM log_event_total_counter 
+ WHERE entity = 'nurswgvml201' AND tags.level = 'ERROR' 
+ AND datetime >= '2015-09-30T09:00:00Z' AND datetime < '2015-09-30T10:00:00Z' 
+ GROUP by period(5 minute)
 ```
 
 ```json
@@ -463,7 +467,7 @@ One metric, one entity, filter by tag, detailed values for time range
 
 ```sql
 SELECT time, value, tags.file_system FROM df.df.disk_used_percent WHERE entity = 'nurswgvml007'
-  AND tags.file_system LIKE '/d%' AND time between now - 1 * hour and now
+  AND tags.file_system LIKE '/d%' AND time between now - 1 * hour AND now
 ```
 
 > Response
@@ -532,7 +536,9 @@ SELECT time, value, tags.file_system FROM df.df.disk_used_percent WHERE entity =
 > Request
 
 ```sql
-select entity, entity.tags.os as os, entity.tags.ip as ip from df.disk_used where time between now - 1*minute and now group by entity
+SELECT entity, entity.tags.os AS os, entity.tags.ip AS ip FROM df.disk_used 
+ WHERE time BETWEEN now - 1*minute AND now 
+ GROUP BY entity
 ```
 
 > Response
@@ -613,7 +619,10 @@ select entity, entity.tags.os as os, entity.tags.ip as ip from df.disk_used wher
 > Request
 
 ```sql
-SELECT time, value FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' AND time > 1428352721000 AND time < 1428352721000
+SELECT time, value FROM mpstat.cpu_busy 
+ WHERE entity = 'nurswgvml007' 
+ AND time > 1428352721000 
+ AND time < 1428352721000
 ```
 
 > Response - returns an array with 1 record:
@@ -652,7 +661,9 @@ SELECT time, value FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' AND time >
 > Request
 
 ```sql
-SELECT datetime, time, value, entity FROM mpstat.cpu_busy WHERE entity LIKE '%00%' AND datetime BETWEEN '2015-04-09T14:00:00Z' AND '2015-04-09T14:05:00Z'
+SELECT datetime, time, value, entity FROM mpstat.cpu_busy 
+ WHERE entity LIKE '%00%' AND datetime 
+ BETWEEN '2015-04-09T14:00:00Z' AND '2015-04-09T14:05:00Z'
 ```
 
 > Response
@@ -734,7 +745,10 @@ SELECT datetime, time, value, entity FROM mpstat.cpu_busy WHERE entity LIKE '%00
 > Request
 
 ```sql
-SELECT time, value FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' AND time between now - 1 * hour and now ORDER BY time
+SELECT time, value FROM mpstat.cpu_busy 
+ WHERE entity = 'nurswgvml007' 
+ AND time between now - 1 * hour AND now 
+ ORDER BY time
 ```
 
 > Response
@@ -795,7 +809,9 @@ SELECT time, value FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' AND time b
 > Request
 
 ```sql
-SELECT * FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' AND time between now - 1 * hour and now
+SELECT * FROM mpstat.cpu_busy 
+ WHERE entity = 'nurswgvml007' 
+ AND time between now - 1 * hour AND now
 ```
 
 > Response
@@ -871,13 +887,15 @@ Unquoted `alias` must begin with a letter followed by letters, underscores, digi
 > Request
 
 ```sql
-SELECT time, value, entity, metric AS "measurement" FROM mpstat.cpu_busy WHERE entity = 'nurswgvml006' AND time between now - 5 * minute and now
+SELECT time, value, entity, metric AS "measurement" FROM mpstat.cpu_busy 
+ WHERE entity = 'nurswgvml006' AND time BETWEEN now - 5 * minute AND now
 ```
 
 > OR
 
 ```sql
-SELECT time, value, entity, metric AS 'measurement' FROM mpstat.cpu_busy WHERE entity = 'nurswgvml006' AND time between now - 5 * minute and now
+SELECT time, value, entity, metric AS 'measurement' FROM mpstat.cpu_busy 
+ WHERE entity = 'nurswgvml006' AND time BETWEEN now - 5 * minute AND now
 ```
 
 > Response
@@ -957,10 +975,10 @@ SELECT time, value, entity, metric AS 'measurement' FROM mpstat.cpu_busy WHERE e
 
 ```sql
 SELECT count(*), entity, tags.*, period (30 minute) FROM df.disk_used 
-WHERE entity = 'nurswgvml102' AND tags.mount_point = '/' 
-AND tags.file_system = '/dev/disk/by-uuid/8a5a178f-4dba-4282-803a-1fe43fc6220a' 
-AND datetime BETWEEN '2015-07-08T16:00:00Z' AND '2015-07-08T16:30:00Z' 
-GROUP BY entity, tags, period (30 minute)
+ WHERE entity = 'nurswgvml102' AND tags.mount_point = '/' 
+ AND tags.file_system = '/dev/disk/by-uuid/8a5a178f-4dba-4282-803a-1fe43fc6220a' 
+ AND datetime BETWEEN '2015-07-08T16:00:00Z' AND '2015-07-08T16:30:00Z' 
+ GROUP BY entity, tags, period (30 minute)
 ```
 
 > Response
@@ -1027,7 +1045,11 @@ GROUP BY entity, tags, period (30 minute)
 > Request
 
 ```sql
-select entity, avg(value), count(*) from mpstat.cpu_busy where time > now - 1* hour group by entity having avg(value) > 10 and count(*) > 200
+SELECT entity, avg(value), count(*) FROM mpstat.cpu_busy 
+ WHERE time > now - 1* hour 
+ GROUP BY entity 
+ HAVING avg(value) > 10 
+ AND count(*) > 200
 ```
 
 > Response
@@ -1095,7 +1117,11 @@ select entity, avg(value), count(*) from mpstat.cpu_busy where time > now - 1* h
 > Request
 
 ```sql
-select entity, avg(value) from mpstat.cpu_busy where time > now - 1*hour group by entity order by avg(value) desc limit 5
+SELECT entity, avg(value) from mpstat.cpu_busy 
+ WHERE time > now - 1*hour 
+ GROUP BY entity 
+ ORDER BY avg(value) 
+ DESC limit 5
 ```
 
 > Response
@@ -1683,15 +1709,15 @@ In this example the "not equal" operator `!=`, is used to exclude values equal t
 
 ```sql
 SELECT entity, tags.mount_point AS mp, tags.file_system as FS,
-    MIN(disk_used.value), MAX(disk_used.value),
-    FIRST(disk_used.value), LAST(disk_used.value),
-    DELTA(disk_used.value), COUNT(disk_used.value),
-    AVG(cpu_busy.value) FROM cpu_busy
-JOIN USING entity disk_used
-    WHERE time > now - 60 * minute
-    GROUP BY entity, tags.mount_point, tags.file_system
-HAVING DELTA(disk_used.value) != 0
-    ORDER BY DELTA(disk_used.value) DESC
+ MIN(disk_used.value), MAX(disk_used.value),
+ FIRST(disk_used.value), LAST(disk_used.value),
+ DELTA(disk_used.value), COUNT(disk_used.value),
+ AVG(cpu_busy.value) FROM cpu_busy
+ JOIN USING entity disk_used
+ WHERE time > now - 60 * minute
+ GROUP BY entity, tags.mount_point, tags.file_system
+ HAVING DELTA(disk_used.value) != 0
+ ORDER BY DELTA(disk_used.value) DESC
 ```
 
 > Response
@@ -1846,9 +1872,9 @@ Result table contains rows with table1.entity = table2.entity and table1.time = 
 
 ```sql
 SELECT *
-FROM cpu_busy
-JOIN cpu_idle
-WHERE time > now - 1 * hour
+ FROM cpu_busy
+ JOIN cpu_idle
+ WHERE time > now - 1 * hour
 ```
 
 > Response
@@ -1985,9 +2011,9 @@ Inner join + tables rows that is not belonging to inner join table with null val
 
 ```sql
 SELECT *
-FROM cpu_busy
-OUTER JOIN disk_used
-WHERE time > now - 1 * hour
+ FROM cpu_busy
+ OUTER JOIN disk_used
+ WHERE time > now - 1 * hour
 ```
 
 > Response
@@ -2150,10 +2176,10 @@ WHERE time > now - 1 * hour
 
 ```sql
 SELECT entity, time, AVG(cpu_busy.value), AVG(disk_used.value)
-FROM cpu_busy
-OUTER JOIN disk_used
-WHERE time > now - 1 * hour
-GROUP BY entity, period(15 minute)
+ FROM cpu_busy
+ OUTER JOIN disk_used
+ WHERE time > now - 1 * hour
+ GROUP BY entity, period(15 minute)
 ```
 
 > Response
@@ -2261,10 +2287,10 @@ This function numbers rows according to grouping columns (example: `entity, tags
 
 ```sql
 SELECT entity, time, AVG(cpu_busy.value)
-FROM cpu_busy
-WHERE time > now - 1 * hour
-GROUP BY entity, period(15 minute)
-WITH row_number(entity, tags ORDER BY time DESC) <= 3
+ FROM cpu_busy
+ WHERE time > now - 1 * hour
+ GROUP BY entity, period(15 minute)
+ WITH row_number(entity, tags ORDER BY time DESC) <= 3
 ```
 
 > Response
@@ -2353,10 +2379,10 @@ Returns the last time of a stored value in a table for a key (metric + entity + 
 
 ```sql
 SELECT entity, datetime, AVG(cpu_busy.value)
-FROM cpu_busy
-WHERE time > now - 1 * hour 
-GROUP BY entity, period(15 minute)
-WITH time > last_time - 30 * minute
+ FROM cpu_busy
+ WHERE time > now - 1 * hour 
+ GROUP BY entity, period(15 minute)
+ WITH time > last_time - 30 * minute
 ```
 
 > Response
@@ -2455,10 +2481,10 @@ Calculate Cartesian product for table tags and fill each row with metric values 
 
 ```sql
 SELECT entity, disk_used.time, cpu_busy.time, AVG(cpu_busy.value), AVG(disk_used.value), tags.*
-FROM cpu_busy
-JOIN USING entity disk_used
-WHERE time > now - 1 * hour
-GROUP BY entity, tags, period(15 minute)
+ FROM cpu_busy
+ JOIN USING entity disk_used
+ WHERE time > now - 1 * hour
+ GROUP BY entity, tags, period(15 minute)
 ```
 
 > Response
