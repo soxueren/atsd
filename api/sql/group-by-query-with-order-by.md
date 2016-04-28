@@ -3,7 +3,11 @@
 > Request
 
 ```sql
-select entity, avg(value) from mpstat.cpu_busy where time > now - 1*hour group by entity order by avg(value) desc limit 5
+SELECT entity, avg(value) FROM mpstat.cpu_busy 
+ WHERE time > now - 1*hour 
+ GROUP BY entity 
+ ORDER BY avg(value) 
+ DESC limit 5
 ```
 
 > Response
