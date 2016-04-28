@@ -6,7 +6,7 @@
 
 ```sql
 SELECT entity, period(5 MINUTE) AS "period", avg(value) AS CPU_Avg FROM mpstat.cpu_busy 
-  WHERE entity IN ('nurswgvml007', 'nurswgvml011') AND time between now - 1 * hour and now 
+  WHERE entity IN ('nurswgvml007', 'nurswgvml011') AND time between now - 1 * hour AND now 
   GROUP BY entity, period(5 MINUTE)
 ```
 
