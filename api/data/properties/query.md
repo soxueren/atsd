@@ -1,11 +1,11 @@
 ## Properties: Query
 
-### Request Fields
+### Method
 
 ```
 POST /api/v1/properties
 ```
-
+### Basic Request Example
 > Request
 
 ```json
@@ -20,7 +20,7 @@ POST /api/v1/properties
    ]
 }
 ```
-
+### Request Fields
 | **Field**  | **Required** | **Description**  |
 |---|---|---|---|---|
 | entity    | no*          | an entity name, such as server name, or a entity name pattern with `?` and `*` wildcards            |
@@ -44,7 +44,7 @@ POST /api/v1/properties
 * Mutually exclusive fields. Entities or an Entity should be specified in the request using ONE of the following fields: entity, entities, entityGroup.
 </aside>
 
-### Response Fields
+### Basic Response Example
 
 > Response
 
@@ -67,7 +67,7 @@ POST /api/v1/properties
    }
 ]
 ```
-
+### Response Fields
 | **Field**  | **Description**  |
 |---|---|
 | type | property type name |
