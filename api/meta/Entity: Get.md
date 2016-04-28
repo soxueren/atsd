@@ -27,7 +27,7 @@ http://atsd_hostname:8088/api/v1/entities/nurswgvml006?timeFormat=iso
 
 Displays entity properties and all tags.
 
-**Response Fields:**
+###Response Fields
 
 See: [Entities: List](#entities:-list)
 
