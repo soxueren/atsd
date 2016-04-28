@@ -6,10 +6,10 @@ Returns the last time of a stored value in a table for a key (metric + entity + 
 
 ```sql
 SELECT entity, datetime, AVG(cpu_busy.value)
-FROM cpu_busy
-WHERE time > now - 1 * hour 
-GROUP BY entity, period(15 minute)
-WITH time > last_time - 30 * minute
+ FROM cpu_busy
+ WHERE time > now - 1 * hour 
+ GROUP BY entity, period(15 minute)
+ WITH time > last_time - 30 * minute
 ```
 
 > Response
