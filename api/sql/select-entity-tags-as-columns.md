@@ -3,7 +3,8 @@
 > Request
 
 ```sql
-select entity, entity.tags.os as os, entity.tags.ip as ip from df.disk_used where time between now - 1*minute and now group by entity
+SELECT entity, entity.tags.os AS os, entity.tags.ip AS ip FROM df.disk_used 
+ WHERE time BETWEEN now - 1*minute AND now GROUP BY entity
 ```
 
 > Response
