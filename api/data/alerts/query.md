@@ -1,11 +1,11 @@
 ## Alerts: Query
 
-### Request Fields
+### Method
 
 ```
 POST /api/v1/alerts
 ```
-
+### Basic Example
 > Request
 
 ```json
@@ -46,7 +46,7 @@ POST /api/v1/alerts
     }
 ]
 ```
-
+### Request Fields
 | Field       | Required | Description              |
 |-------------|----|----------------------|
 | metrics     | no | an array of metric names |
