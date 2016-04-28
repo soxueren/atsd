@@ -2,12 +2,12 @@
 
 Replace entities in the entity group with the specified collection.
 
-### Request Fields
 
+### Method
 ```
 PUT /api/v1/entity-groups/{group}/entities
 ```
-
+### Basic Example
 > Request
 
 ```json
@@ -16,7 +16,7 @@ PUT /api/v1/entity-groups/{group}/entities
 {"name":"nurswgvml006"}
 ]
 ```
-
+### Request Fields
 | **Field**  | **Required** | **Description**                                                                                |
 |----------------|--------------|------------------------------------------------------------------------------------------------|
 | createEntities | no       | Automatically create new entities from the submitted list if such entities don't already exist. Default value: true|
