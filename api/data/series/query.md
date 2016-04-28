@@ -1,10 +1,10 @@
 ## Series: Query
-### Request Fields
+### Method
 
 ```
 POST /api/v1/series
 ```
-
+### Basic Example
 > Request
 
 ```json
@@ -42,6 +42,8 @@ POST /api/v1/series
 If endTime is not specified, endDate is used. If endDate is not specified an error is raised.
 If startTime is not specified, startDate is used. If startDate is not specified, endDate is used minus interval. If no start can be established, an error is raised.
 </aside>
+
+### Request Fields
 
 |Field|Required|Description|
 |---|---|---|
