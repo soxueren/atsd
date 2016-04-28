@@ -1,10 +1,10 @@
 ## Series URL: Query
-
+### Method 
 ```
 GET /api/v1/series/{csv|json}/{entity}/{metric}?t:name=t:value
 ```
 
-**Request Parameters**
+### Basic Example
 
 > Request
 
@@ -43,7 +43,7 @@ GET /api/v1/series/{csv|json}/{entity}/{metric}?t:name=t:value
     ]
 }
 ```
-
+### Request Fields
 |Parameters|Required|Description|
 |---|---|---|
 |t:name|no|Tag name, prefixed by `t:`. Tag value specified as parameter value, for example, `&t:file_system=/tmp`. Multiple values for the same tag can be specified by repeating parameter, for example, `&t:file_system=/tmp&&t:file_system=/home/export`|
