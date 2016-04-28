@@ -77,14 +77,14 @@ WHERE entity = 'nurswgvml006' AND time BETWEEN now - 5 * minute AND now
 
 **SQL Console Response**
 
-| time          | value | entity       | measurement | 
-|---------------|-------|--------------|-------------| 
-| 1446038417000 | 8.0   | nurswgvml006 | mpstat.cpu_busy    | 
-| 1446038433000 | 100.0 | nurswgvml006 | mpstat.cpu_busy    | 
-| 1446038449000 | 30.3  | nurswgvml006 | mpstat.cpu_busy    | 
-| 1446038465000 | 17.0  | nurswgvml006 | mpstat.cpu_busy    | 
-| 1446038481000 | 11.0  | nurswgvml006 | mpstat.cpu_busy    | 
-| 1446038497000 | 90.82 | nurswgvml006 | mpstat.cpu_busy    | 
-| 1446038513000 | 19.0  | nurswgvml006 | mpstat.cpu_busy    | 
-| 1446038529000 | 27.27 | nurswgvml006 | mpstat.cpu_busy    | 
-| 1446038545000 | 12.12 | nurswgvml006 | mpstat.cpu_busy    | 
+| time          | value | entity       |
+|---------------|-------|--------------|
+| 1446038417000 | 8.0   | nurswgvml006 |
+| 1446038433000 | 100.0 | nurswgvml006 |
+| 1446038449000 | 30.3  | nurswgvml006 |
+| 1446038465000 | 17.0  | nurswgvml006 |
+| 1446038481000 | 11.0  | nurswgvml006 |
+| 1446038497000 | 90.82 | nurswgvml006 | 
+| 1446038513000 | 19.0  | nurswgvml006 | 
+| 1446038529000 | 27.27 | nurswgvml006 | 
+| 1446038545000 | 12.12 | nurswgvml006 | 
