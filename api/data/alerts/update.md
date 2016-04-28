@@ -14,7 +14,7 @@ PATCH /api/v1/alerts
 
 To acknowledge alerts, specify action `update`, field `'acknowledge':true` and array of alert identifiers to acknowledge.
 
-### Basic Examples
+
 > Request
 
 ```json
