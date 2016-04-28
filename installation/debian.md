@@ -34,26 +34,7 @@ repositories](modifying-ubuntu-debian-repositories.md "Modifying Repositories").
 Then try installing the dependencies again.
 
 
-## Verifying Installation
 
-At the end of the installation, the installer displays the list of IPs
-and ports (8088, 8443) of the ATSD web interface.
-
-![](images/atsd_install_shell.png "atsd_install_shell")
-
-Open your browser and navigate to port `8088` on the target machine.
-
-When accessing the ATSD web interface for the first time, you will need
-to setup an administrator account.
-
-## Verifying Portals
-
-Click on Portals tab in the ATSD web interface.
-
-Open pre-defined ‘ATSD’ portal to view key operating system and database
-metrics.
-
-![](images/fresh_atsd_portal21.png "ATSD Host")
 
 ## Installation Troubleshooting
 

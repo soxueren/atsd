@@ -61,13 +61,6 @@ For example:
 
 ![](images/atsd_install_shell.png "atsd_install_shell")
 
-## Verifying Installation
-
-Open your browser and navigate to port `8443` on the Docker host.
-
-If `ATSD_USER_NAME` was not specified in environmental properties, you
-will need to setup an administrator account when accessing ATSD for the
-first time.
 
 #### Known Issues
 
@@ -86,11 +79,3 @@ runs on a supported kernel level.
 
 See “Latest Quick Workarounds” for Docker issue \#18180 on
 [https://github.com/docker/docker/issues/18180](https://github.com/docker/docker/issues/18180)
-
-## Viewing Portals
-
-Click on Portals tab in the ATSD web interface, select ‘ATSD’ portal.
-
-This portal displays various database and operating system metrics.
-
-![](images/fresh_atsd_portal21.png "ATSD Host")

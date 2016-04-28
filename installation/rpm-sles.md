@@ -32,26 +32,3 @@ Install ATSD
 ```sh
  sudo rpm -i atsd_ce_8645_amd64_sles.rpm                                  
 ```
-
-## Verifying Installation
-
-At the end of the installation, the installer displays the IP and ports
-of ATSD. You can use them to access the ATSD web interface.
-
-![](images/atsd_install_shell.png "atsd_install_shell")
-
-To find the IP address of the target machine manually, enter `ifconfig`
-or `ip addr` command.
-
-> Open your browser and navigate to port `8088` on the target machine.
-When accessing the ATSD web interface for the first time, you will need
-to setup an administrator account.
-
-## Verifying ATSD Portals
-
-Click on Portals tab in the ATSD web interface. A pre-defined ‘ATSD’
-portal consisting of 12 widgets should be visible. This portal displays
-various system usage metrics for ATSD and the machine where it’s
-installed.
-
-![](images/fresh_atsd_portal21.png "ATSD Host")

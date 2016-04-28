@@ -85,18 +85,3 @@ for ATSD and Components to start.
 axibase.
 
 ![](images/atsd-login1.png "atsd login")
-
-## Verifying ATSD Portals
-
-Using your browser, navigate to the Portals tab in the ATSD web
-interface.
-
-A pre-defined portal consisting of 12 widgets should be visible and
-should display various system usage metrics for the machine where the
-ATSD is installed.
-
-Be sure to check server time after installation. If server time is
-incorrect, portals may be empty. See [Optional
-Steps](http://axibase.com/products/axibase-time-series-database/download-atsd/install-vmware/install-atsd-on-vmware/#optional).
-
-![](images/fresh_atsd_portal21.png "ATSD Host")

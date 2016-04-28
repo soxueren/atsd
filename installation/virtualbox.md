@@ -89,14 +89,3 @@ generate a new MAC address for the VM.
 axibase.
 
 ![](images/login-atsd.png "login atsd")
-
-## Verifying ATSD Portals
-
-Using your browser, navigate to the Portals tab in the ATSD web
-interface.
-
-A pre-defined portal consisting of 12 widgets should be visible and
-should display various system usage metrics for the machine where the
-ATSD is installed.
-
-![](images/fresh_atsd_portal21.png "ATSD Host")

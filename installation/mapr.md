@@ -75,38 +75,3 @@ Start ATSD:
 ```
 
 Verify that ATSD web interface is available at http://atsd_hostname:8099
-
-## Verifying Data Insertion
-
-Open the SSH console on a computer, other than ATSD, and insert the data
-into the ATSD via telnet:
-
-```sh
- telnet "atsd_hostname" 8081
-```
-
-For example:
-
-```sh
- telnet 10.102.0.6 8081                                                   
- series e:entity-2 m:metric-2=123                                         
-```
-
-To verify the telnet test, open the ATSD web interface again and check
-that the new entity, ‘entity-2′, was added on the Entities tab. Note
-that insert command returns no output.
-
-The new entity, enitity-2, should be present under the Entities tab.
-
-![](images/fresh_atsd_entities.png "fresh_atsd_entities")
-
-## Verifying ATSD Portals
-
-Using your browser, navigate to the Portals tab in the ATSD web
-interface.
-
-A pre-defined portal consisting of 12 widgets should be visible and
-should display various system usage metrics for the machine where the
-ATSD is installed.
-
-![](images/fresh_atsd_portal21.png "ATSD Host")
