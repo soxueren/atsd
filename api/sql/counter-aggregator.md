@@ -5,7 +5,7 @@
 ```sql
 SELECT datetime, count(value), max(value), counter(value) FROM log_event_total_counter 
  WHERE entity = 'nurswgvml201' and tags.level = 'ERROR' 
- AND datetime >= '2015-09-30T09:00:00Z' and datetime < '2015-09-30T10:00:00Z' 
+ AND datetime >= '2015-09-30T09:00:00Z' AND datetime < '2015-09-30T10:00:00Z' 
  GROUP BY period(5 minute)
 ```
 
