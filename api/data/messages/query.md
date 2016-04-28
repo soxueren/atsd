@@ -1,11 +1,11 @@
 ## Messages: Query
 
-### Request Fields
+### Method
 
 ```
 POST /api/v1/messages
 ```
-
+### Basic Request Example
 > Request
 
 ```json
@@ -29,6 +29,8 @@ POST /api/v1/messages
     ]
 }
 ```
+
+### Request Fields
 
 |   Field          |  Required   | Description                                                                                     |
 |-------------|-----|--------------------------------------------------------------------------------------|
@@ -56,7 +58,7 @@ POST /api/v1/messages
 ** Mutually exclusive fields. Entities or an Entity should be specified in the request using ONE of the following fields: entity, entities, entityGroup.
 </aside>
 
-### Response Fields
+### Basic Response Example
 
 > Response
 
@@ -86,7 +88,7 @@ POST /api/v1/messages
     }
 ]
 ```
-
+### Response Fields
 | Field | Description |
 |---|---|
 |entity | entity name |
