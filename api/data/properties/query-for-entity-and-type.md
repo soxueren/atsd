@@ -2,7 +2,7 @@
 
 Returns properties for entity and type. 
 
-### Request Parameters
+### Methods
 
 ```
 GET /api/v1/properties/{entity}/types/{type}
@@ -12,6 +12,7 @@ GET /api/v1/properties/{entity}/types/{type}
 GET /api/v1/entities/{entity}/property-types/{property-type}
 ```
 
+### Basic Examples
 > Request
 
 ```
@@ -86,7 +87,7 @@ http://atsd_server:8088/api/v1/entities/i-943a8878/property-types/aws_ec2.instan
 |---|---|---|---|---|
 |timeFormat|	no|	response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 
-#### RESPONSE FIELDS
+### RESPONSE FIELDS
 
 | **Field**       | **Description**                                                                                        |
 |----------------|--------------------------------------------------------------------------------------------------------|
