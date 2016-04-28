@@ -1,13 +1,13 @@
 ## Metric: Create or Replace
-
+### Method 
 ```
 PUT /api/v1/metrics/{metric}
 ```
 
 Create a metric with specified properties and tags or replace an existing metric.
 This method creates a new metric or replaces an existing metric. 
+### Basic Example
 
-### Request Fields
 
 > Request
 
@@ -23,7 +23,7 @@ This method creates a new metric or replaces an existing metric.
     "versioned": true
 }
 ```
-
+### Request Fields
 |**Field**|**Description**|
 |---|---|
 |label|Metric label|
