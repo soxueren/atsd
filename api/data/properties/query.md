@@ -1,6 +1,6 @@
 ## Properties: Query
 
-### Request Parameters
+### Request Fields
 
 ```
 POST /api/v1/properties
@@ -12,6 +12,7 @@ POST /api/v1/properties
 {
   "queries": [
     {
+      "timeFormat": "iso",
       "type": "system",
       "entity": "nurswgvml007",
       "key": {}
@@ -20,15 +21,28 @@ POST /api/v1/properties
 }
 ```
 
-| **Name**  | **Required** | **Description**  |
+| **Field**  | **Required** | **Description**  |
 |---|---|---|---|---|
-| entity    | yes          | an entity name, such as server name, or a entity name pattern with `?` and `*` wildcards            |
+| entity    | no*          | an entity name, such as server name, or a entity name pattern with `?` and `*` wildcards            |
+| entities | no* | an array of entities |
+| entityGroup | no* | If `entityGroup` field is specified in the query, properties of the specified type for entities in this group are returned. `entityGroup` is used only if entity field is missing or if entity field is an empty string. `entityGroup` is supported both for regular types and reserved `$entity_tags` type. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
 | startTime | no           |   start of the selection interval. Default value: `endTime - 1 hour`                                                                                                                        |
 | endTime   | no           | end of the selection interval. Default value: `current server time`                                                                                                                             | 
+|startDate|	no|	start of the selection interval. Specified in ISO format or using endtime syntax.|
+|endDate|	no|	end of the selection interval. Specified in ISO format or using endtime syntax.|
+|timeFormat|	no|	response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 | limit     | no           | maximum number of data samples returned. Default value: 0                                                                                                                 | 
-| type      | yes          | type of data properties                                                                                                                                   |
+| type      | yes          | type of data properties. Supports reserved `$entity_tags` type to retrieve entity tags. Any keys specified in a request containing this reserved type will be ignored.                                                                                                                              |
 | key      | no           | JSON object containing `name=values` that uniquely identify the property record                                                                                   |
 | keyExpression | no | expression for matching properties with specified keys |
+
+<aside class="notice">
+'$entity_tags' is a reserved property type to retrieve entity tags. Any keys specified in a request containing this reserved type will be ignored.
+</aside>
+
+<aside class="notice">
+* Mutually exclusive fields. Entities or an Entity should be specified in the request using ONE of the following fields: entity, entities, entityGroup.
+</aside>
 
 ### Response Fields
 
@@ -49,22 +63,125 @@ POST /api/v1/properties
            "memory_mb.active": "946.2",
            "memory_mb.bigfree": "-1.0"
        },
-       "timestamp": 1423155302000
+       "date": "2015-02-05T16:55:02Z"
    }
 ]
 ```
 
-| **Name**  | **Description**  |
+| **Field**  | **Description**  |
 |---|---|
 | type | property type name |
 | entity | entity name |
 | key | JSON object containing `name=value` that uniquely identify the property record |
 | tags | object keys |
 | timestamp | time in Unix milliseconds |
+| date | date and time in ISO format |
 
-### Sample Request
+### Examples
 
-**properties for type using key expression**
+### Retreive Entity Tags
+
+> Request
+
+```json
+{
+  "queries": [
+    {
+      "timeFormat": "iso",
+      "type": "$entity_tags",
+      "entity": "nurswgvml007"
+     }
+   ]
+}
+```
+
+>Response
+
+```json
+
+
+    [
+        {
+            "type": "$entity_tags",
+            "entity": "nurswgvml007",
+            "key":
+            {
+            },
+            "tags":
+            {
+                "alias": "007",
+                "app": "ATSD",
+                "ip": "10.102.0.6",
+                "loc_area": "dc2",
+                "loc_code": "nur,nur",
+                "os": "Linux"
+            },
+            "date": "2015-09-08T09:06:32Z"
+        }
+    ]
+```
+
+### Entity Tags for entityGroup
+
+> Request
+
+```json
+{
+    "queries": [
+        {
+            "entityGroup": "nur-entities-name",
+            "type": "$entity_tags",
+            "timeFormat": "iso"
+        }
+    ]
+}
+```
+
+> Response
+
+```json
+[
+    {
+        "type": "$entity_tags",
+        "entity": "nurswgvml003",
+        "key": {},
+        "tags": {
+            "app": "Shared NFS/CIFS disk, ntp server",
+            "app-test": "1",
+            "ip": "10.102.0.2",
+            "os": "Linux"
+        },
+        "date": "2015-09-08T09:37:13Z"
+    },
+    {
+        "type": "$entity_tags",
+        "entity": "nurswgvml006",
+        "key": {},
+        "tags": {
+            "app": "Hadoop/HBASE",
+            "ip": "10.102.0.5",
+            "os": "Linux"
+        },
+        "date": "2015-09-08T09:37:13Z"
+    },
+    {
+        "type": "$entity_tags",
+        "entity": "nurswgvml007",
+        "key": {},
+        "tags": {
+            "alias": "007",
+            "app": "ATSD",
+            "ip": "10.102.0.6",
+            "loc_area": "dc2",
+            "loc_code": "nur,nur",
+            "os": "Linux"
+        },
+        "date": "2015-09-08T09:37:13Z"
+    }
+]
+```
+
+### Properties for type using expression Example
 
 > Request
 
@@ -80,9 +197,7 @@ POST /api/v1/properties
 }
 ```
 
-### Sample Request
-
-**properties for type disk, multiple rows for `key='id'`**
+### Properties for type 'disk'
 
 > Request
 
@@ -90,6 +205,7 @@ POST /api/v1/properties
 {
   "queries": [
     {
+      "timeFormat": "iso",
       "type": "disk",
       "entity": "nurswgvml007"
      }
@@ -114,7 +230,7 @@ POST /api/v1/properties
            "disk_transfers_per_second": "59.1",
            "disk_write_kb/s": "236.3"
        },
-       "timestamp": 1423156623000
+       "date": "2015-02-05T16:55:02Z"
    },
    {
        "type": "disk",
@@ -129,14 +245,12 @@ POST /api/v1/properties
            "disk_transfers_per_second": "0.0",
            "disk_write_kb/s": "0.0"
        },
-       "timestamp": 1423156623000
+       "date": "2015-02-05T16:55:02Z"
    }
 ]
 ```
 
-### Sample Request
-
-**properties for type `disk`, specific key**
+### Properties for type 'disk' with key
 
 > Request
 
@@ -144,6 +258,7 @@ POST /api/v1/properties
 {
   "queries": [
     {
+      "timeFormat": "iso",
       "type": "disk",
       "entity": "nurswgvml007",
       "key": {"id": "dm-0"}
@@ -169,14 +284,12 @@ POST /api/v1/properties
            "disk_transfers_per_second": "59.5",
            "disk_write_kb/s": "238.2"
        },
-       "timestamp": 1423156803000
+       "date": "2015-02-05T16:55:02Z"
    }
 ]
 ```
 
-### Sample Request
-
-**properties for type `process`, multiple keys**
+### Properties for type 'process' with multiple keys
 
 > Request
 
@@ -184,6 +297,7 @@ POST /api/v1/properties
 {
   "queries": [
     {
+      "timeFormat": "iso",
       "type": "process",
       "entity": "nurswgvml007",
       "key": {"command": "java", "pid": "27297"} 
@@ -216,12 +330,12 @@ POST /api/v1/properties
            "shdlib": "13964",
            "size": "1733508"
        },
-       "timestamp": 1423222143000
+       "date": "2015-02-05T16:55:02Z"
    }
 ]
 ```
 
-### Sample Request
+### Key Expression
 
 **key expression: Filter out all disks except those starting with `sd*`. Disks dm1, dm2 are excluded**
 
@@ -231,6 +345,7 @@ POST /api/v1/properties
 {
     "queries": [
         {
+            "timeFormat": "iso",
             "type": "disk",
             "entity": "nurswgvml007" ,
             "keyExpression": "id like 'sd*'"
@@ -256,7 +371,7 @@ POST /api/v1/properties
            "disk_transfers_per_second": "43.1",
            "disk_write_kb/s": "262.8"
        },
-       "timestamp": 1425405363000
+       "date": "2015-02-05T16:55:02Z"
    },
    {
        "type": "disk",
@@ -271,7 +386,7 @@ POST /api/v1/properties
            "disk_transfers_per_second": "0.0",
            "disk_write_kb/s": "0.0"
        },
-       "timestamp": 1425405363000
+       "date": "2015-02-05T16:55:02Z"
    },
    {
        "type": "disk",
@@ -286,7 +401,7 @@ POST /api/v1/properties
            "disk_transfers_per_second": "43.1",
            "disk_write_kb/s": "262.8"
        },
-       "timestamp": 1425405363000
+       "date": "2015-02-05T16:55:02Z"
    }
 ]
 ```

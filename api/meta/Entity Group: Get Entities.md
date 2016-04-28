@@ -9,7 +9,7 @@ GET /api/v1/entity-groups/{group}/entities
 > Request
 
 ```
-http://atsd_server.com:8088/api/v1/entity-groups/nur-entities-name/entities?tags=*&limit=3
+http://atsd_server:8088/api/v1/entity-groups/nur-entities-name/entities?timeFormat=iso&tags=*&limit=3
 ```
 
 |**Parameter**|**Required**|**Description**|
@@ -18,22 +18,23 @@ http://atsd_server.com:8088/api/v1/entity-groups/nur-entities-name/entities?tags
 |expression|no|Use `name` variable for entity name. Use `*` placeholder in `like` expressions|
 |tags|no|Specify entity tags to be included in the response|
 |limit|no|Limit response to first N entities, ordered by name.|
+|timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 
-### Response Parameters
+### Response Fields
 
 > Response
 
 ```json
 [
     {
-        "name": "atsd_server.com",
+        "name": "atsd_server",
         "enabled": true,
         "tags": {}
     },
     {
         "name": "nurswgvml003",
         "enabled": true,
-        "lastInsertTime": 1426066431000,
+        "lastInsertDate": "2015-09-04T15:43:36.000Z",
         "tags": {
             "app": "Shared NFS/CIFS disk, ntp server",
             "ip": "10.102.0.2",
@@ -48,9 +49,14 @@ http://atsd_server.com:8088/api/v1/entity-groups/nur-entities-name/entities?tags
 ]
 ```
 
-| **Name**                                 | **Description**                                                                             |
+| **Field**                                 | **Description**                                                                             |
 |------------------------------------------|---------------------------------------------------------------------------------------------|
 | name                                     | Entity name (unique)                                                                        |
 | enabled                                  | Enabled status. Incoming data is discarded for disabled entities                            |
 | lastInsertTime                           | Last time value was received by ATSD for this entity. Time specified in epoch milliseconds. |
-| tags  | User-defined tags as requested by `add_tags` parameter                                                                          |
+|lastInsertDate|Last time value was received by ATSD for this metric. Time specified in ISO format.|
+|tags as requested by tags parameter|User-defined tags|
+
+<aside class="notice">
+If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returned. If `timeFormat` is set to the default value (milliseconds), then `lastInsertTime` will be returned.
+</aside>

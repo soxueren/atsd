@@ -15,13 +15,19 @@ property e:abc001 t:disk k:name=sda v:size=203459 v:fs_type=nfs
 > UDP command
 
 ```
-echo property e:DL1866 t:disk k:name=sda v:size=203459 v:fs_type=nfs | nc -u atsd_server.com 8082
+echo property e:DL1866 t:disk k:name=sda v:size=203459 v:fs_type=nfs | nc -u -w1 atsd_server 8082
+```
+
+```
+printf 'property e:DL1866 t:disk k:name=sda v:size=203459 v:fs_type=nfs' | nc -u -w1 atsd_server 8082
 ```
 
 | **Field** | **Required** |
 |-----------|--------------|
 | e         | yes          |
 | s         | no           |
+| ms        | no           |
+| d         | no           |
 | t         | yes          |
 | k         | no           |
 | v         | yes          |

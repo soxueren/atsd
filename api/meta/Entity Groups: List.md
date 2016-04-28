@@ -1,4 +1,4 @@
-## Entity Groups: Get
+## Entity Groups: List
 
 ### Request Parameters
 
@@ -9,7 +9,7 @@ GET /api/v1/entity-groups
 > Request
 
 ```
-http://atsd_server.com:8088/api/v1/entity-groups
+http://atsd_server:8088/api/v1/entity-groups
 ```
 
 |**Parameter**|**Required**|**Description**|
@@ -43,7 +43,7 @@ http://atsd_server.com:8088/api/v1/entity-groups
 > Request
 
 ```
-http://atsd_server.com:8088/api/v1/entity-groups?tags=os_level&limit=2&expression=name%20like%20%27nmon*%27
+http://atsd_server:8088/api/v1/entity-groups?tags=os_level&limit=2&expression=name%20like%20%27nmon*%27
 ```
 
 > Expression

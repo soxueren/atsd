@@ -22,7 +22,7 @@ Payload - CSV containing time column and one or multiple metric columns.
 > Payload
 
 ```
-time,disk_used_percent,disk_size,disk_used
+time,df.disk_used_percent,disk_size,df.disk_used
 1423139581216,22.2,25165824,5586812
 1423139581216,22.2,25165824,5586812
 ```

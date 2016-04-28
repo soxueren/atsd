@@ -6,7 +6,7 @@ PATCH /api/v1/properties
 
 Insert keys and delete keys by id or by partial key match in one request.
 
-### Actions:
+### Actions
 
 > Request
 

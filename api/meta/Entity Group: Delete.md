@@ -1,7 +1,7 @@
 ## Entity Group: Delete
 
 ```
-DELETE /api/v1/entity-groups/{entity}
+DELETE /api/v1/entity-groups/{entity-group}
 ```
 
 Delete the entity group. 
