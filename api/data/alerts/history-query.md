@@ -1,11 +1,11 @@
 ## Alerts: History Query
 
-### Request Fields
+### Method
 
 ```
 POST /api/v1/alerts/history
 ```
-
+### Basic Example
 > Request
 
 ```json
@@ -50,7 +50,7 @@ POST /api/v1/alerts/history
    }
 ]
 ```
-
+### Request Fields
 |**Field**| **Required** | **Description** |
 |---|---|---|
 | startTime| no |Unix timestamp, default `0`|
