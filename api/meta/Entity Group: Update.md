@@ -1,5 +1,5 @@
 ## Entity Group: Update
-
+### Method
 ```
 PATCH /api/v1/entity-groups/{entity-group}
 ```
