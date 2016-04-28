@@ -1,11 +1,11 @@
 ## Messages: Insert
 
-### Request Fields
+### Method 
 
 ```
 POST /api/v1/messages/insert
 ```
-
+### Basic Example
 > Request
 
 ```json
@@ -19,7 +19,7 @@ POST /api/v1/messages/insert
     }
 ]
 ```
-
+### Request Fields
 | Field       | Required | Description              |
 |---|---|---|
 | entity | yes | an entity name, such as server name, or a entity name pattern with ? and * wildcards |
