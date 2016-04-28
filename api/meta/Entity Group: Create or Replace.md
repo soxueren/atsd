@@ -1,5 +1,6 @@
 ## Entity Group: Create or Replace
 
+### Method
 ```
 PUT /api/v1/entity-groups/{entity-group}
 ```
@@ -13,7 +14,10 @@ If only a subset of fields is provided for an existing entity group, the remaini
 
 ### Request Fields
 
- | **Field**   | **Description**                                   |
-|------------|---------------------------------------------------|
-| expression | Entity group expression                           |
-|tags|User-defined tags, `"tagKey": "tagValue"`, like `"tags": {"os_level": "aix 6.3"}`|
+|Field | Description|
+|---|---|
+| expression | Entity group expression|
+|tags | User-defined tags, `"tagKey": "tagValue"`, like `"tags": {"os_level": "aix 6.3"}`|
+
+
+
