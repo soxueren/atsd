@@ -6,7 +6,7 @@ One metric, one entity, filter by tag, detailed values for time range
 
 ```sql
 SELECT time, value, tags.file_system FROM df.df.disk_used_percent WHERE entity = 'nurswgvml007'
-  AND tags.file_system LIKE '/d%' AND time between now - 1 * hour and now
+  AND tags.file_system LIKE '/d%' AND time between now - 1 * hour AND now
 ```
 
 > Response
