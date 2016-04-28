@@ -5,25 +5,12 @@
 ```
 GET /api/v1/entities
 ```
-### Basic Request Example
+### Basic Example
 > Request
 
 ```
 http://atsd_hostname:8088/api/v1/entities?timeFormat=iso&limit=2&expression=name%20like%20%27nurs*%27
 ```
-### Request Fields
-|**Parameter**|**Required**|**Description**|
-|---|---|---|
-|active|no|Filter entities by last insert time. If `active = true`, only entities with positive `last_insert_time` are included in the response|
-|expression|no|Use `name` variable for entity name. Use `*` placeholder in `like` expresions|
-|tags|no|Specify entity tags to be included in the response, use `tags=*` as a wildcard (returns all existing tags)|
-|minInsertDate|no|return entities with lastInsertTime equal or greater than specified time, accepts iso date format|
-|maxInsertDate|no|return entities with lastInsertTime less than specified time, accepts iso date format|
-|limit|no|Limit response to first N entities, ordered by name.|
-|timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
-
-
-### Basic Response Example
 
 > Response
 
@@ -40,6 +27,18 @@ http://atsd_hostname:8088/api/v1/entities?timeFormat=iso&limit=2&expression=name
     }
 ]
 ```
+### Request Fields
+|**Parameter**|**Required**|**Description**|
+|---|---|---|
+|active|no|Filter entities by last insert time. If `active = true`, only entities with positive `last_insert_time` are included in the response|
+|expression|no|Use `name` variable for entity name. Use `*` placeholder in `like` expresions|
+|tags|no|Specify entity tags to be included in the response, use `tags=*` as a wildcard (returns all existing tags)|
+|minInsertDate|no|return entities with lastInsertTime equal or greater than specified time, accepts iso date format|
+|maxInsertDate|no|return entities with lastInsertTime less than specified time, accepts iso date format|
+|limit|no|Limit response to first N entities, ordered by name.|
+|timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
+
+
 ### Response Fields
 | **Field**                            | **Description**                                                                             |
 |---|---|
