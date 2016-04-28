@@ -1,9 +1,9 @@
 ## Entity Group: Get
-
+### Method
 ```
 GET /api/v1/entity-groups/{group}
 ```
-
+### Basic Example 
 > Request
 
 ```
