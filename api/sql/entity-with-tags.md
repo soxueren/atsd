@@ -4,10 +4,10 @@
 
 ```sql
 SELECT count(*), entity, tags.*, period (30 minute) FROM df.disk_used 
-WHERE entity = 'nurswgvml102' AND tags.mount_point = '/' 
-AND tags.file_system = '/dev/disk/by-uuid/8a5a178f-4dba-4282-803a-1fe43fc6220a' 
-AND datetime BETWEEN '2015-07-08T16:00:00Z' AND '2015-07-08T16:30:00Z' 
-GROUP BY entity, tags, period (30 minute)
+ WHERE entity = 'nurswgvml102' AND tags.mount_point = '/' 
+ AND tags.file_system = '/dev/disk/by-uuid/8a5a178f-4dba-4282-803a-1fe43fc6220a' 
+ AND datetime BETWEEN '2015-07-08T16:00:00Z' AND '2015-07-08T16:30:00Z' 
+ GROUP BY entity, tags, period (30 minute)
 ```
 
 > Response
