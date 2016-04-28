@@ -1,4 +1,4 @@
-# Allocating Memory to Axibase Time Series Database Components
+# Allocating Memory to components
 
 
 ##### Change maximum ATSD process memory
