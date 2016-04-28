@@ -5,10 +5,10 @@
 
 ```sql
 SELECT entity, time, AVG(cpu_busy.value), AVG(disk_used.value)
-FROM cpu_busy
-OUTER JOIN disk_used
-WHERE time > now - 1 * hour
-GROUP BY entity, period(15 minute)
+ FROM cpu_busy
+ OUTER JOIN disk_used
+ WHERE time > now - 1 * hour
+ GROUP BY entity, period(15 minute)
 ```
 
 > Response
