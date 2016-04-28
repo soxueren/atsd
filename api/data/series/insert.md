@@ -2,12 +2,11 @@
 
 Payload - an array of series with `data` arrays.
 
-### Request Fields
-
+### Method
 ```
 POST /api/v1/series/insert
 ```
-
+### Basic Example
 > Request
 
 ```json
@@ -57,6 +56,7 @@ POST /api/v1/series/insert
     }
 ]
 ```
+### Request Fields
 
 |**Field**|**Required**|**Description**|
 |---|---|---|---|
