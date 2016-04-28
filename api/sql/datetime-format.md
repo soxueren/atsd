@@ -5,7 +5,8 @@
 > Request
 
 ```sql
-SELECT datetime, time, value, entity FROM mpstat.cpu_busy WHERE entity LIKE '%00%' AND datetime BETWEEN '2015-04-09T14:00:00Z' AND '2015-04-09T14:05:00Z'
+SELECT datetime, time, value, entity FROM mpstat.cpu_busy 
+ WHERE entity LIKE '%00%' AND datetime BETWEEN '2015-04-09T14:00:00Z' AND '2015-04-09T14:05:00Z'
 ```
 
 > Response
