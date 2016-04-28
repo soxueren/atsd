@@ -1,8 +1,8 @@
 # Client for Java
 
 
-    Check out our [GitHub](https://github.com/axibase/atsd-api-java) for
-    more Axibase developments.
+> Check out our [GitHub](https://github.com/axibase/atsd-api-java) for
+more Axibase developments.
 
 The ATSD Client for Java enables Java developers to easily read and
 write statistics and metadata from the [Axibase Time-Series

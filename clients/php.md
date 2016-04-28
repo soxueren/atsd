@@ -1,14 +1,14 @@
 # Client for PHP
 
-    Check out our [GitHub](https://github.com/axibase/atsd-api-php) for
-    more Axibase developments.
+> Check out our [GitHub](https://github.com/axibase/atsd-api-php) for
+more Axibase developments.
 
 The ATSD Client for PHP enables PHP developers to easily read and write
 statistics and metadata from the [Axibase Times-Series
 Database](http://axibase.com/products/axibase-time-series-database/).
 With minimal effort, you can build reporting, analytic, and alerting
 solutions.
-Use[Composer](https://packagist.org/packages/axibase/atsd-api-php) to
+Use [Composer](https://packagist.org/packages/axibase/atsd-api-php) to
 get started with this PHP API.
 
 ## Implemented Methods
@@ -73,21 +73,21 @@ Once in composer.json, specify the following:
 
 See:
 
-[AtsdClientAlertsExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/AlertsExample.html)
+- [ClientAlertsExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/AlertsExample.html)
 
-[AtsdClientAlertsHistoryExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/AlertsHistoryExample.html)
+- [ClientAlertsHistoryExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/AlertsHistoryExample.html)
 
-[AtsdClientEntitiesExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/EntitiesExample.html)
+- [ClientEntitiesExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/EntitiesExample.html)
 
-[AtsdClientEntityAndTagsExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/EntityAndTagsExample.html)
+- [ClientEntityAndTagsExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/EntityAndTagsExample.html)
 
-[AtsdClientEntityGroupsExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/EntityGroupsExample.html)
+- [ClientEntityGroupsExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/EntityGroupsExample.html)
 
-[AtsdClientMetricsExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/MetricsExample.html)
+- [ClientMetricsExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/MetricsExample.html)
 
-[AtsdClientPropertiesExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/PropertiesExample.html)
+- [ClientPropertiesExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/PropertiesExample.html)
 
-[AtsdClientSeriesExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/SeriesExample.html)
+- [ClientSeriesExample](http://htmlpreview.github.io/?https://github.com/axibase/atsd-api-php/blob/master/examples/SeriesExample.html)
 
 ### Client Configuration
 

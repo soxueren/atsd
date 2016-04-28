@@ -1,6 +1,5 @@
 # Ruby
 
-
 Ruby is a dynamic, object orientated open source programming language.
 It has a refined syntax that is clear to read and simple write.
 
