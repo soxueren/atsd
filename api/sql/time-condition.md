@@ -3,7 +3,10 @@
 > Request
 
 ```sql
-SELECT time, value FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' AND time > 1428352721000 AND time < 1428352721000
+SELECT time, value FROM mpstat.cpu_busy 
+ WHERE entity = 'nurswgvml007' 
+ AND time > 1428352721000 
+ AND time < 1428352721000
 ```
 
 > Response - returns an array with 1 record:

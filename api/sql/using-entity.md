@@ -6,10 +6,10 @@ Calculate Cartesian product for table tags and fill each row with metric values 
 
 ```sql
 SELECT entity, disk_used.time, cpu_busy.time, AVG(cpu_busy.value), AVG(disk_used.value), tags.*
-FROM cpu_busy
-JOIN USING entity disk_used
-WHERE time > now - 1 * hour
-GROUP BY entity, tags, period(15 minute)
+ FROM cpu_busy
+ JOIN USING entity disk_used
+ WHERE time > now - 1 * hour
+ GROUP BY entity, tags, period(15 minute)
 ```
 
 > Response
