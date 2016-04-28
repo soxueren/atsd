@@ -14,7 +14,8 @@ SELECT entity, tags.mount_point AS mp, tags.file_system AS FS,
  WHERE time > now - 60 * minute
  GROUP BY entity, tags.mount_point, tags.file_system
  HAVING DELTA(disk_used.value) != 0
- ORDER BY DELTA(disk_used.value) DESC
+ ORDER BY DELTA(disk_used.value)
+ DESC
 ```
 
 > Response
