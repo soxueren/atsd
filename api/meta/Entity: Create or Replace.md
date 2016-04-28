@@ -1,9 +1,9 @@
 ## Entity: Create or Replace
-
+### Method
 ```
 PUT /api/v1/entities/{entity}
 ```
-
+### Basic Example
 ```
 {
     "tags": {
