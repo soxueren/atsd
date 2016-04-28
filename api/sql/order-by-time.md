@@ -3,7 +3,10 @@
 > Request
 
 ```sql
-SELECT time, value FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' AND time between now - 1 * hour and now ORDER BY time
+SELECT time, value FROM mpstat.cpu_busy 
+ WHERE entity = 'nurswgvml007' 
+ AND time BETWEEN now - 1 * hour AND now 
+ ORDER BY time
 ```
 
 > Response
