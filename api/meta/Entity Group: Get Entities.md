@@ -1,27 +1,16 @@
 ## Entity Group: Get Entities
 
-### Request Parameters
 
+### Method
 ```
 GET /api/v1/entity-groups/{group}/entities
 ```
-
+### Basic Example
 > Request
 
 ```
 http://atsd_server:8088/api/v1/entity-groups/nur-entities-name/entities?timeFormat=iso&tags=*&limit=3
 ```
-
-|**Parameter**|**Required**|**Description**|
-|---|---|---|
-|active|no| Filter entities by `last_insert_time`. If `active = true`, only entities with positive `last_insert_time` are included in the response|
-|expression|no|Use `name` variable for entity name. Use `*` placeholder in `like` expressions|
-|tags|no|Specify entity tags to be included in the response|
-|limit|no|Limit response to first N entities, ordered by name.|
-|timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
-
-### Response Fields
-
 > Response
 
 ```json
@@ -48,6 +37,16 @@ http://atsd_server:8088/api/v1/entity-groups/nur-entities-name/entities?timeForm
     }
 ]
 ```
+### Request Fields
+|**Parameter**|**Required**|**Description**|
+|---|---|---|
+|active|no| Filter entities by `last_insert_time`. If `active = true`, only entities with positive `last_insert_time` are included in the response|
+|expression|no|Use `name` variable for entity name. Use `*` placeholder in `like` expressions|
+|tags|no|Specify entity tags to be included in the response|
+|limit|no|Limit response to first N entities, ordered by name.|
+|timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
+
+### Response Fields
 
 | **Field**                                 | **Description**                                                                             |
 |------------------------------------------|---------------------------------------------------------------------------------------------|
