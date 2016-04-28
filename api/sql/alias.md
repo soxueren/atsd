@@ -7,13 +7,15 @@ Unquoted `alias` must begin with a letter followed by letters, underscores, digi
 > Request
 
 ```sql
-SELECT time, value, entity, metric AS "measurement" FROM mpstat.cpu_busy WHERE entity = 'nurswgvml006' AND time between now - 5 * minute and now
+SELECT time, value, entity, metric AS "measurement" FROM mpstat.cpu_busy 
+WHERE entity = 'nurswgvml006' AND time BETWEEN now - 5 * minute AND now
 ```
 
 > OR
 
 ```sql
-SELECT time, value, entity, metric AS 'measurement' FROM mpstat.cpu_busy WHERE entity = 'nurswgvml006' AND time between now - 5 * minute and now
+SELECT time, value, entity, metric AS 'measurement' FROM mpstat.cpu_busy 
+WHERE entity = 'nurswgvml006' AND time BETWEEN now - 5 * minute AND now
 ```
 
 > Response
