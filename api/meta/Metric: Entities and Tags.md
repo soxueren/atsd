@@ -2,27 +2,17 @@
 
 Returns a list of unique series tags for the metric. The list is based on data stored on disk for the last 24 hours.
 
-### Request Parameters
 
+### Method
 ```
 GET /api/v1/metrics/{metric}/entity-and-tags
 ```
-
+### Basic Example
 > Request
 
 ```
 http://atsd_server:8088/api/v1/metrics/disk_used/entity-and-tags?timeFormat=iso
 ```
-
-| **Parameter** | **Required** | **Description**                 |
-|---------------|--------------|---------------------------------|
-| entity        | no       | Filter entities by entity name. |
-|minInsertDate|no|return entities and tags with lastInsertTime equal or greater than specified time, accepts iso date format|
-|maxInsertDate|no|return entities with lastInsertTime less than specified time, accepts iso date format|
-|timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
-
-### Response Fields
-
 > Response
 
 ```json
@@ -61,6 +51,16 @@ http://atsd_server:8088/api/v1/metrics/disk_used/entity-and-tags?timeFormat=iso
     }
 ]
 ```
+### Request Parameters
+| **Parameter** | **Required** | **Description**                 |
+|---------------|--------------|---------------------------------|
+| entity        | no       | Filter entities by entity name. |
+|minInsertDate|no|return entities and tags with lastInsertTime equal or greater than specified time, accepts iso date format|
+|maxInsertDate|no|return entities with lastInsertTime less than specified time, accepts iso date format|
+|timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
+
+### Response Fields
+
 
 | **Field**       | **Description**                                                                                        |
 |----------------|--------------------------------------------------------------------------------------------------------|
