@@ -47,3 +47,4 @@ and cannot be fixed with a restart.
 ```sh
  tail -f /opt/atsd/atsd/logs/atsd.log
 ```
+
