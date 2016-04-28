@@ -5,7 +5,8 @@ Query for one metric, one entity and detailed values for time range
 > Request
 
 ```sql
-SELECT time, value, entity FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' AND time >= previous_day AND time < now
+SELECT time, value, entity FROM mpstat.cpu_busy 
+ WHERE entity = 'nurswgvml007' AND time >= previous_day AND time < now
 ```
 
 > Response
