@@ -6,10 +6,10 @@ This function numbers rows according to grouping columns (example: `entity, tags
 
 ```sql
 SELECT entity, time, AVG(cpu_busy.value)
-FROM cpu_busy
-WHERE time > now - 1 * hour
-GROUP BY entity, period(15 minute)
-WITH row_number(entity, tags ORDER BY time DESC) <= 3
+ FROM cpu_busy
+ WHERE time > now - 1 * hour
+ GROUP BY entity, period(15 minute)
+ WITH row_number(entity, tags ORDER BY time DESC) <= 3
 ```
 
 > Response
