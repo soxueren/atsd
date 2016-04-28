@@ -2,6 +2,7 @@
 
 Returns an array of properties for entity and type. 
 
+### Methods
 ```
 GET /api/v1/entities/{entity}/property-types
 ```
@@ -10,6 +11,7 @@ GET /api/v1/entities/{entity}/property-types
 GET /api/v1/properties/{entity}/types
 ```
 
+### Basic Example
 > Request
 
 ```
