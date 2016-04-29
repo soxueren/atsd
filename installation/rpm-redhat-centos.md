@@ -24,7 +24,7 @@ dependencies, use the [Manual ATSD Installation guide](../administration/update
 ## Installation Steps
 
 ```sh
-sudo yum install java-1.7.0-openjdk-devel openssh-server cronie sysstat sed passwd iproute net-tools                 
+sudo yum install java-1.7.0-openjdk-devel openssh-server cronie sysstat sed passwd iproute net-tools
 ```
 
 If some of the above dependencies are not found, for example in case of
@@ -32,7 +32,7 @@ installation on new systems, perform `sudo yum update` to upgrade all
 packages on your operating system to the latest versions.
 
 ```sh
-sudo rpm -i atsd_ce_${VERSION}_amd64.rpm                                   
+sudo rpm -i atsd_ce_${VERSION}_amd64.rpm
 ```
 
 ## Troubleshooting
@@ -40,7 +40,7 @@ sudo rpm -i atsd_ce_${VERSION}_amd64.rpm
 If ATSD web interface is not accessible on port 8088, open **atsd.log** and review it for errors.
 
 ```sh
- tail -f /opt/atsd/atsd/logs/atsd.log                                     
+tail -f /opt/atsd/atsd/logs/atsd.log
 ```
 
 ## Optional Steps
