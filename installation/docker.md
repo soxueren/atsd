@@ -1,85 +1,116 @@
-# Install on Docker
+# Installation on Docker
 
-This installation requires Docker 1.6+. [Use the official Docker
-installation guides to install Docker on your target
-machine.](https://docs.docker.com/installation/ "Docker Installation Guides")
+## Host Requirements
 
-Axibase Time-Series Database Dockerfile on
-GitHub: [https://github.com/axibase/dockers/blob/master/atsd/Dockerfile](https://github.com/axibase/dockers/blob/master/atsd/Dockerfile "ATSD Docker GitHub")
+* [Docker Engine](https://docs.docker.com/engine/installation/) 1.7+.
 
-Start ATSD Docker container:
+## Image Information
 
-```sh
- docker run \                                                             
-   -d \                                                                   
-   -p 8088:8088 \                                                         
-   -p 8443:8443 \                                                         
-   -p 8081:8081 \                                                         
-   -p 8082:8082/udp \                                                     
-   -h atsd \                                                              
-   --name=atsd \                                                          
-   --restart=always \                                                     
-   axibase/atsd:latest                                                    
-```
-> Note: 8088 – http, 8443 – https, 8081 – network commands TCP, 8082 –
-network commands UDP.*\
- *The full list of exposed ports is specified in ATSD Dockerfile.*
+* Image name: `axibase/atsd:latest`
+* [Dockerfile](https://github.com/axibase/dockers/blob/master/atsd/Dockerfile)
+* [Docker Hub](https://hub.docker.com/r/axibase/atsd/)
 
-In the command above, be sure to set the following parameters correctly:
+## Start Container
 
-`-h` sets the hostname of the container
+### Option 1: Configure collector account automatically
 
-`--name` sets the name of the container
+Replace `${collector-user}` and `${collector-password}` with new credentials for a built-in [collector account](collector-account.md) that will be created automatically. Minimum password length is **6 characters**.
 
-`-e AXIBASE_USER_PASSWORD=` optionally, set password for ‘axibase’ user
-in Ubuntu
-
-`-e ATSD_USER_NAME=` optionally, set username for the default
-administrator account in ATSD
-
-`-e ATSD_USER_PASSWORD=` optionally, sets password for the default
-administrator account in ATSD. Minimum password length is 6 characters.
-
-Depending on your Docker host configuration, you may need to change port
-mappings for the container.
-
-For example:
-
-```sh
- docker run \                                                             
-   -dit \                                                                 
-   -p 9088:8088 \                                                         
-   -p 9081:8081 \                                                         
-   -p 9443:8443 \                                                         
-   -p 9082:8082/udp \                                                     
-   -h atsd \                                                              
-   --name=atsd \                                                          
-   --restart=always \                                                     
-   axibase/atsd:latest \                                                  
-   tail -f /opt/atsd/atsd/logs/start.log                                  
+```properties
+docker run \
+  --detach \
+  --hostname=atsd \
+  --name=atsd \
+  --restart=always \
+  --publish 8088:8088 \
+  --publish 8443:8443 \
+  --publish 8081:8081 \
+  --publish 8082:8082/udp \
+  --env ATSD_USER_NAME=${collector-user} \
+  --env ATSD_USER_PASSWORD=${collector-password} \
+  axibase/atsd:latest
 ```
 
-![](images/atsd_install_shell.png "atsd_install_shell")
+### Option 2: Configure collector account manually
 
+If `ATSD_USER_{NAME, PASSWORD}` credentials are not specified as part of `docker run` command, no collector account will be created.
 
-#### Known Issues
+In this case, you can launch the container without `ATSD_USER_{NAME, PASSWORD}` parameters and configure both administrator and [collector](collector-account.md) accounts on initial login.
 
-If ATSD fails to start in the container, verify that your Docker host
-runs on a supported kernel level.
-
-```sh
- uname -a                                                                 
+```properties
+docker run \
+  --detach \
+  --hostname=atsd \
+  --name=atsd \
+  --restart=always \
+  --publish 8088:8088 \
+  --publish 8443:8443 \
+  --publish 8081:8081 \
+  --publish 8082:8082/udp \
+  axibase/atsd:latest
 ```
 
-```sh
- 3.13.0-79.123+                                                           
- 3.19.0-51.57+                                                            
- 4.2.0-30.35+                                                             
+It may take up to 5 minutes to initialize the database.
+
+## Check Installation
+
+```
+docker logs -f atsd
 ```
 
-See “Latest Quick Workarounds” for Docker issue \#18180 on
-[https://github.com/docker/docker/issues/18180](https://github.com/docker/docker/issues/18180)
+You should see _ATSD start completed_ message at the end of the start.log.
 
-## Optional Steps
-- [Veryfing installation](veryfing-installation.md)
-- [Post-installation](post-installation.md)
+## Launch Parameters
+
+**Name** | **Required** | **Description**
+----- | ----- | -----
+`--detach` | Yes | Run container in background and print container id.
+`--hostname` | No | Assign hostname to the container.
+`--name` | Yes | Assign a unique name to the container.
+`--restart` | No | Auto-restart policy. _Not supported in all Docker Engine versions._
+`--publish` | No | Publish a container's port to the host
+`--env ATSD_USER_NAME` | No | Username for the built-in collector account
+`--env ATSD_USER_PASSWORD` | No | Password for the built-in collector account. Minimum length is 6 characters.
+
+## Exposed Ports
+
+* 8088 – http
+* 8443 – https
+* 8081 – [TCP network commands](https://axibase.com/atsd/api/#network-commands)
+* 8082 – [UDP network commands](https://axibase.com/atsd/api/#network-commands)
+
+## Port Mappings
+
+Depending on your Docker host network configuration, you may need to change port mappings in case some of the published ports are already taken.
+
+```sh
+Cannot start container <container_id>: failed to create endpoint atsd on network bridge: Bind for 0.0.0.0:8088 failed: port is already allocated
+```
+
+```properties
+docker run \
+  --detach \
+  --hostname=atsd \
+  --name=atsd \
+  --restart=always \
+  --publish 9088:8088 \
+  --publish 9443:8443 \
+  --publish 9081:8081 \
+  --publish 9082:8082/udp \
+  axibase/atsd:latest
+```
+
+## Known Issues
+
+If the container fails to start, verify that your Docker host runs on a supported kernel level.
+
+```
+uname -a
+```
+
+* 3.13.0-79.123+
+* 3.19.0-51.57+
+* 4.2.0-30.35+
+
+See "Latest Quick Workarounds" in [#18180](https://github.com/docker/docker/issues/18180#issuecomment-193708192)
+
