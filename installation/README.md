@@ -4,7 +4,7 @@
 
 | Distribution | Format | Software | Installation Guide |
 | --- | --- | --- | :---: |
-| Ubuntu/Debian | apt-get repository |  | [View](ubuntu-debian-apt.md)|
+| Ubuntu/Debian | apt |  | [View](ubuntu-debian-apt.md)|
 | Ubuntu/Debian  | deb | [Download](http://axibase.com/public/atsd_ce_deb_latest.htm)  | [View](debian.md#installation-from-debian-package) |
 | Docker | image |  | [View](docker.md#install-on-docker)|
 | RedHat/CentOS| rpm | [Download](http://axibase.com/public/atsd_ce_rpm_latest.htm)  | [View](rpm-redhat-centos.md)|
