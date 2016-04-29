@@ -20,10 +20,6 @@ Supported commands:
 * series
 * property
 * message
-* ping
 
-<aside class="success">
-The client may choose to maintain a persistent connection and continue writing commands into the outputstream for several minutes and hours.
-The server should impose a read timeout of 10 minutes.
-To prevent a timeout, the client may send a `ping` command at any time.
-</aside>
+
+
