@@ -114,3 +114,6 @@ uname -a
 
 See "Latest Quick Workarounds" in [#18180](https://github.com/docker/docker/issues/18180#issuecomment-193708192)
 
+## Optional Steps
+- [Veryfing installation](veryfing-installation.md)
+- [Post-installation](post-installation.md)
