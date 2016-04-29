@@ -1,4 +1,4 @@
-# Ubuntu/Debian: apt-get
+# Ubuntu/Debian: APT
 
 ## Supported Versions
 
