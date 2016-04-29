@@ -1,18 +1,24 @@
-# Installing with apt-get
+# Ubuntu/Debian: apt-get
 
+## Supported Versions
 
-This installation guide applies to Ubuntu OS version 14.x, 15.x and
-Debian OS version 6.x, 7.x.
+- Ubuntu 14.x
+- Ubuntu 15.x
+- Debian 6.x
+- Debian 7.x
 
-Make sure that the target machine has at least 1 GB of RAM. For
-production installations see
-[Requirements](../administration/requirements.md "ATSD Requirements")
+## Requirements
 
-Add Axibase repository on the target machine:
+- Minimum RAM: 1 GB 
+- See [Requirements](../administration/requirements.md "ATSD Requirements") for additional information.
+
+## Installation Steps
 
 ```sh
 sudo apt-get update
 ```
+
+Add **axibase.com/public/repository/deb/** repository:
 
 ```sh
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 26AEE425A57967CFB323846008796A6514F3CB79                             
@@ -28,18 +34,19 @@ Update repositories and follow the prompts to install ATSD:
 sudo apt-get update && sudo apt-get install atsd                       
 ```
 
-## Installation Troubleshooting
+## Troubleshooting
 
-If ATSD web interface is not accessible, open its log file and review it
-for errors.
+If ATSD web interface is not accessible on port 8088, open **atsd.log** and review it for errors.
 
-Send the log file to Axibase support in case the problem is persistent
-and cannot be fixed with a restart.
 
 ```sh
  tail -f /opt/atsd/atsd/logs/atsd.log                                     
 ```
 
+
+Send the log file to Axibase support in case the problem cannot be resolved with a restart.
+
 ## Optional Steps
+
 - [Veryfing installation](veryfing-installation.md)
 - [Post-installation](post-installation.md)
