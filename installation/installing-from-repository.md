@@ -14,19 +14,18 @@ Add Axibase repository on the target machine:
 sudo apt-get update
 ```
 
-```SH
- sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 2 
- 6AEE425A57967CFB323846008796A6514F3CB79                                  
+```sh
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 26AEE425A57967CFB323846008796A6514F3CB79                             
 ```
 
 ```sh
- sudo echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./" >> /etc/apt/sources.list.d/axibase.list
+sudo echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./" >> /etc/apt/sources.list.d/axibase.list
 ```
 
 Update repositories and follow the prompts to install ATSD:
 
 ```sh
- sudo apt-get update && sudo apt-get install atsd                         
+sudo apt-get update && sudo apt-get install atsd                       
 ```
 
 ## Installation Troubleshooting
@@ -40,6 +39,7 @@ and cannot be fixed with a restart.
 ```sh
  tail -f /opt/atsd/atsd/logs/atsd.log                                     
 ```
+
 ## Optional Steps
 - [Veryfing installation](veryfing-installation.md)
 - [Post-installation](post-installation.md)
