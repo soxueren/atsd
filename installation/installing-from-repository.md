@@ -20,7 +20,8 @@ sudo apt-get update
 ```
 
 ```sh
- sudo echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./" >> /etc/apt/sources.list.d/axibase.list
+ sudo echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./"\
+ >> /etc/apt/sources.list.d/axibase.list
 ```
 
 Update repositories and follow the prompts to install ATSD:
