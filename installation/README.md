@@ -11,6 +11,6 @@
 | SUSE Linux Enterprise Server | rpm  | [Download](http://axibase.com/public/atsd_ce_rpm_sles_latest.htm)  | [View](rpm-sles.md)|
 | Virtual Machine for VMware | ova | [Download](http://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](vmware-esxi-server-vsphere.md)|
 | Virtual Machine for Oracle VirtualBox | ova | [Download](http://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](virtualbox.md)|
-| Standalone application for MapR | tar.gz | [Download](http://axibase.com/public/atsd_ce_distrib_latest.htm) | [View](mapr.md)|
+| MapR | tar.gz | [Download](http://axibase.com/public/atsd_ce_distrib_latest.htm) | [View](mapr.md)|
 | ARM Devices | tar.gz | [Download](http://axibase.com/public/atsd_ce_distrib_latest.htm)  | [View](arm.md)|
 
