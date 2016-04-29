@@ -38,7 +38,6 @@ sudo apt-get update && sudo apt-get install atsd
 
 If ATSD web interface is not accessible on port 8088, open **atsd.log** and review it for errors.
 
-
 ```sh
  tail -f /opt/atsd/atsd/logs/atsd.log                                     
 ```
