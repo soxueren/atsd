@@ -26,7 +26,7 @@ guide](installing-from-repository.md "Install ATSD Using Axibase Repositories").
 ```
 
 ```sh
- sudo dpkg -i atsd_ce_8645_amd64.deb
+ sudo dpkg -i atsd_ce_$version$_amd64.deb
 ```
 
 *If there are any issues with installing the dependencies, [check the
