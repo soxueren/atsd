@@ -4,8 +4,8 @@
 
 | Distribution | Format | Software | Installation Guide |
 | --- | --- | --- | :---: |
-| Ubuntu/Debian  | deb | [Download](http://axibase.com/public/atsd_ce_deb_latest.htm)  | [View](debian.md#installation-from-debian-package) |
 | Ubuntu/Debian | apt-get repository |  | [View](installing-from-repository.md)|
+| Ubuntu/Debian  | deb | [Download](http://axibase.com/public/atsd_ce_deb_latest.htm)  | [View](debian.md#installation-from-debian-package) |
 | Docker | image |  | [View](docker.md#install-on-docker)|
 | RedHat/CentOS| rpm | [Download](http://axibase.com/public/atsd_ce_rpm_latest.htm)  | [View](rpm-redhat-centos.md)|
 | SUSE Linux Enterprise Server | rpm  | [Download](http://axibase.com/public/atsd_ce_rpm_sles_latest.htm)  | [View](rpm-sles.md)|
