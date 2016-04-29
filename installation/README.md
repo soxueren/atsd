@@ -9,8 +9,8 @@
 | Docker | image |  | [View](docker.md#install-on-docker)|
 | RedHat/CentOS| rpm | [Download](http://axibase.com/public/atsd_ce_rpm_latest.htm)  | [View](rpm-redhat-centos.md)|
 | SUSE Linux Enterprise Server | rpm  | [Download](http://axibase.com/public/atsd_ce_rpm_sles_latest.htm)  | [View](rpm-sles.md)|
-| Virtual Machine for VMware | ova | [Download](http://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](vmware-esxi-server-vsphere.md)|
-| Virtual Machine for Oracle VirtualBox | ova | [Download](http://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](virtualbox.md)|
-| MapR | tar.gz | [Download](http://axibase.com/public/atsd_ce_distrib_latest.htm) | [View](mapr.md)|
+| VMware Virtual Machine  | ova | [Download](http://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](vmware-esxi-server-vsphere.md)|
+| Oracle VirtualBox Virtual Machine | ova | [Download](http://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](virtualbox.md)|
+| MapR M3 | tar.gz | [Download](http://axibase.com/public/atsd_ce_distrib_latest.htm) | [View](mapr.md)|
 | ARM Devices | tar.gz | [Download](http://axibase.com/public/atsd_ce_distrib_latest.htm)  | [View](arm.md)|
 
