@@ -6,7 +6,7 @@
 * [Data](data/README.md) API
 * [Meta](meta/README.md) API
 * [SQL](sql/README.md) API
-* 
+
 ## ATSD API Clients
 
 The following client libraries enable developers to query time-series and related meta-data such as entities, metrics and tags from ATSD.
