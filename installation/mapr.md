@@ -72,4 +72,6 @@ Start ATSD:
 
 Verify that ATSD web interface is available at http://atsd_hostname:8099
 
-We also recommend to view [veryfing installation](veryfing-installation.md) and [post installation](post-installation.md) pages.
+## Optional Steps
+- [Veryfing installation](veryfing-installation.md)
+- [Post-installation](post-installation.md)

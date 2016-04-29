@@ -90,4 +90,6 @@ axibase.
 
 ![](images/login-atsd.png "login atsd")
 
-We also recommend to view [veryfing installation](veryfing-installation.md) and [post installation](post-installation.md) pages.
+## Optional Steps
+- [Veryfing installation](veryfing-installation.md)
+- [Post-installation](post-installation.md)

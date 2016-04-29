@@ -80,4 +80,6 @@ runs on a supported kernel level.
 See “Latest Quick Workarounds” for Docker issue \#18180 on
 [https://github.com/docker/docker/issues/18180](https://github.com/docker/docker/issues/18180)
 
-We also recommend to view [veryfing installation](veryfing-installation.md) and [post installation](post-installation.md) pages.
+## Optional Steps
+- [Veryfing installation](veryfing-installation.md)
+- [Post-installation](post-installation.md)
