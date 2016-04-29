@@ -20,7 +20,7 @@ multiple automation procedures are triggered. For instance:
 
 ![](images/atsd_rule_engine.png "atsd_rule_engine")
 
-### In-Memory Processing
+## In-Memory Processing
 
 The data is processed by the Rule Engine in-memory which operates
 independently of storage, messaging, and replication channels. If the
@@ -33,7 +33,7 @@ unless it is required by functions specified in the expression. For
 example, except for percentile() function, summary statistics for each
 window can be re-computed without maintaining input data in memory.
 
-### Window Types
+## Window Types
 
 Windows can be count-based or time-based. A count-based window maintains
 an ordered array of elements. Once the array reaches the specified
@@ -45,7 +45,7 @@ elements that arrived over the last 5 minutes. As the current time
 increases, the start time is incremented accordingly as if the window is
 ‘sliding’ along the timeline.
 
-### Window Status
+## Window Status
 
 Windows are stateful. Once the expression for the given window evaluates
 to TRUE, it is maintained in memory with status OPEN. On subsequent TRUE
@@ -57,7 +57,7 @@ is TRUE enables deduplication and supports flexible action programming.
 For example, some actions can be configured to execute only on OPEN
 status, while others can run on every n-th REPEAT occurrence.
 
-### Expressions
+## Expressions
 
 Expressions represent statements that return a boolean value: TRUE or
 FALSE.
@@ -70,7 +70,7 @@ to fit into application memory. The list of functions and operators is
 specific to the type of received data: time-series, properties, or
 message.
 
-### Developing Rules
+## Developing Rules
 
 Rules are typically developed by system engineers with specialized
 knowledge in their respective subject matter domains. Rules can be also
@@ -86,7 +86,7 @@ Rule Engine provides the following capabilities:
 -   Automated thresholding using forecast() function
 -   Override tables with support for wildcards
 
-### Thresholds
+##   Thresholds
 
 Thresholds specified in expressions can be set manually or using the
 forecast function. For example, the following rule fires if observed
@@ -181,9 +181,9 @@ Alert exceptions can be created directly in the alerts table.
 Alert exceptions can be also created using the 'Exception' link received
 in email notifications.
 
-# Rule reference
+## Rule reference
 
-## Rule Types
+### Rule Types
 
 | Type | Window | Example | Description |
 | --- | --- | --- | --- |
@@ -200,7 +200,7 @@ in email notifications.
 | log frequency | time('15min') | `count(message) > 10 message LIKE ‘%Invalid user%from%’` | Raise an alert if more than 10 occurrences of invalid user message are written into authentication log over 15 minutes |
 | log correlation | time('15min') | `avg(value) > 75 message NOT LIKE ‘%compaction started%’` | Raise an alert if 15-minute average exceeds threshold except when database compaction has been started |
 
-## Analytical Functions
+### Analytical Functions
 
 | Name | Example |
 | --- | --- |
@@ -212,7 +212,7 @@ in email notifications.
 | COUNT | `count(value) > 100` |
 | FORECAST (time) | `forecast(value, ’30 min’) < 25` |
 
-## Calendar Functions
+### Calendar Functions
 
 | Name | Example |
 | --- | --- |
@@ -220,7 +220,7 @@ in email notifications.
 | cron AND | `‘* 8-10 * * MON-FRI’ AND ‘* 16-18 * * MON-FRI’` |
 | cron OR | `‘* 0-7,19-23 * * MON-FRI’ OR ‘* * * * SUN, SAT’` |
 
-## Tag Functions
+### Tag Functions
 
 | Name | Example | Description |
 | --- | --- | --- |
@@ -229,7 +229,7 @@ in email notifications.
 | metric.tag(name) | `metric.tag(‘type’) = ‘availability’` | Tags defined for metrics can be used in filters, groupings, and alerts |
 | entity.groupTag(name) | `entity. groupTag(‘email’, ‘;’)` | Tags defined for entity groups can be used in filters, groupings, and alerts |
 
-## Data Windows
+### Data Windows
 
 | Type | Example |
 | --- | --- |
@@ -237,7 +237,7 @@ in email notifications.
 | Time | `time('30 minute')` |
 | Time (external) | `ext_timed('30 minute')` |
 
-## De-duplication Functions
+### De-duplication Functions
 
 | Type | Example | Description |
 | --- | --- | --- |
@@ -245,7 +245,8 @@ in email notifications.
 | NONE | `None` | Do not raise any alerts |
 | EVERY N EVENTS | `count(10)` | Raise alert every 10 times when expression is true |
 | EVERY N MINUTES | `time('15 min')` | Raise alert no more often than 15 minutes when expression is true |
-## Historical Data Queries
+
+### Historical Data Queries
 
 | Type | Example | Description |
 | --- | --- | --- |

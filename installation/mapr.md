@@ -52,20 +52,16 @@ minutes:
 Start HBase master and regionserver services:
 
 ```sh
- /opt/mapr/hbase/hbase-0.94.24/bin/hbase-daemons.sh --config /opt/mapr/hb 
- ase/hbase-0.94.24/conf start master                                      
- /opt/mapr/hbase/hbase-0.94.24/bin/hbase-daemons.sh --config /opt/mapr/hb 
- ase/hbase-0.94.24/conf start regionserver                                
+ /opt/mapr/hbase/hbase-0.94.24/bin/hbase-daemons.sh --config /opt/mapr/hbase/hbase-0.94.24/conf start master
+ /opt/mapr/hbase/hbase-0.94.24/bin/hbase-daemons.sh --config /opt/mapr/hbase/hbase-0.94.24/conf start regionserver
 ```
 
 Modify ATSD configuration files to avoid port conflict with MapR
 services:
 
 ```sh
- echo "hbase.zookeeper.property.clientPort = 5181" >> /opt/atsd/atsd/conf 
- /hadoop.properties                                                       
- sed -i "s/http.port = 8088/http.port = 8099/g" /opt/atsd/atsd/conf/serve 
- r.properties                                                             
+ echo "hbase.zookeeper.property.clientPort = 5181" >> /opt/atsd/atsd/conf/hadoop.properties
+ sed -i "s/http.port = 8088/http.port = 8099/g" /opt/atsd/atsd/conf/server.properties
 ```
 
 Start ATSD:

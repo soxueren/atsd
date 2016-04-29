@@ -100,8 +100,7 @@ Compares previous and current property tags and returns a difference map contain
 Sample difference map:
 
 ```java
-{inputarguments_19='-Xloggc:/home/axibase/axibase-collector/logs/gc_29286.log' 
-                -> '-Xloggc:/home/axibase/axibase-collector/logs/gc_13091.log'}
+{inputarguments_19='-Xloggc:/home/axibase/axibase-collector/logs/gc_29286.log' -> '-Xloggc:/home/axibase/axibase-collector/logs/gc_13091.log'}
 ```
 
 The map includes tags that are not present in new property tags and tags that were deleted.
@@ -128,9 +127,8 @@ NOT property_compare_except(['name', '*time'], ['*Xloggc*']).isEmpty()
 
 Returns true if property tags have changed except for `name` tag, any tags that end with `time`, and any previous tags with value containing `Xloggc`. Pattern `*Xloggc*` would ignore changes such as:
 
-```
-{inputarguments_19='-Xloggc:/home/axibase/axibase-collector/logs/gc_29286.log' 
-                -> '-Xloggc:/home/axibase/axibase-collector/logs/gc_13091.log'}
+``` java
+{inputarguments_19='-Xloggc:/home/axibase/axibase-collector/logs/gc_29286.log'-> '-Xloggc:/home/axibase/axibase-collector/logs/gc_13091.log'}
 ```
 
 

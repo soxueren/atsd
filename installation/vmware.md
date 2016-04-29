@@ -72,11 +72,9 @@ for ATSD and Components to start.
 
 ​9. Check the IP address of the VM:
 
-+--------------------------------------------------------------------------+
-| ~~~~ {.javascript style="font-family:monospace;"}                        |
-| ip addr                                                                  |
-| ~~~~                                                                     |
-+--------------------------------------------------------------------------+
+```sh
+ ip addr                                                                  
+```
 
 ![](images/screenshot_280415_15-22-59.png "screenshot_280415_15-22-59")
 
