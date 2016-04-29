@@ -1,5 +1,7 @@
 # Installation
 
+**By installing ATSD you agree to [Axibase Time Series Database License Terms and Conditions](https://axibase.com/wp-content/uploads/2014/12/ATSD-Community-Edition-Software-License.pdf)**.
+
 | Distribution | Format | Software | Installation Guide |
 | --- | --- | --- | :---: |
 | Ubuntu/Debian  | deb | [Download](http://axibase.com/public/atsd_ce_deb_latest.htm)  | [View](debian.md#installation-from-debian-package) |
@@ -12,4 +14,3 @@
 | Standalone application for MapR | Standalone application | [Download](http://axibase.com/public/atsd_ce_distrib_latest.htm) | [View](mapr.md)|
 | ARM Devices | Standalone application | [Download](http://axibase.com/public/atsd_ce_distrib_latest.htm)  | [View](arm.md)|
 
-> By downloading and installing ATSD, you agree to the [Axibase Time Series Database License Terms and Conditions](https://axibase.com/wp-content/uploads/2014/12/ATSD-Community-Edition-Software-License.pdf).
