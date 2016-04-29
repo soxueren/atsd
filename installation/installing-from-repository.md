@@ -1,4 +1,4 @@
-# Installing from Repository
+# Installing with apt-get
 
 
 This installation guide applies to Ubuntu OS version 14.x, 15.x and
