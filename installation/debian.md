@@ -21,7 +21,8 @@ guide](installing-from-repository.md "Install ATSD Using Axibase Repositories").
 ```
 
 ```sh
- sudo apt-get install openjdk-7-jdk sysstat openssh-server cron debconf libc6 passwd adduser iproute net-tools curl
+ sudo apt-get install openjdk-7-jdk sysstat openssh-server cron debconf \
+ libc6 passwd adduser iproute net-tools curl
 ```
 
 ```sh
