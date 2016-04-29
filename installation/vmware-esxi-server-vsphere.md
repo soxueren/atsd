@@ -95,3 +95,5 @@ complete, you will need to setup a static IP in /etc/network/interfaces.
 axibase.
 
 ![](images/atsd-login1.png "atsd login")
+
+Also useful for you [veryfing installation](veryfing-installation.md) and [post installation](post-installation.md) pages.
