@@ -12,7 +12,7 @@ If the target machine does not have Internet connection to download
 dependencies, use the [Manual ATSD Installation guide](../administration/update-manual.md "Manual ATSD Installation").
 
 ```sh
- sudo yum install java-1.7.0-openjdk-devel openssh-server cronie sysstat  
+ sudo yum install java-1.7.0-openjdk-devel openssh-server cronie sysstat\ 
  sed passwd iproute net-tools                                             
 ```
 
