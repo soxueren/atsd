@@ -33,4 +33,4 @@ Install ATSD
  sudo rpm -i atsd_ce_8645_amd64_sles.rpm                                  
 ```
 
-Also useful for you [veryfing installation](veryfing-installation.md) and [post installation](post-installation.md) pages.
+We also recommend to view [veryfing installation](veryfing-installation.md) and [post installation](post-installation.md) pages.

@@ -26,4 +26,4 @@ ATSD.](http://axibase.com/products/axibase-time-series-database/download-atsd/ "
  sudo /opt/atsd/install_user.sh                                           
 ```
 
-Also useful for you [veryfing installation](veryfing-installation.md) and [post installation](post-installation.md) pages.
+We also recommend to view [veryfing installation](veryfing-installation.md) and [post installation](post-installation.md) pages.
