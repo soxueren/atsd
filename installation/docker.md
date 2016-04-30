@@ -86,7 +86,8 @@ ATSD web interface is accessible on port 8088.
 Depending on your Docker host network configuration, you may need to change port mappings in case some of the published ports are already taken.
 
 ```sh
-Cannot start container <container_id>: failed to create endpoint atsd on network bridge: Bind for 0.0.0.0:8088 failed: port is already allocated
+Cannot start container <container_id>: failed to create endpoint atsd on network bridge: 
+Bind for 0.0.0.0:8088 failed: port is already allocated
 ```
 
 ```properties
