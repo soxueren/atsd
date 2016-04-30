@@ -52,13 +52,13 @@ docker run \
 
 It may take up to 5 minutes to initialize the database.
 
-### Launch Parameters
+## Launch Parameters
 
 **Name** | **Required** | **Description**
 ----- | ----- | -----
 `--detach` | Yes | Run container in background and print container id.
 `--hostname` | No | Assign hostname to the container.
-`--name` | Yes | Assign a unique name to the container.
+`--name` | No | Assign a unique name to the container.
 `--restart` | No | Auto-restart policy. _Not supported in all Docker Engine versions._
 `--publish` | No | Publish a container's port to the host
 `--env ATSD_USER_NAME` | No | Username for the built-in collector account
@@ -71,6 +71,8 @@ docker logs -f atsd
 ```
 
 You should see _ATSD start completed_ message at the end of the start.log.
+
+ATSD web interface is accessible on port 8088.
 
 ## Exposed Ports
 
@@ -102,7 +104,7 @@ docker run \
 
 ## Known Issues
 
-If the container fails to start, verify that your Docker host runs on a supported kernel level.
+Verify that your Docker host runs on a supported kernel level if the container fails to start or the installation script stalls.
 
 ```
 uname -a
@@ -112,8 +114,9 @@ uname -a
 * 3.19.0-51.57+
 * 4.2.0-30.35+
 
-See "Latest Quick Workarounds" in [#18180](https://github.com/docker/docker/issues/18180#issuecomment-193708192)
+See "Workarounds" in [#18180](https://github.com/docker/docker/issues/18180#issuecomment-193708192)
 
 ## Optional Steps
+
 - [Veryfing installation](veryfing-installation.md)
 - [Post-installation](post-installation.md)
