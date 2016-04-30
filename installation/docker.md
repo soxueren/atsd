@@ -14,7 +14,7 @@
 
 ### Option 1: Configure collector account automatically
 
-Replace `${collector-user}` and `${collector-password}` with new credentials for a built-in [collector account](collector-account.md) that will be created automatically. Minimum password length is **6 characters**.
+Replace `${collector-user}` and `${collector-password}` with new credentials for a built-in [collector account](../administration/collector-account.md) that will be created automatically. Minimum password length is **6 characters**.
 
 ```properties
 docker run \
