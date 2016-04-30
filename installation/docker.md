@@ -35,7 +35,7 @@ docker run \
 
 If `ATSD_USER_{NAME, PASSWORD}` credentials are not specified as part of `docker run` command, no collector account will be created.
 
-In this case, you can launch the container without `ATSD_USER_{NAME, PASSWORD}` parameters and configure both administrator and [collector](collector-account.md) accounts on initial login.
+In this case, you can launch the container without `ATSD_USER_{NAME, PASSWORD}` parameters and configure both administrator and [collector](../administration/collector-account.md) accounts on initial login.
 
 ```properties
 docker run \
