@@ -4,16 +4,20 @@ We recommend creating a separate `collector` user account with permissions limit
 
 These credentials can be used in all HTTP clients when sending data into ATSD over http/https protocol.
 
-![Collector Account](collector_user.png)
+![Collector Account](images/collector-account.png)
 
-Follow these steps to create `collector` account:
+## Create `collectors` User Group 
 
 * Login into ATSD as administrator
-* Open **Admin>Users>User Groups>Create** page and create `collectors` group with **[All Entities] Write** permission.
+* Open **Admin > Users > User Groups > Create** page
+* Create `collectors` group with **[All Entities] Write** permission
 
-![collectors group](all-entities-write.png)
+![collectors group](images/all-entities-write.png)
 
-* Open **Admin>Users>Create** page and create `collector` user with **API_DATA_WRITE** and **API_META_WRITE** roles. 
-* Click on `collectors` group to add `collector` user as the member of the this group.
+## Create `collector` User 
 
-![collector user](collector-user.png)
+* Open **Admin > Users > Create** page
+* Create `collector` user with **API_DATA_WRITE** and **API_META_WRITE** roles
+* Check `collectors` row in the User Groups table to add the user to the `collectors` group
+
+![collector user](images/collector-user.png)
