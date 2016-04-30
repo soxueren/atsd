@@ -14,7 +14,7 @@
 
 ### Option 1: Configure collector Account Automatically
 
-Replace `${collector-user}` and `${collector-password}` to automatically create a built-in [collector account](../administration/collector-account.md). Minimum password length is **6 characters**.
+Replace `collector-user` and `collector-password` to automatically create a built-in [collector account](../administration/collector-account.md). Minimum password length is **6 characters**.
 
 ```properties
 docker run \
@@ -26,8 +26,8 @@ docker run \
   --publish 8443:8443 \
   --publish 8081:8081 \
   --publish 8082:8082/udp \
-  --env ATSD_USER_NAME=${collector-user} \
-  --env ATSD_USER_PASSWORD=${collector-password} \
+  --env ATSD_USER_NAME=collector-user \
+  --env ATSD_USER_PASSWORD=collector-password \
   axibase/atsd:latest
 ```
 
