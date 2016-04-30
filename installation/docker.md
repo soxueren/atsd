@@ -52,15 +52,7 @@ docker run \
 
 It may take up to 5 minutes to initialize the database.
 
-## Check Installation
-
-```
-docker logs -f atsd
-```
-
-You should see _ATSD start completed_ message at the end of the start.log.
-
-## Launch Parameters
+### Launch Parameters
 
 **Name** | **Required** | **Description**
 ----- | ----- | -----
@@ -71,6 +63,14 @@ You should see _ATSD start completed_ message at the end of the start.log.
 `--publish` | No | Publish a container's port to the host
 `--env ATSD_USER_NAME` | No | Username for the built-in collector account
 `--env ATSD_USER_PASSWORD` | No | Password for the built-in collector account. Minimum length is 6 characters.
+
+## Check Installation
+
+```
+docker logs -f atsd
+```
+
+You should see _ATSD start completed_ message at the end of the start.log.
 
 ## Exposed Ports
 
