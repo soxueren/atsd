@@ -12,9 +12,9 @@
 
 ## Start Container
 
-### Option 1: Configure collector account automatically
+### Option 1: Configure collector Account Automatically
 
-Replace `${collector-user}` and `${collector-password}` with new credentials for a built-in [collector account](../administration/collector-account.md) that will be created automatically. Minimum password length is **6 characters**.
+Replace `${collector-user}` and `${collector-password}` to automatically create a built-in [collector account](../administration/collector-account.md). Minimum password length is **6 characters**.
 
 ```properties
 docker run \
@@ -31,11 +31,11 @@ docker run \
   axibase/atsd:latest
 ```
 
-### Option 2: Configure collector account manually
+### Option 2: Configure User Accounts Manually
 
 If `ATSD_USER_{NAME, PASSWORD}` credentials are not specified as part of `docker run` command, no collector account will be created.
 
-In this case, you can launch the container without `ATSD_USER_{NAME, PASSWORD}` parameters and configure both administrator and [collector](../administration/collector-account.md) accounts on initial login.
+In this case, you can configure both administrator and [collector](../administration/collector-account.md) accounts on initial login.
 
 ```properties
 docker run \
