@@ -26,31 +26,41 @@ wget
 
 ## Installation Steps
 
-```sh
-sudo apt-get update                                                      
-```
+Update repositories and install dependencies:
 
 ```sh
-sudo apt-get install openjdk-7-jdk sysstat openssh-server cron debconf \
+sudo apt-get update && apt-get install openjdk-7-jdk sysstat openssh-server cron debconf \
 libc6 passwd adduser iproute net-tools curl
 ```
+
+> If there are any issues with installing the dependencies, [check the repositories](modifying-ubuntu-debian-repositories.md "Modifying Repositories") and retry the command.
+
+Follow the prompts to install ATSD:
 
 ```sh
 sudo dpkg -i atsd_ce_${VERSION}_amd64.deb
 ```
 
-*If there are any issues with installing the dependencies, [check the
-repositories](modifying-ubuntu-debian-repositories.md "Modifying Repositories").*
-Then try installing the dependencies again.
+It may take up to 5 minutes to initialize the database.
+
+## Check Installation
+
+```sh
+tail -f /opt/atsd/atsd/logs/start.log                                   
+```
+
+You should see **ATSD start completed** message at the end of the start.log.
+
+Web interface is accessible on port 8088 (http) and 8443 (https).
 
 ## Troubleshooting
 
-If ATSD web interface is not accessible on port 8088, open **atsd.log** and review it for errors.
+Review the following log files for errors:
 
-```sh
-tail -f /opt/atsd/atsd/logs/atsd.log                                     
-```
+* Startup log: `/opt/atsd/atsd/logs/start.log`
+* Application log: `/opt/atsd/atsd/logs/atsd.log`
 
 ## Optional Steps
+
 - [Veryfing installation](veryfing-installation.md)
 - [Post-installation](post-installation.md)
