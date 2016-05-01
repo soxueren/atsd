@@ -21,11 +21,13 @@ sudo apt-get update
 Add **axibase.com/public/repository/deb/** repository:
 
 ```sh
-sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 26AEE425A57967CFB323846008796A6514F3CB79                             
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 \
+--recv-keys 26AEE425A57967CFB323846008796A6514F3CB79                             
 ```
 
 ```sh
-sudo echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./" >> /etc/apt/sources.list.d/axibase.list
+sudo echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./" \
+>> /etc/apt/sources.list.d/axibase.list
 ```
 
 Update repositories and follow the prompts to install ATSD:
