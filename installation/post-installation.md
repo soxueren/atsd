@@ -1,23 +1,31 @@
 # Post-Installation Steps
 
+## Setup Email Client
+
+See [note](../administration/setting-up-email-client.md).
+
 ## Verify System Time
 
-> Open Admin \> Server Time tab in the ATSD web interface and verify the
+> Open **Admin > Server Time** tab in the ATSD web interface and verify the
 time and timezone information.
 
-Modify system time or setup NTP in order to keep the server time
-accurate.
+Synchronize system time or setup NTP in order to keep the server time accurate.
 
 ![Server\_time](images/Server_time.png)
 
-## Adjust Network Buffers
+## Increase Network Buffers
 
-If you’re anticipating high data insertion rate with bursts of 100000
-packets per second or more, increase maximum receiving buffer on Linux
-OS: [Read Network Settings
-Guide](../administration/networking-settings.md "Network Settings")
+If you're anticipating insertion rate with bursts of 100K+ packets per second, 
+increase maximum receiving buffer according to [Network Settings Guide](../administration/networking-settings.md).
 
-## Setup Email Client
+## Enable Swap
 
-See [Setting up the Email Client
-guide](../administration/setting-up-email-client.md "Email Client").
+See [note](../administration/enabling-swap-space.md).
+
+## Increase Memory
+
+See [note](../administration/allocating-memory.md).
+
+## Review Log Files
+
+See [note](../administration/logging.md).
