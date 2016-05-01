@@ -5,12 +5,12 @@
 | Distribution | Format | Software | Installation Guide |
 | --- | --- | --- | :---: |
 | Ubuntu/Debian | apt |  | [View](ubuntu-debian-apt.md)|
-| Ubuntu/Debian  | deb | [Download](http://axibase.com/public/atsd_ce_deb_latest.htm)  | [View](ubuntu-debian-deb.md) |
+| Ubuntu/Debian  | deb | [Download](https://axibase.com/public/atsd_ce_deb_latest.htm)  | [View](ubuntu-debian-deb.md) |
 | Docker | image |  | [View](docker.md)|
-| RedHat/CentOS| rpm | [Download](http://axibase.com/public/atsd_ce_rpm_latest.htm)  | [View](rpm-redhat-centos.md)|
-| SUSE Linux Enterprise Server | rpm  | [Download](http://axibase.com/public/atsd_ce_rpm_sles_latest.htm)  | [View](rpm-sles.md)|
-| VMware Virtual Machine  | ova | [Download](http://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](vmware-esxi-server-vsphere.md)|
-| Oracle VirtualBox Virtual Machine | ova | [Download](http://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](virtualbox.md)|
-| MapR M3 | tar.gz | [Download](http://axibase.com/public/atsd_ce_distrib_latest.htm) | [View](mapr.md)|
-| ARM Devices | tar.gz | [Download](http://axibase.com/public/atsd_ce_distrib_latest.htm)  | [View](arm.md)|
+| RedHat/CentOS| rpm | [Download](https://axibase.com/public/atsd_ce_rpm_latest.htm)  | [View](redhat-centos-rpm.md)|
+| SUSE Linux Enterprise Server | rpm  | [Download](https://axibase.com/public/atsd_ce_rpm_sles_latest.htm)  | [View](rpm-sles.md)|
+| VMware Virtual Machine  | ova | [Download](https://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](vmware-esxi-server-vsphere.md)|
+| Oracle VirtualBox Virtual Machine | ova | [Download](https://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](virtualbox.md)|
+| MapR M3 | tar.gz | [Download](https://axibase.com/public/atsd_ce_distrib_latest.htm) | [View](mapr.md)|
+| ARM Devices | tar.gz | [Download](https://axibase.com/public/atsd_ce_distrib_latest.htm)  | [View](arm.md)|
 
