@@ -27,16 +27,16 @@ wget
 ## Installation Steps
 
 ```sh
- sudo apt-get update                                                      
+sudo apt-get update                                                      
 ```
 
 ```sh
- sudo apt-get install openjdk-7-jdk sysstat openssh-server cron debconf \
- libc6 passwd adduser iproute net-tools curl
+sudo apt-get install openjdk-7-jdk sysstat openssh-server cron debconf \
+libc6 passwd adduser iproute net-tools curl
 ```
 
 ```sh
- sudo dpkg -i atsd_ce_${VERSION}_amd64.deb
+sudo dpkg -i atsd_ce_${VERSION}_amd64.deb
 ```
 
 *If there are any issues with installing the dependencies, [check the
@@ -48,7 +48,7 @@ Then try installing the dependencies again.
 If ATSD web interface is not accessible on port 8088, open **atsd.log** and review it for errors.
 
 ```sh
- tail -f /opt/atsd/atsd/logs/atsd.log                                     
+tail -f /opt/atsd/atsd/logs/atsd.log                                     
 ```
 
 ## Optional Steps
