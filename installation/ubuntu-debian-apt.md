@@ -34,18 +34,23 @@ Update repositories and follow the prompts to install ATSD:
 sudo apt-get update && sudo apt-get install atsd                       
 ```
 
-## Troubleshooting
+It may take up to 5 minutes to initialize the database.
 
-If ATSD web interface is not accessible on port 8088, open **atsd.log** and review it for errors.
+## Check Installation
 
 ```sh
- tail -f /opt/atsd/atsd/logs/atsd.log                                     
+tail -f /opt/atsd/atsd/logs/start.log                                   
 ```
 
+You should see **ATSD start completed** message at the end of the start.log.
 
-Send the log file to Axibase support in case the problem cannot be resolved with a restart.
+Web interface is accessible on port 8088 (http) and 8443 (https).
+
+## Troubleshooting
+
+Review `/opt/atsd/atsd/logs/atsd.log` log file for errors.
 
 ## Optional Steps
 
-- [Veryfing installation](veryfing-installation.md)
-- [Post-installation](post-installation.md)
+* [Veryfing installation](veryfing-installation.md)
+* [Post-installation](post-installation.md)
