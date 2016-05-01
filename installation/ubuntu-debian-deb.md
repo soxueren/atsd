@@ -15,8 +15,8 @@
 ## Check Connection
 
 If the target machine is not connected to public or private repositories
-to install dependencies with APT, use the [Manual ATSD Installation
-guide](../administration/update-manual.md "Manual ATSD Installation").
+to install dependencies with APT, use the [Manual Installation
+guide](http://axibase.com/products/axibase-time-series-database/download-atsd/install-atsd/manual-atsd-installation/).
 
 ## Download
 
