@@ -12,17 +12,11 @@
 - Minimum RAM: 1 GB 
 - See [Requirements](../administration/requirements.md "ATSD Requirements") for additional information.
 
-## Connectivity
+## Check Connection
 
 If the target machine is not connected to public or private repositories
 to install dependencies with APT, use the [Manual ATSD Installation
 guide](../administration/update-manual.md "Manual ATSD Installation").
-
-## Download
-
-```sh
-wget 
-```
 
 ## Installation Steps
 
