@@ -103,6 +103,13 @@ docker run \
   axibase/atsd:latest
 ```
 
+## Troubleshooting
+
+Review the following log files for errors:
+
+* Startup log: `/opt/atsd/atsd/logs/start.log`
+* Application log: `/opt/atsd/atsd/logs/atsd.log`
+
 ## Known Issues
 
 Verify that your Docker host runs on a supported kernel level if the container fails to start or the installation script stalls.
