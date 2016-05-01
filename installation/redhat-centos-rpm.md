@@ -17,7 +17,7 @@
 ## Connection
 
 If the target machine does not have Internet connection to download
-dependencies, use the [Manual ATSD Installation guide](../administration/update-manual.md "Manual ATSD Installation").
+dependencies, use the [Manual Installation guide](https://axibase.com/products/axibase-time-series-database/download-atsd/install-rpm-package/manual-rpm-package/).
 
 ## Download
 
