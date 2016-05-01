@@ -1,11 +1,14 @@
 # Requirements
 
 
-| Edition | Community | Enterprise |
+| Deployment | Single-Node | Cluster |
 | --- | --- | --- |
 | Nodes | 1 | > 5 |
-| Processor | 2 CPU, 2+ GHz | 4 CPU, 2+ GHz |
-| Memory | 4 GB (2 GB for JVM) | 16 GB (8 GB for JVM) |
+| Processor | 10+ GHz | 10+ GHz |
+| RAM | 4 GB (min 1 GB) | 16 GB |
+
+> Total Processor capacity computed as number of cores multiplied by clock speed, e.g. 4 x 2.5GHz = 10 GHz
+> 
 
 ## Operating Systems
 
@@ -20,7 +23,6 @@
 ## Production Environment
 
 -   Bare Metal
--   VMware ESXi Server
 -   VMware vSphere
 
 ## Staging/Testing Environment
