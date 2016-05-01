@@ -18,6 +18,10 @@ If the target machine is not connected to public or private repositories
 to install dependencies with APT, use the [Manual ATSD Installation
 guide](../administration/update-manual.md "Manual ATSD Installation").
 
+## Download
+
+Download deb package to the target server from [axibase.com](https://axibase.com/public/atsd_ce_deb_latest.htm)
+
 ## Installation Steps
 
 Update repositories and install dependencies:
