@@ -5,8 +5,8 @@
 - Minimum RAM: 1 GB 
 - See [Requirements](../administration/requirements.md "ATSD Requirements") for additional information.
 
-> For ARM devices, make sure that the target device has at least a 16GB hard
-drive or SD card. Use SD cards with 60mb/s+ write speeds.
+> On ARM devices, make sure that the device has at least a 16GB hard drive or SD card. <br>
+Use SD cards with 60mb/s+ write speeds.
 
 ## Download
 
