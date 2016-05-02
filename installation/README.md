@@ -1,6 +1,6 @@
 # Installation
 
-**By installing ATSD you agree to [Axibase Time Series Database License Terms and Conditions](https://axibase.com/wp-content/uploads/2014/12/ATSD-Community-Edition-Software-License.pdf)**.
+By installing ATSD you agree to **[Axibase Time Series Database License Terms and Conditions](https://axibase.com/wp-content/uploads/2014/12/ATSD-Community-Edition-Software-License.pdf)**.
 
 | Distribution | Format | Software | Installation Guide |
 | --- | --- | --- | :---: |
@@ -12,4 +12,6 @@
 | VMware Virtual Machine  | ova | [Download](https://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](vmware-esxi-server-vsphere.md)|
 | Oracle VirtualBox Virtual Machine | ova | [Download](https://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](virtualbox.md)|
 | Other distributions (including ARM devices) | tar.gz |   | [View](other-distributions.md)|
+
+Review OS and hardware [requirements](../administration/requirements.md).
 
