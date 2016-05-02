@@ -13,7 +13,7 @@
 ## Connection
 
 If the target machine does not have Internet connection to download
-dependencies, use the [Manual Installation guide](https://axibase.com/products/axibase-time-series-database/download-atsd/atsd-installation-on-sles/manual-installation-on-sles/).
+dependencies, use the [offline installation option](sles-offline.md).
 
 ## Download
 
