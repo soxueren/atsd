@@ -17,7 +17,7 @@
 ## Connection
 
 If the target machine does not have Internet connection to download
-dependencies, use the [Manual Installation guide](https://axibase.com/products/axibase-time-series-database/download-atsd/install-rpm-package/manual-rpm-package/).
+dependencies, use the [offline installation option](redhat-centos-offline.md).
 
 ## Download
 
