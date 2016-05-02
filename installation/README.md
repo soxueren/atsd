@@ -11,5 +11,5 @@
 | SUSE Linux Enterprise Server | rpm  | [Download](https://axibase.com/public/atsd_ce_rpm_sles_latest.htm)  | [View](sles-rpm.md)|
 | VMware Virtual Machine  | ova | [Download](https://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](vmware-esxi-server-vsphere.md)|
 | Oracle VirtualBox Virtual Machine | ova | [Download](https://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](virtualbox.md)|
-| ARM Devices | tar.gz |   | [View](arm.md)|
+| Other distributions (including ARM devices) | tar.gz |   | [View](arm.md)|
 
