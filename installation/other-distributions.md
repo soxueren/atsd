@@ -6,8 +6,7 @@
 - See [Requirements](../administration/requirements.md "ATSD Requirements") for additional information.
 
 > For ARM devices, make sure that the target device has at least a 16GB hard
-drive or SD card (we recommend using SD cards with high write speeds, at
-least 60mb/s), depending on the device.
+drive or SD card. Use SD cards with 60mb/s+ write speeds.
 
 ## Download
 
