@@ -68,6 +68,10 @@ ${propDiff}
 
 ## Functions
 
+### [Aggregate Functions](expression.md#functions)
+
+### Lookup Functions
+
 ```sh
 ${property_values('linux.disk:fstype=ext4:mount_point')}
 ```
