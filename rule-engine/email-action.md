@@ -77,32 +77,7 @@ The default Subject text is
 
 ## Email Message Placeholders
 
--   ${entity}
--   ${metric}
--   ${value}
--   ${message}
--   ${severity}
--   ${rule}
--   ${expression}
--   ${rule_filter}
--   ${repeat_count}
--   ${repeat_interval}
--   ${alert_open_time}
--   ${alert_duration}
--   ${window}
--   ${schedule}
--   ${status}
--   ${received_time}
--   ${event_time}
--   ${open_value}
--   ${alert_type}
--   ${min_interval_expired}
--   ${window_first_time}
--   ${threshold}
--   ${tags} and ${tags.tag_name}
--   ${entity_tags} and ${entity_tags.tag_name}
--   ${properties} and ${properties.key_name} or
-    ${properties.tag_name}
+* Supported [placeholders](placeholders.md)
 
 ## Email Alert Content Example
 
