@@ -1,35 +1,33 @@
 # Expression
 
-
 Expression is a condition which is evaluated each time a data sample is
-received by the window For example, expression ‘`value > 50`‘ checks if
+received by the window. For example, expression **`value > 50`** checks if
 received value is greater than 50.
 
-If the expression evaluates to ‘true’, it raises an alert, followed by
-execution of triggers such as system command or email notification. Once
-the expression returns ‘false’, the alert is closed and another set of
+If the expression evaluates to **true**, it raises an alert, followed by
+execution of triggers such as system command and email notification. Once
+the expression returns **false**, the alert is closed and another set of
 triggers is invoked.
 
-The expression consists of one or multiple checks combined with OR and
-AND operators. Exceptions specified in the Thresholds table take
+The expression consists of one or multiple checks combined with **OR** and
+**AND** operators. Exceptions specified in the **Thresholds** table take
 precedence over expression.
 
-## Supported Fields
+## Fields
 
 **Field** | **Description**
---- | ---
+:--- | :---
 `value` | last data sample
-`tags.'tag-name'` | value of tag ‘tag-name’, for example,
-tags.file _system
+`tags.'tag-name'` | value of series tag 'tag-name', for example, tags.file _system
 `entity` | entity name
-`metric` |metric name
+`metric` | metric name
 
-## Supported Functions
+## Functions
 
 ### Aggregation Functions
 
 **Function** | **Description**
---- | ---
+:--- | :---
 `avg()` | average value.
 `mean()` | average value. Same as `avg()`.
 `sum()` | sum of values.
@@ -65,7 +63,7 @@ tags.file _system
 ### Forecast functions
 
 **Function** | **Description**
---- | ---
+:--- | :---
 `forecast()` | forecast value for the entity, metric, tags in the current window
 `forecast_stdev()` | forecast standard deviation
 `forecast(name)` | named forecast value for the entity, metric, tags in the current window
@@ -89,35 +87,30 @@ tags.file _system
 ### String Functions
 
 **Function** | **Description**
---- | ---
+:--- | :---
 `upper(t)` | convert string 't' to upper case
 `lower(t)` | convert string 't' to lower case
 
-## Supported Numeric Operators
+## Numeric Operators
 
-`=` – equal
+**Operator** | **Description**
+:--- | :---
+`=` | equal
+`!=` | not equal
+`>` | greater than
+`>=` | greater than or equal
+`<` | less than
+`<=` | less than or equal
 
-`!=` – not equal
+## Text Operators
 
-`>` – greater than
-
-`>=` – greater than or equal
-
-`<` - less than
-
-`<=` - less than or equal
-
-## Supported Text Operators
-
-`=` - equal
-
-`!=` - not equal
-
-`t.contains(str)` - check if text 't' contains text 'str'
-
-`t.startsWidth(str)` - check if text 't' starts with text 'str'
-
-`t.endsWidth(str)` - check if text 't' ends with text 'str'
+**Operator** | **Description**
+:--- | :---
+`=` | equal
+`!=` | not equal
+`t.contains(str)` | check if text 't' contains text 'str'
+`t.startsWidth(str)` | check if text 't' starts with text 'str'
+`t.endsWidth(str)` | check if text 't' ends with text 'str'
 
 > Note: `=` and `!=` operators are case-insensitive.
 
