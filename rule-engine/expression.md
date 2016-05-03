@@ -16,16 +16,17 @@ precedence over expression.
 
 ## Supported Fields
 
-`value` – last data sample
-
-`tags.'tag-name'` – value of tag ‘tag-name’, for example,
+**Field** | **Description**
+--- | ---
+`value` | last data sample
+`tags.'tag-name'` | value of tag ‘tag-name’, for example,
 tags.file _system
+`entity` | entity name
+`metric` |metric name
 
-`entity` – entity name
+## Supported Functions
 
-`metric` – metric name
-
-## Supported Aggregation Functions
+### Aggregation Functions
 
 **Function** | **Description**
 --- | ---
@@ -61,23 +62,36 @@ tags.file _system
 `slope_per_minute()` | `slope_per_second()/60`.
 `slope_per_hour()` | `slope_per_second()/3600`.
 
-## Forecast functions
+### Forecast functions
 
-`forecast()` – forecast value for the entity, metric, tags in the
-current window
+**Function** | **Description**
+--- | ---
+`forecast()` | forecast value for the entity, metric, tags in the current window
+`forecast_stdev()` | forecast standard deviation
+`forecast(name)` | named forecast value for the entity, metric, tags in the current window
+`forecast_deviation()` | `(D-forecast())/forecast_stdev()`
 
-`forecast_stdev()` – forecast standard deviation
+### Math functions
 
-`forecast(name)` – named forecast value for the entity, metric, tags in
-the current window
+* `abs(D)`
+* `ceil(D)`
+* `floor(В)`
+* `pow(D, D)`
+* `round(D)`
+* `round(D, N)`
+* `random()`
+* `max(double a, double b)`
+* `min(D, D)`
+* `sqrt(D)`
+* `exp(D)`
+* `log(D)`
 
-`forecast_deviation()` – `(D-forecast())/forecast_stdev()`
+### String Functions
 
-## Math functions
-
-`abs(D)`, `ceil(D)`, `floor(В)`, `pow(D, D)`, `round(D)`, `round(D, N)`,
-`random() max(double a, double b)`, `min(D, D)`, `sqrt(D)`, `exp(D)`,
-`log(D)`
+**Function** | **Description**
+--- | ---
+`upper(t)` | convert string 't' to upper case
+`lower(t)` | convert string 't' to lower case
 
 ## Supported Numeric Operators
 
@@ -107,8 +121,4 @@ the current window
 
 > Note: `=` and `!=` operators are case-insensitive.
 
-## Supported Text Functions
 
-`upper(t)` - convert text 't' to upper case
-
-`lower(t)` - convert text 't' to lower case
