@@ -1,4 +1,4 @@
-## Fetch metric with parameter timeFormat
+## c
 
 ### Request
 
