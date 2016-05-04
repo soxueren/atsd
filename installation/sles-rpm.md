@@ -19,7 +19,7 @@ dependencies, use the [offline installation option](sles-offline.md).
 
 Download rpm package to the target server:
 
-* `curl -O atsd_ce_amd64_sles.rpm`
+* `curl -O https://www.axibase.com/public/atsd_ce_amd64_sles.rpm`
 * [axibase.com](https://axibase.com/public/atsd_ce_rpm_sles_latest.htm)
 
 ## Installation Steps
