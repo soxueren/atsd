@@ -1,5 +1,5 @@
 ## Metrics: List
-
+### Description 
 ### Path
 ```
 /api/v1/metrics
@@ -52,7 +52,7 @@ If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returne
 
 ### Example 
 
-> Request
+#### Request
 
 ```
 /api/v1/metrics?limit=2
@@ -60,7 +60,7 @@ If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returne
 
 
 
-> Response
+#### Response
 
 ```json
  [
@@ -89,7 +89,7 @@ If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returne
     }
 ]
 ```
-
+#### Erorrs
 
 
 ### Additional Examples
