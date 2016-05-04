@@ -10,13 +10,13 @@ By installing ATSD you agree to **[Axibase Time Series Database License Terms an
 
 ## Installation Guides
 
-| Distribution | Format | Software | Installation Guide |
-| --- | --- | --- | :---: |
-| Ubuntu/Debian | apt |  | [View](ubuntu-debian-apt.md)|
-| Ubuntu/Debian  | deb | [Download](https://axibase.com/public/atsd_ce_deb_latest.htm)  | [View](ubuntu-debian-deb.md) |
-| Docker | image |  | [View](docker.md)|
-| RedHat/CentOS| rpm | [Download](https://axibase.com/public/atsd_ce_rpm_latest.htm)  | [View](redhat-centos-rpm.md)|
-| SUSE Linux Enterprise Server | rpm  | [Download](https://axibase.com/public/atsd_ce_rpm_sles_latest.htm)  | [View](sles-rpm.md)|
-| VMware Virtual Machine  | ova | [Download](https://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](vmware-esxi-server-vsphere.md)|
-| Oracle VirtualBox Virtual Machine | ova | [Download](https://axibase.com/public/atsd_ce_ova_latest.htm)  | [View](virtualbox.md)|
-| Other distributions (including ARM devices) | tar.gz |   | [View](other-distributions.md)|
+| Distribution | Format | Installation Guide |
+| :--- | --- | :---: |
+| Ubuntu/Debian | apt | [View](ubuntu-debian-apt.md)|
+| Ubuntu/Debian  | deb | [View](ubuntu-debian-deb.md) |
+| Docker | image | [View](docker.md)|
+| RedHat/CentOS| rpm | [View](redhat-centos-rpm.md)|
+| SUSE Linux Enterprise Server | rpm   | [View](sles-rpm.md)|
+| VMware Virtual Machine  | ova  | [View](vmware-esxi-server-vsphere.md)|
+| Oracle VirtualBox Virtual Machine | ova  | [View](virtualbox.md)|
+| Other distributions (including ARM devices) | tar.gz | [View](other-distributions.md)|
