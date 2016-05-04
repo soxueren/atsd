@@ -1,12 +1,29 @@
 ## Series: Insert
 
 Payload - an array of series with `data` arrays.
+### Path
+```
+/api/v1/series/insert
+```
 
 ### Method
 ```
-POST /api/v1/series/insert
+POST 
 ```
-### Basic Example
+### Request 
+#### Fields
+|**Field**|**Required**|**Description**|
+|---|---|---|---|
+| entity | yes | entity name |
+| metric | yes | metric name |
+| tags | no | an object with named keys, where a key is a tag name and a value is tag value |
+| type | no | specifies source for underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default value: HISTORY |
+|forecastName| no | Unique forecast name. You can store an unlimited number of named forecasts for any series using `forecastName`. If `forecastName` is not set, then the default ATSD forecast will be overwritten. `forecastName` is applicable only when `type` is set to `FORECAST` or `FORECAST_DEVIATION` |
+| data | yes | an array of key-value objects, where key 't' is unix milliseconds anf 'v' is the metrics value at time 't' |
+|version |no| An object. Contains source, status and change time fields for versioned metrics. |
+
+
+### Example
 > Request
 
 ```json
@@ -28,70 +45,9 @@ POST /api/v1/series/insert
     ]
 }]
 ```
+### Additional Examples
+* [Named Forecast](https://github.com/axibase/atsd-docs/blob/master/api/data/series/examples/insert-named-forecast.md)
+* [Versioned Metric](https://github.com/axibase/atsd-docs/blob/master/api/data/series/examples/versioned-metric.md)
 
-> Request (named forecast)
 
-```json
-[
-    {
-        "entity": "duckduckgo",
-        "metric": "direct.queries",
-        "tags": {},
-        "forecastName": "DuckDuckGo2",
-        "type": "FORECAST",
-        "data": [
-            {
-                "d": "2015-06-17T00:00:00.000Z",
-                "v": 9497228.587367011
-            },
-            {
-                "d": "2015-06-18T00:00:00.000Z",
-                "v": 9517253.496233052
-            },
-            {
-                "d": "2015-06-19T00:00:00.000Z",
-                "v": 9227410.099153783
-            }
-        ]
-    }
-]
-```
-### Request Fields
 
-|**Field**|**Required**|**Description**|
-|---|---|---|---|
-| entity | yes | entity name |
-| metric | yes | metric name |
-| tags | no | an object with named keys, where a key is a tag name and a value is tag value |
-| type | no | specifies source for underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default value: HISTORY |
-|forecastName| no | Unique forecast name. You can store an unlimited number of named forecasts for any series using `forecastName`. If `forecastName` is not set, then the default ATSD forecast will be overwritten. `forecastName` is applicable only when `type` is set to `FORECAST` or `FORECAST_DEVIATION` |
-| data | yes | an array of key-value objects, where key 't' is unix milliseconds anf 'v' is the metrics value at time 't' |
-|version |no| An object. Contains source, status and change time fields for versioned metrics. |
-
-#### version
-
-> Request (verioned metric)
-
-```json
-[
-    {
-        "entity": "e-vers",
-        "metric": "m-vers",
-        "data": [
-            {
-                "t": 1447834771665,
-                "v": 513,
-                "version": {
-                    "status": "provisional",
-                    "source": "t540p"
-                }
-            }
-        ]
-    }
-]
-```
-
-|Name | Description|
-|---|---|
-|status | Status describing value change event.|
-|source | Source that generated value change event.|
