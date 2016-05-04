@@ -58,9 +58,6 @@ If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returne
 /api/v1/metrics?limit=2
 ```
 
-```
-/api/v1/entities/{entity}?timeFormat=iso
-```
 
 
 > Response
