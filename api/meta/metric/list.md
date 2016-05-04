@@ -99,6 +99,7 @@ If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returne
 * [Fetch all disk metrics](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-all-disk-metrics.md)
 * [Fetch metrics with tag table](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-with-tag-table.md)
 * [Fetch metrics by name and tag](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-by-name-and-tag.md)
+* [Fetch metric with parameter 'timeFormat'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metric-with-timeformat.md)
 
 
 
