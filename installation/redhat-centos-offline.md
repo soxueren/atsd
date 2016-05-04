@@ -21,7 +21,12 @@ and copying them to the target machine with similar characteristics for offline 
 
 ## Installation Steps
 
-Download dependencies on an intermediate machine with connected repositories:
+Download ATSD rpm package to an intermediate machine with Internet access:
+
+* `curl -O https://www.axibase.com/public/atsd_ce_amd64.rpm`
+* [axibase.com](https://axibase.com/public/atsd_ce_rpm_latest.htm)
+
+Download ATSD dependencies to an intermediate machine with connected repositories:
 
 ```sh
 sudo yum install yum-utils
@@ -34,7 +39,7 @@ cronie sysstat sed passwd iproute net-tools
 
 > See a RedHat [note](https://access.redhat.com/solutions/10154) on using yum to download packages without installation.
 
-> If some of the above dependencies are not found, for example in case of installation on new systems, run sudo yum update to upgrade all packages on your operating system to the latest versions.
+> If some of the above dependencies are not found, for example in case of installation on new systems, run `sudo yum update` to upgrade all packages on your operating system to the latest versions.
 
 Copy the downloaded *.rpm packages to the target machine and install them as follows:
 
@@ -45,7 +50,7 @@ sudo yum localinstall ./folder_with_dependencies/*
 Follow the prompts to install ATSD:
 
 ```sh
-sudo rpm -i atsd_ce_${VERSION}_amd64.rpm
+sudo rpm -i atsd_ce_amd64.rpm
 ```
 
 It may take up to 5 minutes to initialize the database.
