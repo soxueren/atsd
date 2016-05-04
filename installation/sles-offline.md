@@ -62,7 +62,7 @@ sudo zypper install sles_dependencies/*
 
 ## Install Java
 
-Download [Oracle Java 7 JDK rpm package](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
+Download and install [Oracle Java 7 JDK rpm package](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
 
 ```sh
  sudo rpm -i jdk-7u80-linux-x64.rpm
@@ -70,10 +70,15 @@ Download [Oracle Java 7 JDK rpm package](http://www.oracle.com/technetwork/java/
 
 ## Install ATSD
 
-Download rpm package from [axibase.com](https://axibase.com/public/atsd_ce_rpm_sles_latest.htm)
+Download ATSD rpm package:
+
+* `curl -O https://axibase.com/public/atsd_ce_amd64_sles.rpm`
+* [axibase.com](https://axibase.com/public/atsd_ce_rpm_sles_latest.htm)
+
+Follow the prompts to install ATSD:
 
 ```sh
- sudo rpm -i atsd_ce_${VERSION}_amd64_sles.rpm                                  
+ sudo rpm -i atsd_ce_amd64_sles.rpm                                  
 ```
 
 It may take up to 5 minutes to initialize the database.
