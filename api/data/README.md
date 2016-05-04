@@ -28,4 +28,4 @@ You can use any programming language that lets you issue HTTP requests and parse
 * Clients may send compressed data by specifying Content-Encoding: gzip
 
 ### Errors
-[Error Codes](https://github.com/axibase/atsd-docs/edit/master/api/data/error-codes.md)
+[Error Codes](https://github.com/axibase/atsd-docs/blob/master/api/data/error-codes.md)
