@@ -128,4 +128,5 @@ Entity, metric and tag names as well as property type and key names must not con
 By the default the server doesn't respond to the client when processing series, property and message commands.
 The client may include `debug` field at the start of the line (as the first word) which instructs the server to respond with `ok` for each processed command.
 
+###[Dropped Comands](https://github.com/axibase/atsd-docs/blob/master/api/network/dropped-commands.md)
 
