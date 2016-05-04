@@ -21,7 +21,10 @@ dependencies, use the [offline installation option](redhat-centos-offline.md).
 
 ## Download
 
-Download rpm package to the target server from [axibase.com](https://axibase.com/public/atsd_ce_rpm_latest.htm)
+Download rpm package to the target server:
+
+* `curl -O https://www.axibase.com/public/atsd_ce_amd64.rpm`
+* [axibase.com](https://axibase.com/public/atsd_ce_rpm_latest.htm)
 
 ## Installation Steps
 
@@ -38,7 +41,7 @@ packages on your operating system to the latest versions.
 Follow the prompts to install ATSD:
 
 ```sh
-sudo rpm -i atsd_ce_${VERSION}_amd64.rpm
+sudo rpm -i atsd_ce_amd64.rpm
 ```
 
 It may take up to 5 minutes to initialize the database.
