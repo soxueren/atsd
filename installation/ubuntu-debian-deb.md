@@ -20,7 +20,10 @@ option](ubuntu-debian-offline.md).
 
 ## Download
 
-Download deb package to the target server from [axibase.com](https://axibase.com/public/atsd_ce_deb_latest.htm)
+Download deb package to the target server:
+
+* `wget https://www.axibase.com/public/atsd_ce_amd64.deb`
+* [axibase.com](https://axibase.com/public/atsd_ce_deb_latest.htm)
 
 ## Installation Steps
 
