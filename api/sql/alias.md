@@ -4,7 +4,7 @@ An `alias` can be set in single (`'alias'`) or double qoatations (`"alias"`).
 
 Unquoted `alias` must begin with a letter followed by letters, underscores, digits (0-9).
 
-> Request
+> Query
 
 ```sql
 SELECT time, value, entity, metric AS "measurement" FROM mpstat.cpu_busy 
