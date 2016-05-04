@@ -10,23 +10,26 @@ Use SD cards with 60mb/s+ write speeds.
 
 ## Download
 
-Download tar.gz archive to the target server from [axibase.com](https://axibase.com/public/atsd_ce_distrib_latest.htm)
+Download tar.gz archive to the target server:
+
+* `curl -O https://www.axibase.com/public/atsd_ce.tar.gz`
+* [axibase.com](https://axibase.com/public/atsd_ce_distrib_latest.htm)
 
 ## Installation
 
 ```sh
- sudo tar -xzvf atsd_ce_${VERSION}.tar.gz -C /opt/                              
+ sudo tar -xzvf atsd_ce.tar.gz -C /opt/
 ```
 
 ```sh
- sudo /opt/atsd/install_sudo.sh                                           
+ sudo /opt/atsd/install_sudo.sh
 ```
 
 ```sh                    
- sudo /opt/atsd/install_user.sh                                           
+ sudo /opt/atsd/install_user.sh
 ```
 
-It may take up to 5 minutes, and up to 20 minutes on ARM devices, to initialize the database.
+It may take up to 5 minutes, to initialize the database. Installation on ARM devices may take up to 20 minutes.
 
 ## Check Installation
 
