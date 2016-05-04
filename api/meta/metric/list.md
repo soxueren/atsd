@@ -6,7 +6,7 @@
 ```
 ### Method
 ```
-GET /api/v1/metrics
+GET 
 ```
 
 ### Request
