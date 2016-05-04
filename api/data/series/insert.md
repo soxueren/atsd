@@ -1,6 +1,7 @@
 ## Series: Insert
 
 Payload - an array of series with `data` arrays.
+### Description 
 ### Path
 ```
 /api/v1/series/insert
@@ -24,7 +25,7 @@ POST
 
 
 ### Example
-> Request
+####Request
 
 ```json
 [{
