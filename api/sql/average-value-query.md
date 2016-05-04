@@ -2,7 +2,7 @@
 
 Average value for one metric, one entity
 
-> Request
+> Query
 
 ```sql
 SELECT avg(value) AS CPU_Avg FROM mpstat.cpu_busy 
