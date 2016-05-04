@@ -39,7 +39,7 @@ libc6 passwd adduser iproute net-tools curl
 Follow the prompts to install ATSD:
 
 ```sh
-sudo dpkg -i atsd_ce_${VERSION}_amd64.deb
+sudo dpkg -i atsd_ce_amd64.deb
 ```
 
 It may take up to 5 minutes to initialize the database.
