@@ -30,8 +30,8 @@ Download deb package to the target server:
 Update repositories and install dependencies:
 
 ```sh
-sudo apt-get update && apt-get install openjdk-7-jdk sysstat openssh-server cron debconf \
-libc6 passwd adduser iproute net-tools curl
+sudo apt-get update && sudo apt-get install openjdk-7-jdk sysstat openssh-server cron \
+debconf libc6 passwd adduser iproute net-tools curl
 ```
 
 > If there are any issues with installing the dependencies, [check the repositories](modifying-ubuntu-debian-repositories.md "Modifying Repositories") and retry the command.
