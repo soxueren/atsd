@@ -1,4 +1,4 @@
-## Example Insert Named Forecast
+## Insert Named Forecast
 
 ### Request 
 ```json
