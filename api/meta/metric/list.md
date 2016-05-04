@@ -49,6 +49,7 @@ GET
  <aside class="notice">
 If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returned. If `timeFormat` is set to the default value (milliseconds), then `lastInsertTime` will be returned.
 </aside>
+#### Erorrs
 
 ### Example 
 
@@ -89,7 +90,7 @@ If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returne
     }
 ]
 ```
-#### Erorrs
+
 
 
 ### Additional Examples
