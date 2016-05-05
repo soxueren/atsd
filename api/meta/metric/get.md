@@ -1,14 +1,26 @@
-## Metric: Get
-### Method 
+# Metric: Get
+## Description 
+## Path 
 ```
-GET /api/v1/metrics/{metric}
+/api/v1/metrics/{metric}
 ```
-### Basic Example
-> Request
+## Method 
+```
+GET
+```
+## Request
 
+## Response
+### Erorrs 
+
+
+## Example
+### Request
+#### URI 
 ```
 http://atsd_server:8088/api/v1/metrics/mpstat.cpu_busy?timeFormat=iso
 ```
+#### Curl 
 
 > Response
 
