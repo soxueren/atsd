@@ -50,4 +50,4 @@ Displays metric properties and its tags.
 
 
 
-See: [Metrics: List](#metrics:-list)
+See: [Metrics: List](https://github.com/axibase/atsd-docs/blob/master/api/meta/metric/list.md)
