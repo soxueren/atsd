@@ -2,9 +2,10 @@
 
 ## Request 
 ### URI
+```
+https://atsd_host:8443/api/v1/series/insert
+```
 ### Payload
-### curl 
-## Response
 ```json
 [{
     "entity": "nurswgvml007",
@@ -15,7 +16,7 @@
       { "d": "2016-05-05T05:50:18.312Z", "v": 17.8 }
     ]
 },{
-    "entity": "nurswgvml007",
+    "entity": "c",
     "metric": "df.disk_used_percent",
     "tags": {"file_system": "/sdb", "mount_point": "/export"},
     "data": [
@@ -24,3 +25,13 @@
     ]
 }]
 ```
+### curl 
+``` css
+curl https://atsd_host:8443/api/v1/series/insert \
+  -v -u {username}:{password} \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '[{"entity": "nurswgvml007", "metric": "df.disk_used_percent", "tags": {"file_system": "/sda", "mount_point": "/"},"data": [{ "t": 1462427358127, "v": 22.0 }]}, {"entity": "df.disk_used_percent", "metric": "df.disk_used_percent", "tags": {"file_system": "/sdb", "mount_point": "/export"},"data": [{ "t": 1462427358666, "v": 22.0 }]}]'
+```
+## Response
+
