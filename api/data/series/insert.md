@@ -55,7 +55,7 @@ Empty if insert was successful.
 #### URI
 
 ```
-https://atsd_host:8443/api/v1/series/query
+https://atsd_host:8443/api/v1/series/insert
 ```
 
 #### Payload
@@ -73,7 +73,7 @@ https://atsd_host:8443/api/v1/series/query
 #### curl
 
 ```css
-curl https://atsd_host:8443/api/v1/series/query \
+curl https://atsd_host:8443/api/v1/series/insert \
   -v -u {username}:{password} \
   -H "Content-Type: application/json" \
   -X POST \
