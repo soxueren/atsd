@@ -21,13 +21,15 @@ POST /api/v1/properties
 }
 ```
 ### Request Fields
+
 | **Field**  | **Required** | **Description**  |
-|---|---|---|---|---|
-| entity    | no*          | an entity name, such as server name, or a entity name pattern with `?` and `*` wildcards            |
-| entities | no* | an array of entities |
-| entityGroup | no* | If `entityGroup` field is specified in the query, properties of the specified type for entities in this group are returned. `entityGroup` is used only if entity field is missing or if entity field is an empty string. `entityGroup` is supported both for regular types and reserved `$entity_tags` type. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
-| startTime | no           |   start of the selection interval. Default value: `endTime - 1 hour`                                                                                                                        |
-| endTime   | no           | end of the selection interval. Default value: `current server time`                                                                                                                             | 
+|---|---|---|
+| entity    | yes (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
+| entities | yes (1) | Array of entity names or patterns |
+| entityGroup | yes (1) | If `entityGroup` field is specified in the query, properties of the specified type for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
+| entityExpression | yes (1) | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
+| startTime | no           |   start of the selection interval in UNIX milliseconds. Default value: `endTime - 1 hour` |
+| endTime   | no           | end of the selection interval in UNIX milliseconds. Default value: `current server time` | 
 |startDate|	no|	start of the selection interval. Specified in ISO format or using endtime syntax.|
 |endDate|	no|	end of the selection interval. Specified in ISO format or using endtime syntax.|
 |timeFormat|	no|	response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
@@ -37,12 +39,15 @@ POST /api/v1/properties
 | keyExpression | no | expression for matching properties with specified keys |
 
 <aside class="notice">
-'$entity_tags' is a reserved property type to retrieve entity tags. Any keys specified in a request containing this reserved type will be ignored.
+* One of the following fields is required: **entity, entities, entityGroup, entityExpression**. 
+* **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
+* entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
 </aside>
 
 <aside class="notice">
-* Mutually exclusive fields. Entities or an Entity should be specified in the request using ONE of the following fields: entity, entities, entityGroup.
+'$entity_tags' is a reserved property type to retrieve entity tags. Any keys specified in a request containing this reserved type will be ignored.
 </aside>
+
 
 ### Basic Response Example
 
