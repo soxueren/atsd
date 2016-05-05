@@ -1,8 +1,11 @@
-## Series: Query
-### Method
-
+# Series: Query
+## Path 
 ```
-POST /api/v1/series
+/api/v1/series
+```
+## Method
+```
+POST 
 ```
 ### Basic Example
 > Request
