@@ -35,14 +35,13 @@ GET
 ## Example
 ### Request
 #### URI
-
-> Request
-
 ```
-/api/v1/series/json/nurswgvml007/mpstat.cpu_busy?startDate=previous_hour&endDate=now&timeFormat=iso
+https://atsd_host:8443/api/v1/series/json/nurswgvml007/mpstat.cpu_busy?startDate=previous_hour&endDate=now&timeFormat=iso
 ```
+#### curl
 
-> Response
+
+### Response
 
 ```json
 {
@@ -73,7 +72,6 @@ GET
     ]
 }
 ```
-### Request Fields
 
 
 > Request
@@ -99,3 +97,4 @@ time,entity,metric,value
 If endTime is not specified, endDate is used. If endDate is not specified an error is raised.
 If startTime is not specified, startDate is used. If startDate is not specified, endDate is used minus interval. If no start can be established, an error is raised.
 </aside>
+## Additional Examples
