@@ -32,12 +32,12 @@ POST /api/v1/messages
 
 ### Request Fields
 
-|   Field          |  Required   | Description                                                                                     |
-|-------------|-----|--------------------------------------------------------------------------------------|
-|entity 	  | yes** | an entity name, such as server name, or a entity name pattern with `?` and `*` wildcards |
-|entities | no** | an array of entities |
-|entityGroups | no** | if entityGroups field is specified in the query, messages for entities in the listed entity groups are returned. entityGroups is used only if entity field is missing or if entity field is an empty string. If the entities listed in entityGroups are not found or contain no entities an empty resultset will be returned. |
-|excludeGroups | no | entity groups that will be excluded from the response. |
+| **Field** | **Required** | **Description** |
+|---|---|---|
+| entity    | yes (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
+| entities | yes (1) | Array of entity names or entity name patterns |
+| entityGroup | yes (1) | If `entityGroup` field is specified in the query, messages for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
+| entityExpression | yes (1) | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
 |startTime	  | no*  | start of the selection interval. Default value: endTime - 1 hour                     |
 |endTime	  | no*  | end of the selection interval. Default value: current server time                    |
 |startDate	  | no*  | start of the selection interval. Specified in ISO format or using endtime syntax.    |
@@ -55,7 +55,9 @@ POST /api/v1/messages
 </aside>
 
 <aside class="notice">
-** Mutually exclusive fields. Entities or an Entity should be specified in the request using ONE of the following fields: entity, entities, entityGroup.
+* One of the following fields is required: **entity, entities, entityGroup, entityExpression**. 
+* **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
+* entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
 </aside>
 
 ### Basic Response Example
