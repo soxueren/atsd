@@ -50,6 +50,11 @@ If startTime is not specified, startDate is used. If startDate is not specified,
 
 |Field|Required|Description|
 |---|---|---|
+| metric | yes |  Metric name |
+| entity    | yes (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
+| entities | yes (1) | Array of entity names or entity name patterns |
+| entityGroup | yes (1) | If `entityGroup` field is specified in the query, series for the specified metric anf tags for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
+| entityExpression | yes (1) | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
 |startTime|no*|start of the selection interval. Specified in UNIX milliseconds.|
 |endTime|no*|end of the selection interval. Specified in UNIX milliseconds.|
 |startDate|no*|start of the selection interval. Specified in ISO format or using endtime syntax.|
@@ -58,10 +63,7 @@ If startTime is not specified, startDate is used. If startDate is not specified,
 |timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 | limit | no | maximum number of data samples returned. Only the most recent data samples will be returned if endtime/startime are set. Default value: 0 | 
 | last | no |  Performs GET instead of scan. Retrieves only 1 most recent value. Boolean. Default value: false|
-| entity | yes** |  an entity name, such as server name, or a entity name pattern with `?` and `*` wildcards |
-| entities | no** | an array of entities |
-| entityGroup | no** | If `entityGroup` field is specified in the query, series for all entities in this group are returned. entityGroup is used only if `entity` or `entities` fields are missing or if entity field is an empty string. If entityGroup is not found or contains no entities an empty resultset is returned. |
-| metric | yes |  a metric name of the requested time series |
+
 | tags | no |  An object. key is a tag name and value is a single tag value or an array of possible tag values with `?` and `*` wildcards. |
 | type | no | specifies source for underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default value: `HISTORY` |
 |forecastName| no | Unique forecast name. You can store an unlimited number of named forecasts for any series using `forecastName`. If `forecastName` is not set, then the default ATSD forecast will be returned. `forecastName` is applicable only when `type` is set to `FORECAST` or `FORECAST_DEVIATION` |
@@ -78,7 +80,9 @@ If startTime is not specified, startDate is used. If startDate is not specified,
 </aside>
 
 <aside class="notice">
-** Mutually exclusive fields. Entities or an Entity should be specified in the request using ONE of the following fields: entity, entities, entityGroup.
+* One of the following fields is required: **entity, entities, entityGroup, entityExpression**. 
+* **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
+* entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
 </aside>
 
 <h4 id="period">period</h4>
