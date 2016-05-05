@@ -33,9 +33,9 @@ POST /api/v1/properties
 |startDate|	no|	start of the selection interval. Specified in ISO format or using endtime syntax.|
 |endDate|	no|	end of the selection interval. Specified in ISO format or using endtime syntax.|
 |timeFormat|	no|	response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
-| limit     | no           | maximum number of data samples returned. Default value: 0                                                                                                                 | 
-| type      | yes          | type of data properties. Supports reserved `$entity_tags` type to retrieve entity tags. Any keys specified in a request containing this reserved type will be ignored.                                                                                                                              |
-| key      | no           | JSON object containing `name=values` that uniquely identify the property record                                                                                   |
+| limit     | no           | maximum number of data samples returned. Default value: 0   | 
+| type      | yes          | type of data properties. Supports reserved `$entity_tags` type to retrieve entity tags. Any keys specified in a request containing this reserved type will be ignored.  |
+| key      | no           | JSON object containing `name=values` that uniquely identify the property record. Ignored when querying '$entity_tags' which is a reserved property type to retrieve entity tags. |
 | keyExpression | no | expression for matching properties with specified keys |
 
 <aside class="notice">
@@ -43,11 +43,6 @@ POST /api/v1/properties
 * **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
 * entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
 </aside>
-
-<aside class="notice">
-'$entity_tags' is a reserved property type to retrieve entity tags. Any keys specified in a request containing this reserved type will be ignored.
-</aside>
-
 
 ### Basic Response Example
 
