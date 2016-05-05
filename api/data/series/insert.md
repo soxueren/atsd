@@ -79,8 +79,7 @@ curl https://atsd_host:8443/api/v1/series/query \
   -X POST \
   -d '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
 ```
-
-### Additional Examples
+## Additional Examples
 
 * [Named Forecast](examples/insert-named-forecast.md)
 * [Versioned Metric](examples/versioned-metric.md)
