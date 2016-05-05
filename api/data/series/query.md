@@ -48,7 +48,7 @@ If startTime is not specified, startDate is used. If startDate is not specified,
 
 ### Request Fields
 
-|Field|Required|Description|
+| **Field** | **Required** | **Description** |
 |---|---|---|
 | metric | yes |  Metric name |
 | entity    | yes (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
