@@ -49,20 +49,18 @@ POST /api/v1/alerts
 ### Request Fields
 | Field       | Required | Description              |
 |-------------|----|----------------------|
-| metrics     | no | an array of metric names |
-| entity      | no* | an entity name, such as server name, or a entity name pattern with ? and * wildcards |
-| entities    | no | an array of entity names |
-| entityGroup | no | If `entityGroup` field is specified in the query, alerts for all entities in this group are returned. entityGroup is used only if `entity` or `entities` fields are missing or if entity field is an empty string. If entityGroup is not found or contains no entities an empty resultset will be returned. |
-| rules       | no | an array of rules        |
+| entity    | no (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
+| entities | no (1) | Array of entity names or entity name patterns |
+| entityGroup | no (1) | If `entityGroup` field is specified in the query, alerts for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
+| entityExpression | no (1) | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
+| rules       | no | an array of rules which produced the alerts        |
+| metrics     | no | an array of metric names for which the alerts were created |
 | severities  | no | an array of severities   |
 | minSeverity | no | Minimal severity filter  |
 
 <aside class="notice">
-If the entity field only contains a wildcard (*), then alerts for all entities are returned.
-</aside>
-
-<aside class="notice">
-* If entity, entities, entityGroup is not defined, then data is returned for all entities (subject to remaining conditions).
+* **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
+* entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
 </aside>
 
 <aside class="notice">
@@ -72,7 +70,7 @@ If queries[] array is empty, then all alerts are returned.
 **Severity codes**
 
 | **Code** | **Description** |
-|---|---|
+|---:|---|
 | 0 | undefined |
 | 1 | unknown |
 | 2 | normal |
