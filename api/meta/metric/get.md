@@ -18,15 +18,21 @@ GET
 ### Request
 #### URI 
 ```
-http://atsd_server:8088/api/v1/metrics/mpstat.cpu_busy?timeFormat=iso
+https://atsd_host:8443/api/v1/metrics/md-2
 ```
 #### Curl 
+````css
+curl https://atsd_host:8443/api/v1/metrics/md-2 \
+  -v -u {username}:{password} \
+  -H "Content-Type: application/json" \
+  -X GET
 
-> Response
+````
+### Response
 
 ```json
 {
-    "name": "mpstat.cpu_busy",
+    "name": "md-2",
     "enabled": true,
     "dataType": "FLOAT",
     "counter": false,
@@ -42,6 +48,6 @@ http://atsd_server:8088/api/v1/metrics/mpstat.cpu_busy?timeFormat=iso
 
 Displays metric properties and its tags.
 
-###Response Fields
+
 
 See: [Metrics: List](#metrics:-list)
