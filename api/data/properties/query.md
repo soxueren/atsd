@@ -25,7 +25,7 @@ POST /api/v1/properties
 | **Field**  | **Required** | **Description**  |
 |---|---|---|
 | entity    | yes (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
-| entities | yes (1) | Array of entity names or patterns |
+| entities | yes (1) | Array of entity names or entity name patterns |
 | entityGroup | yes (1) | If `entityGroup` field is specified in the query, properties of the specified type for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
 | entityExpression | yes (1) | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
 | startTime | no           |   start of the selection interval in UNIX milliseconds. Default value: `endTime - 1 hour` |
