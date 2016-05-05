@@ -1,17 +1,17 @@
-## Metrics: List
-### Description 
-### Path
+# Metrics: List
+## Description 
+## Path
 ```
 /api/v1/metrics
 ```
-### Method
+## Method
 ```
 GET 
 ```
 
-### Request
+## Request
 
-#### Parameters
+### Parameters
 
 |**Parameter**|**Required**|**Description**|
 |---|---|---|
@@ -23,8 +23,8 @@ GET
 |limit|no|Limit response to first N metrics, ordered by name.|
 |timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 
-### Response 
-#### Fields
+## Response 
+### Fields
 |**Field**|**Description**|
 |---|---|
 |name|Metric name (unique)|
@@ -49,19 +49,24 @@ GET
  <aside class="notice">
 If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returned. If `timeFormat` is set to the default value (milliseconds), then `lastInsertTime` will be returned.
 </aside>
-#### Erorrs
+### Erorrs
 
-### Example 
+## Example 
 
-#### Request
-
+### Request
+#### URI
 ```
-/api/v1/metrics?limit=2
+https://atsd_host:8443/api/v1/metrics?limit=2
+```
+#### Curl
+```css
+curl https://atsd_host:8443/api/v1/series/query \
+  -v -u {username}:{password} \
+  -H "Content-Type: application/json" \
+  -X GET
 ```
 
-
-
-#### Response
+### Response
 
 ```json
  [
@@ -93,7 +98,7 @@ If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returne
 
 
 
-### Additional Examples
+## Additional Examples
 * [Fetch all disk metrics](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-all-disk-metrics.md)
 * [Fetch metrics with tag table](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-with-tag-table.md)
 * [Fetch metrics by name and tag](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-by-name-and-tag.md)
