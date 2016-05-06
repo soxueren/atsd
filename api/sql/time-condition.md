@@ -1,6 +1,6 @@
 ## Time Condition
 
-> Request
+> Query
 
 ```sql
 SELECT time, value FROM mpstat.cpu_busy 
