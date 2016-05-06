@@ -2,7 +2,7 @@
 
 Result table contains rows with table1.entity = table2.entity and table1.time = table2.time and table1.tags = table2.tags
 
-> Request
+> Query
 
 ```sql
 SELECT *
