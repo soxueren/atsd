@@ -2,7 +2,7 @@
 
 `datetime` is used to return time in ISO format without offset: `2015-04-07T08:14:28.231Z`
 
-> Request
+> Query
 
 ```sql
 SELECT datetime, time, value, entity FROM mpstat.cpu_busy 
