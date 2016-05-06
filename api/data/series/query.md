@@ -62,8 +62,7 @@ If startTime is not specified, startDate is used. If startDate is not specified,
 |interval|no*|Duration of the selection interval, specified as `count` and `unit`|
 |timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 | limit | no | maximum number of data samples returned. Only the most recent data samples will be returned if endtime/startime are set. Default value: 0 | 
-| last | no |  Performs GET instead of scan. Retrieves only 1 most recent value. Boolean. Default value: false|
-
+| last | no |  Performs GET instead of scan. Retrieves only 1 most recent value. Boolean. Default value: false |
 | tags | no |  An object. key is a tag name and value is a single tag value or an array of possible tag values with `?` and `*` wildcards. |
 | type | no | specifies source for underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default value: `HISTORY` |
 |forecastName| no | Unique forecast name. You can store an unlimited number of named forecasts for any series using `forecastName`. If `forecastName` is not set, then the default ATSD forecast will be returned. `forecastName` is applicable only when `type` is set to `FORECAST` or `FORECAST_DEVIATION` |
