@@ -2,7 +2,7 @@
 
 This function numbers rows according to grouping columns (example: `entity, tags`), orders rows (example `time DESC`), and then filters each row with predicate based on `row_number` function value (`WITH row_number(entity, tags ORDER BY time DESC) <= 3`).
 
-> Request
+> Query
 
 ```sql
 SELECT entity, time, AVG(cpu_busy.value)
