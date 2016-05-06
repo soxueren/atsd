@@ -66,7 +66,6 @@ https://atsd_host:8443/api/v1/metrics?limit=2
 ```css
 curl https://atsd_host:8443/api/v1/metrics?limit=2 \
   -v -u {username}:{password} \
-  -H "Content-Type: application/json" \
   -X GET
 ```
 
