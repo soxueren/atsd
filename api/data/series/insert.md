@@ -49,7 +49,9 @@ Empty if insert was successful.
 ### Errors
 |  Status Code  |  Description  |
 |---------------|---------------|
-| 400 |Bad Request|
+| 400 |IllegalArgumentException: Empty entity|
+| 400 |IllegalArgumentException: Negative timestamp|
+| 400 | IllegalArgumentException: No data |
 | 401 |Unauthorized Access||
 | 500 |Internal Server Error|
 | 501 |Wrong Method|
@@ -86,7 +88,6 @@ curl https://atsd_host:8443/api/v1/series/insert \
 ```
 ## Additional Examples
 
-* [Named Forecast](/api/data/examples/named-forecast-example.md)
 * [Versioned Metric](/api/data/examples/versioned-metric.md)
 * [Multiple series](/api/data/examples/insert-multiple-series.md)
 
