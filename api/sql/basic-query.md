@@ -2,7 +2,7 @@
 
 Query for one metric, one entity and detailed values for time range
 
-> Request
+> Query
 
 ```sql
 SELECT time, value, entity FROM mpstat.cpu_busy 
