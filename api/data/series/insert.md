@@ -50,7 +50,7 @@ Empty if insert was successful.
 |  Status Code  |  Description  |
 |---------------|---------------|
 | 400 |Bad Request|
-| 401 |Unauthorized|
+| 401 |Unauthorized Access||
 | 500 |Internal Server Error|
 | 501 |Wrong Method|
 ## Example
