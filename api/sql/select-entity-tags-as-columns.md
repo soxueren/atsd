@@ -1,6 +1,6 @@
 ## Select Entity Tags as Columns
 
-> Request
+> Query
 
 ```sql
 SELECT entity, entity.tags.os AS os, entity.tags.ip AS ip FROM df.disk_used 
