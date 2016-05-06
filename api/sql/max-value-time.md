@@ -2,7 +2,7 @@
 
 Time when the metric value reached its maximum over the last hour
 
-> Request
+> Query
 
 ```sql
 SELECT entity, MAX(value),
