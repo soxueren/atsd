@@ -22,6 +22,8 @@ Payload - CSV containing time column and one or multiple metric columns.
 * Content-type: text/plain or text/csv
 
 ## Response 
+### Fields
+Empty if insert was successful.
 ### Errors
 
 ## Example 
