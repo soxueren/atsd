@@ -2,7 +2,7 @@
 
 5 minute average value for one metric, two entities, sorted by entity name
 
-> Request
+> Query
 
 ```sql
 SELECT entity, period(5 MINUTE) AS "period", avg(value) AS CPU_Avg FROM mpstat.cpu_busy 
