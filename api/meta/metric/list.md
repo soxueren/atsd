@@ -52,7 +52,7 @@ If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returne
 ### Erorrs
 |  Status Code  |  Description  |
 |---------------|---------------|
-| 401 |Unauthorized|
+| 401 |Unauthorized Access|
 | 500 |Internal Server Error|
 | 501 |Wrong Method|
 ## Example 
