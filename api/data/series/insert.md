@@ -47,7 +47,11 @@ The request must contain an array of series objects each containing an array of 
 Empty if insert was successful.
 
 ### Errors
-
+|  Status Code  |  Description  |
+|---------------|---------------|
+| 400 |Bad Request|
+| 500 |Internal Server Error|
+| 401 |Unauthorized|
 ## Example
 
 ### Request
