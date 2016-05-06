@@ -2,7 +2,7 @@
 
 One metric, one entity, filter by tag, detailed values for time range
 
-> Request
+> Query
 
 ```sql
 SELECT time, value, tags.file_system FROM df.df.disk_used_percent WHERE entity = 'nurswgvml007'
