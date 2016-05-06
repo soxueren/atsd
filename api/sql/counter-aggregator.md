@@ -1,6 +1,6 @@
 ## Counter Aggregator
 
-> Request
+> Query
 
 ```sql
 SELECT datetime, count(value), max(value), counter(value) FROM log_event_total_counter 
