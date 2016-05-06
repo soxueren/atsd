@@ -431,7 +431,8 @@ Verioned values are always returned with version time/date (t or d). Verision ti
 </aside>
 
 
-
+## Additional Examples 
+* [Named Forecast](/api/data/examples/named-forecast-example.md)
 
 
 
