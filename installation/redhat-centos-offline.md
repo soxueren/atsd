@@ -24,7 +24,7 @@ and copying them to the target machine with similar characteristics for offline 
 Download ATSD rpm package to an intermediate machine with Internet access:
 
 * `curl -O https://www.axibase.com/public/atsd_ce_amd64.rpm`
-* [axibase.com](https://axibase.com/public/atsd_ce_rpm_latest.htm)
+* [https://axibase.com/public/atsd_ce_rpm_latest.htm](https://axibase.com/public/atsd_ce_rpm_latest.htm)
 
 Download ATSD dependencies to an intermediate machine with connected repositories:
 
