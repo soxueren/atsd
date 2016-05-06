@@ -24,7 +24,7 @@ dependencies, use the [offline installation option](redhat-centos-offline.md).
 Download rpm package to the target server:
 
 * `curl -O https://www.axibase.com/public/atsd_ce_amd64.rpm`
-* [axibase.com](https://axibase.com/public/atsd_ce_rpm_latest.htm)
+* [https://axibase.com/public/atsd_ce_rpm_latest.htm](https://axibase.com/public/atsd_ce_rpm_latest.htm)
 
 ## Installation Steps
 
