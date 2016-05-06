@@ -3,7 +3,7 @@ CSV file is exported
 ## Request 
 ### URI
 ```
-/api/v1/series/csv/nurswgvml007/mpstat.cpu_busy?startDate=previous_hour&endDate=now&columns=date,entity,metric,value
+https://atsd_host:8443/api/v1/series/csv/nurswgvml007/mpstat.cpu_busy?startDate=previous_hour&endDate=now&columns=date,entity,metric,value
 ```
 ### curl
 ```css
