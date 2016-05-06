@@ -1,6 +1,6 @@
 ## Entity with Tags
 
-> Request
+> Query
 
 ```sql
 SELECT count(*), entity, tags.*, period (30 minute) FROM df.disk_used 
