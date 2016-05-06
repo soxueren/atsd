@@ -2,7 +2,7 @@
 
 Inner join + tables rows that is not belonging to inner join table with null value columns.
 
-> Request
+> Query
 
 ```sql
 SELECT *
