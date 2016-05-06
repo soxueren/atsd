@@ -19,14 +19,16 @@ dependencies, use the [offline installation option](sles-offline.md).
 
 Download rpm package to the target server:
 
-* `curl -O https://www.axibase.com/public/atsd_ce_amd64_sles.rpm`
-* [axibase.com](https://axibase.com/public/atsd_ce_rpm_sles_latest.htm)
+* `curl -O https://www.axibase.com/public/atsd_ce_amd64.rpm`
+* [https://axibase.com/public/atsd_ce_rpm_latest.htm](https://axibase.com/public/atsd_ce_rpm_latest.htm)
 
 ## Installation Steps
 
 Install ATSD with dependencies:
 
+```sh
 sudo zypper -n install atsd_ce_amd64.rpm
+```
 
 It may take up to 5 minutes to initialize the database.
 
