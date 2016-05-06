@@ -2,7 +2,7 @@
 
 `tags.*` - every tag will have its own column in the response.
 
-> Request
+> Query
 
 ```sql
 SELECT entity, tags.*, datetime, Avg(value)
