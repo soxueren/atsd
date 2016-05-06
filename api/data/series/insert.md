@@ -52,6 +52,7 @@ Empty if insert was successful.
 | 400 |IllegalArgumentException: Empty entity|
 | 400 |IllegalArgumentException: Negative timestamp|
 | 400 | IllegalArgumentException: No data |
+
 | 500 |Internal Server Error|
 
 ## Example
