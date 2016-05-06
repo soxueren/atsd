@@ -2,7 +2,7 @@
 
 In this example the "not equal" operator `!=`, is used to exclude values equal to zero from the results.
 
-> Request
+> Query
 
 ```sql
 SELECT entity, tags.mount_point AS mp, tags.file_system AS FS,
