@@ -1,6 +1,6 @@
 ## SELECT All
 
-> Request
+> Query
 
 ```sql
 SELECT * FROM mpstat.cpu_busy 
