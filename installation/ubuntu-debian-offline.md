@@ -31,8 +31,8 @@ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 \
 ```
 
 ```sh
-sudo echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./" \
->> /etc/apt/sources.list.d/axibase.list
+sudo sh -c 'echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./" \
+>> /etc/apt/sources.list.d/axibase.list'
 ```
 
 Download atsd package including its dependencies to `atsd_with_dependencies` directory.
