@@ -30,7 +30,7 @@ Download deb package to the target server:
 Update repositories and install dependencies:
 
 ```sh
-sudo apt-get update && sudo apt-get install -y openjdk-7-jdk sysstat curl
+sudo apt-get update && sudo apt-get install -y openjdk-7-jdk sysstat curl hostname
 ```
 
 > If there are any issues with installing the dependencies, [check the repositories](modifying-ubuntu-debian-repositories.md "Modifying Repositories") and retry the command.
