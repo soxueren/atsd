@@ -1,7 +1,7 @@
 ## Outer Join with Aggregation
 
 
-> Request
+> Query
 
 ```sql
 SELECT entity, time, AVG(cpu_busy.value), AVG(disk_used.value)
