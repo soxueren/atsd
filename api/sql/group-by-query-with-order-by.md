@@ -1,6 +1,6 @@
 ## GROUP BY Query with ORDER BY
 
-> Request
+> Query
 
 ```sql
 SELECT entity, avg(value) FROM mpstat.cpu_busy 
