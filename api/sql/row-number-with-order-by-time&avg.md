@@ -2,7 +2,7 @@
 
 `tags` - concatenates all tags in one column.
 
-> Request
+> Query
 
 ```sql
 SELECT entity, tags, datetime, Avg(value)
