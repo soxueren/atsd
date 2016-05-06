@@ -50,7 +50,11 @@ GET
 If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returned. If `timeFormat` is set to the default value (milliseconds), then `lastInsertTime` will be returned.
 </aside>
 ### Erorrs
-
+|  Status Code  |  Description  |
+|---------------|---------------|
+| 401 |Unauthorized|
+| 500 |Internal Server Error|
+| 501 |Wrong Method|
 ## Example 
 
 ### Request
