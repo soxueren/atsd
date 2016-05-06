@@ -24,25 +24,9 @@ Download rpm package to the target server:
 
 ## Installation Steps
 
-Download [Oracle Java 7 JDK rpm package](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
+Install ATSD with dependencies:
 
-Install Java
-
-```sh
- sudo rpm -i jdk-7u80-linux-x64.rpm
-```
-
-Install Dependencies
-
-```sh
-sudo zypper -n install sysstat sed iproute net-tools openssh cron pwdutils
-```
-
-Follow the prompts to install ATSD
-
-```sh
- sudo rpm -i atsd_ce_amd64_sles.rpm                                  
-```
+sudo zypper -n install atsd_ce_amd64.rpm
 
 It may take up to 5 minutes to initialize the database.
 
