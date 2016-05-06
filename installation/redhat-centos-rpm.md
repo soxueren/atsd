@@ -28,20 +28,10 @@ Download rpm package to the target server:
 
 ## Installation Steps
 
-Install dependencies:
+Install ATSD with dependencies:
 
 ```sh
-sudo yum install java-1.7.0-openjdk-devel openssh-server cronie sysstat sed passwd iproute net-tools
-```
-
-> If some of the above dependencies are not found, for example in case of
-installation on new systems, run `sudo yum update` to upgrade all
-packages on your operating system to the latest versions.
-
-Follow the prompts to install ATSD:
-
-```sh
-sudo rpm -i atsd_ce_amd64.rpm
+sudo yum install -y atsd_ce_amd64.rpm
 ```
 
 It may take up to 5 minutes to initialize the database.
