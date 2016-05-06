@@ -42,7 +42,7 @@ nano dep-download.sh
 #!/bin/sh
 SCRIPT=$(readlink -f $0)
 DIR="`dirname $SCRIPT`"
-list="telnet sysstat sed iproute2 net-tools openssh cron pwdutils netcat-openbsd"
+list="telnet sysstat netcat-openbsd"
 zypper install -df $list
 for package in $list; do
     cp "`find /var/cache/zypp/packages -name *$package*.rpm`" $DIR/
