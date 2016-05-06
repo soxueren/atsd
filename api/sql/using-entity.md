@@ -2,7 +2,7 @@
 
 Calculate Cartesian product for table tags and fill each row with metric values based on entity and time.
 
-> Request
+> Query
 
 ```sql
 SELECT entity, disk_used.time, cpu_busy.time, AVG(cpu_busy.value), AVG(disk_used.value), tags.*
