@@ -2,7 +2,7 @@
 
 Returns the last time of a stored value in a table for a key (metric + entity + tags).
 
-> Request
+> Query
 
 ```sql
 SELECT entity, datetime, AVG(cpu_busy.value)
