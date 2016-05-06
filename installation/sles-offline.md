@@ -20,65 +20,57 @@ and copying them to the target machine with similar characteristics for offline 
 ### Option 1: Install dependencies from local repositories.
 
 ```sh
-sysstat sed iproute net-tools openssh cron pwdutils
+sudo zypper -n install java-1.7.0-openjdk-devel sysstat which
 ```
 
-### Option 2: Install dependencies from an archive.
+### Option 2: Copy dependencies from a connected machine.
 
-On a separate machine with internet access download the provided archive containing all the dependencies:
-
-```sh
-curl -O https://axibase.com/public/sles_dependencies.tar.gz
-```
-
-Copy the archive containing the dependencies to target machine, unpack and then install the dependencies:
-
-```sh
-tar xzf sles_dependencies.tar.gz
-cd sles_dependencies
-sudo zypper install *
-```
-
-### Option 3: Install dependencies using a script.
-
-On a separate machine with internet access download the dependencies using the provided script (dependencies will be downloaded to the same folder where the script is located):
+On a separate machine with internet access create a directory containing the dependencies:
 
 ```sh
 mkdir ./sles_dependencies
 cd sles_dependencies
 ```
 
+Copy the following script to `dep-download.sh`file and execute it to download the dependencies:
+
 ```sh
-curl -O https://axibase.com/public/zypper_download.tar.gz
-tar xzf zypper_download.tar.gz
-sudo ./zypper_download.sh
+nano dep-download.sh
 ```
 
-Copy the folder containing the dependencies to target machine and install them:
-
 ```sh
-sudo zypper install sles_dependencies/*
+#!/bin/sh
+SCRIPT=$(readlink -f $0)
+DIR="`dirname $SCRIPT`"
+list="telnet sysstat sed iproute2 net-tools openssh cron pwdutils netcat-openbsd"
+zypper install -df $list
+for package in $list; do
+    cp "`find /var/cache/zypp/packages -name *$package*.rpm`" $DIR/
+done
 ```
 
-## Install Java
+```sh
+chmod a+x dep-download.sh
+sudo ./dep-download.sh
+```
 
-Download and install [Oracle Java 7 JDK rpm package](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
+Copy the folder containing the dependencies to the target machine and install them:
 
 ```sh
- sudo rpm -i jdk-7u80-linux-x64.rpm
+sudo zypper -n install sles_dependencies/*
 ```
 
 ## Install ATSD
 
-Download ATSD rpm package:
+Download ATSD rpm package to the target machine:
 
-* `curl -O https://axibase.com/public/atsd_ce_amd64_sles.rpm`
-* [axibase.com](https://axibase.com/public/atsd_ce_rpm_sles_latest.htm)
+* `curl -O https://axibase.com/public/atsd_ce_amd64.rpm`
+* [https://axibase.com/public/atsd_ce_rpm_latest.htm](https://axibase.com/public/atsd_ce_rpm_latest.htm)
 
 Follow the prompts to install ATSD:
 
 ```sh
- sudo rpm -i atsd_ce_amd64_sles.rpm                                  
+ sudo rpm -i atsd_ce_amd64.rpm                                  
 ```
 
 It may take up to 5 minutes to initialize the database.
