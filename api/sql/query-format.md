@@ -1,6 +1,6 @@
 ## Query Format
 
-> Request
+> Query
 
 ```SQL
 SELECT * FROM {metric} 
