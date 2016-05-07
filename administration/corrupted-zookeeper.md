@@ -5,39 +5,25 @@ If the HBase server did not start correctly and the file
 `/opt/atsd/hbase/logs/hbase-axibase-zookeeper-{hostname}.out` contains:
 
 ```java
- java.io.IOException: Failed to process transaction type: 1 error: Keeper 
- ErrorCode = NoNode for /hbase                                            
-     at org.apache.zookeeper.server.persistence.FileTxnSnapLog.restore(Fi 
- leTxnSnapLog.java:153)                                                   
-     at org.apache.zookeeper.server.ZKDatabase.loadDataBase(ZKDatabase.ja 
- va:223)                                                                  
-     at org.apache.zookeeper.server.ZooKeeperServer.loadData(ZooKeeperSer 
- ver.java:250)                                                            
-     at org.apache.zookeeper.server.ZooKeeperServer.startdata(ZooKeeperSe 
- rver.java:377)                                                           
-     at org.apache.zookeeper.server.NIOServerCnxnFactory.startup(NIOServe 
- rCnxnFactory.java:122)                                                   
-     at org.apache.zookeeper.server.ZooKeeperServerMain.runFromConfig(Zoo 
- KeeperServerMain.java:112)                                               
-     at org.apache.hadoop.hbase.zookeeper.HQuorumPeer.runZKServer(HQuorum 
- Peer.java:85)                                                            
-     at org.apache.hadoop.hbase.zookeeper.HQuorumPeer.main(HQuorumPeer.ja 
- va:70)                                                                   
- Caused by: org.apache.zookeeper.KeeperException$NoNodeException: KeeperE 
- rrorCode = NoNode for /hbase                                             
-     at org.apache.zookeeper.server.persistence.FileTxnSnapLog.processTra 
- nsaction(FileTxnSnapLog.java:211)                                        
-     at org.apache.zookeeper.server.persistence.FileTxnSnapLog.restore(Fi 
- leTxnSnapLog.java:151)                                                   
+ java.io.IOException: Failed to process transaction type: 1 error: Keeper ErrorCode = NoNode for /hbase                           
+     at org.apache.zookeeper.server.persistence.FileTxnSnapLog.restore(FileTxnSnapLog.java:153)                                    
+     at org.apache.zookeeper.server.ZKDatabase.loadDataBase(ZKDatabase.java:223)                                                  
+     at org.apache.zookeeper.server.ZooKeeperServer.loadData(ZooKeeperServer.java:250)                                             
+     at org.apache.zookeeper.server.ZooKeeperServer.startdata(ZooKeeperServer.java:377)                                            
+     at org.apache.zookeeper.server.NIOServerCnxnFactory.startup(NIOServerCnxnFactory.java:122)                                    
+     at org.apache.zookeeper.server.ZooKeeperServerMain.runFromConfig(ZooKeeperServerMain.java:112)                                
+     at org.apache.hadoop.hbase.zookeeper.HQuorumPeer.runZKServer(HQuorumPeer.java:85)                                             
+     at org.apache.hadoop.hbase.zookeeper.HQuorumPeer.main(HQuorumPeer.java:70)                                                    
+ Caused by: org.apache.zookeeper.KeeperException$NoNodeException: KeeperErrorCode = NoNode for /hbase                              
+     at org.apache.zookeeper.server.persistence.FileTxnSnapLog.processTransaction(FileTxnSnapLog.java:211)                         
+     at org.apache.zookeeper.server.persistence.FileTxnSnapLog.restore(FileTxnSnapLog.java:151)
      ... 7 more                                                           
 ```
 Then execute the following steps to fix the issue:
 
-> Note: If your ATSD installation has replication setup [according to our
-guide](replication.md "ATSD Replication"),
-be sure to execute the `add_peer` commands on the master machine again
-to restart replication after you have restored the corrupted zookeeper
-using this guide.*
+> Note: If your ATSD installation has replication setup according [replication
+guide](replication.md "ATSD Replication"), execute the `add_peer` commands on the master machine again
+to restart replication after you have restored the corrupted zookeeper using this guide.*
 
 Stop HBase:
 
