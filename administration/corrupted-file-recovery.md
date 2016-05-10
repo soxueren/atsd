@@ -130,7 +130,7 @@ ERROR: Unknown table atsd_entity!
  # status OK
 ```
 
-*Start atsd and it will be available on the web interface now.
+* Start atsd and it will be available on the web interface now.
 
 ```sh
 /opt/atsd/bin/atsd-all.sh start
