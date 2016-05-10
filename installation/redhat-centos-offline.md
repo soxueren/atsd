@@ -43,7 +43,7 @@ sudo yumdownloader --resolve java-1.7.0-openjdk-devel sysstat which hostname
 Copy the downloaded *.rpm packages to the target machine and install them as follows:
 
 ```sh
-sudo yum localinstall ./folder_with_dependencies/*
+sudo yum install ./folder_with_dependencies/*
 ```
 
 Follow the prompts to install ATSD:
