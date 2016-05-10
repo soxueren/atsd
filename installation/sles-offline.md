@@ -41,7 +41,7 @@ nano dep-download.sh
 ```sh
 #!/bin/sh
 SCRIPT=$(readlink -f $0)
-DIR="`dirname $SCRIPT`"
+DIR=$(dirname $SCRIPT)
 list="java-1_7_0-openjdk-devel sysstat which"
 zypper -n install -df $list
 for package in $list; do
