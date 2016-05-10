@@ -27,7 +27,7 @@ It is worth to
 * Make sure /hbase/ contains corrupted data files
 
 ```
-/opt/atsd/hadoop/bin/hadoop fs -rmr -skipTrash /hbase/.logs/*
+ /opt/atsd/hadoop/bin/hadoop fs -rmr -skipTrash /hbase/.logs/*
  /opt/atsd/hadoop/bin/hadoop fsck /hbase/ -openforwrite -files | grep "Status: CORRUPT"
 ```
 
