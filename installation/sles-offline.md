@@ -57,7 +57,7 @@ sudo ./dep-download.sh
 Copy the folder containing the dependencies to the target machine and install them:
 
 ```sh
-sudo zypper -n install sles_dependencies/*
+sudo zypper -n install sles_dependencies/*.rpm
 ```
 
 ## Install ATSD
@@ -70,7 +70,7 @@ Download ATSD rpm package to the target machine:
 Follow the prompts to install ATSD:
 
 ```sh
- sudo rpm -i atsd_ce_amd64.rpm                                  
+ sudo zypper -n install atsd_ce_amd64.rpm                                  
 ```
 
 It may take up to 5 minutes to initialize the database.
