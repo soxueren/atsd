@@ -77,7 +77,7 @@ Restart hadoop
 Wait for leaving safemode by himself about 1 minute, check hadoop safemode and if it is OFF start hbase
 
 ```sh
- /opt/atsd/hadoop/bin/hadoop dfsadmin -safemode leave
+ /opt/atsd/hadoop/bin/hadoop dfsadmin -safemode get
  # safe mode is OFF
  /opt/atsd/hbase/bin/start-hbase.sh
 ```
