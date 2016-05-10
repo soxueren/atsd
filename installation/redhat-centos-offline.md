@@ -29,7 +29,7 @@ Download ATSD rpm package to an intermediate machine with Internet access:
 Download ATSD dependencies to an intermediate machine with connected repositories:
 
 ```sh
-sudo yum install yum-utils
+sudo yum install -y yum-utils
 ```
 
 ```sh
@@ -43,13 +43,13 @@ sudo yumdownloader --resolve java-1.7.0-openjdk-devel sysstat which hostname
 Copy the downloaded *.rpm packages to the target machine and install them as follows:
 
 ```sh
-sudo yum localinstall ./folder_with_dependencies/*
+sudo yum install -y ./folder_with_dependencies/*
 ```
 
 Follow the prompts to install ATSD:
 
 ```sh
-sudo rpm -i atsd_ce_amd64.rpm
+sudo yum install -y atsd_ce_amd64.rpm
 ```
 
 It may take up to 5 minutes to initialize the database.

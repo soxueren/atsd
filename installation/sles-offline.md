@@ -20,7 +20,7 @@ and copying them to the target machine with similar characteristics for offline 
 ### Option 1: Install dependencies from local repositories.
 
 ```sh
-sudo zypper -n install java-1.7.0-openjdk-devel sysstat which
+sudo zypper -n install java-1_7_0-openjdk-devel sysstat which
 ```
 
 ### Option 2: Copy dependencies from a connected machine.
@@ -42,10 +42,10 @@ nano dep-download.sh
 #!/bin/sh
 SCRIPT=$(readlink -f $0)
 DIR="`dirname $SCRIPT`"
-list="telnet sysstat netcat-openbsd"
-zypper install -df $list
+list="java-1_7_0-openjdk-devel sysstat which"
+zypper -n install -df $list
 for package in $list; do
-    cp "`find /var/cache/zypp/packages -name *$package*.rpm`" $DIR/
+    find /var/cache/zypp/packages -name $package*.rpm -exec cp {} $DIR \;
 done
 ```
 
