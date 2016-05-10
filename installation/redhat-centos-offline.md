@@ -49,7 +49,7 @@ sudo yum install ./folder_with_dependencies/*
 Follow the prompts to install ATSD:
 
 ```sh
-sudo rpm -i atsd_ce_amd64.rpm
+sudo yum install atsd_ce_amd64.rpm
 ```
 
 It may take up to 5 minutes to initialize the database.
