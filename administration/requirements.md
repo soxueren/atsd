@@ -9,6 +9,10 @@
 
 > Total Processor capacity computed as number of cores multiplied by clock speed, e.g. 4 x 2.5GHz = 10 GHz
 
+## Architecture
+
+- x86_64 / 64bit
+
 ## Operating Systems
 
 -   Ubuntu 14.x, 15.x
