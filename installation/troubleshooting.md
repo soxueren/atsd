@@ -13,5 +13,6 @@ Review the following log files for errors:
 
 ## 32-bit Error
 
-`Package Not Found` error will be displayed when attempting an installation of atsd deb package on a 32-bit architecture. 
+`Package Not Found` error will be displayed when attempting an installation of atsd deb package on a 32-bit architecture.
+
 Retry installation on a supported [architecture](../administration/requirements.md).
