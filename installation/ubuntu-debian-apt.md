@@ -50,10 +50,7 @@ Web interface is accessible on port 8088 (http) and 8443 (https).
 
 ## Troubleshooting
 
-Review the following log files for errors:
-
-* Startup log: `/opt/atsd/atsd/logs/start.log`
-* Application log: `/opt/atsd/atsd/logs/atsd.log`
+* Review [Troubleshooting Guide](troubleshooting.md).
 
 ## Optional Steps
 
