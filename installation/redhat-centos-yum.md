@@ -22,7 +22,7 @@ Add **axibase.com/public/repository/rpm/** repository:
 ```sh
 sudo sh -c "cat << EOF > /etc/yum.repos.d/axibase.repo
 [axibase]
-name=axibase - axibase yum repository
+name=Axibase Repository
 baseurl=https://axibase.com/public/repository/rpm
 enabled=1
 gpgcheck=0
