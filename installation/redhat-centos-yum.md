@@ -1,4 +1,4 @@
-# RedHat/Centos: rpm package
+# RedHat/Centos: YUM
 
 ## Supported Versions
 
@@ -14,24 +14,27 @@
 - Minimum RAM: 1 GB 
 - See [Requirements](../administration/requirements.md "ATSD Requirements") for additional information.
 
-## Connection
-
-If the target machine does not have Internet connection to download
-dependencies, use the [offline installation option](redhat-centos-offline.md).
-
-## Download
-
-Download rpm package to the target server:
-
-* `curl -O https://www.axibase.com/public/atsd_ce_amd64.rpm`
-* [https://axibase.com/public/atsd_ce_rpm_latest.htm](https://axibase.com/public/atsd_ce_rpm_latest.htm)
 
 ## Installation Steps
 
-Install ATSD with dependencies:
+Add **axibase.com/public/repository/rpm/** repository:
 
 ```sh
-sudo yum install -y atsd_ce_amd64.rpm
+sudo sh -c "cat << EOF > /etc/yum.repos.d/axibase.repo
+[axibase]
+name=axibase - axibase yum repository
+baseurl=https://axibase.com/public/repository/rpm
+enabled=1
+gpgcheck=0
+protect=1
+EOF"      
+```
+
+
+Update repositories and follow the prompts to install ATSD:
+
+```sh
+yum clean expire-cache && sudo yum install -y atsd                     
 ```
 
 It may take up to 5 minutes to initialize the database.
