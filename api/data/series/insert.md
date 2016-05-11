@@ -52,8 +52,8 @@ Empty if insert was successful.
 | 400 |IllegalArgumentException: Empty entity|
 | 400 |IllegalArgumentException: Negative timestamp|
 | 400 | IllegalArgumentException: No data |
-
-| 500 |Internal Server Error|
+| 500 | JsonParseException: Unexpected character "}" | 
+| 500 | JsonMappingException: No enum constant in field type|
 
 ## Example
 
