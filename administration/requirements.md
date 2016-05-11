@@ -6,8 +6,14 @@
 | Nodes | 1 | > 5 |
 | Processor | 10+ GHz | 10+ GHz |
 | RAM | 4 GB (min 1 GB) | 16 GB |
+| Disk Type | Magnetic | SSD |
 
 > Total Processor capacity computed as number of cores multiplied by clock speed, e.g. 4 x 2.5GHz = 10 GHz
+
+## Disk Space
+
+- Application files: 5 GB
+- Data files: depends on the amount of collected data and replication factor, if applicable.
 
 ## Architecture
 
@@ -24,7 +30,8 @@
 -   Oracle UEK 2, 3
 -   Docker Engine 1.7+
 
-## Disk Space
+## Hostname
 
-- Application files: 5 GB
-- Data files: depends on the amount of collected data and replication factor, if applicable.
+The target server's hostname should not be **localhost**.
+
+
