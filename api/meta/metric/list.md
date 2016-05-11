@@ -52,9 +52,8 @@ If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returne
 ### Erorrs
 |  Status Code  |  Description  |
 |---------------|---------------|
-| 401 |Unauthorized Access|
-| 500 |Internal Server Error|
-| 501 |Wrong Method|
+| 500 |TypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'com.axibase.tsd.model.TimeFormat';|
+| 500 |TypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'int'|
 ## Example 
 
 ### Request
