@@ -1,5 +1,6 @@
 # Metrics: List
 ## Description 
+Return a list of metrics and their properties.
 ## Path
 ```
 /api/v1/metrics
