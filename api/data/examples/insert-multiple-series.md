@@ -16,7 +16,7 @@ https://atsd_host:8443/api/v1/series/insert
       { "d": "2016-05-05T05:50:18.312Z", "v": 17.8 }
     ]
 },{
-    "entity": "c",
+    "entity": "nurswth2309",
     "metric": "df.disk_used_percent",
     "tags": {"file_system": "/sdb", "mount_point": "/export"},
     "data": [
