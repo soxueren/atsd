@@ -1,4 +1,4 @@
-# 2 example - 2 elements in data
+# Insert a few objects in data array
 ## Request
 ### URI
 ```
