@@ -1,4 +1,4 @@
-# Example 1
+# Example 1 - another format of time
 ## Request
 
 ### URI
