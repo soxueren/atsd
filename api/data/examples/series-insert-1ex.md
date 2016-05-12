@@ -1,4 +1,4 @@
-# Example 1 - another format of time
+# Series Insert: ISO time format
 ## Request
 
 ### URI
