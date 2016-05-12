@@ -97,8 +97,11 @@ curl https://atsd_host:8443/api/v1/series/insert \
 ## Additional Examples
 
 * [Versioned Metric](/api/data/examples/versioned-metric.md)
-* [Multiple series](/api/data/examples/insert-multiple-series.md)
-
+* [Multiple Series](/api/data/examples/insert-multiple-series.md)
+* [Named Forecast](/api/data/examples/insert-named-forecast.md)
+* [ISO Time Format](/api/data/examples/series-insert-1ex.md)
+* [A few objects in data array](/api/data/examples/series-insert-2ex.md)
+* [insert with Tags](/api/data/examples/series-insert-4ex.md)
 
 
 
