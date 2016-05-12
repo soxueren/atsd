@@ -1,5 +1,5 @@
-## Versioned metric
-### Request
+# Versioned metric
+## Request
 
 ```json
 [
@@ -24,3 +24,5 @@
 |---|---|
 |status | Status describing value change event.|
 |source | Source that generated value change event.|
+
+## Response
