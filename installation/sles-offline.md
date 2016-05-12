@@ -20,7 +20,7 @@ and copying them to the target machine with similar characteristics for offline 
 ### Option 1: Install dependencies from local repositories.
 
 ```sh
-sudo zypper -n install java-1_7_0-openjdk-devel sysstat which net-tools
+sudo zypper -n install java-1_7_0-openjdk-devel sysstat which net-tools iproute
 ```
 
 ### Option 2: Copy dependencies from a connected machine.
