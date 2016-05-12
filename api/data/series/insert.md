@@ -86,6 +86,14 @@ curl https://atsd_host:8443/api/v1/series/insert \
   -X POST \
   -d '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
 ```
+
+```css
+curl https://atsd_host:8443/api/v1/series/insert \
+  -v -u {username}:{password} \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d @payload
+```
 ## Additional Examples
 
 * [Versioned Metric](/api/data/examples/versioned-metric.md)
