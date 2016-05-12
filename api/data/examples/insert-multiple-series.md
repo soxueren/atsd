@@ -1,4 +1,4 @@
-#Insert Multiple Series Example
+#Insert Multiple Series
 
 ## Request 
 ### URI
