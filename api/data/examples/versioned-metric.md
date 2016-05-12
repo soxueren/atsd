@@ -1,4 +1,4 @@
-# Insert versioned metric
+# Insert Versioned Metric
 ## Request
 ### URI
 ```
