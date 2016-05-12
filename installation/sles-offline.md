@@ -42,7 +42,7 @@ nano dep-download.sh
 #!/bin/sh
 SCRIPT=$(readlink -f $0)
 DIR=$(dirname $SCRIPT)
-list="java-1_7_0-openjdk-devel sysstat which"
+list="java-1_7_0-openjdk-devel sysstat which net-tools"
 zypper -n install -df $list
 for package in $list; do
     find /var/cache/zypp/packages -name $package*.rpm -exec cp {} $DIR \;
