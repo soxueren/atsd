@@ -33,7 +33,7 @@ sudo yum install -y yum-utils
 ```
 
 ```sh
-sudo yumdownloader --resolve java-1.7.0-openjdk-devel sysstat which hostname net-tools
+sudo yumdownloader --resolve java-1.7.0-openjdk-devel sysstat which hostname net-tools iproute
 ```
 
 > See a RedHat [note](https://access.redhat.com/solutions/10154) on using yum to download packages without installation.
