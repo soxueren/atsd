@@ -1,6 +1,10 @@
-## Insert Named Forecast
+# Insert Named Forecast
 
-### Request 
+## Request
+### URI
+```
+```
+### Payload
 ```json
 [
     {
@@ -26,3 +30,4 @@
     }
 ]
 ```
+## Response 
