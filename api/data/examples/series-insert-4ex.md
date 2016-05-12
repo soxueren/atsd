@@ -1,4 +1,4 @@
-# 4 Example Tags
+# 4 Series insert with tags
 ## Request
 ### URI
 ```
