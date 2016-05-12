@@ -19,8 +19,8 @@ GET
 |expression|no|Use `name` variable for metric name. Use `*` placeholder in `like` expresions. <br> Expression must be URL-encoded.|
 |active|no|Filter metrics by `last_insert_time`. If `active = true`, only metrics with positive `last_insert_time` are included in the response|
 |tags|no|Specify metric tags to be included in the response, use `tags=*` as a wildcard (returns all existing tags)|
-|minInsertDate|no|return metrics with lastInsertTime equal or greater than specified time, accepts iso date format|
-|maxInsertDate|no|return metrics with lastInsertTime less than specified time, accepts iso date format|
+|minInsertDate|no|return metrics with `lastInsertTime` equal or greater than specified time, accepts iso date format|
+|maxInsertDate|no|return metrics with `lastInsertTime` less than specified time, accepts iso date format|
 |limit|no|Limit response to first N metrics, ordered by name.|
 |timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 
