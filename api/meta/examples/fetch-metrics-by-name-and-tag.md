@@ -1,8 +1,9 @@
-## Fetch metrics by name and tag
+# Fetch metrics by name and tag
 
 Fetch metrics starting with `nmon` and with tag `table` starting with `CPU`
 
-### Request 
+## Request 
+### URI 
 ```
 /api/v1/metrics?timeFormat=iso&active=true&tags=table&limit=2&expression=name%20like%20%27nmon*%27%20and%20tags.table%20like%20%27*CPU*%27
 ```
@@ -13,7 +14,7 @@ Fetch metrics starting with `nmon` and with tag `table` starting with `CPU`
 name like 'nmon*' and `tags.table` like '*CPU*'
 ```
 
-### Response
+## Response
 
 ```json
 [
