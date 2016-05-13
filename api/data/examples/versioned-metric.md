@@ -1,7 +1,7 @@
 # Insert Versioned Metric
 ## Request
 ### URI
-```
+```elm
 POST https://atsd_host:8443/api/v1/series/insert
 ```
 ### Payload
@@ -9,7 +9,7 @@ POST https://atsd_host:8443/api/v1/series/insert
 [
     {
         "entity": "e-vers",
-        "metric": "m-vers",
+        "metric": "mpstat.cpu_busy",
         "data": [
             {
                 "t": 1447834771665,
