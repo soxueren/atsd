@@ -4,26 +4,46 @@
 
 ### URI
 ```
-https://atsd_host:8443/api/v1/entities/ayr?timeFormat=iso
+GET https://atsd_host:8443/api/v1/metrics?timeformat=iso
 ```
 ## Response 
 ```
-{
-  "name": "ayr",
-  "enabled": true,
-  "lastInsertDate": "2016-05-04T01:00:00.000Z",
-  "tags": {
-    "dist": "33",
-    "entity_group": "Australian Meteo Stations",
-    "height_m": "17",
-    "lat": "-19.6169",
-    "lon": "147.3758",
-    "site_id": "033002",
-    "site_name": "AYR DPI RESEARCH STN",
-    "source": "GPS",
-    "start": "1951",
-    "state_name": "QLD",
-    "wmo": "95295"
-  }
-}
+[
+   {
+      "name":"df.disk_size",
+      "enabled":true,
+      "dataType":"FLOAT",
+      "counter":false,
+      "persistent":true,
+      "timePrecision":"MILLISECONDS",
+      "retentionInterval":0,
+      "invalidAction":"NONE",
+      "lastInsertTime":1463141635000,
+      "versioned":false
+   },
+   {
+      "name":"df.disk_used",
+      "enabled":true,
+      "dataType":"FLOAT",
+      "counter":false,
+      "persistent":true,
+      "timePrecision":"MILLISECONDS",
+      "retentionInterval":0,
+      "invalidAction":"NONE",
+      "lastInsertTime":1463141635000,
+      "versioned":false
+   },
+   {
+      "name":"df.disk_used_percent",
+      "enabled":true,
+      "dataType":"FLOAT",
+      "counter":false,
+      "persistent":true,
+      "timePrecision":"MILLISECONDS",
+      "retentionInterval":0,
+      "invalidAction":"NONE",
+      "lastInsertTime":1463141635000,
+      "versioned":false
+   }
+]
 ```
