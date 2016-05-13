@@ -2,7 +2,7 @@
 
 ## Request
 ### URI
-```
+```elm
 POST https://atsd_host:8443/api/v1/series/insert
 ```
 ### Payload
@@ -10,7 +10,7 @@ POST https://atsd_host:8443/api/v1/series/insert
 [
     {
         "entity": "nurswgvml007",
-        "metric": "df.disk_used_percent",
+        "metric": "mpstat.cpu_busy",
         "type": "FORECAST",
         "forecastName": "arima",
         "data": [
