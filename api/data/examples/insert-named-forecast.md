@@ -1,4 +1,4 @@
-# Insert Named Forecast
+# Insert Forecast
 
 ## Request
 ### URI
