@@ -92,7 +92,7 @@ curl https://atsd_host:8443/api/v1/series/insert \
   -v -u {username}:{password} \
   -H "Content-Type: application/json" \
   -X POST \
-  -d @payload
+  -d @file.json
 ```
 ## Additional Examples
 
