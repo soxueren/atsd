@@ -3,7 +3,7 @@
 Fetch all metrics with `lastInsertTime` less than 2016-05-14T08:13:40 
 ## Request
 ### URI
-```
+```elm
 GET https://atsd_host:8443/api/v1/metrics?maxInsertDate=2016-05-14T08:13:40
 ```
 
