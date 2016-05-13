@@ -4,7 +4,7 @@ Fetch three metrics with `lastInsertTime` qual or greater than 2016-05-13T08:13:
 
 ## Request
 ### URI
-```
+```elm
 GET https://atsd_host:8443/api/v1/metrics?minInsertDate=2016-05-13T08:13:40
 ```
 ## Response
