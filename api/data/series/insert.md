@@ -100,6 +100,7 @@ curl https://atsd_host:8443/api/v1/series/insert \
 * [Series with Tags](/api/data/examples/series-insert-with-tags.md)
 * [Multiple Series](/api/data/examples/insert-multiple-series.md)
 * [Forecast](/api/data/examples/insert-forecast.md)
+* [Named Forecast](https://github.com/axibase/atsd-docs/blob/master/api/data/examples/insert-named-forecast.md)
 * [Versioned Metric](/api/data/examples/versioned-metric.md)
 
 
