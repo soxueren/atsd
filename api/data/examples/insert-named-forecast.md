@@ -9,23 +9,13 @@ POST https://atsd_host:8443/api/v1/series/insert
 ```json
 [
     {
-        "entity": "duckduckgo",
-        "metric": "direct.queries",
-        "tags": {},
-        "forecastName": "DuckDuckGo2",
+        "entity": "nurswgvml007",
+        "metric": "df.disk_used_percent",
         "type": "FORECAST",
         "data": [
             {
-                "d": "2015-06-17T00:00:00.000Z",
+                "t": 1462427358127,
                 "v": 9497228.587367011
-            },
-            {
-                "d": "2015-06-18T00:00:00.000Z",
-                "v": 9517253.496233052
-            },
-            {
-                "d": "2015-06-19T00:00:00.000Z",
-                "v": 9227410.099153783
             }
         ]
     }
