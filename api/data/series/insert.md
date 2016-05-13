@@ -96,10 +96,10 @@ curl https://atsd_host:8443/api/v1/series/insert \
 ```
 ## Additional Examples
 * [ISO Time Format](/api/data/examples/series-insert-iso-time-format.md)
+* [Multiple Samples](https://github.com/axibase/atsd-docs/blob/master/api/data/examples/series-insert-multiple-samples.md)
 * [Versioned Metric](/api/data/examples/versioned-metric.md)
 * [Multiple Series](/api/data/examples/insert-multiple-series.md)
 * [Named Forecast](/api/data/examples/insert-named-forecast.md)
-* [A few objects in data array](/api/data/examples/series-insert-a-few-objects-in-data-array.md)
 * [insert with Tags](/api/data/examples/series-insert-with-tags.md)
 
 
