@@ -11,7 +11,7 @@ https://atsd_host:8443/api/v1/series/insert
     "metric": "df.disk_used_percent",
     "tags": {"file_system": "/sda", "mount_point": "/"},
     "data": [
- { "t": 1462427358127, "v": 22.0 }
+        { "t": 1462427358127, "v": 22.0 }
     ]
 }]
 ```
