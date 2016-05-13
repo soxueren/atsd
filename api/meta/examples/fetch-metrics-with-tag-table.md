@@ -3,12 +3,12 @@
 ## Request
 ### URI
 ```
-/api/v1/metrics?timeFormat=iso&tags=table&limit=2&expression=tags.table%20!=%20%27%27
+GET https://atsd_host:8443/api/v1/metrics?tags=table&expression=tags.table%20!=%20%27%27
 
 ```
 ### Expression
 ```
-expression=tags.table != ''
+tags=table&expression=tags.table%20!=%20%27%27
 ```
 ### Response
 
@@ -41,7 +41,7 @@ expression=tags.table != ''
         "timePrecision": "MILLISECONDS",
         "retentionInterval": 0,
         "invalidAction": "NONE",
-        "lastInsertDate": "2015-11-18T14:57:22.649Z",
+        "lastInsertDate": 1447858020000,
         "versioned": false
     }
 ]
