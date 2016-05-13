@@ -1,4 +1,4 @@
-# Fetch metrics by limit parameter
+# Fetch metrics by limit parameter 
 Fetch first three metrics, ordered by name.
 ## Request
 ### URI
