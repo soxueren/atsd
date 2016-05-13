@@ -1,16 +1,16 @@
 # Fetch active metrics 
 
-Fetch all active metrics with name like '*email*'
 ## Request
 ### URI
 ```
-https://atsd_host:8443/api/v1/metrics?active=true&expression=name%20like%20%27*email*%27
+https://atsd_host:8443/api/v1/metrics?active=true
 ```
+
 ## Response
 ```json
 [
    {
-      "name":"email_notifications_per_minute",
+      "name":"meminfo.active(file)",
       "enabled":true,
       "dataType":"FLOAT",
       "counter":false,
@@ -18,7 +18,31 @@ https://atsd_host:8443/api/v1/metrics?active=true&expression=name%20like%20%27*e
       "timePrecision":"MILLISECONDS",
       "retentionInterval":0,
       "invalidAction":"NONE",
-      "lastInsertTime":1463125772552,
+      "lastInsertTime":1463141890000,
+      "versioned":false
+   },
+   {
+      "name":"meminfo.anonhugepages",
+      "enabled":true,
+      "dataType":"FLOAT",
+      "counter":false,
+      "persistent":true,
+      "timePrecision":"MILLISECONDS",
+      "retentionInterval":0,
+      "invalidAction":"NONE",
+      "lastInsertTime":1463141890000,
+      "versioned":false
+   },
+   {
+      "name":"meminfo.anonpages",
+      "enabled":true,
+      "dataType":"FLOAT",
+      "counter":false,
+      "persistent":true,
+      "timePrecision":"MILLISECONDS",
+      "retentionInterval":0,
+      "invalidAction":"NONE",
+      "lastInsertTime":1463141890000,
       "versioned":false
    }
 ]
