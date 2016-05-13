@@ -104,12 +104,11 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
 ## Additional Examples
 * [Fetch all disk metrics](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-all-disk-metrics.md)
 * [Fetch metrics with tag table](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-with-tag-table.md)
-* [Fetch metrics by name and tag](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-by-name-and-tag.md)
 * [Fetch metric with parameter 'timeFormat'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metric-with-timeformat.md)
 * [Fetch active metrics](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-active-metrics.md)
 * [Fetch metrics by 'maxInsertTime'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-by-maxinserttime.md)
 * [Fetch metrics by 'minInsertTime'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-by-mininserttime.md)
-
+* [Fetch metrics by name and tag](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-by-name-and-tag.md)
 
 
 
