@@ -1,11 +1,12 @@
-## Fetch metric with parameter 'timeFormat'
+# Fetch metric with parameter 'timeFormat'
 
-### Request
+## Request
 
+### URI
 ```
-/api/v1/entities/ayr?timeFormat=iso
+https://atsd_host:8443/api/v1/entities/ayr?timeFormat=iso
 ```
-### Response 
+## Response 
 ```
 {
   "name": "ayr",
