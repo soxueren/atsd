@@ -8,7 +8,8 @@ GET https://atsd_host:8443/api/v1/metrics?tags=table&expression=tags.table%20!=%
 ```
 ### Expression
 ```
-tags=table&expression=tags.table%20!=%20%27%27
+tags=table&expression=tags.table != ''
+
 ```
 ### Response
 
