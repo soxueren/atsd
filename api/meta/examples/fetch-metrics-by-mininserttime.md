@@ -1,6 +1,6 @@
 # Fetch metrics by minInsertTime
 
-Fetch three metrics with lastInsertTime qual or greater than 2016-05-13T08:13:40, timeFormat = iso
+Fetch three metrics with `lastInsertTime` qual or greater than 2016-05-13T08:13:40, timeFormat = iso
 
 ## Request
 ### URI
