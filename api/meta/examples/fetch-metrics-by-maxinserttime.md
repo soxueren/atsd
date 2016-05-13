@@ -1,17 +1,17 @@
 # Fetch metrics by maxInsertTime
 
-Fetch all metrics with `lastInsertTime` less than 2016-05-13T08:13:40 and name like '*second*', timeFormat=iso
+Fetch all metrics with `lastInsertTime` less than 2016-05-14T08:13:40 
 ## Request
 ### URI
 ```
-https://atsd_host:8443/api/v1/metrics?maxInsertDate=2016-05-13T08:13:40&timeFormat=iso&expression=name%20like%20%27*second*%27
+https://atsd_host:8443/api/v1/metrics?maxInsertDate=2016-05-14T08:13:40
 ```
 
 ## Response
 ```json
 [
    {
-      "name":"message_gets_per_second",
+      "name":"meminfo.buffers",
       "enabled":true,
       "dataType":"FLOAT",
       "counter":false,
@@ -19,11 +19,11 @@ https://atsd_host:8443/api/v1/metrics?maxInsertDate=2016-05-13T08:13:40&timeForm
       "timePrecision":"MILLISECONDS",
       "retentionInterval":0,
       "invalidAction":"NONE",
-      "lastInsertDate":"2016-05-06T15:54:51.431Z",
+      "lastInsertTime":1463142416000,
       "versioned":false
    },
    {
-      "name":"property_gets_per_second",
+      "name":"meminfo.cached",
       "enabled":true,
       "dataType":"FLOAT",
       "counter":false,
@@ -31,7 +31,19 @@ https://atsd_host:8443/api/v1/metrics?maxInsertDate=2016-05-13T08:13:40&timeForm
       "timePrecision":"MILLISECONDS",
       "retentionInterval":0,
       "invalidAction":"NONE",
-      "lastInsertDate":"2016-05-06T15:54:51.431Z",
+      "lastInsertTime":1463142416000,
+      "versioned":false
+   },
+   {
+      "name":"meminfo.cmafree",
+      "enabled":true,
+      "dataType":"FLOAT",
+      "counter":false,
+      "persistent":true,
+      "timePrecision":"MILLISECONDS",
+      "retentionInterval":0,
+      "invalidAction":"NONE",
+      "lastInsertTime":1463142416000,
       "versioned":false
    }
 ]
