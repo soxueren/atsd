@@ -4,7 +4,7 @@ Fetch all metrics whose name includes `disk`
 
 ## Request
 ### URI
-```erl
+```elm
 GET http://atsd_server:8088/api/v1/metrics?expression=name%20like%20%27*disk*%27
 ```
 ### Expression
