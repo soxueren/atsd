@@ -1,13 +1,16 @@
 # Fetch all 'disk' metrics
 
-Fetch all metrics whose name includes `disk`, including all tags.
+Fetch all metrics whose name includes `disk`
 
 ## Request
 ### URI
 ```
-http://atsd_server:8088/api/v1/metrics?tags=*&expression=name%20like%20%27*disk*%27
+http://atsd_server:8088/api/v1/metrics?expression=name%20like%20%27*disk*%27
 ```
-
+### Expression
+```
+expression=name like '*disk*'
+```
 ## Response
 
 ```json
