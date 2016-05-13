@@ -1,17 +1,17 @@
 # Fetch metrics by minInsertTime
 
-Fetch three metrics with `lastInsertTime` qual or greater than 2016-05-13T08:13:40, timeFormat = iso
+Fetch three metrics with `lastInsertTime` qual or greater than 2016-05-13T08:13:40
 
 ## Request
 ### URI
 ```
-https://atsd_host:8443/api/v1/metrics?minInsertDate=2016-05-13T08:13:40&timeFormat=iso&limit=3
+GET https://atsd_host:8443/api/v1/metrics?minInsertDate=2016-05-13T08:13:40
 ```
 ## Response
 ```json
 [
    {
-      "name":"api_command_malformed_per_second",
+      "name":"properties_pool_active_count",
       "enabled":true,
       "dataType":"FLOAT",
       "counter":false,
@@ -19,11 +19,11 @@ https://atsd_host:8443/api/v1/metrics?minInsertDate=2016-05-13T08:13:40&timeForm
       "timePrecision":"MILLISECONDS",
       "retentionInterval":0,
       "invalidAction":"NONE",
-      "lastInsertDate":"2016-05-13T08:16:32.731Z",
+      "lastInsertTime":1463142625873,
       "versioned":false
    },
    {
-      "name":"df.disk_size",
+      "name":"properties_queue_size",
       "enabled":true,
       "dataType":"FLOAT",
       "counter":false,
@@ -31,11 +31,11 @@ https://atsd_host:8443/api/v1/metrics?minInsertDate=2016-05-13T08:13:40&timeForm
       "timePrecision":"MILLISECONDS",
       "retentionInterval":0,
       "invalidAction":"NONE",
-      "lastInsertDate":"2016-05-13T08:16:34.000Z",
+      "lastInsertTime":1463142625873,
       "versioned":false
    },
    {
-      "name":"df.disk_used",
+      "name":"properties_rejected_count",
       "enabled":true,
       "dataType":"FLOAT",
       "counter":false,
@@ -43,7 +43,7 @@ https://atsd_host:8443/api/v1/metrics?minInsertDate=2016-05-13T08:13:40&timeForm
       "timePrecision":"MILLISECONDS",
       "retentionInterval":0,
       "invalidAction":"NONE",
-      "lastInsertDate":"2016-05-13T08:16:34.000Z",
+      "lastInsertTime":1463142625873,
       "versioned":false
    }
 ]
