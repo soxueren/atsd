@@ -1,56 +1,53 @@
-# Restoring corrupted files
+# Restoring Corrupted Files 
 
+Recommended Steps:
 
+   * Wait 60 seconds after starting HBase and before running `hbase hbck`
+   * Restart HBase after running repair and make sure that status OK by hbck again
 
-It is worth to
+## Repair HBase
 
-   * wait 30-60 sec after starting hbase and before running hbase hbck;
-   * restart hbase after running repair and make sure that status OK by hbck again.
-
-
-## Safety Part
-
-* Check hadoop safemode
+* Check HDFS safemode status
 
 ```sh
  /opt/atsd/hadoop/bin/hadoop dfsadmin -safemode get
  # safe mode is ON.
 ```
 
-* Make hadoop to leave safemode
+* If HDFS is in safe mode, force it to leave safemode manually
 
 ```sh
  /opt/atsd/hadoop/bin/hadoop dfsadmin -safemode leave
  # safe mode is OFF
 ```
 
-* Make sure /hbase/ contains corrupted data files
+* Check that /hbase/ directory in HDFS indeed contains corrupted files
 
 ```
  /opt/atsd/hadoop/bin/hadoop fs -rmr -skipTrash /hbase/.logs/*
  /opt/atsd/hadoop/bin/hadoop fsck /hbase/ -openforwrite -files | grep "Status: CORRUPT"
 ```
 
-If there is no corrupted data files, you are able to use ```/opt/atsd/bin/atsd-all.sh start``` to start ATSD.
+If there are no corrupted files, recovery is complete. Start ATSD as usual ```/opt/atsd/bin/atsd-all.sh start```.
 
 
-* Check hbase status
+* Check HBase status
 
 ```sh
  /opt/atsd/hbase/bin/hbase hbck
  # status incosistent
 ```
 
-* Repair corrupted data files using hbase util
+* Repair corrupted data files using hbck utility
 
 ```sh
  /opt/atsd/hbase/bin/hbase hbck -repair
  # status incosistent
 ```
 
-If repairing doesn't help it comes to remove corrupted files.
+If repairing didn't help, you will have to **remove** corrupted files.
 
-## Danger part
+## Corrupted File Deletion
 
 * Stop hbase
 
@@ -58,13 +55,13 @@ If repairing doesn't help it comes to remove corrupted files.
  /opt/atsd/hbase/bin/stop-hbase.sh
 ```
 
-* Get list of corrupted data files 
+* List corrupted files 
 
 ```sh
  /opt/atsd/hadoop/bin/hadoop fsck / | egrep -v '^\.+$' | grep -v eplica
 ```
 
-* Remove corrupted files using hadoop 
+* Remove corrupted files 
 
 ```sh
  /opt/atsd/hadoop/bin/hadoop fs -rm /hbase/atsd_d/3bcbe238eea99b09bc33bf72129414d7/r/5f301b8315684225b726ec598b1344b1
@@ -84,14 +81,14 @@ If repairing doesn't help it comes to remove corrupted files.
  /opt/atsd/hadoop/bin/hadoop fs -rm /hbase/atsd_rule/f0af921234254fd479811973067cb3c9/r/495d100f9f204af5b6123ee715b9f74a
 ```
 
-* Restart hadoop
+* Restart HDFS
 
 ```sh
  /opt/atsd/hadoop/bin/stop-dfs.sh
  /opt/atsd/hadoop/bin/start-dfs.sh
 ```
 
-* Wait for leaving safemode by himself about 1 minute, check hadoop safemode and if it is OFF start hbase
+* Wait for 1 minute. Check that HDFS was able to leave safemode by itself, check safemode status and if safemofe is OFF, proceed to start HBase
 
 ```sh
  /opt/atsd/hadoop/bin/hadoop dfsadmin -safemode get
@@ -99,22 +96,21 @@ If repairing doesn't help it comes to remove corrupted files.
  /opt/atsd/hbase/bin/start-hbase.sh
 ```
 
-
-* Repair corrupted files using hbase again
+* Repair corrupted files with `hbck` again
 
 ```sh
  /opt/atsd/hbase/bin/hbase hbck -repair
  # status OK
 ```
 
-* Restart hbase
+* Restart HBase
 
 ```sh
  /opt/atsd/hbase/bin/stop-hbase.sh
  /opt/atsd/hbase/bin/start-hbase.sh
 ```
 
-* Check hbase tables are available
+* Check that HBase tables are available
 
 ```sh
 /opt/atsd/hbase/bin/hbase shell
@@ -130,7 +126,7 @@ ERROR: Unknown table atsd_entity!
  # status OK
 ```
 
-* Start atsd and it will be available on the web interface now.
+* Start ATSD
 
 ```sh
 /opt/atsd/bin/atsd-all.sh start
