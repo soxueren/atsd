@@ -1,6 +1,6 @@
 ## Fetch all 'disk' metrics
 
-Fetch all metrics whos name includes `disk`, including all tags.
+Fetch all metrics whose name includes `disk`, including all tags.
 
 ### Request
 ```
