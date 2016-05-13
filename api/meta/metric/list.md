@@ -107,7 +107,6 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
 * [Fetch metrics by name and tag](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-by-name-and-tag.md)
 * [Fetch metric with parameter 'timeFormat'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metric-with-timeformat.md)
 * [Fetch active metrics](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-active-metrics.md)
-* [Fetch metrics by parameter 'limit'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-by-limit-parameter.md)
 * [Fetch metrics by 'maxInsertTime'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-by-maxinserttime.md)
 * [Fetch metrics by 'minInsertTime'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-by-mininserttime.md)
 
