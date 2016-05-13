@@ -1,6 +1,7 @@
-## Fetch metrics with tag 'table'
+# Fetch metrics with tag 'table'
 
-### Request
+## Request
+### URI
 ```
 /api/v1/metrics?timeFormat=iso&tags=table&limit=2&expression=tags.table%20!=%20%27%27
 
