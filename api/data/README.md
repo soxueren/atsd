@@ -1,31 +1,51 @@
 ## Overview
 
-The Data API lets you insert and retrieve time-series, properties, messages, and alerts from Axibase Time-Series Database (ATSD) server. 
-
-The API uses standard HTTP requests, such as: `GET`, `POST`, and `PATCH`. 
-
-All requests must be authorized using BASIC AUTHENTICATION. 
-
-In response, the ATSD server sends an HTTP status code (such as a 200-type status for success or 400-type status for failure) that reflects the result of each request. 
+The Data API lets you insert and retrieve series, properties, messages, and alerts from Axibase Time Series Database server. 
 
 You can use any programming language that lets you issue HTTP requests and parse JSON-based responses. 
 
-### Authentication
+The API uses `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` methods to read and write data.
+
+The `PATCH` method is typically used to delete records based on condition specified in payload, since `DELETE` method doesn't allow payload. 
+
+## Response Codes
+
+* `200` status code if the request is successful.
+* `401` status code in case of unknown resource.
+* `403` status code in case of access denied error.
+* `4xx` status code in case of other client errors.
+* `5xx` status code in case of server error. 
+
+4xx or 5xx response codes are specific to each API methods.
+
+## Authentication
 
 * User authentication is required.
-* Authentication method: HTTP BASIC.
+* All requests must be authenticated using BASIC AUTHENTICATION.
+* Authentication method is **HTTP BASIC**.
 * Client may use session cookies to execute multiple requests without repeating authentication.
-* Cross-domain requests are allowed. The server includes the following headers in each response:
 
-`Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization`
+## Authorization
 
-`Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE`
+* User must have [**API_DATA_READ**/**API_DATA_WRITE**](/administration/user-authorization.md#available-api-roles) role.
+* User must have read/write [**entity permission**](/administration/user-authorization.md#entity-permissions) for specific or all entities.
+ 
+## Cross-domain Requests
 
-`Access-Control-Allow-Origin: *`
+Cross-domain requests are allowed. 
 
-### Compression
+The server includes the following headers in each response:
 
-* Clients may send compressed data by specifying Content-Encoding: gzip
+```yaml
+Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE
+Access-Control-Allow-Origin: *
+```
 
-### Errors
+## Compression
+
+* Clients may send compressed data by adding HTTP header **Content-Encoding: gzip** to the request.
+
+## Errors
+
 [Error Codes](https://github.com/axibase/atsd-docs/blob/master/api/data/error-codes.md)
