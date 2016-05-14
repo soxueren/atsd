@@ -4,6 +4,14 @@ The Data API lets you insert and retrieve series, properties, messages, and aler
 
 You can use any programming language that lets you issue HTTP requests and parse JSON-based responses. 
 
+## Categories
+
+* [Series](series)
+* [Properties](properties)
+* [Messages](messages)
+* [Alerts](alerts)
+* [Combined](command.md)
+
 ## Request Methods
 
 The API uses `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` methods to read and write data.
