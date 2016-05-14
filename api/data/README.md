@@ -4,9 +4,11 @@ The Data API lets you insert and retrieve series, properties, messages, and aler
 
 You can use any programming language that lets you issue HTTP requests and parse JSON-based responses. 
 
+## Request Methods
+
 The API uses `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` methods to read and write data.
 
-The `PATCH` method is typically used to delete records based on condition specified in payload, since `DELETE` method doesn't allow payload. 
+The `PATCH` method is typically used to delete records based on a condition specified in payload, because payload is not allowed in the `DELETE` method. 
 
 ## Response Codes
 
@@ -20,7 +22,7 @@ The `PATCH` method is typically used to delete records based on condition specif
 
 ## Authentication
 
-* User authentication is required.
+* User [authentication](/administration/user-authentiication.md) is required.
 * All requests must be authenticated using BASIC AUTHENTICATION.
 * Authentication method is **HTTP BASIC**.
 * Client may use session cookies to execute multiple requests without repeating authentication.
