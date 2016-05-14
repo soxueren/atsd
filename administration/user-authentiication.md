@@ -1,24 +1,23 @@
 # User Authentication
 
+User authentication mechanisms implemented in Axibase Time Series Database specify the way users are granted access to protected
+application resources such as UI views and API URLs.
 
-User authentication mechanisms implemented in Axibase Time Series
-Database specify the way users are granted access to protected
-application resources such as UI views and API URLs. The database
-supports the following authentication mechanisms:
+## Supported Authentication Mechanisms
 
-## Form-based Authentication for UI views
+### Form-based Authentication for UI views
 
-When an unauthenticated user requests access to a protected view, the
+When an unauthenticated user requests access to a protected view in the user interface, the
 server redirects the user to a login page containing username and
-password input fields. If the hashcode for the submitted password
-matches the stored hashcode for the specified username, the user is
-granted access.
+password input fields.
 
-## Basic Authentication for API URLs
+The user is granted access if the submitted password hashcode matches the stored hashcode for the specified username.
 
-HTTP requests to an API URL are required to include ‘Authorization’
-header, type Basic.\
- If the header is missing, the HTTP client is prompted to provide
+### Basic Authentication for API URLs
+
+HTTP requests to an API URL are required to include **Authorization** header, type Basic.
+
+If the header is missing, the HTTP client is prompted to provide
 username and password. The API request is executed if the password
 hashcode matches the stored value.
 
@@ -28,10 +27,9 @@ hashcode matches the stored value.
 -   Password must contain at least 6 characters. The default minimum
     length can be adjusted in server.properties file with
     `user.password.min.length` setting.
--   Password can consist of the following characters:
-
-– Unicode character categorized as an alphanumeric character\
- – Special characters: \~!@\#\$%\^&\*\_-+=\`|\\(){}[]:;”‘\<\>,.?/
+-   Password can consist of:
+    - Unicode character categorized as an alphanumeric character\
+    - Special characters: \~!@\#\$%\^&\*\_-+=\`|\\(){}[]:;”‘\<\>,.?/
 
 ## Implementation Notes
 
