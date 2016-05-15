@@ -35,9 +35,7 @@ time = time-millisecond / time-second / time-iso
 ; %x31-39 is non-zero-digit 1 to 9
 time-millisecond = "ms:" POSITIVE-INTEGER
 time-second = "s:" POSITIVE-INTEGER
-time-iso = "d:" iso-date
-; RFC-3339-Appendix-A-ABNF
-iso-date = yyyy-MM-dd'T'HH:mm:ss.SSSZ
+time-iso = "d:" ISO-DATE
 ```
 
 ## Examples
