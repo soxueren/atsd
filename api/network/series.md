@@ -2,6 +2,8 @@
 
 Insert timestamped metric samples for an entity and series tags into the database. 
 
+## Syntax
+
 ```css
 series e:{entity} s:{unix_seconds} m:{metric}={value} m:{metric}={value} t:{key}={value} t:{key}={value}
 ```
