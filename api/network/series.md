@@ -19,6 +19,20 @@ series e:{entity} s:{unix_seconds} m:{metric}={value} m:{metric}={value} t:{key}
 | t         | no           |
 | m         | yes          |
 
+## ABNF
+
+```properties
+series-command = "series= " entity 1*(" " metric) *(" " tag) [" " time]
+entity = "e:" VCHAR
+metric = "m:" VCHAR "=" number
+tag = "t:" VCHAR "=" DQUOTE CHAR DQUOTE
+time = timemillisecond / timesecond / timeiso
+timemillisecond = "ms:" integer
+timesecond = "s:" integer
+timeiso = "d:" RFC-3339-Appendix-A-ABNF
+number = *DIGIT ["." *DIGIT] / NaN
+```
+
 ## Examples
 
 ```css
