@@ -23,16 +23,17 @@ series e:{entity} s:{unix_seconds} m:{metric}={value} m:{metric}={value} t:{key}
 
 ```properties
 command = "series= " entity 1*(" " metric) *(" " tag) [" " time] LF
-entity = "e:" *VCHAR
+entity = "e:" *NBCHAR
          ; any visible character except double quote and whitespace
-metric = "m:" *VCHAR "=" number
-tag = "t:" VCHAR "=" [DQUOTE] *VCHAR / %x20 [DQUOTE]
+metric = "m:" *NBCHAR "=" number
+tag = "t:" *NBCHAR "=" [DQUOTE] *VCHAR / %x20 [DQUOTE]
 time = timemillisecond / timesecond / timeiso
 timemillisecond = "ms:" *DIGIT
 timesecond = "s:" *DIGIT
 timeiso = "d:" isodate
 isodate = yyyy-MM-dd'T'HH:mm:ss.SSSZ -> RFC-3339-Appendix-A-ABNF
 number = *DIGIT ["." *DIGIT] / "NaN"
+NBCHAR = %x23 / %x23-7E ; any visible character except double quote and whitespace
 ```
 
 ## Examples
