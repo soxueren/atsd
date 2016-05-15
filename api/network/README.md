@@ -27,7 +27,7 @@ By default ATSD servers listenes for incoming commands on the following ports:
 * HTTP 8088
 * HTTPS 8443
 
-## Data Flow
+## Connection
 
 ### Single Command
 
