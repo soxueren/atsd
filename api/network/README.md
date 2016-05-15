@@ -2,9 +2,11 @@
 
 Network API provides a set of plain text commands for inserting numeric time series, key=value properties, and tagged messages into Axibase Time Series Database via TCP and UDP network protocols.
 
-You can use netcat, telnet, UNIX pipes, or any programming language that lets you connect to a remote server via TCP/UDP protocol to insert data into ATSD.
+You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language that lets you connect to ATSD server via TCP/UDP protocol.
 
-## Data Commands
+## Supported Commands
+
+### Data Commands
 
 * series
 * property
@@ -12,34 +14,40 @@ You can use netcat, telnet, UNIX pipes, or any programming language that lets yo
 * csv
 * nmon
 
-## Control/Utility Commands
+### Control Commands
 
 * ping
+* debug
 * time
+* version
 * exit
 
 ## Ports
 
-By default ATSD servers listenes for incoming commands on the following ports:
+By default ATSD server listenes for incoming commands on the following ports:
 
-* TCP 8081
-* UDP 8082
-* HTTP 8088
-* HTTPS 8443
+* 8081 TCP
+* 8082 UDP
 
 ## Connection
 
 ### Single Command
 
+To send a single command, connect to an ATSD server, send the command in plain text and terminate the connection.
+
+* netcat:echo
+
 ```json
 echo series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z | nc 10.102.0.6 8081
 ```
+
+* netcat:printf
 
 ```json
 printf 'series e:station_1 m:temperature=32.2 m:humidity=81.4 s:1463271035' | nc 10.102.0.6 8081
 ```
 
-This will insert values for **temperature** and **humidity** metrics by **station_1** entity using netcat utility.
+The above example insert timestamped **temperature** and **humidity** samples (observations) by **station_1** using `netcat` utility.
 
 ### Multiple Commands
 
@@ -69,51 +77,59 @@ Client can submit commands of different types during the same session.
 
 Telnet traffic can be tunneled over SSH if required: [Read Axibase guide on SSH Tunneling] (http://axibase.com/products/axibase-time-series-database/writing-data/nmon/ssh-tunneling/).
 
-## Fields
+## Syntax
 
-* Each command starts with command name such as `series` and a list of fields each identified with a prefix followed by colon symbol.
-* Fields such as tag or key start with prefix, colon symbol followed by key=value.
-* The order of fields is not important.
-* If field value contains white space it needs to be enclosed in double quotes.
-* Entity and metric names will be automatically created if they're not existent provided they meet naming requirements.
-* Tag and key names are case-insensitive. Values are case-sensitive and will be stored as submitted.
-* Entity, metric and tag names as well as property type and key names must not contain the following characters: space, quote, double quote. When inserted via CSV upload or HTTP API, these characters are converted to underscore. Multiple underscores are collapsed into one underscore character.
-* Double quotes must be screened, for example: `\"Ubuntu 14.04\"`
+### Line Syntax
 
-> Request
+* Command must start with command name such as `series` followed by space-separated fields each identified with a prefix followed by colon symbol.
 
-```
-echo debug property e:axibase ms:1438178237215 t:collectd-atsd v:host=axibase v:OS_Version=\"Ubuntu 14.04\" | nc atsd_server 9081
+```css
+command-name field-name:field-key[=field-value]EOL
 ```
 
-## Time
-
-Some commands contain a timestamp field `s:` which should be specified in UNIX seconds by default.
-The timestamp field encodes the time of sample or event as determined by the source.
-An alternative prefix can be used to submit time in a different format.
-
-|**Field**|**Description**|
-|---|---|---|
-|s|UNIX seconds|
-|ms|UNIX milliseconds|
-|d|ISO 8601 date, yyyy-MM-dd'T'HH:mm:ss.SSSZ |
-
-<aside class="success">
-If timestamp field in seconds or milliseconds is less than or equal 0, or if it's empty in case of d: prefix, the time is set to server's current time.
-If timestamp field is not specified, time is set to current server time.
-</aside>
-
-## Command Length
+### Command Length
 
 The server enforces the following maximum length constraints to command lines. 
 The client is advised to split a command that is too long into multiple commands.
 
-| **Command** | **Maximum Length** |
+| **Command** | **Maximum Length, bytes** |
 |---|---|---|
-| series        | 128*1024  |
-| property        | 128*1024  |
-| message        | 128*1024  |
-| other (first line)       | 1024  |
+| series | 256*1024  |
+| property | 256*1024  |
+| message  | 256*1024  |
+| other | 1024  |
+
+### Fields
+
+* The order of fields is not important.
+* Fields such as tag or key start with prefix, colon symbol followed by key=value.
+* If field name or value contains white space it needs to be enclosed in double quotes.
+* Entity, metric and tag names as well as property type and key names must not contain the following characters: space, quote, double quote. When inserted via CSV upload or HTTP API, these characters are converted to underscore. Multiple underscores are collapsed into one underscore character.
+* Tag and key names are case-insensitive. Values are case-sensitive and will be stored as submitted.
+* Double quotes must be escaped with backslash, for example: `\"Ubuntu 14.04\"`
+
+```css
+property e:axibase ms:1438178237215 t:collectd-atsd v:host=axibase v:OS_Version=\"Ubuntu 14.04\"
+```
+
+### New Entities/Metrics
+
+* Entity and metric names will be automatically created provided they meet naming requirements.
+
+### Time Field
+
+The timestamp field encodes the time of an observation or message as determined by the source and can be specified with `ms`, `s`, or `d` fields.
+
+|**Field**|**Description**|
+|---|:---|
+|ms|UNIX milliseconds|
+|s|UNIX seconds|
+|d|ISO 8601 date: yyyy-MM-dd'T'HH:mm:ss.SSSZ |
+
+* If timestamp field in seconds or milliseconds is less than or equal 0, or if it's empty in case of d: prefix, the time is set to server's current time.
+* If timestamp field is not specified, time is set to current server time.
+
+
 
 ## Maximum Records
 
