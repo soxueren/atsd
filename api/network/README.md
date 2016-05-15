@@ -41,25 +41,25 @@ To send a single command, connect to an ATSD server, send the command in plain t
 
 * netcat:echo
 
-```json
+```elm
 echo series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z | nc 10.102.0.6 8081
 ```
 
 * netcat:printf
 
-```json
+```elm
 printf 'series e:station_2 m:temperature=32.2 m:humidity=81.4 s:1463271035' | nc 10.102.0.6 8081
 ```
 
 * UNIX pipe
 
-```
+```elm
 echo series e:station_3 m:temperature=32.2 m:humidity=81.4 > /dev/tcp/10.102.0.6/8081
 ```
 
 * telnet:one line
 
-```
+```sh
 telnet 10.102.0.6 8081 << EOF
 series e:station_4 m:temperature=32.2 m:humidity=81.4
 EOF
@@ -67,49 +67,95 @@ EOF
 
 * telnet:session
 
-```
-telnet 10.102.0.6 8081
+```sh
+$ telnet 10.102.0.6 8081
+Trying 10.102.0.6...
+Connected to 10.102.0.6.
+Escape character is '^]'.
 series e:station_5 m:temperature=32.2 m:humidity=81.4
 ^C
 Connection closed by foreign host.
 ```
 
-The above example inserts timestamped **temperature** and **humidity** samples (observations) for **station** entities.
+* java:socket
+
+```java
+Socket s = new Socket("10.102.0.6", 8081);
+PrintWriter writer = new PrintWriter(s.getOutputStream(), true);
+writer.println("series e:station_6 m:temperature=32.2");
+s.close();
+```
+
+The above examples insert timestamped **temperature** and **humidity** metric samples for **station** entities.
 
 ### Multiple Commands
 
-Commands must be separated by line break symbol `\n` in order to send multiple commands over the same connection.
+Separate commands by line feed symbol `\n` (LF, `0x0A`) when sending multiple commands over the same connection.
+
+Trailing line feed is not required for the last command.
 
 Use `-e` flag in `echo` commands to enable interpretation of backslash escapes.
 
-```json
+```elm
 echo -e series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z\\nseries e:station_1 m:temperature=32.1 m:humidity=82.4 d:2016-05-15T00:25:00Z | nc 10.102.0.6 8081
 ```
 
-Alternatively, the application can establish a persistent connection, write multiple commands, one command per line, and close the connection. Trailing end of line is not required when the connection is closed.
+```java
+Socket s = new Socket("10.102.0.6", 8081);
+PrintWriter writer = new PrintWriter(s.getOutputStream(), true);
+writer.println("series e:station_6 m:temperature=30.1\nseries e:station_7 m:temperature=28.7");
+s.close();
+```
 
-```
-telnet 10.102.0.6 8081
-```
+### Persistent Connection
+
+A client application can establish a persistent connection in order to continously write commands, one command per line, and close the connection. 
+
+Trailing line feed is not required for the last command when the connection is closed.
 
 The commands are processed as they're received by the server, without buffering.
 
-Client can submit commands of different types during the same session.
+Clients can submit commands of different types over the same connection.
 
-> The server will break the connection if it receives an unknown or malformed command.
+```
+$ telnet 10.102.0.6 8081
+Trying 10.102.0.6...
+Connected to 10.102.0.6.
+Escape character is '^]'.
+series e:station_1 m:temperature=32.2
+property e:station_2 t:location v:city=Cupettino v:state=CA v:country=USA
+^C
+Connection closed by foreign host.
+```
 
-> A duplicate series insert with the same key and timestamp will override the previously stored value. If duplicate inserts are submitted at approximately the same time, there is no guarantee that they will be processed in the order they were received.
+Note that the server will **close the connection** if it receives an unknown or malformed command.
 
+### Duplicate Commands
 
+Multiple commands with the same timestamp and key fields may override each others value. 
+
+If such commands are submitted at approximately the same time, there is no guarantee that they will be processed in the order they were received.
+
+* Duplicate example: same key, same current time  
+
+```elm
+echo -e series e:station_1 m:temperature=32.2\\nseries e:station_1 m:temperature=42.1 | nc 10.102.0.6 8081
+```
+
+* Duplicate example: same key, same time  
+
+```elm
+echo -e series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\\nseries e:station_1 m:temperature=42.1  d:2016-05-15T00:10:00Z | nc 10.102.0.6 8081
+```
 
 ## Syntax
 
 ### Line Syntax
 
-* Command must start with command name such as `series` followed by space-separated fields each identified with a prefix followed by colon symbol.
+* Command must start with command name such as `series` followed by space-separated fields each identified with a prefix followed by colon symbol and optional field value.
 
 ```css
-command-name field-name:field-key[=field-value]EOL
+command-name field-prefix:field-name[=field-value]
 ```
 
 ### Command Length
@@ -140,6 +186,16 @@ property e:axibase ms:1438178237215 t:collectd-atsd v:host=axibase v:OS_Version=
 ### New Entities/Metrics
 
 * Entity and metric names will be automatically created provided they meet naming requirements.
+* The number of unique identifiers in ATSD is subject to the following limits: 
+
+|**Type**| **Max Identifier**|
+|-------|---------|
+|metric| 65535|
+|entity| 16777215|
+|tag_key| 65535|
+|tag_value| 16777215|
+|message_type| 65535|
+|message_source| 65535|
 
 ### Time Field
 
@@ -153,17 +209,6 @@ The timestamp field encodes the time of an observation or message as determined 
 
 * If timestamp field in seconds or milliseconds is less than or equal 0, or if it's empty in case of d: prefix, the time is set to server's current time.
 * If timestamp field is not specified, time is set to current server time.
-
-## Maximum Records
-
-|Type| Max Id|
-|-------|---------|
-|metric| 65535|
-|entity| 16777215|
-|tag_key| 65535|
-|tag_value| 16777215|
-|message_type| 65535|
-|message_source| 65535|
 
 ## Debugging
 
