@@ -115,6 +115,8 @@ Trailing line feed is not required for the last command when the connection is c
 
 The commands are processed as they're received by the server, without buffering.
 
+To prevent the connection from timing out the client may send [`ping`](ping.md) command at a regular interval.
+
 Clients can submit commands of different types over the same connection.
 
 ```
