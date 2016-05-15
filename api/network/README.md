@@ -22,6 +22,12 @@ You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language that 
 * [version](version.md)
 * [exit](exit.md)
 
+### Extended Data Commands
+
+* [tcollector](extended-commands.md#tcollector)
+* [statsd](extended-commands.md#statsd)
+* [graphite](extended-commands.md#graphite)
+
 ## Ports
 
 By default ATSD server listenes for incoming commands on the following ports:
