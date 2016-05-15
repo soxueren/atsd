@@ -25,7 +25,7 @@ Rules inherited from [generic ABNF](generic-abnf.md).
 
 ```properties
 ; 1*SP - one or multiple whitespaces
-command = "series" 1*SP entity 1*(1*SP metric) *(1*SP tag) [1*SP time] [LF]
+command = "series" 1*SP entity 1*(1*SP metric) *(1*SP tag) [1*SP time]
 entity = "e:" 1*UCHAR
 metric = "m:" 1*UCHAR "=" NUMBER
 ; tag values containing whitespace must be double quoted
