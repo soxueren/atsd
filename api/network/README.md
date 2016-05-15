@@ -1,8 +1,22 @@
-## Overview
+# Network API
 
-Network commands provide a simple interface for inserting time series data, properties, and messages into Axibase Time-Series Database (ATSD) server.
+Network API provides a set of plain text commands for inserting numeric time series, key=value properties, and tagged messages into Axibase Time Series Database via TCP and UDP network protocols.
 
-You can use telnet, netcat or any programming language that lets you connect to remote systems via TCP/IP to send data into ATSD.
+You can use netcat, telnet, UNIX pipes, or any programming language that lets you connect to a remote server via TCP/UDP protocol to insert data into ATSD.
+
+## Data Commands
+
+* series
+* property
+* message
+* csv
+* nmon
+
+## Control Commands
+
+* ping
+* time
+* exit
 
 ### Sending a single command
 
