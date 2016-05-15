@@ -161,7 +161,7 @@ Include `debug` command at the start of the line to instruct the server to respo
 * `debug` with valid command
 
 ```sh
-$ echo debug series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z | nc 10.102.0.6 8081
+$ echo debug series e:station_1 m:temperature=32.2 | nc 10.102.0.6 8081
 ok
 ```
 
@@ -172,5 +172,17 @@ $ echo debug my_command e:station_1 m:temperature=32.2 | nc 10.102.0.6 8081
 >no response, connection closed
 ```
 
-## [Dropped Comands](https://github.com/axibase/atsd-docs/blob/master/api/network/dropped-commands.md)
+## Dropped Commands
+
+Reasons why ATSD server can drop commands:
+
+* If multiple commands are sent without including the end of line in the last command.
+* If timestamp is earlier than `1970-01-01T00:00:00Z`.
+* If ATSD cannot parse the timestamp, for example: if `s` or `ms` value is not numeric or if `d` value is not in ISO format.
+* If multiple data points for the same entity, metric and tags have the same timestamp (commands are considered duplicate and dropped).
+* If commands are sent without a timestamp, in this case ATSD will assign current server time as the timestamp - this case lead to the same entity, metric and tags having identical timestamps - resulting in duplicate commands being dropped.
+* If data is sent using UDP protocol the receive buffer can sometimes become oversaturated.
+* If metric 'Min/Max Value' setting is set together with the `DISCARD` 'Invalid Value Action' setting in ATSD, then values that fall outside the 'Min/Max Value' are discarded.
+* If entity, metric or tag names are not valid.
+* If value cannot be parsed into double - decimal point must be a period (`.`), scientific notation is supported.
 
