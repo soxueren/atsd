@@ -80,7 +80,7 @@ https://atsd_host:8443/api/v1/series/insert
 #### curl
 
 ```css
-curl https://atsd_host:8443/api/v1/series/insert \
+curl http://atsd_host:8088/api/v1/series/insert \
   -v -u {username}:{password} \
   -H "Content-Type: application/json" \
   -X POST \
@@ -88,7 +88,7 @@ curl https://atsd_host:8443/api/v1/series/insert \
 ```
 
 ```css
-curl https://atsd_host:8443/api/v1/series/insert \
+curl http://atsd_host:8088/api/v1/series/insert \
   -v -u {username}:{password} \
   -H "Content-Type: application/json" \
   -X POST \
