@@ -29,6 +29,10 @@ By default ATSD server listenes for incoming commands on the following ports:
 * 8081 TCP
 * 8082 UDP
 
+## Encryption
+
+To encrypt TCP traffic, setup an IPSEC VPN or establish an [SSH tunnel] (http://axibase.com/products/axibase-time-series-database/writing-data/nmon/ssh-tunneling/).
+
 ## Connection
 
 ### Single Command
@@ -73,9 +77,7 @@ Client can submit commands of different types during the same session.
 
 > A duplicate series insert with the same key and timestamp will override the previously stored value. If duplicate inserts are submitted at approximately the same time, there is no guarantee that they will be processed in the order they were received.
 
-## Encryption
 
-Telnet traffic can be tunneled over SSH if required: [Read Axibase guide on SSH Tunneling] (http://axibase.com/products/axibase-time-series-database/writing-data/nmon/ssh-tunneling/).
 
 ## Syntax
 
@@ -129,8 +131,6 @@ The timestamp field encodes the time of an observation or message as determined 
 * If timestamp field in seconds or milliseconds is less than or equal 0, or if it's empty in case of d: prefix, the time is set to server's current time.
 * If timestamp field is not specified, time is set to current server time.
 
-
-
 ## Maximum Records
 
 |Type| Max Id|
@@ -142,16 +142,35 @@ The timestamp field encodes the time of an observation or message as determined 
 |message_type| 65535|
 |message_source| 65535|
 
-## Entity Names
-
-<aside class="notice">
-Entity, metric and tag names as well as property type and key names must not contain the following characters: space, quote, double quote. When inserted via CSV upload or HTTP API, these characters are converted to underscore. Multiple underscores are collapsed into one underscore character.
-</aside>
-
 ## Debugging
 
-By the default the server doesn't respond to the client when processing series, property and message commands.
-The client may include `debug` field at the start of the line (as the first word) which instructs the server to respond with `ok` for each processed command.
+The server terminates the connection if it receives an unknown or malformed command.
+
+```sh
+$ telnet 10.102.0.6 8081
+Trying 10.102.0.6...
+Connected to 10.102.0.6.
+Escape character is '^]'.
+debug unknown_command e:station_1 m:temperature=32.2
+Connection closed by foreign host.
+```
+
+By the default ATSD doesn't send acknowledgements to the client when processing series, property and message commands.
+Include `debug` command at the start of the line to instruct the server to respond with `ok` for each processed command.
+
+* `debug` with valid command
+
+```sh
+$ echo debug series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z | nc 10.102.0.6 8081
+ok
+```
+
+* `debug` with unknown command
+
+```sh
+$ echo debug my_command e:station_1 m:temperature=32.2 | nc 10.102.0.6 8081
+>no response, connection closed
+```
 
 ## [Dropped Comands](https://github.com/axibase/atsd-docs/blob/master/api/network/dropped-commands.md)
 
