@@ -48,10 +48,33 @@ echo series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00
 * netcat:printf
 
 ```json
-printf 'series e:station_1 m:temperature=32.2 m:humidity=81.4 s:1463271035' | nc 10.102.0.6 8081
+printf 'series e:station_2 m:temperature=32.2 m:humidity=81.4 s:1463271035' | nc 10.102.0.6 8081
 ```
 
-The above example insert timestamped **temperature** and **humidity** samples (observations) by **station_1** using `netcat` utility.
+* UNIX pipe
+
+```
+echo series e:station_3 m:temperature=32.2 m:humidity=81.4 > /dev/tcp/10.102.0.6/8081
+```
+
+* telnet:one line
+
+```
+telnet 10.102.0.6 8081 << EOF
+series e:station_4 m:temperature=32.2 m:humidity=81.4
+EOF
+```
+
+* telnet:session
+
+```
+telnet 10.102.0.6 8081
+series e:station_5 m:temperature=32.2 m:humidity=81.4
+^C
+Connection closed by foreign host.
+```
+
+The above example inserts timestamped **temperature** and **humidity** samples (observations) for **station** entities.
 
 ### Multiple Commands
 
