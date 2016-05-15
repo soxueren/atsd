@@ -10,27 +10,29 @@ series e:{entity} s:{unix_seconds} m:{metric}={value} m:{metric}={value} t:{key}
 
 ## Fields
 
-| **Field** | **Required** |
-|-----------|--------------|
-| e         | yes          |
-| s         | no           |
-| ms        | no           |
-| d         | no           |
-| t         | no           |
-| m         | yes          |
+| **Field** | **Required** | **Description** |
+|---|---|---|
+| e         | yes          | Entity name |
+| m         | yes          | Metric name, at least one |
+| t         | no           | Tag key/value |
+| s         | no           | Time in UNIX seconds | 
+| ms        | no           | Time in UNIX milliseconds | 
+| d         | no           | Time in ISO format | 
 
 ## ABNF
 
 ```properties
-series-command = "series= " entity 1*(" " metric) *(" " tag) [" " time]
-entity = "e:" VCHAR
-metric = "m:" VCHAR "=" number
-tag = "t:" VCHAR "=" DQUOTE CHAR DQUOTE
+command = "series= " entity 1*(" " metric) *(" " tag) [" " time] LF
+entity = "e:" *VCHAR
+         ; any visible character except double quote and whitespace
+metric = "m:" *VCHAR "=" number
+tag = "t:" VCHAR "=" [DQUOTE] *VCHAR / %x20 [DQUOTE]
 time = timemillisecond / timesecond / timeiso
-timemillisecond = "ms:" integer
-timesecond = "s:" integer
-timeiso = "d:" RFC-3339-Appendix-A-ABNF
-number = *DIGIT ["." *DIGIT] / NaN
+timemillisecond = "ms:" *DIGIT
+timesecond = "s:" *DIGIT
+timeiso = "d:" isodate
+isodate = yyyy-MM-dd'T'HH:mm:ss.SSSZ -> RFC-3339-Appendix-A-ABNF
+number = *DIGIT ["." *DIGIT] / "NaN"
 ```
 
 ## Examples
