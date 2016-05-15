@@ -128,7 +128,35 @@ property e:station_2 t:location v:city=Cupettino v:state=CA v:country=USA
 Connection closed by foreign host.
 ```
 
-Note that the server will **close the connection** if it receives an unknown or malformed command.
+Note that the server will **terminate** the connection if it receives an unknown or malformed command.
+
+
+```sh
+$ telnet 10.102.0.6 8081
+Trying 10.102.0.6...
+Connected to 10.102.0.6.
+Escape character is '^]'.
+unknown_command e:station_1 m:temperature=32.2
+Connection closed by foreign host.
+```
+
+### UDP Datagrams
+
+The UDP protocol doesn't guarantee delivery but may have a higher throughput compared to TCP due to lower overhead. In addition, sending commands with UDP datagrams decouples the client application from the server to minimize the risk of freezes read timeouts.
+
+```elm
+echo series e:station_3 m:temperature=32.2 m:humidity=81.4 | nc -u -w1 10.102.0.6 8082
+```
+
+```elm
+printf 'series e:station_3 m:temperature=32.2 m:humidity=81.4' | nc -u -w1 10.102.0.6 8082
+```
+
+Unlike TCP, the last command in a multi-command UDP datagram must terminate with the line feed character.
+
+```elm
+echo -e series e:station_33 m:temperature=32.2\\nseries e:station_34 m:temperature=32.1 m:humidity=82.4\\n | nc -u -w1 10.102.0.6 8082
+```
 
 ### Duplicate Commands
 
@@ -212,18 +240,7 @@ The timestamp field encodes the time of an observation or message as determined 
 
 ## Debugging
 
-The server terminates the connection if it receives an unknown or malformed command.
-
-```sh
-$ telnet 10.102.0.6 8081
-Trying 10.102.0.6...
-Connected to 10.102.0.6.
-Escape character is '^]'.
-debug unknown_command e:station_1 m:temperature=32.2
-Connection closed by foreign host.
-```
-
-By the default ATSD doesn't send acknowledgements to the client when processing series, property and message commands.
+By default ATSD doesn't return acknowledgements to the client after processing data commands.
 Include `debug` command at the start of the line to instruct the server to respond with `ok` for each processed command.
 
 * `debug` with valid command
