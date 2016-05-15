@@ -33,6 +33,12 @@ By default ATSD server listenes for incoming commands on the following ports:
 
 To encrypt TCP traffic, setup an IPSEC VPN or establish an [SSH tunnel] (http://axibase.com/products/axibase-time-series-database/writing-data/nmon/ssh-tunneling/).
 
+## Authentication
+
+Authentication and authorization are not supported for plain text commands received over TCP and UDP protocols. 
+
+Utilize [HTTP command](./data/command.md) to send plain-text commands over http/https protocols with authentication and authorization enabled.
+
 ## Connection
 
 ### Single Command
@@ -90,9 +96,9 @@ The above examples insert timestamped **temperature** and **humidity** metric sa
 
 ### Multiple Commands
 
-Separate commands by line feed symbol `\n` (LF, `0x0A`) when sending multiple commands over the same connection.
+Separate commands by line feed symbol `\n` (LF, `0x0A`) when sending a batch containing multiple commands over the same connection.
 
-Trailing line feed is not required for the last command.
+Trailing line feed is not required for the last command in the batch.
 
 Use `-e` flag in `echo` commands to enable interpretation of backslash escapes.
 
