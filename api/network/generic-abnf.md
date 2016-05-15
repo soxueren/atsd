@@ -3,7 +3,7 @@
 ```properties
 ; inherit from https://tools.ietf.org/html/rfc5234#appendix-B.1
 ; any visible character except double quote %x21 and whitespace %x20
-VARCHAR = %x21 / %x23-7E / UTF8-NON-ASCII 
+UCHAR = %x21 / %x23-7E / UTF8-NON-ASCII 
 ; http://tools.ietf.org/html/rfc6531#section-3.3
 UTF8-NON-ASCII  = %x80-FF / ; Latin-1 Supplement
                   %x100-17F / ; Latin Extended-A
