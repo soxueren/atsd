@@ -19,25 +19,25 @@ series e:{entity} s:{unix_seconds} m:{metric}={value} m:{metric}={value} t:{key}
 
 ## Examples
 
-```css
+```javascript
 series e:server001 s:1425482080 m:cpu_used=72.0 m:memory_used=94.5
 ```
 
-```css
+```javascript
 series e:server001 ms:1425482080000 m:cpu_used=72.0 m:memory_used=94.5
 ```
 
-```css
+```javascript
 series e:server001 d:2015-03-04T12:43:20Z m:cpu_used=72.0 m:memory_used=94.5
 ```
 
-```css
+```javascript
 series e:server001 m:disk_used_percent=20.5 m:disk_size_mb=10240 t:mount_point=/ t:disk_name=/sda1
 ```
 
 ## Versioning
 
-```
+```javascript
 series d:2015-08-13T10:00:00Z e:e-vers m:m-vers=13 t:$version_status=OK t:$version_source=collector:10.102.0.44
 ```
 
