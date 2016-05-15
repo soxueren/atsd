@@ -31,7 +31,6 @@ metric = "m:" 1*UCHAR "=" NUMBER
 ; tag values containing whitespace must be double quoted
 tag = "t:" 1*UCHAR "=" 1*UCHAR / DQUOTE 1*(UCHAR / SP) DQUOTE
 time = time-millisecond / time-second / time-iso
-; %x31-39 is non-zero-digit 1 to 9
 time-millisecond = "ms:" POSITIVE-INTEGER
 time-second = "s:" POSITIVE-INTEGER
 time-iso = "d:" ISO-DATE
