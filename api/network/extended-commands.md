@@ -1,6 +1,6 @@
 # Extended Commands
 
-ATSD supports data insertion commands the for following thirt-party line protocols.
+ATSD supports data insertion commands for following line protocols implemented in thirt-party data collection daemons.
 
 ### tcollector
 
