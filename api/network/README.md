@@ -8,19 +8,19 @@ You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language that 
 
 ### Data Commands
 
-* series
-* property
-* message
-* csv
-* nmon
+* [series](series.md)
+* [property](property.md)
+* [message](message.md)
+* [csv](csv.md)
+* [nmon](nmon.md)
 
 ### Control Commands
 
-* ping
-* debug
-* time
-* version
-* exit
+* [ping](ping.md)
+* [debug](#debugging)
+* [time](time.md)
+* [version](version.md)
+* [exit](exit.md)
 
 ## Ports
 
