@@ -21,38 +21,23 @@ series e:{entity} s:{unix_seconds} m:{metric}={value} m:{metric}={value} t:{key}
 
 ## ABNF
 
+Rules inherited from [generic ABNF](generic-abnf.md).
+
 ```properties
-; https://tools.ietf.org/html/rfc5234
+; 
 ; 1*SP - one or multiple whitespaces
 command = "series" 1*SP entity 1*(1*SP metric) *(1*SP tag) [1*SP time] LF
-entity = "e:" 1*NBCHAR
-metric = "m:" 1*NBCHAR "=" number
+entity = "e:" 1*VARCHAR
+metric = "m:" 1*VARCHAR "=" NUMBER
 ; tag values containing whitespace must be double quoted
-tag = "t:" 1*NBCHAR "=" 1*NBCHAR / DQUOTE 1*(NBCHAR / SP) DQUOTE
+tag = "t:" 1*VARCHAR "=" 1*VARCHAR / DQUOTE 1*(VARCHAR / SP) DQUOTE
 time = time-millisecond / time-second / time-iso
 ; %x31-39 is non-zero-digit 1 to 9
-time-millisecond = "ms:" positive-number
-time-second = "s:" positive-number
+time-millisecond = "ms:" POSITIVE-INTEGER
+time-second = "s:" POSITIVE-INTEGER
 time-iso = "d:" iso-date
 ; RFC-3339-Appendix-A-ABNF
 iso-date = yyyy-MM-dd'T'HH:mm:ss.SSSZ
-number = fractional-number / real-number / "NaN"
-; any visible character except double quote %x21 and whitespace %x20
-NBCHAR = %x21 / %x23-7E / UTF8-NON-ASCII 
-; http://tools.ietf.org/html/rfc6531#section-3.3
-UTF8-NON-ASCII  = %x80-FF / ; Latin-1 Supplement
-                  %x100-17F / ; Latin Extended-A
-                  %x370-3FF / ; Greek and Coptic
-                  %x400-4FF / ; Cyrillic
-                  %x500-52F / ; Cyrillic Supplement
-                  %x4E00-9FFF ; CJK Unified Ideographs
-fractional-number = positive-number ["." 1*decimal-digit]                  
-positive-number = non-zero-digit *decimal-digit
-decimal-digit   = %x30-39  ; "0" to "9"
-non-zero-digit  = %x31-39  ; "1" to "9"  
-real-number = mantissa exponent
-mantissa   = (positive-number [ "." *decimal-digit ]) / ( "0." *("0") positive-number )
-exponent   = "E" ( "0" / ([ "-" ] positive-number))
 ```
 
 ## Examples
