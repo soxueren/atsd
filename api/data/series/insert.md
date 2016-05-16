@@ -37,7 +37,7 @@ The request must contain an array of series objects each containing an array of 
 | tags | no | an object with named keys, where a key is a tag name and a value is tag value |
 | type | no | specifies source for underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default value: HISTORY |
 |forecastName| no | Forecast name. <br>Applicable when `type` is set to `FORECAST` or `FORECAST_DEVIATION`. <br>`forecastName` can be used to store any number of custom forecasts. <br>If `forecastName` is not set, then the default forecast will be overwritten.  |
-| data | yes | an array of `t:v` key-value objects, where key `t` is time in UNIX milliseconds and `v` is the metric's value at time `t`. Alternatively, time can be specified in ISO format using `d` field. |
+| data | yes | an array of `{t:number,v:number}` objects, <br>where `t` is time in UNIX milliseconds and `v` is the metric's value at time `t`. <br>Time can be also specified in ISO format using `d` field. <br>Set `v` to `null` to insert `NaN` (not a number), for example: `{t:1462427358127, v:null}` |
 |version |no| An object. Contains source, status and change time fields for versioned metrics. |
 
 ## Response
