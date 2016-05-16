@@ -270,13 +270,16 @@ $ echo debug my_command e:station_1 m:temperature=32.2 | nc 10.102.0.6 8081
 
 Reasons why ATSD server can drop commands:
 
-* If multiple commands are sent without including the end of line in the last command.
-* If timestamp is earlier than `1970-01-01T00:00:00Z`.
-* If ATSD cannot parse the timestamp, for example: if `s` or `ms` value is not numeric or if `d` value is not in ISO format.
-* If multiple data points for the same entity, metric and tags have the same timestamp (commands are considered duplicate and dropped).
-* If commands are sent without a timestamp, in this case ATSD will assign current server time as the timestamp - this case lead to the same entity, metric and tags having identical timestamps - resulting in duplicate commands being dropped.
-* If data is sent using UDP protocol the receive buffer can sometimes become oversaturated.
-* If metric 'Min/Max Value' setting is set together with the `DISCARD` 'Invalid Value Action' setting in ATSD, then values that fall outside the 'Min/Max Value' are discarded.
-* If entity, metric or tag names are not valid.
-* If value cannot be parsed into double - decimal point must be a period (`.`), scientific notation is supported.
+* Entity, metric or tag names are not valid.
+* Timestamp is negative or earlier than `1970-01-01T00:00:00Z`.
+* Timestamp cannot be parsed, for example if `s:` or `ms:` field value is not numeric or if `d` value is not in ISO format.
+* Metric value cannot be parsed into double using `.` as the decimal separator. Scientific notation is supported.
+* Multiple data points for the same entity, metric and tags have the same timestamp in which case commands are considered duplicates and some of them are dropped. This could occur when commands with the same key are sent without timestamp.
+* Data is sent using UDP protocol and the client UDP send buffer or ATSD UDP receive buffer overflows.
+* Value is below 'Min Value' or above 'Max Value' limit specified for the metric and the 'Invalid Value Action' is set to `DISCARD`.
+* Last command in multi-line UDP packed doesn't terminate with line feed symbol.
+
+To review dropped commands, open command*.log files in ATSD.
+
+![](dropped-commands-logs.png)
 
