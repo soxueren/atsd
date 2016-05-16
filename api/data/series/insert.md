@@ -32,13 +32,14 @@ The request must contain an array of series objects each containing an array of 
 
 |**Field**|**Required**|**Description**|
 |---|---|---|
-| entity | yes | entity name |
-| metric | yes | metric name |
-| tags | no | an object with named keys, where a key is a tag name and a value is tag value |
-| type | no | specifies source for underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default value: HISTORY |
-|forecastName| no | Forecast name. <br>Applicable when `type` is set to `FORECAST` or `FORECAST_DEVIATION`. <br>`forecastName` can be used to store any number of custom forecasts. <br>If `forecastName` is not set, then the default forecast will be overwritten.  |
-| data | yes | an array of `{t:number,v:number}` objects, <br>where `t` is time in UNIX milliseconds and `v` is the metric's value at time `t`. <br>Time can be also specified in ISO format using `d` field. <br>Set `v` to `null` to insert `NaN` (not a number), for example: `{t:1462427358127, v:null}` |
-|version |no| An object. Contains source, status and change time fields for versioned metrics. |
+| entity | yes | Entity name |
+| metric | yes | Metric name |
+| tags | no | Object containing series tags, where field name represents tag name and field value is tag value.<br>`{"tag-1":string,"tag-2":string}` |
+| type | no | Type ype of inserted data: `HISTORY`, `FORECAST`. Default value: `HISTORY` |
+| version |no| Object containing version source and status fields for versioned metrics.<br>`{"source":string, "status":string}` |
+|forecastName| no | Forecast name. <br>Applicable when `type` is set to `FORECAST`. <br>`forecastName` can be used to store a custom forecast identified by name. <br>If `forecastName` is omitted, the values overwrite the default forecast.  |
+| data | yes | Array of `{t:number,v:number}` objects, <br>where `t` is time in UNIX milliseconds and `v` is the metric's value at time `t`. <br>Time can be also specified in ISO format using `d` field. <br>Set `v` to `null` to insert `NaN` (not a number), for example: `{t:1462427358127, v:null}`<br>When `type` is set to `FORECAST`, the object `{t,v}` can include an additional `s` field containing standard deviation of the forecast value in `v` |
+
 
 ## Response
 
