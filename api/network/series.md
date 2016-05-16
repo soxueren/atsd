@@ -26,10 +26,10 @@ Rules inherited from [generic ABNF](generic-abnf.md).
 ```properties
 ; 1*SP - one or multiple whitespaces
 command = "series" 1*SP entity 1*(1*SP metric) *(1*SP tag) [1*SP time]
-entity = "e:" 1*UCHAR
-metric = "m:" 1*UCHAR "=" NUMBER
+entity = "e:" 1*NCHAR
+metric = "m:" 1*NCHAR "=" NUMBER
 ; tag values containing whitespace must be double quoted
-tag = "t:" 1*UCHAR "=" 1*UCHAR / DQUOTE 1*(UCHAR / SP) DQUOTE
+tag = "t:" 1*NCHAR "=" 1*NCHAR / DQUOTE 1*VCHAR DQUOTE
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE-INTEGER
 time-second = "s:" POSITIVE-INTEGER
