@@ -2,8 +2,10 @@
 
 ```properties
 ; inherit from https://tools.ietf.org/html/rfc5234#appendix-B.1
-; any visible character except double quote %x21 and whitespace %x20
-UCHAR = %x21 / %x23-7E / UTF8-NON-ASCII 
+; visible characters except double-quote %x21 and quote %x27
+NCHAR = %x21 %x21-26 %28-7E / UTF8-NON-ASCII 
+; visible characters and space
+VCHAR = %x20-7E / UTF8-NON-ASCII 
 ; http://tools.ietf.org/html/rfc6531#section-3.3
 UTF8-NON-ASCII  = %x80-FF / ; Latin-1 Supplement
                   %x100-17F / ; Latin Extended-A
