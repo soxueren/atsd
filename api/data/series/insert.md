@@ -94,6 +94,14 @@ curl http://atsd_host:8088/api/v1/series/insert \
   -X POST \
   -d @file.json
 ```
+```css
+curl --insecure https://atsd_host:8443/api/v1/series/insert \
+  -v -u {username}:{password} \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
+  ```
+
 ## Additional Examples
 * [ISO Time Format](/api/data/examples/series-insert-iso-time-format.md)
 * [Scientific Notation](https://github.com/axibase/atsd-docs/blob/master/api/data/examples/series-insert-scietific-notation.md)
