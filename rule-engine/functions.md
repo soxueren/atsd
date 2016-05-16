@@ -4,7 +4,7 @@
 
 Returns tag value for the current series, property or message. tag name can be specified after `.` or inside square brackets.
 
-_Example_
+Examples:
 
 ```sh
 tags.location = 'NUR'
@@ -12,6 +12,10 @@ tags.location = 'NUR'
 
 ```sh
 tags.image-name = 'collector'
+```
+
+```
+tags.io.docker.environment != 'test'
 ```
 
 ```sh
