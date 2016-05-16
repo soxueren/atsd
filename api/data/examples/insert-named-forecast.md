@@ -16,7 +16,7 @@ POST http://atsd_host:8443/api/v1/series/insert
         "data": [
             {
                 "t": 1462427361327,
-                "v": 9497228.587367011
+                "v": 46
             }
         ]
     }
