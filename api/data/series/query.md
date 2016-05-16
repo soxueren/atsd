@@ -51,10 +51,10 @@ If startTime is not specified, startDate is used. If startDate is not specified,
 | **Field** | **Required** | **Description** |
 |---|---|---|
 | metric | yes |  Metric name |
-| entity    | yes (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
-| entities | yes (1) | Array of entity names or entity name patterns |
-| entityGroup | yes (1) | If `entityGroup` field is specified in the query, series for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
-| entityExpression | yes (1) | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
+| entity    | yes (1)         | Entity name or entity name pattern with `?` and `*` wildcards. |
+| entities | yes (1) | Array of entity names or entity name patterns. |
+| entityGroup | yes (1) | Entities that are members of the specified entity group. |
+| entityExpression | yes (1) | Applies [filter](../entity-filter.md) to selected entities.  |
 |startTime|no*|start of the selection interval. Specified in UNIX milliseconds.|
 |endTime|no*|end of the selection interval. Specified in UNIX milliseconds.|
 |startDate|no*|start of the selection interval. Specified in ISO format or using endtime syntax.|
