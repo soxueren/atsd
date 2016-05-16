@@ -200,6 +200,15 @@ echo -e series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\\nseries e:
 command-name field-prefix:field-name[=field-value]
 ```
 
+### Fields
+
+* The order of fields is not important.
+* Tag and key names are case-insensitive. Text values are case-sensitive and will be stored as submitted.
+* Fields such as tag or key start with prefix, colon symbol followed by key=value.
+* If field name or value contains white space it needs to be enclosed in double-quotes, for example: `v:os="Ubuntu 14.04"`. 
+* Double-quote appearing inside a value must be escaped with backslash, for example: `t:descr="Version is \"Ubuntu 14.04\""`
+* Entity, metric and tag names as well as property type and key names must not contain space, quote, and double-quote characters. <br>hen inserted via CSV upload or HTTP API, these characters are converted to underscore. <br>Multiple underscores are replaced with one underscore character.
+
 ### Command Length
 
 The server enforces the following maximum length constraints to command lines. 
@@ -211,19 +220,6 @@ The client is advised to split a command that is too long into multiple commands
 | property | 256*1024  |
 | message  | 256*1024  |
 | other | 1024  |
-
-### Fields
-
-* The order of fields is not important.
-* Fields such as tag or key start with prefix, colon symbol followed by key=value.
-* If field name or value contains white space it needs to be enclosed in double quotes.
-* Entity, metric and tag names as well as property type and key names must not contain the following characters: space, quote, double quote. When inserted via CSV upload or HTTP API, these characters are converted to underscore. Multiple underscores are collapsed into one underscore character.
-* Tag and key names are case-insensitive. Values are case-sensitive and will be stored as submitted.
-* Double quotes must be escaped with backslash, for example: `\"Ubuntu 14.04\"`
-
-```css
-property e:axibase ms:1438178237215 t:collectd-atsd v:host=axibase v:OS_Version=\"Ubuntu 14.04\"
-```
 
 ### New Entities/Metrics
 
