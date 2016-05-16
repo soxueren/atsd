@@ -77,7 +77,7 @@ https://atsd_host:8443/api/v1/series/insert
 }]
 ```
 
-#### curl
+#### curl HTTP 8088 inline
 
 ```css
 curl http://atsd_host:8088/api/v1/series/insert \
@@ -87,6 +87,8 @@ curl http://atsd_host:8088/api/v1/series/insert \
   -d '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
 ```
 
+#### curl HTTP 8088 file
+
 ```css
 curl http://atsd_host:8088/api/v1/series/insert \
   -v -u {username}:{password} \
@@ -94,6 +96,9 @@ curl http://atsd_host:8088/api/v1/series/insert \
   -X POST \
   -d @file.json
 ```
+
+#### curl HTTPs 8443 inline
+
 ```css
 curl --insecure https://atsd_host:8443/api/v1/series/insert \
   -v -u {username}:{password} \
