@@ -194,25 +194,24 @@ echo -e series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\\nseries e:
 
 ### Line Syntax
 
-* Command must start with command name such as `series` followed by space-separated fields each identified with a prefix followed by colon symbol and optional field value.
+* Command must start with command name such as `series` followed by space-separated fields each identified with a prefix followed by (:) colon symbol and field name=value.
 
 ```css
 command-name field-prefix:field-name[=field-value]
 ```
 
-### Fields
-
 * The order of fields is not important.
-* Tag and key names are case-insensitive. Text values are case-sensitive and will be stored as submitted.
-* Fields such as tag or key start with prefix, colon symbol followed by key=value.
-* If field name or value contains white space it needs to be enclosed in double-quotes, for example: `v:os="Ubuntu 14.04"`. 
-* Double-quote appearing inside a value must be escaped with backslash, for example: `t:descr="Version is \"Ubuntu 14.04\""`
-* Entity, metric and tag names as well as property type and key names must not contain space, quote, and double-quote characters. <br>hen inserted via CSV upload or HTTP API, these characters are converted to underscore. <br>Multiple underscores are replaced with one underscore character.
+* Field names are case-insensitive.
+* Field names must not contain space, quote, and double-quote characters. <br>hen inserted via CSV upload or HTTP API, these characters are converted to underscore. <br>Multiple underscores are replaced with one underscore character.
+* Field values are case-sensitive and are stored as submitted.
+* Field values are trimmed of starting and trailing CR,LF symbols.
+* If field value contains space it needs to be enclosed in double-quotes, for example: `v:os="Ubuntu 14.04"`. 
+* Double-quote inside a field value must be escaped with backslash, for example: `t:descr="Version is \"Ubuntu 14.04\""`.
 
-### Command Length
+### Command Length Limits
 
-The server enforces the following maximum length constraints to command lines. 
-The client is advised to split a command that is too long into multiple commands.
+The server enforces the following maximum lengths for command lines. 
+The client must split a command that is too long into multiple commands.
 
 | **Command** | **Maximum Length, bytes** |
 |---|---|---|
