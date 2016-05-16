@@ -3,7 +3,7 @@
 ```properties
 ; inherit from https://tools.ietf.org/html/rfc5234#appendix-B.1
 ; visible characters except double-quote %x21 and quote %x27
-NCHAR = %x21 %x21-26 %28-7E / UTF8-NON-ASCII 
+NCHAR = %x21 %x23-26 %28-7E / UTF8-NON-ASCII 
 ; visible characters and space
 VCHAR = %x20-7E / UTF8-NON-ASCII 
 ; http://tools.ietf.org/html/rfc6531#section-3.3
