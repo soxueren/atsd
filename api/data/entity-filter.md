@@ -9,21 +9,41 @@ One of the entity fields is required.
 | entity    | Entity name or entity name pattern with `?` and `*` wildcards|
 | entities | Array of entity names or entity name patterns |
 | entityGroup | If `entityGroup` field is specified in the query, series for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
-| entityExpression | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group.   |
+| entityExpression | Select entities matching the specified `entityExpression`. The filter is applied to entities returned other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group.   |
 
 ## entity-expression Syntax
 
-`entityExpression` should return boolean result based on evaluating an expression.
+`entityExpression` returns boolean result based on evaluating an expression.
 
-Supported fields and [functions](/rule-engine/functions.md):
+Supported fields:
 
 * id (entity id)
 * name (entity id)
 * tags.{tag-name}
-* entity_tags
-* property_values
+
+Supported functions:
+
+* [functions](/rule-engine/functions.md)
 
 ## Examples:
 
-`tags.location='SVL'
+```css
+tags.environment = 'production'
+```
+
+```css
+tags.location LIKE 'SVL*'
+```
+
+```css
+id LIKE 'nurswgvml*'
+```
+
+```css
+id LIKE 'nurswgvml*' && property_values('docker.info::version').contains('1.9.1')
+```
+
+```css
+matches('*ubuntu*', property_values('docker.info::version'))
+```
 
