@@ -79,7 +79,7 @@ https://atsd_host:8443/api/v1/series/insert
 
 ### curl Example
 
-#### http 8088 inline
+#### http 8088 data
 
 ```css
 curl http://atsd_host:8088/api/v1/series/insert \
@@ -99,7 +99,7 @@ curl http://atsd_host:8088/api/v1/series/insert \
   -d @file.json
 ```
 
-#### https 8443 inline
+#### https 8443 data
 
 ```css
 curl --insecure https://atsd_host:8443/api/v1/series/insert \
