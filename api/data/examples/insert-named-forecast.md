@@ -3,7 +3,7 @@
 ## Request
 ### URI
 ```elm
-POST https://atsd_host:8443/api/v1/series/insert
+POST http://atsd_host:8443/api/v1/series/insert
 ```
 ### Payload
 ```json
