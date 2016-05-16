@@ -28,7 +28,7 @@ Returns a map containing entity tags for the current entity.
 
 _Example_
 
-```java
+```sh
 entity_tags.location = 'NUR'
 ```
 
@@ -38,6 +38,10 @@ Returns entity tag value for current entity.
 
 ```sh
 entity.tags.location = 'docker'
+```
+
+```sh
+entity.tags.io.docker.environment != 'test'
 ```
 
 ### entity_tags(String entityName)
