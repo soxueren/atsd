@@ -96,6 +96,7 @@ curl http://atsd_host:8088/api/v1/series/insert \
 ```
 ## Additional Examples
 * [ISO Time Format](/api/data/examples/series-insert-iso-time-format.md)
+* [Scientific Notation](https://github.com/axibase/atsd-docs/blob/master/api/data/examples/series-insert-scietific-notation.md)
 * [Multiple Samples](https://github.com/axibase/atsd-docs/blob/master/api/data/examples/series-insert-multiple-samples.md)
 * [Series with Tags](/api/data/examples/series-insert-with-tags.md)
 * [Multiple Series](/api/data/examples/insert-multiple-series.md)
