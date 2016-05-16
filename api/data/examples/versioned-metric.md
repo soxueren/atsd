@@ -13,7 +13,7 @@ POST http://atsd_host:8443/api/v1/series/insert
         "data": [
             {
                 "t": 1447834771665,
-                "v": 513,
+                "v": 33,
                 "version": {
                     "status": "provisional",
                     "source": "t540p"
