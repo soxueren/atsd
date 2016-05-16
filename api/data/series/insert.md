@@ -89,7 +89,7 @@ curl http://atsd_host:8088/api/v1/series/insert \
   -d '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
 ```
 
-#### HTTP 8088 file
+#### http 8088 file
 
 ```css
 curl http://atsd_host:8088/api/v1/series/insert \
@@ -99,7 +99,7 @@ curl http://atsd_host:8088/api/v1/series/insert \
   -d @file.json
 ```
 
-#### HTTPs 8443 inline
+#### https 8443 inline
 
 ```css
 curl --insecure https://atsd_host:8443/api/v1/series/insert \
