@@ -49,10 +49,26 @@ If repairing didn't help, you will have to **remove** corrupted files.
 
 ## Corrupted File Deletion
 
-* Stop hbase
+* Stop HBase and HDFS
 
 ```sh
  /opt/atsd/hbase/bin/stop-hbase.sh
+ /opt/atsd/hadoop/bin/stop-dfs.sh
+```
+
+* Create backup 
+
+```sh
+rsync -r /opt/atsd/hdfs-data-name ~/backup/hdfs-data-name
+rsync -r /opt/atsd/hdfs-data ~/backup/hdfs-data
+rsync -r /opt/atsd/hbase/zookeeper ~/backup/zookeeper
+rsync -r /opt/atsd/hdfs-cache ~/backup/hdfs-cache
+```
+
+* Start HDFS
+
+```sh
+ /opt/atsd/hadoop/bin/start-dfs.sh
 ```
 
 * List corrupted files 
