@@ -13,8 +13,8 @@ UTF8-NON-ASCII  = %x80-FF / ; Latin-1 Supplement
                   %x400-4FF / ; Cyrillic
                   %x500-52F / ; Cyrillic Supplement
                   %x4E00-9FFF ; CJK Unified Ideographs
-; defined in RFC-3339-Appendix-A-ABNF. Format "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-ISO-DATE = ISO-DATE
+; defined in RFC-3339 Appendix-A. Format "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+ISO-DATE = date-time ; https://tools.ietf.org/html/rfc3339#appendix-A
 NUMBER = [ "-" ] (FRACTIONAL-NUMBER / REAL-NUMBER) / "NaN"           
 FRACTIONAL-NUMBER = ("0" / POSITIVE-INTEGER) ["." 1*DECIMAL-DIGIT]                  
 POSITIVE-INTEGER = NON-ZERO-DIGIT *DECIMAL-DIGIT
