@@ -12,7 +12,7 @@ sudo apt-get install -y openjdk-7-jdk
 
 #### Manual Configuration
 
-Stop ATSD:
+Stop ATSD processes
 
 ```sh
 /opt/atsd/bin/atsd-all.sh stop
@@ -30,13 +30,13 @@ Modify old `java_home` (for example, `/usr/lib/jvm/java-1.6.0-openjdk-amd64`) to
  /opt/atsd/hbase/conf/hbase-env.sh                                        
 ```
 
-Set new `JAVA_HOME` variable:
+Set new `JAVA_HOME` variable
 
 ```sh
 export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
 ```
 
-Start ATSD:
+Start ATSD
 
 ```sh
 /opt/atsd/bin/atsd-all.sh start
@@ -44,13 +44,13 @@ Start ATSD:
 
 #### Automated Configuration
 
-Stop ATSD:
+Stop ATSD
 
 ```sh
 /opt/atsd/bin/atsd-all.sh stop
 ```
 
-Replace old `java_home` with new `java_home` in each file:
+Replace old `java_home` with new `java_home` in each file
 
 ```sh
  $: printf "/home/axibase/.bashrc\n/opt/atsd/hadoop/conf/hadoop-env.sh\n/ 
@@ -59,13 +59,13 @@ Replace old `java_home` with new `java_home` in each file:
  jvm/java-1.6.0-openjdk-amd64,/usr/lib/jvm/java-1.7.0-openjdk-amd64,g'    
 ```
 
-Apply changes to your environment variables:
+Apply changes to your environment variables
 
 ```sh
 source /home/axibase/.bashrc
 ```
 
-Start ATSD:
+Start ATSD
 
 ```sh
 /opt/atsd/bin/atsd-all.sh start
