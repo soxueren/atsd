@@ -118,14 +118,6 @@ Make sure you don't kill HDFS processes.
 kill 18494
 ```
 
-Alternatively kill HBase processes by name with `pkill`
-
-```sh
-pkill HMaster
-pkill HQuorumPeer
-pkill HRegionServer
-```
-
 If any HBase process fails to stop after that and is still visible in `jps`, contact Axibase support for further instructions to prevent data loss.
 
 ### Start Services
