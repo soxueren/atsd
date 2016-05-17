@@ -40,6 +40,10 @@ id LIKE 'nurswgvml*'
 ```
 
 ```css
+tags.container_label.com.axibase.code == 'collector'
+```
+
+```css
 id LIKE 'nurswgvml*' && property_values('docker.info::version').contains('1.9.1')
 ```
 
