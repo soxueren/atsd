@@ -28,7 +28,7 @@ This method creates a new metric or replaces an existing metric.
 |---|---|
 |label|Metric label|
 |enabled|Enabled status. Incoming data is discarded for disabled metrics|
-|dataType|short, integer, float, long, double|
+|dataType|See [data types](#data-types)|
 |timePrecision|seconds, milliseconds|
 |persistent |Persistence status. Non-persistent metrics are not stored in the database and are only used in rule engine.|
 |counter|Metrics with continuously incrementing value should be defined as counters|
@@ -44,3 +44,12 @@ This method creates a new metric or replaces an existing metric.
 <aside class="notice">
 If only a subset of fields is provided for an existing metric, the remaining properties and tags will be deleted.
 </aside>
+
+### Data Types
+
+* short
+* integer
+* long
+* float (default)
+* double
+* decimal
