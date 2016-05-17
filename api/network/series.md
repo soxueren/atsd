@@ -37,6 +37,11 @@ time-second = "s:" POSITIVE-INTEGER
 time-iso = "d:" ISO-DATE
 ```
 
+## Schema
+
+* New entity and metric names will be automatically created provided they meet naming requirements.
+* New metrics will be created with `float` data type by default.
+
 ## Examples
 
 ```css
