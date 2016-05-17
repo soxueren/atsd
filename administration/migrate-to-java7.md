@@ -53,10 +53,9 @@ Stop ATSD
 Replace old `java_home` with new `java_home` in each file
 
 ```sh
- $: printf "/home/axibase/.bashrc\n/opt/atsd/hadoop/conf/hadoop-env.sh\n/ 
- opt/atsd/bin/update.sh\n/opt/atsd/bin/atsd-hbase.sh\n/opt/atsd/bin/atsd- 
- dfs.sh\n/opt/atsd/hbase/conf/hbase-env.sh\n"  xargs sed -i 's,/usr/lib/ 
- jvm/java-1.6.0-openjdk-amd64,/usr/lib/jvm/java-1.7.0-openjdk-amd64,g'    
+ $: printf "/home/axibase/.bashrc\n/opt/atsd/hadoop/conf/hadoop-env.sh\n\
+ /opt/atsd/bin/update.sh\n/opt/atsd/bin/atsd-hbase.sh\n/opt/atsd/bin/atsd-dfs.sh\n/opt/atsd/hbase/conf/hbase-env.sh\n"\
+ xargs sed -i 's,/usr/lib/jvm/java-1.6.0-openjdk-amd64,/usr/lib/jvm/java-1.7.0-openjdk-amd64,g'    
 ```
 
 Apply changes to your environment variables
