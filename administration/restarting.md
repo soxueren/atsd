@@ -34,7 +34,7 @@ them back up on system reboot.
 /opt/atsd/bin/update.sh
 ```
 
-## rocesses
+## Processes
 
 Switch to `axibase` user and run `jps`
 
