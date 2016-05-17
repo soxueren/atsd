@@ -19,8 +19,8 @@ them back up on system reboot.
 | **Name** | **Description** | **Arguments** | **Example** |
 |---|:---|---|---|
 | atsd-all.sh | Start, stop and get status of all components. | start, stop, status | `/opt/atsd/bin/atsd-all.sh status` |
-| atsd-hbase.sh | Start, stop and get status of HBase. | start, stop, status | `/opt/atsd/bin/atsd-hbase.sh status` |
 | atsd-tsd.sh | Start, stop and get status of ATSD. | start, stop, status | `/opt/atsd/bin/atsd-tsd.sh stop` |
+| atsd-hbase.sh | Start, stop and get status of HBase. | start, stop, status | `/opt/atsd/bin/atsd-hbase.sh status` |
 | atsd-dfs.sh | Start, stop and get status of HDFS. | start, stop, status | `/opt/atsd/bin/atsd-dfs.sh start` |
 | update.sh | [Update ATSD](update.md "Update ATSD") in interactive mode.<br>`-t` - Upgrade and restart ATSD silently. No HBase and HDFS restart.<br>`-a` - Upgrade and restart ATSD, HBase, and HDFS silently.| -a, -t | `/opt/atsd/bin/update.sh` |
 
@@ -34,15 +34,7 @@ them back up on system reboot.
 /opt/atsd/bin/update.sh
 ```
 
-## Safe Restart
-
-Change to script directory
-
-```sh
-cd /opt/atsd/bin
-```
-
-## Check Processes
+## rocesses
 
 Switch to `axibase` user and run `jps`
 
@@ -67,6 +59,14 @@ HRegionServer - HBase
 NameNode - HDFS
 SecondaryNameNode - HDFS
 DataNode - HDFS
+```
+
+## Safe Restart
+
+Change to script directory
+
+```sh
+cd /opt/atsd/bin
 ```
 
 ### Stop Services
