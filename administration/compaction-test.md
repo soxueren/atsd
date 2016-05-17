@@ -12,8 +12,8 @@ instance, not a production instance.
 
 Open the Metrics page found on the main menu, click CREATE button on the
 bottom of the page to create new `metrics` that you are planning to load
-into ATSD with the correct data type (short, float, integer, double or
-long, depending on the type of data you would like to store).
+into ATSD with the correct data type (short, integer, long, float, double or decimal, 
+depending on the type of data you would like to store).
 
 > Note: the default data type is float. This step is not necessary if
 you will be writing data with the float data type.
