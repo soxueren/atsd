@@ -19,7 +19,7 @@ Supported fields:
 
 * id (entity id)
 * name (entity id)
-* tags.{tag-name}
+* tags.{tag-name} or tags.['tag-name']
 
 Supported functions:
 
