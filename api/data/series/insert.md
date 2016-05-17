@@ -40,7 +40,6 @@ The request must contain an array of series objects each containing an array of 
 |forecastName| no | Forecast name. <br>Applicable when `type` is set to `FORECAST`. <br>`forecastName` can be used to store a custom forecast identified by name. <br>If `forecastName` is omitted, the values overwrite the default forecast.  |
 | data | yes | Array of `{"t":number,"v":number}` objects, <br>where `t` is time in UNIX milliseconds and `v` is the metric's value at time `t`. <br>Time can be also specified in ISO format using `d` field. <br>To insert `NaN` (not a number), set `v` to `null`, for example: `{t:1462427358127, v:null}`<br>If `type` is set to `FORECAST`, the object `{t,v}` can include an additional `s` field containing standard deviation of the forecast value `v`, for example  `{t:1462427358127, v:80.4, s:12.3409}` |
 
-
 ## Response
 
 ### Fields
@@ -48,13 +47,19 @@ The request must contain an array of series objects each containing an array of 
 Empty if insert was successful.
 
 ### Errors
+
 |  Status Code  |  Description  |
-|---------------|---------------|
+|---------------|:---------------|
 | 400 |IllegalArgumentException: Empty entity|
 | 400 |IllegalArgumentException: Negative timestamp|
 | 400 | IllegalArgumentException: No data |
 | 500 | JsonParseException: Unexpected character "}" | 
 | 500 | JsonMappingException: No enum constant in field type|
+
+## Schema
+
+* New entities and metrics will be automatically created provided they meet naming requirements.
+* New metrics will be initialized with `float` data type by default.
 
 ## Example
 
