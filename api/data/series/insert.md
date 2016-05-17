@@ -59,7 +59,7 @@ Empty if insert was successful.
 ## Schema
 
 * New entities and metrics will be automatically created provided they meet naming requirements.
-* New metrics will be initialized with `float` data type by default.
+* New metrics will be initialized with `float` data type by default. <br>To insert metric samples with another datatype, create or update metric properties using [Meta API](/api/meta/metric/create-or-replace.md) or the web interface.
 
 ## Example
 
