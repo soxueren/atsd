@@ -7,7 +7,7 @@ Series Database revision 11938 and earlier.**
 #### Install openjdk-7-jdk
 
 ```sh
- sudo apt-get install -y openjdk-7-jdk                                    
+sudo apt-get install -y openjdk-7-jdk      
 ```
 
 #### Manual Configuration
@@ -15,11 +15,10 @@ Series Database revision 11938 and earlier.**
 Stop ATSD:
 
 ```sh
- /opt/atsd/bin/atsd-all.sh stop                                           
+/opt/atsd/bin/atsd-all.sh stop
 ```
 
-Modify old `java_home` (for example,
-`/usr/lib/jvm/java-1.6.0-openjdk-amd64`) to the new `java_home`
+Modify old `java_home` (for example, `/usr/lib/jvm/java-1.6.0-openjdk-amd64`) to the new `java_home`
 (`/usr/lib/jvm/java-1.7.0-openjdk-amd64`) in the following files:
 
 ```sh
@@ -34,13 +33,13 @@ Modify old `java_home` (for example,
 Set new `JAVA_HOME` variable:
 
 ```sh
- export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64                   
+export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
 ```
 
 Start ATSD:
 
 ```sh
- /opt/atsd/bin/atsd-all.sh start                                          
+/opt/atsd/bin/atsd-all.sh start
 ```
 
 #### Automated Configuration
@@ -48,7 +47,7 @@ Start ATSD:
 Stop ATSD:
 
 ```sh
- /opt/atsd/bin/atsd-all.sh stop                                           
+/opt/atsd/bin/atsd-all.sh stop
 ```
 
 Replace old `java_home` with new `java_home` in each file:
@@ -63,11 +62,11 @@ Replace old `java_home` with new `java_home` in each file:
 Apply changes to your environment variables:
 
 ```sh
- source /home/axibase/.bashrc                                             
+source /home/axibase/.bashrc
 ```
 
 Start ATSD:
 
 ```sh
- /opt/atsd/bin/atsd-all.sh start                                          
+/opt/atsd/bin/atsd-all.sh start
 ```
