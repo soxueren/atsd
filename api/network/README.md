@@ -220,10 +220,11 @@ The client must split a command that is too long into multiple commands.
 | message  | 256*1024  |
 | other | 1024  |
 
-### New Entities/Metrics
+### Schema
 
-* Entity and metric names will be automatically created provided they meet naming requirements.
-* The number of unique identifiers in ATSD is subject to the following limits: 
+* There is no need to create entities, metrics, tags ahead of time prior to inserting data.
+* New entity and metric names will be automatically created provided they meet naming requirements.
+* The number of unique identifiers is subject to the following default limits: 
 
 |**Type**| **Max Identifier**|
 |-------|---------|
