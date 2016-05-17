@@ -11,9 +11,13 @@ Series Database revision 11938 and earlier.
 sudo apt-get install -y openjdk-7-jdk      
 ```
 
-## Stop ATSD
+Switch to axibase user
 
-Stop ATSD processes
+```
+su axibase
+```
+
+## Stop ATSD
 
 ```sh
 /opt/atsd/bin/atsd-all.sh stop
@@ -23,8 +27,8 @@ Stop ATSD processes
 
 ### Manual Option
 
-Modify old `java_home` (for example, `/usr/lib/jvm/java-1.6.0-openjdk-amd64`) 
-to the new `java_home` (`/usr/lib/jvm/java-1.7.0-openjdk-amd64`) in the following files:
+Change `JAVA_HOME` variable from old path `/usr/lib/jvm/java-1.6.0-openjdk-amd64` to new path 
+`/usr/lib/jvm/java-1.7.0-openjdk-amd64` in the following files:
 
 ```sh
  /home/axibase/.bashrc                                                    
@@ -35,21 +39,9 @@ to the new `java_home` (`/usr/lib/jvm/java-1.7.0-openjdk-amd64`) in the followin
  /opt/atsd/hbase/conf/hbase-env.sh                                        
 ```
 
-Set new `JAVA_HOME` variable
-
-```sh
-export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-amd64
-```
-
-Start ATSD
-
-```sh
-/opt/atsd/bin/atsd-all.sh start
-```
-
 ### Scripted Option
 
-Replace old `java_home` with new `java_home` in each file
+Change `JAVA_HOME` variable in the following files with `sed`
 
 ```sh
 $: printf "/home/axibase/.bashrc\n/opt/atsd/hadoop/conf/hadoop-env.sh\n\
@@ -57,7 +49,7 @@ $: printf "/home/axibase/.bashrc\n/opt/atsd/hadoop/conf/hadoop-env.sh\n\
 xargs sed -i 's,/usr/lib/jvm/java-1.6.0-openjdk-amd64,/usr/lib/jvm/java-1.7.0-openjdk-amd64,g'    
 ```
 
-Apply changes to 'axibase' user environment variables
+## Reload Environment Variables
 
 ```sh
 source /home/axibase/.bashrc
