@@ -118,7 +118,7 @@ Make sure you don't kill HDFS processes.
 kill 18494
 ```
 
-Alternatively kill by name with `pkill`
+Alternatively kill HBase processes by name with `pkill`
 
 ```sh
 pkill HMaster
