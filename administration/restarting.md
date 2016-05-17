@@ -42,6 +42,33 @@ Change to script directory
 cd /opt/atsd/bin
 ```
 
+## Check Processes
+
+Switch to `axibase` user and run `jps`
+
+```java
+27392 Jps
+22110 Server 
+18494 HMaster
+18387 HQuorumPeer
+18673 HRegionServer
+25587 NameNode
+25961 SecondaryNameNode
+25790 DataNode
+```
+
+Process affiliation:
+
+```java
+Server - ATSD 
+HMaster - HBase
+HQuorumPeer - HBase
+HRegionServer - HBase
+NameNode - HDFS
+SecondaryNameNode - HDFS
+DataNode - HDFS
+```
+
 ### Stop Services
 
 * Stop ATSD
@@ -58,7 +85,7 @@ Verify that `Server` process is **not** present in `jps` output
 jps
 ```
 
-If Server process is running, kill it forcefully with `kill -9 {Server-pid}`
+If `Server` process is still running, kill it forcefully with `kill -9 {Server-pid}`
 
 * Stop HBase and wait for the script to exit
 
@@ -83,7 +110,23 @@ The `jps` output should display only HDFS processes at this time:
 
 If HBase processes are still running, retry `./atsd-hbase.sh stop`.
 
-If any HBase process fails to stop, contact Axibase support for further instructions to prevent data loss.
+If subsequent  `./atsd-hbase.sh stop` executions fail to stop HBase processes, kill HBase processes by pid with SIGTERM (no flags).
+
+Make sure you don't kill HDFS processes.
+
+```sh
+kill 18494
+```
+
+Alternatively kill by name with `pkill`
+
+```sh
+pkill HMaster
+pkill HQuorumPeer
+pkill HRegionServer
+```
+
+If any HBase process fails to stop after that and is still visible in `jps`, contact Axibase support for further instructions to prevent data loss.
 
 ### Start Services
 
