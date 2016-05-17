@@ -72,7 +72,17 @@ Verify that `HMaster`, `HRegionServer`, `HQuorumPeer` processes are **not** pres
 jps
 ```
 
-If the above processes are running, retry `./atsd-hbase.sh stop`.
+The `jps` output should display only HDFS processes at this time:
+
+```
+27392 Jps
+25961 SecondaryNameNode
+25790 DataNode
+25587 NameNode
+```
+
+If HBase processes are still running, retry `./atsd-hbase.sh stop`.
+
 If any HBase process fails to stop, contact Axibase support for further instructions to prevent data loss.
 
 ### Start Services
