@@ -31,7 +31,7 @@ GET
 |name|Metric name (unique)|
 |label|Metric label|
 |enabled|Enabled status. Incoming data is discarded for disabled metrics|
-|dataType|short, integer, float, long, double|
+|dataType|[Data type](#data-types)|
 |timePrecision|seconds, milliseconds|
 |persistent |Persistence status. Non-persistent metrics are not stored in the database and are only used in rule engine.|
 |counter|Metrics with continuously incrementing value should be defined as counters|
@@ -50,19 +50,39 @@ GET
  <aside class="notice">
 If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returned. If `timeFormat` is set to the default value (milliseconds), then `lastInsertTime` will be returned.
 </aside>
-### Erorrs
+
+### Data Types
+
+|**Type**|**Size, bytes**|
+|---|:---|
+|short|2|
+|integer|4|
+|long|8|
+|float|4|
+|double|8|
+|decimal|variable|
+
+Default data type for new metrics, when auto-created, is **float**. 
+
+### Errors
+
 |  Status Code  |  Description  |
 |---------------|---------------|
 | 500 |TypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'com.axibase.tsd.model.TimeFormat';|
 | 500 |TypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'int'|
+
 ## Example 
 
 ### Request
+
 #### URI
+
 ```
 https://atsd_host:8443/api/v1/metrics?limit=2
 ```
-#### Curl
+
+#### curl
+
 ```css
 curl --insecure https://atsd_host:8443/api/v1/metrics?limit=2 \
   -v -u {username}:{password} \
