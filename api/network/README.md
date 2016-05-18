@@ -1,6 +1,6 @@
 # Network API
 
-Network API provides a set of plain text commands for inserting numeric time series, key=value properties, and tagged messages into Axibase Time Series Database via TCP and UDP network protocols.
+Network API provides a set of plain text commands for inserting numeric time series, key=value properties, and tagged messages into Axibase Time Series Database via **TCP** and **UDP** network protocols.
 
 You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language that lets you connect to ATSD server via TCP/UDP protocol.
 
@@ -37,7 +37,7 @@ By default ATSD server listenes for incoming commands on the following ports:
 
 ## Encryption
 
-To encrypt TCP traffic, setup an IPSEC VPN or establish an [SSH tunnel] (http://axibase.com/products/axibase-time-series-database/writing-data/nmon/ssh-tunneling/).
+To encrypt TCP traffic, setup an [SSH tunnel](http://axibase.com/products/axibase-time-series-database/writing-data/nmon/ssh-tunneling/) or create a VPN connection.
 
 ## Authentication
 
@@ -142,7 +142,7 @@ property e:station_2 t:location v:city=Cupettino v:state=CA v:country=USA
 Connection closed by foreign host.
 ```
 
-Note that the server will **terminate** the connection if it receives an unknown or malformed command.
+Note that the server will **terminate** the connection if it receives an unsupported or malformed command.
 
 
 ```sh
@@ -156,7 +156,9 @@ Connection closed by foreign host.
 
 ### UDP Datagrams
 
-The UDP protocol doesn't guarantee delivery but may have a higher throughput compared to TCP due to lower overhead. In addition, sending commands with UDP datagrams decouples the client application from the server to minimize the risk of freezes read timeouts.
+The UDP protocol doesn't guarantee delivery but may have a higher throughput compared to TCP due to lower overhead. 
+
+In addition, sending commands with UDP datagrams decouples the client application from the server to minimize the risk of blocking I/O timeouts.
 
 ```elm
 echo series e:station_3 m:temperature=32.2 m:humidity=81.4 | nc -u -w1 10.102.0.6 8082
@@ -166,7 +168,7 @@ echo series e:station_3 m:temperature=32.2 m:humidity=81.4 | nc -u -w1 10.102.0.
 printf 'series e:station_3 m:temperature=32.2 m:humidity=81.4' | nc -u -w1 10.102.0.6 8082
 ```
 
-Unlike TCP, the last command in a multi-command UDP datagram must terminate with the line feed character.
+Unlike TCP, the last command in a multi-command UDP datagram must be terminated with the line feed character.
 
 ```elm
 echo -e series e:station_33 m:temperature=32.2\\nseries e:station_34 m:temperature=32.1 m:humidity=82.4\\n | nc -u -w1 10.102.0.6 8082
@@ -202,11 +204,11 @@ command-name field-prefix:field-name[=field-value]
 
 * The order of fields is not important.
 * Field names are case-insensitive.
-* Field names must not contain space, quote, and double-quote characters. <br>hen inserted via CSV upload or HTTP API, these characters are converted to underscore. <br>Multiple underscores are replaced with one underscore character.
 * Field values are case-sensitive and are stored as submitted.
+* Field names must not contain a space character. <br>When inserted via CSV upload or HTTP API, space is converted to an underscore symbol. <br>Multiple underscores are replaced with one underscore character.
+* Double-quote must be escaped with backslash, for example: `t:descr="Version is \"Ubuntu 14.04\""`.
 * Field values are trimmed of starting and trailing CR,LF symbols.
-* If field value contains space it needs to be enclosed in double-quotes, for example: `v:os="Ubuntu 14.04"`. 
-* Double-quote inside a field value must be escaped with backslash, for example: `t:descr="Version is \"Ubuntu 14.04\""`.
+* If field value contains space it needs to be enclosed in double-quotes, for example: `v:os="Ubuntu 14.04"`.
 
 ### Command Length Limits
 
@@ -222,8 +224,7 @@ The client must split a command that is too long into multiple commands.
 
 ### Schema
 
-* There is no need to create entities, metrics, tags ahead of time prior to inserting data.
-* New entity and metric names will be automatically created provided they meet naming requirements.
+* New entities, metrics, and tags are automatically created when inserting data.
 * The number of unique identifiers is subject to the following default limits: 
 
 |**Type**| **Max Identifier**|
