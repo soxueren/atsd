@@ -56,6 +56,23 @@ Access-Control-Allow-Origin: *
 
 * Clients may send compressed data by adding HTTP header **Content-Encoding: gzip** to the request.
 
+## Troubleshooting
+
+* Review error logs on **Admin:Server Logs** page in case the payload rejected
+* To validate json received from a client, launch `netcat` utility in server mode, reconfigure the client to send data to netcat port, and dump incoming data to file:
+
+```
+nc -lk localhost 20088 > json-in.log &
+
+curl http://localhost:20088/api/v1/series/insert \
+  -v -u {username}:{password} \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
+
+cat json-in.log
+```
+
 ## Errors
 
 [Error Codes](https://github.com/axibase/atsd-docs/blob/master/api/data/error-codes.md)
