@@ -3,6 +3,7 @@
 ## Description
 
 Update specified properties and tags for the given (existing) metric.
+
 Properties and tags that are not specified in the payload are left unchanged.
 
 ## Path
