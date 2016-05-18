@@ -274,10 +274,10 @@ Reasons why ATSD server can drop commands:
 
 * Entity, metric or tag names are not valid.
 * Timestamp is negative or earlier than `1970-01-01T00:00:00Z`.
-* Timestamp cannot be parsed, for example if `s:` or `ms:` field value is not numeric or if `d` value is not in ISO format.
-* Metric value cannot be parsed into double using `.` as the decimal separator. Scientific notation is supported.
+* Timestamp field `s:`/`ms:` is not numeric or if `d` field is not in ISO format.
+* Metric value could not be parsed as a number using `.` as the decimal separator. Scientific notation is supported.
 * Multiple data points for the same entity, metric and tags have the same timestamp in which case commands are considered duplicates and some of them are dropped. This could occur when commands with the same key are sent without timestamp.
-* Data is sent using UDP protocol and the client UDP send buffer or ATSD UDP receive buffer overflows.
+* Data is sent using UDP protocol and the client UDP send buffer or the server UDP receive buffer overflows.
 * Value is below 'Min Value' or above 'Max Value' limit specified for the metric and the 'Invalid Value Action' is set to `DISCARD`.
 * Last command in multi-line UDP packed doesn't terminate with line feed symbol.
 
