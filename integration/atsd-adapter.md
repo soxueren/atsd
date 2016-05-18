@@ -12,29 +12,32 @@ In order for Axibase Server to group ATSD metrics into virtual tables, metrics n
 * Login into ATSD
 * Open **Admin:Server Properties** page
 * Add `table` tag to `metric.display.tags` property
+
+![Server Properties](metric-table-tags.png)
+
 * Click Apply Changes and open Metrics tab to verify that the `table` tag is visible in Metrics list
 
-[Metrics List: table tag](metrics-table-tag.png)
+![Metrics List: table tag](metrics-table-tag.png)
 
 ## Apply `table` tag to Metrics
 
 * Enter partial metric name in Name Mask to filter Metric list by name. `*` and `?` wildcards are supported.
 * Set Page Size (Display on Page) to 1000
 
-[Metric List: filter](metric-list-filter.png)
+![Metric List: filter](metric-list-filter.png)
 
 * Click checkbox to select filtered metrics.
 * Enter a name that describes selected metrics and click [Apply]
 
-[Metric List: apply tag](metric-list-tag-apply.png)
+![Metric List: apply tag](metric-table-tag-apply.png)
 
 * Verify that selected metrics have the `table` tag set
 
-[Metric List: applied tag](metric-list-tag-applied.png)
+![Metric List: applied tag](metric-table-tag-applied.png)
 
 * Repeat the process to group metrics into tables
 
-[Metric List: tag all](metric-list-tag-all.png)
+![Metric List: tag all](metric-table-tag-all.png)
 
 ## Discover Metric Tables in Axibase Server
 
