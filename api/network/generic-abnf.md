@@ -1,11 +1,11 @@
 # Generic ABNF Rules
 
 ```properties
-; inherit from https://tools.ietf.org/html/rfc5234#appendix-B.1
-; visible characters except double-quote %x22 and quote %x27
-NCHAR = %x21 / %x23-26 / %x28-7E / UTF8-NON-ASCII 
-; visible characters and space
-VCHAR = %x20-7E / UTF8-NON-ASCII 
+; inherited from https://tools.ietf.org/html/rfc5234#appendix-B.1
+; visible characters and unicode characters
+NCHAR = %x21-7E / UTF8-NON-ASCII 
+; space, visible characters, and unicode characters
+VCHAR = %x20-7E / UTF8-NON-ASCII
 ; http://tools.ietf.org/html/rfc6531#section-3.3
 UTF8-NON-ASCII  = %x80-FF / ; Latin-1 Supplement
                   %x100-17F / ; Latin Extended-A
