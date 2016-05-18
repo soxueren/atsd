@@ -55,16 +55,16 @@ If startTime is not specified, startDate is used. If startDate is not specified,
 | entities | yes (1) | Array of entity names or entity name patterns. |
 | entityGroup | yes (1) | Entities that are members of the specified entity group. |
 | entityExpression | yes (1) | Applies [filter](../entity-filter.md) to selected entities.  |
-|startTime|no*|start of the selection interval. Specified in UNIX milliseconds.|
-|endTime|no*|end of the selection interval. Specified in UNIX milliseconds.|
-|startDate|no*|start of the selection interval. Specified in ISO format or using endtime syntax.|
-|endDate|no*|end of the selection interval. Specified in ISO format or using endtime syntax.|
+|startTime|no*|Start of the selection interval. Specified in UNIX milliseconds.|
+|endTime|no*|End of the selection interval. Specified in UNIX milliseconds.|
+|startDate|no*|Etart of the selection interval. Specified in ISO format or using endtime syntax.|
+|endDate|no*|End of the selection interval. Specified in ISO format or using endtime syntax.|
 |interval|no*|Duration of the selection interval, specified as `count` and `unit`|
-|timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
+|timeFormat|no|Response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 | limit | no | maximum number of data samples returned. Only the most recent data samples will be returned if endtime/startime are set. Default value: 0 | 
-| last | no |  Performs GET instead of scan. Retrieves only 1 most recent value. Boolean. Default value: false |
+| last | no |  Performs GET instead of scan. Retrieves only 1 most recent value. <br>Boolean. Default value: false<br>Start time and end time are ignored when last=true. |
 | tags | no |  An object. key is a tag name and value is a single tag value or an array of possible tag values with `?` and `*` wildcards. |
-| type | no | specifies source for underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default value: `HISTORY` |
+| type | no | Specifies source for underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default value: `HISTORY` |
 |forecastName| no | Unique forecast name. You can store an unlimited number of named forecasts for any series using `forecastName`. If `forecastName` is not set, then the default ATSD forecast will be returned. `forecastName` is applicable only when `type` is set to `FORECAST` or `FORECAST_DEVIATION` |
 | group | no | An object. Merges multiple time series into one serie. |
 | rate| no | An object. Computes difference between consecutive samples per unit of time (rate period). |
