@@ -123,7 +123,7 @@ curl --insecure https://atsd_host:8443/api/v1/metrics?limit=2 \
 
 ## Additional Examples
 * [List metrics name by name](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-by-name.md)
-* [List metrics with tag table](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/List-metrics-with-tag-table.md)
+* [List metrics with tag table](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-with-tag-table.md)
 * [List metric with parameter 'timeFormat'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metric-with-timeformat.md)
 * [List active metrics](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-active-metrics.md)
 * [List metrics by 'maxInsertTime'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-by-maxinserttime.md)
