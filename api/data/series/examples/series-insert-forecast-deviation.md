@@ -26,7 +26,7 @@ POST https://atsd_host:8443/api/v1/series/insert
 ]
 ```
 ## Response 
-```
+```json
 {
     "series": [
         {
