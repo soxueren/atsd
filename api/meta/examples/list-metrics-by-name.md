@@ -1,4 +1,4 @@
-# Fetch all 'disk' metrics
+# List metrics by name 
 
 Fetch all metrics whose name includes `disk`
 
