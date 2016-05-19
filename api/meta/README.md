@@ -10,6 +10,37 @@ In response, the ATSD server sends an HTTP status code (such as a 200-type statu
 
 You can use any programming language that lets you issue HTTP requests and parse JSON-based responses.
 
+## Categories
+
+* [Metric](metric)
+    - [list](metric/list.md)
+    - [delete](metric/delete.md)
+    - [get](metric/get.md)
+    - [update](metric/update.md)
+    - [create or replace](metric/create-or-replace.md)
+    - [entities and tags](metric/entities-and-tags.md)
+* [Entity](entity)
+    - [list](entity/list.md)
+    - [delete](entity/delete.md)
+    - [get](entity/get.md)
+    - [update](entity/update.md)
+    - [create or replace](entity/create-or-replace.md)
+    - [entity groups](entity/entity-groups.md)
+    - [metrics](entity/metrics.md)
+    - [property types](entity/property-types.md)
+* [Entity group](entity-group)
+    - [list](entity-group/list.md)
+    - [delete](entity-group/delete.md)
+    - [get](entity-group/get.md)
+    - [update](entity-group/update.md)
+    - [create or replace](entity-group/create-or-replace.md)
+    - [add entities](entity-group/add-entities.md)
+    - [delete entities](entity-group/delete-entities.md)
+    - [get entities](entity-group/get-entities)
+    - [set (replace) entities](entity-group/set-replace-entities)
+
+
+
 
 ### Authentication
 
