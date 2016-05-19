@@ -1,4 +1,4 @@
-# Fetch active metrics 
+# List active metrics 
 
 ## Request
 ### URI
