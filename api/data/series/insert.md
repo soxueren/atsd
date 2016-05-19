@@ -124,6 +124,7 @@ curl --insecure https://atsd_host:8443/api/v1/series/insert \
 * [Multiple Series](/api/data/series/examples/insert-multiple-series.md)
 * [Forecast](/api/data/series/examples/insert-forecast.md)
 * [Named Forecast](https://github.com/axibase/atsd-docs/blob/master/api/data/series/examples/insert-named-forecast.md)
+* [Forecast Deviation](https://github.com/axibase/atsd-docs/blob/master/api/data/series/examples/series-insert-forecast-deviation.md)
 * [Versioned Metric](/api/data/series/examples/versioned-metric.md)
 
 
