@@ -27,24 +27,5 @@ POST https://atsd_host:8443/api/v1/series/insert
 ```
 ## Response 
 ```json
-{
-    "series": [
-        {
-            "entity": "nurswgvml007",
-            "metric": "mpstat.cpu_busy",
-            "tags": {},
-            "type": "FORECAST_DEVIATION",
-            "aggregate": {
-                "type": "DETAIL"
-            },
-            "forecastName": "test",
-            "data": [
-                {
-                    "t": 1462427358127,
-                    "v": 7
-                }
-            ]
-        }
-    ]
-}
+
 ```
