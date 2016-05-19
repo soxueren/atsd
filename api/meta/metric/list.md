@@ -122,7 +122,7 @@ curl --insecure https://atsd_host:8443/api/v1/metrics?limit=2 \
 
 
 ## Additional Examples
-* [Fetch all disk metrics](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-all-disk-metrics.md)
+* [List metrics name by name](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-by-name.md)
 * [Fetch metrics with tag table](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metrics-with-tag-table.md)
 * [Fetch metric with parameter 'timeFormat'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-metric-with-timeformat.md)
 * [Fetch active metrics](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/fetch-active-metrics.md)
