@@ -1,6 +1,6 @@
-# Fetch metrics by name and tag
+# List metrics by name and tag
 
-Fetch metrics starting with `nmon` and with tag `table` starting with `CPU`
+List metrics starting with `nmon` and with tag `table` starting with `CPU`
 
 ## Request 
 ### URI 
