@@ -21,3 +21,7 @@ Logs are rolled over and archived according to `/opt/atsd/atsd/conf/logging.prop
 |err.log|Standard err|
 
 ![server logs](images/server_logs_atsd.png "server_logs_atsd")
+
+Command processings logs should be enabled on **Admin:Input Settings** page:
+
+![](server-logs-command-files.png)
