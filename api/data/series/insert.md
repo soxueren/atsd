@@ -89,30 +89,30 @@ https://atsd_host:8443/api/v1/series/insert
 
 ```css
 curl http://atsd_host:8088/api/v1/series/insert \
-  -v -u {username}:{password} \
-  -H "Content-Type: application/json" \
-  -X POST \
-  -d '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
+  --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
 ```
 
 #### http 8088 file
 
 ```css
 curl http://atsd_host:8088/api/v1/series/insert \
-  -v -u {username}:{password} \
-  -H "Content-Type: application/json" \
-  -X POST \
-  -d @file.json
+  --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data @file.json
 ```
 
 #### https 8443 data
 
 ```css
 curl --insecure https://atsd_host:8443/api/v1/series/insert \
-  -v -u {username}:{password} \
-  -H "Content-Type: application/json" \
-  -X POST \
-  -d '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
+  --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
   ```
 
 ## Additional Examples
