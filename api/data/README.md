@@ -7,6 +7,7 @@ You can use any programming language that lets you issue HTTP requests and parse
 ## Categories
 
 * [Series](series)
+  - [insert](series/insert.md)
 * [Properties](properties)
 * [Messages](messages)
 * [Alerts](alerts)
