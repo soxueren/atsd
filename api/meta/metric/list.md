@@ -85,8 +85,8 @@ https://atsd_host:8443/api/v1/metrics?limit=2
 
 ```css
 curl --insecure https://atsd_host:8443/api/v1/metrics?limit=2 \
-  -v -u {username}:{password} \
-  -X GET
+  --verbose --user {username}:{password} \
+  --request GET
 ```
 
 ### Response
