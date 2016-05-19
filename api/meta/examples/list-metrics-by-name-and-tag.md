@@ -5,7 +5,7 @@ List metrics starting with `nmon` and with tag `table` starting with `CPU`
 ## Request 
 ### URI 
 ```elm
-GET https://atsd_host:8443/api/v1/metrics?tags=table&limit=2&expression=name%20like%20%27nmon*%27%20and%20tags.table%20like%20%27*CPU*%27
+GET https://atsd_host:8443/api/v1/metrics?tags=table&limit=2&expression=name%20like%20%27nmon*%27%20and%20tags.table%20like%20%27*CPU*%27&timeFormat=iso
 ```
 
 ### Expression
@@ -30,7 +30,7 @@ name like 'nmon*' and `tags.table` like '*CPU*'
         "timePrecision": "MILLISECONDS",
         "retentionInterval": 0,
         "invalidAction": "NONE",
-        "lastInsertDate": "1447858020000",
+        "lastInsertDate": "2016-05-19T10:38:26.731Z",
         "versioned": false
     },
     {
@@ -45,7 +45,7 @@ name like 'nmon*' and `tags.table` like '*CPU*'
         "timePrecision": "MILLISECONDS",
         "retentionInterval": 0,
         "invalidAction": "NONE",
-        "lastInsertDate": "1447858020000",
+        "lastInsertDate": "2016-05-19T10:38:26.731Z",
         "versioned": false
     }
 ]
