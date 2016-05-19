@@ -1,4 +1,4 @@
-# Fetch metric with parameter 'timeFormat'
+# List metric with parameter 'timeFormat'
 
 ## Request
 
