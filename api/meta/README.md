@@ -36,8 +36,8 @@ You can use any programming language that lets you issue HTTP requests and parse
     - [create or replace](entity-group/create-or-replace.md)
     - [add entities](entity-group/add-entities.md)
     - [delete entities](entity-group/delete-entities.md)
-    - [get entities](entity-group/get-entities)
-    - [set (replace) entities](entity-group/set-replace-entities)
+    - [get entities](entity-group/get-entities.md)
+    - [set (replace) entities](entity-group/set-replace-entities.md)
 
 
 
