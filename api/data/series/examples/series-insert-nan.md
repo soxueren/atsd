@@ -1,4 +1,4 @@
-# Series Insert Null value 
+# Series Insert Not A Number 
 
 ## Request
 ### URI
