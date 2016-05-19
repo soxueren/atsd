@@ -1,6 +1,6 @@
 # List metrics by name 
 
-Fetch all metrics whose name includes `disk`
+List all metrics whose name includes `disk`
 
 ## Request
 ### URI
