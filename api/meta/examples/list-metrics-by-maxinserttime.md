@@ -1,6 +1,6 @@
-# Fetch metrics by maxInsertTime
+# List metrics by maxInsertTime
 
-Fetch all metrics with `lastInsertTime` less than 2016-05-14T08:13:40 
+List all metrics with `lastInsertTime` less than 2016-05-14T08:13:40 
 ## Request
 ### URI
 ```elm
