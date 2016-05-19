@@ -18,7 +18,7 @@ GET https://atsd_host:8443/api/v1/metrics?active=true
       "timePrecision":"MILLISECONDS",
       "retentionInterval":0,
       "invalidAction":"NONE",
-      "lastInsertTime":1463141890000,
+      "lastInsertTime":"2016-05-19T09:18:49.000Z",
       "versioned":false
    },
    {
@@ -30,7 +30,7 @@ GET https://atsd_host:8443/api/v1/metrics?active=true
       "timePrecision":"MILLISECONDS",
       "retentionInterval":0,
       "invalidAction":"NONE",
-      "lastInsertTime":1463141890000,
+      "lastInsertTime":"2016-05-19T09:18:49.000Z",
       "versioned":false
    },
    {
@@ -42,7 +42,7 @@ GET https://atsd_host:8443/api/v1/metrics?active=true
       "timePrecision":"MILLISECONDS",
       "retentionInterval":0,
       "invalidAction":"NONE",
-      "lastInsertTime":1463141890000,
+      "lastInsertTime":"2016-05-19T09:18:49.000Z",
       "versioned":false
    }
 ]
