@@ -109,3 +109,6 @@ You can download script file from [here](inotify_sender.sh)
 
 
 
+## CSV Parser definitions
+- Linux OS [configs](klz-csv-configs.xml)
+- VMware [configs](kvm-csv-configs.xml)
