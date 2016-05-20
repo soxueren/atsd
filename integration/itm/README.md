@@ -14,8 +14,8 @@ long-term detailed data retention capabilities.
 - Read and upload CSV files into ATSD continuously using scripts.
 - To minimize latency, watch for new CSV files using inotify or similar utility.
 
-#### `hd.ini` setting to enable private history streaming in ITM
 
+#### `hd.ini` Settings to enable private history streaming in ITM.
 ```ini
 KHD_CSV_OUTPUT_ACTIVATE=Y
 KHD_CSV_OUTPUT=/tmp/itm/csv
@@ -26,6 +26,8 @@ KHD_CSV_EVAL_INTERVAL=60
 ```
 
 ### Enabling private history on agent
+
+- `Linux OS agent`
 ```xml
 <PRIVATECONFIGURATION>
     <HISTORY Interval="1" Export="1" RETAIN="1" USE="A" Table="KLZ_CPU"></HISTORY>
@@ -59,6 +61,13 @@ KHD_CSV_EVAL_INTERVAL=60
     <HISTORY Interval="1" Export="1" RETAIN="1" USE="A" Table="Linux_Host_Availability"></HISTORY>
 </PRIVATECONFIGURATION>
 ```
+- `VMware agent`
+
+```xml
+
+```
+
+
 #### Sender Script
 
 Sender script that checks the specified directory for new CSV files and
