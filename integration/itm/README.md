@@ -12,7 +12,7 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
 
 ## Installation steps
 
-## Configure ITM Warehouse Proxy Agent
+### Configure ITM Warehouse Proxy Agent
 
 * Configure WPA to store analytical data received from agents into CSV files on the local file system as described [here](http://www-01.ibm.com/support/knowledgecenter/SSATHD_7.7.0/com.ibm.itm.doc_6.3fp2/adminuse/history_analytics_scenarios.htm "WPA")
 
@@ -35,13 +35,13 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
         bin/itmcmd start hd
         ```
 
-## Configure ITM Agents
+### Configure ITM Agents
 
 * Download situations configuration files for the following products:
 
-    - [Linux OS](csv-configs/agents/lz_sutiations.xml)
-    - [VMware](csv-configs/agents/vm_sutiations.xml)
-    - [WebSphere MQ](csv-configs/agents/mq_sutiations.xml)
+    - [Linux OS](csv-configs/agents/lz_situations.xml)
+    - [VMware](csv-configs/agents/vm_situations.xml)
+    - [WebSphere MQ](csv-configs/agents/mq_situations.xml)
 
 * Copy configuration file to localconfig/${PRODUCT_CODE}/ directory on the agent machine, where `${PRODUCT_CODE}` is the agent product code. You can lookup commonly used product codes [here](http://www-01.ibm.com/support/docview.wss?uid=swg21265222).
 
@@ -54,13 +54,13 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
     bin/itmcmd start ${PRODUCT_CODE}
     ```
 
-## download CSV Parsers for UX, VM, and MQ product codes
+### Download CSV Parsers for UX, VM, and MQ product codes
 
    - [Linux OS](csv-configs/atsd/klz-csv-configs.xml)
    - [VMware](csv-configs/atsd/kvm-csv-configs.xml)
    - [WebSphere MQ](csv-configs/atsd/mq-csv-configs.xml)
 
-## Upload CSV Parsers into ATSD
+### Upload CSV Parsers into ATSD
 
 - Login into ATSD web interface
 - Open `Configuration->CSV:Parsers` page.
