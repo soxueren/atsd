@@ -19,6 +19,7 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
 Set `hd.ini` settings to enable private history streaming:
 
 * Go to ITM folder and append the following strings to your `config/hd.ini` file:
+
     ```ini
     KHD_CSV_OUTPUT_ACTIVATE=Y
     KHD_CSV_OUTPUT=/tmp/itm/csv
@@ -28,6 +29,7 @@ Set `hd.ini` settings to enable private history streaming:
     KHD_CSV_EVAL_INTERVAL=60
     ```
 * Then restart WareHouse Proxy agent:
+
     ```sh
     bin/itmcmd stop hd
     bin/itmcmd start hd
@@ -47,7 +49,6 @@ Set `hd.ini` settings to enable private history streaming:
     - [IBM MQ](csv-configs/agents/mq_situation.xml)
 
 * After copying you need restart agent
-
     ```sh
     bin/itmcmd stop ${PRODUCT_CODE}
     bin/itmcmd start ${PRODUCT_CODE}
