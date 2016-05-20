@@ -69,7 +69,7 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
 
 * Download [inotify_sender](inotify_sender.sh) script on your ITM host.
 
-* Set your ATSD host url by editing following string in script:
+* Set your ATSD host by editing following string in script:
     ```sh
     if [ "$url" = "" ]; then
         url="http://atsd_host:8088"
