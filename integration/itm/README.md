@@ -39,7 +39,7 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
 
 * Copy situation config to localconfig/${PRODUCT_CODE}/
 
-    `${PRODUCT_CODE}` is an agent id. The ids of most popular products you can find [here](http://www-01.ibm.com/support/docview.wss?uid=swg21265222).
+    `${PRODUCT_CODE}` is an agent id. You can find  ids of most popular products [here](http://www-01.ibm.com/support/docview.wss?uid=swg21265222).
 
     > The configs has a specific name ${PRODUCT_CODE}_situation.xml.
 
