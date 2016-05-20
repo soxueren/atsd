@@ -1,24 +1,37 @@
-## Properties: Property Types
-
+# Properties: Property Types
+## Description
 Returns an array of properties for entity and type. 
+## Path
+```
+/api/v1/entities/{entity}/property-types
+```
+```
+/api/v1/properties/{entity}/types
+```
+## Method
+```
+GET 
+```
+## Response
+### Fields
 
-### Methods
-```
-GET /api/v1/entities/{entity}/property-types
-```
+| **Field**       | **Description**                                                                                        |
+|----------------|--------------------------------------------------------------------------------------------------------|
+| type | Property type name                                                                                            |
 
+## Example
+### Request
+#### URI
+```eml
+GET https://atsd_server:8443/api/v1/entities/i-943a8878/property-types
 ```
-GET /api/v1/properties/{entity}/types
+#### curl
 ```
-
-### Basic Example
-> Request
-
+curl --insecure https://atsd_server:8443/api/v1/entities/i-943a8878/property-types \
+  --verbose --user {username}:{password} \
+  --request GET
 ```
-http://atsd_server:8088/api/v1/entities/i-943a8878/property-types
-```
-
-> Response
+### Response
 
 ```json
 [
@@ -60,8 +73,3 @@ http://atsd_server:8088/api/v1/properties/nurswgvml007/types
 ]
 ```
 
-**RESPONSE FIELDS:**
-
-| **Name**       | **Description**                                                                                        |
-|----------------|--------------------------------------------------------------------------------------------------------|
-| type | Property type name                                                                                            |
