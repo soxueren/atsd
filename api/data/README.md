@@ -6,25 +6,25 @@ You can use any programming language that lets you issue HTTP requests and parse
 
 ## Categories
 
-* [Series]
+* Series
   - [insert](series/insert.md)
   - [query](series/query.md)
   - [csv insert](series/csv-insert.md)
   - [url query](series/url-query.md)
-* [Properties]
+* Properties
   - [batch](properties/batch.md)
   - [insert](properties/insert.md)
   - [query](properties/query.md)
   - [property types](properties/property-types.md)
   - [query for entity and type](properties/query-for-entity-and-type.md)
-* [Messages]
+* Messages
   - [insert](messages/insert.md)
   - [query](messages/query.md)
-* [Alerts]
+* Alerts
   - [query](alerts/query.md)
   - [update](alerts/update.md)
   - [history query](alerts/history-query.md)
-* [Combined]
+* Combined
   - [command](command.md)
 
 ## Request Methods
