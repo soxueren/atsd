@@ -1,25 +1,15 @@
-## Messages: Insert
-
-### Method 
-
+# Messages: Insert
+## Descriprion
+## Path 
 ```
-POST /api/v1/messages/insert
+/api/v1/messages/insert
 ```
-### Basic Example
-> Request
-
-```json
-[
-    {
-        "entity": "nurswgvml007",
-        "type": "application",
-        "message": "NURSWGVML007 ssh: error: connect_to localhost port 8881: failed.",
-        "severity": "undefined",
-        "source": "atsd"
-    }
-]
+## Method 
 ```
-### Request Fields
+POST 
+```
+## Request
+### Fields
 | Field       | Required | Description              |
 |---|---|---|
 | entity | yes | an entity name, such as server name, or a entity name pattern with ? and * wildcards |
@@ -34,3 +24,30 @@ POST /api/v1/messages/insert
 <aside class="notice">
 severity, message, type, source are reserved fields. In insert command, these reserved fields should be specified as fields, not as tags. In case of collision, tags with the same names as reserved keywords are discarded.
 </aside>
+
+## Example
+### Request
+#### URI
+```elm
+POST https://atsd_host:8443/api/v1/messages/insert
+```
+#### Payload
+```json
+[
+    {
+        "entity": "nurswgvml007",
+        "type": "application",
+        "message": "NURSWGVML007 ssh: error: connect_to localhost port 8881: failed.",
+        "severity": "undefined",
+        "source": "atsd"
+    }
+]
+```
+#### curl
+```css
+curl --insecure https://atsd_host:8443/api/v1/messages/insert \
+  --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
+```
