@@ -1,4 +1,5 @@
 # Series CSV: Insert
+## Descriprion
 ## Path 
 ```
 /api/v1/series/csv/{entity}?tag1=value1&tag2=value2
@@ -24,13 +25,13 @@ Payload - CSV containing time column and one or multiple metric columns.
 ## Response 
 ### Fields
 Empty if insert was successful.
-### Errors
+
 
 ## Example 
 ### Request 
 #### URI
 ```
-https://atsd_host:8443/api/v1/series/csv/nurswgvml007?file_system=/sda&mount_point=/
+POST https://atsd_host:8443/api/v1/series/csv/nurswgvml007?file_system=/sda&mount_point=/
 ```
 #### Payload
 ```
@@ -40,11 +41,11 @@ time,df.disk_used_percent,disk_size,df.disk_used
 ```
 #### curl
 ```
-curl https://atsd_host:8443/api/v1/series/csv/nurswgvml007?file_system=/sda&mount_point=/ \
- -v -u {username}:{password} \
-  -H "Content-Type: text/csv" \
-  -X POST \
-  -d 
+curl --insecure https://atsd_host:8443/api/v1/series/csv/nurswgvml007?file_system=/sda&mount_point=/ \
+ -verbose -user {username}:{password} \
+  -header "Content-Type: text/csv" \
+  -request POST \
+  -data ??? 
 ```
 
 
