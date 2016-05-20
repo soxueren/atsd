@@ -30,7 +30,7 @@ You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language that 
 
 ## Ports
 
-By default ATSD server listenes for incoming commands on the following ports:
+By default ATSD server listens for incoming commands on the following ports:
 
 * 8081 TCP
 * 8082 UDP
@@ -53,25 +53,25 @@ To send a single command, connect to an ATSD server, send the command in plain t
 
 * netcat:echo
 
-```sh
+```ls
 echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z" | nc 10.102.0.6 8081
 ```
 
 * netcat:printf
 
-```sh
+```ls
 printf 'series e:station_2 m:temperature=32.2 m:humidity=81.4 s:1463271035' | nc 10.102.0.6 8081
 ```
 
 * UNIX pipe
 
-```sh
+```ls
 echo -e "series e:station_3 m:temperature=32.2 m:humidity=81.4" > /dev/tcp/10.102.0.6/8081
 ```
 
 * telnet:one line
 
-```sh
+```ls
 telnet 10.102.0.6 8081 << EOF
 series e:station_4 m:temperature=32.2 m:humidity=81.4
 EOF
@@ -79,7 +79,7 @@ EOF
 
 * telnet:session
 
-```sh
+```ls
 $ telnet 10.102.0.6 8081
 Trying 10.102.0.6...
 Connected to 10.102.0.6.
@@ -108,8 +108,8 @@ Trailing line feed is not required for the last command in the batch.
 
 Use `-e` flag in `echo` commands to enable interpretation of backslash escapes.
 
-```elm
-echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z\\nseries e:station_1 m:temperature=32.1 m:humidity=82.4 d:2016-05-15T00:25:00Z" | nc 10.102.0.6 8081
+```ls
+echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z\nseries e:station_1 m:temperature=32.1 m:humidity=82.4 d:2016-05-15T00:25:00Z" | nc 10.102.0.6 8081
 ```
 
 ```java
@@ -131,13 +131,13 @@ To prevent the connection from timing out the client may send [`ping`](ping.md) 
 
 Clients can submit commands of different types over the same connection.
 
-```
+```ls
 $ telnet 10.102.0.6 8081
 Trying 10.102.0.6...
 Connected to 10.102.0.6.
 Escape character is '^]'.
 series e:station_1 m:temperature=32.2
-property e:station_2 t:location v:city=Cupettino v:state=CA v:country=USA
+property e:station_2 t:location v:city=Cupertino v:state=CA v:country=USA
 ^C
 Connection closed by foreign host.
 ```
@@ -145,7 +145,7 @@ Connection closed by foreign host.
 Note that the server will **terminate** the connection if it receives an unsupported or malformed command.
 
 
-```sh
+```ls
 $ telnet 10.102.0.6 8081
 Trying 10.102.0.6...
 Connected to 10.102.0.6.
@@ -158,7 +158,7 @@ Connection closed by foreign host.
 
 The UDP protocol doesn't guarantee delivery but may have a higher throughput compared to TCP due to lower overhead. 
 
-In addition, sending commands with UDP datagrams decouples the client application from the server to minimize the risk of blocking I/O timeouts.
+In addition, sending commands with UDP datagrams decouples the client application from the server to minimize the risk of blocking I/O time-outs.
 
 ```ls
 echo -e "series e:station_3 m:temperature=32.2 m:humidity=81.4" | nc -u -w1 10.102.0.6 8082
@@ -171,7 +171,7 @@ printf 'series e:station_3 m:temperature=32.2 m:humidity=81.4' | nc -u -w1 10.10
 Unlike TCP, the last command in a multi-command UDP datagram must be terminated with the line feed character.
 
 ```ls
-echo -e "series e:station_33 m:temperature=32.2\\nseries e:station_34 m:temperature=32.1 m:humidity=82.4\\n" | nc -u -w1 10.102.0.6 8082
+echo -e "series e:station_33 m:temperature=32.2\nseries e:station_34 m:temperature=32.1 m:humidity=82.4\n" | nc -u -w1 10.102.0.6 8082
 ```
 
 ### Duplicate Commands
@@ -183,13 +183,13 @@ If such commands are submitted at approximately the same time, there is no guara
 * Duplicate example: same key, same current time  
 
 ```ls
-echo -e series e:station_1 m:temperature=32.2\\nseries e:station_1 m:temperature=42.1 | nc 10.102.0.6 8081
+echo -e "series e:station_1 m:temperature=32.2\nseries e:station_1 m:temperature=42.1" | nc 10.102.0.6 8081
 ```
 
 * Duplicate example: same key, same time  
 
 ```ls
-echo -e "series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\\nseries e:station_1 m:temperature=42.1  d:2016-05-15T00:10:00Z" | nc 10.102.0.6 8081
+echo -e "series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\nseries e:station_1 m:temperature=42.1  d:2016-05-15T00:10:00Z" | nc 10.102.0.6 8081
 ```
 
 ## Syntax
@@ -198,7 +198,7 @@ echo -e "series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\\nseries e
 
 * Command must start with command name such as `series` followed by space-separated fields each identified with a prefix followed by (:) colon symbol and field name=value.
 
-```ls
+```elm
 command-name field-prefix:field-name[=field-value]
 ```
 
@@ -216,8 +216,7 @@ The server enforces the following maximum lengths for command lines.
 The client must split a command that is too long into multiple commands.
 
 | **Command** | **Maximum Length, bytes** |
-
-|---|---|---|
+|:---|:---|
 | series | 256*1024  |
 | property | 256*1024  |
 | message  | 256*1024  |
@@ -229,7 +228,7 @@ The client must split a command that is too long into multiple commands.
 * The number of unique identifiers is subject to the following default limits: 
 
 |**Type**| **Max Identifier**|
-|-------|---------|
+|:---|:---|
 |metric| 65535|
 |entity| 16777215|
 |tag_key| 65535|
@@ -245,7 +244,7 @@ The timestamp field encodes the time of an observation or message as determined 
 |---|:---|
 |ms|UNIX milliseconds|
 |s|UNIX seconds|
-|d|ISO 8601 date: yyyy-MM-dd'T'HH:mm:ss.SSSZ |
+|d|ISO 8601 date: yyyy-MM-dd'T'HH:mm:ss.SSS'Z' |
 
 * If timestamp field in seconds or milliseconds is less than or equal 0, or if it's empty in case of d: prefix, the time is set to server's current time.
 * If timestamp field is not specified, time is set to current server time.
@@ -257,14 +256,14 @@ Include `debug` command at the start of the line to instruct the server to respo
 
 * `debug` with valid command
 
-```sh
+```ls
 $ echo -e "debug series e:station_1 m:temperature=32.2" | nc 10.102.0.6 8081
 ok
 ```
 
 * `debug` with unknown command
 
-```sh
+```ls
 $ echo -e "debug my_command e:station_1 m:temperature=32.2" | nc 10.102.0.6 8081
 >no response, connection closed
 ```
@@ -285,4 +284,3 @@ Reasons why ATSD server can drop commands:
 To review dropped commands, open command*.log files in ATSD.
 
 ![](dropped-commands-logs.png)
-
