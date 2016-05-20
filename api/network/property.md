@@ -2,23 +2,23 @@
 
 Insert property of specified type with keys and values for a given entity.
 
-```
+```slim
 property e:{entity} s:{unix_seconds} t:{type} k:{key}={value} k:{key}={value} v:{name}={value} v:{name}={value}
 ```
 
 > Example
 
-```
+```slim
 property e:abc001 t:disk k:name=sda v:size=203459 v:fs_type=nfs
 ```
 
 > UDP command
 
-```
+```slim
 echo property e:DL1866 t:disk k:name=sda v:size=203459 v:fs_type=nfs | nc -u -w1 atsd_server 8082
 ```
 
-```
+```slim
 printf 'property e:DL1866 t:disk k:name=sda v:size=203459 v:fs_type=nfs' | nc -u -w1 atsd_server 8082
 ```
 
