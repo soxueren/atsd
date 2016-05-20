@@ -23,6 +23,7 @@ For 'delete-match' action, 'createdBeforeTime' specifies an optional time condit
 
 Insert keys and delete keys by id or by partial key match in one request.
 
+## Response
 ## Example
 
 ### Request
@@ -83,3 +84,5 @@ curl https://atsd_host:8443/api/v1/properties \
 
 ```
 ### Response
+```
+```

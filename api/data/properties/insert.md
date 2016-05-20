@@ -1,11 +1,20 @@
-## Properties: Insert
-### Method
+# Properties: Insert
+## Description
+Insert an array of properties.
+## Path
 ```
-POST /api/v1/properties/insert
+/api/v1/properties/insert
 ```
-### Basic Example
-> Request
-
+## Method
+```
+POST 
+```
+## Example
+### Request
+#### URI
+```elm
+```
+#### Payload
 ```json
 [{
    "type":"type-1",
@@ -19,5 +28,9 @@ POST /api/v1/properties/insert
    "tags":{"name.2": "value.2"}
 }]
 ```
-
-Insert an array of properties.
+#### curl
+```css
+```
+## Response 
+```
+```
