@@ -1,15 +1,19 @@
-## Properties: Query for Entity and Type
-
+# Properties: Query for Entity and Type
+## Description
 Returns properties for entity and type. 
+### Path 
+```
+/api/v1/properties/{entity}/types/{type}
+```
+
+```
+/api/v1/entities/{entity}/property-types/{property-type}
+```
 
 ### Methods
 
 ```
-GET /api/v1/properties/{entity}/types/{type}
-```
-
-```
-GET /api/v1/entities/{entity}/property-types/{property-type}
+GET 
 ```
 
 ### Basic Examples
