@@ -65,7 +65,7 @@ POST https://atsd_host:8443/api/v1/alerts
 }
 ```
 #### curl 
-```
+```css
 curl --insecure https://atsd_host:8443/api/v1/alerts \
   --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
