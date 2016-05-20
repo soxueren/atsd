@@ -18,21 +18,40 @@ Since the from ITM agents will be received by ATSD without any delay, it can be 
 
 Set `hd.ini` settings to enable private history streaming:
 
-```ini
-KHD_CSV_OUTPUT_ACTIVATE=Y
-KHD_CSV_OUTPUT=/tmp/itm/csv
-KHD_CSV_OUTPUT_TAGGED_ONLY=Y
-KHD_CSV_ISO_DATE_FORMAT=Y
-KHD_CSV_MAXSIZE=400
-KHD_CSV_EVAL_INTERVAL=60
-```
+* Go to ITM folder and append the following strings to your `config/hd.ini` file:
+    ```ini
+    KHD_CSV_OUTPUT_ACTIVATE=Y
+    KHD_CSV_OUTPUT=/tmp/itm/csv
+    KHD_CSV_OUTPUT_TAGGED_ONLY=Y
+    KHD_CSV_ISO_DATE_FORMAT=Y
+    KHD_CSV_MAXSIZE=400
+    KHD_CSV_EVAL_INTERVAL=60
+    ```
+* Then restart WareHouse Proxy agent
+    ```sh
+    bin/itmcmd stop hd
+    bin/itmcmd start hd
+    ```
 
 ## Configure ITM Agents
 
-- Enable private history collection on the agents:
-  - [Linux OS](csv-configs/agents/lz-situation.xml)
-  - [VMware](csv-configs/agents/vm-situation.xml)
-  - [IBM MQ](csv-configs/agents/mq-situation.xml)
+* Copy situation config to localconfig/${PRODUCT_CODE}/
+
+    `${PRODUCT_CODE}` is an agent id. The ids of most popular products you can find [here](http://www-01.ibm.com/support/docview.wss?uid=swg21265222).
+
+    > The configs has a specific name ${PRODUCT_CODE}_situation.xml.
+
+* You can download configs of the following products:
+    - [Linux OS](csv-configs/agents/lz-situation.xml)
+    - [VMware](csv-configs/agents/vm-situation.xml)
+    - [IBM MQ](csv-configs/agents/mq-situation.xml)
+
+* After copying you need restart agent
+
+    ```sh
+    bin/itmcmd stop ${PRODUCT_CODE}
+    bin/itmcmd start ${PRODUCT_CODE}
+    ```
 
 ## Upload CSV Parsers into ATSD
 
