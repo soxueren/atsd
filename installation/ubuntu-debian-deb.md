@@ -2,8 +2,8 @@
 
 ## Supported Versions
 
-- Ubuntu 14.x
-- Ubuntu 15.x
+- Ubuntu 14.04
+- Ubuntu 16.04
 - Debian 6.x
 - Debian 7.x
 
@@ -27,7 +27,13 @@ Download deb package to the target server:
 
 ## Installation Steps
 
-Update repositories and install dependencies:
+#### Only for Ubuntu 16.04 (Xenial Xerus): Add openjdk Repository
+
+```sh
+sudo add-apt-repository ppa:openjdk-r/ppa  
+```
+
+#### Update repositories and install dependencies
 
 ```sh
 sudo apt-get update && sudo apt-get install -y openjdk-7-jdk sysstat curl hostname
@@ -35,7 +41,7 @@ sudo apt-get update && sudo apt-get install -y openjdk-7-jdk sysstat curl hostna
 
 > If there are any issues with installing the dependencies, [check the repositories](modifying-ubuntu-debian-repositories.md "Modifying Repositories") and retry the command.
 
-Follow the prompts to install ATSD:
+#### Follow the prompts to install ATSD
 
 ```sh
 sudo dpkg -i atsd_ce_amd64.deb
