@@ -1,7 +1,7 @@
 # Properties: Query for Entity and Type
 ## Description
 Returns properties for entity and type. 
-### Path 
+## Path 
 ```
 /api/v1/properties/{entity}/types/{type}
 ```
@@ -10,20 +10,42 @@ Returns properties for entity and type.
 /api/v1/entities/{entity}/property-types/{property-type}
 ```
 
-### Methods
+## Methods
 
 ```
 GET 
 ```
+## Request 
+### Fields
+| **Field**  | **Required** | **Description**  |
+|---|---|---|---|---|
+|timeFormat|	no|	response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 
-### Basic Examples
-> Request
+## Response 
+### Fields
 
+| **Field**       | **Description**                                                                                        |
+|----------------|--------------------------------------------------------------------------------------------------------|
+| type | Property type name                                                                                            |
+| entity | an entity name, such as server name, or a entity name pattern with `?` and `*` wildcards |
+| key | JSON object containing `name=values` that uniquely identify the property record |
+| tags | object keys |
+| timestamp | time in Unix milliseconds |
+| date | date and time in ISO format |
+
+## Example
+### Request
+#### URI
+```elm 
+GET http://atsd_server:8088/api/v1/properties/nurswgvml007/types/system?timeFormat=iso
 ```
-http://atsd_server:8088/api/v1/properties/nurswgvml007/types/system?timeFormat=iso
+#### curl
+```css
+curl --insecure http://atsd_server:8088/api/v1/properties/nurswgvml007/types/system?timeFormat=iso \
+  --verbose --user {username}:{password} \
+  --request GET
 ```
-
-> Response
+### Response
 
 ```json
 [
@@ -86,18 +108,3 @@ http://atsd_server:8088/api/v1/entities/i-943a8878/property-types/aws_ec2.instan
     }
 ]
 ```
-### Request Fields
-| **Parameter**  | **Required** | **Description**  |
-|---|---|---|---|---|
-|timeFormat|	no|	response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
-
-### Response Fields
-
-| **Field**       | **Description**                                                                                        |
-|----------------|--------------------------------------------------------------------------------------------------------|
-| type | Property type name                                                                                            |
-| entity | an entity name, such as server name, or a entity name pattern with `?` and `*` wildcards |
-| key | JSON object containing `name=values` that uniquely identify the property record |
-| tags | object keys |
-| timestamp | time in Unix milliseconds |
-| date | date and time in ISO format |
