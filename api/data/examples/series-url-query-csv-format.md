@@ -1,16 +1,17 @@
 # Series URL Query. CSV Format
+## Description
 CSV file is exported
 ## Request 
 ### URI
-```
-https://atsd_host:8443/api/v1/series/csv/nurswgvml007/mpstat.cpu_busy?startDate=previous_hour&endDate=now&columns=date,entity,metric,value
+```elm
+GET https://atsd_host:8443/api/v1/series/csv/nurswgvml007/mpstat.cpu_busy?startDate=previous_hour&endDate=now&columns=date,entity,metric,value
 ```
 ### curl
 ```css
-curl https://atsd_host:8443/api/v1/series/csv/nurswgvml007/mpstat.cpu_busy?startDate=previous_hour&endDate=now&columns=date,entity,metric,value \
-  -v -u {username}:{password} \
-    -H "Content-Type: application/json" \
-    -X GET
+curl --insecure https://atsd_host:8443/api/v1/series/csv/nurswgvml007/mpstat.cpu_busy?startDate=previous_hour&endDate=now&columns=date,entity,metric,value \
+  --verbose --user {username}:{password} \
+    -header "Content-Type: application/json" \
+    -request GET
 ```
 ## Response
 ```
