@@ -4,9 +4,9 @@
 
 In order to offload detailed data from ITM infrastructure with minimal latency you need to enable ITM Warehouse Proxy Agent to dump incoming analytical data into CSV files on the local file system. The dump directory will be continously monitored by an `inotify` script which will upload new CSV files into ATSD as soon as they are created.
 
-This enabled ATSD to server as a long-term repository of historical data that is typically deleted after a few months in order to minimize the disk space usage in Tivoli Data Warehouse.
+This enables ATSD to serve as a long-term repository of historical data that is typically deleted after a few months by ITM in order to minimize the disk space usage in Tivoli Data Warehouse.
 
-Since the from ITM agents will be received by ATSD without any delay, it can be used for real-time analytics and peformance dashboards.
+Since statistics from ITM agents will be received by ATSD without any delay, the integration can be used for real-time analytics and peformance dashboards.
 
 ![](images/itm_diag.png "Warehouse Proxy Agent diagram")
 
