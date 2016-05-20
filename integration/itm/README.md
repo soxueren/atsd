@@ -16,24 +16,24 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
 
 * Configure WPA to store analytical data received from agents into CSV files on the local file system as described [here](http://www-01.ibm.com/support/knowledgecenter/SSATHD_7.7.0/com.ibm.itm.doc_6.3fp2/adminuse/history_analytics_scenarios.htm "WPA")
 
-Set `hd.ini` settings to enable private history streaming:
+*Set `hd.ini` settings to enable private history streaming:
 
-* Go to ITM folder and append the following strings to your `config/hd.ini` file:
+    * Go to ITM folder and append the following strings to your `config/hd.ini` file:
 
-    ```ini
-    KHD_CSV_OUTPUT_ACTIVATE=Y
-    KHD_CSV_OUTPUT=/tmp/itm/csv
-    KHD_CSV_OUTPUT_TAGGED_ONLY=Y
-    KHD_CSV_ISO_DATE_FORMAT=Y
-    KHD_CSV_MAXSIZE=400
-    KHD_CSV_EVAL_INTERVAL=60
-    ```
-* Then restart WareHouse Proxy agent:
+        ```ini
+        KHD_CSV_OUTPUT_ACTIVATE=Y
+        KHD_CSV_OUTPUT=/tmp/itm/csv
+        KHD_CSV_OUTPUT_TAGGED_ONLY=Y
+        KHD_CSV_ISO_DATE_FORMAT=Y
+        KHD_CSV_MAXSIZE=400
+        KHD_CSV_EVAL_INTERVAL=60
+        ```
+    * Then restart WareHouse Proxy agent:
 
-    ```sh
-    bin/itmcmd stop hd
-    bin/itmcmd start hd
-    ```
+        ```sh
+        bin/itmcmd stop hd
+        bin/itmcmd start hd
+        ```
 
 ## Configure ITM Agents
 
