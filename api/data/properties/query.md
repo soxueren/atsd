@@ -64,7 +64,7 @@ POST https://atsd_host:8443/api/v1/properties
 ```
 #### curl
 ```css
-curl https://atsd_host:8443/api/v1/properties \
+curl --insecure https://atsd_host:8443/api/v1/properties \
   --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
