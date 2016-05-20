@@ -13,6 +13,7 @@ POST
 ### Request
 #### URI
 ```elm
+POST https://atsd_host:8443/api/v1/properties/insert
 ```
 #### Payload
 ```json
@@ -30,6 +31,12 @@ POST
 ```
 #### curl
 ```css
+curl --insecure https://atsd_host:8443/api/v1/properties/insert  \
+  --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request  POST \
+  --data @file.json
+
 ```
 ## Response 
 ```

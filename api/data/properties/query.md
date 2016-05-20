@@ -1,26 +1,15 @@
-## Properties: Query
-
-### Method
+# Properties: Query
+## Path
+```
+/api/v1/properties
+```
+## Method
 
 ```
-POST /api/v1/properties
+POST 
 ```
-### Basic Request Example
-> Request
-
-```json
-{
-  "queries": [
-    {
-      "timeFormat": "iso",
-      "type": "system",
-      "entity": "nurswgvml007",
-      "key": {}
-     }
-   ]
-}
-```
-### Request Fields
+## Request
+### Fields
 
 | **Field**  | **Required** | **Description**  |
 |---|---|---|
@@ -44,9 +33,35 @@ POST /api/v1/properties
 * entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
 </aside>
 
-### Basic Response Example
+## Response 
+### Fields
+| **Field**  | **Description**  |
+|---|---|
+| type | property type name |
+| entity | entity name |
+| key | JSON object containing `name=value` that uniquely identify the property record |
+| tags | object keys |
+| timestamp | time in Unix milliseconds |
+| date | date and time in ISO format |
 
-> Response
+## Example
+### Request
+
+```json
+{
+  "queries": [
+    {
+      "timeFormat": "iso",
+      "type": "system",
+      "entity": "nurswgvml007",
+      "key": {}
+     }
+   ]
+}
+```
+
+
+### Response
 
 ```json
 [
@@ -67,59 +82,11 @@ POST /api/v1/properties
    }
 ]
 ```
-### Response Fields
-| **Field**  | **Description**  |
-|---|---|
-| type | property type name |
-| entity | entity name |
-| key | JSON object containing `name=value` that uniquely identify the property record |
-| tags | object keys |
-| timestamp | time in Unix milliseconds |
-| date | date and time in ISO format |
+
 
 ### Examples
 
-### Retreive Entity Tags
 
-> Request
-
-```json
-{
-  "queries": [
-    {
-      "timeFormat": "iso",
-      "type": "$entity_tags",
-      "entity": "nurswgvml007"
-     }
-   ]
-}
-```
-
->Response
-
-```json
-
-
-    [
-        {
-            "type": "$entity_tags",
-            "entity": "nurswgvml007",
-            "key":
-            {
-            },
-            "tags":
-            {
-                "alias": "007",
-                "app": "ATSD",
-                "ip": "10.102.0.6",
-                "loc_area": "dc2",
-                "loc_code": "nur,nur",
-                "os": "Linux"
-            },
-            "date": "2015-09-08T09:06:32Z"
-        }
-    ]
-```
 
 ### Entity Tags for entityGroup
 
