@@ -35,8 +35,8 @@ GET
 ## Example
 ### Request
 #### URI
-```
-https://atsd_host:8443/api/v1/series/json/nurswgvml007/mpstat.cpu_busy?startDate=previous_hour&endDate=now&timeFormat=iso
+```elm
+GET https://atsd_host:8443/api/v1/series/json/nurswgvml007/mpstat.cpu_busy?startDate=previous_hour&endDate=now&timeFormat=iso
 ```
 #### curl
 ```css
