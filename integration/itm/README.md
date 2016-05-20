@@ -103,8 +103,13 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
  - `lnx`
   ![](images/lnx_metrics.png)
 
+ - `kvm`
+  ![](images/kvm_metrics.png)
+
+
  - `mq`
   ![](images/mq_metrics.png)
+
 
 ## Viewing Data in ATSD
 
