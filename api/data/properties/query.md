@@ -4,7 +4,6 @@
 /api/v1/properties
 ```
 ## Method
-
 ```
 POST 
 ```
@@ -46,9 +45,13 @@ POST
 
 ## Example
 ### Request
-
+#### URI
+```elm
+POST https://atsd_host:8443/api/v1/properties
+```
+#### Payload
 ```json
-{
+[{
   "queries": [
     {
       "timeFormat": "iso",
@@ -57,9 +60,16 @@ POST
       "key": {}
      }
    ]
-}
+}]
 ```
-
+#### curl
+```css
+curl https://atsd_host:8443/api/v1/properties \
+  --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data @file.json
+```
 
 ### Response
 
