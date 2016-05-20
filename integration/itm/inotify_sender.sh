@@ -10,7 +10,7 @@ tmpDir="$workDir/tmp"
 stopLog="$workDir/logs/stop.log"
 
 if [ "$url" = "" ]; then
-	url="http://10.102.0.6:8088"
+	url="http://atsd_host:8088"
 fi
 touch $newcsvLog
 
