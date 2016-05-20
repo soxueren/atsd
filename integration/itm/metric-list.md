@@ -558,7 +558,8 @@ kvmcltrsrv.memory_total_utilization
 kvmcltrsrv.server_cpu_utilization
 ```
 
-##IBM MQ
+##WebSphere MQ
+
 ```css
 Name
 mq.channel_statistics.batches_complete
@@ -568,7 +569,7 @@ mq.channel_statistics.bytes_received
 mq.channel_statistics.bytes_sent
 mq.channel_statistics.completed_retry_time
 mq.channel_statistics.current_batch_messages
-mq.channel_statistics.current_message_sequence_number
+mq.channel_statisticscurrent_message_sequence_number
 mq.channel_statistics.currently_defined
 mq.channel_statistics.default_header_compression_value
 mq.channel_statistics.default_message_compression_value

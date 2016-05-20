@@ -44,9 +44,9 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
     > The configs has a specific name ${PRODUCT_CODE}_situations.xml.
 
 * You can download configs of the following products:
-    - [Linux OS](csv-configs/agents/lz_situations.xml)
-    - [VMware](csv-configs/agents/vm_situations.xml)
-    - [IBM MQ](csv-configs/agents/mq_situations.xml)
+    - [Linux OS](csv-configs/agents/lz_sutiations.xml)
+    - [VMware](csv-configs/agents/vm_sutiations.xml)
+    - [IBM MQ](csv-configs/agents/mq_sutiations.xml)
 
 * After copying you need restart agent
     ```sh
@@ -63,7 +63,7 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
   - Select one of the following parsers depending on your product:
       - [Linux OS](csv-configs/atsd/klz-csv-configs.xml)
       - [VMware](csv-configs/atsd/kvm-csv-configs.xml)
-      - [IBM MQ](csv-configs/atsd/mq-csv-configs.xml)
+      - [WebSphere MQ](csv-configs/atsd/mq-csv-configs.xml)
 
 ## Configure `inotify` script to read CSV files and upload them into ATSD
 
