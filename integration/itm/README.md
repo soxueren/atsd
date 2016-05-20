@@ -44,9 +44,9 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
     > The configs has a specific name ${PRODUCT_CODE}_situation.xml.
 
 * You can download configs of the following products:
-    - [Linux OS](csv-configs/agents/lz_situation.xml)
-    - [VMware](csv-configs/agents/vm_situation.xml)
-    - [IBM MQ](csv-configs/agents/mq_situation.xml)
+    - [Linux OS](csv-configs/agents/lz_situations.xml)
+    - [VMware](csv-configs/agents/vm_situations.xml)
+    - [IBM MQ](csv-configs/agents/mq_situations.xml)
 
 * After copying you need restart agent
     ```sh
