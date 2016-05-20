@@ -2,8 +2,8 @@
 
 ## Supported Versions
 
-- Ubuntu 14.x
-- Ubuntu 15.x
+- Ubuntu 14.04
+- Ubuntu 16.04
 - Debian 6.x
 - Debian 7.x
 
@@ -14,11 +14,19 @@
 
 ## Installation Steps
 
+#### Only for Ubuntu 16.04 (Xenial Xerus): Add openjdk Repository
+
+```sh
+sudo add-apt-repository ppa:openjdk-r/ppa  
+```
+
+#### Update repositories
+
 ```sh
 sudo apt-get update
 ```
 
-Add **axibase.com/public/repository/deb/** repository:
+#### Add `axibase.com/public/repository/deb/` repository
 
 ```sh
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 \
@@ -30,7 +38,7 @@ sudo sh -c 'echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./"
 >> /etc/apt/sources.list.d/axibase.list'
 ```
 
-Update repositories and follow the prompts to install ATSD:
+#### Update repositories and follow the prompts to install ATSD
 
 ```sh
 sudo apt-get update && sudo apt-get install atsd                       
