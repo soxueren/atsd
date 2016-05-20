@@ -95,7 +95,7 @@ curl --insecure https://atsd_host:8443/api/v1/properties \
 ```
 
 
-### Examples
+### Additional Examples
 
 
 
