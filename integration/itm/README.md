@@ -66,7 +66,7 @@ uploads them into ATSD.
 
 You can check the script’s logs in `/tmp/itm/logs` directory.
 
-You can dowdnload script file from [here](inotify_sender.sh)
+You can download script file from [here](inotify_sender.sh)
 
 
 ![](images/Warehouse-Proxy-Agent-diagram1.jpg "Warehouse Proxy Agent diagram")
