@@ -47,6 +47,9 @@ If queries[] array is empty, then all alerts are returned.
 ## Example
 ### Request
 #### URI
+```elm
+POST https://atsd_host:8443/api/v1/alerts
+```
 #### Payload
 ```json
 {
@@ -62,7 +65,13 @@ If queries[] array is empty, then all alerts are returned.
 }
 ```
 #### curl 
-
+```
+curl --insecure https://atsd_host:8443/api/v1/alerts \
+  --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data @json.file
+ ```
 ### Response
 
 ```json
