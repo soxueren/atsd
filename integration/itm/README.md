@@ -57,7 +57,7 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
 ## Upload CSV Parsers into ATSD
 
 - Import CSV parser definitions into ATSD for particular agent codes: UX, PA, LZ, NT, VM, T3, UD, etc.
-  - Login to ATSD UI:
+  - Login to ATSD UI.
   - Go to `Configuration->CSV:Parsers` page.
   - Click 'Import' button.
   - Select one of the following parsers depending on your product:
