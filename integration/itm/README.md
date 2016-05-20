@@ -87,7 +87,7 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
     ```
 * Check script logs in `/tmp/itm/logs` directory.
 
-* Add following command to autostart
+* Add script to autostart
 
 ## Verifying Data in ATSD
 
