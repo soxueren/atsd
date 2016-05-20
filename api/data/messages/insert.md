@@ -49,5 +49,5 @@ curl --insecure https://atsd_host:8443/api/v1/messages/insert \
   --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
-  --data '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
+  --data @file.json
 ```
