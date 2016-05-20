@@ -74,5 +74,6 @@ You can download script file from [here](inotify_sender.sh)
 
 
 ## CSV Parser definitions
-- Linux OS [configs](csv-configs/klz-csv-configs.xml)
-- VMware [configs](csv-configs/kvm-csv-configs.xml)
+- [Linux OS](csv-configs/atsd/klz-csv-configs.xml)
+- [VMware](csv-configs/atsd/kvm-csv-configs.xml)
+- [IBM MQ](csv-configs/atsd/mq-csv-configs.xml)
