@@ -16,7 +16,7 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
 
 * Configure WPA to store analytical data received from agents into CSV files on the local file system as described [here](http://www-01.ibm.com/support/knowledgecenter/SSATHD_7.7.0/com.ibm.itm.doc_6.3fp2/adminuse/history_analytics_scenarios.htm "WPA")
 
-*Set `hd.ini` settings to enable private history streaming:
+* Set `hd.ini` settings to enable private history streaming:
 
     * Go to ITM folder and append the following strings to your `config/hd.ini` file:
 
