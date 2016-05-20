@@ -1,52 +1,16 @@
-## Alerts: Query
-
-### Method
+# Alerts: Query
+## Description
+## Path
+```
+POST
+```
+## Method
 
 ```
-POST /api/v1/alerts
+/api/v1/alerts
 ```
-### Basic Example
-> Request
-
-```json
-{
-   "queries": [
-   {
-      "metrics": ["loadavg.5m", "message"],
-      "entities" : ["awsswgvml001"],
-      "timeFormat": "iso",
-      "minSeverity" : 2,
-      "severities": [2, 6, 7]
-   }
-   ]
-}
-```
-
-> Response
-
-```json
-[
-    {
-        "value": 0,
-        "message": "",
-        "id": 6,
-        "textValue": "",
-        "tags":
-        {
-        },
-        "metric": "message",
-        "entity": "awsswgvml001",
-        "severity": 2,
-        "rule": "alert-app",
-        "repeatCount": 15,
-        "acknowledged": false,
-        "openValue": 0,
-        "lastEventDate": "2015-05-12T14:57:42Z",
-        "openDate": "2015-05-12T13:39:37Z"
-    }
-]
-```
-### Request Fields
+## Request 
+### Fields
 | Field       | Required | Description              |
 |-------------|----|----------------------|
 | entity    | no (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
@@ -79,3 +43,47 @@ If queries[] array is empty, then all alerts are returned.
 | 5 | major |
 | 6 | critical |
 | 7 | fatal |
+
+## Example
+### Request
+#### URI
+#### Payload
+```json
+{
+   "queries": [
+   {
+      "metrics": ["loadavg.5m", "message"],
+      "entities" : ["awsswgvml001"],
+      "timeFormat": "iso",
+      "minSeverity" : 2,
+      "severities": [2, 6, 7]
+   }
+   ]
+}
+```
+#### curl 
+
+### Response
+
+```json
+[
+    {
+        "value": 0,
+        "message": "",
+        "id": 6,
+        "textValue": "",
+        "tags":
+        {
+        },
+        "metric": "message",
+        "entity": "awsswgvml001",
+        "severity": 2,
+        "rule": "alert-app",
+        "repeatCount": 15,
+        "acknowledged": false,
+        "openValue": 0,
+        "lastEventDate": "2015-05-12T14:57:42Z",
+        "openDate": "2015-05-12T13:39:37Z"
+    }
+]
+```
