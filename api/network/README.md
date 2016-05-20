@@ -53,20 +53,20 @@ To send a single command, connect to an ATSD server, send the command in plain t
 
 * netcat:echo
 
-```elm
-echo series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z | nc 10.102.0.6 8081
+```sh
+echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z" | nc 10.102.0.6 8081
 ```
 
 * netcat:printf
 
-```elm
+```sh
 printf 'series e:station_2 m:temperature=32.2 m:humidity=81.4 s:1463271035' | nc 10.102.0.6 8081
 ```
 
 * UNIX pipe
 
-```elm
-echo series e:station_3 m:temperature=32.2 m:humidity=81.4 > /dev/tcp/10.102.0.6/8081
+```sh
+echo -e "series e:station_3 m:temperature=32.2 m:humidity=81.4" > /dev/tcp/10.102.0.6/8081
 ```
 
 * telnet:one line
@@ -109,7 +109,7 @@ Trailing line feed is not required for the last command in the batch.
 Use `-e` flag in `echo` commands to enable interpretation of backslash escapes.
 
 ```elm
-echo -e series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z\\nseries e:station_1 m:temperature=32.1 m:humidity=82.4 d:2016-05-15T00:25:00Z | nc 10.102.0.6 8081
+echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z\\nseries e:station_1 m:temperature=32.1 m:humidity=82.4 d:2016-05-15T00:25:00Z" | nc 10.102.0.6 8081
 ```
 
 ```java
@@ -160,18 +160,18 @@ The UDP protocol doesn't guarantee delivery but may have a higher throughput com
 
 In addition, sending commands with UDP datagrams decouples the client application from the server to minimize the risk of blocking I/O timeouts.
 
-```elm
-echo series e:station_3 m:temperature=32.2 m:humidity=81.4 | nc -u -w1 10.102.0.6 8082
+```ls
+echo -e "series e:station_3 m:temperature=32.2 m:humidity=81.4" | nc -u -w1 10.102.0.6 8082
 ```
 
-```elm
+```ls
 printf 'series e:station_3 m:temperature=32.2 m:humidity=81.4' | nc -u -w1 10.102.0.6 8082
 ```
 
 Unlike TCP, the last command in a multi-command UDP datagram must be terminated with the line feed character.
 
-```elm
-echo -e series e:station_33 m:temperature=32.2\\nseries e:station_34 m:temperature=32.1 m:humidity=82.4\\n | nc -u -w1 10.102.0.6 8082
+```ls
+echo -e "series e:station_33 m:temperature=32.2\\nseries e:station_34 m:temperature=32.1 m:humidity=82.4\\n" | nc -u -w1 10.102.0.6 8082
 ```
 
 ### Duplicate Commands
@@ -182,14 +182,14 @@ If such commands are submitted at approximately the same time, there is no guara
 
 * Duplicate example: same key, same current time  
 
-```elm
+```ls
 echo -e series e:station_1 m:temperature=32.2\\nseries e:station_1 m:temperature=42.1 | nc 10.102.0.6 8081
 ```
 
 * Duplicate example: same key, same time  
 
-```elm
-echo -e series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\\nseries e:station_1 m:temperature=42.1  d:2016-05-15T00:10:00Z | nc 10.102.0.6 8081
+```ls
+echo -e "series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\\nseries e:station_1 m:temperature=42.1  d:2016-05-15T00:10:00Z" | nc 10.102.0.6 8081
 ```
 
 ## Syntax
@@ -198,7 +198,7 @@ echo -e series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\\nseries e:
 
 * Command must start with command name such as `series` followed by space-separated fields each identified with a prefix followed by (:) colon symbol and field name=value.
 
-```css
+```ls
 command-name field-prefix:field-name[=field-value]
 ```
 
@@ -216,6 +216,7 @@ The server enforces the following maximum lengths for command lines.
 The client must split a command that is too long into multiple commands.
 
 | **Command** | **Maximum Length, bytes** |
+
 |---|---|---|
 | series | 256*1024  |
 | property | 256*1024  |
@@ -257,14 +258,14 @@ Include `debug` command at the start of the line to instruct the server to respo
 * `debug` with valid command
 
 ```sh
-$ echo debug series e:station_1 m:temperature=32.2 | nc 10.102.0.6 8081
+$ echo -e "debug series e:station_1 m:temperature=32.2" | nc 10.102.0.6 8081
 ok
 ```
 
 * `debug` with unknown command
 
 ```sh
-$ echo debug my_command e:station_1 m:temperature=32.2 | nc 10.102.0.6 8081
+$ echo -e "debug my_command e:station_1 m:temperature=32.2" | nc 10.102.0.6 8081
 >no response, connection closed
 ```
 
