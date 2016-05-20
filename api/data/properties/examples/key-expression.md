@@ -1,6 +1,6 @@
 # Key Expression
 
-**key expression: Filter out all disks except those starting with `sd*`. Disks dm1, dm2 are excluded**
+key expression: Filter out all disks except those starting with `sd*`. Disks dm1, dm2 are excluded
 
 ## Request
 ### URI
