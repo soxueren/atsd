@@ -1,4 +1,5 @@
 # Properties: Query
+## Description 
 ## Path
 ```
 /api/v1/properties
