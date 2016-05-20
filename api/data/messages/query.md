@@ -1,5 +1,5 @@
 # Messages: Query
-## DEscription
+## Description
 ## Path
 ```
 /api/v1/messages
@@ -55,7 +55,9 @@ POST
 ## Example
 ### Request
 #### URI
-
+```elm
+POST https://atsd_host:8443/api/v1/messages
+```
 #### Payload
 ```json
 {
@@ -80,7 +82,13 @@ POST
 ```
 
 #### curl
-
+```css
+curl --insecure https://atsd_host:8443/api/v1/messages \
+  --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data @file.json
+  ```
 ### Response
 
 ```json
