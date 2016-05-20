@@ -41,7 +41,7 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
 
     `${PRODUCT_CODE}` is an agent id. You can find  ids of most popular products [here](http://www-01.ibm.com/support/docview.wss?uid=swg21265222).
 
-    > The configs has a specific name ${PRODUCT_CODE}_situations.xml.
+    > The configs has a specific name ${PRODUCT_CODE}_sutiations.xml.
 
 * You can download configs of the following products:
     - [Linux OS](csv-configs/agents/lz_sutiations.xml)
