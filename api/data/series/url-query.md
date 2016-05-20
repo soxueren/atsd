@@ -40,10 +40,10 @@ GET https://atsd_host:8443/api/v1/series/json/nurswgvml007/mpstat.cpu_busy?start
 ```
 #### curl
 ```css
-curl -insecure https://atsd_host:8443/api/v1/series/json/nurswgvml007/mpstat.cpu_busy?startDate=previous_hour&endDate=now&timeFormat=iso \
-  -verbose -user {username}:{password} \
-    -header "Content-Type: application/json" \
-    -request GET
+curl --insecure https://atsd_host:8443/api/v1/series/json/nurswgvml007/mpstat.cpu_busy?startDate=previous_hour&endDate=now&timeFormat=iso \
+  --verbose -user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request GET
 ```
 
 ### Response
