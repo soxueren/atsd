@@ -45,7 +45,7 @@ curl --insecure https://atsd_host:8443/api/v1/series/csv/nurswgvml007?file_syste
  -verbose -user {username}:{password} \
   -header "Content-Type: text/csv" \
   -request POST \
-  -data ??? 
+  -data @file.csv
 ```
 
 
