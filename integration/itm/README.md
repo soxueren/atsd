@@ -1,21 +1,23 @@
 # IBM Tivoli Monitoring
 
 ## Overview
-ATSD extends IBM Tivoli Monitoring with streaming analytics and
-long-term detailed data retention capabilities.
+
+In order to offload detailed data from ITM infrastructure with minimal latency you need to enable ITM Warehouse Proxy Agent to dump incoming analytical data into CSV files on the local file system. The dump directory will be continously monitored by an `inotify` script which will upload new CSV files into ATSD as soon as they are created.
+
+This enabled ATSD to server as a long-term repository of historical data that is typically deleted after a few months in order to minimize the disk space usage in Tivoli Data Warehouse.
+
+Since the from ITM agents will be received by ATSD without any delay, it can be used for real-time analytics and peformance dashboards.
+
+![](images/Warehouse-Proxy-Agent-diagram1.jpg "Warehouse Proxy Agent diagram")
 
 ## Installation steps
 
-### Enabling ITM to stream data into the ATSD is done through the Warehouse Proxy Agent
+## Configure ITM Warehouse Proxy Agent
 
-- Import CSV parser definitions into ATSD for particular agent codes: UX, PA, LZ, NT, VM, T3, UD, etc.
-- Configure [Warehouse Proxy Agent](http://www-01.ibm.com/support/knowledgecenter/SSATHD_7.7.0/com.ibm.itm.doc_6.3fp2/adminuse/history_analytics_scenarios.htm "WPA") to store analytical data into CSV files on the local file system.
-- Enable private history collection on the agent.
-- Read and upload CSV files into ATSD continuously using scripts.
-- To minimize latency, watch for new CSV files using inotify or similar utility.
+* Configure WPA to store analytical data received from agents into CSV files on the local file system as described [here](http://www-01.ibm.com/support/knowledgecenter/SSATHD_7.7.0/com.ibm.itm.doc_6.3fp2/adminuse/history_analytics_scenarios.htm "WPA")
 
+Set `hd.ini` settings to enable private history streamin:
 
-#### `hd.ini` Settings to enable private history streaming in ITM.
 ```ini
 KHD_CSV_OUTPUT_ACTIVATE=Y
 KHD_CSV_OUTPUT=/tmp/itm/csv
@@ -25,26 +27,37 @@ KHD_CSV_MAXSIZE=400
 KHD_CSV_EVAL_INTERVAL=60
 ```
 
-### Enabling private history on agent
+## Configure ITM Agents
 
-- [`Linux OS`](csv-configs/agents/lz-situation.xml)
-- [`VMware`](csv-configs/agents/vm-situation.xml)
-- [`IBM MQ`](csv-configs/agents/mq-situation.xml)
+- Enable private history collection on the agents:
+  - [Linux OS](csv-configs/agents/lz-situation.xml)
+  - [VMware](csv-configs/agents/vm-situation.xml)
+  - [IBM MQ](csv-configs/agents/mq-situation.xml)
 
+## Upload CSV Parsers into ATSD
 
-#### Sender Script
+- Import CSV parser definitions into ATSD for particular agent codes: UX, PA, LZ, NT, VM, T3, UD, etc.
+  - [Linux OS](csv-configs/atsd/klz-csv-configs.xml)
+  - [VMware](csv-configs/atsd/kvm-csv-configs.xml)
+  - [IBM MQ](csv-configs/atsd/mq-csv-configs.xml)
 
-Sender script that checks the specified directory for new CSV files and
-uploads them into ATSD. 
+## Configure `inotify` script to read CSV files and upload them into ATSD
 
-You can check the script’s logs in `/tmp/itm/logs` directory.
+Download [inotify_sender](inotify_sender.sh) script.
 
-You can download script file from [here](inotify_sender.sh)
+```sh
+chmod a+x inotify_sender.sh
+```
 
+Run the script with the following command:
 
-![](images/Warehouse-Proxy-Agent-diagram1.jpg "Warehouse Proxy Agent diagram")
+```sh
+./inotify_sender.sh
+```
 
-## Verifying  in ATSD
+Check script logs in `/tmp/itm/logs` directory.
+
+## Verifying Data in ATSD
 
 * Login into ATSD
 * Click on Metrics tab and filter metrics by following prefixes:
@@ -55,11 +68,10 @@ You can download script file from [here](inotify_sender.sh)
  - `lnx`
   ![](images/lnx_metrics.png)
 
-
-
 ## Viewing Data in ATSD
 
 ### Metrics
+
 * List of collected [ITM metrics](metric-list.md)
 
 ### Entity Groups
@@ -72,8 +84,3 @@ You can download script file from [here](inotify_sender.sh)
 ![](images/itm_linux_portal.png "itm_linux_portal")
 
 
-
-## CSV Parser definitions
-- [Linux OS](csv-configs/atsd/klz-csv-configs.xml)
-- [VMware](csv-configs/atsd/kvm-csv-configs.xml)
-- [IBM MQ](csv-configs/atsd/mq-csv-configs.xml)
