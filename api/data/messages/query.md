@@ -1,36 +1,15 @@
-## Messages: Query
-
-### Method
-
+# Messages: Query
+## DEscription
+## Path
 ```
-POST /api/v1/messages
+/api/v1/messages
 ```
-### Basic Request Example
-> Request
-
-```json
-{
-    "queries": [
-        {
-            "entity": "nurswgvml007",
-            "timeFormat": "iso",
-            "type": "security",
-            "limit": 5,
-            "severity": "UNDEFINED",
-            "endDate": "2015-09-17T10:00:00Z",
-            "interval": {
-                "count": 15,
-                "unit": "MINUTE"
-            },
-            "tags": {
-                "path": "/var/log/secure"
-            }
-        }
-    ]
-}
+## Method
 ```
-
-### Request Fields
+POST 
+```
+## Request 
+### Fields
 
 | **Field** | **Required** | **Description** |
 |---|---|---|
@@ -60,9 +39,49 @@ POST /api/v1/messages
 * entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
 </aside>
 
-### Basic Response Example
+## Response 
+### Fields
+| Field | Description |
+|---|---|
+|entity | entity name |
+|type | type |
+|source | source |
+|severity | severity code |
+|tags | JSON object containing name=value that uniquely identify the message record |
+|message | message text |
+|date | date and time in ISO format |
+|time | date and time in milliseconds |
 
-> Response
+## Example
+### Request
+#### URI
+
+#### Payload
+```json
+{
+    "queries": [
+        {
+            "entity": "nurswgvml007",
+            "timeFormat": "iso",
+            "type": "security",
+            "limit": 5,
+            "severity": "UNDEFINED",
+            "endDate": "2015-09-17T10:00:00Z",
+            "interval": {
+                "count": 15,
+                "unit": "MINUTE"
+            },
+            "tags": {
+                "path": "/var/log/secure"
+            }
+        }
+    ]
+}
+```
+
+#### curl
+
+### Response
 
 ```json
 [
@@ -90,14 +109,3 @@ POST /api/v1/messages
     }
 ]
 ```
-### Response Fields
-| Field | Description |
-|---|---|
-|entity | entity name |
-|type | type |
-|source | source |
-|severity | severity code |
-|tags | JSON object containing name=value that uniquely identify the message record |
-|message | message text |
-|date | date and time in ISO format |
-|time | date and time in milliseconds |
