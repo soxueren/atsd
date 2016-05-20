@@ -37,11 +37,11 @@ GET
 ### Request
 #### URI
 ```elm 
-GET http://atsd_server:8088/api/v1/properties/nurswgvml007/types/system?timeFormat=iso
+GET https://atsd_server:8443/api/v1/properties/nurswgvml007/types/system?timeFormat=iso
 ```
 #### curl
 ```css
-curl --insecure http://atsd_server:8088/api/v1/properties/nurswgvml007/types/system?timeFormat=iso \
+curl --insecure https://atsd_server:8443/api/v1/properties/nurswgvml007/types/system?timeFormat=iso \
   --verbose --user {username}:{password} \
   --request GET
 ```
@@ -70,7 +70,7 @@ curl --insecure http://atsd_server:8088/api/v1/properties/nurswgvml007/types/sys
 > Request
 
 ```
-http://atsd_server:8088/api/v1/entities/i-943a8878/property-types/aws_ec2.instance?timeFormat=iso
+https://atsd_server:8443/api/v1/entities/i-943a8878/property-types/aws_ec2.instance?timeFormat=iso
 ```
 
 > Response
