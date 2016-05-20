@@ -16,9 +16,9 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
 
 * Configure WPA to store analytical data received from agents into CSV files on the local file system as described [here](http://www-01.ibm.com/support/knowledgecenter/SSATHD_7.7.0/com.ibm.itm.doc_6.3fp2/adminuse/history_analytics_scenarios.htm "WPA")
 
-* Set `hd.ini` settings to enable private history streaming:
+* Set `hd.ini` settings to activate private history streaming:
 
-    * Go to ITM folder and append the following strings to your `config/hd.ini` file:
+    * Change to /opt/ITM directory and append the following settings to `config/hd.ini` file:
 
         ```ini
         KHD_CSV_OUTPUT_ACTIVATE=Y
@@ -28,7 +28,7 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
         KHD_CSV_MAXSIZE=400
         KHD_CSV_EVAL_INTERVAL=60
         ```
-    * Then restart WareHouse Proxy agent:
+    * Restart WareHouse Proxy agent:
 
         ```sh
         bin/itmcmd stop hd
@@ -37,46 +37,49 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
 
 ## Configure ITM Agents
 
-* Copy situation config to localconfig/${PRODUCT_CODE}/
+* Download situations configuration files for the following products:
 
-    `${PRODUCT_CODE}` is an agent id. You can find  ids of most popular products [here](http://www-01.ibm.com/support/docview.wss?uid=swg21265222).
-
-    > The configs has a specific name ${PRODUCT_CODE}_sutiations.xml.
-
-* You can download configs of the following products:
     - [Linux OS](csv-configs/agents/lz_sutiations.xml)
     - [VMware](csv-configs/agents/vm_sutiations.xml)
     - [WebSphere MQ](csv-configs/agents/mq_sutiations.xml)
 
-* After copying you need restart agent
+* Copy configuration file to localconfig/${PRODUCT_CODE}/ directory on the agent machine, where `${PRODUCT_CODE}` is the agent product code. You can lookup commonly used product codes [here](http://www-01.ibm.com/support/docview.wss?uid=swg21265222).
+
+    > Agent situation files adhere to the following naming convention: ${PRODUCT_CODE}_situations.xml
+
+* Restart the agent
+    
     ```sh
     bin/itmcmd stop ${PRODUCT_CODE}
     bin/itmcmd start ${PRODUCT_CODE}
     ```
 
+## download CSV Parsers for UX, VM, and MQ product codes
+
+   - [Linux OS](csv-configs/atsd/klz-csv-configs.xml)
+   - [VMware](csv-configs/atsd/kvm-csv-configs.xml)
+   - [WebSphere MQ](csv-configs/atsd/mq-csv-configs.xml)
+
 ## Upload CSV Parsers into ATSD
 
-- Import CSV parser definitions into ATSD for particular agent codes: UX, PA, LZ, NT, VM, T3, UD, etc.
-  - Login to ATSD UI.
-  - Go to `Configuration->CSV:Parsers` page.
-  - Click 'Import' button.
-  - Select one of the following parsers depending on your product:
-      - [Linux OS](csv-configs/atsd/klz-csv-configs.xml)
-      - [VMware](csv-configs/atsd/kvm-csv-configs.xml)
-      - [WebSphere MQ](csv-configs/atsd/mq-csv-configs.xml)
+- Login into ATSD web interface
+- Open `Configuration->CSV:Parsers` page.
+- Click 'Import' button.
+- upload CSV parser xml files that you downloaded previously.
 
 ## Configure `inotify` script to read CSV files and upload them into ATSD
 
-* Download [inotify_sender](inotify_sender.sh) script on your ITM host.
+* Download [inotify_sender](inotify_sender.sh) script to your WPA server
 
-* Set your ATSD host by editing following string in script:
+* Specify ATSD hostname by editing the following line:
+
     ```sh
     if [ "$url" = "" ]; then
         url="http://atsd_host:8088"
     fi
     ```
 
-* Set permissions to execute script:
+* Set permissions to execute the script:
     ```sh
     chmod a+x inotify_sender.sh
     ```
@@ -85,9 +88,9 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
     ```sh
     ./inotify_sender.sh
     ```
-* Check script logs in `/tmp/itm/logs` directory.
+* Review script logs in `/tmp/itm/logs` directory.
 
-* Add script to autostart
+* Add script to auto-start. The auto-start configuration is dependent on your operating system.
 
 ## Verifying Data in ATSD
 
