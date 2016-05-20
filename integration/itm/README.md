@@ -8,7 +8,7 @@ This enabled ATSD to server as a long-term repository of historical data that is
 
 Since the from ITM agents will be received by ATSD without any delay, it can be used for real-time analytics and peformance dashboards.
 
-![](images/Warehouse-Proxy-Agent-diagram1.jpg "Warehouse Proxy Agent diagram")
+![](images/itm_diag.png "Warehouse Proxy Agent diagram")
 
 ## Installation steps
 
