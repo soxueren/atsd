@@ -1,13 +1,37 @@
-## Alerts: History Query
-
-### Method
-
+# Alerts: History Query
+## Description
+## Path
 ```
-POST /api/v1/alerts/history
+/api/v1/alerts/history
 ```
-### Basic Example
-> Request
+## Method
+```
+POST 
+```
+## Request 
+### Fields
+|**Field**| **Required** | **Description** |
+|---|---|---|
+| startTime| no |Unix timestamp, default `0`|
+|endTime| no | Unix timestamp, default `Long.MAX_VALUE`|
+|startDate|	no|	start of the selection interval. Specified in ISO format or using endtime syntax.|
+|endDate|	no|	end of the selection interval. Specified in ISO format or using endtime syntax.|
+|timeFormat|	no|	response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
+|metric| yes |a metric name of the requested time series |
+| entity      | no | an entity name, such as server name, or a entity name pattern with ? and * wildcards |
+| entities    | no | an array of entity names |
+| entityGroup | no | If `entityGroup` field is specified in the query, alerts for all entities in this group are returned. entityGroup is used only if `entity` or `entities` fields are missing or if entity field is an empty string. If entityGroup is not found or contains no entities an empty resultset will be returned. |
+|rule| yes | alert rule |
+|limit| no | default 1000|
 
+## Example
+### Request
+#### URI
+```elm
+POST https://atsd_host:8443/api/v1/alerts/history
+```
+
+#### Payload
 ```json
 {
    "queries": [
@@ -24,8 +48,15 @@ POST /api/v1/alerts/history
    ]
 }
 ```
-
-> Response
+#### curl 
+```css
+curl --insecure https://atsd_host:8443/api/v1/alerts/history \
+  --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data @file.json
+  ```
+### Response
 
 ```json
 [
@@ -50,17 +81,4 @@ POST /api/v1/alerts/history
    }
 ]
 ```
-### Request Fields
-|**Field**| **Required** | **Description** |
-|---|---|---|
-| startTime| no |Unix timestamp, default `0`|
-|endTime| no | Unix timestamp, default `Long.MAX_VALUE`|
-|startDate|	no|	start of the selection interval. Specified in ISO format or using endtime syntax.|
-|endDate|	no|	end of the selection interval. Specified in ISO format or using endtime syntax.|
-|timeFormat|	no|	response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
-|metric| yes |a metric name of the requested time series |
-| entity      | no | an entity name, such as server name, or a entity name pattern with ? and * wildcards |
-| entities    | no | an array of entity names |
-| entityGroup | no | If `entityGroup` field is specified in the query, alerts for all entities in this group are returned. entityGroup is used only if `entity` or `entities` fields are missing or if entity field is an empty string. If entityGroup is not found or contains no entities an empty resultset will be returned. |
-|rule| yes | alert rule |
-|limit| no | default 1000|
+
