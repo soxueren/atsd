@@ -1,4 +1,5 @@
 # Collected ITM metrics
+`Linux OS`
 ```css
  klzcpu.busy_cpu
  klzcpu.busyc_whsc
@@ -269,10 +270,7 @@
  klzvm.total_virtual_storage                                                 
  klzvm.totmf_whsc                                                            
  klzvm.used_virtual_storage                                                  
- klzvm.used_virtual_storage_pct                                              
-```
-
-```css                      
+ klzvm.used_virtual_storage_pct
  lnxallusr.password_null                                                     
  lnxallusr.user_duplicated                                                   
  lnxallusr.user_sessions                                                     
@@ -534,4 +532,53 @@
  lnxvm.used_virtual_storage                                                  
  lnxvm.virtual_storage_pct_avail                                             
  lnxvm.virtual_storage_pct_used                                              
+```
+
+## VMware
+```css
+kvmcltrdst.accessible
+kvmcltrdst.capacity
+kvmcltrdst.connected_hosts
+kvmcltrdst.connected_vms
+kvmcltrdst.percent_used
+kvmcltrrps.cpu_usage
+kvmcltrrps.max_cpu_usage
+kvmcltrrps.max_memory_usage
+kvmcltrrps.memory_usage
+kvmcltrrps.percent_cpu_usage
+kvmcltrrps.percent_memory_usage
+kvmcltrsrv.cpu_effective_contribution
+kvmcltrsrv.cpu_effective_utilization
+kvmcltrsrv.cpu_total_contribution
+kvmcltrsrv.cpu_total_utilization
+kvmcltrsrv.mem_effective_contribution
+kvmcltrsrv.mem_total_contribution
+kvmcltrsrv.memory_effective_utilization
+kvmcltrsrv.memory_total_utilization
+kvmcltrsrv.server_cpu_utilization
+```
+
+##IBM MQ
+```css
+Name
+mq.channel_statistics.batches_complete
+mq.channel_statistics.buffers_received
+mq.channel_statistics.buffers_sent
+mq.channel_statistics.bytes_received
+mq.channel_statistics.bytes_sent
+mq.channel_statistics.completed_retry_time
+mq.channel_statistics.current_batch_messages
+mq.channel_statistics.current_message_sequence_number
+mq.channel_statistics.currently_defined
+mq.channel_statistics.default_header_compression_value
+mq.channel_statistics.default_message_compression_value
+mq.channel_statistics.last_header_compression_value
+mq.channel_statistics.last_message_compression_value
+mq.channel_statistics.last_message_date_and_time
+mq.channel_statistics.long_retries
+mq.channel_statistics.long_term_compression_rate
+mq.channel_statistics.long_term_compression_time
+mq.channel_statistics.long_term_exit_time
+mq.channel_statistics.long_term_net_time
+mq.channel_statistics.long_term_recent_batch_size
 ```

@@ -27,7 +27,7 @@ Set `hd.ini` settings to enable private history streaming:
     KHD_CSV_MAXSIZE=400
     KHD_CSV_EVAL_INTERVAL=60
     ```
-* Then restart WareHouse Proxy agent
+* Then restart WareHouse Proxy agent:
     ```sh
     bin/itmcmd stop hd
     bin/itmcmd start hd
@@ -56,25 +56,39 @@ Set `hd.ini` settings to enable private history streaming:
 ## Upload CSV Parsers into ATSD
 
 - Import CSV parser definitions into ATSD for particular agent codes: UX, PA, LZ, NT, VM, T3, UD, etc.
-  - [Linux OS](csv-configs/atsd/klz-csv-configs.xml)
-  - [VMware](csv-configs/atsd/kvm-csv-configs.xml)
-  - [IBM MQ](csv-configs/atsd/mq-csv-configs.xml)
+  - Login to ATSD UI:
+  - Go to `Configuration: ATSD: CSV:Parsers` page.
+  - Click 'Import' button.
+  - Select one of the following parsers depending on your product:
+      - [Linux OS](csv-configs/atsd/klz-csv-configs.xml)
+      - [VMware](csv-configs/atsd/kvm-csv-configs.xml)
+      - [IBM MQ](csv-configs/atsd/mq-csv-configs.xml)
 
 ## Configure `inotify` script to read CSV files and upload them into ATSD
 
-Download [inotify_sender](inotify_sender.sh) script.
+Download [inotify_sender](inotify_sender.sh) script .
 
-```sh
-chmod a+x inotify_sender.sh
-```
+>Note: you need to set up your ITM host url in script
 
-Run the script with the following command:
+* Set your ITM host url by editing following string in script:
+    ```sh
+    if [ "$url" = "" ]; then
+        url="http://atsd_host:8088"
+    fi
+    ```
 
-```sh
-./inotify_sender.sh
-```
+* Set permissions to execute script:
+    ```sh
+    chmod a+x inotify_sender.sh
+    ```
 
-Check script logs in `/tmp/itm/logs` directory.
+* Run the script with the following command:
+    ```sh
+    ./inotify_sender.sh
+    ```
+* Check script logs in `/tmp/itm/logs` directory.
+
+* Add following command to autostart
 
 ## Verifying Data in ATSD
 
@@ -86,6 +100,9 @@ Check script logs in `/tmp/itm/logs` directory.
 
  - `lnx`
   ![](images/lnx_metrics.png)
+
+ - `mq`
+  ![](images/mq_metrics.png)
 
 ## Viewing Data in ATSD
 
