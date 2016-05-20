@@ -67,7 +67,7 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
 
 ## Configure `inotify` script to read CSV files and upload them into ATSD
 
-Download [inotify_sender](inotify_sender.sh) script on your ITM host.
+* Download [inotify_sender](inotify_sender.sh) script on your ITM host.
 
 * Set your ATSD host url by editing following string in script:
     ```sh
