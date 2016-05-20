@@ -2,9 +2,9 @@
 
 ## Description
 
-Insert timestamped array of numeric samples for a given metric, entity, and series tags. 
+Insert a timestamped array of numeric samples for a given metric, entity, and series tags. 
 
-This method can also be used to insert custom forecast and forecast deviation samples.
+This method can also be used to insert a array of custom forecast and forecast deviation samples.
 
 ## Path
 
