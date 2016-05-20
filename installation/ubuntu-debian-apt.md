@@ -14,7 +14,9 @@
 
 ## Installation Steps
 
-#### Only for Ubuntu 16.04 (Xenial Xerus): Add openjdk Repository
+#### Add openjdk Repository
+
+This step is required **only on Ubuntu 16.04** (Xenial Xerus).
 
 ```sh
 sudo add-apt-repository ppa:openjdk-r/ppa  
