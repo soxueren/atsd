@@ -30,17 +30,17 @@ Empty if insert was successful.
 ## Example 
 ### Request 
 #### URI
-```
+```elm
 POST https://atsd_host:8443/api/v1/series/csv/nurswgvml007?file_system=/sda&mount_point=/
 ```
 #### Payload
-```
+```json
 time,df.disk_used_percent,disk_size,df.disk_used
 1423139581216,22.2,25165824,5586812
 1423139581216,22.2,25165824,5586812
 ```
 #### curl
-```
+```css
 curl --insecure https://atsd_host:8443/api/v1/series/csv/nurswgvml007?file_system=/sda&mount_point=/ \
  -verbose -user {username}:{password} \
   -header "Content-Type: text/csv" \
