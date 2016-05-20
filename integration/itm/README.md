@@ -67,7 +67,7 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
 - Click 'Import' button.
 - upload CSV parser xml files that you downloaded previously.
 
-## Configure `inotify` script to read CSV files and upload them into ATSD
+### Configure `inotify` script to read CSV files and upload them into ATSD
 
 * Download [inotify_sender](inotify_sender.sh) script to your WPA server
 

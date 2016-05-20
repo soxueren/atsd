@@ -1,5 +1,5 @@
 # Collected ITM metrics
-`Linux OS`
+## Linux OS
 ```css
  klzcpu.busy_cpu
  klzcpu.busyc_whsc
