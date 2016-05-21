@@ -5,7 +5,7 @@ Insert timestamped metric samples for an entity and series tags into the databas
 ## Syntax
 
 ```css
-series e:{entity} s:{unix_seconds} m:{metric}={value} m:{metric}={value} t:{key}={value} t:{key}={value}
+series e:{entity} s:{unix_seconds} m:{metric-1}={value} m:{metric-2}={value} t:{tag-1}={value} t:{tag-2}={value}
 ```
 
 ## Fields
