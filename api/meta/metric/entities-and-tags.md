@@ -1,17 +1,49 @@
 ## Metric: Entities and Tags
 
-Returns a list of unique series tags for the metric. The list is based on data stored on disk for the last 24 hours.
+## Description 
+
+Returns a list of unique **series** tags for the metric.
+
+## Path
+
+```
+/api/v1/metrics/{metric}/entity-and-tags
+```
+
+## Method
+
+```
+GET 
+```
+
+## Request
+
+### Parameters
+
+| **Parameter** |**Type**| **Description** |
+|:---|:---|:---|
+| entity | string|Include series for the specified entity name. |
+|minInsertDate|iso_date|Include series with `lastInsertDate` equal or greater than `minInsertDate`.|
+|maxInsertDate|iso_date|Include series with `lastInsertDate` less than `maxInsertDate`.|
+
+_All parameters are optional._
+
+### Response Fields
+
+| **Field** | **Description** |
+|:---|:---|
+| entity | Entity name.  |
+| tags | An object containing **series** tags as names and values.<br>For example, `"tags": {"file_system": "/dev/sda"}` |
+|lastInsertDate|Last time a value was received for this series. ISO date.|
 
 
-### Method
-```
-GET /api/v1/metrics/{metric}/entity-and-tags
-```
+
 ### Basic Example
+
 > Request
 
 ```
-http://atsd_server:8088/api/v1/metrics/disk_used/entity-and-tags?timeFormat=iso
+http://atsd_server:8088/api/v1/metrics/disk_used/entity-and-tags
 ```
 > Response
 
@@ -51,27 +83,7 @@ http://atsd_server:8088/api/v1/metrics/disk_used/entity-and-tags?timeFormat=iso
     }
 ]
 ```
-### Request Parameters
-| **Parameter** | **Required** | **Description**                 |
-|---------------|--------------|---------------------------------|
-| entity        | no       | Filter entities by entity name. |
-|minInsertDate|no|return entities and tags with lastInsertTime equal or greater than specified time, accepts iso date format|
-|maxInsertDate|no|return entities with lastInsertTime less than specified time, accepts iso date format|
-|timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 
-### Response Fields
-
-
-| **Field**       | **Description**                                                                                        |
-|----------------|--------------------------------------------------------------------------------------------------------|
-| entity         | Entity name                                                                                            |
-| lastInsertTime | Maximium last time for metric, entity and one of the tag names . Time specified in epoch milliseconds. |
-|lastInsertDate|Last time value was received by ATSD for this metric. Time specified in ISO format.|
-| tags           | map of tag names and values                                                                            |
-
-<aside class="notice">
-If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returned. If `timeFormat` is set to the default value (milliseconds), then `lastInsertTime` will be returned.
-</aside>
 
 
 
