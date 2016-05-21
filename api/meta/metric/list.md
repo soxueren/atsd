@@ -22,7 +22,7 @@ GET
 
 |**Parameter**|**Type**|**Description**|
 |:---|:---|:---|
-|expression|string|Include metrics that match an expression containing `name` and `tags.{tag-name}` variables. <br>`LIKE` operator supports `*` wildcard, for example `name LIKE 'cpu*'`.|
+|expression|string|Include metrics that match an [expression](../expression.md) filter.|
 |minInsertDate|iso_date|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.|
 |maxInsertDate|iso_date|Include metrics with `lastInsertDate` less than `maxInsertDate`.|
 |tags|string|Comma-separated list of metric tags to be included in the response.<br>Specify `tags=*` to include all metric tags.|
