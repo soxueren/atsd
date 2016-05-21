@@ -21,7 +21,7 @@ GET
 ### Parameters
 
 |**Parameter**|**Type**|**Description**|
-|---|---|:---|
+|:---|:---|:---|
 |expression|string|Include metrics that match an expression containing `name` and `tags.{tag-name}` variables. <br>`LIKE` operator supports `*` wildcard, for example `name LIKE 'cpu*'`.|
 |minInsertDate|iso_date|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.|
 |maxInsertDate|iso_date|Include metrics with `lastInsertDate` less than `maxInsertDate`.|
@@ -34,7 +34,7 @@ _All parameters are optional. Expression must be URL-encoded._
 
 ### Fields
 |**Field**|**Description**|
-|---|:---|
+|:---|:---|
 |name|Metric name|
 |label|Metric label|
 |description |Metric description|
@@ -54,8 +54,8 @@ _All parameters are optional. Expression must be URL-encoded._
 
 ### Data Types
 
-|**Type**|**Size, bytes**|
-|---|:---|
+|**Type**|**Storage Size, bytes**|
+|:---|:---|
 |short|2|
 |integer|4|
 |long|8|
@@ -68,7 +68,7 @@ Default data type for new metrics, when auto-created, is **float**.
 ### Errors
 
 |  Status Code  |  Description  |
-|---------------|---------------|
+|:---------------|:---------------|
 | 500 |TypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'com.axibase.tsd.model.TimeFormat';|
 | 500 |TypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'int'|
 
