@@ -1,33 +1,47 @@
 # Metric: Get
 ## Description 
+
+Retrieve properties and tags for the specified metric.
+
 ## Path 
-```
+
+```elm
 /api/v1/metrics/{metric}
 ```
+
 ## Method 
+
 ```
 GET
 ```
+
 ## Request
 
 ## Response
-### Erorrs 
 
+### Fields
+
+Refer to Response Fields in [Metrics: List](https://github.com/axibase/atsd-docs/blob/master/api/meta/metric/list.md)
 
 ## Example
+
 ### Request
-#### URI 
+
+#### URI
+
+```elm
+GET https://atsd_host:8443/api/v1/metrics/md-2
 ```
-https://atsd_host:8443/api/v1/metrics/md-2
-```
-#### Curl 
-````css
+
+#### curl 
+
+```css
 curl https://atsd_host:8443/api/v1/metrics/md-2 \
   -v -u {username}:{password} \
   -H "Content-Type: application/json" \
   -X GET
+```
 
-````
 ### Response
 
 ```json
@@ -46,8 +60,5 @@ curl https://atsd_host:8443/api/v1/metrics/md-2 \
 }
 ```
 
-Displays metric properties and its tags.
 
 
-
-See: [Metrics: List](https://github.com/axibase/atsd-docs/blob/master/api/meta/metric/list.md)
