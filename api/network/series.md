@@ -8,18 +8,18 @@ Insert timestamped metric samples for an entity and series tags into the databas
 series e:{entity} s:{seconds} m:{metric-1}={number} m:{metric-2}={number} t:{tag-1}={value} t:{tag-2}={value}
 ```
 
-## Fields
+### Fields
 
 | **Field** | **Required** | **Description** |
 |:---|:---|:---|
-| e         | yes          | Entity name |
-| m         | yes          | Metric name, at least one |
-| t         | no           | Tag key/value |
-| s         | no           | Time in UNIX seconds | 
-| ms        | no           | Time in UNIX milliseconds | 
-| d         | no           | Time in ISO format | 
+| e         | yes          | Entity name. |
+| m         | yes          | Metric name and numeric value. Multiple. |
+| t         | no           | Tag name and text value. Multiple. |
+| s         | no           | Time in UNIX seconds. | 
+| ms        | no           | Time in UNIX milliseconds. | 
+| d         | no           | Time in ISO format. | 
 
-## ABNF
+### ABNF
 
 Rules inherited from [generic ABNF](generic-abnf.md).
 
