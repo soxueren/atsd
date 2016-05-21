@@ -22,7 +22,7 @@ The Data API lets you insert and retrieve series, properties, messages, and aler
   - [query](alerts/query.md)
   - [update](alerts/update.md)
   - [history query](alerts/history-query.md)
-* Combined
+* Multi-type Commands
   - [command](command.md)
 
 ## Request Methods
