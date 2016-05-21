@@ -1,15 +1,16 @@
-# List metrics with tag 'table'
+# List Metrics with tag 'table'
 
 ## Request
 ### URI
+
 ```elm
 GET https://atsd_host:8443/api/v1/metrics?tags=table&expression=tags.table%20!=%20%27%27
-
 ```
+
 ### Expression
-```
-tags=table&expression=tags.table != ''
 
+```sh
+tags.table != ''
 ```
 ### Response
 
@@ -20,7 +21,6 @@ tags=table&expression=tags.table != ''
         "name": "collector-csv-job-exec-time",
         "enabled": true,
         "dataType": "FLOAT",
-        "counter": false,
         "persistent": true,
         "tags": {
             "table": "axibase-collector"
@@ -28,13 +28,13 @@ tags=table&expression=tags.table != ''
         "timePrecision": "MILLISECONDS",
         "retentionInterval": 0,
         "invalidAction": "NONE",
+        "lastInsertDate": "2016-05-19T10:38:26.731Z",
         "versioned": false
     },
      {
         "name": "collector-http-connection",
         "enabled": true,
         "dataType": "FLOAT",
-        "counter": false,
         "persistent": true,
         "tags": {
             "table": "axibase-collector"
@@ -42,7 +42,7 @@ tags=table&expression=tags.table != ''
         "timePrecision": "MILLISECONDS",
         "retentionInterval": 0,
         "invalidAction": "NONE",
-        "lastInsertDate": 1447858020000,
+        "lastInsertDate": "2016-05-19T10:38:26.731Z",
         "versioned": false
     }
 ]
