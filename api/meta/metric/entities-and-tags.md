@@ -2,7 +2,7 @@
 
 ## Description 
 
-Returns a list of unique **series** tags for the metric.
+Returns a list of **series** for the metric. Each series contains entity name and optional series tags.
 
 ## Path
 
