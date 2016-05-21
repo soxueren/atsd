@@ -122,11 +122,11 @@ curl --insecure https://atsd_host:8443/api/v1/metrics?limit=2 \
 ```
 
 ## Additional Examples
-* [List metrics name by name](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-by-name.md)
+* [List metrics by name](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-by-name.md)
 * [List metrics by name and tag](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-by-name-and-tag.md)
-* [List metrics with tag table](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-with-tag-table.md)
-* [List metrics by 'maxInsertDate'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-by-maxinserttime.md)
-* [List metrics by 'minInsertDate'](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-by-mininserttime.md)
+* [List metrics with tag `table`](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-with-tag-table.md)
+* [List metrics by maxInsertDate](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-by-maxinserttime.md)
+* [List metrics by minInsertDate](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-by-mininserttime.md)
 
 
 
