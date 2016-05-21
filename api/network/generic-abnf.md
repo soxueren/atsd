@@ -1,9 +1,15 @@
 # Generic ABNF Rules
 
 ```properties
+  ; visible characters, double-quotes escaped with backslash
+NAME = (1*NCHAR / DQUOTE 1*(NCHAR / "\" DQUOTE) DQUOTE)  
+  ; visible characters and spaces. double-quotes escaped with backslash
+VALUE = (1*NCHAR / DQUOTE 1*(NCHAR / SP / "\" DQUOTE) DQUOTE)
   ; space
 SP = %x20 
-  ; visible characters except double-quote
+  ; double-quote
+DQUOTE = %x21
+  ; visible character except double-quote
 NCHAR = %x21 / %x23-7E / UNICODE
   ; visible character
 VCHAR = %x21-7E / UNICODE
