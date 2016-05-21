@@ -2,9 +2,9 @@
 
 ```properties
   ; visible characters, double-quotes escaped with backslash
-NAME = (1*NCHAR / DQUOTE 1*(NCHAR / "\" DQUOTE) DQUOTE)  
+NAME = 1*NCHAR / DQUOTE 1*(NCHAR / "\" DQUOTE) DQUOTE  
   ; visible characters and spaces. double-quotes escaped with backslash
-VALUE = (1*NCHAR / DQUOTE 1*(NCHAR / SP / "\" DQUOTE) DQUOTE)
+VALUE = 1*NCHAR / DQUOTE 1*(NCHAR / SP / "\" DQUOTE) DQUOTE
   ; space
 SP = %x20 
   ; double-quote
