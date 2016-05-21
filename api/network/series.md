@@ -30,7 +30,7 @@ entity = "e:" NAME
 metric = "m:" NAME "=" NUMBER
   ; tag values containing space must be double-quoted
   ; double-quote in value must be escaped with backslash
-tag = "t:" NAME "=" VALUE
+tag = "t:" NAME "=" TEXTVALUE
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE-INTEGER
 time-second = "s:" POSITIVE-INTEGER
