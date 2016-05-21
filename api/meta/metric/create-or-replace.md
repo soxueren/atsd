@@ -1,8 +1,6 @@
 ## Metric: Create or Replace
-### Method 
-```
-PUT /api/v1/metrics/{metric}
-```
+
+### Description 
 
 Create a metric with specified properties and tags or replace an existing metric.
 
@@ -10,10 +8,41 @@ If the metric exists, all of its current properties and tags will be overwritten
 
 In order to update only specific fields specified in the request, use [Metric: Update](update.md) method.
 
-### Basic Example
+## Path
 
+```
+/api/v1/metrics/{metric}
+```
 
-> Request
+## Method
+
+```
+PUT
+```
+
+## Request
+
+### Headers
+
+|**Header**|**Value**|
+|:---|:---|
+| Content-Type | application/json |
+
+### Fields
+
+Refer to Response Fields specified in [Metrics List](list.md#fields) method.
+
+## Example
+
+### Request
+
+#### URI
+
+```elm
+PUT https://atsd_host:8443/api/v1/metrics/my-metric
+```
+
+#### Payload
 
 ```json
 {
@@ -27,9 +56,8 @@ In order to update only specific fields specified in the request, use [Metric: U
     "versioned": true
 }
 ```
-### Request Fields
 
-Refer to Response Fields specified in [Metrics List](list.md#fields) method.
+
 
 
 
