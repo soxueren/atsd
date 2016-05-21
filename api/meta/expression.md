@@ -4,21 +4,20 @@
 ## Variables
 
 `name` - name of the record, such as entity name or metric name
+
 `tags.{tag-name}` - value of tag with name `tag-name`, for example, `tags.location` or `tags.table`
 
 * All the variables are string variables.
 * Tag names are case-insensitive, for example, `tags.location` and `tags.Location` are equal.
-* If tag `tags.{tag-name}` is not defined, the variable is equal to an empty string.
-
-For example expression `tags.app != ''` will find all entities that have app tag
+* If tag `tag-name` is not defined, the `tags.{tag-name}` variable returns an empty string.
 
 ## Operators
 
 Comparision operators: `=`, `==`, `!=`, `LIKE`
 
-Logical operators: `and`, `or`, `not` as well as `&&` , `||`, `!`
+Logical operators: `AND`, `OR`, `NOT` as well as `&&` , `||`, `!`
 
-Collections operator: `in`, for example `tags.location in ('SVL', 'NUR')`
+Collections operator: `IN`, for example `tags.location IN ('SVL', 'NUR')`
 
 ## Wildcards
 
@@ -30,26 +29,26 @@ Wildcard `.` means any character.
 
 * Return records with name that starts with `nur` and that have `app` tag defined
 
-```ls
-name like 'nur*' and tags.app != ''
+```sql
+name LIKE 'nur*' AND tags.app != ''
 ```
 
 * Return records with name equal to `nurswgvml003`
 
-```ls
+```sql
 name = 'nurswgvml003'
 ```
 
 * Return records with name that starts with `nur` and with tag `os` equal to 'Linux'
 
-```ls
-name like 'nur*' and tags.os = 'Linux'
+```sql
+name LIKE 'nur*' AND tags.os = 'Linux'
 ```
 
 * Return records with tag `ip` starting with `10.` and ending with `22`
 
-```ls
-tags.ip like '10.*22'
+```sql
+tags.ip LIKE '10.*22'
 ```
 
 ## Extended Functions
