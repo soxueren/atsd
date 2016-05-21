@@ -1,8 +1,6 @@
 ## Overview
 
-The Data API lets you insert and retrieve series, properties, messages, and alerts from Axibase Time Series Database server. 
-
-You can use any programming language that lets you issue HTTP requests and parse JSON-based responses. 
+The Data API lets you insert and retrieve series, properties, messages, and alerts from Axibase Time Series Database. 
 
 ## Categories
 
