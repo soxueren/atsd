@@ -2,7 +2,7 @@
 
 ## Description 
 
-Return a list of metrics and their properties.
+Return a list of metrics, their properties, and optional metric tags.
 
 ## Path
 
