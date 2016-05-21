@@ -11,7 +11,7 @@ series e:{entity} s:{unix_seconds} m:{metric}={value} m:{metric}={value} t:{key}
 ## Fields
 
 | **Field** | **Required** | **Description** |
-|---|---|---|
+|:---|:---|:---|
 | e         | yes          | Entity name |
 | m         | yes          | Metric name, at least one |
 | t         | no           | Tag key/value |
@@ -26,11 +26,11 @@ Rules inherited from [generic ABNF](generic-abnf.md).
 ```properties
   ; 1*SP - one or multiple spaces
 command = "series" 1*SP entity 1*(1*SP metric) *(1*SP tag) [1*SP time]
-entity = "e:" 1*VCHAR
-metric = "m:" 1*VCHAR "=" NUMBER
+entity = "e:" NAME
+metric = "m:" NAME "=" NUMBER
   ; tag values containing space must be double-quoted
   ; double-quote in value must be escaped with backslash
-tag = "t:" 1*VCHAR "=" (1*VCHAR / (DQUOTE 1*VCHAR DQUOTE))
+tag = "t:" NAME "=" VALUE
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE-INTEGER
 time-second = "s:" POSITIVE-INTEGER
