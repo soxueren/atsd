@@ -23,7 +23,7 @@ series e:{entity} s:{seconds} m:{metric-1}={number} m:{metric-2}={number} t:{tag
 
 > If time fields are omitted, the values are inserted with current server time.
 
-### ABNF
+### ABNF Syntax
 
 Rules inherited from [generic ABNF](generic-abnf.md).
 
