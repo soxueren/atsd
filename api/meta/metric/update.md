@@ -2,9 +2,9 @@
 
 ## Description
 
-Update specified properties and tags for the given (existing) metric.
+Update specified properties and tags for an existing metric.
 
-Properties and tags that are not specified in the payload are left unchanged.
+Properties and tags that are not specified in the request are left unchanged.
 
 ## Path
 
@@ -23,12 +23,12 @@ PATCH
 ### Headers
 
 |**Header**|**Value**|
-|---|---|
+|:---|:---|
 | Content-Type | application/json |
 
 ### Fields
 
-Refer to [Metric: Create or Replace](create-or-replace.md#request-fields)
+Refer to [Metric: List](list.md#fields)
 
 ## Example
 
