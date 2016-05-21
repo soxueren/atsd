@@ -22,6 +22,6 @@ DECIMAL-DIGIT  = %x30-39  ; "0" to "9"
 NON-ZERO-DIGIT  = %x31-39  ; "1" to "9"  
 REAL-NUMBER = MANTISSA EXPONENT
 MANTISSA   = (POSITIVE-INTEGER [ "." *DECIMAL-DIGIT ]) / ( "0." *("0") POSITIVE-INTEGER )
-EXPONENT   = "E" ( "0" / ([ "-" ] POSITIVE-INTEGER))
+EXPONENT   = ["E"/"e"] ( "0" / ([ "-" ] POSITIVE-INTEGER))
 ```
 
