@@ -27,16 +27,22 @@ Wildcard `.` means any character.
 
 ## Examples
 
-* Return records with name that starts with `nur` and that have `app` tag defined
-
-```sql
-name LIKE 'nur*' AND tags.app != ''
-```
-
-* Return records with name equal to `nurswgvml003`
+* Return record with name equal to `nurswgvml003`
 
 ```sql
 name = 'nurswgvml003'
+```
+
+* Return records with name starting with `nur`
+
+```sql
+name LIKE 'nur*'
+```
+
+* Return records that have `location` tag defined
+
+```sql
+name tags.location != ''
 ```
 
 * Return records with name that starts with `nur` and with tag `os` equal to 'Linux'
@@ -61,13 +67,13 @@ tags.ip LIKE '10.*22'
 * String lower(Object value);
 * Collection collection(String name);
 
-| Function   | Description                                                                         |
+| **Function**   | **Description**                                                                         |
 |:------------|:-------------------------------------------------------------------------------------|
-| list       | Splits a string by delimiter. Default delimiter is comma                            |
-| likeAll    | returns true, if every element in the collection of patterns matches message        |
-| likeAny    | returns true, if at least one element in the collection of patterns matches message |
-| upper      | converts the argument to upper case                                                 |
-| lower      | converts the argument to lower case                                                 |
-| collection | returns ATSD named collection                                                       |
+| `list`       | Splits a string by delimiter. Default delimiter is comma                            |
+| `likeAll`    | returns true, if every element in the collection of patterns matches message        |
+| `likeAny`    | returns true, if at least one element in the collection of patterns matches message |
+| `upper`      | converts the argument to upper case                                                 |
+| `lower`      | converts the argument to lower case                                                 |
+| `collection` | returns ATSD named collection                                                       |
 
 
