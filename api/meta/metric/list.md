@@ -71,8 +71,8 @@ Default data type for new metrics, when auto-created, is **float**.
 
 |  Status Code  |  Description  |
 |:---------------|:---------------|
-| 500 |TypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'com.axibase.tsd.model.TimeFormat';|
-| 500 |TypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'int'|
+| 500 |TypeMismatchException: <br>Failed to convert value of type 'java.lang.String' to required type 'com.axibase.tsd.model.TimeFormat';|
+| 500 |TypeMismatchException: <br>Failed to convert value of type 'java.lang.String' to required type 'int'|
 
 ## Example 
 
