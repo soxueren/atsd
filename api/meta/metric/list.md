@@ -126,8 +126,8 @@ curl --insecure https://atsd_host:8443/api/v1/metrics?limit=2 \
 * [List metrics by name](../examples/list-metrics-by-name.md)
 * [List metrics by name and tag](../examples/list-metrics-by-name-and-tag.md)
 * [List metrics with tag `table`](../examples/list-metrics-with-tag-table.md)
-* [List metrics by maxInsertDate](../examples/list-metrics-by-maxinserttime.md)
-* [List metrics by minInsertDate](../examples/list-metrics-by-mininserttime.md)
+* [List metrics by maxInsertDate](../examples/list-metrics-by-maxinsertdate.md)
+* [List metrics by minInsertDate](../examples/list-metrics-by-mininsertdate.md)
 
 
 
