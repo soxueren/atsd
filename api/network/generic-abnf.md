@@ -1,10 +1,10 @@
 # Generic ABNF Rules
 
 ```properties
-  ; visible characters, double-quotes escaped with backslash
-NAME = 1*NCHAR / DQUOTE 1*(NCHAR / "\" DQUOTE) DQUOTE  
-  ; visible characters and spaces. double-quotes escaped with backslash
-TEXTVALUE = 1*NCHAR / DQUOTE 1*(NCHAR / SP / "\" DQUOTE) DQUOTE
+  ; visible characters. double-quote must be escaped with backslash.
+NAME = 1*(NCHAR / "\" DQUOTE) 
+  ; visible characters and spaces. space must be double-quoted. double-quote must be escaped with backslash.
+TEXTVALUE = NAME / DQUOTE 1*(NCHAR / "\" DQUOTE / SP) DQUOTE
   ; multiples space
 MSP = 1*SP
   ; space
