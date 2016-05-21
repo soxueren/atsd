@@ -1,5 +1,7 @@
 # series Command
 
+## Description
+
 Insert timestamped metric samples for an entity and series tags into the database. 
 
 ## Syntax
