@@ -25,11 +25,15 @@ Rules inherited from [generic ABNF](generic-abnf.md).
 
 ```properties
   ; MSP - one or multiple spaces
+  ; entity and at least one metric is required
 command = "series" MSP entity 1*(MSP metric) *(MSP tag) [MSP time]
+  ; NAME consists of visible characters. 
+  ; double-quote must be escaped with backslash.
 entity = "e:" NAME
 metric = "m:" NAME "=" NUMBER
-  ; tag values containing space must be double-quoted
-  ; double-quote in value must be escaped with backslash
+  ; TEXTVALUE consists of visible characters and space. 
+  ; double-quote must be escaped with backslash. 
+  ; tag values containing space must me quoted with double-quote.
 tag = "t:" NAME "=" TEXTVALUE
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE-INTEGER
