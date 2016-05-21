@@ -24,8 +24,8 @@ series e:{entity} s:{seconds} m:{metric-1}={number} m:{metric-2}={number} t:{tag
 Rules inherited from [generic ABNF](generic-abnf.md).
 
 ```properties
-  ; 1*SP - one or multiple spaces
-command = "series" 1*SP entity 1*(1*SP metric) *(1*SP tag) [1*SP time]
+  ; MSP - one or multiple spaces
+command = "series" MSP entity 1*(MSP metric) *(MSP tag) [MSP time]
 entity = "e:" NAME
 metric = "m:" NAME "=" NUMBER
   ; tag values containing space must be double-quoted
