@@ -33,6 +33,7 @@ _All parameters are optional. Expression must be URL-encoded._
 ## Response 
 
 ### Fields
+
 |**Field**|**Description**|
 |:---|:---|
 |name|Metric name|
@@ -43,13 +44,14 @@ _All parameters are optional. Expression must be URL-encoded._
 |timePrecision|seconds or milliseconds|
 |enabled|Enabled status. Incoming data is discarded for disabled metrics.|
 |persistent |Persistence status. Non-persistent metrics are not stored in the database and are only processed by the rule engine.|
-|retentionInterval|Number of days to retain values for this metric in the database|
 |filter |Persistence filter. Series insert commands for this metric that do not match the filter are discarded.|
-|versioned| If set to true, enables versioning for the specified metric. When metrics is versioned, the database retains the history of series value changes for the same timestamp along with version_source and version_status.|
-|minValue |Minimum value. If value is less than Minimum value, Invalid Action is triggered|
-|maxValue|Maximum value. If value is greater than Maximum value, Invalid Action is triggered|
-|invalidAction |None - retain value as is. <br>Discard - don't process the incoming put, discard it.<br> Transform - set value to `min_value` or `max_value`.<br> `Raise_Error` - log error in ATSD log.|
 |lastInsertDate|Last time a value was received for this metric by any series. ISO date.|
+|retentionInterval|Number of days to retain values for this metric in the database|
+|versioned| If set to true, enables versioning for the specified metric. When metrics is versioned, the database retains the history of series value changes for the same timestamp along with version_source and version_status.|
+|minValue|Minimum value. If value is less than Minimum value, Invalid Action is triggered|
+|maxValue|Maximum value. If value is greater than Maximum value, Invalid Action is triggered|
+|invalidAction |**None** - retain value as is. <br>**Discard** - don't process the incoming put, discard it.<br>**Transform** - set value to `min_value` or `max_value`.<br>**Raise_Error** - log error in ATSD log.|
+
 
 
 ### Data Types
