@@ -19,39 +19,36 @@ expression=name like '*disk*'
         "name": "aws_ec2.diskreadbytes.average",
         "enabled": true,
         "dataType": "FLOAT",
-        "counter": false,
         "persistent": true,
         "tags": {},
         "timePrecision": "MILLISECONDS",
         "retentionInterval": 0,
         "invalidAction": "NONE",
-        "lastInsertTime": 1447858020000,
+        "lastInsertDate": "2016-05-18T00:35:12.000Z",
         "versioned": false
     },
     {
         "name": "aws_ec2.diskreadbytes.maximum",
         "enabled": true,
         "dataType": "FLOAT",
-        "counter": false,
         "persistent": true,
         "tags": {},
         "timePrecision": "MILLISECONDS",
         "retentionInterval": 0,
         "invalidAction": "NONE",
-        "lastInsertTime": 1447858020000,
+        "lastInsertDate": "2016-05-18T00:35:12.000Z",
         "versioned": false
     },
     {
         "name": "aws_ec2.diskreadbytes.minimum",
         "enabled": true,
         "dataType": "FLOAT",
-        "counter": false,
         "persistent": true,
         "tags": {},
         "timePrecision": "MILLISECONDS",
         "retentionInterval": 0,
         "invalidAction": "NONE",
-        "lastInsertTime": 1447858020000,
+        "lastInsertDate": "2016-05-18T00:35:12.000Z",
         "versioned": false
     }
 ]
