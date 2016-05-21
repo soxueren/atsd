@@ -8,7 +8,7 @@ Properties and tags that are not specified in the request are left unchanged.
 
 ## Path
 
-```
+```elm
 /api/v1/metrics/{metric}
 ```
 
