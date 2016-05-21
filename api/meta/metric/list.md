@@ -39,7 +39,7 @@ _All parameters are optional. Expression must be URL-encoded._
 |name|Metric name.|
 |label|Metric label.|
 |description |Metric description.|
-|tags|An object containing tags as names and values.<br><br>For example, `"tags": {"table": "axibase-collector"}`|
+|tags|An object containing tags as names and values.<br>For example, `"tags": {"table": "axibase-collector"}`|
 |dataType|[Data Type](#data-types).|
 |timePrecision|SECONDS or MILLISECONDS|
 |enabled|Enabled status. Incoming data is discarded for disabled metrics.|
@@ -48,11 +48,9 @@ _All parameters are optional. Expression must be URL-encoded._
 |lastInsertDate|Last time a value was received for this metric by any series. ISO date.|
 |retentionInterval|Number of days to retain values for this metric in the database|
 |versioned| If set to true, enables versioning for the specified metric. When metrics is versioned, the database retains the history of series value changes for the same timestamp along with version_source and version_status.|
-|minValue|Minimum value for Invalid Action trigger.|
-|maxValue|Maximum value for Invalid Action trigger.|
-|invalidAction |[Invalid Action](#invalid-actions)|
-
-
+|minValue|Minimum value for [Invalid Action](#invalid-actions) trigger.|
+|maxValue|Maximum value for [Invalid Action](#invalid-actions) trigger.|
+|invalidAction |[Invalid Action](#invalid-actions) type.|
 
 ### Data Types
 
@@ -69,7 +67,7 @@ Default data type for new metrics, when auto-created, is **float**.
 
 ### Invalid Actions
 
- Invalid Action is triggered if the received value is less than Minimum value, or if the value is greater than Maximum value.
+ Invalid Action is triggered if the received series value is less than Minimum value, or if it's greater than Maximum value.
 
 |**Action**|**Description**|
 |:---|:---|
