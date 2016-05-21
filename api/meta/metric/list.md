@@ -47,7 +47,7 @@ _All parameters are optional. Expression must be URL-encoded._
 |filter |Persistence filter [expression](../expression.md). Discards series that do not match this filter.|
 |lastInsertDate|Last time a value was received for this metric by any series. ISO date.|
 |retentionInterval|Number of days to retain values for this metric in the database|
-|versioned| If set to true, enables versioning for the specified metric. When metrics is versioned, the database retains the history of series value changes for the same timestamp along with version_source and version_status.|
+|versioned| If set to true, enables versioning for the specified metric. <br>When metrics is versioned, the database retains the history of series value changes for the same timestamp along with `version_source` and `version_status`.|
 |minValue|Minimum value for [Invalid Action](#invalid-actions) trigger.|
 |maxValue|Maximum value for [Invalid Action](#invalid-actions) trigger.|
 |invalidAction |[Invalid Action](#invalid-actions) type.|
