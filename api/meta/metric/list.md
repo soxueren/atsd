@@ -14,28 +14,28 @@ GET
 
 ### Parameters
 
-|**Parameter**|**Type**|**Description**|
+|**Parameter**|**Type**|:**Description**|
 |---|---|---|
-|expression|string|Include metrics that match an expression containing `name` and `tags.{tag-name}` variables. <br>`LIKE` operator supports `*` wildcard, for example `name LIKE 'cpu*'`. Expression must be URL-encoded.|
-|minInsertDate|iso date|Include metrics with `lastInsertDate` equal or greater than specified date.|
-|maxInsertDate|iso date|Include metrics with `lastInsertDate` less than specified date.|
+|expression|string|Include metrics that match an expression containing `name` and `tags.{tag-name}` variables. <br>`LIKE` operator supports `*` wildcard, for example `name LIKE 'cpu*'`.|
+|minInsertDate|iso_date|Include metrics with `lastInsertDate` equal or greater than specified date.|
+|maxInsertDate|iso_date|Include metrics with `lastInsertDate` less than specified date.|
 |tags|string|Comma-separated list of metric tags to be included in the response.<br>Set `tags=*` to include all metric tags.|
 |limit|integer|Limit response to first N metrics, ordered by name.|
 
-_All parameters are optional._
+_All parameters are optional. Expression must be URL-encoded._
 
 ## Response 
 
 ### Fields
 |**Field**|**Description**|
-|---|---|
+|---|:---|
 |name|Metric name|
 |label|Metric label|
 |description |Metric description|
-|tags|List of metric tags|
+|tags|Array of metric tag name:value objects.|
 |enabled|Enabled status. Incoming data is discarded for disabled metrics.|
 |dataType|[Data type](#data-types)|
-|timePrecision|seconds, milliseconds|
+|timePrecision|seconds or milliseconds|
 |persistent |Persistence status. Non-persistent metrics are not stored in the database and are only processed by the rule engine.|
 |versioned| If set to true, enables versioning for the specified metric. When metrics is versioned, the database retains the history of series value changes for the same timestamp along with version_source and version_status.|
 |counter|Metrics represents a continuously incrementing counter.|
@@ -44,7 +44,7 @@ _All parameters are optional._
 |maxValue|Maximum value. If value is greater than Maximum value, Invalid Action is triggered|
 |invalidAction |None - retain value as is. <br>Discard - don't process the incoming put, discard it.<br> Transform - set value to `min_value` or `max_value`.<br> `Raise_Error` - log error in ATSD log.|
 |retentionInterval|Number of days to retain values for this metric in the database|
-|lastInsertDate|Last time a value was received for this metric by any series. Time specified in ISO format.|
+|lastInsertDate|Last time a value was received for this metric by any series. ISO date.|
 
 ### Data Types
 
