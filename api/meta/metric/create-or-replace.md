@@ -10,7 +10,7 @@ In order to update only specific fields specified in the request, use [Metric: U
 
 ## Path
 
-```
+```elm
 /api/v1/metrics/{metric}
 ```
 
