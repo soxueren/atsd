@@ -25,7 +25,7 @@ GET
 |expression|string|Include metrics that match an [expression](../expression.md) filter.|
 |minInsertDate|iso_date|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.|
 |maxInsertDate|iso_date|Include metrics with `lastInsertDate` less than `maxInsertDate`.|
-|tags|string|Comma-separated list of metric tags to be included in the response.<br>Specify `tags=*` to include all metric tags.|
+|tags|string|Comma-separated list of metric tags to be included in the response.<br>For example, `tags=table,unit`<br>Specify `tags=*` to include all metric tags.|
 |limit|integer|Limit response to first N metrics, ordered by name.|
 
 _All parameters are optional. Expression must be URL-encoded._
@@ -39,7 +39,7 @@ _All parameters are optional. Expression must be URL-encoded._
 |name|Metric name.|
 |label|Metric label.|
 |description |Metric description.|
-|tags|An object containing tags as names and values.|
+|tags|An object containing tags as names and values.<br><br>For example, `"tags": {"table": "axibase-collector"}`|
 |dataType|[Data Type](#data-types).|
 |timePrecision|SECONDS or MILLISECONDS|
 |enabled|Enabled status. Incoming data is discarded for disabled metrics.|
