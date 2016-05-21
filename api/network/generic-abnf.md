@@ -3,8 +3,11 @@
 ```properties
   ; space
 SP = %x20 
-  ; visible ASCII Unicode characters
-VCHAR = %x21-7E / UNICODE 
+  ; visible characters except double-quote
+NCHAR = %x21 / %x23-7E / UNICODE
+  ; visible character
+VCHAR = %x21-7E / UNICODE
+  ; Unicode character
   ; http://tools.ietf.org/html/rfc6531#section-3.3
 UNICODE = %x80-FF / ; Latin-1 Supplement
           %x100-17F / ; Latin Extended-A
