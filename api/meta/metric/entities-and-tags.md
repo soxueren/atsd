@@ -6,7 +6,7 @@ Returns a list of **series** for the metric. Each series contains entity name an
 
 ## Path
 
-```
+```elm
 /api/v1/metrics/{metric}/entity-and-tags
 ```
 
@@ -46,7 +46,7 @@ _All parameters are optional._
 
 #### URI
 
-```
+```elm
 GET https://atsd_host:8443/api/v1/metrics/disk_used/entity-and-tags
 ```
 
