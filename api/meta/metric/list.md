@@ -14,42 +14,37 @@ GET
 
 ### Parameters
 
-|**Parameter**|**Required**|**Description**|
+|**Parameter**|**Type**|**Description**|
 |---|---|---|
-|expression|no|Filter to include metrics that match the specified expression.<br>Use `name` variable for metric name. `*` wildcard is supported in `like` expressions. <br> Expression must be URL-encoded.|
-|active|no|Filter metrics by `last_insert_time`. If `active = true`, only metrics with positive `last_insert_time` are included in the response|
-|tags|no|Specify metric tags to be included in the response, use `tags=*` as a wildcard (returns all existing tags)|
-|minInsertDate|no|return metrics with `lastInsertTime` equal or greater than specified time, accepts iso date format|
-|maxInsertDate|no|return metrics with `lastInsertTime` less than specified time, accepts iso date format|
-|limit|no|Limit response to first N metrics, ordered by name.|
-|timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
+|expression|string|Include metrics that match an expression containing `name` and `tags.{tag-name}` variables. <br>`LIKE` operator supports `*` wildcard, for example `name LIKE 'cpu*'`. Expression must be URL-encoded.|
+|minInsertDate|iso date|Include metrics with `lastInsertDate` equal or greater than specified date.|
+|maxInsertDate|iso date|Include metrics with `lastInsertDate` less than specified date.|
+|tags|string|Comma-separated list of metric tags to be included in the response.<br>Set `tags=*` to include all metric tags.|
+|limit|integer|Limit response to first N metrics, ordered by name.|
+
+_All parameters are optional._
 
 ## Response 
+
 ### Fields
 |**Field**|**Description**|
 |---|---|
-|name|Metric name (unique)|
+|name|Metric name|
 |label|Metric label|
-|enabled|Enabled status. Incoming data is discarded for disabled metrics|
+|description |Metric description|
+|tags|List of metric tags|
+|enabled|Enabled status. Incoming data is discarded for disabled metrics.|
 |dataType|[Data type](#data-types)|
 |timePrecision|seconds, milliseconds|
-|persistent |Persistence status. Non-persistent metrics are not stored in the database and are only used in rule engine.|
-|counter|Metrics with continuously incrementing value should be defined as counters|
-|filter |If filter is specified, metric puts that do not match the filter are discarded|
+|persistent |Persistence status. Non-persistent metrics are not stored in the database and are only processed by the rule engine.|
+|versioned| If set to true, enables versioning for the specified metric. When metrics is versioned, the database retains the history of series value changes for the same timestamp along with version_source and version_status.|
+|counter|Metrics represents a continuously incrementing counter.|
+|filter |Persistent filter. If specified series insert commands that do not match the filter are discarded.|
 |minValue |Minimum value. If value is less than Minimum value, Invalid Action is triggered|
 |maxValue|Maximum value. If value is greater than Maximum value, Invalid Action is triggered|
-|invalidAction |None - retain value as is; Discard - don't process the incoming put, discard it; Transform - set value to `min_value` or `max_value`; `Raise_Error` - log error in ATSD log|
-|description |Metric description|
+|invalidAction |None - retain value as is. <br>Discard - don't process the incoming put, discard it.<br> Transform - set value to `min_value` or `max_value`.<br> `Raise_Error` - log error in ATSD log.|
 |retentionInterval|Number of days to retain values for this metric in the database|
-|lastInsertTime|Last time value was received by ATSD for this metric. Time specified in epoch milliseconds.|
-|lastInsertDate|Last time value was received by ATSD for this metric. Time specified in ISO format.|
-|tags as requested by tags parameter|User-defined tags|
-|versioned| If set to true, enables versioning for the specified metric. When metrics is versioned, the database retains the history of series value changes for the same timestamp along with version_source and version_status.|
-
-
- <aside class="notice">
-If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returned. If `timeFormat` is set to the default value (milliseconds), then `lastInsertTime` will be returned.
-</aside>
+|lastInsertDate|Last time a value was received for this metric by any series. Time specified in ISO format.|
 
 ### Data Types
 
