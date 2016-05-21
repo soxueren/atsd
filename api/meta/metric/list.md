@@ -36,21 +36,21 @@ _All parameters are optional. Expression must be URL-encoded._
 
 |**Field**|**Description**|
 |:---|:---|
-|name|Metric name|
-|label|Metric label|
-|description |Metric description|
-|tags|Array of metric tag name:value objects.|
-|dataType|[Data type](#data-types)|
-|timePrecision|seconds or milliseconds|
+|name|Metric name.|
+|label|Metric label.|
+|description |Metric description.|
+|tags|An object containing tags as names and values.|
+|dataType|[Data Type](#data-types).|
+|timePrecision|SECONDS or MILLISECONDS|
 |enabled|Enabled status. Incoming data is discarded for disabled metrics.|
 |persistent |Persistence status. Non-persistent metrics are not stored in the database and are only processed by the rule engine.|
-|filter |Persistence filter. Series insert commands for this metric that do not match the filter are discarded.|
+|filter |Persistence filter [expression](../expression.md). Discards series that do not match this filter.|
 |lastInsertDate|Last time a value was received for this metric by any series. ISO date.|
 |retentionInterval|Number of days to retain values for this metric in the database|
 |versioned| If set to true, enables versioning for the specified metric. When metrics is versioned, the database retains the history of series value changes for the same timestamp along with version_source and version_status.|
-|minValue|Minimum value. If value is less than Minimum value, Invalid Action is triggered|
-|maxValue|Maximum value. If value is greater than Maximum value, Invalid Action is triggered|
-|invalidAction |**None** - retain value as is. <br>**Discard** - don't process the incoming put, discard it.<br>**Transform** - set value to `min_value` or `max_value`.<br>**Raise_Error** - log error in ATSD log.|
+|minValue|Minimum value for Invalid Action trigger.|
+|maxValue|Maximum value for Invalid Action trigger.|
+|invalidAction |[Invalid Action](#invalid-actions)|
 
 
 
@@ -58,14 +58,25 @@ _All parameters are optional. Expression must be URL-encoded._
 
 |**Type**|**Storage Size, bytes**|
 |:---|:---|
-|short|2|
-|integer|4|
-|long|8|
-|float|4|
-|double|8|
-|decimal|variable|
+|SHORT|2|
+|INTEGER|4|
+|LONG|8|
+|FLOAT|4|
+|DOUBLE|8|
+|DECIMAL|variable|
 
 Default data type for new metrics, when auto-created, is **float**. 
+
+### Invalid Actions
+
+ Invalid Action is triggered if the received value is less than Minimum value, or if the value is greater than Maximum value.
+
+|**Action**|**Description**|
+|:---|:---|
+|NONE|Retain value as is.|
+|DISCARD|Don't process the received value, discard it.|
+|TRANSFORM|Set value to `min_value` or `max_value`, if value is outside of range.|
+|RAISE_ERROR|Log ERROR event in the database log.|
 
 ### Errors
 
