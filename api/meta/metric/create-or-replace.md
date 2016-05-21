@@ -1,6 +1,6 @@
-## Metric: Create or Replace
+# Metric: Create or Replace
 
-### Description 
+## Description 
 
 Create a metric with specified properties and tags or replace an existing metric.
 
