@@ -28,7 +28,7 @@ PATCH
 
 ### Fields
 
-Refer to [Metric: List](list.md#fields)
+Refer to Response Fields specified in [Metrics List](list.md#fields) method.
 
 ## Example
 
