@@ -1,4 +1,4 @@
-# List metrics by maxInsertDate
+# List Metrics by maxInsertDate
 
 List metrics with `lastInsertDate` less than 2016-05-19T08:13:40.000Z
 ## Request
@@ -14,7 +14,6 @@ GET https://atsd_host:8443/api/v1/metrics?maxInsertDate=2016-05-19T08:13:40.000Z
       "name":"meminfo.buffers",
       "enabled":true,
       "dataType":"FLOAT",
-      "counter":false,
       "persistent":true,
       "timePrecision":"MILLISECONDS",
       "retentionInterval":0,
@@ -26,7 +25,6 @@ GET https://atsd_host:8443/api/v1/metrics?maxInsertDate=2016-05-19T08:13:40.000Z
       "name":"meminfo.cached",
       "enabled":true,
       "dataType":"FLOAT",
-      "counter":false,
       "persistent":true,
       "timePrecision":"MILLISECONDS",
       "retentionInterval":0,
@@ -38,7 +36,6 @@ GET https://atsd_host:8443/api/v1/metrics?maxInsertDate=2016-05-19T08:13:40.000Z
       "name":"meminfo.cmafree",
       "enabled":true,
       "dataType":"FLOAT",
-      "counter":false,
       "persistent":true,
       "timePrecision":"MILLISECONDS",
       "retentionInterval":0,
