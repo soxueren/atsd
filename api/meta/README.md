@@ -1,14 +1,6 @@
 ## Overview
 
-The Meta API lets you query and update meta-data about metrics, entities, entity groups, rules, and tags from Axibase Time-Series Database (ATSD) server. 
-
-The API uses standard HTTP requests, such as: `GET`, `POST`, and `PATCH`. 
-
-All requests must be authorized using BASIC AUTHENTICATION. 
-
-In response, the ATSD server sends an HTTP status code (such as a 200-type status for success or 400-type status for failure) that reflects the result of each request. 
-
-You can use any programming language that lets you issue HTTP requests and parse JSON-based responses.
+The Meta API lets you query and update metadata about metrics, entities, and entity groups in Axibase Time Series Database. 
 
 ## Categories
 
@@ -39,23 +31,61 @@ You can use any programming language that lets you issue HTTP requests and parse
     - [get entities](entity-group/get-entities.md)
     - [set (replace) entities](entity-group/set-replace-entities.md)
 
+## Request Methods
 
+The API uses `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` methods to read and write data.
 
+## Response Codes
 
-### Authentication
+* `200` status code if the request is successful.
+* `401` status code in case of unknown resource.
+* `403` status code in case of access denied error.
+* `4xx` status code in case of other client errors.
+* `5xx` status code in case of server error. 
 
-* User authentication is required.
-* Authentication method: `HTTP BASIC`.
-* Client may use session cookies to execute multiple requests without repeating authentication.
-* Cross-domain requests are allowed. The server includes the following headers in each response:
+4xx or 5xx response codes are specific to each API methods.
 
-`Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization`
+## Authentication
 
-`Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE`
-    
-`Access-Control-Allow-Origin: *`
+* User [authentication](/administration/user-authentiication.md) is required.
+* All requests must be authenticated using BASIC AUTHENTICATION.
+* Authentication method is **HTTP BASIC**.
+* Client may enable session cookies to execute multiple requests without re-sending BASIC authentication header.
 
-### Compression
+## Authorization
 
-* Clients may send compressed data by specifying Content-Encoding: gzip
+* User must have [**API_META_READ**/**API_META_WRITE**](/administration/user-authorization.md#available-api-roles) role.
+ 
+## Cross-domain Requests
+
+Cross-domain requests are allowed. 
+
+The server includes the following headers in each response:
+
+```yaml
+Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
+Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE
+Access-Control-Allow-Origin: *
+```
+
+## Compression
+
+* Clients may send compressed data by adding HTTP header **Content-Encoding: gzip** to the request.
+
+## Troubleshooting
+
+* Review error logs on **Admin:Server Logs** page in case the payload rejected
+* To validate json received from a client, launch `netcat` utility in server mode, reconfigure the client to send data to netcat port, and dump incoming data to file:
+
+```
+nc -lk localhost 20088 > json-in.log &
+
+curl http://localhost:20088/api/v1/metrics/cpu-used-total \
+  -v -u {username}:{password} \
+  -H "Content-Type: application/json" \
+  -X PATCH \
+  -d '{ "label": "CPU Busy Average" }'
+
+cat json-in.log
+```
 
