@@ -1,4 +1,4 @@
-## Metric: Entities and Tags
+# Metric: Entities and Tags
 
 ## Description 
 
@@ -28,7 +28,9 @@ GET
 
 _All parameters are optional._
 
-### Response Fields
+## Response
+
+### Fields
 
 | **Field** | **Description** |
 |:---|:---|
@@ -38,14 +40,17 @@ _All parameters are optional._
 
 
 
-### Basic Example
+## Example
 
-> Request
+### Request
+
+#### URI
 
 ```
-http://atsd_server:8088/api/v1/metrics/disk_used/entity-and-tags
+GET https://atsd_host:8443/api/v1/metrics/disk_used/entity-and-tags
 ```
-> Response
+
+### Response
 
 ```json
 [
