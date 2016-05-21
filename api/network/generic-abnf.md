@@ -5,6 +5,8 @@
 NAME = 1*NCHAR / DQUOTE 1*(NCHAR / "\" DQUOTE) DQUOTE  
   ; visible characters and spaces. double-quotes escaped with backslash
 VALUE = 1*NCHAR / DQUOTE 1*(NCHAR / SP / "\" DQUOTE) DQUOTE
+  ; multiples space
+MSP = 1*SP
   ; space
 SP = %x20 
   ; double-quote
