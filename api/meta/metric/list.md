@@ -100,29 +100,26 @@ curl --insecure https://atsd_host:8443/api/v1/metrics?limit=2 \
         "name": "m-vers",
         "enabled": true,
         "dataType": "FLOAT",
-        "counter": false,
         "persistent": true,
         "timePrecision": "MILLISECONDS",
         "retentionInterval": 0,
         "invalidAction": "NONE",
-        "lastInsertTime": 1445205600000,
+        "lastInsertDate": "2016-05-19T00:15:02.000Z",
         "versioned": true
     },
     {
-        "name": "24h_average",
+        "name": "temperature",
         "enabled": true,
         "dataType": "FLOAT",
-        "counter": false,
         "persistent": true,
         "timePrecision": "MILLISECONDS",
         "retentionInterval": 0,
         "invalidAction": "NONE",
+        "lastInsertDate": "2016-05-18T00:35:12.000Z",        
         "versioned": false
     }
 ]
 ```
-
-
 
 ## Additional Examples
 * [List metrics name by name](https://github.com/axibase/atsd-docs/blob/master/api/meta/examples/list-metrics-by-name.md)
