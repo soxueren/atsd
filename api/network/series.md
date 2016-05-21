@@ -19,6 +19,8 @@ series e:{entity} s:{seconds} m:{metric-1}={number} m:{metric-2}={number} t:{tag
 | ms        | no           | Time in UNIX milliseconds. | 
 | d         | no           | Time in ISO format. | 
 
+> If time fields are omitted, the values are inserted with current server time.
+
 ### ABNF
 
 Rules inherited from [generic ABNF](generic-abnf.md).
