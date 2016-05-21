@@ -87,7 +87,3 @@ curl http://localhost:20088/api/v1/series/insert \
 
 cat json-in.log
 ```
-
-## Errors
-
-[Error Codes](https://github.com/axibase/atsd-docs/blob/master/api/data/error-codes.md)
