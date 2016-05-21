@@ -24,13 +24,13 @@ series e:{entity} s:{unix_seconds} m:{metric}={value} m:{metric}={value} t:{key}
 Rules inherited from [generic ABNF](generic-abnf.md).
 
 ```properties
-; 1*SP - one or multiple spaces
+  ; 1*SP - one or multiple spaces
 command = "series" 1*SP entity 1*(1*SP metric) *(1*SP tag) [1*SP time]
-entity = "e:" 1*NCHAR
-metric = "m:" 1*NCHAR "=" NUMBER
-; tag values containing space must be double-quoted
-; double-quote in value must be escaped with backslash
-tag = "t:" 1*NCHAR "=" 1*NCHAR / (DQUOTE 1*VCHAR DQUOTE)
+entity = "e:" 1*VCHAR
+metric = "m:" 1*VCHAR "=" NUMBER
+  ; tag values containing space must be double-quoted
+  ; double-quote in value must be escaped with backslash
+tag = "t:" 1*VCHAR "=" (1*VCHAR / (DQUOTE 1*VCHAR DQUOTE))
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE-INTEGER
 time-second = "s:" POSITIVE-INTEGER
@@ -67,7 +67,7 @@ series e:server001 m:disk_used_percent=20.5 m:disk_size_mb=10240 t:mount_point=/
 
 Versioning is disabled by default. It can be enabled for particular metrics by setting Versioning checkbox to selected on Metric Editor page.
 
-To insert versioning fields use reserved series tags:
+To insert versioning fields use reserved tags:
 
 * `$version_source`
 * `$version_status`
@@ -76,7 +76,5 @@ To insert versioning fields use reserved series tags:
 series s:1425482080 e:e-vers m:m-vers=13 t:$version_status=OK t:$version_source=collector-1
 ```
 
-These tags will be ignored as series tags and instead will be used to populate corresponding versioning fields.
-
-If the metric is unversioned, `$version_source` and `$version_status` tags will be processed as regular series tags.
+If the metrics is versioned,  `$version_source` and `$version_status` tags will be ignored as regular series tags and instead will be converted to corresponding versioning tags.
 
