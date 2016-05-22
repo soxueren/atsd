@@ -101,6 +101,8 @@ https://atsd_host:8443/api/v1/metrics?limit=2
 
 #### Payload
 
+None.
+
 #### curl
 
 ```elm
