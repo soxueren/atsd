@@ -66,17 +66,17 @@ curl https://atsd_host:8443/api/v1/metrics/cpu_busy \
 
 ```json
 {
-    "name": "cpu_busy",
-    "enabled": true,
-    "dataType": "FLOAT",
-    "counter": false,
-    "persistent": true,
-    "tags": {},
-    "timePrecision": "MILLISECONDS",
-    "retentionInterval": 0,
-    "invalidAction": "NONE",
-    "lastInsertDate": "2015-10-20T12:13:26.000Z",
-    "versioned": false
+  "name": "cpu_busy",
+  "enabled": true,
+  "dataType": "FLOAT",
+  "counter": false,
+  "persistent": true,
+  "tags": {},
+  "timePrecision": "MILLISECONDS",
+  "retentionInterval": 0,
+  "invalidAction": "NONE",
+  "lastInsertDate": "2015-10-20T12:13:26.000Z",
+  "versioned": false
 }
 ```
 
