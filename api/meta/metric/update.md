@@ -58,10 +58,10 @@ PATCH https://atsd_host:8443/api/v1/metrics/collectd.cpu.aggregation.busy.averag
 
 ```json
 {
-    "label": "CPU Busy Average",
-    "tags": {
-        "table": "CollectD CPU Total"
-    }
+	"label": "CPU Busy Average",
+	"tags": {
+		"table": "CollectD CPU Total"
+	}
 }
 ```
 
