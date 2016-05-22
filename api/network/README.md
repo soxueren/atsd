@@ -276,6 +276,18 @@ $ echo -e "debug my_command e:station_1 m:temperature=32.2" | nc 10.102.0.6 8081
 >no response, connection closed
 ```
 
+## Command Validation
+
+To validate network received from a client, launch `netcat` utility in server mode, reconfigure the client to send data to netcat port, and dump incoming data to file:
+
+```elm
+nc -lk localhost 2081 > command-in.log &
+
+echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z" | nc localhost 2081
+
+cat command-in.log
+```
+
 ## Dropped Commands
 
 Reasons why ATSD server can drop commands:
