@@ -4,19 +4,21 @@
 
 Return a list of metrics, their properties, and optional metric tags.
 
-## Path
+## Request
+
+### Path
 
 ```elm
 /api/v1/metrics
 ```
 
-## Method
+### Method
 
 ```
 GET 
 ```
 
-## Request
+### Headers
 
 ### Parameters
 
@@ -29,6 +31,10 @@ GET
 |limit|integer|Limit response to first N metrics, ordered by name.|
 
 _All parameters are optional. Expression must be URL-encoded._
+
+### Fields
+
+None.
 
 ## Response 
 
@@ -93,9 +99,11 @@ Default data type for new metrics, when auto-created, is **float**.
 https://atsd_host:8443/api/v1/metrics?limit=2
 ```
 
+#### Payload
+
 #### curl
 
-```bmx
+```elm
 curl https://atsd_host:8443/api/v1/metrics?limit=2 \
   --insecure --verbose --user {username}:{password} \
   --request GET
@@ -104,30 +112,27 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
 ### Response
 
 ```json
- [
-    {
-        "name": "m-vers",
-        "enabled": true,
-        "dataType": "FLOAT",
-        "persistent": true,
-        "timePrecision": "MILLISECONDS",
-        "retentionInterval": 0,
-        "invalidAction": "NONE",
-        "lastInsertDate": "2016-05-19T00:15:02.000Z",
-        "versioned": true
-    },
-    {
-        "name": "temperature",
-        "enabled": true,
-        "dataType": "FLOAT",
-        "persistent": true,
-        "timePrecision": "MILLISECONDS",
-        "retentionInterval": 0,
-        "invalidAction": "NONE",
-        "lastInsertDate": "2016-05-18T00:35:12.000Z",        
-        "versioned": false
-    }
-]
+[{
+	"name": "m-vers",
+	"enabled": true,
+	"dataType": "FLOAT",
+	"persistent": true,
+	"timePrecision": "MILLISECONDS",
+	"retentionInterval": 0,
+	"invalidAction": "NONE",
+	"lastInsertDate": "2016-05-19T00:15:02.000Z",
+	"versioned": true
+}, {
+	"name": "temperature",
+	"enabled": true,
+	"dataType": "FLOAT",
+	"persistent": true,
+	"timePrecision": "MILLISECONDS",
+	"retentionInterval": 0,
+	"invalidAction": "NONE",
+	"lastInsertDate": "2016-05-18T00:35:12.000Z",
+	"versioned": false
+}]
 ```
 
 ## Additional Examples
