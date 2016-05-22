@@ -249,6 +249,14 @@ The timestamp field encodes the time of an observation or message as determined 
 * If timestamp field in seconds or milliseconds is less than or equal 0, or if it's empty in case of d: prefix, the time is set to server's current time.
 * If timestamp field is not specified, time is set to current server time.
 
+### Number Formatting
+
+* Decimal separator is period (`.`).
+* No thousands separator.
+* No digit grouping.
+* Negative numbers use negative sign (`-`) at the beginning of the number.
+* Not-a-Number is literal `NaN`.
+
 ## Debugging
 
 By default ATSD doesn't return acknowledgements to the client after processing data commands.
