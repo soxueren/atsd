@@ -37,9 +37,8 @@ GET https://atsd_host:8443/api/v1/metrics/md-2
 
 ```css
 curl https://atsd_host:8443/api/v1/metrics/md-2 \
-  -v -u {username}:{password} \
-  -H "Content-Type: application/json" \
-  -X GET
+  --insecure --verbose --user {username}:{password} \
+  --request GET
 ```
 
 ### Response
