@@ -56,7 +56,7 @@ None.
 
 #### curl 
 
-```bmx
+```elm
 curl https://atsd_host:8443/api/v1/metrics/cpu_busy \
   --insecure --verbose --user {username}:{password} \
   --request GET
