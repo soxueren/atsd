@@ -56,7 +56,11 @@ None.
 
 #### curl
 
-None.
+```elm
+curl https://atsd_host:8443/api/v1/metrics/my-metric \
+  --insecure --verbose --user {username}:{password} \
+  --request DELETE
+```
 
 ### Response
 
