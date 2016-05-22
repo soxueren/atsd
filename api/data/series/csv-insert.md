@@ -38,10 +38,12 @@ POST
 ### Payload
 
 * Payload is plain text in CSV format containing a header line and data rows.
+* Last time in the file must be terminated with line feed.
 * The header must begin with `time` or `date` column, followed by at least one metric column containing numeric values.
+* Metric names containing space characters will be normalized. <br>Space will be replaced with underscore and multiple underscored will be collapsed into one underscore.
 * Time must be specified in Unix milliseconds if `time` column is used, and in ISO format if `date` column is used.
 * Separator must be comma.
-* It is recommended that samples are sorted by time in ascending order
+* It is recommended that samples are sorted by time in ascending order.
 
 #### Unix millisecond format
 
@@ -67,7 +69,10 @@ None.
 
 ### Errors
 
-None.
+* "Empty first row" if no rows found.
+* "CSV must have at least 2 columns" if header contains less than 2 columns.
+* "First header must be 'time' (specified in Unix milliseconds) or 'date' (ISO 8601 date)" if the name of first column in header is neither `time` nor `date`.
+* "No data" if number of data rows is 0.
 
 ## Example 
 
@@ -92,9 +97,17 @@ time,cpu_user,cpu_system,waitio
 ```elm
 curl https://atsd_host:8443/api/v1/series/csv/nurswgvml007 \
  --insecure --verbose --user {username}:{password} \
-  --header "Content-Type: text/csv" \
-  --request POST \
-  --data @file.csv
+ --header "Content-Type: text/csv" \
+ --request POST \
+ --data-binary $'date,lx.cpu_busy\n2016-05-21T00:00:00Z,12.45\n2016-05-21T00:00:15Z,10.8\n'
+```
+
+```elm
+curl https://atsd_host:8443/api/v1/series/csv/nurswgvml007 \
+ --insecure --verbose --user {username}:{password} \
+ --header "Content-Type: text/csv" \
+ --request POST \
+ --data-binary @file.csv
 ```
 
 ### Response
