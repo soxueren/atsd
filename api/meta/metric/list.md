@@ -114,27 +114,30 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
 ### Response
 
 ```json
-[{
-	"name": "m-vers",
-	"enabled": true,
-	"dataType": "FLOAT",
-	"persistent": true,
-	"timePrecision": "MILLISECONDS",
-	"retentionInterval": 0,
-	"invalidAction": "NONE",
-	"lastInsertDate": "2016-05-19T00:15:02.000Z",
-	"versioned": true
-}, {
-	"name": "temperature",
-	"enabled": true,
-	"dataType": "FLOAT",
-	"persistent": true,
-	"timePrecision": "MILLISECONDS",
-	"retentionInterval": 0,
-	"invalidAction": "NONE",
-	"lastInsertDate": "2016-05-18T00:35:12.000Z",
-	"versioned": false
-}]
+[
+  {
+    "name": "m-vers",
+    "enabled": true,
+    "dataType": "FLOAT",
+    "persistent": true,
+    "timePrecision": "MILLISECONDS",
+    "retentionInterval": 0,
+    "invalidAction": "NONE",
+    "lastInsertDate": "2016-05-19T00:15:02.000Z",
+    "versioned": true
+  },
+  {
+    "name": "temperature",
+    "enabled": true,
+    "dataType": "FLOAT",
+    "persistent": true,
+    "timePrecision": "MILLISECONDS",
+    "retentionInterval": 0,
+    "invalidAction": "NONE",
+    "lastInsertDate": "2016-05-18T00:35:12.000Z",
+    "versioned": false
+  }
+]
 ```
 
 ## Additional Examples
