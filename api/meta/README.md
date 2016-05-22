@@ -77,7 +77,7 @@ Access-Control-Allow-Origin: *
 * Review error logs on **Admin:Server Logs** page in case the payload rejected
 * To validate json received from a client, launch `netcat` utility in server mode, reconfigure the client to send data to netcat port, and dump incoming data to file:
 
-```
+```elm
 nc -lk localhost 20088 > json-in.log &
 
 curl http://localhost:20088/api/v1/metrics/cpu-used-total \
