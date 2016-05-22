@@ -6,32 +6,36 @@ Insert a timestamped array of numeric samples for a given metric, entity, and se
 
 This method can also be used to insert a array of custom forecast and forecast deviation samples.
 
-## Path
+New entities and metrics will be automatically created provided they meet naming requirements.
 
-```
+New metrics will be initialized with `float` data type by default. To insert metric samples with another datatype, create or update metric properties using the web interface or [Meta API](/api/meta/metric/update.md).
+
+## Request
+
+### Path
+
+```elm
 /api/v1/series/insert
 ```
 
-## Method
+### Method
 
 ```
 POST 
 ```
 
-## Request
-
-The request must contain an array of series objects each containing an array of timestamped observations. It is recommended that observations for each series are ordered ascendingly by time.
-
 ### Headers
 
 |**Header**|**Value**|
-|---|---|
+|:---|:---|
 | Content-Type | application/json |
 
 ### Fields
 
+The request must contain an array of series objects each containing an array of timestamped samples. It is recommended that samples for each series are ordered by time ascendingly.
+
 |**Field**|**Required**|**Description**|
-|---|---|---|
+|:---|:---|:---|
 | entity | yes | Entity name |
 | metric | yes | Metric name |
 | tags | no | Object containing series tags, where field name represents tag name and field value is tag value.<br>`{"tag-1":string,"tag-2":string}` |
@@ -44,7 +48,7 @@ The request must contain an array of series objects each containing an array of 
 
 ### Fields
 
-Empty if insert was successful.
+None.
 
 ### Errors
 
@@ -55,11 +59,6 @@ Empty if insert was successful.
 | 400 | IllegalArgumentException: No data |
 | 500 | JsonParseException: Unexpected character "}" | 
 | 500 | JsonMappingException: No enum constant in field type|
-
-## Schema
-
-* New entities and metrics will be automatically created provided they meet naming requirements.
-* New metrics will be initialized with `float` data type by default. <br>To insert metric samples with another datatype, create or update metric properties using [Meta API](/api/meta/metric/create-or-replace.md) or the web interface.
 
 ## Example
 
@@ -83,36 +82,26 @@ POST https://atsd_host:8443/api/v1/series/insert
 }]
 ```
 
-### curl Example
+#### curl
 
-#### http 8088 data
+* `--data` Payload
 
-```css
-curl http://atsd_host:8088/api/v1/series/insert \
-  --verbose --user {username}:{password} \
+```elm
+curl https://atsd_host:8443/api/v1/series/insert \
+  --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
   --data '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
-```
+  ```
+  
+* file
 
-#### http 8088 file
-
-```css
-curl http://atsd_host:8088/api/v1/series/insert \
-  --verbose --user {username}:{password} \
+```elm
+curl https://atsd_host:8443/api/v1/series/insert \
+  --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
   --data @file.json
-```
-
-#### https 8443 data
-
-```css
-curl --insecure https://atsd_host:8443/api/v1/series/insert \
-  --verbose --user {username}:{password} \
-  --header "Content-Type: application/json" \
-  --request POST \
-  --data '[{"entity": "nurswgvml007", "metric": "mpstat.cpu_busy", "data": [{ "t": 1462427358127, "v": 22.0 }]}]'
   ```
 
 ## Additional Examples
