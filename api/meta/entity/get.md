@@ -1,16 +1,49 @@
-## Entity: Get
-### Method
+# Entity: Get
+
+## Description 
+
+Retrieve properties and tags for the specified entity.
+
+## Path 
+
+```elm
+/api/v1/entities/{entity}
 ```
-GET /api/v1/entities/{entity}
-```
-### Basic Example
-> Request
+
+## Method 
 
 ```
-http://atsd_hostname:8088/api/v1/entities/nurswgvml006?timeFormat=iso
+GET
 ```
 
-> Response
+## Request
+
+## Response
+
+### Fields
+
+Refer to Response Fields in [Entities: List](list.md)
+
+## Example
+
+### Request
+
+#### URI
+
+```elm
+GET https://atsd_host:8443/api/v1/entities/nurswgvml006
+```
+
+#### curl 
+
+```css
+curl https://atsd_host:8443/api/v1/entities/nurswgvml006 \
+  -v -u {username}:{password} \
+  -H "Content-Type: application/json" \
+  -X GET
+```
+
+### Response
 
 ```json
 {
@@ -24,10 +57,3 @@ http://atsd_hostname:8088/api/v1/entities/nurswgvml006?timeFormat=iso
     }
 }
 ```
-
-Displays entity properties and all tags.
-
-###Response Fields
-
-See: [Entities: List](#entities:-list)
-
