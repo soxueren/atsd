@@ -21,7 +21,7 @@ property e:{entity} t:{type} k:{key-1}={value} k:{key-2}={value} v:{tag-1}={text
 | e         | yes          | Entity name. |
 | t         | no           | Property type. |
 | k         | no           | Property key name and text value. Multiple. |
-| v         | no           | Property tag name and text value. At least one. |
+| v         | yes           | Property tag name and text value. At least one. |
 | s         | no           | Time in UNIX seconds. | 
 | ms        | no           | Time in UNIX milliseconds. | 
 | d         | no           | Time in ISO format. | 
