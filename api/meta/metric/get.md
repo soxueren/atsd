@@ -1,27 +1,40 @@
 # Metric: Get
+
 ## Description 
 
 Retrieve properties and tags for the specified metric.
 
-## Path 
+## Request
+
+### Path 
 
 ```elm
 /api/v1/metrics/{metric}
 ```
 
-## Method 
+### Method 
 
 ```
 GET
 ```
 
-## Request
+### Headers
+
+None.
+
+### Parameters
+
+None.
+
+### Fields
+
+None.
 
 ## Response
 
 ### Fields
 
-Refer to Response Fields in [Metrics: List](list.md#fields)
+Refer to Fields in [Metrics: List](list.md#fields)
 
 ## Example
 
@@ -32,6 +45,10 @@ Refer to Response Fields in [Metrics: List](list.md#fields)
 ```elm
 GET https://atsd_host:8443/api/v1/metrics/cpu_busy
 ```
+
+#### Payload
+
+None.
 
 #### curl 
 
@@ -58,6 +75,8 @@ curl https://atsd_host:8443/api/v1/metrics/cpu_busy \
     "versioned": false
 }
 ```
+
+## Additional Examples
 
 
 
