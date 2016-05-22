@@ -60,14 +60,14 @@ PUT https://atsd_host:8443/api/v1/metrics/my-metric
 
 ```json
 {
-    "enabled": true,
-    "counter": false,
-    "persistent": true,
-    "dataType": "FLOAT",
-    "timePrecision": "MILLISECONDS",
-    "retentionInterval": 0,
-    "invalidAction": "TRANSFORM",
-    "versioned": true
+  "enabled": true,
+  "counter": false,
+  "persistent": true,
+  "dataType": "FLOAT",
+  "timePrecision": "MILLISECONDS",
+  "retentionInterval": 0,
+  "invalidAction": "TRANSFORM",
+  "versioned": true
 }
 ```
 
