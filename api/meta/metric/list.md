@@ -1,4 +1,4 @@
-# Metrics: List
+# Metric: List
 
 ## Description 
 
