@@ -51,7 +51,7 @@ None.
 #### URI
 
 ```elm
-PATCH https://atsd_host:8443/api/v1/metrics/collectd.cpu.aggregation.busy.average
+PATCH https://atsd_host:8443/api/v1/metrics/cpu_busy
 ```
 
 #### Payload
@@ -67,7 +67,13 @@ PATCH https://atsd_host:8443/api/v1/metrics/collectd.cpu.aggregation.busy.averag
 
 #### curl
 
-None.
+```elm
+curl --insecure https://atsd_host:8443/api/v1/metrics/cpu_busy \
+  --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request PATCH \
+  --data '{"label":"CPU Busy Average","tags":{"table":"CollectD CPU Total"}}'
+```
 
 ### Response
 
