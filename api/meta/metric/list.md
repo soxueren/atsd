@@ -25,8 +25,8 @@ GET
 |**Parameter**|**Type**|**Description**|
 |:---|:---|:---|
 |expression|string|Include metrics that match an [expression](../expression.md) filter.|
-|minInsertDate|iso_date|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.|
-|maxInsertDate|iso_date|Include metrics with `lastInsertDate` less than `maxInsertDate`.|
+|minInsertDate|iso_date|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or [endtime](/end-time-syntax.md) syntax.|
+|maxInsertDate|iso_date|Include metrics with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or [endtime](/end-time-syntax.md) syntax.|
 |tags|string|Comma-separated list of metric tags to be included in the response.<br>For example, `tags=table,unit`<br>Specify `tags=*` to include all metric tags.|
 |limit|integer|Limit response to first N metrics, ordered by name.|
 
