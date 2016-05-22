@@ -29,10 +29,10 @@ None.
 |t:name|no|Tag name, prefixed by `t:`. Tag value specified as parameter value, for example, `&t:file_system=/tmp`. <br>Multiple values for the same tag can be specified by repeating parameter, for example, `&t:file_system=/tmp&&t:file_system=/home/export`|
 |startDate|yes* |Start of the selection interval. Specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 |endDate|yes* |End of the selection interval. Specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
-|interval|yes* |Duration of the selection interval, specified as `count-timeunit`, for example, `1-hour`.|
+|interval|yes* |Timespan of the selection interval, specified as `count-timeunit`, for example, `1-hour`.|
 |timeFormat|no|Timestamp format in response: `iso` or `milliseconds`. <br>Default format: `milliseconds`|
 |aggregate|no|Statistical function to compute aggregated values for values in each period|
-|period|no|Duration of regular time period for grouping raw values. <br>Specified as `count-timeunit`, for example, `1-hour`.|
+|period|no|Duration of the aggregation period specified as `count-timeunit`, for example, `1-hour`.|
 |limit|no|Maximum number of samples returned in response. Default value: 0|
 |last|no|Performs GET instead of scan. Retrieves only 1 most recent value. Default value: false|
 |columns|no|Columns included in CSV format response. <br>Possible values: time, date (time in ISO), entity, metric, t:{name}, value. <br>Default: time, entity, metric, requested tag names, value
