@@ -4,19 +4,23 @@
 
 Returns a list of **series** for the metric. Each series contains entity name and optional series tags.
 
-## Path
+## Request
+
+### Path
 
 ```elm
 /api/v1/metrics/{metric}/entity-and-tags
 ```
 
-## Method
+### Method
 
 ```
 GET 
 ```
 
-## Request
+### Headers
+
+None.
 
 ### Parameters
 
@@ -28,6 +32,10 @@ GET
 
 _All parameters are optional._
 
+### Fields
+
+None.
+
 ## Response
 
 ### Fields
@@ -38,6 +46,10 @@ _All parameters are optional._
 | tags | An object containing **series** tags as names and values.<br>For example, `"tags": {"file_system": "/dev/sda"}` |
 | lastInsertDate |Last time a value was received for this series. ISO date.|
 
+### Errors
+
+None.
+
 ## Example
 
 ### Request
@@ -47,6 +59,14 @@ _All parameters are optional._
 ```elm
 GET https://atsd_host:8443/api/v1/metrics/disk_used/entity-and-tags
 ```
+
+#### Payload
+
+None.
+
+#### curl
+
+None.
 
 ### Response
 
@@ -81,6 +101,8 @@ GET https://atsd_host:8443/api/v1/metrics/disk_used/entity-and-tags
 	"lastInsertDate": "2015-09-04T15:48:47.000Z"
 }]
 ```
+
+## Additional Examples
 
 
 
