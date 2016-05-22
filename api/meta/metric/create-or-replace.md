@@ -56,9 +56,3 @@ PUT https://atsd_host:8443/api/v1/metrics/my-metric
     "versioned": true
 }
 ```
-
-
-
-
-
-
