@@ -8,6 +8,8 @@ Entity, property type and property keys form a composite primary key of the prop
 
 When a new property is inserted into the database, it overwrites an existing property with the same composite primary key (entity+type+[keys]).
 
+Tag names may duplicate key names specified in the same command.
+
 ## Syntax
 
 ```css
