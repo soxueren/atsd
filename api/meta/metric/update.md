@@ -6,19 +6,19 @@ Update specified properties and tags for an existing metric.
 
 Properties and tags that are not specified in the request are left unchanged.
 
-## Path
+## Request
+
+### Path
 
 ```elm
 /api/v1/metrics/{metric}
 ```
 
-## Method
+### Method
 
 ```
 PATCH
 ```
-
-## Request
 
 ### Headers
 
@@ -26,9 +26,23 @@ PATCH
 |:---|:---|
 | Content-Type | application/json |
 
+### Parameters
+
+None.
+
 ### Fields
 
 Refer to Fields specified in [Metrics List](list.md#fields) method.
+
+## Response
+
+### Fields
+
+None.
+
+### Errors
+
+None.
 
 ## Example
 
@@ -50,6 +64,14 @@ PATCH https://atsd_host:8443/api/v1/metrics/collectd.cpu.aggregation.busy.averag
     }
 }
 ```
+
+#### curl
+
+### Response
+
+None.
+
+## Additional Examples
 
 
 
