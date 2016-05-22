@@ -30,13 +30,13 @@ Refer to Response Fields in [Metrics: List](list.md#fields)
 #### URI
 
 ```elm
-GET https://atsd_host:8443/api/v1/metrics/md-2
+GET https://atsd_host:8443/api/v1/metrics/cpu_busy
 ```
 
 #### curl 
 
-```css
-curl https://atsd_host:8443/api/v1/metrics/md-2 \
+```bmx
+curl https://atsd_host:8443/api/v1/metrics/cpu_busy \
   --insecure --verbose --user {username}:{password} \
   --request GET
 ```
@@ -45,7 +45,7 @@ curl https://atsd_host:8443/api/v1/metrics/md-2 \
 
 ```json
 {
-    "name": "md-2",
+    "name": "cpu_busy",
     "enabled": true,
     "dataType": "FLOAT",
     "counter": false,
