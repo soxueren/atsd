@@ -21,7 +21,7 @@ GET
 
 ### Fields
 
-Refer to Response Fields in [Metrics: List](https://github.com/axibase/atsd-docs/blob/master/api/meta/metric/list.md)
+Refer to Response Fields in [Metrics: List](list.md#fields)
 
 ## Example
 
