@@ -61,19 +61,22 @@ PUT https://atsd_host:8443/api/v1/metrics/my-metric
 ```json
 {
   "enabled": true,
-  "counter": false,
   "persistent": true,
-  "dataType": "FLOAT",
+  "dataType": "DOUBLE",
   "timePrecision": "MILLISECONDS",
-  "retentionInterval": 0,
-  "invalidAction": "TRANSFORM",
-  "versioned": true
+  "retentionInterval": 0
 }
 ```
 
 #### curl
 
-None.
+```elm
+curl https://atsd_host:8443/api/v1/metrics/my-metric \
+  --insecure --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request PUT \
+  --data '{"enabled":true,"persistent":true,"dataType":"DOUBLE","timePrecision":"MILLISECONDS","retentionInterval":0}'
+```
 
 ### Response
 
