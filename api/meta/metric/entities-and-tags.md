@@ -36,9 +36,7 @@ _All parameters are optional._
 |:---|:---|
 | entity | Entity name.  |
 | tags | An object containing **series** tags as names and values.<br>For example, `"tags": {"file_system": "/dev/sda"}` |
-|lastInsertDate|Last time a value was received for this series. ISO date.|
-
-
+| lastInsertDate |Last time a value was received for this series. ISO date.|
 
 ## Example
 
