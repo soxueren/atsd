@@ -46,6 +46,14 @@ Status Code: 500
 {"error":"...HttpRequestMethodNotSupportedException: Request method 'GET' not supported"}
 ```
 
+## Number Formatting
+
+* Decimal separator is period (`.`).
+* No thousands separator.
+* No digit grouping.
+* Negative numbers use negative sign (`-`) at the beginning of the number.
+* Not-a-Number is literal `NaN` unless specified [otherwise](data/series/insert.md#fields).
+
 ## Response Codes
 
 * `200` status code if the request is successful.
