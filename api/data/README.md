@@ -31,6 +31,12 @@ The API uses `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` methods to read and wri
 
 The `PATCH` method is typically used to delete records based on a condition specified in payload, because payload is not allowed in the `DELETE` method. 
 
+## Request Headers
+
+When submitting payload with `POST`, `PUT`, and `PATCH` methods in JSON format, add header `Content-Type: application/json`.
+
+For correct Unicode handling, specify charset `Content-Type: application/json;chartset=UTF-8`.
+
 ## URI Encoding
 
 Request parameter values and parameterized path segments such as [`/api/v1/properties/{entity}/types`](data/properties/property-types.md) should be [URL encoded](https://tools.ietf.org/html/rfc3986#section-2.1) to translate special characters such as `: / ? # [ ] @` into a percent format that can be transmitted safely as part of the request URI.
@@ -63,6 +69,14 @@ Status Code: 500
 * `5xx` status code in case of server error. 
 
 4xx or 5xx response codes are specific to each API methods.
+
+## Errors
+
+Processing errors are returned in json format:
+
+```json
+{"error":"Empty first row"}
+```
 
 ## Authentication
 
