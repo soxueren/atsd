@@ -1,9 +1,9 @@
-## Error Codes
+# Error Codes
 
-The Axibase Time Series Database API uses the following error codes:
+Standard HTTP error codes
 
-Error Code | Meaning
----------- | -------
+**Error Code** | Description
+---------- | :-------
 400 | Bad Request
 401 | Unauthorized 
 403 | Forbidden
