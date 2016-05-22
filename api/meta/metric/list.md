@@ -6,7 +6,7 @@ Return a list of metrics, their properties, and optional metric tags.
 
 ## Path
 
-```
+```elm
 /api/v1/metrics
 ```
 
@@ -89,15 +89,15 @@ Default data type for new metrics, when auto-created, is **float**.
 
 #### URI
 
-```
+```elm
 https://atsd_host:8443/api/v1/metrics?limit=2
 ```
 
 #### curl
 
-```css
-curl --insecure https://atsd_host:8443/api/v1/metrics?limit=2 \
-  --verbose --user {username}:{password} \
+```bmx
+curl https://atsd_host:8443/api/v1/metrics?limit=2 \
+  --insecure --verbose --user {username}:{password} \
   --request GET
 ```
 
