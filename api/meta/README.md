@@ -35,6 +35,22 @@ The Meta API lets you query and update metadata about metrics, entities, and ent
 
 The API uses `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` methods to read and write data.
 
+## URI Encoding
+
+Request parameter values and parameterized path segments such as [`/api/v1/metrics/{metric}`](metric/get.md#path) should be [URL encoded](https://tools.ietf.org/html/rfc3986#section-2.1) to translate special characters such as `: / ? # [ ] @` into a percent format that can be transmitted safely as part of the request URI.
+
+| **Input** | **Encoded Value** | **URI** |
+|:---|:---|:---|
+|`jvm/memory(max)`|`jvm%2Fmemory%28max%29`| /api/v1/metrics/**jvm%2Fmemory%28max%29** |
+|`name LIKE 'cpu*'`|`name%20LIKE%20%27cpu*%27`| /api/v1/metrics?**expression=name%20LIKE%20%27cpu*%27** |
+
+Failure to encode URI components may result in 4xx and 5xx errors:
+
+```json
+Status Code: 500
+{"error":"...HttpRequestMethodNotSupportedException: Request method 'GET' not supported"}
+```
+
 ## Response Codes
 
 * `200` status code if the request is successful.
