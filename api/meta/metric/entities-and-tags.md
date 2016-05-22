@@ -71,35 +71,40 @@ None.
 ### Response
 
 ```json
-[{
-	"entity": "nurswgvml007",
-	"tags": {
-		"file_system": "/dev/mapper/vg_nurswgvml007-lv_root",
-		"mount_point": "/"
-	},
-	"lastInsertDate": "2015-09-04T15:48:58.000Z"
-}, {
-	"entity": "nurswgvml007",
-	"tags": {
-		"file_system": "10.102.0.2:/home/store/share",
-		"mount_point": "/mnt/share"
-	},
-	"lastInsertDate": "2015-09-04T15:48:58.000Z"
-}, {
-	"entity": "nurswgvml006",
-	"tags": {
-		"file_system": "/dev/mapper/vg_nurswgvml006-lv_root",
-		"mount_point": "/"
-	},
-	"lastInsertDate": "2015-09-04T15:48:47.000Z"
-}, {
-	"entity": "nurswgvml006",
-	"tags": {
-		"file_system": "/dev/sdc1",
-		"mount_point": "/media/datadrive"
-	},
-	"lastInsertDate": "2015-09-04T15:48:47.000Z"
-}]
+[
+  {
+    "entity": "nurswgvml007",
+    "tags": {
+      "file_system": "/dev/mapper/vg_nurswgvml007-lv_root",
+      "mount_point": "/"
+    },
+    "lastInsertDate": "2015-09-04T15:48:58.000Z"
+  },
+  {
+    "entity": "nurswgvml007",
+    "tags": {
+      "file_system": "10.102.0.2:/home/store/share",
+      "mount_point": "/mnt/share"
+    },
+    "lastInsertDate": "2015-09-04T15:48:58.000Z"
+  },
+  {
+    "entity": "nurswgvml006",
+    "tags": {
+      "file_system": "/dev/mapper/vg_nurswgvml006-lv_root",
+      "mount_point": "/"
+    },
+    "lastInsertDate": "2015-09-04T15:48:47.000Z"
+  },
+  {
+    "entity": "nurswgvml006",
+    "tags": {
+      "file_system": "/dev/sdc1",
+      "mount_point": "/media/datadrive"
+    },
+    "lastInsertDate": "2015-09-04T15:48:47.000Z"
+  }
+]
 ```
 
 ## Additional Examples
