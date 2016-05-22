@@ -27,8 +27,8 @@ None.
 | **Parameter** |**Type**| **Description** |
 |:---|:---|:---|
 | entity | string|Include series for the specified entity name. |
-|minInsertDate|iso_date|Include series with `lastInsertDate` equal or greater than `minInsertDate`.|
-|maxInsertDate|iso_date|Include series with `lastInsertDate` less than `maxInsertDate`.|
+|minInsertDate|iso_date|Include series with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+|maxInsertDate|iso_date|Include series with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 
 _All parameters are optional._
 
