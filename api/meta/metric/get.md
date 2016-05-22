@@ -36,6 +36,10 @@ None.
 
 Refer to Fields in [Metrics: List](list.md#fields)
 
+### Errors
+
+None.
+
 ## Example
 
 ### Request
