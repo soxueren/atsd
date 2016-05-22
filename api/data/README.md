@@ -6,15 +6,15 @@ The Data API lets you insert and retrieve series, properties, messages, and aler
 
 * Series
   - [insert](series/insert.md)
-  - [query](series/query.md)
   - [csv insert](series/csv-insert.md)
+  - [query](series/query.md)
   - [url query](series/url-query.md)
 * Properties
-  - [batch](properties/batch.md)
   - [insert](properties/insert.md)
   - [query](properties/query.md)
   - [property types](properties/property-types.md)
   - [query for entity and type](properties/query-for-entity-and-type.md)
+  - [batch](properties/batch.md)
 * Messages
   - [insert](messages/insert.md)
   - [query](messages/query.md)
@@ -33,12 +33,11 @@ The `PATCH` method is typically used to delete records based on a condition spec
 
 ## URI Encoding
 
-Request parameter values and parameterized path segments such as [`/api/v1/metrics/{metric}`](metric/get.md#path) should be [URL encoded](https://tools.ietf.org/html/rfc3986#section-2.1) to translate special characters such as `: / ? # [ ] @` into a percent format that can be transmitted safely as part of the request URI.
+Request parameter values and parameterized path segments such as [`/api/v1/properties/{entity}/types`](data/properties/property-types.md) should be [URL encoded](https://tools.ietf.org/html/rfc3986#section-2.1) to translate special characters such as `: / ? # [ ] @` into a percent format that can be transmitted safely as part of the request URI.
 
 | **Input** | **Encoded Value** | **URI** |
 |:---|:---|:---|
-|`jvm/memory(max)`|`jvm%2Fmemory%28max%29`| /api/v1/metrics/**jvm%2Fmemory%28max%29** |
-|`name LIKE 'cpu*'`|`name%20LIKE%20%27cpu*%27`| /api/v1/metrics?**expression=name%20LIKE%20%27cpu*%27** |
+|`station/24`|`station%2F24`| /api/v1/properties/**station%2F24**/types |
 
 Failure to encode URI components may result in 4xx and 5xx errors:
 
