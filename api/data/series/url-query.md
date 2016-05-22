@@ -31,7 +31,7 @@ None.
 |endDate|yes* |End of the selection interval. Specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 |interval|yes* |Timespan of the selection interval, specified as `count-timeunit`, for example, `1-hour`.|
 |timeFormat|no|Timestamp format in response: `iso` or `milliseconds`. <br>Default format: `milliseconds`|
-|aggregate|no|Statistical function to compute aggregated values for values in each period|
+|aggregate|no|[Statistical function](/api/data/aggregation.md#statistics) to compute aggregate results from detailed values in each period|
 |period|no|Duration of the aggregation period specified as `count-timeunit`, for example, `1-hour`.|
 |limit|no|Maximum number of samples returned in response. Default value: 0|
 |last|no|Performs GET instead of scan. Retrieves only 1 most recent value. Default value: false|
