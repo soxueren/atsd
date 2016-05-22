@@ -8,19 +8,19 @@ If the metric exists, all of its current properties and tags will be overwritten
 
 In order to update only specific fields specified in the request, use [Metric: Update](update.md) method.
 
-## Path
+## Request
+
+### Path
 
 ```elm
 /api/v1/metrics/{metric}
 ```
 
-## Method
+### Method
 
 ```
 PUT
 ```
-
-## Request
 
 ### Headers
 
@@ -28,9 +28,23 @@ PUT
 |:---|:---|
 | Content-Type | application/json |
 
+### Parameters
+
+None.
+
 ### Fields
 
 Refer to Fields specified in [Metrics List](list.md#fields) method.
+
+## Response
+
+### Fields
+
+None.
+
+### Errors
+
+None.
 
 ## Example
 
@@ -56,3 +70,13 @@ PUT https://atsd_host:8443/api/v1/metrics/my-metric
     "versioned": true
 }
 ```
+
+#### curl
+
+None.
+
+### Response
+
+None.
+
+## Additional Examples
