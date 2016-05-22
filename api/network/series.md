@@ -4,6 +4,10 @@
 
 Insert timestamped metric samples for an entity and series tags into the database. 
 
+New entities and metrics will be automatically created provided they meet naming requirements.
+
+New metrics will be created with `float` data type by default.<br>To insert metric samples with another datatype, create or update metric properties using [Meta API](/api/meta/metric/create-or-replace.md) or the web interface.
+
 ## Syntax
 
 ```css
@@ -21,7 +25,7 @@ series e:{entity} m:{metric-1}={number} m:{metric-2}={number} t:{tag-1}={text} t
 | ms        | no           | Time in UNIX milliseconds. | 
 | d         | no           | Time in ISO format. | 
 
-> If time fields are omitted, the values are inserted with current server time.
+> If time fields are omitted, the values are inserted with the current server time.
 
 ### ABNF Syntax
 
@@ -45,23 +49,18 @@ time-second = "s:" POSITIVE-INTEGER
 time-iso = "d:" ISO-DATE
 ```
 
-## Schema
-
-* New entities and metrics will be automatically created provided they meet naming requirements.
-* New metrics will be created with `float` data type by default.<br>To insert metric samples with another datatype, create or update metric properties using [Meta API](/api/meta/metric/create-or-replace.md) or the web interface.
-
 ## Examples
 
 ```ls
-series e:server001 s:1425482080 m:cpu_used=72.0 m:memory_used=94.5
+series e:server001 m:cpu_used=72.0 m:memory_used=94.5 s:1425482080
 ```
 
 ```ls
-series e:server001 ms:1425482080000 m:cpu_used=72.0 m:memory_used=94.5
+series e:server001 m:cpu_used=72.0 m:memory_used=94.5 ms:1425482080000
 ```
 
 ```ls
-series e:server001 d:2015-03-04T12:43:20Z m:cpu_used=72.0 m:memory_used=94.5
+series e:server001 m:cpu_used=72.0 m:memory_used=94.5 d:2015-03-04T12:43:20Z
 ```
 
 ```ls
