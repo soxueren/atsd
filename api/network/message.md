@@ -41,3 +41,34 @@ printf 'message e:DL1866 d:2015-03-04T12:43:20Z t:type=application t:source=cron
 Message text or one of the tags is required, otherwise the message will be dropped silently.
 Enclose tag values and message text containing white space in double quotes.
 </aside>
+
+### ABNF Syntax
+
+Rules inherited from [generic ABNF](generic-abnf.md).
+
+```properties
+  ; MSP - one or multiple spaces
+  ; entity or at least one tag is required
+command = "message" MSP entity *(MSP tag) [MSP time]
+  ; NAME consists of visible characters. 
+  ; double-quote must be escaped with backslash.
+entity = "e:" NAME
+  ; TEXTVALUE consists of visible characters and space. 
+  ; double-quote must be escaped with backslash. 
+  ; tag values containing space must me quoted with double-quote.  
+tag = "t:" NAME = TEXTVALUE
+time = time-millisecond / time-second / time-iso
+time-millisecond = "ms:" POSITIVE-INTEGER
+time-second = "s:" POSITIVE-INTEGER
+time-iso = "d:" ISO-DATE
+```
+
+## Examples
+
+```ls
+property e:server-001 t:disk-config k:mount_point=/ k:name=sda1 v:size_gb=192 v:fs_type=nfs
+```
+
+```ls
+property e:server-001 t:operating_system v:type=Linux d:2015-03-04T12:43:20Z
+```
