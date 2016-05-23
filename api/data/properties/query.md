@@ -1,14 +1,21 @@
 # Properties: Query
+
 ## Description 
+
 ## Path
-```
+
+```elm
 /api/v1/properties
 ```
+
 ## Method
+
 ```
 POST 
 ```
+
 ## Request
+
 ### Fields
 
 | **Field**  | **Required** | **Description**  |
@@ -34,7 +41,9 @@ POST
 </aside>
 
 ## Response 
+
 ### Fields
+
 | **Field**  | **Description**  |
 |---|---|
 | type | property type name |
@@ -45,11 +54,15 @@ POST
 | date | date and time in ISO format |
 
 ## Example
+
 ### Request
+
 #### URI
+
 ```elm
 POST https://atsd_host:8443/api/v1/properties
 ```
+
 #### Payload
 ```json
 [{
@@ -64,9 +77,9 @@ POST https://atsd_host:8443/api/v1/properties
 }]
 ```
 #### curl
-```css
-curl --insecure https://atsd_host:8443/api/v1/properties \
-  --verbose --user {username}:{password} \
+```elm
+curl  https://atsd_host:8443/api/v1/properties \
+  --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
   --data @file.json
@@ -93,7 +106,6 @@ curl --insecure https://atsd_host:8443/api/v1/properties \
    }
 ]
 ```
-
 
 ### Additional Examples
 
