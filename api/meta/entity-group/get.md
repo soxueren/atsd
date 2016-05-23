@@ -21,6 +21,8 @@ GET
 
 ### Headers
 
+None.
+
 ### Parameters
 
 ### Fields
