@@ -2,7 +2,7 @@
 ## Description
 Insert an array of properties.
 ## Path
-```
+```elm
 /api/v1/properties/insert
 ```
 ## Method
