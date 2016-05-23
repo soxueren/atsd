@@ -8,7 +8,7 @@ Returns a list of metrics collected by the entity. The list is based on memory c
 
 ### Path
 
-```
+```elm
 /api/v1/entities/{entity}/metrics
 ```
 
@@ -20,7 +20,11 @@ GET
 
 ### Headers
 
+None.
+
 ### Parameters
+
+None.
 
 ### Fields
 
@@ -46,13 +50,19 @@ Refer to Fields specified in [Metrics List](list.md#fields) method.
 
 #### URI
 
-```
-http://atsd_server:8088/api/v1/entities/nurswgvml007/metrics?timeFormat=iso&limit=2
+```elm
+GET https://atsd_host:8443/api/v1/entities/nurswgvml007/metrics?timeFormat=iso&limit=2
 ```
 
 #### Payload
 
 #### curl
+
+```elm
+curl https://atsd_host:8443/api/v1/entities/nurswgvml007/metrics?timeFormat=iso&limit=2H \
+  --insecure --verbose --user {username}:{password} \
+  --request GET
+``` 
 
 ### Response
 
