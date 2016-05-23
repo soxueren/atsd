@@ -76,3 +76,5 @@ curl https://atsd_host:8443/api/v1/entities/nurswgvml006 \
     }
 }
 ```
+
+## Additional Examples
