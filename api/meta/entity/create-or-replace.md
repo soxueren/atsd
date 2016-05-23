@@ -20,6 +20,10 @@ PUT
 
 ### Headers
 
+|**Header**|**Value**|
+|:---|:---|
+| Content-Type | application/json |
+
 ### Parameters
 
 ### Fields
@@ -37,7 +41,11 @@ If only a subset of fields is provided for an existing entity, the remaining pro
 
 ### Fields 
 
+None.
+
 ### Errors
+
+None. 
 
 ## Example
 
@@ -72,9 +80,7 @@ curl https://atsd_host:8443/api/v1/entities/hostmain \
 
 ### Response 
 
+None. 
+
 ## Additional Examples
-
-
-### Basic Example
-
 
