@@ -20,15 +20,15 @@ GET
 
 ### Headers 
 
-None
+None.
 
 ### Parameters
 
-None
+None.
 
 ### Fields 
 
-None
+None.
 
 ## Response
 
@@ -37,6 +37,8 @@ None
 Refer to Response Fields in [Entities: List](list.md)
 
 ### Errors
+
+None.
 
 ## Example
 
@@ -49,7 +51,7 @@ GET https://atsd_host:8443/api/v1/entities/nurswgvml006
 ```
 #### Payload
 
-None
+None.
 
 #### curl 
 
