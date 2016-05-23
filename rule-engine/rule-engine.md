@@ -57,6 +57,15 @@ is TRUE enables deduplication and supports flexible action programming.
 For example, some actions can be configured to execute only on OPEN
 status, while others can run on every n-th REPEAT occurrence.
 
+## Time Control
+
+The rule engine in ATSD is designed to analyze current, real-time data streams.
+
+It ignores commands that are 1 minute behind or 1 minute ahead of the current server time.
+When enabled, the ignored commands are logged to `*_expired.lo`g and `*_forward.log` files respectively.
+
+The log of expired or future commands can be enabled on **Admin:Input Settings** page.
+
 ## Expressions
 
 Expressions represent statements that return a boolean value: TRUE or
