@@ -9,7 +9,7 @@ Data collected by the entity will be removed asynchronously in the background.
 
 ### Path
 
-```
+```elm
 /api/v1/entities/{entity}
 ```
 
