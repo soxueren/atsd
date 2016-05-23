@@ -49,15 +49,17 @@ Rules inherited from [generic ABNF](generic-abnf.md).
 ```properties
   ; MSP - one or multiple spaces
   ; entity or at least one tag is required
-command = "message" MSP entity *(MSP tag) [MSP time]
+command = "message" MSP entity [1*MSP tag-type] [1*MSP tag-source] [1*MSP tag-severity] [1*MSP time] *(1*MSP tag) 
   ; NAME consists of visible characters. 
   ; double-quote must be escaped with backslash.
 entity = "e:" NAME
   ; TEXTVALUE consists of visible characters and space. 
   ; double-quote must be escaped with backslash. 
   ; tag values containing space must me quoted with double-quote.  
-tag = "t:" NAME "=" TEXTVALUE / reserved-tag
-reserved-tag = "t:type=" TEXT / "t:severity=" %x30-37 / "t:source=" TEXT
+tag-type = "t:type=" TEXTVALUE
+tag-source = "t:source=" TEXTVALUE
+tag-severity = "t:severity=" (%x30-37 / "UNDEFINED" / "UNKNOWN" / "NORMAL" / "WARNING" / "MINOR" / "MAJOR" / "CRITICAL" / "FATAL" )
+tag = "t:" NAME "=" TEXTVALUE
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE-INTEGER
 time-second = "s:" POSITIVE-INTEGER
