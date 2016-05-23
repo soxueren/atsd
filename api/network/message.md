@@ -62,31 +62,21 @@ time-iso = "d:" ISO-DATE
 
 ## Severity
 
-0 - UNDEFINED
-1 - UNKNOWN
-2 - NORMAL
-3 - WARNING
-4 - MINOR
-5 - MAJOR
-6 - CRITICAL
-7 - FATAL
+| **Code** | **Name** |
+|:---|:---|
+|0 | UNDEFINED|
+|1 | UNKNOWN|
+|2 | NORMAL|
+|3 | WARNING|
+|4 | MINOR|
+|5 | MAJOR|
+|6 | CRITICAL|
+|7 | FATAL|
 
 ## Examples
 
-> Example
-
-```
+```ls
 message e:server001 d:2015-03-04T12:43:20Z t:type=application t:source=cron t:subject="my subject" m:"Hello, world"
-```
-
-> UDP command
-
-```sh
-echo message e:DL1866 d:2015-03-04T12:43:20Z t:type=application t:source=cron t:subject="my subject" m:"Hello, world" | nc -u -w1 atsd_server 8082
-```
-
-```sh
-printf 'message e:DL1866 d:2015-03-04T12:43:20Z t:type=application t:source=cron t:subject="my subject" m:"Hello, world"' | nc -u -w1 atsd_server 8082
 ```
 
 ```ls
