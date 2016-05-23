@@ -1,16 +1,59 @@
-## Entity Group: Get
+# Entity Group: Get
+
+## Description
+
+
+Displays entity group properties and all tags.
+
+## Request
+
+### Path
+
+```elm
+ /api/v1/entity-groups/{group}
+ ```
+ 
 ### Method
-```
-GET /api/v1/entity-groups/{group}
-```
-### Basic Example 
-> Request
 
 ```
-http://atsd_server:8088/api/v1/entity-groups/nmon-aix
+GET
 ```
 
-> Response
+### Headers
+
+### Parameters
+
+### Fields
+
+## Response
+
+### Fields
+
+### Errors
+
+## Example
+
+### Request
+
+#### URI
+
+```elm
+GET https://atsd_host:8443/api/v1/entity-groups/nmon-aix
+```
+
+#### Payload
+
+None.
+
+#### curl
+
+```elm
+curl https://atsd_host:8443/api/v1/entity-groups/nmon-aix \
+  --insecure --verbose --user {username}:{password} \
+  --request GET
+  ```
+  
+### Response
 
 ```json
 {
@@ -21,8 +64,4 @@ http://atsd_server:8088/api/v1/entity-groups/nmon-aix
 }
 ```
 
-Displays entity group properties and all tags.
-
-**Response Fields:**
-
-See: [Entity Groups: Get](#entity-groups:-get
+## Additional examples
