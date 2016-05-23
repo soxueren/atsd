@@ -1,12 +1,54 @@
 ## Entity: Update
 
+## Description
+
 Update specified properties and tags for the given entity.
+
+## Request
+
+### Path
+
+```elm
+/api/v1/entities/{entity}
+```
+
+### Method
+
+```
+PATCH 
+```
+
+### Headers
+
+### Parameters
+
+### Fields
+
+## Response
+
+### Fields
+
+### Errors
+
+## Example
+
+### Request
+
+#### URI
+
+#### Payload
+
+#### curl
+
+### Response
+
+## Additional examples
+
+
 
 ### Request Fields
 
-```
-PATCH /api/v1/entities/{entity}
-```
+
 
  > Request
 
