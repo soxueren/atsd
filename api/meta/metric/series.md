@@ -2,7 +2,7 @@
 
 ## Description 
 
-Returns a list of **series** for the metric. Each series contains entity name and optional series tags.
+Returns a list of **series** for the metric. Each series is identified with metric name, entity name, and optional series tags.
 
 ## Request
 
@@ -42,6 +42,7 @@ None.
 
 | **Field** | **Description** |
 |:---|:---|
+| metric | Metric name.  |
 | entity | Entity name.  |
 | tags | An object containing **series** tags as names and values.<br>For example, `"tags": {"file_system": "/dev/sda"}` |
 | lastInsertDate |Last time a value was received for this series. ISO date.|
