@@ -8,7 +8,7 @@ This method creates a new entity or replaces the properties and tags of an exist
 
 ### Path
 
-```
+```elm
 /api/v1/entities/{entity}
 ```
 
