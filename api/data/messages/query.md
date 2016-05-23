@@ -1,14 +1,21 @@
 # Messages: Query
+
 ## Description
+
 ## Path
-```
+
+```elm
 /api/v1/messages
 ```
+
 ## Method
+
 ```
 POST 
 ```
+
 ## Request 
+
 ### Fields
 
 | **Field** | **Required** | **Description** |
@@ -40,7 +47,9 @@ POST
 </aside>
 
 ## Response 
+
 ### Fields
+
 | Field | Description |
 |---|---|
 |entity | entity name |
@@ -53,12 +62,16 @@ POST
 |time | date and time in milliseconds |
 
 ## Example
+
 ### Request
+
 #### URI
+
 ```elm
 POST https://atsd_host:8443/api/v1/messages
 ```
 #### Payload
+
 ```json
 {
     "queries": [
@@ -82,9 +95,9 @@ POST https://atsd_host:8443/api/v1/messages
 ```
 
 #### curl
-```css
-curl --insecure https://atsd_host:8443/api/v1/messages \
-  --verbose --user {username}:{password} \
+```elm
+curl  https://atsd_host:8443/api/v1/messages \
+  --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
   --data @file.json
