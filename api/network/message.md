@@ -56,7 +56,8 @@ entity = "e:" NAME
   ; TEXTVALUE consists of visible characters and space. 
   ; double-quote must be escaped with backslash. 
   ; tag values containing space must me quoted with double-quote.  
-tag = "t:" NAME "=" TEXTVALUE
+tag = "t:" NAME "=" TEXTVALUE / reserved-tag
+reserved-tag = "t:type=" TEXT / "t:severity=" %x30-37 / "t:source=" TEXT
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE-INTEGER
 time-second = "s:" POSITIVE-INTEGER
@@ -66,9 +67,9 @@ time-iso = "d:" ISO-DATE
 ## Examples
 
 ```ls
-property e:server-001 t:disk-config k:mount_point=/ k:name=sda1 v:size_gb=192 v:fs_type=nfs
+message e:server-001 t:type="basic" m:"notify message"
 ```
 
 ```ls
-property e:server-001 t:operating_system v:type=Linux d:2015-03-04T12:43:20Z
+message e:server-001 t:type="advanced" t:severity=6 t:source="alert_monitor" m:"warning message"
 ```
