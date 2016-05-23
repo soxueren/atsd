@@ -49,10 +49,11 @@ Rules inherited from [generic ABNF](generic-abnf.md).
 ```properties
   ; MSP - one or multiple spaces
   ; entity or at least one tag is required
-command = "message" MSP entity [1*MSP tag-type] [1*MSP tag-source] [1*MSP tag-severity] [1*MSP time] *(1*MSP tag) 
+command = "message" MSP entity message [MSP tag-type] [MSP tag-source] [MSP tag-severity] [MSP time] *(MSP tag) 
   ; NAME consists of visible characters. 
   ; double-quote must be escaped with backslash.
 entity = "e:" NAME
+message = "m:" TEXTVALUE
   ; TEXTVALUE consists of visible characters and space. 
   ; double-quote must be escaped with backslash. 
   ; tag values containing space must me quoted with double-quote.  
