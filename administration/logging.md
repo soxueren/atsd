@@ -1,7 +1,8 @@
 # Logging
 
-The database collects a set of logs in `/opt/atsd/atsd/logs` directory 
-which are also downloadable from **Admin:Server Logs** page.
+The database logs are located in `/opt/atsd/atsd/logs` directory.
+
+The logs can be also downloaded from **Admin:Server Logs** page.
 
 Logs are rolled over and archived according to `/opt/atsd/atsd/conf/logging.properties` settings.
 
@@ -18,7 +19,9 @@ Logs are rolled over and archived according to `/opt/atsd/atsd/conf/logging.prop
 |metrics.txt|Current database metrics|
 |stopstart.log|Start/stop log for ATSD, HBase, HDFS|
 |stdout.log|Standard out|
-|err.log|Standard err|
+|err.log|Standard error|
+
+* Rule Engine ignores commands that are 1 minute behind or 1 minute ahead of the current server time.<br>When enabled, the ignored commands are logged to `*_expired.log` and `*_forward.log` files respectively.
 
 ![server logs](images/server_logs_atsd.png "server_logs_atsd")
 
