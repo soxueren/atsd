@@ -20,6 +20,8 @@ GET
 
 ### Headers
 
+None.
+
 ### Parameters
 
 |**Parameter**|**Type**|**Description**|
