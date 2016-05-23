@@ -1,15 +1,23 @@
 # Alerts: History Query
+
 ## Description
+
 ## Path
-```
+
+```elm
 /api/v1/alerts/history
 ```
+
 ## Method
+
 ```
 POST 
 ```
+
 ## Request 
+
 ### Fields
+
 |**Field**| **Required** | **Description** |
 |---|---|---|
 | startTime| no |Unix timestamp, default `0`|
@@ -25,13 +33,17 @@ POST
 |limit| no | default 1000|
 
 ## Example
+
 ### Request
+
 #### URI
+
 ```elm
 POST https://atsd_host:8443/api/v1/alerts/history
 ```
 
 #### Payload
+
 ```json
 {
    "queries": [
@@ -48,10 +60,12 @@ POST https://atsd_host:8443/api/v1/alerts/history
    ]
 }
 ```
+
 #### curl 
-```css
-curl --insecure https://atsd_host:8443/api/v1/alerts/history \
-  --verbose --user {username}:{password} \
+
+```elm
+curl  https://atsd_host:8443/api/v1/alerts/history \
+  --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
   --data @file.json
@@ -81,4 +95,3 @@ curl --insecure https://atsd_host:8443/api/v1/alerts/history \
    }
 ]
 ```
-
