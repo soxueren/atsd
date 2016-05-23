@@ -20,6 +20,11 @@ PUT
 ### Parameters
 
 ### Fields
+| **Field**                            | **Description**                                                                             |
+|---|---|
+| enabled                             | Enabled status. Incoming data is discarded for disabled entities.                           |
+|tags|User-defined tags, `"tagKey": "tagValue"`, like `"tags": {"alias": "vmware_host"}`|
+
 
 ## Response
 
@@ -74,7 +79,3 @@ If only a subset of fields is provided for an existing entity, the remaining pro
 
 ### Request Fields
 
-| **Field**                            | **Description**                                                                             |
-|---|---|
-| enabled                             | Enabled status. Incoming data is discarded for disabled entities.                           |
-|tags|User-defined tags, `"tagKey": "tagValue"`, like `"tags": {"alias": "vmware_host"}`|
