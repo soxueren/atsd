@@ -47,9 +47,9 @@ idle = "t:" 1*DIGIT
 ## Examples
 
 ```ls
-message e:server-001 t:type="basic" m:"notify message"
+nmon e:server-001 p:default f:server-001.nmon
 ```
 
 ```ls
-message e:server-001 t:type="advanced" t:severity=6 t:source="alert_monitor" m:"warning message"
+nmon e:server-001 p:default f:server-001.nmon d:UTC
 ```
