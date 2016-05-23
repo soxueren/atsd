@@ -1,15 +1,23 @@
 # Messages: Insert
+
 ## Descriprion
+
 ## Path 
-```
+
+```elm
 /api/v1/messages/insert
 ```
+
 ## Method 
+
 ```
 POST 
 ```
+
 ## Request
+
 ### Fields
+
 | Field       | Required | Description              |
 |---|---|---|
 | entity | yes | an entity name, such as server name, or a entity name pattern with ? and * wildcards |
@@ -26,12 +34,17 @@ severity, message, type, source are reserved fields. In insert command, these re
 </aside>
 
 ## Example
+
 ### Request
+
 #### URI
+
 ```elm
 POST https://atsd_host:8443/api/v1/messages/insert
 ```
+
 #### Payload
+
 ```json
 [
     {
@@ -43,10 +56,11 @@ POST https://atsd_host:8443/api/v1/messages/insert
     }
 ]
 ```
+
 #### curl
-```css
-curl --insecure https://atsd_host:8443/api/v1/messages/insert \
-  --verbose --user {username}:{password} \
+```elm
+curl https://atsd_host:8443/api/v1/messages/insert \
+  --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
   --data @file.json
