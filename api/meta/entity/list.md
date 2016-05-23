@@ -18,7 +18,11 @@ GET
 
 ### Headers
 
+None.
+
 ### Parameters
+
+None.
 
 ### Fields
 
