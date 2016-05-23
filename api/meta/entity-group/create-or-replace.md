@@ -51,8 +51,12 @@ PUT
 
 #### URI
 
-#### Payload
+```elm
+PUT https://atsd_host:8443/api/v1/entity-groups/nmon-aix
+```
 
+#### Payload
+???
 #### curl
 
 ### Response
