@@ -34,7 +34,7 @@ GET
 
 #### URI
 
-```eml
+```elm
 GET https://atsd_server:8443/api/v1/entities/i-943a8878/property-types
 ```
 
