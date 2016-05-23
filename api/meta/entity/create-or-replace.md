@@ -24,7 +24,6 @@ PUT
 |:---|:---|
 | Content-Type | application/json |
 
-### Parameters
 
 ### Fields
 | **Field**                            | **Description**                                                                             |
