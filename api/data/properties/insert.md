@@ -30,9 +30,9 @@ POST https://atsd_host:8443/api/v1/properties/insert
 }]
 ```
 #### curl
-```css
-curl --insecure https://atsd_host:8443/api/v1/properties/insert  \
-  --verbose --user {username}:{password} \
+```elm
+curl https://atsd_host:8443/api/v1/properties/insert  \
+  --insecure  --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request  POST \
   --data @file.json
