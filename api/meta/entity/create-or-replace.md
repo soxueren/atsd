@@ -34,7 +34,7 @@ PUT
 #### URI
 
 ```
-PUT https://atsd_host:8443/api/v1/entities/{entity}
+PUT https://atsd_host:8443/api/v1/entities/hostmain
 ```
 
 #### Payload
@@ -50,11 +50,11 @@ PUT https://atsd_host:8443/api/v1/entities/{entity}
 #### curl
 
 ```elm
-curl https://atsd_host:8443/api/v1/metrics/cpu_busy \
+curl https://atsd_host:8443/api/v1/entities/hostmain \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request PATCH \
-  --data '{"label":"CPU Busy Average","tags":{"table":"CollectD CPU Total"}}'
+  --data '{"tags": {"alias": "vmware_host"}}'
   ```
   
 
