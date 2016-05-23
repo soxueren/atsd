@@ -24,8 +24,12 @@ PUT
 |:---|:---|
 | Content-Type | application/json |
 
+###  Parameters
+
+None.
 
 ### Fields
+
 | **Field**                            | **Description**                                                                             |
 |---|---|
 | enabled                             | Enabled status. Incoming data is discarded for disabled entities.                           |
@@ -35,6 +39,7 @@ PUT
 <aside class="notice">
 If only a subset of fields is provided for an existing entity, the remaining properties will be set to default values and tags will be deleted.
 </aside>
+
 
 ## Response
 
