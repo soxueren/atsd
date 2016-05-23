@@ -1,15 +1,23 @@
 # Properties: Batch
+
 ## Description
+
 ## Path
-```
+
+```elm
 /api/v1/properties
 ```
+
 ## Method
+
 ```
 PATCH 
 ```
+
 ## Request
+
 ###  Fields
+
 | **Name**     | **Description**                                                                   |
 |---|---|
 | insert       | Insert an array of properties for a given entity, type                            |
@@ -24,13 +32,17 @@ For 'delete-match' action, 'createdBeforeTime' specifies an optional time condit
 Insert keys and delete keys by id or by partial key match in one request.
 
 ## Response
+
 ## Example
 
 ### Request
+
 #### URI
+
 ```elm
 PATCH https://atsd_host:8443/api/v1/properties
 ```
+
 #### Payload
 
 ```json
@@ -75,12 +87,12 @@ PATCH https://atsd_host:8443/api/v1/properties
 }]
 ``` 
 #### curl
-``` css
+``` elm
 curl https://atsd_host:8443/api/v1/properties \
-  -verbose -user {username}:{password} \
-  -header "Content-Type: application/json" \
-  -request PATCH 
-  -data '[{"action": "insert", "properties": [{ "type":"type-1","entity":"entity-1","key":{"server_name":"server", "user_name":"system"}, "tags":{"name.1": "value.1"},"timestamp":1000},{"type":"type-2","entity":"entity-2","tags":{"name.2": "value.2"}}]},{"action": "delete", "properties": [{ "type":"type-1","entity":"entity-1","key":{"server_name":"server", "user_name":"system"}}, {"type":"type-1","entity":"entity-2","key":{"server_name":"server","user_name":"system"}}]},{"action":"delete-match","matchers": [{"type":"type-1","createdBeforeTime":1000},{"type":"type-2","entity":"entity-2"},{"type":"type-3","key":{"server_name":"server"}}]}]'
+   --insecure --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request PATCH 
+  --data '[{"action": "insert", "properties": [{ "type":"type-1","entity":"entity-1","key":{"server_name":"server", "user_name":"system"}, "tags":{"name.1": "value.1"},"timestamp":1000},{"type":"type-2","entity":"entity-2","tags":{"name.2": "value.2"}}]},{"action": "delete", "properties": [{ "type":"type-1","entity":"entity-1","key":{"server_name":"server", "user_name":"system"}}, {"type":"type-1","entity":"entity-2","key":{"server_name":"server","user_name":"system"}}]},{"action":"delete-match","matchers": [{"type":"type-1","createdBeforeTime":1000},{"type":"type-2","entity":"entity-2"},{"type":"type-3","key":{"server_name":"server"}}]}]'
 
 ```
 ### Response
