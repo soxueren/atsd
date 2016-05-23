@@ -1,8 +1,12 @@
 # Properties: Query for Entity and Type
+
 ## Description
+
 Returns properties for entity and type. 
+
 ## Path 
-```
+
+```elm
 /api/v1/properties/{entity}/types/{type}
 ```
 
@@ -15,13 +19,17 @@ Returns properties for entity and type.
 ```
 GET 
 ```
+
 ## Request 
+
 ### Fields
+
 | **Field**  | **Required** | **Description**  |
 |---|---|---|---|---|
 |timeFormat|	no|	response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 
 ## Response 
+
 ### Fields
 
 | **Field**       | **Description**                                                                                        |
@@ -34,15 +42,18 @@ GET
 | date | date and time in ISO format |
 
 ## Example
+
 ### Request
+
 #### URI
+
 ```elm 
 GET https://atsd_server:8443/api/v1/properties/nurswgvml007/types/system?timeFormat=iso
 ```
 #### curl
-```css
-curl --insecure https://atsd_server:8443/api/v1/properties/nurswgvml007/types/system?timeFormat=iso \
-  --verbose --user {username}:{password} \
+```elm
+curl  https://atsd_server:8443/api/v1/properties/nurswgvml007/types/system?timeFormat=iso \
+  --insecure --verbose --user {username}:{password} \
   --request GET
 ```
 ### Response
