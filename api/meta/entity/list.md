@@ -85,9 +85,9 @@ None.
 ```
 
 ## Additional examples
-* [Example 1 - Rename](entity/examples/list-all-tags-for-all-entities-with-name.md)
-* [Example 2 - Rename](entity/examples/list-entities-by-tag-containing-hbase.md)
-* [Example 3 - Rename](entity/examples/list-entities-starting-with-nur.md)
+* [Example 1 - Rename](examples/list-all-tags-for-all-entities-with-name.md)
+* [Example 2 - Rename](examples/list-entities-by-tag-containing-hbase.md)
+* [Example 3 - Rename](examples/list-entities-starting-with-nur.md)
 
 
 
