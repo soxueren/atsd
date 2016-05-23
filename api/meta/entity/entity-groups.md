@@ -8,7 +8,7 @@ Returns an array of Entity Groups to which the entity belongs. Entity-group tags
 
 ### Path
 
-```
+```elm
 /api/v1/entities/{entity}/groups
 ```
 
