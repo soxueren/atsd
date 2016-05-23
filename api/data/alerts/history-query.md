@@ -2,19 +2,25 @@
 
 ## Description
 
-## Path
+## Request
+
+### Path
 
 ```elm
 /api/v1/alerts/history
 ```
 
-## Method
+### Method
 
 ```
 POST 
 ```
 
-## Request 
+### Headers 
+
+|**Header**|**Value**|
+|:---|:---|
+| Content-Type | application/json |
 
 ### Fields
 
@@ -31,6 +37,14 @@ POST
 | entityGroup | no | If `entityGroup` field is specified in the query, alerts for all entities in this group are returned. entityGroup is used only if `entity` or `entities` fields are missing or if entity field is an empty string. If entityGroup is not found or contains no entities an empty resultset will be returned. |
 |rule| yes | alert rule |
 |limit| no | default 1000|
+
+## Response
+
+### Fields
+
+None.
+
+### Errors
 
 ## Example
 
@@ -95,3 +109,5 @@ curl  https://atsd_host:8443/api/v1/alerts/history \
    }
 ]
 ```
+
+## Additional Examples
