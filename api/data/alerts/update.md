@@ -1,7 +1,8 @@
 ## Alerts: Update
 
 ### Method
-```
+
+```elm
 PATCH /api/v1/alerts
 ```
 
