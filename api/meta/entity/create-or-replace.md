@@ -45,13 +45,13 @@ If only a subset of fields is provided for an existing entity, the remaining pro
 
 #### URI
 
-```
+```elm
 PUT https://atsd_host:8443/api/v1/entities/hostmain
 ```
 
 #### Payload
 
-```
+```css
 {
   "tags": {
      "alias": "vmware_host"
