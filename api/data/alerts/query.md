@@ -1,16 +1,23 @@
 # Alerts: Query
+
 ## Description
+
 ## Path
+
 ```
 POST
 ```
+
 ## Method
 
-```
+```elm
 /api/v1/alerts
 ```
+
 ## Request 
+
 ### Fields
+
 | Field       | Required | Description              |
 |-------------|----|----------------------|
 | entity    | no (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
@@ -65,9 +72,9 @@ POST https://atsd_host:8443/api/v1/alerts
 }
 ```
 #### curl 
-```css
-curl --insecure https://atsd_host:8443/api/v1/alerts \
-  --verbose --user {username}:{password} \
+```elm
+curl  https://atsd_host:8443/api/v1/alerts \
+  --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
   --data @json.file
