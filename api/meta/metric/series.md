@@ -9,7 +9,7 @@ Returns a list of **series** for the metric. Each series contains entity name an
 ### Path
 
 ```elm
-/api/v1/metrics/{metric}/entity-and-tags
+/api/v1/metrics/{metric}/series
 ```
 
 ### Method
@@ -57,7 +57,7 @@ None.
 #### URI
 
 ```elm
-GET https://atsd_host:8443/api/v1/metrics/disk_used/entity-and-tags
+GET https://atsd_host:8443/api/v1/metrics/disk_used/series
 ```
 
 #### Payload
@@ -67,7 +67,7 @@ None.
 #### curl
 
 ```elm
-curl https://atsd_host:8443/api/v1/metrics/disk_used/entity-and-tags \
+curl https://atsd_host:8443/api/v1/metrics/disk_used/series \
   --insecure --verbose --user {username}:{password} \
   --request GET
 ```
@@ -75,40 +75,23 @@ curl https://atsd_host:8443/api/v1/metrics/disk_used/entity-and-tags \
 ### Response
 
 ```json
-[
-  {
-    "entity": "nurswgvml007",
-    "tags": {
-      "file_system": "/dev/mapper/vg_nurswgvml007-lv_root",
-      "mount_point": "/"
-    },
-    "lastInsertDate": "2015-09-04T15:48:58.000Z"
-  },
-  {
-    "entity": "nurswgvml007",
-    "tags": {
-      "file_system": "10.102.0.2:/home/store/share",
-      "mount_point": "/mnt/share"
-    },
-    "lastInsertDate": "2015-09-04T15:48:58.000Z"
-  },
-  {
-    "entity": "nurswgvml006",
-    "tags": {
-      "file_system": "/dev/mapper/vg_nurswgvml006-lv_root",
-      "mount_point": "/"
-    },
-    "lastInsertDate": "2015-09-04T15:48:47.000Z"
-  },
-  {
-    "entity": "nurswgvml006",
-    "tags": {
-      "file_system": "/dev/sdc1",
-      "mount_point": "/media/datadrive"
-    },
-    "lastInsertDate": "2015-09-04T15:48:47.000Z"
-  }
-]
+[{
+	"metric": "disk_used",
+	"entity": "nurswgvml007",
+	"tags": {
+		"file_system": "/dev/mapper/vg_nurswgvml007-lv_root",
+		"mount_point": "/"
+	},
+	"lastInsertDate": "2016-05-23T11:54:36.000Z"
+}, {
+	"metric": "disk_used",
+	"entity": "nurswgvml006",
+	"tags": {
+		"file_system": "10.102.0.2:/home/store/share",
+		"mount_point": "/mnt/share"
+	},
+	"lastInsertDate": "2015-12-25T14:09:49.000Z"
+}]
 ```
 
 ## Additional Examples
