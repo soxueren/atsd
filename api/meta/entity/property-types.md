@@ -1,19 +1,70 @@
-## Entity: Property Types
+# Entity: Property Types
+
+## Description
 
 Returns an array of property types for the entity. 
 
+## Request
+
+### Path
+
+```elm
+/api/v1/entities/{entity}/property-types
+```
 
 ### Method
-```
-GET /api/v1/entities/{entity}/property-types
-```
-### Basic Example
-> Request
 
 ```
-http://atsd_server:8088/api/v1/entities/nurswgvml007/property-types
+GET 
 ```
-> Response
+
+### Headers
+
+None.
+
+### Parameters
+
+| **Parameter** | **Required** | **Description**                 |
+|---------------|--------------|---------------------------------|
+| startTime        | no        | Return only property types that have been collected after the specified time. |
+
+### Fields
+
+None.
+
+## Response
+
+### Fields
+
+
+| **Field**       | **Description**                                                                                        |
+|----------------|--------------------------------------------------------------------------------------------------------|
+| type | Property type name                                                                                            |
+
+### Errors
+
+## Example
+
+### Request
+
+#### URI
+
+```elm
+GET https://atsd_host:8443/api/v1/entities/nurswgvml007/property-types
+```
+
+#### Payload
+
+None.
+
+#### curl
+
+```elm
+curl https://atsd_host:8443/api/v1/entities/nurswgvml007/property-types \
+  --insecure --verbose --user {username}:{password} \
+  --request GET
+  ```
+### Response
 
 ```json
 [
@@ -22,15 +73,9 @@ http://atsd_server:8088/api/v1/entities/nurswgvml007/property-types
    "process"
 ]
 ```
-### Request Parameters
-| **Parameter** | **Required** | **Description**                 |
-|---------------|--------------|---------------------------------|
-| startTime        | no        | Return only property types that have been collected after the specified time. |
 
-### Response Fields
+## Additional examples
 
 
 
-| **Field**       | **Description**                                                                                        |
-|----------------|--------------------------------------------------------------------------------------------------------|
-| type | Property type name                                                                                            |
+
