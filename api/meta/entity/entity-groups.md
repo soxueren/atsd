@@ -1,16 +1,66 @@
-## Entity: Entity Groups
+# Entity: Entity Groups
+
+## Description
+
+Returns an array of Entity Groups to which the entity belongs. Entity-group tags are included in the reponse.
+
+## Request
+
+### Path
+
+```
+/api/v1/entities/{entity}/groups
+```
+
 ### Method
-```
-GET /api/v1/entities/{entity}/groups
-```
-### Simple Example
-> Request
 
 ```
-http://atsd_hostname:8088/api/v1/entities/nurswgvml007/groups
+GET 
 ```
 
-> Resonse
+### Headers
+
+None.
+
+### Parameters
+
+None.
+
+### Fields
+
+None.
+
+## Response
+
+### Fields
+
+### Errors
+
+None.
+
+## Example
+
+### Request
+
+#### URI
+
+```elm
+GET https://atsd_host:8443/api/v1/entities/nurswgvml007/groups
+```
+
+#### Payload
+
+None.
+
+#### curl
+
+```elm
+curl https://atsd_host:8443/api/v1/entities/nurswgvml007/groups \
+  --insecure --verbose --user {username}:{password} \
+  --request GET
+```
+
+### Response
 
 ```json
 [
@@ -59,4 +109,7 @@ http://atsd_hostname:8088/api/v1/entities/nurswgvml007/groups
 ]
 ```
 
-Returns an array of Entity Groups to which the entity belongs. Entity-group tags are included in the reponse.
+## Additional examples
+
+
+
