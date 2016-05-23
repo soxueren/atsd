@@ -4,25 +4,39 @@
 
 Retrieve properties and tags for the specified entity.
 
-## Path 
+## Request
+
+### Path 
 
 ```elm
 /api/v1/entities/{entity}
 ```
 
-## Method 
+### Method 
 
 ```
 GET
 ```
 
-## Request
+### Headers 
+
+None
+
+### Parameters
+
+None
+
+### Fields 
+
+None
 
 ## Response
 
 ### Fields
 
 Refer to Response Fields in [Entities: List](list.md)
+
+### Errors
 
 ## Example
 
@@ -33,14 +47,17 @@ Refer to Response Fields in [Entities: List](list.md)
 ```elm
 GET https://atsd_host:8443/api/v1/entities/nurswgvml006
 ```
+#### Payload
+
+None
 
 #### curl 
 
-```css
+```elm
 curl https://atsd_host:8443/api/v1/entities/nurswgvml006 \
-  -v -u {username}:{password} \
-  -H "Content-Type: application/json" \
-  -X GET
+ --insecure --verbose --user {username}:{password} \
+ --header "Content-Type: application/json" \
+ --request GET
 ```
 
 ### Response
