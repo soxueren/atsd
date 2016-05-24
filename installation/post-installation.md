@@ -1,5 +1,9 @@
 # Post-Installation Steps
 
+## Configure Firewall
+
+* Allow remote access to ATSD network services by [adding `iptables` rules](firewall.md).
+
 ## Setup Email Client
 
 * See [note](../administration/setting-up-email-client.md).
@@ -19,11 +23,11 @@ increase maximum receiving buffer.
 
 * See [note](../administration/networking-settings.md).
 
-## Enable Swap
+## Enable Swap Memory
 
 * See [note](../administration/enabling-swap-space.md).
 
-## Increase Memory
+## Increase Java Memory Allocations
 
 * See [note](../administration/allocating-memory.md).
 
