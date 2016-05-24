@@ -42,7 +42,7 @@ Rules inherited from [generic ABNF](generic-abnf.md).
 ```properties
   ; MSP - one or multiple spaces
   ; message or at least one tag is required
-command = "message" MSP entity [MSP tag-type] [MSP tag-source] [MSP tag-severity] *(MSP tag) MSP message [MSP time]
+command = "message" MSP entity [MSP tag-type] [MSP tag-source] [MSP tag-severity] *(MSP tag) [MSP message] [MSP time]
   ; NAME consists of visible characters. 
   ; double-quote must be escaped with backslash.
 entity = "e:" NAME
