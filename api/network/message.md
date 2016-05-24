@@ -15,7 +15,7 @@ Type, source, and entity fields are indexed and therefore provide fast response 
 ## Syntax
 
 ```css
-message e:{entity} t:type={type} t:source={source} t:severity={} m:{message-text} s:{seconds}
+message e:{entity} t:type={type} t:source={source} t:severity={} t:tag={tag-value} m:{message} s:{seconds}
 ```
 
 ### Fields
@@ -23,7 +23,7 @@ message e:{entity} t:type={type} t:source={source} t:severity={} m:{message-text
 | **Field** | **Required** | **Description** |
 |:---|:---|:---|
 | e         | yes          | Entity name. |
-| t         | no           | Tags, including reserved tags `type`, `source`, `severity`. |
+| t         | no           | Tags, including reserved tags `type`, `source`, [`severity`](#severity). |
 | m         | no           | Message text. |
 | s         | no           | Time in UNIX seconds. | 
 | ms        | no           | Time in UNIX milliseconds. | 
@@ -31,7 +31,7 @@ message e:{entity} t:type={type} t:source={source} t:severity={} m:{message-text
 
 > If time fields are omitted, the record is inserted with the current server time.
 
-Message text or one of the tags is required, otherwise the message will be dropped silently.
+Message text or at least one tag is required, otherwise the message will be dropped silently.
 
 Enclose tag values and message text containing space in double quotes.
 
@@ -41,8 +41,8 @@ Rules inherited from [generic ABNF](generic-abnf.md).
 
 ```properties
   ; MSP - one or multiple spaces
-  ; entity or at least one tag is required
-command = "message" MSP entity MSP message [MSP tag-type] [MSP tag-source] [MSP tag-severity] *(MSP tag) [MSP time]
+  ; message or at least one tag is required
+command = "message" MSP entity [MSP tag-type] [MSP tag-source] [MSP tag-severity] *(MSP tag) MSP message [MSP time]
   ; NAME consists of visible characters. 
   ; double-quote must be escaped with backslash.
 entity = "e:" NAME
