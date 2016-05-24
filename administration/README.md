@@ -17,6 +17,7 @@
   - [Implementation Notes](user-authorization.md#implementation-notes)
 - [Restarting](restarting.md#restarting)
       - [Scripts](restarting.md#scripts)
+- [Updating](update.md)
 - [Uninstalling](uninstalling.md#uninstalling)
   - [Debian Package](uninstalling.md#debian-package)
   - [RPM Package](uninstalling.md#rpm-package)
