@@ -5,7 +5,7 @@
 Allow access to particular ports on the target ATSD server:
 
 * Login into ATSD server
-* Add allow rule for each target port:
+* Add allow rules for target ATSD ports:
 
 ```sh
 iptables -I INPUT -p tcp --dport 8081 -j ACCEPT
