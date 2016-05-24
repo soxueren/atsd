@@ -1,33 +1,51 @@
 # Update
 
 
-Updating ATSD to the latest version is done using by running an update
-script. The process is completely automatic, all new files are
-downloaded, all processes are stopped and restarted, no interaction with
-the system is required by the user.
+Update ATSD to the latest version by running an `update.sh`. 
+The script automates the process by downloading the latest ATSD artifacts, 
+copying files, and gracefully restarting services.
 
-This guide assumes that the target machine has direct internet
-connection.
+Access to axibase.com from the ATSD is required to download installation files.
 
-If the target machine does not have direct internet connection, please
-use the [manual update
-guide](update-manual.md "Update ATSD").
+If the target machine does not have direct internet connection, 
+use the [manual update guide](update-manual.md).
 
-Update command:
+## Check Revision
+
+* Open **Admin:Build Info** page.
+* Take note of the current Revision Number.
+
+## Update Command
 
 ```sh
 /opt/atsd/bin/update.sh
 ```
 
-The update process can take a while.
+### Update Command in Docker container
 
-To verify that ATSD is working correctly, navigate to the ATSD user interface in your browser:
+Assuming `atsd` is the name of the container:
 
-```sh
- http://atsd_hostname:8088/
+```
+docker exec -it atsd /opt/atsd/bin/update.sh
 ```
 
-Navigate to the Admin -\> Build Info page, verify that the Revision
-Number is the same as the revision number of the installed ATSD update.
+## Validation
+
+Once update is completed, the script will print out the following message:
+
+```
+Update process finished successfully.
+```
+
+The update process may take a few minutes to complete.
+
+To verify that ATSD is working correctly, open ATSD web interface:
+
+```sh
+ http://atsd_host:8088/
+```
+
+* Open **Admin:Build Info** page
+* Verify that the Revision Number has been incremented compared to pre-installation stage.
 
 ![](images/ATSD_build_info.png "ATSD_build_info")
