@@ -1,6 +1,5 @@
 # Restarting
 
-
 ATSD provides wrapper scripts that control the start, stop
 and status of ATSD and components.
 
@@ -34,10 +33,11 @@ Use these scripts to gracefully restart ATSD.
 
 ## Docker Container
 
-To control ATSD running inside a Docker container, use `docker exec -it` command, for example:
+To control ATSD running inside a Docker container, open `/bin/bash` session with `docker exec -it` and execute commands as usual:
 
 ```sh
-docker exec -it atsd /opt/atsd/bin/atsd-all.sh start
+docker exec -it atsd /bin/bash
+/opt/atsd/bin/update.sh 
 ```
 
 ```sh
