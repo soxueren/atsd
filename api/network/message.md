@@ -2,15 +2,17 @@
 
 ## Description
 
-Insert a text message or a log event for a given entity and tags into the database.
+Insert a timestamped text message or a log event for a given entity and tags into the database.
 
-Special tags supported by the command:
+Special fields supported by the message command:
 
-* `type` - message type, using in index
-* `source` - message source, using in index
-* `severity` - criticality [level](#severity), can be specified in numeric or text format.
+* `type` - message type, used in search index
+* `source` - message source, used in search index
+* `severity` - criticality level, can be specified in [numeric or text format](#severity).
 
-Type, source, and entity fields are indexed and therefore provide fast response time when used in search.
+`type`, `source`, and `entity` fields are indexed and therefore provide fast response time for search queries.
+
+`severity` field is exposed in the rule engine for filtering and alerting.
 
 ## Syntax
 
@@ -78,13 +80,13 @@ time-iso = "d:" ISO-DATE
 ## Examples
 
 ```ls
-message e:server001 d:2015-03-04T12:43:20Z t:type=application t:source=cron t:subject="my subject" m:"Hello, world"
+message e:server001 t:type=application t:source=cron t:job="backup" m:"Task completed" d:2016-03-04T12:43:20Z
 ```
 
 ```ls
-message e:server-001 t:type="basic" m:"notify message"
+message e:server001 t:type=collector-job t:job_name=nginx-connect-check t:job_type=TCP t:status=COMPLETED
 ```
 
 ```ls
-message e:server-001 t:type="advanced" t:severity=6 t:source="alert_monitor" m:"warning message"
+message e:server001 t:type=logger t:source=parsingstatistics t:level=ERROR s:1464076784
 ```
