@@ -38,11 +38,11 @@ Rules inherited from [generic ABNF](generic-abnf.md).
   ; MSP - one or multiple spaces
   ; entity and at least one tag is required
 command = "property" MSP entity type *(MSP key) 1*(MSP tag) [MSP time]
-  ; NAME consists of visible characters. 
+  ; NAME consists of printable characters. 
   ; double-quote must be escaped with backslash.
 entity = "e:" NAME
   type = "t:" NAME
-  ; TEXTVALUE consists of visible characters and space. 
+  ; TEXTVALUE consists of printable characters and space. 
   ; double-quote must be escaped with backslash. 
   ; tag values containing space must me quoted with double-quote.  
    key = "k:" NAME "=" TEXTVALUE  
