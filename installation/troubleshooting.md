@@ -40,7 +40,7 @@ $ netcat -z -v atsd_host 8081
 Connection to atsd_host 8081 port [tcp/tproxy] succeeded!
 ```
 
-* If the connection cannot be established, check that the `iptables` firewall on the ATSD server is configured to allow incoming TCP/UDP traffic to the target ports.
+* If the connection cannot be established, check that the `iptables` firewall on the ATSD server is [configured to allow](firewall.md) incoming TCP/UDP traffic to the target ports.
 
 ## Review Logs
 
