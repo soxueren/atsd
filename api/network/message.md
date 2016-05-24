@@ -52,7 +52,9 @@ message = "m:" TEXTVALUE
   ; tag values containing space must me enclosed with double-quote.  
 tag-type = "t:type=" TEXTVALUE
 tag-source = "t:source=" TEXTVALUE
-tag-severity = "t:severity=" (%x30-37 / "UNDEFINED" / "UNKNOWN" / "NORMAL" / "WARNING" / "MINOR" / "MAJOR" / "CRITICAL" / "FATAL" )
+  ; severity value is case-insensitive
+  ; https://tools.ietf.org/html/rfc7405#section-2.1
+tag-severity = "t:severity=" (%x30-37 / %i("UNDEFINED" / "UNKNOWN" / "NORMAL" / "WARNING" / "MINOR" / "MAJOR" / "CRITICAL" / "FATAL" ))
 tag = "t:" NAME "=" TEXTVALUE
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE-INTEGER
