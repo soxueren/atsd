@@ -15,7 +15,7 @@ Type, source, and entity fields are indexed and therefore provide fast response 
 ## Syntax
 
 ```css
-message e:{entity} t:type={type} t:source={source} t:severity={} t:tag={tag-value} m:{message} s:{seconds}
+message e:{entity} t:type={type} t:source={source} t:severity={severity} t:tag={tag-value} m:{message} s:{seconds}
 ```
 
 ### Fields
