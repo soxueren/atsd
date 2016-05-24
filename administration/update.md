@@ -23,7 +23,8 @@ Access to axibase.com from the target server is required to download installatio
 Assuming `atsd` is the name of the container:
 
 ```
-docker exec -it atsd /opt/atsd/bin/update.sh
+docker exec -it atsd /bin/bash
+/opt/atsd/bin/update.sh
 ```
 
 ## Validation
