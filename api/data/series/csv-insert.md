@@ -4,9 +4,7 @@
 
 Insert series values for the specified entity and series tags in CSV format.
 
-The request accepts samples only for one entity and tag combination. 
-
-One or multiple metric columns are specified in CSV header.
+The CSV header should include a leading time column and one or multiple numeric metric columns for the same entity and tag combination.
 
 ## Request
 
