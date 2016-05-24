@@ -1,10 +1,10 @@
 # Generic ABNF Rules
 
 ```properties
-  ; visible characters. 
+  ; printable characters. 
   ; double-quote must be escaped with backslash.
 NAME = 1*(NCHAR / "\" DQUOTE) 
-  ; visible characters and spaces.
+  ; printable characters and spaces.
   ; space must be quoted with double-quote. 
   ; double-quote must be escaped with backslash.
 TEXTVALUE = NAME / DQUOTE 1*(NCHAR / "\" DQUOTE / SP) DQUOTE
@@ -14,9 +14,9 @@ MSP = 1*SP
 SP = %x20 
   ; double-quote
 DQUOTE = %x21
-  ; visible character except double-quote
+  ; printable character except double-quote
 NCHAR = %x21 / %x23-7E / UNICODE
-  ; visible character
+  ; printable character
 VCHAR = %x21-7E / UNICODE
   ; Unicode character
   ; http://tools.ietf.org/html/rfc6531#section-3.3
