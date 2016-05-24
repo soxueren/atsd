@@ -54,25 +54,25 @@ To send a single command, connect to an ATSD server, send the command in plain t
 * netcat:echo
 
 ```ls
-echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z" | nc 10.102.0.6 8081
+echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z" | nc host 8081
 ```
 
 * netcat:printf
 
 ```ls
-printf 'series e:station_2 m:temperature=32.2 m:humidity=81.4 s:1463271035' | nc 10.102.0.6 8081
+printf 'series e:station_2 m:temperature=32.2 m:humidity=81.4 s:1463271035' | nc host 8081
 ```
 
 * UNIX pipe
 
 ```ls
-echo -e "series e:station_3 m:temperature=32.2 m:humidity=81.4" > /dev/tcp/10.102.0.6/8081
+echo -e "series e:station_3 m:temperature=32.2 m:humidity=81.4" > /dev/tcp/host/8081
 ```
 
 * telnet:one line
 
 ```ls
-telnet 10.102.0.6 8081 << EOF
+telnet atsd_host 8081 << EOF
 series e:station_4 m:temperature=32.2 m:humidity=81.4
 EOF
 ```
@@ -80,9 +80,9 @@ EOF
 * telnet:session
 
 ```ls
-$ telnet 10.102.0.6 8081
-Trying 10.102.0.6...
-Connected to 10.102.0.6.
+$ telnet host 8081
+Trying host...
+Connected to host.
 Escape character is '^]'.
 series e:station_5 m:temperature=32.2 m:humidity=81.4
 ^C
@@ -92,7 +92,7 @@ Connection closed by foreign host.
 * java:socket
 
 ```java
-Socket s = new Socket("10.102.0.6", 8081);
+Socket s = new Socket("host", 8081);
 PrintWriter writer = new PrintWriter(s.getOutputStream(), true);
 writer.println("series e:station_6 m:temperature=32.2");
 s.close();
@@ -109,11 +109,11 @@ Trailing line feed is not required for the last command in the batch.
 Use `-e` flag in `echo` commands to enable interpretation of backslash escapes.
 
 ```ls
-echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z\nseries e:station_1 m:temperature=32.1 m:humidity=82.4 d:2016-05-15T00:25:00Z" | nc 10.102.0.6 8081
+echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z\nseries e:station_1 m:temperature=32.1 m:humidity=82.4 d:2016-05-15T00:25:00Z" | nc host 8081
 ```
 
 ```java
-Socket s = new Socket("10.102.0.6", 8081);
+Socket s = new Socket("host", 8081);
 PrintWriter writer = new PrintWriter(s.getOutputStream(), true);
 writer.println("series e:station_6 m:temperature=30.1\nseries e:station_7 m:temperature=28.7");
 s.close();
@@ -132,9 +132,9 @@ To prevent the connection from timing out the client may send [`ping`](ping.md) 
 Clients can submit commands of different types over the same connection.
 
 ```ls
-$ telnet 10.102.0.6 8081
-Trying 10.102.0.6...
-Connected to 10.102.0.6.
+$ telnet host 8081
+Trying host...
+Connected to host.
 Escape character is '^]'.
 series e:station_1 m:temperature=32.2
 property e:station_2 t:location v:city=Cupertino v:state=CA v:country=USA
@@ -146,9 +146,9 @@ Note that the server will **terminate** the connection if it receives an unsuppo
 
 
 ```ls
-$ telnet 10.102.0.6 8081
-Trying 10.102.0.6...
-Connected to 10.102.0.6.
+$ telnet host 8081
+Trying host...
+Connected to host.
 Escape character is '^]'.
 unknown_command e:station_1 m:temperature=32.2
 Connection closed by foreign host.
@@ -161,17 +161,17 @@ The UDP protocol doesn't guarantee delivery but may have a higher throughput com
 In addition, sending commands with UDP datagrams decouples the client application from the server to minimize the risk of blocking I/O time-outs.
 
 ```ls
-echo -e "series e:station_3 m:temperature=32.2 m:humidity=81.4" | nc -u -w1 10.102.0.6 8082
+echo -e "series e:station_3 m:temperature=32.2 m:humidity=81.4" | nc -u -w1 host 8082
 ```
 
 ```ls
-printf 'series e:station_3 m:temperature=32.2 m:humidity=81.4' | nc -u -w1 10.102.0.6 8082
+printf 'series e:station_3 m:temperature=32.2 m:humidity=81.4' | nc -u -w1 host 8082
 ```
 
 Unlike TCP, the last command in a multi-command UDP datagram must be terminated with the line feed character.
 
 ```ls
-echo -e "series e:station_33 m:temperature=32.2\nseries e:station_34 m:temperature=32.1 m:humidity=82.4\n" | nc -u -w1 10.102.0.6 8082
+echo -e "series e:station_33 m:temperature=32.2\nseries e:station_34 m:temperature=32.1 m:humidity=82.4\n" | nc -u -w1 host 8082
 ```
 
 ### Duplicate Commands
@@ -183,13 +183,13 @@ If such commands are submitted at approximately the same time, there is no guara
 * Duplicate example: same key, same current time  
 
 ```ls
-echo -e "series e:station_1 m:temperature=32.2\nseries e:station_1 m:temperature=42.1" | nc 10.102.0.6 8081
+echo -e "series e:station_1 m:temperature=32.2\nseries e:station_1 m:temperature=42.1" | nc host 8081
 ```
 
 * Duplicate example: same key, same time  
 
 ```ls
-echo -e "series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\nseries e:station_1 m:temperature=42.1  d:2016-05-15T00:10:00Z" | nc 10.102.0.6 8081
+echo -e "series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\nseries e:station_1 m:temperature=42.1  d:2016-05-15T00:10:00Z" | nc host 8081
 ```
 
 ## Syntax
@@ -265,14 +265,14 @@ Include `debug` command at the start of the line to instruct the server to respo
 * `debug` with valid command
 
 ```ls
-$ echo -e "debug series e:station_1 m:temperature=32.2" | nc 10.102.0.6 8081
+$ echo -e "debug series e:station_1 m:temperature=32.2" | nc host 8081
 ok
 ```
 
 * `debug` with unknown command
 
 ```ls
-$ echo -e "debug my_command e:station_1 m:temperature=32.2" | nc 10.102.0.6 8081
+$ echo -e "debug my_command e:station_1 m:temperature=32.2" | nc host 8081
 >no response, connection closed
 ```
 
