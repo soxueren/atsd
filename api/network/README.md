@@ -43,7 +43,7 @@ To encrypt TCP traffic, setup an [SSH tunnel](http://axibase.com/products/axibas
 
 Authentication and authorization are not supported for plain text commands received over TCP and UDP protocols. 
 
-Utilize [HTTP command](./data/command.md) to send plain-text commands over http/https protocols with authentication and authorization enabled.
+Utilize [HTTP command](../data/command.md) to send plain-text commands over http/https protocols with authentication and authorization enabled.
 
 ## Connection
 
