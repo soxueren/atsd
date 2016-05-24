@@ -1,12 +1,10 @@
 # Restarting
 
 
-ATSD comes with a set of wrapper scripts that control the start, stop
-and status of ATSD and components. Use these scripts to start and stop
-ATSD.
+ATSD provides wrapper scripts that control the start, stop
+and status of ATSD and components.
 
-ATSD uses these scripts to safely stop ATSD and components and start
-them back up on system reboot.
+Use these scripts to gracefully restart ATSD.
 
 ## Script Directory
 
@@ -32,6 +30,18 @@ them back up on system reboot.
 
 ```sh
 /opt/atsd/bin/update.sh
+```
+
+## Docker Container
+
+To control ATSD running inside a Docker container, use `docker exec -it` command, for example:
+
+```sh
+docker exec -it atsd /opt/atsd/bin/atsd-all.sh start
+```
+
+```sh
+docker exec -it atsd tail -f /opt/atsd/atsd/logs/atsd.log
 ```
 
 ## Processes
