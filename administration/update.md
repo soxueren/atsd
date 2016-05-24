@@ -46,3 +46,7 @@ To verify that ATSD is working correctly, open ATSD web interface:
 * Verify that the Revision Number has been incremented compared to pre-installation stage.
 
 ![](images/ATSD_build_info.png "ATSD_build_info")
+
+## Restart
+
+In case the web interface is not accessible for more than 5 minutes after the update, initiate a [restart](restarting.md).
