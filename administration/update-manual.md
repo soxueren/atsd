@@ -1,6 +1,5 @@
 # Manual update
 
-
 #### Login with the Axibase user
 
 ```sh
@@ -9,7 +8,7 @@
 
 #### Download the latest ATSD update file
 
-**[atsd\_latest.tar.gz](http://axibase.com/public/atsd_ce_update_latest.htm "ATSD Update")**
+**http://axibase.com/public/atsd_ce_update_latest.htm](http://axibase.com/public/atsd_ce_update_latest.htm "ATSD Update")**
 
 The download will contain an archive with the latest ATSD release. For
 example: atsd\_9972.tar.gz
@@ -45,8 +44,7 @@ example: atsd\_9972.tar.gz
 ```
 
 ```sh
- cp /opt/atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/atsd-execut 
- able.jar_old                                                             
+ cp /opt/atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/atsd-executable.jar_old                                                             
 ```
 
 #### Copy new versions
@@ -68,9 +66,10 @@ example: atsd\_9972.tar.gz
 #### Navigate to the ATSD user interface in your browser
 
 ```sh
- http://"atsd_hostname":8088/
+ http://atsd_host:8088/
 ```
 
-Open Admin -\> Build Info page and verify that the Revision Number is the same as the revision number of the installed ATSD update.
+* Open **Admin:Build Info** page
+* Verify that the Revision Number matches the installed ATSD update.
 
 ![](images/ATSD_build_info.png "ATSD_build_info")
