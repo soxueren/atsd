@@ -1,14 +1,11 @@
 # Update
 
 
-Update ATSD to the latest version by running an `update.sh`. 
-The script automates the process by downloading the latest ATSD artifacts, 
-copying files, and gracefully restarting services.
+Update Axibase Time Series Database to the latest version by running `update.sh` script. 
+The script automates the process of downloading the latest ATSD artifacts, 
+copying files, and gracefully restarting ATSD services.
 
-Access to axibase.com from the ATSD is required to download installation files.
-
-If the target machine does not have direct internet connection, 
-use the [manual update guide](update-manual.md).
+Access to axibase.com from the target server is required to download installation files. If the server is not connected to the Internet, switch to [manual update](update-manual.md) option.
 
 ## Check Revision
 
