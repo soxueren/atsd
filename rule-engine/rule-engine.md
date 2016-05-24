@@ -57,14 +57,6 @@ is TRUE enables deduplication and supports flexible action programming.
 For example, some actions can be configured to execute only on OPEN
 status, while others can run on every n-th REPEAT occurrence.
 
-## Time Control
-
-The rule engine in ATSD is designed to analyze current, real-time data streams.
-
-It ignores commands that are 1 minute behind or 1 minute ahead of the current server time.
-When enabled, the ignored commands are logged to `*_expired.lo`g and `*_forward.log` files respectively.
-
-The log of expired or future commands can be enabled on **Admin:Input Settings** page.
 
 ## Expressions
 
@@ -145,6 +137,25 @@ free up space for a new sample.
 
 ![Axibase Time Series Database Rule Engine Count Based
 Window](images/count_based_window3.png "count_based_window")
+
+## Time Control
+
+The rule engine in ATSD is designed to analyze current, real-time data streams.
+
+It ignores commands that are 1 minute behind or 1 minute ahead of the current server time.
+When enabled, the ignored commands are logged to `*_expired.lo`g and `*_forward.log` files respectively.
+
+The log of expired or future commands can be enabled on **Admin:Input Settings** page.
+
+## Alert Severity
+
+Severity of alerts raised by the rule engine is specified on Alerts tab in Rule Editor.
+
+If an alert is raised by an expression defined in Threshold table, its severity overrides 
+the default severity configured in Alert tab.
+
+In order to inherit alert severity from `message` severity, set Severity on Alerts tab to 'unknown'.
+
 
 ## Rule Editor Settings
 
