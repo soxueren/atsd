@@ -33,7 +33,7 @@ An array of objects containing fields for filtering records for deletion.
 | type | yes | Property type name. |
 | entity | no | Entity name. |
 | endDate | ISO format. | Delete records updated before the specified time. |
-| key **or** <br>partialKey | yes | An object containing `name=value` fields. <br>`key` - deletes records with the same key. <br>`partialKey` - deletes records containing fields with the same values in the key. |
+| key **or** <br>partialKey | yes | An object containing `name=value` fields. <br>`key` - Delete records with the same key. <br>`partialKey` - Delete records containing fields with the same values in the key. |
 
 ## Response
 
