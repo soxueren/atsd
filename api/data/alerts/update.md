@@ -4,7 +4,7 @@
 
 Change acknowledgement status of the specified alerts.
 
-This method can be acknowledge and un-acknowledge alerts by adding `"acknowledged": true|false` property in the request.
+This method can be used to acknowledge and un-acknowledge alerts with `"acknowledged": true|false` property in the request.
 
 If `acknowledged` property is not specified, the alert will be un-acknowledged. 
 
