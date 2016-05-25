@@ -2,7 +2,7 @@
 
 ## Description
 
-Update specified alerts by id in the database. The fields specified in the payload will overwrite the same fields in existing alerts.
+Update specified alerts by id.
 
 This method can be used to acknowledge and de-acknowledge alerts by adding `"acknowledge": true|false` property in the request.
 
@@ -32,19 +32,12 @@ None.
 
 ### Fields
 
-An array of objects containing 'id' field identifying alert in the database.
+An array of objects containing 'id' property identifying alert in the database and acknowledge property.
 
 |**Field**|**Description**|
 |:---|:---|
 |id|Alert id.|
-|entity|Entity name.|
-|metric|Metric name. For message and property commands, the metric name is 'messages' and 'property'.|
-|rule|Rule name.|
-|entity|Entity name.|
-|acknowledged|Entity name.|
-|severity|Severity code, 0 to 7.|
-|value|Numeric value, for metric commands.|
-|message|Text message, for message commands.|
+|acknowledged|Acknowledgement status. true or false|
 
 ## Response
 
