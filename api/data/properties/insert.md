@@ -27,7 +27,7 @@ POST
 ### Fields
 
 | **Field**  |**Required**  | **Description**  |
-|:---|:---|
+|:---|:---|:---|
 | type | yes | Property type name. |
 | entity | yes | Entity name. |
 | key | no | An object containing `name=value` fields that uniquely identify the property record. |
