@@ -88,7 +88,7 @@ POST https://atsd_host:8443/api/v1/messages/query
 [
     {
         "entity": "nurswgvml007",
-        "type": "security",
+        "type": "logger",
         "limit": 5,
         "endDate": "now",
         "interval": {
@@ -115,27 +115,33 @@ curl  https://atsd_host:8443/api/v1/messages/query \
 
 ```json
 [
-    {
+   {
         "entity": "nurswgvml007",
-        "type": "security",
-        "source": "default",
-        "severity": "UNDEFINED",
-        "tags": {
-            "path": "/var/log/secure"
+        "type": "logger",
+        "source": "com.axibase.tsd.service.entity.findentitybyexpressionserviceimpl",
+        "severity": "NORMAL",
+        "tags":
+        {
+            "level": "INFO",
+            "thread": "applicationScheduler-5",
+            "command": "com.axibase.tsd.Server"
         },
-        "message": "Sep 17 09:13:20 NURSWGVML007 sshd[1930]: pam_unix(sshd:session): session closed for user nmonuser",
-        "date": "2015-09-17T09:13:20Z"
+        "message": "Expression entity group 'scollector-linux' updated",
+        "date": "2016-05-25T17:05:00Z"
     },
     {
         "entity": "nurswgvml007",
-        "type": "security",
-        "source": "default",
-        "severity": "UNDEFINED",
-        "tags": {
-            "path": "/var/log/secure"
+        "type": "logger",
+        "source": "com.axibase.tsd.web.csv.csvcontroller",
+        "severity": "NORMAL",
+        "tags":
+        {
+            "level": "INFO",
+            "thread": "qtp490763067-195",
+            "command": "com.axibase.tsd.Server"
         },
-        "message": "Sep 17 09:13:18 NURSWGVML007 sshd[23006]: error: connect_to localhost port 8081: failed.",
-        "date": "2015-09-17T09:13:18Z"
+        "message": "Start processing csv, config: nginx-status",
+        "date": "2016-05-25T17:04:01Z"
     }
 ]
 ```
