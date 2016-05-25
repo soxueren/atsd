@@ -48,6 +48,8 @@ An array of query objects containing query fields used for filtering. if the arr
 
 ## Response
 
+An array of matching alert objects with the following fields:
+
 ### Fields
 
 | **Field** | **Description** |
