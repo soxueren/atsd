@@ -59,7 +59,7 @@ An array of matching alert objects with the following fields:
 | entity | Entity name. |
 | metric | Metric name.  |
 | rule | Rule name. |
-| severity  | [Severity](#severity) code.  |
+| severity  | [Severity](../severity.md) code.  |
 | tags | An object containing name=value tags, for example `tags: {"path": "/", "name": "sda"}` |
 | repeatCount | Number of times when the expression evaluated to true sequentially.  |
 | textValue | Text value.  |
@@ -71,19 +71,6 @@ An array of matching alert objects with the following fields:
 ### Errors
 
 None.
-
-## Severity
-
-| **Code** | **Name** |
-|:---|:---|
-| 0 | UNDEFINED |
-| 1 | UNKNOWN |
-| 2 | NORMAL |
-| 3 | WARNING |
-| 4 | MINOR |
-| 5 | MAJOR |
-| 6 | CRITICAL |
-| 7 | FATAL |
 
 ## Example
 
