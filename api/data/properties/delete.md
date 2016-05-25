@@ -73,9 +73,9 @@ POST https://atsd_host:8443/api/v1/properties/delete
 
 ``` elm
 curl https://atsd_host:8443/api/v1/properties/delete \
-   --insecure --verbose --user {username}:{password} \
+  --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
-  --request POST 
+  --request POST \
   --data '[{ "type":"nmon-disks", "entity":"nurswgvml007", "key":{"file_system":"/","name":"sda1"} }]'
 ```
 
