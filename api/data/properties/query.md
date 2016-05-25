@@ -18,16 +18,17 @@ POST
 
 ### Fields
 
+An array of query objects containing fields for filtering.
+
 | **Field**  | **Required** | **Description**  |
-|---|---|---|
+|:---|:---|:---|
 | entity    | yes (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
 | entities | yes (1) | Array of entity names or entity name patterns |
 | entityGroup | yes (1) | If `entityGroup` field is specified in the query, properties of the specified type for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
 | entityExpression | yes (1) | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
 |startDate|	no|	start of the selection interval. Specified in ISO format or using endtime syntax.|
 |endDate|	no|	end of the selection interval. Specified in ISO format or using endtime syntax.|
-|timeFormat|	no|	response time format. Possible values: `iso`, `milliseconds`. Default value: `iso`|
-| limit     | no           | maximum number of data samples returned. Default value: 0   | 
+| limit     | no           | Maximum number of records returned. Default value: 0 (all)  | 
 | type      | yes          | type of data properties. Supports reserved `$entity_tags` type to retrieve entity tags. Any keys specified in a request containing this reserved type will be ignored.  |
 | key      | no           | JSON object containing `name=values` that uniquely identify the property record. Ignored when querying '$entity_tags' which is a reserved property type to retrieve entity tags. |
 | keyExpression | no | expression for matching properties with specified keys |
@@ -38,16 +39,17 @@ POST
 
 ## Response 
 
+An array of matching property records containing the following fields:
+
 ### Fields
 
 | **Field**  | **Description**  |
 |:---|:---|
-| type | property type name |
-| entity | entity name |
-| key | JSON object containing `name=value` that uniquely identify the property record |
-| tags | object keys |
-| timestamp | time in Unix milliseconds |
-| date | time in ISO format |
+| type | Property type name. |
+| entity | Entity name. |
+| key | JSON object containing `name=value` that uniquely identify the property record. |
+| tags | An object containing name=value tags, for example tags: `{"path": "/", "name": "sda"}`. |
+| date | Time when the record was last updated, in ISO format. |
 
 ## Example
 
