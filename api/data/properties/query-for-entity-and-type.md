@@ -1,42 +1,38 @@
-# Properties: Query for Entity and Type
+# Properties: URL Query
 
 ## Description
 
-Returns properties for entity and type. 
+Retrieve property records for the specified entity and type.
 
-## Path 
+## Request 
+
+### Path
 
 ```elm
 /api/v1/properties/{entity}/types/{type}
 ```
 
-
-## Methods
+### Method 
 
 ```
-GET 
+GET
 ```
 
-## Request 
+### Headers
 
-### Fields
-
-| **Field**  | **Required** | **Description**  |
-|---|---|---|---|---|
-|timeFormat|	no|	response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
+None.
 
 ## Response 
 
 ### Fields
 
-| **Field**       | **Description**                                                                                        |
-|----------------|--------------------------------------------------------------------------------------------------------|
-| type | Property type name                                                                                            |
-| entity | an entity name, such as server name, or a entity name pattern with `?` and `*` wildcards |
-| key | JSON object containing `name=values` that uniquely identify the property record |
-| tags | object keys |
-| timestamp | time in Unix milliseconds |
-| date | date and time in ISO format |
+| **Field**  | **Description**  |
+|:---|:---|
+| type | Property type name. |
+| entity | Entity name. |
+| key | An object containing `name=value` fields that uniquely identify the property record. |
+| tags | An object containing `name=value` tags, for example tags: `{"path": "/", "name": "sda"}`. |
+| date | Time when the record was last updated, in ISO format. |
 
 ## Example
 
@@ -45,14 +41,17 @@ GET
 #### URI
 
 ```elm 
-GET https://atsd_server:8443/api/v1/properties/nurswgvml007/types/system?timeFormat=iso
+GET https://atsd_server:8443/api/v1/properties/nurswgvml007/types/system
 ```
+
 #### curl
+
 ```elm
-curl  https://atsd_server:8443/api/v1/properties/nurswgvml007/types/system?timeFormat=iso \
+curl https://atsd_server:8443/api/v1/properties/nurswgvml007/types/system?timeFormat=iso \
   --insecure --verbose --user {username}:{password} \
   --request GET
 ```
+
 ### Response
 
 ```json
@@ -64,55 +63,9 @@ curl  https://atsd_server:8443/api/v1/properties/nurswgvml007/types/system?timeF
        "tags": {
            "cpu_total.busy": "1",
            "cpu_total.idle%": "93.6",
-           "cpu_total.sys%": "1.1",
-           "cpu_total.user%": "4.7",
-           "cpu_total.wait%": "0.6",
-           "memory_mb.active": "946.2",
-           "memory_mb.bigfree": "-1.0"
+           "cpu_total.sys%": "1.1"
        },
        "date": "2015-02-05T16:55:02Z"
    }
-]
-```
-
-> Request
-
-```
-https://atsd_server:8443/api/v1/entities/i-943a8878/property-types/aws_ec2.instance?timeFormat=iso
-```
-
-> Response
-
-```json
-[
-    {
-        "type": "aws_ec2.instance",
-        "entity": "i-943a8878",
-        "key": {},
-        "tags": {
-            "amilaunchindex": "0",
-            "architecture": "x86_64",
-            "clienttoken": "TqxBb1417594114891",
-            "dnsname": "ec2-75-101-140-203.compute-1.amazonaws.com",
-            "ebsoptimized": "false",
-            "hypervisor": "xen",
-            "imageid": "ami-08389d60",
-            "instancestate.code": "16",
-            "instancestate.name": "running",
-            "instancetype": "m1.small",
-            "ipaddress": "75.101.140.203",
-            "keyname": "basepair",
-            "launchtime": "2014-12-03T08:08:35.000Z",
-            "monitoring.state": "disabled",
-            "placement.availabilityzone": "us-east-1d",
-            "placement.tenancy": "default",
-            "privatednsname": "ip-10-111-164-53.ec2.internal",
-            "privateipaddress": "10.111.164.53",
-            "rootdevicename": "/dev/sda1",
-            "rootdevicetype": "ebs",
-            "virtualizationtype": "paravirtual"
-        },
-        "date": "2015-09-04T14:30:30Z"
-    }
 ]
 ```
