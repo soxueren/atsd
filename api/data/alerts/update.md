@@ -37,6 +37,14 @@ An array of objects containing 'id' field identifying alert in the database.
 |**Field**|**Description**|
 |:---|:---|
 |id|Alert id.|
+|entity|Entity name.|
+|metric|Metric name. For message and property commands, the metric name is 'messages' and 'property'.|
+|rule|Rule name.|
+|entity|Entity name.|
+|acknowledged|Entity name.|
+|severity|Severity code, 0 to 7.|
+|value|Numeric value, for metric commands.|
+|message|Text message, for message commands.|
 
 ## Response
 
