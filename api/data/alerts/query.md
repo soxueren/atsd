@@ -30,7 +30,7 @@ None.
 
 ### Fields
 
-An array of query objects containing query fields used for filtering. if the array is empty, the server will return all alerts.
+An array of query objects containing filtering fields. if the array is empty, the server will return all alerts.
 
 | **Field** | **Description** |
 |:---|:---|:---|
