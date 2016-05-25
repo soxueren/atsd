@@ -51,7 +51,21 @@ An array of query objects containing query fields used for filtering.
 
 ### Fields
 
-None.
+| **Field** | **Description** |
+|:---|:---|:---|
+| id    | Alert id.|
+| entity | Entity name. |
+| metric | Metric name.  |
+| rule | Rule name. |
+| severity  | [Severity](#severity) code.  |
+| tags | An object containing name=value tags, for example `tags: {"path": "/", "name": "sda"}` |
+| repeatCount | Number of times when the expression evaluated to true sequentially.  |
+| textValue | Text value.  |
+| value | Last numeric value received. |
+| openValue | First numeric value received.  |
+| openDate | Time when alerts was open, in ISO format.  |
+| lastEventDate | Time when alerts was last repeated, in ISO format.  |
+| acknowledged | Acknowledgement status.|
 
 ### Errors
 
@@ -107,22 +121,22 @@ curl https://atsd_host:8443/api/v1/alerts/query \
 ```json
 [
     {
-        "value": 0,
-        "message": "",
-        "id": 6,
-        "textValue": "",
-        "tags":
-        {
+        "id": 13,
+        "entity": "nurswgvml006",        
+        "tags": {
+            "file_system": "/dev/sdc1",
+            "mount_point": "/media/datadrive"
         },
-        "metric": "message",
-        "entity": "awsswgvml001",
-        "severity": 2,
-        "rule": "alert-app",
-        "repeatCount": 15,
+        "repeatCount": 106,
+        "textValue": "61.365",
+        "metric": "disk_used_percent",
+        "severity": 6,
+        "rule": "disk_low",
         "acknowledged": false,
-        "openValue": 0,
+        "openDate": "2015-05-12T13:39:37Z",
+        "openValue": 61.3998,
         "lastEventDate": "2015-05-12T14:57:42Z",
-        "openDate": "2015-05-12T13:39:37Z"
+        "value": 61.3651
     }
 ]
 ```
