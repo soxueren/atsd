@@ -10,9 +10,6 @@ Returns properties for entity and type.
 /api/v1/properties/{entity}/types/{type}
 ```
 
-```
-/api/v1/entities/{entity}/property-types/{property-type}
-```
 
 ## Methods
 
