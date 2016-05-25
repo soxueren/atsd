@@ -34,8 +34,8 @@ An array of query objects containing filtering fields.
 |startDate	  | no  | Start of the selection interval. Specified in ISO format or using endtime syntax.<br>Default value: endTime - 1 hour    |
 |endDate	  | no  | End of the selection interval. Specified in ISO format or using endtime syntax. <br>Default value: current server time     |
 |interval | no | Duration of the selection interval, specified as `count` and `unit`. For example: `"interval": {"count": 5, "unit": "MINUTE"}` |
-|severity       |  no   | Severity [code or description](#severity).  |
-|minSeverity       |  no   | Minimal [code or description](#severity) filter.  |
+|severity       |  no   | Severity [code or name](#severity).  |
+|minSeverity       |  no   | Minimal [code or name](#severity) filter.  |
 |timeFormat   | no  | Response time format: `iso` or `milliseconds`. Default value: `iso`|
 |limit        |	no  | Maximum number of messages returned. Default value: 1000  |
 
