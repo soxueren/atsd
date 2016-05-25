@@ -12,8 +12,8 @@ The Data API lets you insert and retrieve series, properties, messages, and aler
 * Properties
   - [insert](properties/insert.md)
   - [query](properties/query.md)
-  - [property types](properties/property-types.md)
-  - [query for entity and type](properties/query-for-entity-and-type.md)
+  - [url query](properties/url-query.md)
+  - [type query](properties/type-query.md)
   - [delete](properties/delete.md)
 * Messages
   - [insert](messages/insert.md)
@@ -28,13 +28,11 @@ The Data API lets you insert and retrieve series, properties, messages, and aler
 
 ## Request Methods
 
-The API uses `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` methods to read and write data.
-
-The `PATCH` method is typically used to delete records based on a condition specified in payload, because payload is not allowed in the `DELETE` method. 
+The API uses `GET` and `POST` methods to read and write data.
 
 ## Request Headers
 
-When submitting payload with `POST`, `PUT`, and `PATCH` methods in JSON format, add header `Content-Type: application/json`.
+When submitting payload with `POST` method in JSON format, add header `Content-Type: application/json`.
 
 For correct Unicode handling, specify charset `Content-Type: application/json;chartset=UTF-8`.
 
