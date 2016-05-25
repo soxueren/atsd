@@ -23,13 +23,14 @@ precedence over expression.
 `metric` | metric name
 
 ## Functions
+
 ### Time Functions
 
 **Function** | **Description**
 :--- | :---
-`window_length_time()` | configured length of the time-based window in seconds.
-`window_length_count()` | configured amount of samples held by the count-based window.
-`windowStartTime()` | time of the first put to the window (Unix Epoch time).
+`window_length_time()` | Length of the time-based window in seconds, as configured.
+`window_length_count()` | Length of the count-based window, as configured.
+`windowStartTime()` | Time when the first command was received by the window, in UNIX milliseconds.
 
 ### Aggregation Functions
 
