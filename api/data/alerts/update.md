@@ -39,7 +39,7 @@ An array of objects containing 'id' property identifying alert in the database a
 |**Field**|**Type**|**Required**|**Description**|
 |:---|:---|:---|:---|
 |id|number|yes|Alert id.|
-|acknowledged|boolean|no|Acknowledgement status. Default `false`.|
+|acknowledge|boolean|no|Acknowledgement status. Default `false`.|
 
 ## Response
 
