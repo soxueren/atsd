@@ -29,7 +29,7 @@ precedence over expression.
 :--- | :---
 `window_length_time()` | configured length of the time-based window in seconds.
 `window_length_count()` | configured amount of samples held by the count-based window.
-`windowStartTime()` | time in seconds elapsed from the first sample put to the window.
+`windowStartTime()` | time of the first put to the window (Unix Epoch time).
 
 ### Aggregation Functions
 
