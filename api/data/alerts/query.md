@@ -40,7 +40,7 @@ An array of query objects containing filtering fields. if the array is empty, th
 | entityExpression | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
 | rules       | an array of rules which produced the alerts        |
 | metrics     | an array of metric names for which the alerts were created |
-| severities  | an array of [severity code or names](#severity)   |
+| severities  | an array of [severity code or names](../severity.md)   |
 | minSeverity | Minimal severity filter  |
 
 * **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
