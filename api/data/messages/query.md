@@ -18,7 +18,7 @@ POST
 
 ## Request 
 
-An array of query objects containing filtering fields. if the array is empty, the server will return all messages for the last hour, subject to default limit.
+An array of query objects containing filtering fields. 
 
 ### Fields
 
@@ -34,13 +34,16 @@ An array of query objects containing filtering fields. if the array is empty, th
 |startDate	  | no  | Start of the selection interval. Specified in ISO format or using endtime syntax.<br>Default value: endTime - 1 hour    |
 |endDate	  | no  | End of the selection interval. Specified in ISO format or using endtime syntax. <br>Default value: current server time     |
 |interval | no | Duration of the selection interval, specified as `count` and `unit`. For example: `"interval": {"count": 5, "unit": "MINUTE"}` |
-|severity       |  no   | Severity, must be upper-case. Only one severity level can be queried. If severity is not sent in the request, all severity levels will be returned satisfying the request. Severity Codes:  UNDEFINED, UNKNOWN, NORMAL, WARNING, MINOR, MAJOR, CRITICAL, FATAL |
+|severity       |  no   | Severity [code or description](#severity).  |
+|minSeverity       |  no   | Minimal [code or description](#severity) filter.  |
 |timeFormat   | no  | Response time format: `iso` or `milliseconds`. Default value: `iso`|
 |limit        |	no  | Maximum number of messages returned. Default value: 1000  |
 
 * One of the following fields is required: **entity, entities, entityGroup, entityExpression**. 
 * **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
 * entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
+
+* One of the following combinations is required: interval, startDate, interval + startDate, interval + endDate, startDate + endDate
 
 ## Response 
 
@@ -64,14 +67,14 @@ None.
 
 | **Code** | **Description** |
 |:---|:---|
-| 0 | undefined |
-| 1 | unknown |
-| 2 | normal |
-| 3 | warning |
-| 4 | minor |
-| 5 | major |
-| 6 | critical |
-| 7 | fatal |
+| 0 | UNDEFINED |
+| 1 | UNKNOWN |
+| 2 | NORMAL |
+| 3 | WARNING |
+| 4 | MINOR |
+| 5 | MAJOR |
+| 6 | CRITICAL |
+| 7 | FATAL |
 
 ## Example
 
