@@ -30,7 +30,7 @@ None.
 
 ### Fields
 
-An array of query objects containing query fields used for filtering.
+An array of query objects containing query fields used for filtering. if the array is empty, the server will return all alerts.
 
 | **Field** | **Description** |
 |:---|:---|:---|
@@ -45,7 +45,6 @@ An array of query objects containing query fields used for filtering.
 
 * **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
 * entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
-* If queries[] array is empty, then all alerts are returned.
 
 ## Response
 
@@ -54,6 +53,7 @@ An array of query objects containing query fields used for filtering.
 | **Field** | **Description** |
 |:---|:---|:---|
 | id    | Alert id.|
+| acknowledged | Acknowledgement status.|
 | entity | Entity name. |
 | metric | Metric name.  |
 | rule | Rule name. |
@@ -65,7 +65,6 @@ An array of query objects containing query fields used for filtering.
 | openValue | First numeric value received.  |
 | openDate | Time when alerts was open, in ISO format.  |
 | lastEventDate | Time when alerts was last repeated, in ISO format.  |
-| acknowledged | Acknowledgement status.|
 
 ### Errors
 
@@ -91,7 +90,7 @@ None.
 #### URI
 
 ```elm
-POST https://atsd_host:8443/api/v1/alerts/query/query
+POST https://atsd_host:8443/api/v1/alerts/query/
 ```
 
 #### Payload
