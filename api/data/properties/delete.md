@@ -1,4 +1,4 @@
-# Properties: Batch
+# Properties: Delete
 
 ## Description
 
