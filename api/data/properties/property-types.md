@@ -7,10 +7,6 @@ Returns an array of properties for entity and type.
 ## Path
 
 ```elm
-/api/v1/entities/{entity}/property-types
-```
-
-```elm
 /api/v1/properties/{entity}/types
 ```
 
