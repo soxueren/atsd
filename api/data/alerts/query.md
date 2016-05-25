@@ -2,46 +2,65 @@
 
 ## Description
 
-## Path
+Retrieve a list of alerts matching specified fields.
+
+## Request
+
+### Path
+
+```elm
+/api/v1/alerts/query
+```
+
+### Method
 
 ```
 POST
 ```
 
-## Method
+### Headers
 
-```elm
-/api/v1/alerts
-```
+|**Header**|**Value**|
+|:---|:---|
+| Content-Type | application/json |
 
-## Request 
+### Parameters
+
+None.
 
 ### Fields
 
-| Field       | Required | Description              |
-|-------------|----|----------------------|
-| entity    | no (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
-| entities | no (1) | Array of entity names or entity name patterns |
-| entityGroup | no (1) | If `entityGroup` field is specified in the query, alerts for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
-| entityExpression | no (1) | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
-| rules       | no | an array of rules which produced the alerts        |
-| metrics     | no | an array of metric names for which the alerts were created |
-| severities  | no | an array of severities   |
-| minSeverity | no | Minimal severity filter  |
+An array of query objects containing query fields used for filtering.
 
-<aside class="notice">
+| **Field** | **Description** |
+|:---|:---|:---|
+| entity    | Entity name or entity name pattern with `?` and `*` wildcards|
+| entities | Array of entity names or entity name patterns |
+| entityGroup | If `entityGroup` field is specified in the query, alerts for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
+| entityExpression | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
+| rules       | an array of rules which produced the alerts        |
+| metrics     | an array of metric names for which the alerts were created |
+| severities  | an array of [severities](#severity)   |
+| minSeverity | Minimal severity filter  |
+
 * **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
 * entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
-</aside>
+* If queries[] array is empty, then all alerts are returned.
 
-<aside class="notice">
-If queries[] array is empty, then all alerts are returned.
-</aside>
+## Response
 
-**Severity codes**
+### Fields
+
+None.
+
+### Errors
+
+None.
+
+## Severity
 
 | **Code** | **Description** |
-|---:|---|
+|:---|:---|
 | 0 | undefined |
 | 1 | unknown |
 | 2 | normal |
@@ -52,34 +71,38 @@ If queries[] array is empty, then all alerts are returned.
 | 7 | fatal |
 
 ## Example
+
 ### Request
+
 #### URI
+
 ```elm
-POST https://atsd_host:8443/api/v1/alerts
+POST https://atsd_host:8443/api/v1/alerts/query/query
 ```
+
 #### Payload
+
 ```json
-{
-   "queries": [
-   {
-      "metrics": ["loadavg.5m", "message"],
-      "entities" : ["awsswgvml001"],
-      "timeFormat": "iso",
-      "minSeverity" : 2,
-      "severities": [2, 6, 7]
-   }
-   ]
-}
+[{
+	"metrics": ["loadavg.5m", "message"],
+	"entity": "nurswgvml007",
+	"minSeverity": 4
+}]
 ```
-#### curl 
+
+#### curl
+
 ```elm
-curl  https://atsd_host:8443/api/v1/alerts \
+curl https://atsd_host:8443/api/v1/alerts/query \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
-  --data @json.file
- ```
+  --data '[{"metrics":["loadavg.5m","message"],"entity":"nurswgvml007","minSeverity":4}]'
+```
+
 ### Response
+
+####
 
 ```json
 [
@@ -103,3 +126,9 @@ curl  https://atsd_host:8443/api/v1/alerts \
     }
 ]
 ```
+
+## Additional Examples
+
+
+
+
