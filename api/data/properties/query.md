@@ -47,8 +47,8 @@ An array of matching property records containing the following fields:
 |:---|:---|
 | type | Property type name. |
 | entity | Entity name. |
-| key | JSON object containing `name=value` that uniquely identify the property record. |
-| tags | An object containing name=value tags, for example tags: `{"path": "/", "name": "sda"}`. |
+| key | An object containing `name=value` fields that uniquely identify the property record. |
+| tags | An object containing `name=value` tags, for example tags: `{"path": "/", "name": "sda"}`. |
 | date | Time when the record was last updated, in ISO format. |
 
 ## Example
