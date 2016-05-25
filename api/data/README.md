@@ -14,7 +14,7 @@ The Data API lets you insert and retrieve series, properties, messages, and aler
   - [query](properties/query.md)
   - [property types](properties/property-types.md)
   - [query for entity and type](properties/query-for-entity-and-type.md)
-  - [batch](properties/batch.md)
+  - [delete](properties/delete.md)
 * Messages
   - [insert](messages/insert.md)
   - [query](messages/query.md)
