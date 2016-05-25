@@ -4,9 +4,9 @@
 
 Change acknowledgement status of the specified alerts.
 
-This method can be acknowledge and un-acknowledge alerts by adding `"acknowledge": true|false` property in the request.
+This method can be acknowledge and un-acknowledge alerts by adding `"acknowledged": true|false` property in the request.
 
-If `acknowledge` property is not specified, the alert will be un-acknowledged. 
+If `acknowledged` property is not specified, the alert will be un-acknowledged. 
 
 ## Request
 
@@ -39,7 +39,7 @@ An array of objects containing 'id' property identifying alert in the database a
 |**Field**|**Type**|**Required**|**Description**|
 |:---|:---|:---|:---|
 |id|number|yes|Alert id.|
-|acknowledge|boolean|no|Acknowledgement status. Default `false`.|
+|acknowledged|boolean|no|Acknowledgement status. Default `false`.|
 
 ## Response
 
@@ -65,8 +65,8 @@ POST https://atsd_host:8443/api/v1/alerts/update
 
 ```json
 [
-  {"id": 10, "acknowledge": true},
-  {"id": 14, "acknowledge": true}
+  {"id": 10, "acknowledged": true},
+  {"id": 14, "acknowledged": true}
 ]
 ```
 
@@ -77,7 +77,7 @@ curl https://atsd_host:8443/api/v1/alerts/update \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
-  --data '[{"id":10, "acknowledge": true},{"id":14, "acknowledge": true}]'
+  --data '[{"id":10, "acknowledged": true},{"id":14, "acknowledged": true}]'
 ```
 
 ## Additional Examples
