@@ -1,95 +1,80 @@
-## Alerts: Update
+# Alerts: Update
+
+## Description
+
+Update specified alerts by id in the database. The fields specified in the payload will overwrite the same fields in existing alerts.
+
+This method can be used to acknowledge and de-acknowledge alerts by adding `"acknowledge": true|false` property in the request.
+
+## Request
+
+### Path
+
+```elm
+/api/v1/alerts/update
+```
 
 ### Method
 
+```
+POST
+```
+
+### Headers
+
+|**Header**|**Value**|
+|:---|:---|
+| Content-Type | application/json |
+
+### Parameters
+
+None.
+
+### Fields
+
+An array of objects containing 'id' field identifying alert in the database.
+
+|**Field**|**Description**|
+|:---|:---|
+|id|Alert id.|
+
+## Response
+
+### Fields
+
+None.
+
+### Errors
+
+None.
+
+## Example
+
+### Request
+
+#### URI
+
 ```elm
-PATCH /api/v1/alerts
+POST https://atsd_host:8443/api/v1/alerts/update
 ```
 
-**Supported update actions:**
-
-* update - set fields of specified alerts to specified values.
-* delete - delete specified alerts.
-
-### Acknowledge Alerts
-
-To acknowledge alerts, specify action `update`, field `'acknowledge':true` and array of alert identifiers to acknowledge.
-
-
-> Request
+#### Payload
 
 ```json
-[{
-    "action": "update",
-    "fields": {
-        "acknowledge": true
-    },
-    "alerts": [
-        {"id": "evt-1"},
-        {"id": "evt-2"}
-    ]
-}]
+[
+  {"id": 10, "acknowledge": true},
+  {"id": 14, "acknowledge": true}
+]
 ```
 
-### De-acknowledge Alerts
+#### curl
 
-To de-acknowledge alerts, specify action `update`, field `'acknowledge':false` and array of alert identifiers to de-acknowledge.
-
-> Request
-
-```json
-[{
-    "action": "update",
-    "fields": {
-        "acknowledge": false
-    },
-    "alerts": [
-        {"id": "evt-1"},
-        {"id": "evt-2"}
-    ]
-}]
+```elm
+curl https://atsd_host:8443/api/v1/alerts/update \
+  --insecure --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request POST \
+  --data '[{"id":10, "acknowledge": true},{"id":14, "acknowledge": true}]'
 ```
 
-### Delete Alerts
-
-To delete alerts, specify action `delete` and array of alert identifiers to delete.
-
-> Request
-
-```json
-[{
-    "action": "delete",
-    "alerts": [
-        {"id": "evt-1"},
-        {"id": "evt-2"}
-    ]
-}]
-```
-
-### Multiple Actions 
-
-Multiple actions can be combined in one request.
-
-> Request
-
-```json
-[{
-    "action": "update",
-    "fields": {
-        "acknowledge": true
-    },
-    "alerts": [
-        {"id": "evt-1"},
-        {"id": "evt-2"}
-    ]
-},{
-    "action": "update",
-    "fields": {
-        "acknowledge": false
-    },
-    "alerts": [
-        {"id": "evt-3"},
-        {"id": "evt-4"}
-    ]
-}]
-```
+## Additional Examples
