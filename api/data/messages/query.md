@@ -88,17 +88,12 @@ POST https://atsd_host:8443/api/v1/messages/query
 [
     {
         "entity": "nurswgvml007",
-        "timeFormat": "iso",
         "type": "security",
         "limit": 5,
-        "severity": "UNDEFINED",
-        "endDate": "2016-05-17T10:00:00Z",
+        "endDate": "now",
         "interval": {
             "count": 30,
             "unit": "MINUTE"
-        },
-        "tags": {
-            "path": "/var/log/secure"
         }
     }
 ]
