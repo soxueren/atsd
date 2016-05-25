@@ -2,21 +2,29 @@
 
 ## Description 
 
-## Path
+Retrieve a list of property records matching for the specified filters.
+
+## Request
+
+### Path
 
 ```elm
 /api/v1/properties/query
 ```
 
-## Method
+### Method
 
 ```
 POST 
 ```
 
-## Request
+### Headers
 
-### Fields
+|**Header**|**Value**|
+|:---|:---|
+| Content-Type | application/json |
+
+## Fields
 
 An array of query objects containing fields for filtering.
 
