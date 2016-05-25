@@ -2,9 +2,11 @@
 
 ## Description
 
-Update specified alerts by id.
+Change acknowledgement status of specified alerts.
 
-This method can be used to acknowledge and de-acknowledge alerts by adding `"acknowledge": true|false` property in the request.
+This method can be acknowledge and un-acknowledge alerts by adding `"acknowledge": true|false` property in the request.
+
+If `acknowledge` property is not specified, the alert will be un-acknowledged. 
 
 ## Request
 
@@ -32,12 +34,12 @@ None.
 
 ### Fields
 
-An array of objects containing 'id' property identifying alert in the database and acknowledge property.
+An array of objects containing 'id' property identifying alert in the database and `acknowledge` status.
 
-|**Field**|**Description**|
-|:---|:---|
-|id|Alert id.|
-|acknowledged|Acknowledgement status. true or false|
+|**Field**|**Type**|**Required**|**Description**|
+|:---|:---|:---|:---|
+|id|number|yes|Alert id.|
+|acknowledged|boolean|no|Acknowledgement status. Default `false`.|
 
 ## Response
 
