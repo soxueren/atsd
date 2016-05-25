@@ -2,10 +2,12 @@
 
 ## Description
 
+Retrieve message records for the specified filters.
+
 ## Path
 
 ```elm
-/api/v1/messages
+/api/v1/messages/query
 ```
 
 ## Method
@@ -16,6 +18,8 @@ POST
 
 ## Request 
 
+An array of query objects containing filtering fields. if the array is empty, the server will return all messages for the last hour, subject to default limit.
+
 ### Fields
 
 | **Field** | **Required** | **Description** |
@@ -24,42 +28,50 @@ POST
 | entities | yes (1) | Array of entity names or entity name patterns |
 | entityGroup | yes (1) | If `entityGroup` field is specified in the query, messages for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
 | entityExpression | yes (1) | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
-|startTime	  | no*  | start of the selection interval. Default value: endTime - 1 hour                     |
-|endTime	  | no*  | end of the selection interval. Default value: current server time                    |
-|startDate	  | no*  | start of the selection interval. Specified in ISO format or using endtime syntax.    |
-|endDate	  | no*  | end of the selection interval. Specified in ISO format or using endtime syntax.      |
-|interval | no* | duration of the selection interval, specified as `count` and `unit`. For example: `"interval": {"count": 5, "unit": "MINUTE"}` |
-|timeFormat   | no  | response time format. Possible values: iso, milliseconds. Default value: milliseconds|
-|limit        |	no  | maximum number of data samples returned. Default value: 1000                            |
-|severity       |  no   | severity, must be upper-case. Only one severity level can be queried. If severity is not sent in the request, all severity levels will be returned satisfying the request. Severity Codes:  UNDEFINED, UNKNOWN, NORMAL, WARNING, MINOR, MAJOR, CRITICAL, FATAL |
-|type       |  no   | type                                                                       |
-|source       |  no   | source                                                                       |
-|tags	      | no  | JSON object containing name=values that uniquely identify the message record         |
+|type       |  no   | Message type. |
+|source       |  no   | Message source. |
+|tags	      | no  | An object containing `name=values` for matching message records with the same tags.         |
+|startDate	  | no  | Start of the selection interval. Specified in ISO format or using endtime syntax.<br>Default value: endTime - 1 hour    |
+|endDate	  | no  | End of the selection interval. Specified in ISO format or using endtime syntax. <br>Default value: current server time     |
+|interval | no | Duration of the selection interval, specified as `count` and `unit`. For example: `"interval": {"count": 5, "unit": "MINUTE"}` |
+|severity       |  no   | Severity, must be upper-case. Only one severity level can be queried. If severity is not sent in the request, all severity levels will be returned satisfying the request. Severity Codes:  UNDEFINED, UNKNOWN, NORMAL, WARNING, MINOR, MAJOR, CRITICAL, FATAL |
+|timeFormat   | no  | Response time format: `iso` or `milliseconds`. Default value: `iso`|
+|limit        |	no  | Maximum number of messages returned. Default value: 1000  |
 
-<aside class="notice">
-* Interdependent fields. Interval start and end should be set using a combination of startTime, endTime, startDate, endDate and interval.
-</aside>
-
-<aside class="notice">
 * One of the following fields is required: **entity, entities, entityGroup, entityExpression**. 
 * **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
 * entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
-</aside>
 
 ## Response 
 
 ### Fields
 
-| Field | Description |
-|---|---|
-|entity | entity name |
-|type | type |
-|source | source |
-|severity | severity code |
-|tags | JSON object containing name=value that uniquely identify the message record |
-|message | message text |
-|date | date and time in ISO format |
-|time | date and time in milliseconds |
+| **Field** | **Description** |
+|:---|:---|
+|entity | Entity name. |
+|type | Message type. |
+|source | Message source. |
+|severity | Message [severity](#severity) code. |
+|tags | An object containing name=value tags, for example `tags: {"path": "/", "name": "sda"}`. |
+|message | Message text. |
+|date | Message time in ISO format |
+
+### Errors
+
+None.
+
+## Severity
+
+| **Code** | **Description** |
+|:---|:---|
+| 0 | undefined |
+| 1 | unknown |
+| 2 | normal |
+| 3 | warning |
+| 4 | minor |
+| 5 | major |
+| 6 | critical |
+| 7 | fatal |
 
 ## Example
 
@@ -68,41 +80,43 @@ POST
 #### URI
 
 ```elm
-POST https://atsd_host:8443/api/v1/messages
+POST https://atsd_host:8443/api/v1/messages/query
 ```
 #### Payload
 
 ```json
-{
-    "queries": [
-        {
-            "entity": "nurswgvml007",
-            "timeFormat": "iso",
-            "type": "security",
-            "limit": 5,
-            "severity": "UNDEFINED",
-            "endDate": "2015-09-17T10:00:00Z",
-            "interval": {
-                "count": 15,
-                "unit": "MINUTE"
-            },
-            "tags": {
-                "path": "/var/log/secure"
-            }
+[
+    {
+        "entity": "nurswgvml007",
+        "timeFormat": "iso",
+        "type": "security",
+        "limit": 5,
+        "severity": "UNDEFINED",
+        "endDate": "2016-05-17T10:00:00Z",
+        "interval": {
+            "count": 30,
+            "unit": "MINUTE"
+        },
+        "tags": {
+            "path": "/var/log/secure"
         }
-    ]
-}
+    }
+]
 ```
 
 #### curl
+
 ```elm
-curl  https://atsd_host:8443/api/v1/messages \
+curl  https://atsd_host:8443/api/v1/messages/query \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
   --data @file.json
   ```
+  
 ### Response
+
+#### Payload
 
 ```json
 [
@@ -130,3 +144,5 @@ curl  https://atsd_host:8443/api/v1/messages \
     }
 ]
 ```
+
+## Additional Examples
