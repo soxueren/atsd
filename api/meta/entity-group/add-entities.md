@@ -20,7 +20,11 @@ PATCH
 
 ### Headers
 
+None.
+
 ### Parameters
+
+None.
 
 ### Fields
 
@@ -31,6 +35,8 @@ PATCH
 ## Response
 
 ### Fields
+
+None.
 
 ### Errors
 
