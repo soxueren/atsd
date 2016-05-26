@@ -52,14 +52,24 @@ None.
 #### URI
 
 ```elm
-PATCH https://atsd_host:8443/api/v1/entity-groups/{entity-group}
+PATCH https://atsd_host:8443/api/v1/entity-groups/nmon-aix 
 ```
 
 #### Payload
-
+???
 #### curl
 
+```elm
+curl https://atsd_host:8443/api/v1/entity-groups/nmon-aix \
+  --insecure --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request PATCH \
+  --data ???
+  ```
+  
 ### Response
+
+None.
 
 ## Additional examples
 
