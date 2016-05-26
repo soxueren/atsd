@@ -26,24 +26,47 @@ POST
 
 ## Fields
 
-An array of query objects containing fields for filtering.
+An array of query objects containing the following filtering fields:
+
+### Property Filter Fields
 
 | **Field**  | **Required** | **Description**  |
 |:---|:---|:---|
-| entity    | yes (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
-| entities | yes (1) | Array of entity names or entity name patterns |
-| entityGroup | yes (1) | If `entityGroup` field is specified in the query, properties of the specified type for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
-| entityExpression | yes (1) | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
-|startDate|	no|	start of the selection interval. Specified in ISO format or using endtime syntax.|
-|endDate|	no|	end of the selection interval. Specified in ISO format or using endtime syntax.|
-| limit     | no           | Maximum number of records returned. Default value: 0 (all)  | 
-| type      | yes          | type of data properties. Supports reserved `$entity_tags` type to retrieve entity tags. Any keys specified in a request containing this reserved type will be ignored.  |
-| key      | no           | JSON object containing `name=values` that uniquely identify the property record. Ignored when querying '$entity_tags' which is a reserved property type to retrieve entity tags. |
-| keyExpression | no | expression for matching properties with specified keys |
+| type | yes | Property type. <br>Use `$entity_tags` type to retrieve entity tags. |
+| key | no | Object containing `name=value` fields for matching records that contain the specified fields with the same values. <br>Ignored when querying `$entity_tags`. |
+| keyExpression | no | Expression for matching properties with specified keys.<br>Ignored when querying `$entity_tags`. |
 
-* One of the following fields is required: **entity, entities, entityGroup, entityExpression**. 
-* **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
-* entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
+### Entity Filter Fields
+
+* Entity filter is **optional**. 
+* Entity name pattern supports `?` and `*` wildcards.
+* `entity`, `entities`, `entityGroup` fields are mutually exclusive, only one field can be specified in the request. 
+* `entityExpression` is applied as an additional filter to `entity`, `entities`, `entityGroup` fields.
+
+| **Field**  | **Description**  |
+|:---|:---|:---|
+| entity    | Entity name or entity name pattern. |
+| entities | Array of entity names or entity name patterns. |
+| entityGroup | Entity group name. An empty resultset will be returned if the group doesn't exist or is contains no entities. |
+| entityExpression | Entity filter expression using [syntax](/rule-engine/functions.md). <br>Example, `tags.location='SVL'`  |
+
+### Date Filter Fields
+
+* Date filter is **required**. 
+* The filter matches property records where `startDate` <= `property.date` < `endDate`.
+* If not defined, `startDate`/`endDate` is calculated from `interval`/`endDate` and `startDate`/`interval` fields.
+
+| **Field** | **Description** |
+|:---|:---|
+|startDate|	Start of the selection interval. Date in ISO format or [endtime](/end-time-syntax.md) keyword.<br>Examples: `2016-05-25T00:15:00.194Z`, `2016-05-25T`, `current_hour` |
+| endDate |	End of the selection interval. Date in ISO format or [endtime](/end-time-syntax.md) keyword.<br>Examples: `2016-05-25T00:15:00Z`, `previous_day - 1 * HOUR`|
+| interval|	Duration of the selection interval, specified as `count` and `unit`. <br>Example: `{"count": 5, "unit": "MINUTE"}`|
+
+### Result Filter Fields
+
+| **Field**  | **Type** | **Description**  |
+|:---|:---|:---|
+| limit   | int | Maximum number of records to be returned. Default value is 0 (all). | 
 
 ## Response 
 
@@ -76,7 +99,8 @@ POST https://atsd_host:8443/api/v1/properties/query
     {
       "type": "system",
       "entity": "nurswgvml007",
-      "key": {}
+      "interval": {"count": 1, "unit": "HOUR"},
+      "endDate": "2016-02-05T18:00:00Z"
      }
 ]
 ```
@@ -103,7 +127,7 @@ curl  https://atsd_host:8443/api/v1/properties/query \
            "cpu_total.idle%": "93.6",
            "cpu_total.sys%": "1.1"
        },
-       "date": "2015-02-05T16:55:02Z"
+       "date": "2016-02-05T17:15:00Z"
    }
 ]
 ```
