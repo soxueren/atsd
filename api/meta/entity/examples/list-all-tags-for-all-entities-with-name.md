@@ -11,7 +11,7 @@ http://atsd_hostname:8088/api/v1/entities?timeFormat=iso&expression=name%20like%
 ### Expression 
 
 ```
-timeFormat=iso&expression=name like 'nurswgvml00*'&tags=*
+expression=name like 'nurswgvml00*'&tags=*
 ```
 
 ## Response
