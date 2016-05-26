@@ -52,5 +52,5 @@ nmon e:server-001 p:default f:server-001.nmon
 ```
 
 ```ls
-nmon e:server-001 p:default f:server-001.nmon d:UTC
+nmon e:server-001 p:default f:server-001.nmon z:UTC
 ```
