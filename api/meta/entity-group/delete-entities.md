@@ -1,14 +1,52 @@
-## Entity Group: Delete Entities
+# Entity Group: Delete Entities
+
+## Description
 
 Delete entities from entity group.
 
-### `delete` 
+## Request
+
+### Path
 
 ```
-PATCH /api/v1/entity-groups/{group}/entities
+ /api/v1/entity-groups/{group}/entities
 ```
 
-> Request
+### Method
+
+```
+PATCH
+```
+
+### Headers
+
+|**Header**|**Value**|
+|:---|:---|
+| Content-Type | application/json |
+
+### Parameters
+
+### Fields
+
+## Response
+
+### Fields
+
+None.
+
+### Errors
+
+## Example
+
+### Request
+
+#### URI
+
+```elm
+PATCH https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities
+```
+
+#### Payload
 
 ```json
 [
@@ -23,50 +61,18 @@ PATCH /api/v1/entity-groups/{group}/entities
 ]
 ```
 
-`delete` action removes specified entities from the entity group:
+#### curl
 
-### `delete-all`
-
-`delete-all` action removes all entities from the entity group:
-
-> Request
-
-```json
-[
-  {
-    "action" : "delete-all"
-  }
-]
+```
+curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities \
+  --insecure --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request PATCH \
+  --data '[{"action" : "delete","entities" : [{"name":"nurswgvml007"},{"name":"nurswgvml006"}] }]'
 ```
 
-### Multiple actions
+### Response
 
-> Request
+## Additional examples
 
-```json
-[
-  {
-    "action" : "delete",
-    "entities" : 
-        [
-            {"name":"nurswgvml007"},
-            {"name":"nurswgvml006"}
-        ]
-  },
-  {
-    "action" : "add",
-    "createEntities": true,
-    "entities" : 
-        [
-            {"name":"nurswgvml010"},
-            {"name":"nurswgvml011"}
-        ]
-  }
-]
-```
 
-This method supports multiple actions for the same entity group. It can be used to delete and add entities within one request.
-
-<aside class="notice">
-The server cannot execute a request containing multiple actions atomically. The server will abort processing on first error, previously executed actions will not be rolled back.
-</aside>
