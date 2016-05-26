@@ -71,6 +71,11 @@ None.
 
 #### curl
 
+```elm
+curl https://atsd_host:8443/api/v1/entities?timeFormat=iso&limit=2&expression=name%20like%20%27nurs*%27 \
+  --insecure --verbose --user {username}:{password} \
+  --request GET
+```
 
 ### Response
 
