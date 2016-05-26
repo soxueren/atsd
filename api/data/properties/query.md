@@ -78,8 +78,8 @@ An array of matching property records containing the following fields:
 |:---|:---|:---|
 | type | string | Property type name. |
 | entity |string |  Entity name. |
-| key | object | Object containing `name=value` fields that uniquely identify the property record. `{"iftype": "eth", "name": "en1"}`|
-| tags | object | Object containing `name=value` tags, for example `{"label": "Eth Interface (1)"}`. |
+| key | object | Object containing `name=value` fields that uniquely identify the property record. <br>Example: `{"iftype": "eth", "name": "en1"}`|
+| tags | object | Object containing `name=value` tags. <br>Example: `{"label": "Eth Interface (1)"}`. |
 | date | string | ISO 8601 date when the property record was last modified. |
 
 ## Example
