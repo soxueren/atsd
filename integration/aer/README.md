@@ -66,10 +66,19 @@ Example:
 
 ```ls
 [configuration]
-	title = Performance/Daily 
-	width-units = 4
-	height-units = 3
+  title = Performance/Daily 
+  width-units = 4
+  height-units = 3
   url = /proxy
+  
+  [group]
+  [widget]
+    type = chart
+    /*
+    	Query entities and metrics defined in ATSD, even if not exposed in Axibase Server
+    */
+    metric = mpstat.cpu_busy
+    entity = nurswghbs001
 ```
 
 
