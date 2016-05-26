@@ -1,3 +1,4 @@
+```ls
 TIMEZONE = "Pacific/Midway" /
 "Pacific/Niue" /
 "Pacific/Pago_Pago" /
@@ -573,3 +574,4 @@ TIMEZONE = "Pacific/Midway" /
 "Pacific/Fakaofo" /
 "Pacific/Tongatapu" /
 "Pacific/Kiritimati"
+```
