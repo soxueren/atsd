@@ -83,7 +83,7 @@ POST https://atsd_host:8443/api/v1/properties/query
 #### curl
 
 ```elm
-curl  https://atsd_host:8443/api/v1/properties \
+curl  https://atsd_host:8443/api/v1/properties/query \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
