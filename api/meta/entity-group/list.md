@@ -1,16 +1,26 @@
-## Entity Groups: List
+# Entity Groups: List
 
-### Request Parameters
+## Description
+
+## Request
+
+### Path
+
+```elm
+/api/v1/entity-groups
+```
+
+### Method
 
 ```
-GET /api/v1/entity-groups
+GET
 ```
 
-> Request
+### Headers
 
-```
-http://atsd_server:8088/api/v1/entity-groups
-```
+None.
+
+### Parameters
 
 |**Parameter**|**Required**|**Description**|
 |---|---|---|
@@ -18,19 +28,13 @@ http://atsd_server:8088/api/v1/entity-groups
 |tags|no|Specify entity group tags to be included in the response|
 |limit|no|Limit response to first N entity groups, ordered by name.|
 
-### Response Fields
+### Fields
 
-> Response
+None.
 
-```json
-[
-{"name":"HP Servers"},
-{"name":"Linux"},
-{"name":"MQ black list"},
-{"name":"MQ white list"},
-{"name":"environment-ProD","expression":"environment = 'ProD'"}
-]
-```
+## Response
+
+### Fields
 
 | **Name**   | **Description**                                   |
 |------------|---------------------------------------------------|
@@ -38,21 +42,31 @@ http://atsd_server:8088/api/v1/entity-groups
 | expression | Entity group expression                           |
 | tags       | Entity group tags, as requested by tags parameter |
 
-### Sample Request
+### Errors
 
-> Request
+## Example
 
-```
-http://atsd_server:8088/api/v1/entity-groups?tags=os_level&limit=2&expression=name%20like%20%27nmon*%27
-```
+### Request
 
-> Expression
+#### URI
 
-```
-    name like 'nmon*'
+```elm
+GET https://atsd_host:8443/api/v1/entity-groups?tags=os_level&limit=2&expression=name%20like%20%27nmon*%27
 ```
 
-> Response
+#### Payload
+
+None.
+
+#### curl
+
+```elm
+curl https://atsd_host:8443/api/v1/entity-groups?tags=os_level&limit=2&expression=name%20like%20%27nmon*%27 \
+ --insecure --verbose --user {username}:{password} \
+ --request GET
+ ```
+ 
+### Response
 
 ```json
 [{
@@ -65,3 +79,6 @@ http://atsd_server:8088/api/v1/entity-groups?tags=os_level&limit=2&expression=na
     "name": "nmon-linux"
 }]
 ```
+
+## Additional examples
+
