@@ -24,15 +24,25 @@ DELETE
 
 ### Headers
 
+None.
+
 ### Parameters
 
+None.
+
 ### Fields
+
+None.
 
 ## Response
 
 ### Fields
 
+None.
+
 ### Errors
+
+None.
 
 ## Example
 
@@ -45,6 +55,8 @@ DELETE https://atsd_host:8443/api/v1/entity-groups/nmon-aix
 ```
 
 #### Payload
+
+None.
 
 #### curl
 
