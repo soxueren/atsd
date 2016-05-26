@@ -9,7 +9,7 @@ GET https://atsd_server:8443/api/v1/entities?tags=*&expression=name%20like%20%27
 
 ### Expression 
 ```
-tags=*&expression=name like 'nur*'
+expression=name like 'nur*'
 ```
 
 ## Response 
