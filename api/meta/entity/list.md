@@ -99,7 +99,7 @@ curl https://atsd_host:8443/api/v1/entities?timeFormat=iso&limit=2&expression=na
 * [List entities by minInsertDate](./examples/list-entities-by-mininsertdate.md)
 * [List all tags for all entities starting with name](examples/list-all-tags-for-all-entities-with-name.md)
 * [List entities by name and tag](examples/list-entities-by-tag-containing-hbase.md)
-* [Example 3 - Rename](examples/list-entities-starting-with-nur.md)
+
 
 
 
