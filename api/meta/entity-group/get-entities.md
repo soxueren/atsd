@@ -57,7 +57,7 @@ If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returne
 
 #### URI
 
-```
+```elm
 GET https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities?timeFormat=iso&tags=*&limit=3
 ```
 
@@ -67,9 +67,11 @@ None.
 
 #### curl
 
+```elm
 curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities?timeFormat=iso&tags=*&limit=3 \
   --insecure --verbose --user {username}:{password} \
   --request GET 
+  ```
   
 ### Response
 
