@@ -41,6 +41,8 @@ If the specified collection is empty, all entities are removed from the group (r
 
 ### Fields
 
+None.
+
 ### Errors
 
 ## Example
@@ -48,6 +50,10 @@ If the specified collection is empty, all entities are removed from the group (r
 ### Request
 
 #### URI
+
+```elm
+PUT https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities
+```
 
 #### Payload
 
@@ -58,20 +64,17 @@ If the specified collection is empty, all entities are removed from the group (r
 ]
 ```
 
-
 #### curl
 
+```elm
+curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities \
+  --insecure --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request PUT \
+  --data '[{"name":"nurswgvml007"},{"name":"nurswgvml006"}]'
+  ```
 ### Response
 
 ## Additional examples
-
-
-
-
-### Method
-
-### Basic Example
-> Request
-
 
 
