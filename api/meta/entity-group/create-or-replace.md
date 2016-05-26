@@ -64,11 +64,13 @@ PUT https://atsd_host:8443/api/v1/entity-groups/nmon-aix
 ???
 #### curl
 
+```elm
 curl https://atsd_host:8443/api/v1/entity-groups/nmon-aix \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request PUT \
   --data ???
+ ```
  
 ### Response
 
