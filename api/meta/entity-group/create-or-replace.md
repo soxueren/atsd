@@ -31,6 +31,8 @@ PUT
 
 ### Parameters
 
+None.
+
 ### Fields
 
 |Field | Description|
@@ -38,12 +40,15 @@ PUT
 | expression | Entity group expression|
 |tags | User-defined tags, `"tagKey": "tagValue"`, like `"tags": {"os_level": "aix 6.3"}`|
 
-
 ## Response
 
 ### Fields
 
+None. 
+
 ### Errors
+
+None.
 
 ## Example
 
