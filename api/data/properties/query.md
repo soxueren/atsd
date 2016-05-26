@@ -30,7 +30,7 @@ An array of query objects containing the following filtering fields:
 
 ### Property Filter Fields
 
-* `key` and `keyExpression` fields are mutually exclusive, only one field can be specified in the query object.
+* `key` and `keyExpression` fields are mutually exclusive, only one of them can be specified in the query object.
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
@@ -41,7 +41,7 @@ An array of query objects containing the following filtering fields:
 ### Entity Filter Fields
 
 * Entity name pattern may include `?` and `*` wildcards.
-* `entity`, `entities`, `entityGroup` fields are mutually exclusive, only one field can be specified in the query object. 
+* `entity`, `entities`, `entityGroup` fields are mutually exclusive, only one of them can be specified in the query object. 
 * `entityExpression` is applied as an additional filter to `entity`, `entities`, and `entityGroup` fields.
 
 | **Name**  | **Type** | **Description**  |
