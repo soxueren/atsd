@@ -23,7 +23,7 @@ csv p:{parser} e:{entity} r:{metric_prefix} z:{timezone} t:{timeout}
 | p         | yes          | CSV Parser name from **Admin: CSV Parsers** page |
 | e         | no           | Default entity name                       |
 | r         | no           | Metric prefix applied to all metrics in the file                           |
-| z         | no           | Timezone applied when parsing timestamps in local time, e.g. GMT<br>Java [Time Zone ID](abnf-timezone.md)  |
+| z         | no           | Timezone applied when parsing timestamps in local time, e.g. GMT<br>Java [Time Zone ID](timezone-abnf.md)  |
 | o | no | Server read timeout in seconds. For example: 60 |
 | t         | no           | One or multiple series tag key=value pairs. For example: t:location=SPB   |
 
@@ -42,7 +42,7 @@ command = "csv" MSP parser [MSP entity] [MSP metric-prefix] [MSP timezone] [MSP 
 parser = "p:" NAME
 entity = "e:" NAME
 metric-prefix = "r:" NAME
-  ; abnf-timezone.md
+  ; defined in timezone-abnf.md
 timezone = "z:" TIMEZONE
 timeout = "o:" POSITIVE-INTEGER
 tag = "t:" NAME "=" TEXTVALUE
