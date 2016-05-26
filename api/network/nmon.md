@@ -20,7 +20,7 @@ nmon p:default e:nurswgvml007 f:nurswgvml007_141014_2000.nmon z:PST
 | e         | yes          | entity                                     |
 | f         | yes          | name of the nmon file                      |
 | z         | no           | Timezone applied to snapshots, e.g. GMT<br>Java [Time Zone ID](timezone-abnf.md)  |
-| t         | no           | idle timeout in seconds                    |
+| o         | no           | Read timeout in seconds. <br>Set to 2x snapshot interval to prevent the server from terminating an idle connection.|
 
 `f` nmon file name is used to re-read file header from its copy on the server in case of disconnect.
 
@@ -31,18 +31,18 @@ Rules inherited from [generic ABNF](generic-abnf.md).
 ```properties
   ; MSP - one or multiple spaces
   ; entity or at least one tag is required
-command = "nmon" MSP parser MSP entity MSP filename [MSP timezone] [MSP idle]
+command = "nmon" MSP parser MSP entity MSP filename [MSP timezone] [MSP timeout]
   ; NAME consists of visible characters. 
   ; double-quote must be escaped with backslash.
-entity = "e:" NAME
-  ; TEXTVALUE consists of visible characters and space. 
-  ; double-quote must be escaped with backslash. 
-  ; tag values containing space must me quoted with double-quote.  
+entity = "e:" entity-name
+  ; entity name, typically hostname where nmon is running
+entity-name = NAME
 parser = "p:" (ALPHA / "_" )
-filename = "f:" NAME ".nmon"
+  ; nmon file name should start with entity name, typically hostname where nmon is running
+filename = "f:" entity-name NAME ".nmon"
   ; defined in timezone-abnf.md
 timezone = "z:" TIMEZONE
-idle = "t:" 1*DIGIT
+timeout = "o:" POSITIVE_INTEGER
 ```
 
 ## Examples
