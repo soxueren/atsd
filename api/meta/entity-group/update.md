@@ -21,7 +21,11 @@ PATCH
 
 ### Headers
 
+None.
+
 ### Parameters
+
+None.
 
 ### Fields
 
@@ -35,13 +39,21 @@ Properties and tags that are not specified are left unchanged.
 
 ### Fields
 
+None.
+
 ### Errors
+
+None.
 
 ## Example
 
 ### Request
 
 #### URI
+
+```elm
+PATCH https://atsd_host:8443/api/v1/entity-groups/{entity-group}
+```
 
 #### Payload
 
