@@ -76,4 +76,4 @@ curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities \
 ## Additional examples
 
 * [Delete all entities](./examples/delete-all-entities.md)
-* [Multiple Actions](/examples/multiple-actions.md)
+* [Multiple Actions](./examples/multiple-actions.md)
