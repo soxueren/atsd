@@ -1,36 +1,50 @@
-## Entity Group: Add Entities
+# Entity Group: Add Entities
+
+## Description
 
 Add specified entities to entity group.
 
- ### `add` action fields
-### Method 
-```
-PATCH /api/v1/entity-groups/{group}/entities
-```
-### Basic Example
-> Request
+## Request
 
-```json
-[
-  {
-    "action" : "add",
-    "createEntities": true,
-    "entities" : 
-        [
-            {"name":"nurswgvml010"},
-            {"name":"nurswgvml011"}
-        ]
-  }
-]
+### Path
+
+```elm
+ /api/v1/entity-groups/{group}/entities
 ```
-### Request Fields
+
+### Method
+
+```
+PATCH
+```
+
+### Headers
+
+### Parameters
+
+### Fields
+
 | **Field**  | **Required** | **Description**                                                                                |
 |----------------|--------------|-------------------|------------------------------------------------------------------------------------------------|
 | createEntities | no       | Automatically create new entities from the submitted list if such entities don't already exist. Default value: true |
 
-### Multiple actions
+## Response
 
-> Request
+### Fields
+
+### Errors
+
+## Example
+
+### Request
+
+#### URI
+
+```elm
+PATCH https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities
+```
+
+#### Payload
 
 ```json
 [
@@ -42,21 +56,23 @@ PATCH /api/v1/entity-groups/{group}/entities
             {"name":"nurswgvml010"},
             {"name":"nurswgvml011"}
         ]
-  },
-  {
-    "action" : "delete",
-    "deleteAll": false,
-    "entities" : 
-        [
-            {"name":"nurswgvml007"},
-            {"name":"nurswgvml006"}
-        ]
   }
 ]
 ```
 
-This method supports multiple actions for the same entity group. It can be used to delete and add entities within one request.
+#### curl
 
-<aside class="notice">
-The server cannot execute multiple actions atomically. The server will abort processing on first error, previously executed actions will not be rolled back.
-</aside>
+```elm
+curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities \
+  --insecure --verbose --user {username}:{password} \
+  --header "Content-Type: application/json" \
+  --request PATCH \
+  --data '[{"action" : "add","createEntities": true,"entities" : [{"name":"nurswgvml010"},{"name":"nurswgvml011"}]}]'
+  ```
+  
+### Response
+
+None.
+
+## Additional examples
+* [Add multiple entities](./examples/add-multiple-entities.md)
