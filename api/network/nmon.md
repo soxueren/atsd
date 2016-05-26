@@ -19,7 +19,7 @@ nmon p:default e:nurswgvml007 f:nurswgvml007_141014_2000.nmon z:PST
 | p         | yes          | parser name from Admin : nmon Parsers page |
 | e         | yes          | entity                                     |
 | f         | yes          | name of the nmon file                      |
-| z         | no           | timezone, e.g. GMT                         |
+| z         | no           | Timezone applied to snapshots, e.g. GMT<br>Java [Time Zone ID](timezone-abnf.md)  |
 | t         | no           | idle timeout in seconds                    |
 
 `f` nmon file name is used to re-read file header from its copy on the server in case of disconnect.
@@ -40,7 +40,8 @@ entity = "e:" NAME
   ; tag values containing space must me quoted with double-quote.  
 parser = "p:" (ALPHA / "_" )
 filename = "f:" NAME ".nmon"
-timezone = "z:" 3ALPHA
+  ; defined in timezone-abnf.md
+timezone = "z:" TIMEZONE
 idle = "t:" 1*DIGIT
 ```
 
