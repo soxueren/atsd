@@ -75,6 +75,8 @@ An array of query objects containing the following filtering fields:
 
 ## Response 
 
+An array of matching message objects containing the following fields:
+
 ### Fields
 
 | **Field** | **Type** | **Description** |
