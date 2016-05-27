@@ -39,8 +39,6 @@ iptables-save > /etc/iptables/rules.v4
 ip6tables-save > /etc/iptables/rules.v6
 ```
 
-* or by running ```/etc/init.d/netfilter-persistent save```
-
 
 
 #### Installing the following script
