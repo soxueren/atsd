@@ -32,7 +32,6 @@ An array of objects containing fields for filtering records for deletion.
 |:---|:---|:---|
 | type | string | [**Required**] Property type name. |
 | entity | string | Entity name. |
-| startDate | string | ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Delete records updated at or after the specified time. |
 | endDate | string | ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Delete records updated before the specified time. |
 | key | object | Object with `name=value` fields. <br>Delete records with equal key (_exact_) or key containing requested fields with the same values (_partial_).<br>Example: `{"iftype": "eth"}` |
 | exactMatch | boolean | `key` match operator. _Exact_ match if true, _partial_ match if false. Default: **true**.<br>_Exact_ match deletes a record with exactly the same `key` as requested.<br>_Partial_ match deletes records with key that contains requested fields but may also include other fields.<br>Example: `{"k-1":"v-1"}` with _exact_ match deletes a record with key `{"k-1":"v-1"}`.<br>`{"k-1":"v-1"}` with _partial_ match deletes records with key `{"k-1":"v-1"}` as well as with key `{"k-1":"v-1","k-2":"v-2"}`.|
