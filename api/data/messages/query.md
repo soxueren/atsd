@@ -45,7 +45,7 @@ An array of query objects containing the following filtering fields:
 ### Entity Filter Fields
 
 * [**Required**]
-* Refer to [entity filter](../filter-date.md).
+* Refer to [entity filter](../filter-entity.md).
 
 ### Date Filter Fields
 
