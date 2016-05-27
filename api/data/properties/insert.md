@@ -26,13 +26,13 @@ POST
 
 ### Fields
 
-| **Field**  |**Required**  | **Description**  |
+| **Field**  |**Type**  | **Description**  |
 |:---|:---|:---|
-| type | yes | Property type name. |
-| entity | yes | Entity name. |
-| key | no | An object containing `name=value` fields that uniquely identify the property record. |
-| tags | no | An object containing `name=value` tags, for example tags: `{"path": "/", "name": "sda"}`. |
-| date | no | Time in ISO format. Set to current server time if omitted. |
+| type | string | [**Required**] Property type name. |
+| entity | string | [**Required**] Entity name. |
+| key | object | An object containing `name=value` fields that uniquely identify the property record. |
+| tags | object | An object containing `name=value` tags, for example tags: `{"path": "/", "name": "sda"}`. |
+| date | string | ISO 8601 date, for example `2016-05-25T00:15:00Z`. <br>Set to current server time if omitted. |
 
 ## Response
 
