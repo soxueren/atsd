@@ -47,13 +47,13 @@ None.
 #### URI
 
 ```elm
-GET https://atsd_server:8443/api/v1/properties/i-943a8878/types
+GET https://atsd_server:8443/api/v1/properties/nurswgvml007/types
 ```
 
 #### curl
 
 ```elm
-curl  https://atsd_server:8443/api/v1/properties/i-943a8878/types \
+curl  https://atsd_server:8443/api/v1/properties/nurswgvml007/types \
   --insecure --verbose --user {username}:{password} \
   --request GET
 ```
@@ -62,14 +62,9 @@ curl  https://atsd_server:8443/api/v1/properties/i-943a8878/types \
 
 ```json
 [
-    "groupset",
-    "aws_ec2.instance",
-    "tagset",
-    "aws_ec2.blockdevicemapping",
-    "blockdevicemapping",
-    "aws_ec2.tagset",
-    "instance",
-    "aws_ec2.groupset"
+    "disk",
+    "system",
+    "nmon.process"
 ]
 ```
 
