@@ -4,23 +4,27 @@
 
 Retrieve message records for the specified filters.
 
-## Path
+## Request
+
+### Path
 
 ```elm
 /api/v1/messages/query
 ```
 
-## Method
+### Method
 
 ```
 POST 
 ```
 
-## Request 
+### Headers
 
-An array of query objects containing filtering fields. 
+|**Header**|**Value**|
+|:---|:---|
+| Content-Type | application/json |
 
-### Fields
+## Fields
 
 An array of query objects containing the following filtering fields:
 
