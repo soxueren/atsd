@@ -18,6 +18,34 @@ iptables -I INPUT -p tcp --dport 8443 -j ACCEPT
 
 ### Ubuntu/Debian
 
+#### Install the iptables-persistent package
+
+```
+apt-get install iptables-persistent
+```
+
+During the install process you will be asked to save exising rules.
+
+Rules will be saved to ```/etc/iptables/rules.v4``` and ```/etc/iptables/rules.v6``` for ipv4 and ipv6 respectivly.
+
+The saved rules can be updated by either:
+
+* running ```dpkg-reconfigure iptables-persistent``` 
+
+* by executing the following commands:
+
+```
+iptables-save > /etc/iptables/rules.v4
+ip6tables-save > /etc/iptables/rules.v6
+```
+
+* or by running ```/etc/init.d/netfilter-persistent save```
+
+
+
+#### Installing the following script
+
+
 ```sh
 iptblload="/etc/network/if-pre-up.d/iptablesload"
 iptblsave="/etc/network/if-post-down.d/iptablessave"
@@ -28,17 +56,22 @@ fi
 if [ -f $iptblsave ]; then
 	mv $iptblsave ${iptblsave}.backup
 fi
-touch $iptblload
-echo "#!/bin/bash" >> $iptblload
-echo "iptables-restore < /etc/iptables.rules" >> $iptblload
-echo "exit 0" >> $iptblload
-touch $iptblsave
-echo "#!/bin/bash" >> $iptblsave
-echo "iptables-save -c > /etc/iptables.rules" >> $iptblsave
-echo "if [ -f /etc/iptables.downrules ]; then" >> $iptblsave
-echo "iptables-restore < /etc/iptables.downrules" >> $iptblsave
-echo "fi" >> $iptblsave
-echo "exit 0" >> $iptblsave
+
+cat > $iptblload <<EOFF
+#!/bin/bash
+/sbin/iptables-restore < /etc/iptables.rules
+exit 0
+EOFF
+
+cat > $iptblsave <<EOFF
+#!/bin/bash
+/sbin/iptables-save -c > /etc/iptables.rules
+if [ -f /etc/iptables.downrules ]; then
+/sbin/iptables-restore < /etc/iptables.downrules
+fi
+exit 0
+EOFF
+
 chmod +x $iptblload
 chmod +x $iptblsave
 ```
