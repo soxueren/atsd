@@ -91,9 +91,9 @@ An array of query objects containing the following filtering fields:
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
-| [aggregate-processor](#aggregate) | object | Group detailed values into [periods](#period) and calculate statistics for each period. Default: `DETAIL` |
-| [group-processor](#group) | object | Merge multiple series into one series. |
-| [rate-processor](#rate) | object | Compute difference between consecutive samples per unit of time (rate period). |
+| [aggregate](#aggregate-processor) | object | Group detailed values into [periods](#period) and calculate statistics for each period. Default: `DETAIL` |
+| [group](#group-processor) | object | Merge multiple series into one series. |
+| [rate](#rate-processor) | object | Compute difference between consecutive samples per unit of time (rate period). |
 
 ## Period
 
