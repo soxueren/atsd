@@ -24,6 +24,10 @@ POST
 |:---|:---|
 | Content-Type | application/json |
 
+### Parameters
+
+None.
+
 ## Fields
 
 An array of query objects containing the following filtering fields:
