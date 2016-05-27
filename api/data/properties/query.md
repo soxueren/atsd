@@ -63,13 +63,14 @@ An array of query objects containing the following filtering fields:
 |startDate|	string | **[Required]** Start of the selection interval. ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Only records updated at or after `startDate` are returned.<br>Examples: `2016-05-25T00:15:00.194Z`, `2016-05-25T`, `current_hour` |
 | endDate |	string | **[Required]** End of the selection interval. ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Only records updated before `endDate` are returned.<br>Examples: `2016-05-25T00:15:00Z`, `previous_day - 1 * HOUR`|
 | interval|	string | Duration of the selection interval, specified as `count` and `unit`. <br>Example: `{"count": 5, "unit": "MINUTE"}`|
-| offset | integer | Difference, in milliseconds, between maximum update time of matched records and update time of the current record. <br>If the difference exceeds offset, the record is excluded from results.<br>`offset` is ignored if it is 0 or negative. |   
 
 ### Result Filter Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
-| limit   | integer | Maximum number of records to be returned. Default value is 0 (all). | 
+| limit   | integer | Maximum number of records to be returned. Default: 0. | 
+| last | boolean | Return only records with the update time equal to the maximum update time of matched records. Default: false. |
+| offset | integer | Difference, in milliseconds, between maximum update time of matched records and update time of the current record. Default: 0.<br>If the difference exceeds offset, the record is excluded from results. |   
 
 ## Response 
 
