@@ -37,7 +37,7 @@ An array of query objects containing the following filtering fields:
 |:---|:---|:---|
 | type | string | **[Required]** Property type name. <br>Use `$entity_tags` type to retrieve entity tags. |
 | key | object | Object with `name=value` fields. <br>Matches records with equal key (_exact_) or key containing requested fields with the same values (_partial_).<br>Example: `{"iftype": "eth"}` |
-| match | string | `key` match operator: `exact` or `partial`. Default: `partial`.<br>`exact` matches records with exactly the same `key` as requested.<br>`partial` matches records that contain requested keys but may also have additional fields in the key.<br>Example: `{"iftype": "eth"}` with `exact` match selects record with key `{"iftype": "eth"}`.<br>`{"iftype": "eth"}` with `partial` match selects records with key `{"iftype": "eth"}` or `{"iftype": "eth", "name": "en1"}`.|
+| exactMatch | boolean | `key` match operator. _Exact_ match if true, _partial_ match if false. Default: false.<br>_Exact_ match selects records with exactly the same `key` as requested.<br>_Partial_ match selects records with key that contains requested fields but may also include other fields.<br>Example: `{"k-1":"v-1"}` with _exact_ match selects record with key `{"k-1":"v-1"}`.<br>`{"k-1":"v-1"}` with _partial_ match selects records with key `{"k-1":"v-1"}` as well as with key `{"k-1":"v-1","k-2":"v-2"}`.|
 | keyExpression | string | Expression for matching properties with specified keys.<br>Example: `queue_name LIKE 'qm-*'` |
 
 ### Entity Filter Fields
@@ -60,9 +60,10 @@ An array of query objects containing the following filtering fields:
 
 | **Name** | **Type** | **Description** |
 |:---|:---|:---|
-|startDate|	string | **[Required]** Start of the selection interval. ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Only records updated at or after this time are returned.<br>Examples: `2016-05-25T00:15:00.194Z`, `2016-05-25T`, `current_hour` |
-| endDate |	string | **[Required]** End of the selection interval. ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Only records updated before this time are returned.<br>Examples: `2016-05-25T00:15:00Z`, `previous_day - 1 * HOUR`|
+|startDate|	string | **[Required]** Start of the selection interval. ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Only records updated at or after `startDate` are returned.<br>Examples: `2016-05-25T00:15:00.194Z`, `2016-05-25T`, `current_hour` |
+| endDate |	string | **[Required]** End of the selection interval. ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Only records updated before `endDate` are returned.<br>Examples: `2016-05-25T00:15:00Z`, `previous_day - 1 * HOUR`|
 | interval|	string | Duration of the selection interval, specified as `count` and `unit`. <br>Example: `{"count": 5, "unit": "MINUTE"}`|
+| offset | integer | Difference, in milliseconds, between maximum update time of matched records and update time of the current record. <br>If the difference exceeds offset, the record is excluded from results.<br>`offset` is ignored if it is 0 or negative. |   
 
 ### Result Filter Fields
 
