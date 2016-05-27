@@ -35,7 +35,7 @@ An array of query objects containing the following filtering fields:
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 | type | string | **[Required]** Property type name. <br>Use `$entity_tags` type to retrieve entity tags. |
-| key | object | Object with `name=value` fields. <br>Matches records with equal keys (`exact`) or keys containing requested fields with the same values (`partial`).<br>The  parameter is ignored when querying `$entity_tags` type. |
+| key | object | Object with `name=value` fields. <br>Matches records with equal key (`exact`) or key containing requested fields with the same values (`partial`).<br>The  parameter is ignored when querying `$entity_tags` type. |
 | match | string | `key` match operator: `exact` or `partial`. Default: `partial`.<br>`exact` matches records with exactly the same `key` as requested.<br>`partial` matches records that contain requested keys but may also have additional fields in the key.<br>Example: `{"iftype": "eth"}` with `exact` match selects record with key `{"iftype": "eth"}`.<br>`{"iftype": "eth"}` with `partial` match selects records with key `{"iftype": "eth"}` or `{"iftype": "eth", "name": "en1"}`.|
 | keyExpression | string | Expression for matching properties with specified keys.<br>Example: `queue_name LIKE 'qm-*'`<br>The parameter is ignored when querying `$entity_tags` type. |
 
