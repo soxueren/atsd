@@ -70,7 +70,8 @@ An array of query objects containing the following filtering fields:
 |:---|:---|:---|
 | limit   | integer | Maximum number of records to be returned. Default: 0. | 
 | last | boolean | Return only records with the update time equal to the maximum update time of matched records. Default: false. |
-| offset | integer | Difference, in milliseconds, between maximum update time of matched records and update time of the current record. Default: 0.<br>If the difference exceeds offset, the record is excluded from results. |   
+| offset | integer | Difference, in milliseconds, between maximum update time of matched records and update time of the current record. Default: 0.<br>If the difference exceeds `offset`, the record is excluded from results. |   
+| tagOffset | integer | Difference, in milliseconds, between update time of the current record and update time of the tag field. Default: 0.<br>If the difference exceeds `tagOffset`, the tag field is excluded from `tags` object. |   
 
 ## Response 
 
@@ -101,10 +102,11 @@ POST https://atsd_host:8443/api/v1/properties/query
 ```json
 [
     {
-      "type": "system",
+      "type": "disk",
       "entity": "nurswgvml007",
-      "interval": {"count": 1, "unit": "HOUR"},
-      "endDate": "2016-02-05T18:00:00Z"
+      "key": { "file_system": "/" },
+      "startDate": "2016-05-25T04:00:00Z",
+      "endDate":   "2016-05-25T05:00:00Z"
      }
 ]
 ```
@@ -115,7 +117,7 @@ curl  https://atsd_host:8443/api/v1/properties/query \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
-  --data '[{"type":"system","entity":"nurswgvml007","interval":{"count":1,"unit":"HOUR"},"endDate":"2016-02-05T18:00:00Z"}]'
+  --data '[{"type":"disk","entity":"nurswgvml007","key":{"file_system":"/"},"startDate":"2016-05-25T04:00:00Z","endDate":"2016-05-25T05:00:00Z"}]'
 ```
 
 ### Response
@@ -123,15 +125,16 @@ curl  https://atsd_host:8443/api/v1/properties/query \
 ```json
 [
    {
-       "type": "system",
+       "type": "disk",
        "entity": "nurswgvml007",
-       "key": {},
-       "tags": {
-           "cpu_total.busy": "1",
-           "cpu_total.idle%": "93.6",
-           "cpu_total.sys%": "1.1"
+       "key": {
+           "file_system": "/",
+           "mount_point": "sda1"
        },
-       "date": "2016-02-05T17:15:00Z"
+       "tags": {
+           "fs_type": "ext4"
+       },
+       "date": "2016-05-25T04:15:00Z"
    }
 ]
 ```
