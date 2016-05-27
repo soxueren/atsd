@@ -58,6 +58,7 @@ An array of query objects containing the following filtering fields:
 ### Date Filter Fields
 
 * Date filter is **required**. 
+* Date filter is applied to alert open date.
 * If `startDate` or `endDate` is not defined, the omitted field is calculated from `interval`/`endDate` and `startDate`/`interval` fields.
 
 | **Name** | **Type** | **Description** |
