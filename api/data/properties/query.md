@@ -80,7 +80,7 @@ An array of query objects containing the following filtering fields:
 
 ## Response 
 
-An array of matching property records containing the following fields:
+An array of matching property objects containing the following fields:
 
 ### Fields
 
