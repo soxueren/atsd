@@ -2,7 +2,7 @@
 
 ## Description
 
-Retrieve a list of alerts matching specified fields.
+Retrieve a list of **open** alerts matching specified fields.
 
 ## Request
 
