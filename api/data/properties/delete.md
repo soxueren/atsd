@@ -66,7 +66,7 @@ POST https://atsd_host:8443/api/v1/properties/delete
 },{
     "type":"nmon-disks",
     "entity":"nurswgvml006",
-    "partialKey":{"file_system":"/"}
+    "exactMatch": false
 }]
 ``` 
 
