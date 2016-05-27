@@ -40,7 +40,7 @@ An array of query objects containing the following filtering fields:
 
 ### Entity Filter Fields
 
-* Date filter is **required**.
+* One of the entity fields is **required**.
 * Entity name pattern may include `?` and `*` wildcards.
 * `entity`, `entities`, `entityGroup` fields are mutually exclusive, only one of them can be specified in the query object. 
 * `entityExpression` is applied as an additional filter to `entity`, `entities`, and `entityGroup` fields.
