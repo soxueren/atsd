@@ -60,11 +60,11 @@ POST https://atsd_host:8443/api/v1/properties/delete
 
 ```json
 [{
-    "type":"nmon-disks",
+    "type":"disk",
     "entity":"nurswgvml007",
     "key":{"file_system":"/","name":"sda1"}
 },{
-    "type":"nmon-disks",
+    "type":"disk",
     "entity":"nurswgvml006",
     "exactMatch": false
 }]
@@ -77,7 +77,7 @@ curl https://atsd_host:8443/api/v1/properties/delete \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
-  --data '[{ "type":"nmon-disks", "entity":"nurswgvml007", "key":{"file_system":"/","name":"sda1"} }]'
+  --data '[{ "type":"disk", "entity":"nurswgvml007", "key":{"file_system":"/","name":"sda1"} }]'
 ```
 
 ### Response
