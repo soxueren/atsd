@@ -1,97 +1,108 @@
 # Series: Query
-## Path 
+
+## Description 
+
+Retrieve series objects containing time:value arrays for specified filters.
+
+## Request
+
+### Path
+
+```elm
+/api/v1/series/query
 ```
-/api/v1/series
-```
-## Method
+
+### Method
+
 ```
 POST 
 ```
-### Basic Example
-> Request
 
-```json
-    {
-        "queries": [
-            {
-                "startDate": "2015-02-22T13:37:00Z",
-                "endDate": "2015-02-22T13:40:00Z",
-                "timeFormat": "iso",
-                "entity": "nurswgvml007",
-                "metric": "mpstat.cpu_busy"
-            }
-        ]
-    }
-```
+### Headers
 
-> Response
+|**Header**|**Value**|
+|:---|:---|
+| Content-Type | application/json |
 
-```json
-    {
-      "series": [
-        {
-          "entity": "NURSWGVML007",
-          "metric": "mpstat.cpu_busy",
-          "data": [
-            { "d": "2015-02-22T13:37:09Z", "v": 14.0},
-            { "d": "2015-02-22T13:37:25Z", "v": 8.0}
-          ]
-        }
-      ]
-    }
-```
+### Parameters
 
-<aside class="notice">
-If endTime is not specified, endDate is used. If endDate is not specified an error is raised.
-If startTime is not specified, startDate is used. If startDate is not specified, endDate is used minus interval. If no start can be established, an error is raised.
-</aside>
+None.
 
-### Request Fields
+## Fields
 
-| **Field** | **Required** | **Description** |
+An array of query objects containing the following filtering fields:
+
+### Series Filter Fields
+
+| **Field** | **Type** | **Description** |
 |---|---|---|
-| metric | yes |  Metric name |
-| entity    | yes (1)         | Entity name or entity name pattern with `?` and `*` wildcards. |
-| entities | yes (1) | Array of entity names or entity name patterns. |
-| entityGroup | yes (1) | Entities that are members of the specified entity group. |
-| entityExpression | yes (1) | Applies [filter](../entity-filter.md) to selected entities.  |
-|startTime|no*|Start of the selection interval. Specified in UNIX milliseconds.|
-|endTime|no*|End of the selection interval. Specified in UNIX milliseconds.|
-|startDate|no*|Etart of the selection interval. Specified in ISO format or using endtime syntax.|
-|endDate|no*|End of the selection interval. Specified in ISO format or using endtime syntax.|
-|interval|no*|Duration of the selection interval, specified as `count` and `unit`|
-|timeFormat|no|Response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
-| limit | no | maximum number of data samples returned. Only the most recent data samples will be returned if endtime/startime are set. Default value: 0 | 
-| last | no |  Performs GET instead of scan. Retrieves only 1 most recent value. <br>Boolean. Default value: false<br>Start time and end time are ignored when last=true. |
-| tags | no |  An object. key is a tag name and value is a single tag value or an array of possible tag values with `?` and `*` wildcards. |
-| type | no | Specifies source for underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default value: `HISTORY` |
-|forecastName| no | Unique forecast name. You can store an unlimited number of named forecasts for any series using `forecastName`. If `forecastName` is not set, then the default ATSD forecast will be returned. `forecastName` is applicable only when `type` is set to `FORECAST` or `FORECAST_DEVIATION` |
-| group | no | An object. Merges multiple time series into one serie. |
-| rate| no | An object. Computes difference between consecutive samples per unit of time (rate period). |
-| aggregate | no | An object. Computes statistics for the specified time periods. Default value: DETAIL |
-| requestId | no | Optional identifier used to associate `query` object in request with `series` objects in response. |
-| cache | no | `cache = true` redirects the query to Last Insert Cache table which results in faster response time for last-value queries at the cost of slight latency, with up to 1 minute delay in value update time. |
-| versioned | no | Boolean. Returns version status, source, time/date if metric is versioned. |
-|versionFilter| no | Expression to filter value history (versions) by version status, source or time, for example: `version_status = 'Deleted'` or `version_source LIKE '*user*'`. To filter by version `time`, use `date()` function, for example, `version_time > date('2015-08-11T16:00:00Z')` or `version_time > date('current_day')`. The `date()` function accepts End Time syntax.|
+| metric | string | [**Required**] Metric name |
+| tags | object  | Object with `name=value` fields. <br>Matches series with tags that contain the same fields but may also include other fields. <br>Tag field values support `?` and `*` wildcards. |
+| type | string | Type of underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default: `HISTORY` |
 
-<aside class="notice">
-* Interdependent fields. Interval start and end should be set using a combination of startTime, endTime, startDate, endDate and interval.
-</aside>
+### Entity Filter Fields
 
-<aside class="notice">
-* One of the following fields is required: **entity, entities, entityGroup, entityExpression**. 
-* **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
-* entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
-</aside>
+* One of the entity fields is **required**.
+* Entity name pattern may include `?` and `*` wildcards.
+* `entity`, `entities`, `entityGroup` fields are mutually exclusive, only one of them can be specified in the query object. 
+* `entityExpression` is applied as an additional filter to `entity`, `entities`, and `entityGroup` fields.
 
-<h4 id="period">period</h4>
+| **Name**  | **Type** | **Description**  |
+|:---|:---|:---|
+| entity   | string | Entity name or entity name pattern. |
+| entities | list | Array of entity names or entity name patterns. |
+| entityGroup | string | Entity group name. Return records for entites in the specified group.<br>Empty result is returned if the group doesn't exist or contains no entities. |
+| entityExpression | string | Filter entities by name, entity tag, and properties using [syntax](/rule-engine/functions.md). <br>Example: `tags.location = 'SVL'`  |
 
-| Name  | Description                                                                      |
-|---|---|
-| count | Number of aggregation periods                                                  |
-| unit  | Aggregation period unit: `MILLISECOND`, `SECOND`, `MINUTE`, `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, `YEAR` |
+### Date Filter Fields
 
-#### Data Processing Sequence
+* Date filter is **required**. 
+* If `startDate` or `endDate` is not defined, the omitted field is calculated from `interval`/`endDate` and `startDate`/`interval` fields.
+
+| **Name** | **Type** | **Description** |
+|:---|:---|:---|
+|startDate|	string | **[Required]** Start of the selection interval. ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Only records updated at or after `startDate` are returned.<br>Examples: `2016-05-25T00:15:00.194Z`, `2016-05-25T`, `current_hour` |
+| endDate |	string | **[Required]** End of the selection interval. ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Only records updated before `endDate` are returned.<br>Examples: `2016-05-25T00:15:00Z`, `previous_day - 1 * HOUR`|
+| interval|	string | Duration of the selection interval, specified as `count` and `unit`. <br>Example: `{"count": 5, "unit": "MINUTE"}`|
+
+### Forecast Filters
+
+| **Name**  | **Type** | **Description**  |
+|:---|:---|:---|
+|forecastName| string | Unique forecast name. You can store an unlimited number of named forecasts for any series using `forecastName`. If `forecastName` is not set, then the default ATSD forecast will be returned. `forecastName` is applicable only when `type` is set to `FORECAST` or `FORECAST_DEVIATION` |
+
+### Versioning Filters
+| **Name**  | **Type** | **Description**  |
+|:---|:---|:---|
+| versioned | boolean |Returns version status, source, and change date if metric is versioned. Default: `false`. |
+|versionFilter| string | Expression to filter value history (versions) by version status, source or time, for example: `version_status = 'Deleted'` or `version_source LIKE '*user*'`. To filter by version `time`, use `date()` function, for example, `version_time > date('2015-08-11T16:00:00Z')` or `version_time > date('current_day')`. The `date()` function accepts [endtime](/end-time-syntax.md) syntax.|
+
+### Control Filter Fields
+
+| **Name**  | **Type** | **Description**  |
+|:---|:---|:---|
+| limit   | integer | Maximum number of time:value samples for all matching series to be returned. Default: 0. | 
+| last | boolean | Retrieves only 1 most recent value for each series. Default: `false`.<br>Start time and end time are ignored when `last=true`. |
+| cache | boolean | If true, execute the query against Last Insert table which results in faster response time for last value queries. Default: `false`<br>Values in Last Insert table maybe delayed of up to 1 minute (cache to disk interval). |
+| requestId | string | Optional identifier used to associate `query` object in request with `series` objects in response. |
+| timeFormat |string| Time format for data array. `iso` or `milliseconds`. Default: `iso`. |
+
+### Processor Fields
+
+| **Name**  | **Type** | **Description**  |
+|:---|:---|:---|
+| [aggregate-processor](#aggregate) | object | Group detailed values into [periods](#period) and calculate statistics for each period. Default: `DETAIL` |
+| [group-processor](#group) | object | Merge multiple series into one series. |
+| [rate-processor](#rate) | object | Compute difference between consecutive samples per unit of time (rate period). |
+
+## Period
+
+| **Name**  | **Description** |
+|:---|:---|
+| count | Number of units. |
+| unit  | Time unit: `MILLISECOND`, `SECOND`, `MINUTE`, `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, `YEAR` |
+
+## Data Processing Sequence
 
 `group -> rate -> aggregate`
 
@@ -146,22 +157,26 @@ If startTime is not specified, startDate is used. If startDate is not specified,
 
 > In this case aggregate will be executed first.
 
-group operator merges multiple series into one serie before rate and aggregator are applied.
+## Group Processor
 
-#### Group Parameters
+Group processing merges multiple series into one serie before rate and aggregator are applied.
 
-| **Parameter** | **Required** | **Description**                                                                                                     |
-|---------------|--------------|---------------------------------------------------------------------------------------------------------------------|
+| **Parameter** | **Type** | **Description**  |
+|:---|:---|:---|
 | type          | yes          | Statistical function applied to value array `[v-n, w-n]`. Possible values: `COUNT`, `MIN`, `MAX`, `AVG`, `SUM`, `PERCENTILE_999`, `PERCENTILE_995`, `PERCENTILE_99`, `PERCENTILE_95`, `PERCENTILE_90`, `PERCENTILE_75`, `PERCENTILE_50` or `MEDIAN`, `STANDARD_DEVIATION`, `MIN_VALUE_TIME`, `MAX_VALUE_TIME` |
-| interpolate   | no           | Interpolation function used to compute missing values for a given input series at t-n. Possible values: `NONE`, `STEP`, `LINEAR`. Default value: STEP                                                                                                                                                 |
-| truncate      | no           | Discards samples at the beginning and at the of the grouped series until values for all input series are established. Possible values: true, false. Default value: false                                                                                                                                                       |
-| period      | no           | Replaces input series timestamps with regular timestamps based on count=unit frequency. Possible values: count, unit                                                                                                                                                      |
+| interpolate   | no           | Interpolation function used to compute missing values for a given input series at t-n. Possible values: `NONE`, `STEP`, `LINEAR`. Default value: STEP |
+| truncate      | no           | Discards samples at the beginning and at the of the grouped series until values for all input series are established. Possible values: true, false. Default value: false  |
+| period      | no           | Replaces input series timestamps with regular timestamps based on count=unit frequency. Possible values: count, unit  |
 | order         | no           | Change the order in which `aggregate` and `group` is executed, the higher the value of `order` the later in the sequency will it be executed.             |
 
-
-<h4 id="rate">rate</h4>
+## Rate Processor
 
 Computes difference between consecutive samples per unit of time (rate period). Used to compute rate of change when the underlying metric measures a continuously incrementing counter.
+
+| **Name**     | **Description**  |
+|:---|:---|
+| period | ratePeriod |
+| counter | if true, then negative differences between consecutive samples are ignored. Boolean. Default value: true |
 
 > Request
 
@@ -187,12 +202,7 @@ Computes difference between consecutive samples per unit of time (rate period). 
 }
 ```
 
-#### Rate Properties
 
-| Name     | Description  |
-|---|---|
-| period | ratePeriod |
-| counter | if true, then negative differences between consecutive samples are ignored. Boolean. Default value: true |
 
 <aside class="notice">
 Rate supports NANOSECOND period unit.
@@ -270,7 +280,7 @@ If rate period is specified, the function computes rate of change for the specif
 }
 ```
 
-<h4 id="aggregate">aggregate</h4>
+## Aggregate Processor
 
 Computes statistics for the specified time periods. The periods start with the beginning of an hour.
 
@@ -302,26 +312,18 @@ Computes statistics for the specified time periods. The periods start with the b
 }
 ```
 
-<h4 id="aggregateproperties">aggregate properties</h4>
-
-| Name | Required           | Description                                                                                                                                                                                                                                                                                           |
-|---|---|---|
+| **Name** | **Required**  | **Description**   |
+|:---|:---|:---|
 | types | yes          | An array of statistical functions `DETAIL`, `COUNT`, `MIN`, `MAX`, `AVG`, `SUM`, `PERCENTILE_999`, `PERCENTILE_995`, `PERCENTILE_99`, `PERCENTILE_95`, `PERCENTILE_90`, `PERCENTILE_75`, `PERCENTILE_50` or `MEDIAN`, `STANDARD_DEVIATION`, `FIRST`, `LAST`, `DELTA`, `WAVG`, `WTAVG`, `THRESHOLD_COUNT`, `THRESHOLD_DURATION`, `THRESHOLD_PERCENT`, `MIN_VALUE_TIME`, `MAX_VALUE_TIME` |
 | type  | no        | An statistical function, specify only one (mutually exclusive with `types` parameter): `DETAIL`, `COUNT`, `MIN`, `MAX`, `AVG`, `SUM`, `PERCENTILE_999`, `PERCENTILE_995`, `PERCENTILE_99`, `PERCENTILE_95`, `PERCENTILE_90`, `PERCENTILE_75`, `PERCENTILE_50` or `MEDIAN`, `STANDARD_DEVIATION`, `FIRST`, `LAST`, `DELTA`, `WAVG`, `WTAVG`, `THRESHOLD_COUNT`, `THRESHOLD_DURATION`, `THRESHOLD_PERCENT`, `MIN_VALUE_TIME`, `MAX_VALUE_TIME` |
-| period  | yes     | period for computing statistics.                                                                                                                                                                                                                                                                    |
-| interpolate  | no  | Generates missing aggregation periods using interpolation if enabled: `NONE`, `LINEAR`, `STEP`                                                                                                                                                                                                            |
-| threshold    | no  | min and max boundaries for `THRESHOLD_X` aggregators                                                                                                                                                                                                                                                   |
-| calendar     | no  | calendar settings for `THRESHOLD_X` aggregators                                                                                                                                                                                                                                                        |
-| workingMinutes | no | working minutes settings for `THRESHOLD_X` aggregators                                                                                                                                                                                                                                                 |
+| period  | yes     | period for computing statistics.  |
+| interpolate  | no  | Generates missing aggregation periods using interpolation if enabled: `NONE`, `LINEAR`, `STEP`   |
+| threshold    | no  | min and max boundaries for `THRESHOLD_X` aggregators  |
+| calendar     | no  | calendar settings for `THRESHOLD_X` aggregators  |
+| workingMinutes | no | working minutes settings for `THRESHOLD_X` aggregators  |
 | counter | no | Applies to DELTA aggregator. Boolean. Default value: false. If counter = true, the DELTA aggregator assumes that metric's values never decrease, except when a counter is reset or overflows. The DELTA aggregator takes such reset into account when computing differences. |
 | order         | no           | Change the order in which `aggregate` and `group` is executed, the higher the value of `order` the later in the sequency will it be executed.             |
 
-#### period
-
-| Name  | Description                                                                      |
-|---|---|
-| count | Number of aggregation periods                                                  |
-| unit  | Aggregation period unit: `MILLISECOND`, `SECOND`, `MINUTE`, `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, `YEAR` |
 
 #### calendar
 
@@ -430,6 +432,43 @@ Entity and tag wildcards are not supported if `last = true`.
 Verioned values are always returned with version time/date (t or d). Verision time/date is the value change time (when this version was stored in ATSD).
 </aside>
 
+## Example
+
+### Request
+
+#### URI
+
+```elm
+POST https://atsd_host:8443/api/v1/series/query
+```
+
+#### Payload
+
+```json
+[
+    {
+        "startDate": "2016-02-22T13:37:00Z",
+        "endDate": "2016-02-22T13:40:00Z",
+        "entity": "nurswgvml007",
+        "metric": "mpstat.cpu_busy"
+    }
+]
+```
+
+### Response
+
+```json
+[
+    {
+      "entity": "NURSWGVML007",
+      "metric": "mpstat.cpu_busy",
+      "data": [
+        { "d": "2015-02-22T13:37:09Z", "v": 14.0},
+        { "d": "2015-02-22T13:37:25Z", "v": 8.0}
+      ]
+    }
+]
+```
 
 ## Additional Examples 
 * [Named Forecast](/api/data/examples/named-forecast-query.md)
