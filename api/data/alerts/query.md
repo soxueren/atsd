@@ -15,7 +15,7 @@ Retrieve a list of alerts matching specified fields.
 ### Method
 
 ```
-POST
+POST 
 ```
 
 ### Headers
@@ -28,45 +28,65 @@ POST
 
 None.
 
+## Fields
+
+An array of query objects containing the following filtering fields:
+
+### Alert Filter Fields
+
+| **Name**  | **Type** | **Description**  |
+|:---|:---|:---|
+| rules       | list | Array of rules which produced the alerts.        |
+| metrics     | list | Array of metric names for which the alerts were created. |
+| severities  | list | Array of [severity code or names](/api/data/severity.md)   |
+| minSeverity |  string   | Minimal [code or name](/api/data/severity.md) severity filter.  |
+
+### Entity Filter Fields
+
+* One of the entity fields is **required**.
+* Entity name pattern may include `?` and `*` wildcards.
+* `entity`, `entities`, `entityGroup` fields are mutually exclusive, only one of them can be specified in the query object. 
+* `entityExpression` is applied as an additional filter to `entity`, `entities`, and `entityGroup` fields.
+
+| **Name**  | **Type** | **Description**  |
+|:---|:---|:---|
+| entity   | string | Entity name or entity name pattern. |
+| entities | list | Array of entity names or entity name patterns. |
+| entityGroup | string | Entity group name. Return records for entites in the specified group.<br>Empty result is returned if the group doesn't exist or contains no entities. |
+| entityExpression | string | Filter entities by name, entity tag, and properties using [syntax](/rule-engine/functions.md). <br>Example: `tags.location = 'SVL'`  |
+
+### Date Filter Fields
+
+* Date filter is **required**. 
+* If `startDate` or `endDate` is not defined, the omitted field is calculated from `interval`/`endDate` and `startDate`/`interval` fields.
+
+| **Name** | **Type** | **Description** |
+|:---|:---|:---|
+|startDate|	string | **[Required]** Start of the selection interval. ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Only records updated at or after `startDate` are returned.<br>Examples: `2016-05-25T00:15:00.194Z`, `2016-05-25T`, `current_hour` |
+| endDate |	string | **[Required]** End of the selection interval. ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Only records updated before `endDate` are returned.<br>Examples: `2016-05-25T00:15:00Z`, `previous_day - 1 * HOUR`|
+| interval|	string | Duration of the selection interval, specified as `count` and `unit`. <br>Example: `{"count": 5, "unit": "MINUTE"}`|
+
+## Response 
+
+An array of matching alert objects containing the following fields:
+
 ### Fields
 
-An array of query objects containing filtering fields. if the array is empty, the server will return all alerts.
-
-| **Field** | **Description** |
+| **Field** | **Type** | **Description** |
 |:---|:---|:---|
-| entity    | Entity name or entity name pattern with `?` and `*` wildcards|
-| entities | Array of entity names or entity name patterns |
-| entityGroup | If `entityGroup` field is specified in the query, alerts for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
-| entityExpression | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
-| rules       | an array of rules which produced the alerts        |
-| metrics     | an array of metric names for which the alerts were created |
-| severities  | an array of [severity code or names](../severity.md)   |
-| minSeverity | Minimal severity filter  |
-
-* **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
-* entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
-
-## Response
-
-An array of matching alert objects with the following fields:
-
-### Fields
-
-| **Field** | **Description** |
-|:---|:---|:---|
-| id    | Alert id.|
-| acknowledged | Acknowledgement status.|
-| entity | Entity name. |
-| metric | Metric name.  |
-| rule | Rule name. |
-| severity  | [Severity](../severity.md) code.  |
-| tags | An object containing name=value tags, for example `tags: {"path": "/", "name": "sda"}` |
-| repeatCount | Number of times when the expression evaluated to true sequentially.  |
-| textValue | Text value.  |
-| value | Last numeric value received. |
-| openValue | First numeric value received.  |
-| openDate | Time when alerts was open, in ISO format.  |
-| lastEventDate | Time when alerts was last repeated, in ISO format.  |
+| id    | integer | Alert id.|
+| acknowledged | boolean | Acknowledgement status.|
+| entity | string | Entity name. |
+| metric | string | Metric name.  |
+| rule | string | Rule name. |
+| severity  | string | [Severity](/api/data/severity.md) code.  |
+| tags | object | Object containing `name=value` pairs, for example `tags: {"path": "/", "name": "sda"}` |
+| repeatCount | integer | Number of times when the expression evaluated to true sequentially.  |
+| textValue | string | Text value.  |
+| value | double | Last numeric value received. |
+| openValue | double | First numeric value received.  |
+| openDate | string | ISO 8601 date when the alert was open.  |
+| lastEventDate | string | ISO 8601 date when the last record was received.  |
 
 ### Errors
 
@@ -79,7 +99,7 @@ None.
 #### URI
 
 ```elm
-POST https://atsd_host:8443/api/v1/alerts/query/
+POST https://atsd_host:8443/api/v1/alerts/query
 ```
 
 #### Payload
