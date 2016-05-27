@@ -22,59 +22,66 @@ An array of query objects containing filtering fields.
 
 ### Fields
 
-| **Field** | **Required** | **Description** |
-|---|---|---|
-| entity    | yes (1)         | Entity name or entity name pattern with `?` and `*` wildcards|
-| entities | yes (1) | Array of entity names or entity name patterns |
-| entityGroup | yes (1) | If `entityGroup` field is specified in the query, messages for entities in this group are returned. `entityGroup` is used only if entity field is omitted or if entity field is an empty string. If `entityGroup` is not found or contains no entities an empty resultset will be returned. |
-| entityExpression | yes (1) | `entityExpression` filter is applied in addition to other entity* fields. For example, if both `entityGroup` and `entityExpression` fields are specified, the expression is applied to members of the specified entity group. `entityExpression` supports the following [syntax](/rule-engine/functions.md). Example, `tags.location='SVL'`  |
-|type       |  no   | Message type. |
-|source       |  no   | Message source. |
-|tags	      | no  | An object containing `name=values` for matching message records with the same tags.         |
-|startDate	  | no  | Start of the selection interval. Specified in ISO format or using endtime syntax.<br>Default value: endTime - 1 hour    |
-|endDate	  | no  | End of the selection interval. Specified in ISO format or using endtime syntax. <br>Default value: current server time     |
-|interval | no | Duration of the selection interval, specified as `count` and `unit`. For example: `"interval": {"count": 5, "unit": "MINUTE"}` |
-|severity       |  no   | Severity [code or name](#severity).  |
-|minSeverity       |  no   | Minimal [code or name](#severity) filter.  |
-|timeFormat   | no  | Response time format: `iso` or `milliseconds`. Default value: `iso`|
-|limit        |	no  | Maximum number of messages returned. Default value: 1000  |
+An array of query objects containing the following filtering fields:
 
-* One of the following fields is required: **entity, entities, entityGroup, entityExpression**. 
-* **entity, entities, entityGroup** fields are mutually exclusive, only one field can be specified in the request. 
-* entityExpression is applied as an additional filter to entity, entities, entityGroup fields.
+### Message Filter Fields
 
-* One of the following combinations is required: interval, startDate, interval + startDate, interval + endDate, startDate + endDate
+| **Name**  | **Type** | **Description**  |
+|:---|:---|:---|
+|type       |  string   | Message type. |
+|source       |  string   | Message source. |
+|tags	      | object  | Object with `name=value` fields. <br>Matches records with tags that contain the same fields but may also include other fields. |
+|severity       |  string   | Severity [code or name](/api/data/severity.md).  |
+|minSeverity       |  string   | Minimal [code or name](/api/data/severity.md) severity filter.  |
+
+### Entity Filter Fields
+
+* Date filter is **required**.
+* Entity name pattern may include `?` and `*` wildcards.
+* `entity`, `entities`, `entityGroup` fields are mutually exclusive, only one of them can be specified in the query object. 
+* `entityExpression` is applied as an additional filter to `entity`, `entities`, and `entityGroup` fields.
+
+| **Name**  | **Type** | **Description**  |
+|:---|:---|:---|
+| entity   | string | Entity name or entity name pattern. |
+| entities | list | Array of entity names or entity name patterns. |
+| entityGroup | string | Entity group name. Return records for entites in the specified group.<br>Empty result is returned if the group doesn't exist or contains no entities. |
+| entityExpression | string | Filter entities by name, entity tag, and properties using [syntax](/rule-engine/functions.md). <br>Example: `tags.location = 'SVL'`  |
+
+### Date Filter Fields
+
+* Date filter is **required**. 
+* If `startDate` or `endDate` is not defined, the omitted field is calculated from `interval`/`endDate` and `startDate`/`interval` fields.
+
+| **Name** | **Type** | **Description** |
+|:---|:---|:---|
+|startDate|	string | **[Required]** Start of the selection interval. ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Only records updated at or after `startDate` are returned.<br>Examples: `2016-05-25T00:15:00.194Z`, `2016-05-25T`, `current_hour` |
+| endDate |	string | **[Required]** End of the selection interval. ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Only records updated before `endDate` are returned.<br>Examples: `2016-05-25T00:15:00Z`, `previous_day - 1 * HOUR`|
+| interval|	string | Duration of the selection interval, specified as `count` and `unit`. <br>Example: `{"count": 5, "unit": "MINUTE"}`|
+
+### Result Filter Fields
+
+| **Name**  | **Type** | **Description**  |
+|:---|:---|:---|
+| limit   | integer | Maximum number of records to be returned. Default: 1000. | 
 
 ## Response 
 
 ### Fields
 
-| **Field** | **Description** |
-|:---|:---|
-|entity | Entity name. |
-|type | Message type. |
-|source | Message source. |
-|severity | Message [severity](#severity) code. |
-|tags | An object containing name=value tags, for example `tags: {"path": "/", "name": "sda"}`. |
-|message | Message text. |
-|date | Message time in ISO format |
+| **Field** | **Type** | **Description** |
+|:---|:---|:---|
+|entity | string | Entity name. |
+|type | string | Message type. |
+|source | string | Message source. |
+|severity | string | Message [severity](/api/data/severity.md) code or name. |
+|tags | object |  Object containing `name=value` fields, for example `tags: {"path": "/", "name": "sda"}`. |
+|message | string | Message text. |
+|date | string | ISO 8601 date when the message record was created. |
 
 ### Errors
 
 None.
-
-## Severity
-
-| **Code** | **Description** |
-|:---|:---|
-| 0 | UNDEFINED |
-| 1 | UNKNOWN |
-| 2 | NORMAL |
-| 3 | WARNING |
-| 4 | MINOR |
-| 5 | MAJOR |
-| 6 | CRITICAL |
-| 7 | FATAL |
 
 ## Example
 
