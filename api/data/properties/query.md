@@ -36,7 +36,7 @@ An array of query objects containing the following filtering fields:
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 | type | string | **[Required]** Property type name. <br>Use `$entity_tags` type to retrieve entity tags. |
-| key | object | Object with `name=value` fields. <br>Matches records with equal key (_exact_) or key containing requested fields with the same values (_partial_).<br>Example: `{"file_system": "/"}` |
+| key | object | Object with `name=value` fields. <br>Matches records with _exact_ or _partial_ key fields. See `exactMatch` below. <br>Example: `{"file_system": "/"}` |
 | exactMatch | boolean | `key` match operator. _Exact_ match if true, _partial_ match if false. Default: **false**.<br>_Exact_ selects a record with exactly the same `key` as requested.<br>_Partial_ selects records with key that contains requested fields but may also include other fields.<br>Example: assuming records `{"k-1":"v-1"}` (A) and `{"k-1":"v-1","k-2","v-2"}` (B) exist.<br> _Exact_ match for key `{"k-1":"v-1"}` will select **A**.<br>_Partial_ match for key `{"k-1":"v-1"}` will select **A** and **B**.|
 | keyExpression | string | Expression for matching properties with specified keys.<br>Example: `file_system LIKE '/u*'` |
 
