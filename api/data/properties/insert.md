@@ -30,8 +30,8 @@ POST
 |:---|:---|:---|
 | type | string | [**Required**] Property type name. |
 | entity | string | [**Required**] Entity name. |
-| key | object | An object containing `name=value` fields that uniquely identify the property record. |
-| tags | object | An object containing `name=value` tags, for example tags: `{"path": "/", "name": "sda"}`. |
+| key | object | Object containing `name=value` fields that uniquely identify the property record. <br>Example: `{"file_system": "/","mount_point":"sda1"}`|
+| tags | object | Object containing `name=value` fields that are not part of the key and contain descriptive information about the property record. <br>Example: `{"fs_type": "ext4"}`. |
 | date | string | ISO 8601 date, for example `2016-05-25T00:15:00Z`. <br>Set to current server time if omitted. |
 
 ## Response
@@ -58,15 +58,16 @@ POST https://atsd_host:8443/api/v1/properties/insert
 
 ```json
 [{
-   "type":"type-1",
-   "entity":"entity-1",
-   "key":{"server_name":"server","user_name":"system"},
-   "tags":{"name.1": "value.1"},
-   "date":"2015-02-05T16:55:02Z"
-},{
-   "type":"type-2",
-   "entity":"entity-1",
-   "tags":{"name.2": "value.2"}
+    "type": "disk",
+    "entity": "nurswgvml007",
+    "key": {
+        "file_system": "/",
+        "mount_point": "sda1"
+    },
+    "tags": {
+        "fs_type": "ext4"
+    },
+    "date": "2016-05-25T04:15:00Z"
 }]
 ```
 
@@ -77,7 +78,7 @@ curl https://atsd_host:8443/api/v1/properties/insert  \
   --insecure  --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request  POST \
-  --data @file.json
+  --data '[{"type":"disk","entity":"nurswgvml007","key":{"file_system":"/","mount_point":"sda1"},"tags":{"fs_type":"ext4"},"date":"2016-05-25T04:15:00Z"}]'
 ```
 
 ## Response 
