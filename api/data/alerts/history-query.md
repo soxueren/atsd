@@ -36,8 +36,8 @@ An array of query objects containing the following filtering fields:
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
-| rule       | string | **[Required]** Rule name.        |
-| metric     | string | **[Required]** Metric name. |
+| rule       | string | Rule name.        |
+| metric     | string | Metric name. |
 
 ### Entity Filter Fields
 
@@ -78,19 +78,21 @@ An array of matching alert objects containing the following fields:
 
 | **Field** | **Type** | **Description** |
 |:---|:---|:---|
-| id    | integer | Alert id.|
-| acknowledged | boolean | Acknowledgement status.|
 | entity | string | Entity name. |
 | metric | string | Metric name.  |
 | rule | string | Rule name. |
+| ruleExpression | string | Rule expression. |
+| ruleFilter | string | Rule filter. |
 | severity  | string | [Severity](/api/data/severity.md) code.  |
 | tags | object | Object containing `name=value` pairs, for example `tags: {"path": "/", "name": "sda"}` |
 | repeatCount | integer | Number of times when the expression evaluated to true sequentially.  |
-| textValue | string | Text value.  |
+| alert | string | Alert message.  |
 | value | double | Last numeric value received. |
-| openValue | double | First numeric value received.  |
-| openDate | string | ISO 8601 date when the alert was open.  |
-| lastEventDate | string | ISO 8601 date when the last record was received.  |
+| type | string | Alert state when closed: `OPEN`, `CANCEL`, `REPEAT`  |
+| date | string | ISO 8601 date.  |
+| alertOpenDate | string | ISO 8601 date when the alert was open.  |
+| alertDuration | number | Time in milliseconds when alert was in `OPEN` or `REPEAT` state.  |
+| receivedDate | string | ISO 8601 date when the last value was received.  |
 
 ### Errors
 
@@ -103,25 +105,18 @@ None.
 #### URI
 
 ```elm
-POST https://atsd_host:8443/api/v1/alerts/history
+POST https://atsd_host:8443/api/v1/alerts/history/query
 ```
 
 #### Payload
 
 ```json
-{
-   "queries": [
-   {
-      "startDate": "2015-01-25T22:15:00Z",
-      "endDate": "2015-01-25T22:30:00Z",
-      "metric": "mpstat.cpu_busy",
-      "entity" : "host",
-      "entityGroup":"group",
-      "rule":"mpstat.cpu_busy_monitor",
-      "limit" : 10
-   }
-   ]
-}
+[{
+    "metric":"nmon.cpu_total.busy%",
+    "startDate": "2016-05-27T18:00:00Z",
+    "endDate": "2016-05-27T18:15:00Z",
+    "limit": 5
+}]
 ```
 
 #### curl 
@@ -136,27 +131,21 @@ curl  https://atsd_host:8443/api/v1/alerts/history \
 ### Response
 
 ```json
-[
-   {
-        "alert": null,
-        "alertDuration": 45000,
-        "alertOpenTime": 1422224160000,
-        "entity": "nurswgvml006",
-        "metric": "df.disk_used_percent",
-        "receivedTime": 1422224206474,
-        "repeatCount": "2",
-        "rule": "disk_threshold",
-        "ruleExpression": "new_maximum() && threshold_linear_time(99) < 120",
-        "ruleFilter": null,
-        "schedule": null,
-        "severity": "UNDEFINED",
-        "tags": null,
-        "date": "2015-01-25T22:16:46Z",
-        "type": "CANCEL",
-        "value": 57.3671,
-        "window": null
-   }
-]
+[{
+  "date": "2016-05-27T18:08:29Z",
+  "entity": "nurswgvml201",
+  "metric": "nmon.cpu_total.busy%",
+  "type": "CANCEL",
+  "value": 12.2,
+  "alert": "Cancel alert for nurswgvml201, nmon.cpu_total.busy%, {}",
+  "severity": 0,
+  "rule": "nmon_cpu",
+  "ruleExpression": "avg() > 85 OR avg() > 30 AND entity != 'nurswgvml006'",
+  "repeatCount": 6,
+  "alertDuration": 420096,
+  "alertOpenDate": "2016-05-27T18:01:29Z",
+  "receivedDate": "2016-05-27T18:08:29Z"
+}]
 ```
 
 ## Additional Examples
