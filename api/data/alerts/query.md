@@ -36,9 +36,9 @@ An array of query objects containing the following filtering fields:
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
-| rules       | list | Array of rules which produced the alerts.        |
-| metrics     | list | Array of metric names for which the alerts were created. |
-| severities  | list | Array of [severity code or names](/api/data/severity.md)   |
+| rules       | array | Array of rules which produced the alerts.        |
+| metrics     | array | Array of metric names for which the alerts were created. |
+| severities  | array | Array of [severity code or names](/api/data/severity.md)   |
 | minSeverity |  string   | Minimal [code or name](/api/data/severity.md) severity filter.  |
 
 ### Entity Filter Fields
