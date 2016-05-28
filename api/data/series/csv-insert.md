@@ -28,10 +28,10 @@ POST
 
 ### Fields
 
-| **Field** | **Required** | **Description** |
+| **Field** | **Type** | **Description** |
 |:---|:---|:---|
-| entity   | yes          | entity name |
-| tag      | no           | one or multiple `tag=value` request parameter pairs |
+| entity   | string   | [**Required**] entity name |
+| tag      | string   | `tag=value` parameter pairs |
 
 ### Payload
 
