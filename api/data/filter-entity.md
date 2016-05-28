@@ -8,6 +8,6 @@
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 | entity   | string | Entity name or entity name pattern. |
-| entities | list | Array of entity names or entity name patterns. |
+| entities | array | Array of entity names or entity name patterns. |
 | entityGroup | string | Entity group name. Return records for entites in the specified group.<br>Empty result is returned if the group doesn't exist or contains no entities. |
 | entityExpression | string | Filter entities by name, entity tag, and properties using [syntax](/rule-engine/functions.md). <br>Example: `tags.location = 'SVL'`  |
