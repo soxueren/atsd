@@ -49,6 +49,7 @@ An array of query objects containing the following filtering fields:
 ### Date Filter Fields
 
 * [**Required**]
+* Date conditions are applied to alert `openDate`.
 * Refer to [date filter](../filter-date.md).
 
 ## Response 
