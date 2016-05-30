@@ -5,20 +5,17 @@ key expression: Filter out all disks except those starting with `sd*`. Disks dm1
 ## Request
 ### URI
 ```elm
-POST https://atsd_host:8443/api/v1/properties
+POST https://atsd_host:8443/api/v1/properties/query
 ```
 ### Payload
 ```json
-{
-    "queries": [
-        {
-            "timeFormat": "iso",
-            "type": "disk",
-            "entity": "nurswgvml007" ,
-            "keyExpression": "id like 'sd*'"
-        }
-    ]
-}
+[
+    {
+        "type": "disk",
+        "entity": "nurswgvml007" ,
+        "keyExpression": "id like 'sd*'"
+    }
+]
 ```
 
 ## Response
