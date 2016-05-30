@@ -1,0 +1,77 @@
+# Versions
+
+`version` is an object. Contains source, status and change time fields for versioned metrics. 
+
+When a metric is versioned, the database retains the history of series value changes for the same timestamp along with version_source and version_status.
+
+| **Name** | **Description**   |
+|:---|:---|
+| versioned | Boolean. Returns version status, source, time/date if metric is versioned. |
+|versionFilter| Expression to filter value history (versions) by version status, source or time, for example: `version_status = 'Deleted'` or `version_source LIKE '*user*'`. To filter by version time, use `date()` function, for example, `version_time > date('2015-08-11T16:00:00Z')` or `version_time > date('current_day')`. The `date()` function accepts End Time syntax.|
+
+<aside class="notice">
+Verioned values are always returned with version time/date (t or d). Verision time/date is the value change time (when this version was stored in ATSD).
+</aside>
+
+## Example
+
+### Request
+
+```json
+[
+        {
+            "entity": "e-vers",
+            "metric": "m-vers",
+            "versioned":true,
+            "versionFilter":"version_status='provisional'",
+            "startDate": "2015-11-10T13:00:00Z",
+            "endDate": "2015-11-12T13:00:00Z",
+            "type": "HISTORY",
+            "timeFormat": "iso"
+        }
+    ]
+```
+
+### Response
+
+```json
+[
+        {
+            "entity": "e-vers",
+            "metric": "m-vers",
+            "tags": {},
+            "type": "HISTORY",
+            "aggregate": {
+                "type": "DETAIL"
+            },
+            "data": [
+                {
+                    "d": "2015-11-10T13:00:00.000Z",
+                    "v": 2,
+                    "version": {
+                        "d": "2015-11-10T14:20:00.678Z",
+                        "status": "provisional"
+                    }
+                },
+                {
+                    "d": "2015-11-10T13:15:00.000Z",
+                    "v": 3.42,
+                    "version": {
+                        "d": "2015-11-10T14:20:00.657Z",
+                        "status": "provisional"
+                    }
+                },
+                {
+                    "d": "2015-11-10T13:30:00.000Z",
+                    "v": 4.68,
+                    "version": {
+                        "d": "2015-11-10T14:20:00.638Z",
+                        "status": "provisional"
+                    }
+                }
+            ]
+        }
+    ]
+```
+
+
