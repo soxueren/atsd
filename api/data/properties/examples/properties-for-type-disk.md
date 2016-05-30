@@ -1,21 +1,22 @@
 # Properties for type 'disk'
 
 ## Request
+
 ### URI
+
 ```elm
-POST https://atsd_host:8443/api/v1/properties
+POST https://atsd_host:8443/api/v1/properties/query
 ```
+
 ### Payload
+
 ```json
-{
-  "queries": [
-    {
-      "timeFormat": "iso",
-      "type": "disk",
-      "entity": "nurswgvml007"
-     }
-   ]
-}
+[
+  {
+    "type": "disk",
+    "entity": "nurswgvml007"
+  }
+]
 ```
 
 ## Response
