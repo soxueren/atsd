@@ -57,17 +57,18 @@ An array of query objects containing the following filtering fields:
 |forecastName| string | Unique forecast name. You can store an unlimited number of named forecasts for any series using `forecastName`. If `forecastName` is not set, then the default ATSD forecast will be returned. `forecastName` is applicable only when `type` is set to `FORECAST` or `FORECAST_DEVIATION` |
 
 ### Versioning Filters
+
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
-| versioned | boolean |Returns version status, source, and change date if metric is versioned. Default: `false`. |
-|versionFilter| string | Expression to filter value history (versions) by version status, source or time, for example: `version_status = 'Deleted'` or `version_source LIKE '*user*'`. To filter by version `time`, use `date()` function, for example, `version_time > date('2015-08-11T16:00:00Z')` or `version_time > date('current_day')`. The `date()` function accepts [endtime](/end-time-syntax.md) syntax.|
+| versioned | boolean |Returns version status, source, and change date if metric is versioned. Default: false. |
+| versionFilter | string | Expression to filter value history (versions) by version status, source or time, for example: `version_status = 'Deleted'` or `version_source LIKE '*user*'`. To filter by version `time`, use `date()` function, for example, `version_time > date('2015-08-11T16:00:00Z')` or `version_time > date('current_day')`. The `date()` function accepts [endtime](/end-time-syntax.md) syntax.|
 
 ### Control Filter Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 | limit   | integer | Maximum number of time:value samples for all matching series to be returned. Default: 0. | 
-| last | boolean | Retrieves only 1 most recent value for each series. Default: `false`.<br>Start time and end time are ignored when `last=true`. |
+| last | boolean | Retrieves only 1 most recent value for each series. Default: false.<br>Start time and end time are ignored when `last=true`. <br>`last` can return most recent value faster than scan. <br>When last is specified and there is no aggregator or aggregator is `DETAIL`, ATSD executes GET request for the last hour. <br>If the first `GET` returns no data, a second `GET` is executed for the previous hour.|
 | cache | boolean | If true, execute the query against Last Insert table which results in faster response time for last value queries. Default: `false`<br>Values in Last Insert table maybe delayed of up to 1 minute (cache to disk interval). |
 | requestId | string | Optional identifier used to associate `query` object in request with `series` objects in response. |
 | timeFormat |string| Time format for data array. `iso` or `milliseconds`. Default: `iso`. |
@@ -76,16 +77,16 @@ An array of query objects containing the following filtering fields:
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
-| [aggregate](#aggregate-processor) | object | Group detailed values into [periods](#period) and calculate statistics for each period. Default: `DETAIL` |
-| [group](#group-processor) | object | Merge multiple series into one series. |
-| [rate](#rate-processor) | object | Compute difference between consecutive samples per unit of time (rate period). |
+| [aggregate](aggregate.md) | object | Group detailed values into [periods](#period) and calculate statistics for each period. Default: `DETAIL` |
+| [group](group.md) | object | Merge multiple series into one series. |
+| [rate](rate.md) | object | Compute difference between consecutive samples per unit of time (rate period). |
 
 ## Period
 
-| **Name**  | **Description** |
-|:---|:---|
-| count | Number of units. |
-| unit  | Time unit: `MILLISECOND`, `SECOND`, `MINUTE`, `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, `YEAR` |
+| **Name**  | **Type** | **Description** |
+|:---|:---|:---|
+| unit  | string | Time unit: `NANOSECOND`, `MILLISECOND`, `SECOND`, `MINUTE`, `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, `YEAR` |
+| count | integer | Number of time units. |
 
 ## Data Processing Sequence
 
@@ -98,23 +99,6 @@ The default processor sequence is follows:
 The sequence can be modified by specifying an `order` field in each processor, in which case processors steps are executed in the ascending order as specified in `order` field. 
 
 The [following example](/api/data/examples/aggregate-group-order-query.md) outlines how to aggregate series first, and group it second.
-
-## Rate Processor
-
-
-                                                             |
-
-#### requestId
-
-To associate `series` object (one) in request with `series` objects (many) in response, the client can optionally specify a unique `requestId` property in each series object in request.
-For example, the client can set requestId to series object's index in the request.
-The server echos requestId for each series in the response.
-
-#### last
-
-`last` can return most recent value faster than scan. When last is specified and there is no aggregator or aggregator is `DETAIL`, ATSD executes GET request for the last hour. If the first `GET` returns no data, a second `GET` is executed for the previous hour.
-Entity and tag wildcards are not supported if `last = true`.
-
 
 ## Example
 
