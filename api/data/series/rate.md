@@ -20,7 +20,6 @@ Used to compute rate of change when the underlying metric measures a continuousl
   {
     "startDate": "2015-03-05T10:00:00Z",
     "endDate": "2015-03-05T12:00:00Z",
-    "timeFormat": "iso",
     "entity": "nurswgvml007",
     "metric": "net.tx_bytes",
     "tags": {
@@ -29,6 +28,7 @@ Used to compute rate of change when the underlying metric measures a continuousl
         ]
     },
     "rate": {
+        "period": {"count": 1, "unit": "MINUTE"},
         "counter": true
     }
   }
