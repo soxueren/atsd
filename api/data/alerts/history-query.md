@@ -69,7 +69,7 @@ An array of matching alert objects containing the following fields:
 | ruleExpression | string | Rule expression. |
 | ruleFilter | string | Rule filter. |
 | severity  | string | [Severity](/api/data/severity.md) code.  |
-| tags | object | Object containing `name=value` pairs, for example `tags: {"path": "/", "name": "sda"}` |
+| tags | string | Concatenated `name=value` pairs, for example `file_system=/dev/sda1;mount_point=/` |
 | repeatCount | integer | Number of times when the expression evaluated to true sequentially.  |
 | alert | string | Alert message.  |
 | value | double | Last numeric value received. |
