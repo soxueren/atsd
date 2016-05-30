@@ -1,4 +1,4 @@
-### SLA Example
+# SLA Example
 
 ## Request
 
