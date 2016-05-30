@@ -1,22 +1,22 @@
 # Properties for type 'process' with multiple keys
 
 ## Request
+
 ### URI
+
 ```elm
 POST https://atsd_host:8443/api/v1/properties
 ```
+
 ### Payload
 ```json
-{
-  "queries": [
-    {
-      "timeFormat": "iso",
-      "type": "process",
-      "entity": "nurswgvml007",
-      "key": {"command": "java", "pid": "27297"} 
-     }
-   ]
-}
+[
+  {
+    "type": "process",
+    "entity": "nurswgvml007",
+    "key": {"command": "java", "pid": "27297"} 
+  }
+]
 ```
 
 ## Response
