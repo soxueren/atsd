@@ -1,16 +1,14 @@
 # Monitoring ActiveMQ with ATSD
 
-This document describes the process of configuring ActiveMQ for monitoring with Axibase Time Series Database.
+This document describes the process of configuring ActiveMQ for availability and performance monitoring with Axibase Time Series Database.
 
 ## Requirements
 
 * [ActiveMQ version 5.x.+](http://activemq.apache.org)
-* Axibase Time Series Database. For installation instructions, see [Axibase Time Series Database Download Options](http://axibase.com/products/axibase-time-series-database/download-atsd/).
-* Axibase Collector. For installation instructions, see [Axibase Collector Installation](http://axibase.com/products/axibase-time-series-database/writing-data/collector/axibase-collector-installation/).
 
-# Configuring ActiveMQ Server
+# Configure ActiveMQ Server
 
-## Step 1: Enabling JMX and Log Aggregator
+## Step 1: Enable JMX and Log Aggregator
 
 * Login into ActiveMQ server via SSH.
 * Change to ActiveMQ installation directory.
@@ -107,7 +105,7 @@ chmod 600 ./conf/jmx.password
 ./bin/activemq start
 ```
 
-## Step 2: Viewing Collected Logs in ATSD
+## Step 2: View Collected Logs in ATSD
 
 1. Login into ATSD web interface at https://atsd_hostname:8443
 1. Click Entities tab in the top menu.
@@ -126,9 +124,7 @@ An example of the collected log data displayed in the ATSD portal is shown on th
 Login into Axibase Collector via SSH and verify that ActiveMQ server can be reached on activemq_hostname, specified in Step 1.6 above.
 If activemq_hostname cannot be resolved, add it to /etc/hosts manually.
 
-
-
-## Step 3: Configuring ActiveMQ JMX Job
+## Step 3: Configure ActiveMQ JMX Job
 
 1. Login into Axibase Collector at https://collector_hostname:9443
 1. Click Jobs tab in the top menu.
@@ -137,7 +133,7 @@ If activemq_hostname cannot be resolved, add it to /etc/hosts manually.
 1. Adjust cron expression if required. By default, the job will be executed every 10 seconds. For more information on cron expressions, see [Scheduling](http://axibase.com/products/axibase-time-series-database/writing-data/collector/set_schedule/).  
 ![JMX_JOB](https://axibase.com/wp-content/uploads/2016/03/jmx_job_to_configuration.png)
 
-## Configuring activemq-series
+### Configuring activemq-series
 
 1. Select activemq-series configuration.
 1. On the JMX Configuration page, enter JMX connection parameters as specified in Step 1.6 above:
@@ -154,14 +150,14 @@ If the specified configuration is correct, there must be no errors or empty fiel
 1. Click Save.
     ![](https://axibase.com/wp-content/uploads/2016/03/series_config_85.png)
 
-## Configuring activemq-property
+### Configuring activemq-property
 
 1. From the table on the JMX Job page, click Edit next to activemq-property configuration.
 1. Set Host, Port, User Name, Password, and Entity fields as described in the previous section.
 1. Click Test to validate the configuration.
 1. Click Save.
 
-## Step 4: Viewing Collected Statistics in ATSD
+## Step 4: View ActiveMQ Statistics in ATSD
 
 
 1. Login into ATSD web interface at https://atsd_hostname:8443
