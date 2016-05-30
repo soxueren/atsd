@@ -9,7 +9,7 @@ Used to compute rate of change when the underlying metric measures a continuousl
 ## Parameters
 
 | **Name** | **Type**    | **Description**  |
-|:---|:---|
+|:---|:---|:---|
 | period | object | [**Required**] Rate period. Supports NANOSECOND time unit. |
 | counter | boolean | If true, negative differences between consecutive samples are ignored. Default: true |
 
