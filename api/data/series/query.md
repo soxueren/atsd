@@ -77,16 +77,9 @@ An array of query objects containing the following filtering fields:
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
-| [aggregate](aggregate.md) | object | Group detailed values into [periods](#period) and calculate statistics for each period. Default: `DETAIL` |
+| [aggregate](aggregate.md) | object | Group detailed values into periods and calculate statistics for each period. Default: `DETAIL` |
 | [group](group.md) | object | Merge multiple series into one series. |
 | [rate](rate.md) | object | Compute difference between consecutive samples per unit of time (rate period). |
-
-## Period
-
-| **Name**  | **Type** | **Description** |
-|:---|:---|:---|
-| unit  | string | Time unit: `NANOSECOND`, `MILLISECOND`, `SECOND`, `MINUTE`, `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, `YEAR` |
-| count | integer | Number of time units. |
 
 ## Data Processing Sequence
 
