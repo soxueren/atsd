@@ -72,6 +72,7 @@ An array of matching alert objects containing the following fields:
 | tags | string | Concatenated `name=value` pairs, for example `file_system=/dev/sda1;mount_point=/` |
 | repeatCount | integer | Number of times when the expression evaluated to true sequentially.  |
 | alert | string | Alert message.  |
+| window | string | Window length. |
 | value | double | Last numeric value received. |
 | type | string | Alert state when closed: `OPEN`, `CANCEL`, `REPEAT`  |
 | date | string | ISO 8601 date.  |
