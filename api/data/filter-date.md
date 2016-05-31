@@ -36,5 +36,13 @@ Last 2 hours of the previous day.
 
 - `"interval":{"count":2, "unit":"HOUR"}, "endDate":"current_day"`
 
+Last hour, rounded.
+
+- `"startDate":"previous_hour", "interval":{"count":1, "unit":"HOUR"}`
+
+All the data until now.
+
+- `"startDate":"1970-01-01T00:00:00Z"`
+
 
 
