@@ -5,7 +5,7 @@
 ### URI
 
 ```elm
-POST https://atsd_host:8443/api/v1/properties
+POST https://atsd_host:8443/api/v1/properties/query
 ```
 
 ### Payload
