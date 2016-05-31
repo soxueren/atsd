@@ -40,8 +40,9 @@ Refer to message [query](query.md#message-filter-fields) fields.
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
+|metric|string | Must be set to `message-count`. |
 |groupKeys|array | Array of field names to be used for grouping: `type`, `source`, `entity`, etc. |
-|aggregate|object | Periodic [aggregator](/api/data/series/aggregate.md), typically with `COUNT` functions.<br>`"aggregate" : { "type" : "COUNT", "period": { "count" : 1, "unit" : "HOUR" } }` |
+|aggregate|object | Periodic [aggregator](/api/data/series/aggregate.md), typically with `COUNT` function.<br>`"aggregate" : { "type" : "COUNT", "period": { "count" : 1, "unit" : "HOUR" } }` |
 
 ### Entity Filter Fields
 
