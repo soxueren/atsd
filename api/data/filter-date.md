@@ -5,7 +5,6 @@
   - `startDate` and `endDate`
   - `startDate` and `interval` (endDate will be set to startDate + interval).
   - `endDate` and `interval` (startDate will be set to endDate - interval).
-  - `startDate` (endDate will be set to current server time).
   - `interval` (endDate will be set to current server time, startDate will be set to endDate - interval).
 
 | **Name** | **Type** | **Description** |
@@ -22,9 +21,9 @@ At or after `2016-05-30T07:00:00Z` and before `2016-05-30T08:00:00Z`
 
 At or after `2016-05-30T10:00:00Z` and before current server time.
 
-- `"startDate":"2016-05-30T10:00:00Z"`
+- `"startDate":"2016-05-30T10:00:00Z", "endDate":"now"`
 
-Last 2 hours.
+Last 2 hours, ending with current server time.
 
 - `"interval":{"count":2, "unit":"HOUR"}`
 
@@ -42,7 +41,7 @@ Last hour, rounded.
 
 All the data until now.
 
-- `"startDate":"1970-01-01T00:00:00Z"`
+- `"startDate":"1970-01-01T00:00:00Z", "endDate":"now"`
 
 
 
