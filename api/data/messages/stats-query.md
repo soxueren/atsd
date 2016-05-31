@@ -62,19 +62,11 @@ Refer to message [query](query.md#message-filter-fields) fields.
 
 ## Response 
 
-An array of matching message objects containing the following fields:
+An array of series objects containing message filter fields, aggregator, and type field:
 
 ### Fields
 
-| **Field** | **Type** | **Description** |
-|:---|:---|:---|
-|entity | string | Entity name. |
-|type | string | Message type. |
-|source | string | Message source. |
-|severity | string | Message [severity](/api/data/severity.md) code or name. |
-|tags | object |  Object containing `name=value` fields, for example `tags: {"path": "/", "name": "sda"}`. |
-|message | string | Message text. |
-|date | string | ISO 8601 date when the message record was created. |
+Refer to [series fields](/api/data/series/insert.md#fields).
 
 ### Errors
 
