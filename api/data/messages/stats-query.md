@@ -103,8 +103,8 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
                 "unit" : "HOUR"
             }
         },
-        "startDate" : "2016-05-29T14:00:00.000Z",
-        "endDate" : "2016-05-30T17:00:00.000Z"
+        "startDate" : "current_day",
+        "endDate" : "now"
     }
 ]
 ```
@@ -124,7 +124,99 @@ curl  https://atsd_host:8443/api/v1/messages/stats/query \
 #### Payload
 
 ```json
-
+[
+{
+    "entity": "nurswgvml007",
+    "metric": "message-count",
+    "tags":
+    {
+        "type": "application"
+    },
+    "type": "HISTORY",
+    "aggregate":
+    {
+        "type": "COUNT",
+        "period":
+        {
+            "count": 1,
+            "unit": "HOUR"
+        }
+    },
+    "data":
+    [
+        {
+            "d": "2016-05-31T06:00:00.000Z",
+            "v": 1
+        }
+    ]
+},
+{
+    "entity": "nurswgvml007",
+    "metric": "message-count",
+    "tags":
+    {
+        "type": "backup"
+    },
+    "type": "HISTORY",
+    "aggregate":
+    {
+        "type": "COUNT",
+        "period":
+        {
+            "count": 1,
+            "unit": "HOUR"
+        }
+    },
+    "data":
+    [
+        {
+            "d": "2016-05-31T03:00:00.000Z",
+            "v": 4
+        }
+    ]
+},
+{
+    "entity": "nurswgvml007",
+    "metric": "message-count",
+    "tags":
+    {
+        "type": "security"
+    },
+    "type": "HISTORY",
+    "aggregate":
+    {
+        "type": "COUNT",
+        "period":
+        {
+            "count": 1,
+            "unit": "HOUR"
+        }
+    },
+    "data":
+    [
+        {
+            "d": "2016-05-31T00:00:00.000Z",
+            "v": 32
+        },
+        {
+            "d": "2016-05-31T07:00:00.000Z",
+            "v": 30
+        },
+        {
+            "d": "2016-05-31T09:00:00.000Z",
+            "v": 2
+        },
+        {
+            "d": "2016-05-31T10:00:00.000Z",
+            "v": 30
+        },
+        {
+            "d": "2016-05-31T12:00:00.000Z",
+            "v": 16
+        }
+    ]
+}
+]
 ```
 
 ## Additional Examples
