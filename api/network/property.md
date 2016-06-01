@@ -32,7 +32,7 @@ property e:{entity} t:{type} k:{key-1}={value} k:{key-2}={value} v:{tag-1}={text
 
 ### ABNF Syntax
 
-Rules inherited from [generic ABNF](generic-abnf.md).
+Rules inherited from [base ABNF](base-abnf.md).
 
 ```properties
   ; entity, type and at least one tag is required
