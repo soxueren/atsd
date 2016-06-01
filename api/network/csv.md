@@ -32,20 +32,17 @@ csv p:{parser} e:{entity} r:{metric_prefix} z:{timezone} t:{timeout}
 
 ### ABNF Syntax
 
-Rules inherited from [generic ABNF](generic-abnf.md).
+Rules inherited from [base ABNF](base-abnf.md).
 
 ```properties
-  ; MSP - one or multiple spaces
 command = "csv" MSP parser [MSP entity] [MSP metric-prefix] [MSP timezone] [MSP timeout] *(MSP tag)
-  ; NAME consists of printable characters. 
-  ; double-quote must be escaped with backslash.
-parser = "p:" NAME
-entity = "e:" NAME
-metric-prefix = "r:" NAME
+parser = "p:" FIELD
+entity = "e:" FIELD
+metric-prefix = "r:" FIELD
   ; defined in timezone-abnf.md
 timezone = "z:" TIMEZONE
-timeout = "o:" POSITIVE-INTEGER
-tag = "t:" NAME "=" TEXTVALUE
+timeout = "o:" POSITIVE_INTEGER
+tag = "t:" FIELD_NAME "=" FIELD_VALUE
 ```
 
 ## Examples
