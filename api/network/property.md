@@ -35,22 +35,16 @@ property e:{entity} t:{type} k:{key-1}={value} k:{key-2}={value} v:{tag-1}={text
 Rules inherited from [generic ABNF](generic-abnf.md).
 
 ```properties
-  ; MSP - one or multiple spaces
-  ; entity and at least one tag is required
+  ; entity, type and at least one tag is required
 command = "property" MSP entity type *(MSP key) 1*(MSP tag) [MSP time]
-  ; NAME consists of printable characters. 
-  ; double-quote must be escaped with backslash.
-entity = "e:" NAME
-  type = "t:" NAME
-  ; TEXTVALUE consists of printable characters and space. 
-  ; double-quote must be escaped with backslash. 
-  ; tag values containing space must me quoted with double-quote.  
-   key = "k:" NAME "=" TEXTVALUE  
-   tag = "v:" NAME "=" TEXTVALUE
+entity = "e:" FIELD
+type = "t:" FIELD
+key = "k:" FIELD_NAME "=" FIELD_VALUE  
+tag = "v:" FIELD_NAME "=" FIELD_VALUE
 time = time-millisecond / time-second / time-iso
-time-millisecond = "ms:" POSITIVE-INTEGER
-time-second = "s:" POSITIVE-INTEGER
-time-iso = "d:" ISO-DATE
+time-millisecond = "ms:" POSITIVE_INTEGER
+time-second = "s:" POSITIVE_INTEGER
+time-iso = "d:" ISO_DATE
 ```
 
 ## Examples
