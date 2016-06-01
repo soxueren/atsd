@@ -198,22 +198,25 @@ echo -e "series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\nseries e:
 
 * Command must start with command name such as `series` followed by space-separated fields each identified with a prefix followed by (:) colon symbol and field name=value.
 
-```elm
+```ls
 command-name field-prefix:field-name[=field-value]
 ```
 
 * The order of fields is not important.
-* Field names are case-insensitive.
-* Field values are case-sensitive and are stored as submitted.
-* Field names must not contain a space character. <br>When inserted via CSV upload or HTTP API, space is converted to an underscore symbol. <br>Multiple underscores are replaced with one underscore character.
+* Field names must not contain a space character. <br>When inserted via CSV upload, space is converted to an underscore symbol. <br>Multiple underscores are replaced with one underscore character.
 * Double-quote must be escaped with backslash, for example: `t:descr="Version is \"Ubuntu 14.04\""`.
-* Field values are trimmed of starting and trailing CR,LF symbols.
-* If field value contains space it needs to be enclosed in double-quotes, for example: `v:os="Ubuntu 14.04"`.
+* Field values are trimmed of starting and trailing line breaks (CR,LF symbols).
+* If field value contains space it must to be enclosed in double-quotes, for example: `v:os="Ubuntu 14.04"`.
+* If name contains equal sign it must to be enclosed in double-quotes, for example: `v:"os=name"=Ubuntu`.
+
+### Case Sensitivity
+
+* Field names are case-insensitive and are converted to lowercase when stored in ATSD.
+* Field values are case-sensitive and are stored as submitted, except for property key values, which are converted to lowercase.
 
 ### Command Length Limits
 
-The server enforces the following maximum lengths for command lines. 
-The client must split a command that is too long into multiple commands.
+The server enforces the following maximum lengths for command lines:
 
 | **Command** | **Maximum Length, bytes** |
 |:---|:---|
@@ -221,6 +224,8 @@ The client must split a command that is too long into multiple commands.
 | property | 256*1024  |
 | message  | 256*1024  |
 | other | 1024  |
+
+> The client must split a command that is too long into multiple commands.
 
 ### Schema
 
