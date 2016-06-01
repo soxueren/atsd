@@ -39,7 +39,7 @@ Enclose tag values and message text containing space in double quotes.
 
 ### ABNF Syntax
 
-Rules inherited from [generic ABNF](generic-abnf.md).
+Rules inherited from [base ABNF](base-abnf.md).
 
 ```properties
   ; message or at least one tag is required
