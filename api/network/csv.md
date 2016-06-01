@@ -39,7 +39,7 @@ command = "csv" MSP parser [MSP entity] [MSP metric-prefix] [MSP timezone] [MSP 
 parser = "p:" FIELD
 entity = "e:" FIELD
 metric-prefix = "r:" FIELD
-  ; defined in timezone-abnf.md
+  ; inhereted from timezone-abnf.md
 timezone = "z:" TIMEZONE
 timeout = "o:" POSITIVE_INTEGER
 tag = "t:" FIELD_NAME "=" FIELD_VALUE
@@ -53,7 +53,3 @@ date,jvm.memory_used_pct,jvm.system_load
 2016-05-22T00:00:00Z,46.6,1.2
 2016-05-22T00:00:30Z,46.4,0.8
 ```
-
-
-
-
