@@ -5,9 +5,9 @@
 ```properties
   ; printable characters. 
   ; double-quote must be escaped with backslash.
-NAME = 1*(NCHAR / "\" DQUOTE) 
+NAME = 1*(NCHAR / "\" DQUOTE)
   ; printable characters and spaces.
-  ; space must be quoted with double-quote. 
+  ; text with space must be quoted with double-quote. 
   ; double-quote must be escaped with backslash.
 TEXTVALUE = NAME / DQUOTE 1*(NCHAR / "\" DQUOTE / SP) DQUOTE
   ; multiples space
@@ -16,6 +16,8 @@ MSP = 1*SP
 SP = %x20 
   ; double-quote
 DQUOTE = %x21
+  ; equal sign
+EQ = %x3D
   ; printable character except double-quote
 NCHAR = %x21 / %x23-7E / UNICODE
   ; printable character
