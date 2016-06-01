@@ -59,6 +59,12 @@ Status Code: 500
 * Negative numbers use negative sign (`-`) at the beginning of the number.
 * Not-a-Number is literal `NaN` unless specified [otherwise](data/series/insert.md#fields).
 
+## Syntax
+
+* entity, metric, property type, property key name, and tag name must consist from printable characters.
+* entity, metric, property type, property key name, property key value, and tag name is case-insensitive and is converted to lowercase when stored in ATSD. Other values are case-sensitive and are stored as received.
+* Values are trimmed of starting and trailing line breaks (CR,LF symbols).
+
 ## Response Codes
 
 * `200` status code if the request is successful.
