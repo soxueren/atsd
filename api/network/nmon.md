@@ -2,7 +2,7 @@
 
 Initiate line-by-line streaming of an nmon file. The transmission can be resumed without full header in case of disconnect.
 
-```
+```ls
 nmon p:{parser} e:{entity} f:{file_name} z:{timezone} t:{timeout}
 ... nmon file header ...
 ... nmon snapshot ...
@@ -10,7 +10,7 @@ nmon p:{parser} e:{entity} f:{file_name} z:{timezone} t:{timeout}
 
 > Example
 
-```
+```ls
 nmon p:default e:nurswgvml007 f:nurswgvml007_141014_2000.nmon z:PST
 ```
 
@@ -29,17 +29,15 @@ nmon p:default e:nurswgvml007 f:nurswgvml007_141014_2000.nmon z:PST
 Rules inherited from [generic ABNF](generic-abnf.md).
 
 ```properties
-  ; MSP - one or multiple spaces
-  ; entity or at least one tag is required
+  ; parser, entity, and filename are required
 command = "nmon" MSP parser MSP entity MSP filename [MSP timezone] [MSP timeout]
-  ; NAME consists of visible characters. 
-  ; double-quote must be escaped with backslash.
 entity = "e:" entity-name
   ; entity name, typically hostname where nmon is running
-entity-name = NAME
-parser = "p:" (ALPHA / "_" )
-  ; nmon file name should start with entity name, typically hostname where nmon is running
-filename = "f:" entity-name NAME ".nmon"
+entity-name = FIELD
+  ; alphanumeric and underscore
+parser = "p:" 1*(%x41-5A / %x61-7A / "_")
+  ; file name should start with entity name and end with .nmon
+filename = "f:" entity-name [FIELD] ".nmon"
   ; defined in timezone-abnf.md
 timezone = "z:" TIMEZONE
 timeout = "o:" POSITIVE_INTEGER
