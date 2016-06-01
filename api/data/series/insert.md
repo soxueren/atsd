@@ -42,7 +42,7 @@ The request must contain an array of series objects each containing an array of 
 | type | no | Type ype of inserted data: `HISTORY`, `FORECAST`. Default value: `HISTORY` |
 | version |no| Object containing version source and status fields for versioned metrics.<br>`{"source":string, "status":string}` |
 |forecastName| no | Forecast name. <br>Applicable when `type` is set to `FORECAST`. <br>`forecastName` can be used to store a custom forecast identified by name. <br>If `forecastName` is omitted, the values overwrite the default forecast.  |
-| data | yes | Array of `{"t":number,"v":number}` objects, <br>where `t` is time in UNIX milliseconds and `v` is the metric's value at time `t`. <br>Time can be also specified in ISO format using `d` field. <br>To insert `NaN` (not a number), set `v` to `null`, for example: `{t:1462427358127, v:null}`<br>If `type` is set to `FORECAST`, the object `{t,v}` can include an additional `s` field containing standard deviation of the forecast value `v`, for example  `{t:1462427358127, v:80.4, s:12.3409}` |
+| data | yes | Array of `{"t":number,"v":number}` objects, <br>where `t` is time in UNIX milliseconds and `v` is the metric's value at time `t`. <br>Time can be also specified in ISO format using `d` field, for example:<br>`{"d":"2016-06-01T12:08:42.518Z", "v":50.8}`<br>To insert `NaN` (not a number), set `v` to `null`, for example: `{"t":1462427358127, "v":null}`<br>If `type` is set to `FORECAST`, the object `{t,v}` can include an additional `s` field containing standard deviation of the forecast value `v`, for example  `{"t":1462427358127, "v":80.4, "s":12.3409}` |
 
 ## Response
 

@@ -27,7 +27,7 @@ UNICODE = %x80-FF / ; Latin-1 Supplement
           %x500-52F / ; Cyrillic Supplement
           %x4E00-9FFF ; CJK Unified Ideographs
   ; ISO date defined in RFC-3339 Appendix-A. 
-  ; Format yyyy-MM-dd'T'HH:mm:ss.SSSZ
+  ; Format yyyy-MM-dd'T'HH:mm:ss.SSSX
   ; https://tools.ietf.org/html/rfc3339#appendix-A
 ISO-DATE = date-time 
 NUMBER = ["-"] (FRACTIONAL-NUMBER / REAL-NUMBER) / "NaN"           
