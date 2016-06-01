@@ -37,16 +37,16 @@ Rules inherited from [generic ABNF](generic-abnf.md).
 command = "series" MSP entity 1*(MSP metric) *(MSP tag) [MSP time]
   ; NAME consists of printable characters. 
   ; double-quote must be escaped with backslash.
-entity = "e:" NAME
-metric = "m:" NAME "=" NUMBER
+entity = "e:" FIELD
+metric = "m:" FIELD_NAME "=" NUMBER
   ; TEXTVALUE consists of printable characters and space. 
   ; double-quote must be escaped with backslash. 
   ; tag values containing space must me quoted with double-quote.
-tag = "t:" NAME "=" TEXTVALUE
+tag = "t:" FIELD_NAME "=" FIELD_VALUE
 time = time-millisecond / time-second / time-iso
-time-millisecond = "ms:" POSITIVE-INTEGER
-time-second = "s:" POSITIVE-INTEGER
-time-iso = "d:" ISO-DATE
+time-millisecond = "ms:" POSITIVE_INTEGER
+time-second = "s:" POSITIVE_INTEGER
+time-iso = "d:" ISO_DATE
 ```
 
 ## Examples
