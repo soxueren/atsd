@@ -27,8 +27,7 @@ csv p:{parser} e:{entity} r:{metric_prefix} z:{timezone} t:{timeout}
 | o | no | Server read timeout in seconds. For example: 60 |
 | t         | no           | One or multiple series tag key=value pairs. For example: t:location=SPB   |
 
-> Tags specified with `t:` fields are merged with `Default Tags` specified in CSV parser configuration. 
-`Default Tags` with the same name are overwritten by tags specified in the command.
+> Tags specified in `t:` fields override `Default Tags` with the same name specified in CSV parser configuration.
 
 ### ABNF Syntax
 
