@@ -44,24 +44,24 @@ Rules inherited from [generic ABNF](generic-abnf.md).
 ```properties
   ; MSP - one or multiple spaces
   ; message or at least one tag is required
-command = "message" MSP entity [MSP tag-type] [MSP tag-source] [MSP tag-severity] *(MSP tag) [MSP message] [MSP time]
+command = "message" MSP entity [MSP tag-type] [MSP tag-source] [MSP tag-severity] *(MSP tag) [MSP time] [MSP message] 
   ; NAME consists of printable characters. 
   ; double-quote must be escaped with backslash.
-entity = "e:" NAME
-message = "m:" TEXTVALUE
+entity = "e:" FIELD
+message = "m:" FIELD_VALUE
   ; TEXTVALUE consists of printable characters and space. 
   ; double-quote must be escaped with backslash. 
   ; tag values containing space must me enclosed with double-quote.  
-tag-type = "t:type=" TEXTVALUE
-tag-source = "t:source=" TEXTVALUE
+tag-type = "t:type=" FIELD_VALUE
+tag-source = "t:source=" FIELD_VALUE
   ; severity value is case-insensitive
   ; https://tools.ietf.org/html/rfc7405#section-2.1
 tag-severity = "t:severity=" (%x30-37 / %i("UNDEFINED" / "UNKNOWN" / "NORMAL" / "WARNING" / "MINOR" / "MAJOR" / "CRITICAL" / "FATAL" ))
-tag = "t:" NAME "=" TEXTVALUE
+tag = "t:" FIELD_NAME "=" FIELD_VALUE
 time = time-millisecond / time-second / time-iso
-time-millisecond = "ms:" POSITIVE-INTEGER
-time-second = "s:" POSITIVE-INTEGER
-time-iso = "d:" ISO-DATE
+time-millisecond = "ms:" POSITIVE_INTEGER
+time-second = "s:" POSITIVE_INTEGER
+time-iso = "d:" ISO_DATE
 ```
 
 ## Severity
