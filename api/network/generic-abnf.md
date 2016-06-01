@@ -12,6 +12,8 @@ FIELD = (DQUOTE 1*CHAR_ESCAPED DQUOTE) / 1*CHAR_ESCAPED
   ; field name containing equal sign must be quoted
 FIELD_NAME = (DQUOTE 1*CHAR_ESCAPED DQUOTE) / 1*(CHAR_SAFE / "\" DQUOTE)
 
+TEXT = TEXT_QUOTED / 1*CHAR_ESCAPED
+
   ; text with spaces and line breaks must be enclosed in double-quotes.
   ; inner double-quote must be escaped with backslash.
 TEXT_QUOTED = DQUOTE 1*(CHAR_ESCAPED / SPACE / CR / LF) DQUOTE
