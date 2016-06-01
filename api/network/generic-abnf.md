@@ -3,25 +3,35 @@
 ## Text Rules
 
 ```properties
-  ; printable characters. 
-  ; double-quote must be escaped with backslash.
-NAME = 1*(NCHAR / "\" DQUOTE)
-  ; printable characters and spaces.
-  ; text with space must be quoted with double-quote. 
-  ; double-quote must be escaped with backslash.
-TEXTVALUE = NAME / DQUOTE 1*(NCHAR / "\" DQUOTE / SP) DQUOTE
-  ; multiples space
+  ; prefix:field
+  ; all printable characters, optionally enclosed in double-quotes
+  ; inner double-quote must be escaped with backslash.
+FIELD = (DQUOTE 1*CHAR_ESCAPED DQUOTE) / 1*CHAR_ESCAPED
+
+  ; prefix:field_name=field_value
+  ; field name containing equal sign must be quoted
+FIELD_NAME = (DQUOTE 1*CHAR_ESCAPED DQUOTE) / 1*(CHAR_SAFE / "\" DQUOTE)
+
+  ; text with spaces and line breaks must be enclosed in double-quotes.
+  ; inner double-quote must be escaped with backslash.
+TEXT_QUOTED = DQUOTE 1*(CHAR_ESCAPED / SPACE / CR / LF) DQUOTE
+
+  ; multiple spaces
 MSP = 1*SP
   ; space
-SP = %x20 
+SPACE = %x20 
   ; double-quote
-DQUOTE = %x21
+DQUOTE = %x22
   ; equal sign
-EQ = %x3D
-  ; printable character except double-quote
-NCHAR = %x21 / %x23-7E / UNICODE
-  ; printable character
-VCHAR = %x21-7E / UNICODE
+EQUAL = %x3D
+  ; carriage return
+CR = %x0D
+  ; line feed
+LF = %x0A
+  ; printable character with double-quote escaped with backslash
+CHAR_ESCAPED = CHAR_SAFE / "\" DQUOTE / EQUAL
+  ; printable character except double-quote and equal sign
+CHAR_SAFE = %x21 / %x23-3C / %x3E-7E / UNICODE
   ; Unicode character
   ; http://tools.ietf.org/html/rfc6531#section-3.3
 UNICODE = %x80-FF / ; Latin-1 Supplement
@@ -37,21 +47,21 @@ UNICODE = %x80-FF / ; Latin-1 Supplement
   ; ISO date defined in RFC-3339 Appendix-A. 
   ; Format yyyy-MM-dd'T'HH:mm:ss.SSSX
   ; https://tools.ietf.org/html/rfc3339#appendix-A
-ISO-DATE = date-time 
+ISO_DATE = date-time 
 ```
 
 ## Number Rules
 
 ```properties
-NUMBER = ["-"] (FRACTIONAL-NUMBER / REAL-NUMBER) / "NaN"           
-FRACTIONAL-NUMBER = ("0" / POSITIVE-INTEGER) ["." 1*DIGIT]                  
-POSITIVE-INTEGER = %x31-39 *DIGIT
+NUMBER = ["-"] (FRACTIONAL_NUMBER / REAL_NUMBER) / "NaN"           
+FRACTIONAL_NUMBER = ("0" / POSITIVE_INTEGER) ["." 1*DIGIT]                  
+POSITIVE_INTEGER = %x31-39 *DIGIT
   ; "0" to "9"
 DIGIT = %x30-39
   ; https://tools.ietf.org/html/rfc3642  4.  ASN.1 Built-in Types
-REAL-NUMBER = MANTISSA EXPONENT
-MANTISSA   = (POSITIVE-INTEGER [ "." *DIGIT ]) / ( "0." *"0" POSITIVE-INTEGER)
-EXPONENT   = ["E"/"e"] ( "0" / ([ "-" ] POSITIVE-INTEGER))
+REAL_NUMBER = MANTISSA EXPONENT
+MANTISSA   = (POSITIVE_INTEGER [ "." *DIGIT ]) / ( "0." *"0" POSITIVE_INTEGER)
+EXPONENT   = ["E"/"e"] ( "0" / ([ "-" ] POSITIVE_INTEGER))
 ```
 
 
