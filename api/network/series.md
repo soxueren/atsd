@@ -29,19 +29,13 @@ series e:{entity} m:{metric-1}={number} m:{metric-2}={number} t:{tag-1}={text} t
 
 ### ABNF Syntax
 
-Rules inherited from [generic ABNF](generic-abnf.md).
+Rules inherited from [base ABNF](base-abnf.md).
 
 ```properties
-  ; MSP - one or multiple spaces
   ; entity and at least one metric is required
 command = "series" MSP entity 1*(MSP metric) *(MSP tag) [MSP time]
-  ; NAME consists of printable characters. 
-  ; double-quote must be escaped with backslash.
 entity = "e:" FIELD
 metric = "m:" FIELD_NAME "=" NUMBER
-  ; TEXTVALUE consists of printable characters and space. 
-  ; double-quote must be escaped with backslash. 
-  ; tag values containing space must me quoted with double-quote.
 tag = "t:" FIELD_NAME "=" FIELD_VALUE
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE_INTEGER
