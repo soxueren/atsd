@@ -26,7 +26,7 @@ nmon p:default e:nurswgvml007 f:nurswgvml007_141014_2000.nmon z:PST
 
 ### ABNF Syntax
 
-Rules inherited from [generic ABNF](generic-abnf.md).
+Rules inherited from [generic ABNF](generic-abnf.md) and [timezone ABNF](timezone-abnf.md).
 
 ```properties
   ; parser, entity, and filename are required
