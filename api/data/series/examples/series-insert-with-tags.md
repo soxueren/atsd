@@ -1,4 +1,4 @@
-#  Series insert with tags
+#  Series Insert With Tags
 ## Request
 ### URI
 ```elm

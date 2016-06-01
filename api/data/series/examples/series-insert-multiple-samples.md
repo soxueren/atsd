@@ -1,4 +1,4 @@
-# Insert multiple samples
+# Insert Multiple Samples
 ## Request
 ### URI
 ```elm

@@ -1,4 +1,4 @@
-# Series Insert in Scientific Notation
+# Series Insert In Scientific Notation
 
 ## Request
 

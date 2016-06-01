@@ -1,4 +1,4 @@
-# Series Insert in ISO time format
+# Series Insert In ISO Time Format
 ## Request
 
 ### URI
