@@ -1,5 +1,7 @@
 # Generic ABNF Rules
 
+## Text Rules
+
 ```properties
   ; printable characters. 
   ; double-quote must be escaped with backslash.
@@ -26,10 +28,19 @@ UNICODE = %x80-FF / ; Latin-1 Supplement
           %x400-4FF / ; Cyrillic
           %x500-52F / ; Cyrillic Supplement
           %x4E00-9FFF ; CJK Unified Ideographs
+```
+
+## Date Rules
+```properties
   ; ISO date defined in RFC-3339 Appendix-A. 
   ; Format yyyy-MM-dd'T'HH:mm:ss.SSSX
   ; https://tools.ietf.org/html/rfc3339#appendix-A
 ISO-DATE = date-time 
+```
+
+## Number Rules
+
+```properties
 NUMBER = ["-"] (FRACTIONAL-NUMBER / REAL-NUMBER) / "NaN"           
 FRACTIONAL-NUMBER = ("0" / POSITIVE-INTEGER) ["." 1*DIGIT]                  
 POSITIVE-INTEGER = %x31-39 *DIGIT
@@ -40,4 +51,5 @@ REAL-NUMBER = MANTISSA EXPONENT
 MANTISSA   = (POSITIVE-INTEGER [ "." *DIGIT ]) / ( "0." *"0" POSITIVE-INTEGER)
 EXPONENT   = ["E"/"e"] ( "0" / ([ "-" ] POSITIVE-INTEGER))
 ```
+
 
