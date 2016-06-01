@@ -28,7 +28,7 @@ The Data API lets you insert and retrieve series, properties, messages, and aler
 
 ## Request Methods
 
-The API uses `GET` and `POST` methods to read and write data.
+The API uses `POST` method to read, write, and delete data except for url [series](series/url-query.md) and [property](properties/url-query.md) queries.
 
 ## Request Headers
 
