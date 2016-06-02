@@ -41,6 +41,8 @@ An array of query objects containing the following filtering fields:
 | severities  | array | Array of [severity code or names](/api/data/severity.md)   |
 | minSeverity |  string   | Minimal [code or name](/api/data/severity.md) severity filter.  |
 
+> Note that `tags` filter is not supported.
+
 ### Entity Filter Fields
 
 * [**Required**]
