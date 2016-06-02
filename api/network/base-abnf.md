@@ -5,18 +5,20 @@
 ```properties
   ; prefix:field
   ; all printable characters, optionally enclosed in double-quotes
-  ; inner double-quote must be escaped with backslash.
-FIELD = (DQUOTE 1*CHAR_ESCAPED DQUOTE) / 1*CHAR_ESCAPED
+  ; inner double-quote must be escaped with another double quote.
+FIELD = 1*(CHAR_SAFE / EQUAL) / NAME_QUOTED
 
   ; prefix:field_name=field_value
-  ; field name containing equal sign must be quoted
-FIELD_NAME = (DQUOTE 1*CHAR_ESCAPED DQUOTE) / 1*(CHAR_SAFE / "\" DQUOTE)
+  ; same as FIELD except EQUAL sign must be enclosed, t:"tag=name"=tag-value
+FIELD_NAME = 1*CHAR_SAFE / NAME_QUOTED
 
 FIELD_VALUE = TEXT_QUOTED / 1*CHAR_ESCAPED
 
   ; text with spaces and line breaks must be enclosed in double-quotes.
   ; inner double-quote must be escaped with backslash.
 TEXT_QUOTED = DQUOTE 1*(CHAR_ESCAPED / SPACE / CR / LF) DQUOTE
+
+NAME_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE) DQUOTE
 
   ; multiple spaces
 MSP = 1*SP
@@ -30,8 +32,8 @@ EQUAL = %x3D
 CR = %x0D
   ; line feed
 LF = %x0A
-  ; printable character with double-quote escaped with backslash
-CHAR_ESCAPED = CHAR_SAFE / "\" DQUOTE / EQUAL
+  ; printable character with double-quote escaped with another double-quote
+CHAR_ESCAPED = CHAR_SAFE / DQUOTE DQUOTE / EQUAL
   ; printable character except double-quote and equal sign
 CHAR_SAFE = %x21 / %x23-3C / %x3E-7E / UNICODE
   ; Unicode character
