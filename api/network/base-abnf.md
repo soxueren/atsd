@@ -16,11 +16,9 @@ FIELD_NAME = NAME_QUOTED / 1*CHAR_SAFE
 
 FIELD_VALUE = TEXT_QUOTED / 1*(CHAR_SAFE / EQUAL)
 
-  ; text with spaces and line breaks must be enclosed in double-quotes.
-  ; inner double-quote must be escaped with backslash.
-TEXT_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE / SPACE / CR / LF / TB) DQUOTE
-
 NAME_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE) DQUOTE
+
+TEXT_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE / SPACE / CR / LF / TB) DQUOTE
 
 MSP = 1*SP    ; multiple spaces
 SPACE = %x20  ; space
