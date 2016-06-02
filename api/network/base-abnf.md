@@ -7,6 +7,7 @@
   ; all printable characters, optionally enclosed in double-quotes
   ; inner double-quote must be escaped with another double quote.
   ; e:my=entity
+  ; StringEscapeUtils.escapeCsv
 FIELD = NAME_QUOTED / 1*(CHAR_SAFE / EQUAL)
 
   ; prefix:field_name=field_value
@@ -14,12 +15,11 @@ FIELD = NAME_QUOTED / 1*(CHAR_SAFE / EQUAL)
   ; t:"tag=name"=tag-value
 FIELD_NAME = NAME_QUOTED / 1*CHAR_SAFE
 
+  ; StringEscapeUtils.escapeCsv
 FIELD_VALUE = TEXT_QUOTED / 1*(CHAR_SAFE / EQUAL)
 
-  ; StringEscapeUtils.escapeCsv
 NAME_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE) DQUOTE
 
-  ; StringEscapeUtils.escapeCsv
 TEXT_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE / SPACE / CR / LF / TB) DQUOTE
 
 MSP = 1*SP    ; multiple spaces
