@@ -6,32 +6,30 @@
   ; prefix:field
   ; all printable characters, optionally enclosed in double-quotes
   ; inner double-quote must be escaped with another double quote.
-FIELD = 1*(CHAR_SAFE / EQUAL) / NAME_QUOTED
+  ; e:my=entity
+FIELD = NAME_QUOTED / 1*(CHAR_SAFE / EQUAL)
 
   ; prefix:field_name=field_value
-  ; same as FIELD except EQUAL sign must be enclosed, t:"tag=name"=tag-value
-FIELD_NAME = 1*CHAR_SAFE / NAME_QUOTED
+  ; same as FIELD except EQUAL sign must be enclosed
+  ; t:"tag=name"=tag-value
+FIELD_NAME = NAME_QUOTED / 1*CHAR_SAFE
 
-FIELD_VALUE = TEXT_QUOTED / 1*CHAR_ESCAPED
+FIELD_VALUE = TEXT_QUOTED / 1*(CHAR_SAFE / EQUAL)
 
   ; text with spaces and line breaks must be enclosed in double-quotes.
   ; inner double-quote must be escaped with backslash.
-TEXT_QUOTED = DQUOTE 1*(CHAR_ESCAPED / SPACE / CR / LF) DQUOTE
+TEXT_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE / SPACE / CR / LF / TB) DQUOTE
 
 NAME_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE) DQUOTE
 
-  ; multiple spaces
-MSP = 1*SP
-  ; space
-SPACE = %x20 
-  ; double-quote
-DQUOTE = %x22
-  ; equal sign
-EQUAL = %x3D
-  ; carriage return
-CR = %x0D
-  ; line feed
-LF = %x0A
+MSP = 1*SP    ; multiple spaces
+SPACE = %x20  ; space
+DQUOTE = %x22 ; double-quote
+EQUAL = %x3D  ; equal sign
+CR = %x0D     ; carriage return
+LF = %x0A     ; line feed
+TB = %x09     ; tab
+
   ; printable character with double-quote escaped with another double-quote
 CHAR_ESCAPED = CHAR_SAFE / DQUOTE DQUOTE / EQUAL
   ; printable character except double-quote and equal sign
