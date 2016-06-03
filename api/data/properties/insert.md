@@ -28,7 +28,7 @@ POST
 
 | **Field**  |**Type**  | **Description**  |
 |:---|:---|:---|
-| type | string | [**Required**] Property type name. |
+| type | string | [**Required**] Property type name. <br>Use reserved `$entity_tags` type to insert entity tags.|
 | entity | string | [**Required**] Entity name. |
 | key | object | Object containing `name=value` fields that uniquely identify the property record. <br>Example: `{"file_system": "/","mount_point":"sda1"}`|
 | tags | object | Object containing `name=value` fields that are not part of the key and contain descriptive information about the property record. <br>Example: `{"fs_type": "ext4"}`. |
