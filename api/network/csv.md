@@ -35,13 +35,12 @@ Rules inherited from [base ABNF](base-abnf.md).
 
 ```properties
 command = "csv" MSP parser [MSP entity] [MSP metric-prefix] [MSP timezone] [MSP timeout] *(MSP tag)
-parser = "p:" FIELD
-entity = "e:" FIELD
-metric-prefix = "r:" FIELD
-  ; inhereted from timezone-abnf.md
+parser = "p:" NAME
+entity = "e:" NAME
+metric-prefix = "r:" NAME
 timezone = "z:" TIMEZONE
 timeout = "o:" POSITIVE_INTEGER
-tag = "t:" FIELD_NAME "=" FIELD_VALUE
+tag = "t:" NAME "=" VALUE
 ```
 
 ## Examples
