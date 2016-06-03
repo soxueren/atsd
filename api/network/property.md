@@ -39,10 +39,10 @@ Rules inherited from [base ABNF](base-abnf.md).
 ```properties
   ; entity, type and at least one tag is required
 command = "property" MSP entity type *(MSP key) 1*(MSP tag) [MSP time]
-entity = "e:" FIELD
-type = "t:" FIELD
-key = "k:" FIELD_NAME "=" FIELD_VALUE  
-tag = "v:" FIELD_NAME "=" FIELD_VALUE
+entity = "e:" NAME
+type = "t:" NAME
+key = "k:" NAME "=" VALUE  
+tag = "v:" NAME "=" VALUE
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE_INTEGER
 time-second = "s:" POSITIVE_INTEGER
