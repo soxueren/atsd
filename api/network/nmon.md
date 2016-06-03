@@ -33,12 +33,11 @@ Rules inherited from [generic ABNF](generic-abnf.md) and [timezone ABNF](timezon
 command = "nmon" MSP parser MSP entity MSP filename [MSP timezone] [MSP timeout]
 entity = "e:" entity-name
   ; entity name, typically hostname where nmon is running
-entity-name = FIELD
+entity-name = NAME
   ; alphanumeric and underscore
 parser = "p:" 1*(%x41-5A / %x61-7A / "_")
   ; file name should start with entity name and end with .nmon
-filename = "f:" entity-name [FIELD] ".nmon"
-  ; defined in timezone-abnf.md
+filename = "f:" entity-name [NAME] ".nmon"
 timezone = "z:" TIMEZONE
 timeout = "o:" POSITIVE_INTEGER
 ```
