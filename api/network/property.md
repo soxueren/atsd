@@ -10,6 +10,8 @@ When a new property is inserted into the database, it overwrites an existing pro
 
 Tag names may duplicate key names specified in the same command.
 
+Use reserved `$entity_tags` type to insert entity tags with property command.
+
 ## Syntax
 
 ```css
