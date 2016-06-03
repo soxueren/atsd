@@ -44,14 +44,14 @@ Rules inherited from [base ABNF](base-abnf.md).
 ```properties
   ; message or at least one tag is required
 command = "message" MSP entity [MSP tag-type] [MSP tag-source] [MSP tag-severity] *(MSP tag) [MSP time] [MSP message] 
-entity = "e:" FIELD
-message = "m:" FIELD_VALUE
-tag-type = "t:type=" FIELD_VALUE
-tag-source = "t:source=" FIELD_VALUE
+entity = "e:" NAME
+message = "m:" VALUE
+tag-type = "t:type=" VALUE
+tag-source = "t:source=" VALUE
   ; severity value is case-insensitive
   ; https://tools.ietf.org/html/rfc7405#section-2.1
 tag-severity = "t:severity=" (%x30-37 / %i("UNDEFINED"/"UNKNOWN"/"NORMAL"/"WARNING"/"MINOR"/"MAJOR"/"CRITICAL"/"FATAL") )
-tag = "t:" FIELD_NAME "=" FIELD_VALUE
+tag = "t:" NAME "=" VALUE
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE_INTEGER
 time-second = "s:" POSITIVE_INTEGER
