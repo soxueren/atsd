@@ -144,7 +144,6 @@ Connection closed by foreign host.
 
 Note that the server will **terminate** the connection if it receives an unsupported or malformed command.
 
-
 ```ls
 $ telnet atsd_host 8081
 Trying atsd_host...
@@ -203,11 +202,16 @@ command-name field-prefix:field-name[=field-value]
 ```
 
 * The order of fields is not important.
-* Field names must not contain a space character. <br>When inserted via CSV upload, space is converted to an underscore symbol. <br>Multiple underscores are replaced with one underscore character.
-* Double-quote must be escaped with backslash, for example: `t:descr="Version is \"Ubuntu 14.04\""`.
-* Field values are trimmed of starting and trailing line breaks (CR,LF symbols).
-* If field value contains space it must to be enclosed in double-quotes, for example: `v:os="Ubuntu 14.04"`.
-* If name contains equal sign it must to be enclosed in double-quotes, for example: `v:"os=name"=Ubuntu`.
+* If value contains a line feed or double quote, then value must be enclosed in double quotes.
+* Any double quote character in the value must be escaped with another double quote.
+* Use CSV escaping methods in core libraries where available, for example [StringEscapeUtils.escapeCsv](https://commons.apache.org/proper/commons-lang/javadocs/api-2.6/org/apache/commons/lang/StringEscapeUtils.html#escapeCsv%28java.io.Writer,%20java.lang.String%29)
+
+Additional constraints applied to **names**:
+
+* Field names should only contain printable characters, in particular space and line feeds are not allowed.
+* If field name contains equal sign `=` it must be enclosed in double-quotes, for example: `v:"os=name"=Ubuntu`.
+
+Refer to ABNF rules for particular commands for exact rules.
 
 ### Case Sensitivity
 
