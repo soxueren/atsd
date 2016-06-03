@@ -34,9 +34,9 @@ Rules inherited from [base ABNF](base-abnf.md).
 ```properties
   ; entity and at least one metric is required
 command = "series" MSP entity 1*(MSP metric) *(MSP tag) [MSP time]
-entity = "e:" FIELD
-metric = "m:" FIELD_NAME "=" NUMBER
-tag = "t:" FIELD_NAME "=" FIELD_VALUE
+entity = "e:" NAME
+metric = "m:" NAME "=" NUMBER
+tag = "t:" NAME "=" VALUE
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE_INTEGER
 time-second = "s:" POSITIVE_INTEGER
