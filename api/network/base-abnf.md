@@ -8,7 +8,7 @@
   ; inner double-quote must be escaped with another double quote.
   ; t:"tag=name"=tag-value
   ; t:"tag""=name"=tag-value
-FIELD = NAME_QUOTED / 1*CHAR_SAFE
+NAME = NAME_QUOTED / 1*CHAR_SAFE
 
   ; printable and non-printable characters such as space, tab, line feed, carriage return
   ; value must be enclosed in double quotes if it contains double-quote ("), equal (=), or a non-printable character
@@ -17,11 +17,11 @@ FIELD = NAME_QUOTED / 1*CHAR_SAFE
   ; m:"my message"
   ; m:"my 
   ;       message"
-FIELD_VALUE = TEXT_QUOTED / 1*CHAR_SAFE
+VALUE = VALUE_QUOTED / 1*CHAR_SAFE
 
 NAME_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE) DQUOTE
 
-TEXT_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE / SPACE / CR / LF / TB) DQUOTE
+VALUE_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE / SPACE / CR / LF / TB) DQUOTE
 
 MSP = 1*SP    ; multiple spaces
 SPACE = %x20  ; space
