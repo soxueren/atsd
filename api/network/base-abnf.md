@@ -3,20 +3,21 @@
 ## Text Rules
 
 ```properties
-  ; prefix:field
-  ; all printable characters, optionally enclosed in double-quotes
+  ; printable characters
+  ; value must be enclosed in double quotes if it contains double-quote (") or equal (=) character
   ; inner double-quote must be escaped with another double quote.
-  ; e:my=entity
-  ; StringEscapeUtils.escapeCsv
-FIELD = NAME_QUOTED / 1*(CHAR_SAFE / EQUAL)
-
-  ; prefix:field_name=field_value
-  ; same as FIELD except EQUAL sign must be enclosed
   ; t:"tag=name"=tag-value
-FIELD_NAME = NAME_QUOTED / 1*CHAR_SAFE
+  ; t:"tag""=name"=tag-value
+FIELD = NAME_QUOTED / 1*CHAR_SAFE
 
-  ; StringEscapeUtils.escapeCsv
-FIELD_VALUE = TEXT_QUOTED / 1*(CHAR_SAFE / EQUAL)
+  ; printable and non-printable characters such as space, tab, line feed, carriage return
+  ; value must be enclosed in double quotes if it contains double-quote ("), equal (=), or a non-printable character
+  ; inner double-quote must be escaped with another double quote.
+  ; m:"my=message"
+  ; m:"my message"
+  ; m:"my 
+  ;       message"
+FIELD_VALUE = TEXT_QUOTED / 1*CHAR_SAFE
 
 NAME_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE) DQUOTE
 
@@ -30,9 +31,7 @@ CR = %x0D     ; carriage return
 LF = %x0A     ; line feed
 TB = %x09     ; tab
 
-  ; printable character with double-quote escaped with another double-quote
-CHAR_ESCAPED = CHAR_SAFE / DQUOTE DQUOTE / EQUAL
-  ; printable character except double-quote and equal sign
+  ; printable character except double-quote (") and equal (=) characters
 CHAR_SAFE = %x21 / %x23-3C / %x3E-7E / UNICODE
   ; Unicode character
   ; http://tools.ietf.org/html/rfc6531#section-3.3
