@@ -1,5 +1,5 @@
 ```ls
-TIMEZONE = "Pacific/Midway" /
+time-zone-code = "Pacific/Midway" /
 "Pacific/Niue" /
 "Pacific/Pago_Pago" /
 "Pacific/Samoa" /
