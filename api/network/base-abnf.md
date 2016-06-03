@@ -49,6 +49,8 @@ UNICODE = %x80-FF / ; Latin-1 Supplement
   ; Format yyyy-MM-dd'T'HH:mm:ss.SSSX
   ; https://tools.ietf.org/html/rfc3339#appendix-A
 ISO_DATE = date-time 
+  ; inhereted from timezone-abnf.md
+TIMEZONE = time-zone-code
 ```
 
 ## Number Rules
