@@ -1,6 +1,10 @@
-## Command: `nmon`
+# nmon Command
+
+## Description
 
 Initiate line-by-line streaming of an nmon file. The transmission can be resumed without full header in case of disconnect.
+
+## Syntax
 
 ```ls
 nmon p:{parser} e:{entity} f:{file_name} z:{timezone} t:{timeout}
@@ -8,25 +12,21 @@ nmon p:{parser} e:{entity} f:{file_name} z:{timezone} t:{timeout}
 ... nmon snapshot ...
 ```
 
-> Example
-
-```ls
-nmon p:default e:nurswgvml007 f:nurswgvml007_141014_2000.nmon z:PST
-```
+## Fields
 
 | **Field** | **Required** | **Description**                            |
-|---|---|---|
-| p         | yes          | parser name from Admin : nmon Parsers page |
-| e         | yes          | entity                                     |
-| f         | yes          | name of the nmon file                      |
+|:---|:---|:---|
+| p         | yes          | nmon parser name from **Admin:nmon Parsers** page. |
+| e         | yes          | Entity name.                                     |
+| f         | yes          | Name of the nmon file                      |
 | z         | no           | Timezone applied to snapshots, e.g. GMT<br>Java [Time Zone ID](timezone-abnf.md)  |
 | o         | no           | Read timeout in seconds. <br>Set to 2x snapshot interval to prevent the server from terminating an idle connection.|
 
 `f` nmon file name is used to re-read file header from its copy on the server in case of disconnect.
 
-### ABNF Syntax
+## ABNF Syntax
 
-Rules inherited from [generic ABNF](generic-abnf.md) and [timezone ABNF](timezone-abnf.md).
+Rules inherited from [generic ABNF](generic-abnf.md).
 
 ```properties
   ; parser, entity, and filename are required
@@ -43,6 +43,10 @@ timeout = "o:" POSITIVE_INTEGER
 ```
 
 ## Examples
+
+```ls
+nmon p:default e:nurswgvml007 f:nurswgvml007_141014_2000.nmon z:PST
+```
 
 ```ls
 nmon e:server-001 p:default f:server-001.nmon
