@@ -2,10 +2,35 @@
 
 ## Description
 
-Version command returns Axibase Time Server Database version
+The server responds with Axibase Time Series Database revision number.
 
-## Examples
+## Syntax
 
 ```ls
 version
 ```
+
+## Fields
+
+None.
+
+## ABNF Syntax
+
+```
+command = "version"
+```
+
+## Examples
+
+```
+version
+```
+
+> Response
+
+```
+13216
+```
+
+
+
