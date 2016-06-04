@@ -207,13 +207,13 @@ command-name field-prefix:field-name[=field-value]
 Field name: 
 
 * Field name can contain only printable characters. 
-* If field name contains a double-quote (") or equal (=) sign, it must be enclosed in double quotes, <br>for example: `v:"os=name"=Ubuntu` or `v:"os""name"=Ubuntu`
+* If field name contains a double-quote (") or equal (=) sign, it must be enclosed in double quotes, for example: `v:"os=name"=Ubuntu` or `v:"os""name"=Ubuntu`
 * Any double quote character in the value must be escaped with another double quote.
 
 Field value:
 
 * Field value can contain printable and non-printable characters including space, line breaks, tab. 
-* If field value contains a double-quote (") or equal (=) sign or a non-printable character, it must be enclosed in double quotes, <br>for example: `v:os="Ubuntu 14.04"` or `v:os="Ubuntu=""14"""`
+* If field value contains a double-quote (") or equal (=) sign or a non-printable character, it must be enclosed in double quotes, for example: `v:os="Ubuntu 14.04"` or `v:os="Ubuntu=""14"""`
 * Any double quote character in the value must be escaped with another double quote.
 
 Use CSV escaping methods in core libraries where available, for example [StringEscapeUtils.escapeCsv](https://commons.apache.org/proper/commons-lang/javadocs/api-2.6/org/apache/commons/lang/StringEscapeUtils.html#escapeCsv%28java.io.Writer,%20java.lang.String%29) in Java.
