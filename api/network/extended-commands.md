@@ -1,8 +1,8 @@
 # Extended Commands
 
-ATSD supports data insertion commands for following line protocols implemented in thirt-party data collection daemons.
+ATSD supports the following thirt-party line protocols:
 
-### tcollector
+## tcollector
 
 ```css
 put `<metric> <timestamp> <value> <tagk1=tagv1[ tagk2=tagv2 ...tagkN=tagvN]>`
@@ -16,7 +16,7 @@ put sys.cpu.user 1356998400 42.5 host=webserver01 cpu=0
 
 ATSD uses the `host` tag as the entity, if `host` tag is missing then entity will be `tcollector`.
 
-### Graphite
+## Graphite
 
 ```css
 servers.nurswgvml007.cpu_busy 24.5 1232312313
@@ -24,7 +24,7 @@ servers.nurswgvml007.cpu_busy 24.5 1232312313
 
 [Graphite integration](http://axibase.com/products/axibase-time-series-database/writing-data/graphite-format/)
 
-### StatsD
+## StatsD
 
 ```css
 cpu.busy:20.5|c
