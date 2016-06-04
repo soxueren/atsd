@@ -4,11 +4,12 @@
 
 Insert a timestamped array of numeric samples for a given metric, entity, and series tags. 
 
-This method can also be used to insert a array of custom forecast and forecast deviation samples.
+This method can also be used to insert a array of named forecast and forecast deviation samples.
 
-New entities and metrics will be automatically created provided they meet naming requirements.
-
-New metrics will be initialized with `float` data type by default. To insert metric samples with another datatype, create or update metric properties using the web interface or [Meta API](/api/meta/metric/update.md).
+* Entity name, metric name, and tag names cannot contain non-printable characters. Names are case-insensitive and are converted to lower case when stored.
+* Tag values are case-sensitive and are stored as submitted.
+* New entities, metrics, and tag names are created automatically.
+* New metrics will be initialized with `float` data type by default. To insert metric samples with another datatype, create or update the metric using the web interface or Meta API [metric update method](/api/meta/metric/update.md).
 
 ## Request
 
@@ -32,7 +33,7 @@ POST
 
 ### Fields
 
-The request must contain an array of series objects each containing an array of timestamped samples. It is recommended that samples for each series are ordered by time ascendingly.
+The request contains an array of series objects each containing an array of timestamped samples. 
 
 |**Field**|**Required**|**Description**|
 |:---|:---|:---|
