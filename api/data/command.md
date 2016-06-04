@@ -65,18 +65,6 @@ series e:DL1867 m:speed=450 m:altitude=12100
 message e:server001 d:2015-03-04T12:43:20+00:00 t:subject="my subject" m:"Hello, world"
 ```
 
-#### curl
-
-* `--data` Payload
-
-```elm
-curl https://atsd_host:8443/api/v1/command \
-  --insecure --verbose --user {username}:{password} \
-  --header "Content-Type: text/plain" \
-  --request POST \
-  --data 'series e:DL1867 m:speed=450 m:altitude=12100'
-  ```
-
 ## Additional Examples
 
 
