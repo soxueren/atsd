@@ -1,14 +1,34 @@
-## Command: `exit`
+# exit Command
 
-> Request
+## Description
+
+The server responds `Goodbye` and closes the connection.
+
+## Syntax
+
+```ls
+exit
+```
+
+## Fields
+
+None.
+
+## ABNF Syntax
+
+```
+command = "exit"
+```
+
+## Examples
 
 ```
 exit
 ```
+
 > Response
 
 ```
 Goodbye
 ```
 
-The server responds `Goodbye` and closes the connection.
