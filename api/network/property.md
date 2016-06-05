@@ -4,13 +4,16 @@
 
 Insert property record with specified type, keys and tags for the given entity.
 
-Entity, property type and property keys form a composite primary key of the property record in the database, whereas tags (`v:` fields) are stored as additional attributes.
+Entity, property type and property keys (`k:` fields) form a composite primary key of the property record in the database, whereas tags (`v:` fields) are stored as additional attributes.
 
-When a new property is inserted into the database, it overwrites an existing property with the same composite primary key (entity+type+[keys]).
-
-Tag names may duplicate key names specified in the same command.
+When a property record is inserted into the database, it overwrites an existing record with the same composite primary key: **entity+type[+key]**.
 
 Use reserved `$entity_tags` type to insert entity tags with property command.
+
+* Entity name, property type, key names, and tag names are case-insensitive and are converted to lower case when stored. 
+* Key values and tag values are case-sensitive and are stored as submitted.
+* Tag names may duplicate key names specified in the same command.
+* At least one tag is required
 
 ## Syntax
 
