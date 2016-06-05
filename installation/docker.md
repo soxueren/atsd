@@ -19,7 +19,6 @@ Replace `collector-user` and `collector-password` to automatically create a buil
 ```properties
 docker run \
   --detach \
-  --hostname=atsd \
   --name=atsd \
   --restart=always \
   --publish 8088:8088 \
@@ -40,7 +39,6 @@ In this case, you can configure both administrator and [collector](../administra
 ```properties
 docker run \
   --detach \
-  --hostname=atsd \
   --name=atsd \
   --restart=always \
   --publish 8088:8088 \
@@ -93,7 +91,6 @@ Bind for 0.0.0.0:8088 failed: port is already allocated
 ```properties
 docker run \
   --detach \
-  --hostname=atsd \
   --name=atsd \
   --restart=always \
   --publish 9088:8088 \
