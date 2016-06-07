@@ -27,15 +27,14 @@ message e:{entity} t:type={type} t:source={source} t:severity={severity} t:tag={
 | e         | yes          | Entity name. |
 | t         | no           | Tags, including reserved tags: `type`, `source`, [`severity`](/api/data/severity.md). |
 | m         | no           | Message text. |
+| p         | no           | Persist message in the database. Default: true.<br>If disabled, the message is only processed by the rule-engine.
 | s         | no           | Time in UNIX seconds. | 
 | ms        | no           | Time in UNIX milliseconds. | 
 | d         | no           | Time in ISO format. | 
 
-> If time fields are omitted, the record is inserted with the current server time.
-
-Message text or at least one tag is required, otherwise the message will be dropped silently.
-
-Enclose tag values and message text containing space in double quotes.
+* If time fields are omitted, the record is inserted with the current server time.
+* Message text or at least one tag is required, otherwise the message will be dropped silently.
+* Enclose tag values and message text containing space or double-quote in double-quotes.
 
 ### ABNF Syntax
 
@@ -43,15 +42,16 @@ Rules inherited from [base ABNF](base-abnf.md).
 
 ```properties
   ; message or at least one tag is required
-command = "message" MSP entity [MSP tag-type] [MSP tag-source] [MSP tag-severity] *(MSP tag) [MSP time] [MSP message] 
+command = "message" MSP entity [MSP tag-type] [MSP tag-source] [MSP tag-severity] *(MSP tag) [MSP time] [MSP persist] [MSP message] 
 entity = "e:" NAME
-message = "m:" VALUE
 tag-type = "t:type=" VALUE
 tag-source = "t:source=" VALUE
   ; severity value is case-insensitive
   ; https://tools.ietf.org/html/rfc7405#section-2.1
 tag-severity = "t:severity=" (%x30-37 / %i("UNDEFINED"/"UNKNOWN"/"NORMAL"/"WARNING"/"MINOR"/"MAJOR"/"CRITICAL"/"FATAL") )
 tag = "t:" NAME "=" VALUE
+message = "m:" VALUE
+persist = "p:" ("true" / "false")
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE_INTEGER
 time-second = "s:" POSITIVE_INTEGER
