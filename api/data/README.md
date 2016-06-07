@@ -23,8 +23,9 @@ The Data API lets you insert and retrieve series, properties, messages, and aler
   - [update](alerts/update.md)
   - [delete](alerts/delete.md)
   - [history query](alerts/history-query.md)
-* Multi-type
-  - [command insert](command.md)
+* Extended
+  - [command insert](ext/command.md)
+  - [csv upload](ext/csv.md)
 
 ## Request Methods
 
