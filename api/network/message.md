@@ -34,7 +34,6 @@ message e:{entity} t:type={type} t:source={source} t:severity={severity} t:tag={
 
 * If time fields are omitted, the record is inserted with the current server time.
 * Message text or at least one tag is required, otherwise the message will be dropped silently.
-* Enclose tag values and message text containing space or double-quote in double-quotes.
 
 ### ABNF Syntax
 
