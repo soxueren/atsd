@@ -118,7 +118,7 @@ Access-Control-Allow-Origin: *
 * To validate json received from a client, launch `netcat` utility in server mode, reconfigure the client to send data to netcat port, and dump incoming data to file:
 
 ```elm
-nc -lk localhost 20088 > json-in.log &
+nc -lk 0.0.0.0 20088 > json-in.log &
 
 curl http://localhost:20088/api/v1/series/insert \
   -v -u {username}:{password} \
