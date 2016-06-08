@@ -2,11 +2,11 @@
 
 ## Description
 
-Insert timestamped metric samples for an entity and series tags into the database. 
+Insert timestamped numeric values for the specified entity, series tags and one or multiple metrics. 
 
-New entities and metrics will be automatically created provided they meet naming requirements.
+New entities, metrics, and tags will be created automatically.
 
-New metrics will be created with `float` data type by default.<br>To insert metric samples with another datatype, create or update metric properties using [Meta API](/api/meta/metric/create-or-replace.md) or the web interface.
+New metrics will be initialized with `float` data type by default.<br>To insert metric samples with another datatype, create or update metric properties using [Meta API](/api/meta/metric/create-or-replace.md) or the web interface.
 
 ## Syntax
 
@@ -42,6 +42,14 @@ time-millisecond = "ms:" POSITIVE_INTEGER
 time-second = "s:" POSITIVE_INTEGER
 time-iso = "d:" ISO_DATE
 ```
+
+## Number Representation
+
+* The string representation of the inserted number consists of an optional sign, '+' ( '\u002B') or '-' ('\u002D'), followed by a sequence of zero or more decimal digits ("the integer"), optionally followed by a fraction, optionally followed by an exponent.
+* The exponent consists of the character 'e' ('\u0065') or 'E' ('\u0045') followed by one or more decimal digits. 
+* The fraction consists of a decimal point followed by zero or more decimal digits. The string must contain at least one digit in either the integer or the fraction. 
+* The number formed by the sign, the integer and the fraction is referred to as the _significand_.
+* The _significand_ value stripped from training zeros should be within Long.MAX_VALUE `9223372036854775807` and Long.MIN_VALUE  `-9223372036854775808` (19 digits), otherwise the database will raise an IllegalArgumentException exception. For example, significand for `1.1212121212121212121212121212121212121212121` contains 44 digits and as such will produce an error.
 
 ## Examples
 
