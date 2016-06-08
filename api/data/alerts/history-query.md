@@ -82,7 +82,9 @@ An array of matching alert objects containing the following fields:
 
 ### Errors
 
-None.
+| Status Code| Message |
+| --- | --- |
+| 404 | Metric '${metric_name}' not found |
 
 ## Example
 
