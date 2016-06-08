@@ -296,7 +296,7 @@ $ echo -e "debug my_command e:station_1 m:temperature=32.2" | nc atsd_host 8081
 To validate network received from a client, launch `netcat` utility in server mode, reconfigure the client to send data to netcat port, and dump incoming data to file:
 
 ```elm
-nc -lk localhost 2081 > command-in.log &
+nc -lk 0.0.0.0 2081 > command-in.log &
 
 echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z" | nc localhost 2081
 
