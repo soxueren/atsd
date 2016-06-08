@@ -49,7 +49,7 @@ The request contains an array of series objects each containing an array of time
 * The exponent consists of the character 'e' ('\u0065') or 'E' ('\u0045') followed by one or more decimal digits. 
 * The fraction consists of a decimal point followed by zero or more decimal digits. The string must contain at least one digit in either the integer or the fraction. 
 * The number formed by the sign, the integer and the fraction is referred to as the [**significand**](https://en.wikipedia.org/wiki/Significand).
-* The **significand** value stripped from training zeros should be within Long.MAX_VALUE `9223372036854775807` and Long.MIN_VALUE  `-9223372036854775808` (19 digits), otherwise the database will raise an IllegalArgumentException exception. For example, significand for `1.1212121212121212121212121212121212121212121` contains 44 digits and as such will produce an error.
+* The **significand** value stripped from training zeros should be within Long.MAX_VALUE `9223372036854775807` and Long.MIN_VALUE  `-9223372036854775808` (19 digits), otherwise the database will round it. For example, significand for `1.1212121212121212121212121212121212121212121` contains 44 digits and will be rounded to `1.121212121212121212`.
 
 ## Response
 
