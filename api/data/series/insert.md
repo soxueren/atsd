@@ -2,14 +2,12 @@
 
 ## Description
 
-Insert a timestamped array of numeric samples for a given metric, entity, and series tags. 
+Insert a timestamped array of numbers for a given series identified by metric, entity, and series tags. 
 
-This method can also be used to insert a array of named forecast and forecast deviation samples.
-
-* Entity name, metric name, and tag names cannot contain non-printable characters. Names are case-insensitive and are converted to lower case when stored.
+* Entity name, metric name, and tag names can contain only printable characters. Names are case-insensitive and are converted to lower case when stored.
 * Tag values are case-sensitive and are stored as submitted.
 * New entities, metrics, and tag names are created automatically.
-* New metrics will be initialized with `float` data type by default. To insert metric samples with another datatype, create or update the metric using the web interface or Meta API [metric update method](/api/meta/metric/update.md).
+* New metrics are initialized with `float` data type by default. To store number in another datatype, create or update the metric using the web interface or Meta API [metric update method](/api/meta/metric/update.md).
 
 ## Request
 
@@ -43,7 +41,15 @@ The request contains an array of series objects each containing an array of time
 | type | string | Type of inserted data: `HISTORY`, `FORECAST`. Default value: `HISTORY` |
 | version | object | Object containing version source and status fields for versioned metrics.<br>`{"source":string, "status":string}` |
 |forecastName| string | Forecast name. <br>Applicable when `type` is set to `FORECAST`. <br>`forecastName` can be used to store a custom forecast identified by name. <br>If `forecastName` is omitted, the values overwrite the default forecast.  |
-| data | array | [**Required**] Array of `{"t":number,"v":number}` objects, <br>where `t` is time in UNIX milliseconds and `v` is the metric's value at time `t`. <br>Time can be also specified in ISO format using `d` field, for example:<br>`{"d":"2016-06-01T12:08:42.518Z", "v":50.8}`<br>To insert `NaN` (not a number), set `v` to `null`, for example: `{"t":1462427358127, "v":null}`<br>If `type` is set to `FORECAST`, the object `{t,v}` can include an additional `s` field containing standard deviation of the forecast value `v`, for example  `{"t":1462427358127, "v":80.4, "s":12.3409}` |
+| data | array | [**Required**] Array of `{"t":number,"v":number}` objects, <br>where `t` is time in UNIX milliseconds and `v` is the metric's numeric value at time `t`. <br>Time can be also specified in ISO format using `d` field, for example:<br>`{"d":"2016-06-01T12:08:42.518Z", "v":50.8}`<br>To insert `NaN` (not a number), set `v` to `null`, for example: `{"t":1462427358127, "v":null}`<br>If `type` is set to `FORECAST`, the object `{t,v}` can include an additional `s` field containing standard deviation of the forecast value `v`, for example  `{"t":1462427358127, "v":80.4, "s":12.3409}` |
+
+### Number Representation
+
+* The string representation of the inserted number consists of an optional sign, '+' ( '\u002B') or '-' ('\u002D'), followed by a sequence of zero or more decimal digits ("the integer"), optionally followed by a fraction, optionally followed by an exponent.
+* The exponent consists of the character 'e' ('\u0065') or 'E' ('\u0045') followed by one or more decimal digits. 
+* The fraction consists of a decimal point followed by zero or more decimal digits. The string must contain at least one digit in either the integer or the fraction. 
+* The number formed by the sign, the integer and the fraction is referred to as the _significand_.
+* The _significand_ value stripped from training zeros should be within Long.MAX_VALUE `9223372036854775807` and Long.MIN_VALUE  `-9223372036854775808` (19 digits), otherwise the database will raise an IllegalArgumentException exception. For example, significand for `1.1212121212121212121212121212121212121212121` contains 44 digits and as such will produce an error.
 
 ## Response
 
@@ -55,8 +61,8 @@ None.
 
 |  Status Code  |  Description  |
 |---------------|:---------------|
-| 400 |IllegalArgumentException: Empty entity.|
-| 400 |IllegalArgumentException: Negative timestamp.|
+| 400 | IllegalArgumentException: Empty entity.|
+| 400 | IllegalArgumentException: Negative timestamp.|
 | 400 | IllegalArgumentException: No data. |
 | 400 | IllegalArgumentException: BigDecimal significand overflows the long type. |
 | 500 | JsonParseException: Unexpected character "}" | 
