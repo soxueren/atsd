@@ -259,7 +259,7 @@ The timestamp field encodes the time of an observation or message as determined 
 |:---|:---|:---|
 |ms|long|UNIX milliseconds since 1970-01-01T00:00:00Z |
 |s|int|UNIX seconds since 1970-01-01T00:00:00Z|
-|d|string|ISO 8601 date. Supported formats:<br>UTC timezone (Z) = yyyy-MM-dd'T'HH:mm:ss.SSS'Z', for example 2016-06-09T16:15:04.005Z<br> Numeric timezone = yyyy-MM-dd'T'HH:mm:ss.SSSXX, for example 2016-06-09T12:15:04.005-04:00|
+|d|string|ISO 8601 date. Supported formats:<br>UTC timezone (Z) = yyyy-MM-dd'T'HH:mm:ss.SSS'Z', for example 2016-06-09T16:15:04.005Z<br>Timezone offset = yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm, for example 2016-06-09T12:15:04.005-04:00<br>Time zone +hh:mm is ahead of UTC and timezone -hh:mm is behind UTC.|
 
 * If timestamp field in seconds or milliseconds is less than or equal 0, or if it's empty in case of d: prefix, the time is set to server's current time.
 * If timestamp field is not specified, time is set to current server time.
