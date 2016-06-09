@@ -10,8 +10,8 @@
 
 | **Name** | **Type** | **Description** |
 |:---|:---|:---|
-|startDate|	string | Start of the selection interval. <br>ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Records timestamped at or after `startDate` are returned.<br>Examples: `2016-05-25T00:15:00.194Z`, `2016-05-25T`, `current_hour` |
-| endDate |	string | End of the selection interval. <br>ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Records timestamped before `endDate` are returned.<br>Examples: `2016-05-25T00:15:00Z`, `previous_day - 1 * HOUR`|
+|startDate|	string | Start of the selection interval. <br>ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Matches records timestamped at or after `startDate`.<br>Examples: `2016-05-25T00:15:00.194Z`, `2016-05-25T`, `current_hour` |
+| endDate |	string | End of the selection interval. <br>ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Matches records timestamped before `endDate`.<br>Examples: `2016-05-25T00:15:00Z`, `previous_day - 1 * HOUR`|
 | interval|	object | Duration of the selection interval, specified as `count` and `unit`. <br>Example: `{"count": 5, "unit": "MINUTE"}`|
 
 ## ISO Date Format
