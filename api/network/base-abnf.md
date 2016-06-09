@@ -49,7 +49,7 @@ UNICODE = %x80-FF / ; Latin-1 Supplement
   ; Format yyyy-MM-dd'T'HH:mm:ss.SSSXX
   ; https://tools.ietf.org/html/rfc3339#appendix-A
   ; UTC timezone (Z) = 2016-06-01T16:00:15.142Z
-  ; Numeric timezone = 2016-06-01T16:00:15.142-04:00
+  ; Numeric timezone = 2016-06-01T12:00:15.142-04:00
 ISO_DATE = date-time 
   ; inhereted from timezone-abnf.md
 TIMEZONE = time-zone-code
