@@ -1,8 +1,6 @@
 # Axibase Time Series Database Documentation
 
 
-## Table of Contents
-
 * [Installation](installation#installation)
     * [Requirements](administration/requirements.md)
     * [Distributions](installation#installation-guides)
