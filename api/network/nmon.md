@@ -20,7 +20,7 @@ nmon p:{parser} e:{entity} f:{file_name} z:{timezone} t:{timeout}
 | e         | string          | [**Required**] Entity name.                                     |
 | f         | string          | [**Required**] Name of the nmon file                      |
 | z         | string           | Timezone applied to snapshots, e.g. GMT<br>Java [Time Zone ID](timezone-abnf.md)  |
-| v         | string          | nmon script version. |
+| v         | string          | nmon script version for debugging purposes. |
 | o         | integer           | Read timeout in seconds. <br>Set to 2x snapshot interval to prevent the server from terminating an idle connection.|
 
 `f` nmon file name is used to re-read file header from its copy on the server in case of disconnect.
