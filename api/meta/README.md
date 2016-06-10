@@ -30,7 +30,7 @@ The Meta API lets you query and update metadata about metrics, entities, and ent
     - [add entities](entity-group/add-entities.md)
     - [replace entities](entity-group/replace-entities.md)
     - [delete entities](entity-group/delete-entities.md)
-* [Misc]
+* Misc
     - [version](misc/version.md)
     - [ping](misc/ping.md)
 
