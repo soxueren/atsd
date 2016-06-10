@@ -90,3 +90,12 @@ curl https://atsd_host:8443/api/v1/messages/insert \
   --request POST \
   --data @file.json
 ```
+
+## Additional Examples
+* [Message with Date](/api/data/messages/examples/insert/messages-insert-messages-with-date.md)
+* [Message with Tags](/api/data/messages/examples/insert/messages-insert-messages-with-tags.md)
+* [Multiple Messages with Date](/api/data/messages/examples/insert/messages-insert-multiple-messages-for-date.md)
+* [Multiple Messages with Entity](/api/data/messages/examples/insert/messages-insert-multiple-messages-for-entity.md)
+* [Non-persisted Message](/api/data/messages/examples/insert/messages-insert-non-persisted-messages.md)
+
+
