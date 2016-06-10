@@ -14,13 +14,14 @@ nmon p:{parser} e:{entity} f:{file_name} z:{timezone} t:{timeout}
 
 ## Fields
 
-| **Field** | **Required** | **Description**                            |
+| **Field** | **Type** | **Description**                            |
 |:---|:---|:---|
-| p         | yes          | nmon parser name from **Admin:nmon Parsers** page. |
-| e         | yes          | Entity name.                                     |
-| f         | yes          | Name of the nmon file                      |
-| z         | no           | Timezone applied to snapshots, e.g. GMT<br>Java [Time Zone ID](timezone-abnf.md)  |
-| o         | no           | Read timeout in seconds. <br>Set to 2x snapshot interval to prevent the server from terminating an idle connection.|
+| p         | string          | [**Required**] nmon parser name from **Admin:nmon Parsers** page. <br>Specify `p:default` to use the default parser. |
+| e         | string          | [**Required**] Entity name.                                     |
+| f         | string          | [**Required**] Name of the nmon file                      |
+| z         | string           | Timezone applied to snapshots, e.g. GMT<br>Java [Time Zone ID](timezone-abnf.md)  |
+| v         | string          | nmon script version. |
+| o         | integer           | Read timeout in seconds. <br>Set to 2x snapshot interval to prevent the server from terminating an idle connection.|
 
 `f` nmon file name is used to re-read file header from its copy on the server in case of disconnect.
 
