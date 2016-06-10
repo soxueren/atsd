@@ -4,6 +4,8 @@
 ## Table of Contents
 
 * [Installation](installation#installation)
+    * [Requirements](administration/requirements.md)
+    * [Distributions](installation#installation-guides)
 * [API](api#axibase-time-series-database-api)
     * [Data](api/data#overview)
     * [Meta](api/meta#overview)
