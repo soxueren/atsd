@@ -6,8 +6,20 @@
     * [Distributions](installation#installation-guides)
 * [API](api)
     * [Data](api/data#overview)
+      * Series
+      * Properties
+      * Messages
+      * Alerts
     * [Meta](api/meta#overview)
+      * Metrics
+      * Entities
+      * Entity Groups
     * [Network](api/network#network-api)
+      * series
+      * property
+      * message
+      * csv
+      * nmon
     * [SQL](api/sql#overview)   
 * [API Clients](api#api-clients)
     * [R](https://github.com/axibase/atsd-api-r)
