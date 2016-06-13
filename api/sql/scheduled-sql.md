@@ -54,9 +54,9 @@ CSV files can be optionally archived with zip or gzip compression.
 
 ### Sample Reports
 
-* [sql-report.csv](sql-report.csv)
-* [sql-report.json](sql-report.json)
-* [sql-report.xlsx](sql-report.xlsx)
+* [examples/sql-report.csv](sql-report.csv)
+* [examples/sql-report.json](sql-report.json)
+* [examples/sql-report.xlsx](sql-report.xlsx)
 
 ## Decimal Precision
 
@@ -117,7 +117,7 @@ In addition, the metadata header contains a list of column names in resultset an
 
 ### Specifications
 
-* Axibase Time Series Database [Ontology](atsd.json) in jsonld format according to [RFC6350](https://tools.ietf.org/html/rfc6350)
+* Axibase Time Series Database [Ontology](atsd.jsonld) in jsonld format according to [RFC6350](https://tools.ietf.org/html/rfc6350)
 * W3C Recommendation [Metadata Vocabulary for Tabular Data](https://www.w3.org/TR/tabular-metadata/)
 
 ### Metadata in CSV Format
@@ -155,7 +155,7 @@ Table schema object provides the following information about the columns in the 
 * label (alias)
 * datatype
 * table name (metric name)
-* type as specified in [ontology](atsd.json)
+* type as specified in [ontology](atsd.jsonld)
 * description
 
 ```json
