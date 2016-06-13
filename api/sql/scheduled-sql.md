@@ -54,9 +54,9 @@ CSV files can be optionally archived with zip or gzip compression.
 
 ### Sample Reports
 
-* [examples/sql-report.csv](sql-report.csv)
-* [examples/sql-report.json](sql-report.json)
-* [examples/sql-report.xlsx](sql-report.xlsx)
+* [sql-report.csv](examples/sql-report.csv)
+* [sql-report.json](examples/sql-report.json)
+* [sql-report.xlsx](examples/sql-report.xlsx)
 
 ## Decimal Precision
 
