@@ -32,7 +32,11 @@ SELECT datetime, entity, value FROM "cpu_busy" WHERE datetime > now - 1*MINUTE
 
 In the example above, "cpu_busy" table contains records for `cpu_busy` metric.
 
-Data for multiple metrics can be merged by joining virtual tables with JOIN clause.
+Virtual tables are provided only for series. Access to other types of data (properties, messages, alerts) and metadata (entities, metrics) is currently not available.
+
+### Joins
+
+Data for multiple metrics can be merged by joining virtual tables with JOIN clause(s).
 
 ```sql
 SELECT datetime, entity, t1.value, t2.value, t3.value
@@ -42,7 +46,22 @@ SELECT datetime, entity, t1.value, t2.value, t3.value
   WHERE datetime > now - 1*MINUTE
 ```
 
-Virtual tables are provided only for series. Access to other types of data (properties, messages, alerts) and meta-data is currently not available.
+In absence of columns in the JOIN clause, the records are joined by entity, record time, and all tags (if specified) by default.
+
+For the JOIN to work for detailed data, records must have exactly the same time. 
+
+This is typically the case when multiple metrics are inserted with one command or when time is controlled externally, as in the example above, where metrics 'cpu_system', 'cpu_user', 'cpu_iowait' are all timestamped externally by the same collector script with the same time during each `mpstat` command invocation.
+
+To merge metrics with different times, use OUTER JOIN with period aggregation, aligned to calendar, in order to regularize timestamps of merged series.
+
+```sql
+SELECT datetime, entity, avg(t1.value), avg(t2.value)
+  FROM "cpu_busy" t1
+  OUTER JOIN "memfree" t2
+WHERE datetime BETWEEN '2016-06-13T09:20:00.000Z' AND '2016-06-13T09:30:00.000Z'
+  GROUP BY entity, period(1 MINUTE)
+  LIMIT 5
+```
 
 ### Predefined Columns
 
@@ -65,6 +84,8 @@ SELECT datetime, entity, t1.value + t2.value as cpu_sysusr
   JOIN "cpu_user" t2
   WHERE datetime > now - 1*MINUTE
 ```
+
+> Versioning columns (version_tatus, version_source, version_time) is  currently not supported..
 
 ## Time Condition
 
@@ -211,29 +232,29 @@ Tag values and property values are case-sensitive.
 
 ## Examples
 
-- [Alias](alias.md)
-- [Average Value](average-value-query.md)
-- [Basic](basic-query.md)
-- [Counter Aggregator](counter-aggregator.md)
-- [Datetime Format](datetime-format.md)
-- [Entity with Tags](entity-with-tags.md)
-- [Filter by Tag](filter-by-tag.md)
-- [Group by Query with Order By](group-by-query-with-order-by.md)
-- [Grouped Average](grouped-average.md)
-- [Inner Join](inner-join.md)
-- [Last Time](last-time.md)
-- [Max Value Time](max-value-time.md)
-- [Not Equal Operator](not-equal-operator.md)
-- [Order By Time](order-by-time.md)
-- [Outer Join With Aggregation](outer-join-with-aggregation.md)
-- [Outer Join](outer-join.md)
-- [Query Format](query-format.md)
-- [Row Number Function](row-number-function.md)
-- [Row Number With Order By Avg](row-number-with-order-by-avg.md)
-- [Row Number With Order By Time & Avg](row-number-with-order-by-time&avg.md)
-- [Row Number With Order By Time](row-number-with-order-by-time.md)
-- [Select All](select-all.md)
-- [Select Entity Tags As Columns](select-entity-tags-as-columns.md)
-- [Time Condition](time-condition.md)
-- [Using Entity](using-entity.md)
+- [Alias](examples/alias.md)
+- [Average Value](examples/average-value-query.md)
+- [Basic](examples/basic-query.md)
+- [Counter Aggregator](examples/counter-aggregator.md)
+- [Datetime Format](examples/datetime-format.md)
+- [Entity with Tags](examples/entity-with-tags.md)
+- [Filter by Tag](examples/filter-by-tag.md)
+- [Group by Query with Order By](examples/group-by-query-with-order-by.md)
+- [Grouped Average](examples/grouped-average.md)
+- [Inner Join](examples/inner-join.md)
+- [Last Time](examples/last-time.md)
+- [Max Value Time](examples/max-value-time.md)
+- [Not Equal Operator](examples/not-equal-operator.md)
+- [Order By Time](examples/order-by-time.md)
+- [Outer Join With Aggregation](examples/outer-join-with-aggregation.md)
+- [Outer Join](examples/outer-join.md)
+- [Query Format](examples/query-format.md)
+- [Row Number Function](examples/row-number-function.md)
+- [Row Number With Order By Avg](examples/row-number-with-order-by-avg.md)
+- [Row Number With Order By Time & Avg](examples/row-number-with-order-by-time&avg.md)
+- [Row Number With Order By Time](examples/row-number-with-order-by-time.md)
+- [Select All](examples/select-all.md)
+- [Select Entity Tags As Columns](examples/select-entity-tags-as-columns.md)
+- [Time Condition](examples/time-condition.md)
+- [Using Entity](examples/using-entity.md)
 

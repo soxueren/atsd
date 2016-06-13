@@ -1,0 +1,18 @@
+#publisher,Axibase Time-Series Database,https://nur.axibase.com
+#created,2016-06-13T00:10:56.849Z
+#title,SQL Query
+#comment,"SELECT entity, avg(value) AS 'Average', median(value), max(value), count(*), 
+#   percentile(50, value), percentile(75, value), percentile(90, value),  percentile(99, value)  
+#FROM cpu_busy 
+#  WHERE time BETWEEN previous_day and current_day 
+#  GROUP BY entity 
+#  ORDER BY avg(value) DESC"
+#name,entity,Average,median(value),max(value),count(*),percentile(50,value),percentile(75,value),percentile(90,value),percentile(99,value)
+#datatype,string,double,double,double,double,double,double,double,double
+entity,Average,median(value),max(value),count(*),"percentile(50,value)","percentile(75,value)","percentile(90,value)","percentile(99,value)"
+nurswgvml006,18.4,4.0,100.0,5385.0,4.0,10.0,100.0,100.0
+nurswgvml007,8.9,5.0,100.0,5396.0,5.0,7.1,14.1,100.0
+nurswgvml011,5.0,2.0,100.0,5400.0,2.0,3.0,9.2,81.0
+nurswgvml010,4.5,0.8,96.8,5399.0,0.8,1.2,25.1,35.2
+nurswgvml502,3.4,2.0,100.0,5397.0,2.0,4.5,7.0,26.0
+nurswgvml102,1.2,1.0,56.6,5398.0,1.0,2.0,3.0,6.0
