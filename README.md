@@ -74,5 +74,3 @@
     * [Compaction](administration/compaction.md)
     * [Compaction Test](administration/compaction-test.md)
     * [Monitoring](administration/monitoring.md)
-
-
