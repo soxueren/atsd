@@ -97,5 +97,10 @@ curl https://atsd_host:8443/api/v1/messages/insert \
 * [Multiple Messages with Date](/api/data/messages/examples/insert/messages-insert-multiple-messages-for-date.md)
 * [Multiple Messages with Entity](/api/data/messages/examples/insert/messages-insert-multiple-messages-for-entity.md)
 * [Non-persisted Message](/api/data/messages/examples/insert/messages-insert-non-persisted-messages.md)
+* [Duplicate text messages](/api/data/messages/examples/insert/messages-insert-discarded-duplicate-text-messages.md)
+* [Duplicate tags messages](/api/data/messages/examples/insert/messages-insert-discarded-duplicate-tags-messages.md)
+* [Multi-line text messages](/api/data/messages/examples/insert/messages-insert-multi-line-message-text.md)
+* [Multi-line tags messages](/api/data/messages/examples/insert/messages-insert-multi-line-message-tags.md)
+
 
 
