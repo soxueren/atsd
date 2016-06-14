@@ -89,6 +89,11 @@ axibase.
 
 ![](images/atsd-login1.png "atsd login")
 
-## Optional Steps
-- [Veryfing installation](veryfing-installation.md)
-- [Post-installation](post-installation.md).
+## Validation
+
+* [Verify database installation](verifying-installation.md).
+
+## Post-installation Steps
+
+* [Basic configuration](post-installation.md).
+* [Getting Started guide](/tutorials/getting-started.md).

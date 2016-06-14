@@ -62,9 +62,13 @@ Web interface is accessible on port 8088 (http) and 8443 (https).
 
 ## Troubleshooting
 
-* Review [Troubleshooting Guide](troubleshooting.md).
+* Review [troubleshooting guide](troubleshooting.md).
 
-## Optional Steps
+## Validation
 
-- [Veryfing installation](veryfing-installation.md)
-- [Post-installation](post-installation.md)
+* [Verify database installation](verifying-installation.md).
+
+## Post-installation Steps
+
+* [Basic configuration](post-installation.md).
+* [Getting Started guide](/tutorials/getting-started.md).

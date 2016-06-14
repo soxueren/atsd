@@ -1,7 +1,8 @@
 # Verifying Installation
 
-At the end of the installation, the installion script displays ATSD IP and ports
-of ATSD. You can use them to access the ATSD web interface.
+At the end of the installation process, the script displays ATSD IP and ports. 
+
+You can use them to access the ATSD web interface.
 
 Depending on hardware configuration, it can take another 15-20 minutes
 for ATSD to start after the message below has been displayed.
