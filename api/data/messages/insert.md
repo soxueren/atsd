@@ -6,6 +6,7 @@ Insert messages.
 
 * Entity name, source, type, severity, and tag names cannot contain non-printable characters. They are case-insensitive and are converted to lower case when stored.
 * Message text and message tag values are case-sensitive and are stored as submitted.
+* Primary key of the message is composed of type, source, entity, and time. Messages that have the same primary key but different values in other fields such as message text or tags are deduplicated by discarding all duplicates except one.
 
 ## Request
 
