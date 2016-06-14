@@ -1,12 +1,12 @@
 # CSV
 
-CSV files can be [uploaded](https://axibase.com/products/axibase-time-series-database/writing-data/csv/uploading-csv-files/) into Axibase Time-Series Database via HTTP API or manually through the user interface.
+CSV files can be [uploaded](uploading-csv-files.md) into Axibase Time-Series Database via HTTP API or manually through the user interface.
 
 ![](resources/csv.gif)
 
 Uploaded CSV files are processed by a user-defined CSV parser which converts the text into a tabular model and creates series, properties and message commands from cell values depending on column name.
 
-In addition to column-based parsing, ATSD supports [schema-based](/products/axibase-time-series-database/writing-data/csv/csv-schema/) parsing using [RFC 7111](https://tools.ietf.org/html/rfc7111#section-2) selections:
+In addition to column-based parsing, ATSD supports [schema-based](csv-schema.md) parsing using [RFC 7111](https://tools.ietf.org/html/rfc7111#section-2) selections:
 
 ```ls
 select("#row=2-*").select("#col=3-*").
