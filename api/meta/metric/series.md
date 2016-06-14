@@ -26,11 +26,10 @@ None.
 
 | **Parameter** |**Type**| **Description** |
 |:---|:---|:---|
-| entity | string|Include series for the specified entity name. |
-|minInsertDate|iso_date|Include series with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
-|maxInsertDate|iso_date|Include series with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
-
-_All parameters are optional._
+| entity | string| Include series for the specified entity name. |
+| tags.{tag=name} | string | Filter series by specified tag value.|
+|minInsertDate|string|Include series with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+|maxInsertDate|string|Include series with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 
 ### Fields
 
@@ -96,6 +95,12 @@ curl https://atsd_host:8443/api/v1/metrics/disk_used/series \
 ```
 
 ## Additional Examples
+
+* Filter series with tag `file_system` equal to `/`.
+
+```elm
+/api/v1/metrics/disk_used/series?entity=nurswgvml007&tags.file_system=/
+```
 
 
 

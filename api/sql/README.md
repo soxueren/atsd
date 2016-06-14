@@ -79,13 +79,71 @@ Since the underlying data is physically stored in the same shared partitioned ta
 New columns can be created with expressions:
 
 ```sql
-SELECT datetime, entity, t1.value + t2.value as cpu_sysusr
+SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
   FROM "cpu_system" t1
   JOIN "cpu_user" t2
   WHERE datetime > now - 1*MINUTE
 ```
 
-> Versioning columns (version_tatus, version_source, version_time) is  currently not supported..
+### Tag Columns
+
+Tags values can be included in resultset by specifying tags.* or tags.{tag-name} as column name.
+
+```sql
+SELECT datetime, entity, value, tags.* 
+  FROM "disk_used_percent" WHERE datetime > now - 1*MINUTE
+```
+
+```sql
+SELECT datetime, entity, value, tags.mount_point, tags.file_system 
+  FROM "disk_used_percent" WHERE datetime > now - 1*MINUTE
+```
+
+### Versioning Columns
+
+Versioning columns (version_tatus, version_source, version_time) are currently not supported.
+
+## Aliases
+
+Column and table aliases can be added with quoted or double-quoted literal value or with `AS` keyword.
+
+```
+SELECT tbl.value*100 AS "cpu_percent", tbl.time "sample-time" 
+  FROM "cpu_busy" tbl 
+  WHERE datetime > now - 1*MINUTE
+```
+
+The underlying column and table names, or expression text are included in table schema section of the metadata.
+
+## Arithmetic Operators
+
+Arithmetic operators, including `+`, `-`, `*`, `/`, and `%` can be applied to one or multiple numeric data type columns.
+
+```sql
+SELECT datetime, sum(value), sum(value + 100) / 2 
+  FROM gc_invocations_per_minute 
+  WHERE time > now - 10 * minute 
+  GROUP BY period(2 minute)
+```
+
+```sql
+SELECT avg(metric1.value*2), sum(metric1.value + metric2.value) 
+  FROM metric1 
+  JOIN metric2
+  WHERE time > now - 10 * minute 
+```
+
+## Wildcards
+
+`?` and `*` wildcards are supported in `LIKE` expressions. 
+Literal symbols `?` and `*` should be escaped with single backslash.
+
+```sql
+SELECT datetime, entity, value, tags.mount_point, tags.file_system 
+  FROM "disk_used_percent" 
+  WHERE tags.file_system LIKE '/dev/*'
+  AND datetime > now - 1*MINUTE
+```
 
 ## Time Condition
 
@@ -94,13 +152,15 @@ Time condition is specified in WHERE clause using `time` or `datetime` columns.
 The `time` column accepts Unix milliseconds whereas `datetime` column accepts literal date in ISO 8601 format.
 
 ```sql
-SELECT datetime, entity, value FROM "cpu_busy" WHERE time >= 1465685363345 AND datetime < '2016-06-10T14:00:15.020Z'
+SELECT datetime, entity, value FROM "cpu_busy" 
+  WHERE time >= 1465685363345 AND datetime < '2016-06-10T14:00:15.020Z'
 ```
 
 Both columns support [End Time](/end-time-syntax.md) syntax.
 
 ```sql
-SELECT datetime, entity, value FROM "cpu_busy" WHERE time >= previous_minute
+SELECT datetime, entity, value FROM "cpu_busy" 
+  WHERE time >= previous_minute
 ```
 
 ## Query URL
