@@ -14,12 +14,9 @@
 | endDate |	string | End of the selection interval. <br>ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Matches records timestamped before `endDate`.<br>Examples: `2016-05-25T00:15:00Z`, `previous_day - 1 * HOUR`|
 | interval|	object | Duration of the selection interval, specified as `count` and `unit`. <br>Example: `{"count": 5, "unit": "MINUTE"}`|
 
-## ISO Date Format
+## Supported ISO Date Formats
 
-|**Format**|**Example**|**Description**|
-|:---|:---|:---|
-|yyyy-MM-dd'T'HH:mm:ss.SSS'Z'|2016-06-09T16:15:04.005Z|ISO 8601 date. UTC timezone (Z) |
-|yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm|2016-06-09T12:15:04.005-04:00|ISO 8601 date. <br>Time zone offset of +hh:mm ahead of UTC or -hh:mm behind UTC.|
+See [date format](date-format.md) for supported ISO formats.
 
 ## Examples
 

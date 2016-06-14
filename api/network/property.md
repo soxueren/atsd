@@ -8,7 +8,7 @@ Entity, property type and property keys (`k:` fields) form a composite primary k
 
 When a property record is inserted into the database, it overwrites an existing record with the same composite primary key: **entity+type[+key]**.
 
-Use reserved `$entity_tags` type to insert entity tags with property command.
+Use reserved `$entity_tags` type to insert/update entity tags with this property command.
 
 * Entity name, property type, key names, and tag names are case-insensitive and are converted to lower case when stored. 
 * Key values and tag values are case-sensitive and are stored as submitted.
@@ -26,7 +26,7 @@ property e:{entity} t:{type} k:{key-1}={value} k:{key-2}={value} v:{tag-1}={text
 | **Field** | **Required** | **Description** |
 |:---|:---|:---|
 | e         | yes          | Entity name. |
-| t         | no           | Property type. |
+| t         | yes           | Property type. |
 | k         | no           | Property key name and text value. Multiple. |
 | v         | yes           | Property tag name and text value. At least one. |
 | s         | no           | Time in UNIX seconds. | 

@@ -61,7 +61,6 @@ An array of query objects containing the following filtering fields:
 | limit   | integer | Maximum number of records to be returned. Default: 0. | 
 | last | boolean | Return only records with the update time equal to the maximum update time of matched records. Default: false. |
 | offset | integer | Difference, in milliseconds, between maximum update time of matched records and update time of the current record. Default: 0.<br>If the difference exceeds `offset`, the record is excluded from results. |   
-| tagOffset | integer | Difference, in milliseconds, between update time of the current record and update time of the tag field. Default: 0.<br>If the difference exceeds `tagOffset`, the tag field is excluded from `tags` object. |   
 
 ## Response 
 

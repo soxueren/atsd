@@ -40,9 +40,9 @@ Refer to message [query](query.md#message-filter-fields) fields.
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
-|metric|string | Must be set to `message-count`. |
+|metric|string | [**Required**] Must be set to `message-count`. |
 |groupKeys|array | Array of field names to be used for grouping: `type`, `source`, `entity`, etc. |
-|aggregate|object | Periodic [aggregator](/api/data/series/aggregate.md), typically with `COUNT` function.<br>`"aggregate" : { "type" : "COUNT", "period": { "count" : 1, "unit" : "HOUR" } }` |
+|aggregate|object | Period [aggregator](/api/data/series/aggregate.md), typically used with `COUNT` function to calculate the number of messages received per period.<br>`"aggregate" : { "type" : "COUNT", "period": { "count" : 1, "unit" : "HOUR" } }` |
 
 ### Entity Filter Fields
 
@@ -54,15 +54,17 @@ Refer to message [query](query.md#message-filter-fields) fields.
 * [**Required**]
 * Refer to [date filter](../filter-date.md).
 
-### Result Filter Fields
+### Control Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 | limit   | integer | Maximum number of records to be returned. Default: 1000. | 
+| requestId | string | Optional identifier used to associate `query` object in request with `series` objects in response. |
+| timeFormat |string| Time format for data array. `iso` or `milliseconds`. Default: `iso`. |
 
 ## Response 
 
-An array of series objects containing message filter fields, aggregator, and type field:
+An array of series objects containing message filter fields, aggregator, and type field.
 
 ### Fields
 

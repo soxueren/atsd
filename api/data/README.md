@@ -53,6 +53,15 @@ Status Code: 500
 {"error":"...HttpRequestMethodNotSupportedException: Request method 'GET' not supported"}
 ```
 
+## Date/Time Formats
+
+Supported input formats:
+
+* yyyy-MM-dd'T'HH:mm:ss[.SSS]'Z'
+* yyyy-MM-dd'T'HH:mm:ss[.SSS]±hh:mm
+
+Refer to [ISO 8601 date formats](date-format.md).
+
 ## Number Formatting
 
 * Decimal separator is period (`.`).
