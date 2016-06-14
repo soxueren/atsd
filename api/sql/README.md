@@ -73,7 +73,7 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`entity`|string|Entity name.|
 |`tags` *or* `tags.{name}`|object|Object containing series tags, where name is tag name and a value is tag value.<br>`tags.*` syntax is supported only in SELECT clause.|
 |`time`|long|Time in Unix milliseconds|
-|`date`|string|Date in ISO 8601 format|
+|`datetime`|string|Date in ISO 8601 format|
 |`value`|number|Recorded value|
 
 New columns can be created with expressions:

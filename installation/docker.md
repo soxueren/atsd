@@ -117,7 +117,11 @@ uname -a
 
 See "Workarounds" in [#18180](https://github.com/docker/docker/issues/18180#issuecomment-193708192)
 
-## Optional Steps
+## Validation
 
-- [Veryfing installation](veryfing-installation.md)
-- [Post-installation](post-installation.md)
+* [Verify database installation](verifying-installation.md).
+
+## Post-installation Steps
+
+* [Basic configuration](post-installation.md).
+* [Getting Started guide](/tutorials/getting-started.md).

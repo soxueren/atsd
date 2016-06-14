@@ -66,12 +66,13 @@ Web interface is accessible on port 8088 (http) and 8443 (https).
 
 ## Troubleshooting
 
-Review the following log files for errors:
+* Review [troubleshooting guide](troubleshooting.md).
 
-* Startup log: `/opt/atsd/atsd/logs/start.log`
-* Application log: `/opt/atsd/atsd/logs/atsd.log`
+## Validation
 
-## Optional Steps
+* [Verify database installation](verifying-installation.md).
 
-- [Veryfing installation](veryfing-installation.md)
-- [Post-installation](post-installation.md)
+## Post-installation Steps
+
+* [Basic configuration](post-installation.md).
+* [Getting Started guide](/tutorials/getting-started.md).
