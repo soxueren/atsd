@@ -11,23 +11,34 @@ Computes statistics for the specified time periods. The periods start with the b
 | type  | string        | [**Required**] A statistical function, specify only one (mutually exclusive with `types` parameter): `DETAIL`, `COUNT`, `MIN`, `MAX`, `AVG`, `SUM`, `PERCENTILE_999`, `PERCENTILE_995`, `PERCENTILE_99`, `PERCENTILE_95`, `PERCENTILE_90`, `PERCENTILE_75`, `PERCENTILE_50` or `MEDIAN`, `STANDARD_DEVIATION`, `FIRST`, `LAST`, `DELTA`, `WAVG`, `WTAVG`, `THRESHOLD_COUNT`, `THRESHOLD_DURATION`, `THRESHOLD_PERCENT`, `MIN_VALUE_TIME`, `MAX_VALUE_TIME` |
 | types | array          | An array of statistical functions `DETAIL`, `COUNT`, `MIN`, `MAX`, `AVG`, `SUM`, `PERCENTILE_999`, `PERCENTILE_995`, `PERCENTILE_99`, `PERCENTILE_95`, `PERCENTILE_90`, `PERCENTILE_75`, `PERCENTILE_50` or `MEDIAN`, `STANDARD_DEVIATION`, `FIRST`, `LAST`, `DELTA`, `WAVG`, `WTAVG`, `THRESHOLD_COUNT`, `THRESHOLD_DURATION`, `THRESHOLD_PERCENT`, `MIN_VALUE_TIME`, `MAX_VALUE_TIME` |
 | period  | object     | [**Required**] [Period](#period) for computing statistics.  |
-| interpolate  | string  | Generates missing aggregation periods using interpolation if enabled: `NONE`, `LINEAR`, `STEP`   |
-| threshold    | object  | min and max boundaries for `THRESHOLD_X` aggregators  |
-| calendar     | object  | calendar settings for `THRESHOLD_X` aggregators  |
-| workingMinutes | object | working minutes settings for `THRESHOLD_X` aggregators  |
-| counter | boolean | Applies to DELTA aggregator. Boolean. Default value: false. If counter = true, the DELTA aggregator assumes that metric's values never decrease, except when a counter is reset or overflows. The DELTA aggregator takes such reset into account when computing differences. |
-| order         | number           | Change the order in which `aggregate` and `group` is executed, the higher the value of `order` the later in the sequency will it be executed.             |
+| interpolate  | string  | Generates aggregation periods in case of missing detailed samples using an [interpolation function](#interpolation), for example, `PREVIOUS` or `LINEAR`   |
+| threshold    | object  | Object containing minimum and and maximum range for a `THRESHOLD_*` aggregator.  |
+| calendar     | object  | calendar settings for a `THRESHOLD_*` aggregator. |
+| workingMinutes | object | working minutes settings for a `THRESHOLD_*` aggregator.  |
+| order         | number           | Change the order in which `aggregate` and `group` is executed, the higher the value of `order` the later in the sequence will it be executed.             |
 
+
+## Period
+
+Period is a repeating time interval used to group detailed values occurred in the period in order to apply an aggregation function
+
+The period contains the following fields:
+
+| **Name** | **Type**| **Description** |
+|:---|:---|:---|
+| count  | number | [**Required**] Number of time units contained in the period |
+| unit  | string | [**Required**] Time unit such as `MINUTE`, `HOUR`, or `DAY`. |
+| align| string | Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.|
 
 ### calendar
 
-| **Name** | **Type**| **Description* |
+| **Name** | **Type**| **Description** |
 |:---|:---|:---|
 | name | string | Custom calendar name |
 
 ### threshold
 
-| **Name** | **Type**| **Description* |
+| **Name** | **Type**| **Description** |
 |:---|:---|:---|
 | min  | number | min threshold |
 | max  | number | max threshold |
@@ -64,6 +75,55 @@ Computes statistics for the specified time periods. The periods start with the b
         "period": {"count": 1, "unit": "HOUR"}
     }
 }
+```
+
+### Interpolation
+
+By the default, if the period doesn't contain any detailed values, it will not be included in the results.
+
+| **Name** | **Description** |
+|:---|:---|
+| NONE | No interpolation. Periods without any raw values are excluded from results |
+| PREVIOUS | Set value for the period based on the previous period's value |
+| NEXT | Set value for the period based on the period period's value |
+| LINEAR | Calculate period value using linear interpolation between previous and next period values |
+| VALUE| Set value for the period to a specific number |
+
+* PREVIOUS
+
+```json
+            "aggregate" : {
+               "type": "AVG",
+               "period": {"count": 1, "unit": "HOUR"},
+               "interpolate" : {
+                  "type": "PREVIOUS"
+               }
+            }
+```
+
+* LINEAR
+
+```json
+            "aggregate" : {
+               "type": "AVG",
+               "period": {"count": 1, "unit": "HOUR"},
+               "interpolate" : {
+                  "type": "LINEAR"
+               }
+            }
+```
+
+* VALUE
+
+```json
+            "aggregate" : {
+               "type": "AVG",
+               "period": {"count": 1, "unit": "HOUR"},
+               "interpolate" : {
+                  "type": "VALUE",
+                  "value": 0
+               }
+            }
 ```
 
 

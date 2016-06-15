@@ -163,6 +163,53 @@ SELECT datetime, entity, value FROM "cpu_busy"
   WHERE time >= previous_minute
 ```
 
+## Interpolation
+
+> Pending #1475
+
+By the default, if a period specified in `GROUP BY` clause doesn't contain any detailed values, it will not be included in the results.
+
+The behaviour can be changed by specifying an interpolation function.
+
+| **Name** | **Description** |
+|:---|:---|
+| NONE | No interpolation. Periods without any raw values are excluded from results |
+| PREVIOUS | Set value for the period based on the previous period's value |
+| NEXT | Set value for the period based on the period period's value |
+| LINEAR | Calculate period value using linear interpolation between previous and next period values |
+| VALUE| Set value for the period to a specific number |
+
+```sql
+SELECT entity, period(5 MINUTE) 
+  FROM cpu_busy WHERE time > current_hour 
+  GROUP BY entity, period(5 MINUTE, LINEAR)
+```
+
+## Period
+
+Period is a repeating time interval used to group detailed values occurred in the period into buckets in order to apply aggregation functions.
+
+The period contains the following fields:
+
+| **Name** | **Type**| **Description** |
+|:---|:---|:---|
+| count  | number | [**Required**] Number of time units contained in the period. |
+| unit  | string | [**Required**] Time unit such as `MINUTE`, `HOUR`, or `DAY`. |
+| align| string | Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`, .|
+
+> For `START_TIME` and `END_TIME` align options, WHERE clause must contain start and end time of the selection interval, respectively. 
+
+```
+period({count} {unit} [, align])
+```
+
+```sql
+SELECT datetime, sum(value) 
+  FROM gc_invocations_per_minute 
+  WHERE time > current_hour 
+  GROUP BY period(5 minute, FIRST_VALUE_TIME)
+```
+
 ## Query URL
 
 API SQL endpoint is located at: `atsd_server:8088/sql`
