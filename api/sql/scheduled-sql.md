@@ -92,6 +92,8 @@ An expression like `/opt/report/daily/${yyyy-MM-dd}.csv` creates the following d
 
 To distribute report files via email specify message subject and one or multiple email addresses, separated by comma or space.
 
+In case of error, the server will still send an email if email delivery is enabled, including query error text in message body.
+
 ## Versioning
 
 Selecting versioning columns (version_tatus, version_source, version_time) is  currently not supported.

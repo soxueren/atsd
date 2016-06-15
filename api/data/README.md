@@ -76,6 +76,12 @@ Refer to [ISO 8601 date formats](date-format.md).
 * entity, metric, property type, property key name, property key value, and tag name is case-insensitive and is converted to lowercase when stored in ATSD. Other values are case-sensitive and are stored as received.
 * Values are trimmed of starting and trailing line breaks (CR,LF symbols).
 
+## Wildcards
+
+`*` wildcard is supported in entity filter and tag values. 
+
+Literal symbols `?` and `*` should be escaped with single backslash.
+
 ## Response Codes
 
 * `200` status code if the request is successful.
