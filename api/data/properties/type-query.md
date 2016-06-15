@@ -32,6 +32,8 @@ None.
 
 ## Response
 
+An array of property type names.
+
 ### Fields
 
 | **Field** | **Description** |

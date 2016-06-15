@@ -24,12 +24,14 @@ None.
 
 ## Response 
 
+An array of property objects.
+
 ### Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 | type | string | Property type name. |
-| entity |string |  Entity name. |
+| entity |string | Entity name. |
 | key | object | Object containing `name=value` fields that uniquely identify the property record. <br>Example: `{"file_system": "/","mount_point":"sda1"}`|
 | tags | object | Object containing `name=value` fields that are not part of the key and contain descriptive information about the property record. <br>Example: `{"fs_type": "ext4"}`. |
 | date | string | ISO 8601 date when the property record was last modified. |
