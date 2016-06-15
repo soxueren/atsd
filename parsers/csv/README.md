@@ -80,27 +80,27 @@ Columns contained in the CSV file that are not specified in any field in the par
 #### Column-based Parser Examples:
 
 
-- [Weather Data](/products/axibase-time-series-database/writing-data/csv/weather-csv-example/)
-- [Air Quality](/products/axibase-time-series-database/writing-data/csv/air-quality-csv-example/)
+- [Weather Data](examples/weather.md)
+- [Air Quality](examples/air-quality.md)
 
 
 #### Schema-based Parser Examples:
 
 
-- [Basic Example](/products/axibase-time-series-database/writing-data/csv/basic-schema-field/)
-- [Columnar Format](http://axibase.com/products/axibase-time-series-database/writing-data/csv/columnar-schema/)
-- [Columnar Period Format](http://axibase.com/products/axibase-time-series-database/writing-data/csv/columnar-period-schema/)
-- [No Header](/products/axibase-time-series-database/writing-data/csv/no-header-schema/)
-- [Multi-Column Timestamp](/products/axibase-time-series-database/writing-data/csv/multi-column-timestamp/)
-- [Multiple Metrics in Header](/products/axibase-time-series-database/writing-data/csv/multiple-metrics-in-header/)
-- [Metric Column](/products/axibase-time-series-database/writing-data/csv/metric-column-schema/)
-- [Messages](/products/axibase-time-series-database/writing-data/csv/message-schema/)
-- [Properties](/products/axibase-time-series-database/writing-data/csv/properties-schema/)
-- [Messages with Filter](/products/axibase-time-series-database/writing-data/csv/message-with-filter-schema/)
-- [Series with Tags](/products/axibase-time-series-database/writing-data/csv/series-tags-schema/)
-- [notEmptyUp](/products/axibase-time-series-database/writing-data/csv/notemptyup-schema/)
-- [notEmptyLeft](/products/axibase-time-series-database/writing-data/csv/not-empty-left-schema/)
-- [Versioned Series](/products/axibase-time-series-database/writing-data/csv/versioned-series-schema/)
-- [Block-Appended](/products/axibase-time-series-database/writing-data/csv/block-appended-schema/)
+- [Basic Example](examples/basic.md)
+- [Columnar Format](examples/columnar-schema.md)
+- [Columnar Period Format](examples/columnar-period-schema.md)
+- [No Header](examples/no-header.md)
+- [Multi-Column Timestamp](examples/multi-column-timestamp.md)
+- [Multiple Metrics in Header](examples/multiple-metrics-in-header.md)
+- [Metric Column](examples/metric-column-schema.md)
+- [Messages](examples/message-schema.md)
+- [Properties](examples/properties.md)
+- [Messages with Filter](examples/message-with-filter-schema.md)
+- [Series with Tags](examples/series-tags-schema.md)
+- [notEmptyUp](examples/notemptyup-schema.md)
+- [notEmptyLeft](examples/not-empty-left-schema.md)
+- [Versioned Series](examples/versioned-series-schema.md)
+- [Block-Appended](examples/block-appended-schema.md)
 
 
