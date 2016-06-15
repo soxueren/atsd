@@ -1,4 +1,7 @@
 # Discarded duplicate tags messages
+
+## Description
+
 ## Request
 
 ### URI

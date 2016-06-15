@@ -1,4 +1,7 @@
 # Discarded duplicate text messages
+
+## Description
+
 ## Request
 
 ### URI
