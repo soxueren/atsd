@@ -34,7 +34,6 @@ None.
 |expression|no|Use name variable for entity name. Use * placeholder in like expressions|
 |tags|no|Specify metric tags to be included in the response|
 |limit|no|Limit response to first N metrics, ordered by name.|
-|timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 
 ## Response
 

@@ -34,7 +34,6 @@ None.
 |minInsertDate|no|return entities with lastInsertTime equal or greater than specified time, accepts iso date format|
 |maxInsertDate|no|return entities with lastInsertTime less than specified time, accepts iso date format|
 |limit|no|Limit response to first N entities, ordered by name.|
-|timeFormat|no|response time format. Possible values: `iso`, `milliseconds`. Default value: `milliseconds`|
 
 
 ## Response
