@@ -27,6 +27,8 @@ POST https://atsd_host:8443/api/v1/messages/insert
 ```
 
 ## Response
+
+### URI
 ```elm
 POST https://atsd_host:8443/api/v1/messages/query
 ```
