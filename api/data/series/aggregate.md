@@ -2,20 +2,20 @@
 
 ## Overview
 
-Computes statistics for the specified time periods. The periods start with the beginning of an hour.
+Computes statistics for the specified time periods. By default, the periods are aligned with the beginning of calendar units as specified in period.
 
 ## Fields
 
 | **Name** | **Type**  | **Description**   |
 |:---|:---|:---|
-| type  | string        | [**Required**] A statistical function, specify only one (mutually exclusive with `types` parameter): `DETAIL`, `COUNT`, `MIN`, `MAX`, `AVG`, `SUM`, `PERCENTILE_999`, `PERCENTILE_995`, `PERCENTILE_99`, `PERCENTILE_95`, `PERCENTILE_90`, `PERCENTILE_75`, `PERCENTILE_50` or `MEDIAN`, `STANDARD_DEVIATION`, `FIRST`, `LAST`, `DELTA`, `WAVG`, `WTAVG`, `THRESHOLD_COUNT`, `THRESHOLD_DURATION`, `THRESHOLD_PERCENT`, `MIN_VALUE_TIME`, `MAX_VALUE_TIME` |
-| types | array          | An array of statistical functions `DETAIL`, `COUNT`, `MIN`, `MAX`, `AVG`, `SUM`, `PERCENTILE_999`, `PERCENTILE_995`, `PERCENTILE_99`, `PERCENTILE_95`, `PERCENTILE_90`, `PERCENTILE_75`, `PERCENTILE_50` or `MEDIAN`, `STANDARD_DEVIATION`, `FIRST`, `LAST`, `DELTA`, `WAVG`, `WTAVG`, `THRESHOLD_COUNT`, `THRESHOLD_DURATION`, `THRESHOLD_PERCENT`, `MIN_VALUE_TIME`, `MAX_VALUE_TIME` |
+| type  | string        | [**Required**] A statistical function applied to detailed values in each period: `DETAIL`, `AVG`, `SUM`. <br>`DETAIL` function means no aggregation is performed.<br>Refer to [aggregation functions](/api/data/aggregation.md). |
+| types | array          | An array of statistical functions `DETAIL`, `AVG`, `SUM`. Either type or types are required. <br>Refer to [aggregation functions](/api/data/aggregation.md). |
 | period  | object     | [**Required**] [Period](#period) for computing statistics.  |
 | interpolate  | string  | Generates aggregation periods in case of missing detailed samples using an [interpolation function](#interpolation), for example, `PREVIOUS` or `LINEAR`   |
 | threshold    | object  | Object containing minimum and and maximum range for a `THRESHOLD_*` aggregator.  |
 | calendar     | object  | calendar settings for a `THRESHOLD_*` aggregator. |
 | workingMinutes | object | working minutes settings for a `THRESHOLD_*` aggregator.  |
-| order         | number           | Change the order in which `aggregate` and `group` is executed, the higher the value of `order` the later in the sequence will it be executed.             |
+| order         | number           | Change the order in which `aggregate` and `group` are executed, the higher the value of `order` the later in the sequence will it be executed.             |
 
 
 ## Period
@@ -45,9 +45,9 @@ The period contains the following fields:
 
 ### workingMinutes
 
-| **Name** | **Type**| **Description* |
+| **Name** | **Type**| **Description** |
 |:---|:---|:---|
-| start | number | Working date start time, in minutes. If working day starts at 9:30 then `start = 570 = 9 * 60 + 30`. |
+| start | number | Working date start time, in minutes. If working day starts at 9:30 then `start` can be specified as `570` (9 * 60 + 30). |
 | end   | number |  Working date end time, in minutes.  |
 
 ## Examples

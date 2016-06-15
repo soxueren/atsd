@@ -18,7 +18,7 @@ The Data API lets you insert and retrieve series, properties, messages, and aler
 * Messages
   - [insert](messages/insert.md)
   - [query](messages/query.md)
-  - [stats](messages/stats-query.md)
+  - [statistics](messages/stats-query.md)
 * Alerts
   - [query](alerts/query.md)
   - [update](alerts/update.md)

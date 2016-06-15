@@ -115,6 +115,8 @@ SELECT tbl.value*100 AS "cpu_percent", tbl.time "sample-time"
 
 The underlying column and table names, or expression text are included in table schema section of the metadata.
 
+Alias should start with letter [a-zA-Z], followed by letter, digit or underscore.
+
 ## Arithmetic Operators
 
 Arithmetic operators, including `+`, `-`, `*`, `/`, and `%` can be applied to one or multiple numeric data type columns.

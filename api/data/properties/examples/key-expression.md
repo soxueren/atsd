@@ -1,6 +1,6 @@
-# Key Expression
+# Key/Tag Expression
 
-key expression: Filter out all disks except those starting with `sd*`. Disks dm1, dm2 are excluded
+Key/tag expression: Filter out all disks except those starting with `sd*`. Disks dm1, dm2 are excluded
 
 ## Request
 ### URI
@@ -13,7 +13,7 @@ POST https://atsd_host:8443/api/v1/properties/query
     {
         "type": "disk",
         "entity": "nurswgvml007" ,
-        "keyExpression": "id like 'sd*'"
+        "keyTagExpression": "id like 'sd*'"
     }
 ]
 ```

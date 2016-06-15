@@ -1,4 +1,4 @@
-# Properties for type using expression Example
+# Properties for type using keyTagExpression Example
 
 ## Request
 
@@ -15,7 +15,7 @@ POST https://atsd_host:8443/api/v1/properties/query
     {
         "type": "manager2",
         "entity": "host2",
-        "keyExpression": "key3 like 'nur*'"
+        "keyTagExpression": "key3 like 'nur*'"
     }
 ]
 ```
