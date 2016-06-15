@@ -15,7 +15,7 @@
 
 #### Schema
 
-```javscript
+```javascript
 select('#row=1-*').select('#col=1').
 addProperty().
 type(cell(row,3)).
