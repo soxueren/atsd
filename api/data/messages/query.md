@@ -39,8 +39,11 @@ An array of query objects containing the following filtering fields:
 |type       |  string   | Message type. |
 |source       |  string   | Message source. |
 |tags	      | object  | Object with `name=value` fields. <br>Matches records with tags that contain the same fields but may also include other fields. |
-|severity       |  string   | Severity [code or name](/api/data/severity.md).  |
-|minSeverity       |  string   | Minimal [code or name](/api/data/severity.md) severity filter.  |
+|severity     |  string   | Severity [code or name](/api/data/severity.md).  <br>Matches records with the specified severity.<br>Can be specified as string or as number.|
+|severities   |  array   | Am array of severity [codes or names](/api/data/severity.md).  <br>Matches records with one of the the specified severities.<br>Array elements can be specified as string or as number.|
+|minSeverity  |  string   | Minimum [code or name](/api/data/severity.md) severity filter. <br>Can be specified as string or as number. |
+
+* `severity`, `minSeverity`, and `severities` elements can be specified as string or as number. The fields are case-insensitive. The database returns severity names, even if the request contained severity codes.
 
 ### Entity Filter Fields
 
@@ -69,7 +72,7 @@ An array of matching message objects containing the following fields:
 |entity | string | Entity name. |
 |type | string | Message type. |
 |source | string | Message source. |
-|severity | string | Message [severity](/api/data/severity.md) code or name. |
+|severity | string | Message [severity](/api/data/severity.md) name. |
 |tags | object |  Object containing `name=value` fields, for example `tags: {"path": "/", "name": "sda"}`. |
 |message | string | Message text. |
 |date | string | ISO 8601 date when the message record was created. |

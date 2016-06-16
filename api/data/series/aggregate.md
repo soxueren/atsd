@@ -8,27 +8,14 @@ Computes statistics for the specified time periods. By default, the periods are 
 
 | **Name** | **Type**  | **Description**   |
 |:---|:---|:---|
-| type  | string        | [**Required**] A statistical function applied to detailed values in each period: `DETAIL`, `AVG`, `SUM`. <br>`DETAIL` function means no aggregation is performed.<br>Refer to [aggregation functions](/api/data/aggregation.md). |
+| type  | string        | [**Required**] A [statistical function](/api/data/aggregation.md) applied to detailed values in the period, such as `AVG`, `SUM`, or `COUNT`. |
 | types | array          | An array of statistical functions `DETAIL`, `AVG`, `SUM`. Either type or types are required. <br>Refer to [aggregation functions](/api/data/aggregation.md). |
-| period  | object     | [**Required**] [Period](#period) for computing statistics.  |
+| period  | object     | [**Required**] [Period](#period.md) is a repeating time interval used to group detailed values occurred in the period in order to apply an aggregation function.<br>For example, `"period": { "count": 1, "unit": "HOUR" }`  |
 | interpolate  | string  | Generates aggregation periods in case of missing detailed samples using an [interpolation function](#interpolation), for example, `PREVIOUS` or `LINEAR`   |
 | threshold    | object  | Object containing minimum and and maximum range for a `THRESHOLD_*` aggregator.  |
 | calendar     | object  | calendar settings for a `THRESHOLD_*` aggregator. |
 | workingMinutes | object | working minutes settings for a `THRESHOLD_*` aggregator.  |
 | order         | number           | Change the order in which `aggregate` and `group` are executed, the higher the value of `order` the later in the sequence will it be executed.             |
-
-
-## Period
-
-Period is a repeating time interval used to group detailed values occurred in the period in order to apply an aggregation function
-
-The period contains the following fields:
-
-| **Name** | **Type**| **Description** |
-|:---|:---|:---|
-| count  | number | [**Required**] Number of time units contained in the period |
-| unit  | string | [**Required**] Time unit such as `MINUTE`, `HOUR`, or `DAY`. |
-| align| string | Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.|
 
 ### calendar
 
@@ -79,17 +66,20 @@ The period contains the following fields:
 
 ### Interpolation
 
-By the default, if the period doesn't contain any detailed values, it will not be included in the results.
+By the default, if the period doesn't contain any detailed values, it will be excluded from the results.
+The behaviour can be changed by specifying an interpolation function.
 
 | **Name** | **Description** |
 |:---|:---|
-| NONE | No interpolation. Periods without any raw values are excluded from results |
-| PREVIOUS | Set value for the period based on the previous period's value |
-| NEXT | Set value for the period based on the period period's value |
-| LINEAR | Calculate period value using linear interpolation between previous and next period values |
-| VALUE| Set value for the period to a specific number |
+| NONE | No interpolation. Periods without any raw values are excluded from results. |
+| PREVIOUS | Set value for the period based on the previous period's value. |
+| NEXT | Set value for the period based on the next period's value. |
+| LINEAR | Calculate period value using linear interpolation between previous and next period values. |
+| VALUE| Set value for the period to a specific number. |
 
-* PREVIOUS
+#### Examples
+
+**PREVIOUS**:
 
 ```json
             "aggregate" : {
@@ -101,7 +91,7 @@ By the default, if the period doesn't contain any detailed values, it will not b
             }
 ```
 
-* LINEAR
+**LINEAR**:
 
 ```json
             "aggregate" : {
@@ -113,7 +103,7 @@ By the default, if the period doesn't contain any detailed values, it will not b
             }
 ```
 
-* VALUE
+**VALUE**:
 
 ```json
             "aggregate" : {
@@ -125,6 +115,10 @@ By the default, if the period doesn't contain any detailed values, it will not b
                }
             }
 ```
+
+[Chartlab Example](https://apps.axibase.com/chartlab/d8c03f11/3/)
+
+![Interpolation Example](aggregate_interpolate.png)
 
 
 

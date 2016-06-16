@@ -165,28 +165,6 @@ SELECT datetime, entity, value FROM "cpu_busy"
   WHERE time >= previous_minute
 ```
 
-## Interpolation
-
-> Pending #1475
-
-By the default, if a period specified in `GROUP BY` clause doesn't contain any detailed values, it will not be included in the results.
-
-The behaviour can be changed by specifying an interpolation function.
-
-| **Name** | **Description** |
-|:---|:---|
-| NONE | No interpolation. Periods without any raw values are excluded from results |
-| PREVIOUS | Set value for the period based on the previous period's value |
-| NEXT | Set value for the period based on the period period's value |
-| LINEAR | Calculate period value using linear interpolation between previous and next period values |
-| VALUE| Set value for the period to a specific number |
-
-```sql
-SELECT entity, period(5 MINUTE) 
-  FROM cpu_busy WHERE time > current_hour 
-  GROUP BY entity, period(5 MINUTE, LINEAR)
-```
-
 ## Period
 
 Period is a repeating time interval used to group detailed values occurred in the period into buckets in order to apply aggregation functions.
@@ -196,21 +174,67 @@ The period contains the following fields:
 | **Name** | **Type**| **Description** |
 |:---|:---|:---|
 | count  | number | [**Required**] Number of time units contained in the period. |
-| unit  | string | [**Required**] Time unit such as `MINUTE`, `HOUR`, or `DAY`. |
-| align| string | Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`, .|
-
-> For `START_TIME` and `END_TIME` align options, WHERE clause must contain start and end time of the selection interval, respectively. 
+| unit  | string | [**Required**] [Time unit](/api/series/time-unit.md) such as `MINUTE`, `HOUR`, `DAY`. |
+| interpolation  | Interpolation function. Default: `NONE`. Refer to #interpolation |
+| align| string | Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to #period-alignment|
 
 ```
-period({count} {unit} [, align])
+PERIOD({count} {unit} [, interpolation [, align]])
 ```
 
 ```sql
-SELECT datetime, sum(value) 
+SELECT entity, date_format(period(5 minute, NONE, END_TIME)), AVG(value) 
   FROM gc_invocations_per_minute 
-  WHERE time > current_hour 
-  GROUP BY period(5 minute, FIRST_VALUE_TIME)
+  WHERE time >= current_hour AND time < next_hour
+  GROUP BY entity, period(5 minute, NONE, END_TIME)
 ```
+
+The period specified in `GROUP BY` clause can be entered without _align_ and _interpolation_ fields in the SELECT clause:
+
+```sql
+SELECT entity, date_format(period(5 minute), AVG(value) 
+  FROM gc_invocations_per_minute 
+  WHERE time >= current_hour AND time < next_hour
+  GROUP BY entity, period(5 minute, NONE, END_TIME)
+```
+
+### Period Alignment
+
+By default, periods are aligned to calendar grid according based on period's time unit.
+
+For example, `period(1 HOUR)` starts at 0 minutes of each hour in the timespan.
+
+For time units DAY, WEEK, MONTH, QUARTER, and YEAR the start of the day is determined according to server time.
+
+The default `CALENDAR` alignment can be changed to `START_TIME`, `END_TIME`, or `FIRST_VALUE_TIME`.
+
+In case of `START_TIME` and `FIRST_VALUE_TIME`, start of the first period is determined according to the start of the selection interval or time of the first value, respectively.
+
+In case of `END_TIME`, end of the last period is determined according to the end of the selection interval.
+
+For `START_TIME` and `END_TIME` options, WHERE clause must contain start and end time of the selection interval, respectively.
+
+## Interpolation
+
+By the default, if a period specified in `GROUP BY` clause doesn't contain any detailed values, it will be excluded from the results.
+
+The behaviour can be changed by referencing an interpolation function as part of `PERIOD` clause.
+
+| **Name** | **Description** |
+|:---|:---|
+| NONE | No interpolation. Periods without any raw values are excluded from results. |
+| PREVIOUS | Set value for the period based on the previous period's value. |
+| NEXT | Set value for the period based on the next period's value. |
+| LINEAR | Calculate period value using linear interpolation between previous and next period values. |
+| VALUE| Set value for the period to a specific number. |
+
+```sql
+SELECT entity, period(5 MINUTE), avg(value)
+  FROM cpu_busy WHERE time > current_hour 
+  GROUP BY entity, period(5 MINUTE, LINEAR)
+```
+
+[Interpolation Examples in Chartlab](https://apps.axibase.com/chartlab/d8c03f11/3/)
 
 ## Query URL
 
@@ -322,7 +346,9 @@ Supported time formats include:
 
 ## Time Formatting Functions
 
-`date_format(long milliseconds[, string format])` - Formats Unix millisecond time to string in user-defined date format. If format is not specified, ISO 8601 format is applied.
+`date_format(long milliseconds[, string format])` - Formats Unix millisecond time to string in user-defined date format. 
+
+If format is not specified, ISO 8601 format is applied.
 
 Examples:
 
@@ -330,6 +356,19 @@ Examples:
 * `date_format(max_value_time(value))`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss')`
 
+```sql
+SELECT value, time, date_format(time), 
+  date_format(time, "yyyy-MM-dd'T'HH:mm:ss.SSSZ"),
+  date_format(time, 'yyyy-MM-dd HH:mm:ss.SSS')
+FROM cpu_busy
+  WHERE datetime > now - 5 * minute
+  LIMIT 1
+```
+
+```elm
+value  time           date_format(time)         date_format(time,'yyyy-MM-dd'T'HH:mm:ss.SSSZ')  date_format(time,'yyyy-MM-dd HH:mm:ss.SSS')
+5.1    1466069048000  2016-06-16T09:24:08.000Z  2016-06-16T09:24:08.000+0000                    2016-06-16 09:24:08.000
+```
 
 ## Case Sensitivity
 

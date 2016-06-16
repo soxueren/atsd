@@ -4,11 +4,21 @@
 
 * [Docker Engine](https://docs.docker.com/engine/installation/) 1.7+.
 
-## Image Information
+## Images
+
+### Docker Hub Image Information
 
 * Image name: `axibase/atsd:latest`
+* Base: ubuntu:14.04
 * [Dockerfile](https://github.com/axibase/dockers/blob/master/atsd/Dockerfile)
 * [Docker Hub](https://hub.docker.com/r/axibase/atsd/)
+
+### RedHat Enterprise Linux Activated Image Information
+
+* Image name: `axibase/atsd:rhel7`
+* Base: rhel7:latest
+* [Dockerfile](https://github.com/axibase/dockers/blob/atsd-rhel7/Dockerfile)
+* [readme](https://github.com/axibase/dockers/blob/atsd-rhel7/README.md)
 
 ## Start Container
 
