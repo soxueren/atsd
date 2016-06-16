@@ -217,7 +217,7 @@ For `START_TIME` and `END_TIME` options, `WHERE` clause must contain start and e
 
 ## Interpolation
 
-By the default, if a period specified in `GROUP BY` clause doesn't contain any detailed values, it will be excluded from the results.
+By the default, if a period specified in `GROUP BY` clause doesn't contain any detailed values or the period has been filtered out with `HAVING` clause, it will be excluded from the results.
 
 The behaviour can be changed by referencing an interpolation function as part of `PERIOD` clause.
 
@@ -234,6 +234,8 @@ SELECT entity, period(5 MINUTE), avg(value)
   FROM cpu_busy WHERE time > current_hour 
   GROUP BY entity, period(5 MINUTE, LINEAR)
 ```
+
+> The interpolation functions is applied after HAVING filter.
 
 [Interpolation Examples in Chartlab](https://apps.axibase.com/chartlab/d8c03f11/3/)
 
