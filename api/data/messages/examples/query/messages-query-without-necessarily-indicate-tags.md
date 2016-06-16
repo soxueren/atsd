@@ -1,4 +1,4 @@
-# Message Query Without Necessarily Indicate Tags
+# Query Without Necessarily Indicate Tags
 
 ## Description
 

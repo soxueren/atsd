@@ -1,4 +1,4 @@
-# Message With Null Or Without Type Value
+# Query With Null Or Without Type Value
 
 ## Description
 
@@ -21,10 +21,6 @@ POST https://atsd_host:8443/api/v1/messages/query
 
 ## Response
 
-### URI
-```elm
-POST https://atsd_host:8443/api/v1/messages/query
-```
 ### Payload
 ```json
 [
