@@ -64,7 +64,7 @@ Columns contained in the CSV file that are not specified in any field in the par
 | Setting | Description | 
 | --- | --- | 
 |  <p>Delimiter</p>  |  <p>Separator dividing values: comma, semicolon, or tab.</p>  | 
-|  <p>Line Delimiter</p>  |  <p>End-of-line symbol: EOL `(\\n, \\rn)` or semicolon `;`</p>  | 
+|  <p>Line Delimiter</p>  |  <p>End-of-line symbol: EOL `(\n, \r\n)` or semicolon `;`</p>  | 
 |  <p>Text Qualifier</p>  |  <p>Escape character to differentiate separator as literal value.</p>  | 
 |  <p>Comment Symbol</p>  |  <p>Lines starting with comment symbol such as hash `#` are ignored.</p>  | 
 |  <p>Padding Symbol</p>  |  <p>Symbol appended to text values until all cells in the given column have the same width.</p>  <p>Applies to fixed-length formats such as .dat format.</p>  | 
