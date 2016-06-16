@@ -8,9 +8,9 @@ Computes statistics for the specified time periods. By default, the periods are 
 
 | **Name** | **Type**  | **Description**   |
 |:---|:---|:---|
-| type  | string        | [**Required**] A [statistical function](/api/data/aggregation.md) applied to detailed values in the period, such as `AVG`, `SUM`, or `COUNT`. |
-| types | array          | An array of statistical functions `DETAIL`, `AVG`, `SUM`. Either type or types are required. <br>Refer to [aggregation functions](/api/data/aggregation.md). |
-| period  | object     | [**Required**] [Period](#period.md) is a repeating time interval used to group detailed values occurred in the period in order to apply an aggregation function.<br>For example, `"period": { "count": 1, "unit": "HOUR" }`  |
+| type  | string        | [**Required**] [Statistical function](/api/data/aggregation.md) applied to detailed values in the period, such as `AVG`, `SUM`, or `COUNT`. |
+| types | array          | Array of [statistical functions](/api/data/aggregation.md) `DETAIL`, `AVG`, `SUM`. Either `type` or `types` fields are required in each query. |
+| period  | object     | [**Required**] [Period](#period.md) is a repeating time interval used to group detailed values occurred in the period in order to apply a statistical function.<br>For example, `"period": { "count": 1, "unit": "HOUR" }`  |
 | interpolate  | string  | Generates aggregation periods in case of missing detailed samples using an [interpolation function](#interpolation), for example, `PREVIOUS` or `LINEAR`   |
 | threshold    | object  | Object containing minimum and and maximum range for a `THRESHOLD_*` aggregator.  |
 | calendar     | object  | calendar settings for a `THRESHOLD_*` aggregator. |

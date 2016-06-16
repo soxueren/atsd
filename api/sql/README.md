@@ -22,9 +22,9 @@ Only SELECT commands are supported at this time.
 
 ### Virtual Tables
 
-SELECT commands can reference virtual tables in the FROM clause whereas such tables must correspond to metric names.
+SELECT commands can reference virtual tables in `FROM` clause whereas such tables must correspond to metric names.
 
-Each virtual table represents a subset of records stored in a shared partition table for the underlying metric.
+Each virtual table represents a subset of records stored in a shared partitioned table for the underlying metric.
 
 ```sql
 SELECT datetime, entity, value FROM "cpu_busy" WHERE datetime > now - 1*MINUTE
@@ -36,7 +36,7 @@ Virtual tables are provided only for series. Access to other types of data (prop
 
 ### Joins
 
-Data for multiple metrics can be merged by joining virtual tables with JOIN clause(s).
+Data for multiple metrics can be merged by joining virtual tables with `JOIN` clause(s).
 
 ```sql
 SELECT datetime, entity, t1.value, t2.value, t3.value
@@ -46,13 +46,13 @@ SELECT datetime, entity, t1.value, t2.value, t3.value
   WHERE datetime > now - 1*MINUTE
 ```
 
-In absence of columns in the JOIN clause, the records are joined by entity, record time, and all tags (if specified) by default.
+In absence of columns in `JOIN` clause, the records are joined by entity, record time, and all tags (if specified) by default.
 
 For the JOIN to work for detailed data, records must have exactly the same time. 
 
 This is typically the case when multiple metrics are inserted with one command or when time is controlled externally, as in the example above, where metrics 'cpu_system', 'cpu_user', 'cpu_iowait' are all timestamped externally by the same collector script with the same time during each `mpstat` command invocation.
 
-To merge metrics with different times, use OUTER JOIN with period aggregation, aligned to calendar, in order to regularize timestamps of merged series.
+To merge metrics with different times, use `OUTER JOIN` clause with period aggregation, aligned to calendar, in order to regularize timestamps of merged series.
 
 ```sql
 SELECT datetime, entity, avg(t1.value), avg(t2.value)
@@ -71,12 +71,13 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |:---|:---|:---|
 |`metric`|string|Metric name, same as virtual table name.|
 |`entity`|string|Entity name.|
-|`tags` *or* `tags.{name}`|object|Object containing series tags, where name is tag name and a value is tag value.<br>`tags.*` syntax is supported only in SELECT clause.|
-|`time`|long|Time in Unix milliseconds|
-|`datetime`|string|Date in ISO 8601 format|
+|`tags` *or* `tags.{name}`|object|Object containing series tags, where name is tag name and a value is tag value.<br>`tags.*` syntax is supported only in `SELECT` clause.|
+|`time`|long|Time in Unix milliseconds since 1970-01-01T00:00:00Z, e.g. `1408007200000`|
+|`datetime`|string|Date in ISO 8601 format, e.g. `2016-06-10T14:00:15.020Z`|
+|`period`|long|Time in Unix milliseconds since 1970-01-01T00:00:00Z, e.g. `1408007200000`|
 |`value`|number|Recorded value|
 
-New columns can be created with expressions:
+New columns can be created by applying function and arithmetic expressions to existing columns:
 
 ```sql
 SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
@@ -149,7 +150,7 @@ SELECT datetime, entity, value, tags.mount_point, tags.file_system
 
 ## Time Condition
 
-Time condition is specified in WHERE clause using `time` or `datetime` columns.
+Time condition is specified in `WHERE` clause using `time` or `datetime` columns.
 
 The `time` column accepts Unix milliseconds whereas `datetime` column accepts literal date in ISO 8601 format.
 
@@ -171,31 +172,31 @@ Period is a repeating time interval used to group detailed values occurred in th
 
 The period contains the following fields:
 
-| **Name** | **Type**| **Description** |
-|:---|:---|:---|
-| count  | number | [**Required**] Number of time units contained in the period. |
-| unit  | string | [**Required**] [Time unit](/api/series/time-unit.md) such as `MINUTE`, `HOUR`, `DAY`. |
-| interpolation  | Interpolation function. Default: `NONE`. Refer to #interpolation |
-| align| string | Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to #period-alignment|
+| **Name** | **Description** |
+|:---|:---|
+| count  | [**Required**] Number of time units contained in the period. |
+| unit  | [**Required**] [Time unit](/api/series/time-unit.md) such as `MINUTE`, `HOUR`, `DAY`. |
+| interpolation  | Interpolation function, such as `LINEAR`. Default: `NONE`. Refer to [interpolation](#interpolation). |
+| align| Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
 
-```
+```sql
 PERIOD({count} {unit} [, interpolation [, align]])
 ```
 
 ```sql
-SELECT entity, date_format(period(5 minute, NONE, END_TIME)), AVG(value) 
+SELECT entity, date_format(PERIOD(5 minute, NONE, END_TIME)), AVG(value) 
   FROM gc_invocations_per_minute 
   WHERE time >= current_hour AND time < next_hour
-  GROUP BY entity, period(5 minute, NONE, END_TIME)
+  GROUP BY entity, PERIOD(5 minute, NONE, END_TIME)
 ```
 
-The period specified in `GROUP BY` clause can be entered without _align_ and _interpolation_ fields in the SELECT clause:
+The period specified in `GROUP BY` clause can be entered without _align_ and _interpolation_ fields in `SELECT` clause:
 
 ```sql
-SELECT entity, date_format(period(5 minute), AVG(value) 
+SELECT entity, date_format(PERIOD(5 minute), AVG(value) 
   FROM gc_invocations_per_minute 
   WHERE time >= current_hour AND time < next_hour
-  GROUP BY entity, period(5 minute, NONE, END_TIME)
+  GROUP BY entity, PERIOD(5 minute, NONE, END_TIME)
 ```
 
 ### Period Alignment
@@ -212,7 +213,7 @@ In case of `START_TIME` and `FIRST_VALUE_TIME`, start of the first period is det
 
 In case of `END_TIME`, end of the last period is determined according to the end of the selection interval.
 
-For `START_TIME` and `END_TIME` options, WHERE clause must contain start and end time of the selection interval, respectively.
+For `START_TIME` and `END_TIME` options, `WHERE` clause must contain start and end time of the selection interval, respectively.
 
 ## Interpolation
 
@@ -238,19 +239,19 @@ SELECT entity, period(5 MINUTE), avg(value)
 
 ## Query URL
 
-API SQL endpoint is located at: `atsd_server:8088/sql`
+API SQL endpoint is located at: `https://atsd_server:8443/sql?q={QUERY}`
 
-The `q` parameter value must be URL-encoded.
+The `{QUERY}` parameter value must be URL-encoded.
 
 ### Query URL Example
 
 ```elm
-https://atsd_server:8443/sql?q=SELECT+time%2C+value%2C+entity+FROM+mpstat.cpu_busy+WHERE+entity+%3D+%27nurswgvml007%27+AND+time+%3E%3D+previous_day+AND+time+%3C+now
+https://atsd_server:8443/sql?q=SELECT+time%2C+value%2C+entity+FROM+mpstat.cpu_busy+WHERE+time+%3E%3D+previous_hour
 ```
 
 ## Authorization
 
-The rows returned for the SQL query are filtered by the server according to the user's entity read permissions.
+The rows returned for the SQL query are filtered on the server according to the user's entity read permissions.
 
 This means that the same query executed by users with different permissions may produce different results.
 
@@ -331,24 +332,17 @@ The PERCENTILE function accepts `percentile` parameter (0 to 100) and `value` pa
 * OUTER JOIN
 * LAST_TIME
 
-## Not Supported Operators
 
-* INTERPOLATE can follow GROUP BY period(interval) function, e.g. period(1 DAY) interpolate(LINEAR). interpolate - LINEAR, VALUE(0), PREVIOUS, NEXT
-
-## Date and Time Formats
-
-Supported time formats include:
-
-|**Column**|**Type**|**Description**|**Example**|
-|:---|:---|:---|:---|
-|time  |long  |Unix milliseconds since 1970-01-01T00:00:00Z|`1408007200000`|
-|datetime|string|ISO 8601 date | `2016-06-10T14:00:15.020Z`|
 
 ## Time Formatting Functions
 
-`date_format(long milliseconds[, string format])` - Formats Unix millisecond time to string in user-defined date format. 
+`date_format` function formats Unix millisecond time to a string in user-defined date format. 
 
-If format is not specified, ISO 8601 format is applied.
+```java
+date_format(long milliseconds[, time format])
+```
+
+If the time format argument is not provided, ISO 8601 format is applied.
 
 Examples:
 
