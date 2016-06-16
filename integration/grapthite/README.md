@@ -19,7 +19,7 @@ ATSD has a Storage Finder for Graphite-Web, meaning that you can use ATSD as the
 - [Sensu](https://sensuapp.org/) – a monitoring framework that can route metrics to Graphite.
 - [Graphios](https://github.com/shawn-sterling/graphios) – a small Python daemon to send Nagios performance data (perfdata) to Graphite.
 - [Gruffalo](https://github.com/outbrain/gruffalo) – an asynchronous Netty based graphite proxy, for large scale installations.
-- [StatsD](/products/axibase-time-series-database/writing-data/statsd/) – a simple daemon for easy stats aggregation.
+- [StatsD](../statsd) – a simple daemon for easy stats aggregation.
 - [Grafana](http://grafana.org/) – a general purpose graphite dashboard replacement with feature rich graph editing and dashboard creation interface.
 
 

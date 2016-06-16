@@ -36,8 +36,8 @@ series e:nurswgvml001 d:2015-11-15T00:00:00Z m:space_used_%=14.4 t:disk=/dev/sda
 |  <p>Entity Column</p>  |  <p>Name of column in csv file containing the entities, for example: host or node.</p>  <p>Multiple columns can be specified in Entity Column field in order to concatenate their values into a composite entity name using dash symbol – as a token.</p>  <p>For example:</p>  <p>Souce CSV file:</p>  <p>`Year,Source,Destination,Travelers`</p>  <p>`1995,Moscow,Berlin,2000000`</p>  <p>Entity Columns:</p>  <p>`Source,Destination`</p>  <p>Resulting Entity:</p>  <p>`Moscow-Berlin`</p>  | 
 |  <p>Entity Prefix</p>  |  <p>Prefix added to entity names.</p>  | 
 |  <p>Default Entity</p>  |  <p>All data written to specific entity</p>  | 
-|  <p>Replace Entities</p>  |  <p>Replace entity names in the input file with their aliases from the selected [Replacement Table](/products/axibase-time-series-database/download-atsd/administration/entity-lookup/).</p>  <p>For example if Replacement Table contains a mapping `103323213=sensor001` and the entity of the CSV file is named `103323213` then it will be saved in ATSD as `sensor001`.</p>  | 
-|  <p>Process Events</p>  |  <p>Process incoming data in the [Rule Engine](/products/axibase-time-series-database/rule-engine/) in addition to storing it in the database.</p>  | 
+|  <p>Replace Entities</p>  |  <p>Replace entity names in the input file with their aliases from the selected [Replacement Table](../../administration/entity-lookup.md).</p>  <p>For example if Replacement Table contains a mapping `103323213=sensor001` and the entity of the CSV file is named `103323213` then it will be saved in ATSD as `sensor001`.</p>  | 
+|  <p>Process Events</p>  |  <p>Process incoming data in the [Rule Engine](../../rule-engine/rule-engine.md) in addition to storing it in the database.</p>  | 
 |  <p>Metric Prefix</p>  |  <p>Prefix added to metric names.</p>  | 
 |  <p>Metric Name Column</p>  |  <p>Column containing metric names</p>  | 
 |  <p>Metric Value Column</p>  |  <p>Column containing metric values</p>  | 
@@ -54,7 +54,7 @@ series e:nurswgvml001 d:2015-11-15T00:00:00Z m:space_used_%=14.4 t:disk=/dev/sda
 |  <p>Ignored Columns</p>  |  <p>List of columns ignored in METRIC and MESSAGE commands.</p>  <p>These columns are retained in PROPERTY commands.</p>  | 
 |  <p>Renamed Columns</p>  |  <p>List of column names to substitute input column headers, one mapping per line.</p>  <p>Usage: `inputname=storedname`</p>  | 
 |  <p>Header</p>  |  <p>Header to be used if the file contains no header or to replace existing header.</p>  | 
-|  <p>Schema</p>  |  <p>[Schema](/products/axibase-time-series-database/writing-data/csv/csv-schema/) defines how to process cells based on their position.</p>  | 
+|  <p>Schema</p>  |  <p>[Schema](csv-schema.md) defines how to process cells based on their position.</p>  | 
 
 
 Columns contained in the CSV file that are not specified in any field in the parser will be imported as metrics.
