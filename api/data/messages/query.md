@@ -152,7 +152,7 @@ curl  https://atsd_host:8443/api/v1/messages/query \
 ```
 
 ## Additional Examples
-* [Query with null or without yype value](/api/data/messages/examples/query/messages-query-null-without-type-value-message.md)
+* [Query with null or without type value](/api/data/messages/examples/query/messages-query-null-without-type-value-message.md)
 * [Query with null or without source value](/api/data/messages/examples/query/messages-query-null-without-source-value-message.md)
 * [Query without necessarily indicate tags](/api/data/messages/examples/query/messages-query-without-necessarily-indicate-tags.md)
 * [Thresholds times for query](/api/data/messages/examples/query/messages-query-thresholds-times-query.md)
