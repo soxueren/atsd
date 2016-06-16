@@ -152,8 +152,9 @@ curl  https://atsd_host:8443/api/v1/messages/query \
 ```
 
 ## Additional Examples
-* [Message With Null Or Without Type Value](/api/data/messages/examples/query/messages-query-null-without-type-value-message.md)
-* [Message With Null Or Without Type Value](/api/data/messages/examples/query/messages-query-null-without-source-value-message.md)
+* [Query With Null Or Without Type Value](/api/data/messages/examples/query/messages-query-null-without-type-value-message.md)
+* [Query With Null Or Without Source Value](/api/data/messages/examples/query/messages-query-null-without-source-value-message.md)
+* [Query Without Necessarily Indicate Tags](/api/data/messages/examples/query/messages-query-without-necessarily-indicate-tags.md)
 
 
 
