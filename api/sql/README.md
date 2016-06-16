@@ -48,7 +48,7 @@ SELECT datetime, entity, t1.value, t2.value, t3.value
 
 In absence of columns in `JOIN` clause, the records are joined by entity, record time, and all tags (if specified) by default.
 
-For the JOIN to work for detailed data, records must have exactly the same time. 
+For `JOIN` to operate on detailed date, records should have exactly the same time. 
 
 This is typically the case when multiple metrics are inserted with one command or when time is controlled externally, as in the example above, where metrics 'cpu_system', 'cpu_user', 'cpu_iowait' are all timestamped externally by the same collector script with the same time during each `mpstat` command invocation.
 
@@ -69,21 +69,30 @@ Since the underlying data is physically stored in the same shared partitioned ta
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
+|`value`|number|Series value.|
 |`metric`|string|Metric name, same as virtual table name.|
 |`entity`|string|Entity name.|
 |`tags` *or* `tags.{name}`|object|Object containing series tags, where name is tag name and a value is tag value.<br>`tags.*` syntax is supported only in `SELECT` clause.|
-|`time`|long|Time in Unix milliseconds since 1970-01-01T00:00:00Z, e.g. `1408007200000`|
-|`datetime`|string|Date in ISO 8601 format, e.g. `2016-06-10T14:00:15.020Z`|
-|`period`|long|Time in Unix milliseconds since 1970-01-01T00:00:00Z, e.g. `1408007200000`|
-|`value`|number|Recorded value|
+|`time`|long|Record time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY` query with `PERIOD`, time column returns period start time, same as `PERIOD()` column specified in `GROUP BY` clause.|
+|`datetime`|string|Record time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY` query with `PERIOD`, datetime column returns period start time in ISO format, same as `date_format(PERIOD())` column specified in `GROUP BY` clause.|
+|`period`|long|Period start time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.|
 
-New columns can be created by applying function and arithmetic expressions to existing columns:
+New columns can be created by applying functions and arithmetic expressions to existing columns.
 
 ```sql
 SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
   FROM "cpu_system" t1
   JOIN "cpu_user" t2
   WHERE datetime > now - 1*MINUTE
+```
+
+In `GROUP BY` query, `datetime` and `PERIOD()` columns return the same value, period's start time, in ISO format. In this case, `date_format(PERIOD(5 minute))` can be omitted.
+
+```sql
+SELECT entity, datetime, date_format(PERIOD(5 minute)), AVG(value) 
+  FROM gc_invocations_per_minute 
+  WHERE time >= current_hour AND time < next_hour
+  GROUP BY entity, PERIOD(5 minute)
 ```
 
 ### Tag Columns
@@ -205,7 +214,7 @@ By default, periods are aligned to calendar grid according based on period's tim
 
 For example, `period(1 HOUR)` starts at 0 minutes of each hour in the timespan.
 
-For time units DAY, WEEK, MONTH, QUARTER, and YEAR the start of the day is determined according to server time.
+For DAY, WEEK, MONTH, QUARTER, and YEAR units the start of the day is determined according to server timezone.
 
 The default `CALENDAR` alignment can be changed to `START_TIME`, `END_TIME`, or `FIRST_VALUE_TIME`.
 
@@ -214,6 +223,14 @@ In case of `START_TIME` and `FIRST_VALUE_TIME`, start of the first period is det
 In case of `END_TIME`, end of the last period is determined according to the end of the selection interval.
 
 For `START_TIME` and `END_TIME` options, `WHERE` clause must contain start and end time of the selection interval, respectively.
+
+```sql
+SELECT entity, date_format(PERIOD(5 MINUTE)), COUNT(value) 
+  FROM cpu_busy 
+WHERE datetime >= now-1*HOUR AND datetime < now
+  AND entity = 'nurswgvml006'
+GROUP BY entity, PERIOD(5 MINUTE, NONE, END_TIME)
+```
 
 ## Interpolation
 
