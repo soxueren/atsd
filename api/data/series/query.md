@@ -67,7 +67,7 @@ An array of query objects containing the following filtering fields:
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
-| limit   | integer | Maximum number of time:value samples returned for each series. Default: 0 (no limit).<br>Note that limit is applied from the end (default direction=DESC), for example limit=1 means last value. | 
+| limit   | integer | Maximum number of time:value samples returned for each series. Default: 0.<br>Note that limit is applied from the end (default direction=DESC), for example limit=1 means last value.<br>Limit is not applied if the parameter value <= 0.  | 
 | direction| string | Scan order for applying the `limit`: `DESC` - descending, `ASC` - ascending. Default: `DESC`. <br>The returned data values will still be sorted in ascending order.<br>`ASC` direction is supported @since HBase 1.1|
 | last | boolean | Retrieves only 1 most recent value for each series. Default: false.<br>Start time and end time are ignored when `last=true`. <br>`last` can return most recent value faster than scan. <br>When last is specified and there is no aggregator or aggregator is `DETAIL`, ATSD executes GET request for the last hour. <br>If the first `GET` returns no data, a second `GET` is executed for the previous hour.|
 | cache | boolean | If true, execute the query against Last Insert table which results in faster response time for last value queries. Default: `false`<br>Values in Last Insert table maybe delayed of up to 1 minute (cache to disk interval). |

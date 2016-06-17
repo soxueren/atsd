@@ -59,7 +59,7 @@ An array of query objects containing the following filtering fields:
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
-| limit   | integer | Maximum number of records to be returned. Default: 1000. | 
+| limit   | integer | Maximum number of records to be returned. Default: 1000.<br>Limit is not applied if the parameter value <= 0. | 
 
 ## Response 
 
