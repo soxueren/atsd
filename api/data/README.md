@@ -56,12 +56,15 @@ Status Code: 500
 
 ## Date/Time Formats
 
-Supported input formats:
+Supported date input formats:
 
 * yyyy-MM-dd'T'HH:mm:ss[.SSS]'Z'
 * yyyy-MM-dd'T'HH:mm:ss[.SSS]±hh:mm
 
-Refer to [ISO 8601 date formats](date-format.md).
+Refer to [ISO 8601 date format examples](date-format.md).
+
+* Minimum time that can be stored in the database is 1970-01-01T00:00:00.001 UTC, or 1 millisecond.
+* Maximum date that can be specified in ISO format is 9999-12-31T23:59:59.999 UTC.
 
 ## Number Formatting
 

@@ -1,4 +1,4 @@
-## Overview
+# Overview
 
 Axibase Time Series Database supports SQL for retrieving time series data from the database.
 
@@ -14,13 +14,11 @@ The SQL queries can be executed both in adhoc manner as well as on schedule.
 
 Scheduled execution allows for produced report files to be distributed to email subscribers or stored on a local file system.
 
-## Syntax
-
-### Commands
+## Commands
 
 Only SELECT commands are supported at this time.
 
-### Virtual Tables
+## Virtual Tables
 
 SELECT commands can reference virtual tables in `FROM` clause whereas such tables must correspond to metric names.
 
@@ -34,36 +32,114 @@ In the example above, "cpu_busy" table contains records for `cpu_busy` metric.
 
 Virtual tables are provided only for series. Access to other types of data (properties, messages, alerts) and metadata (entities, metrics) is currently not available.
 
-### Joins
+## Joins
 
-Data for multiple metrics can be merged by joining virtual tables with `JOIN` clause(s).
+Data for multiple metrics can be merged by joining virtual tables with `JOIN`, also known as `INNER JOIN`, and `OUTER JOIN` clauses.
+
+Unlike standard SQL, `JOIN` clauses in ATSD do not support any conditions (columns) on which to perform a join. Instead the rows are joined by entity, row (or period) time, and all series tags (if present).
 
 ```sql
 SELECT datetime, entity, t1.value, t2.value, t3.value
   FROM "cpu_system" t1
   JOIN "cpu_user" t2 
   JOIN "cpu_iowait" t3
-  WHERE datetime > now - 1*MINUTE
+WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
+  AND entity = 'nurswgvml006'
 ```
 
-In absence of columns in `JOIN` clause, the records are joined by entity, record time, and all tags (if specified) by default.
+Since timestamps for each of metric are identical in this particular case, `JOIN` produces merged rows for all the detailed records which have equivalent values for entity, series tags, and time.
 
-For `JOIN` to operate on detailed date, records should have exactly the same time. 
+```
+datetime | entity | t1.value | t2.value | t3.value
+:---|:---|---:|---:|---:
+2016-06-16T13:00:01.000Z | nurswgvml006 | 13.3 | 21.0 | 2.9
+2016-06-16T13:00:17.000Z | nurswgvml006 | 1.0 | 2.0 | 13.0
+2016-06-16T13:00:33.000Z | nurswgvml006 | 0.0 | 1.0 | 0.0
+...
+```
 
-This is typically the case when multiple metrics are inserted with one command or when time is controlled externally, as in the example above, where metrics 'cpu_system', 'cpu_user', 'cpu_iowait' are all timestamped externally by the same collector script with the same time during each `mpstat` command invocation.
-
-To merge metrics with different times, use `OUTER JOIN` clause with period aggregation, aligned to calendar, in order to regularize timestamps of merged series.
+However, when merging records for irregular metrics collected by independent scripts, `JOIN` results will contain a small subset of rows with coincidentally identical times.
 
 ```sql
-SELECT datetime, entity, avg(t1.value), avg(t2.value)
-  FROM "cpu_busy" t1
-  OUTER JOIN "memfree" t2
-WHERE datetime BETWEEN '2016-06-13T09:20:00.000Z' AND '2016-06-13T09:30:00.000Z'
-  GROUP BY entity, period(1 MINUTE)
-  LIMIT 5
+SELECT datetime, entity, t1.value as cpu, t2.value as mem
+  FROM "cpu_busy" t1 
+  JOIN "memfree" t2
+WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
+  AND entity = 'nurswgvml006'
 ```
 
-### Predefined Columns
+The result contains only 2 records out of 75. This is because for `JOIN` to merge detailed records from multiple metrics into one row, the records should have the same time. 
+
+```
+datetime | entity | cpu | mem
+:---|:---|---:|---:|---:
+2016-06-16T13:02:57.000Z | nurswgvml006 | 16.0 | 74588.0
+2016-06-16T13:07:17.000Z | nurswgvml006 | 16.0 | 73232.0
+```
+
+This is typically the case when multiple metrics are inserted with one command or when time is controlled externally, as in the example above, where metrics 'cpu_system', 'cpu_user', 'cpu_iowait' are all timestamped by the same collector script with the same time during each `mpstat` command invocation.
+
+To combine all records from joined tables, use `OUTER JOIN` which similarly to `JOIN` returns rows equal entity, series tags, and time values and also returns those rows from one table for which no rows from the other satisfy the join condition.
+
+```sql
+SELECT datetime, entity, t1.value as cpu, t2.value as mem
+  FROM "cpu_busy" t1 
+  OUTER JOIN "memfree" t2
+WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
+  AND entity = 'nurswgvml006'
+```
+
+`OUTER JOIN` for detailed records, without period aggregation, produces rows that have NULLs in value columns because the underlying metric didn't record any value at the specified time.
+
+```
+datetime | entity | cpu | mem
+:---|:---|---:|---:|---:
+...
+2016-06-16T13:02:41.000Z | nurswgvml006 | 3.0 | null
+2016-06-16T13:02:42.000Z | nurswgvml006 | null | 70652.0
+2016-06-16T13:02:57.000Z | nurswgvml006 | 16.0 | 74588.0
+2016-06-16T13:03:12.000Z | nurswgvml006 | null | 72536.0
+2016-06-16T13:03:13.000Z | nurswgvml006 | 7.1 | null
+2016-06-16T13:03:27.000Z | nurswgvml006 | null | 71676.0
+...
+```
+
+To regularize the series, apply `GROUP BY` with period aggregation and apply one of statistical functions to return one value for the period, for each series.
+
+```sql
+SELECT datetime, entity, avg(t1.value) as avg_cpu, avg(t2.value) as avg_mem
+  FROM "cpu_busy" t1 
+  OUTER JOIN "memfree" t2
+WHERE datetime >= '2016-06-16T13:02:40.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
+  AND entity = 'nurswgvml006'
+  GROUP BY entity, period(1 MINUTE)
+```
+
+```
+datetime | entity | avg_cpu | avg_mem
+:---|:---|---:|---:|---:
+...
+2016-06-16T13:02:00.000Z | nurswgvml006 | 9.5 | 72620.0
+2016-06-16T13:03:00.000Z | nurswgvml006 | 6.1 | 70799.0
+2016-06-16T13:04:00.000Z | nurswgvml006 | 15.1 | 71461.0
+2016-06-16T13:05:00.000Z | nurswgvml006 | 93.3 | 69193.0
+...
+```
+
+Choice of statistical function(s) depends on the use case. To retain some values without any aggregation, use `LAST` or `FIRST` functions.
+
+```sql
+SELECT datetime, entity, LAST(t1.value) as cpu, LAST(t2.value) as mem
+  FROM "cpu_busy" t1 
+  OUTER JOIN "memfree" t2
+WHERE datetime >= '2016-06-16T13:02:40.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
+  AND entity = 'nurswgvml006'
+  GROUP BY entity, period(1 MINUTE)
+```
+
+## Columns
+
+## Predefined Columns
 
 Since the underlying data is physically stored in the same shared partitioned table, all virtual tables have the same set of pre-defined columns:
 
@@ -86,16 +162,29 @@ SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
   WHERE datetime > now - 1*MINUTE
 ```
 
-In `GROUP BY` query, `datetime` and `PERIOD()` columns return the same value, period's start time, in ISO format. In this case, `date_format(PERIOD(5 minute))` can be omitted.
+`SELECT` all columns (*) is supported only for detailed queries.
 
-```sql
-SELECT entity, datetime, date_format(PERIOD(5 minute)), AVG(value) 
-  FROM gc_invocations_per_minute 
-  WHERE time >= current_hour AND time < next_hour
-  GROUP BY entity, PERIOD(5 minute)
+```
+SELECT *
+  FROM "cpu_busy" t1 
+  OUTER JOIN "memfree" t2
+WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
+  AND entity = 'nurswgvml006'
 ```
 
-### Tag Columns
+```
+datetime | entity | cpu | mem
+:---|:---|---:|---:|---:
+...
+nurswgvml006 | nurswgvml006 | 1466082161000 | 1466082161000 | 3.0 | null
+nurswgvml006 | nurswgvml006 | 1466082162000 | 1466082162000 | null | 70652.0
+nurswgvml006 | nurswgvml006 | 1466082177000 | 1466082177000 | 16.0 | 74588.0
+nurswgvml006 | nurswgvml006 | 1466082192000 | 1466082192000 | null | 72536.0
+nurswgvml006 | nurswgvml006 | 1466082193000 | 1466082193000 | 7.1 | null
+...
+```
+
+## Tag Columns
 
 Tags values can be included in resultset by specifying tags.* or tags.{tag-name} as column name.
 
@@ -109,18 +198,32 @@ SELECT datetime, entity, value, tags.mount_point, tags.file_system
   FROM "disk_used_percent" WHERE datetime > now - 1*MINUTE
 ```
 
+### Group By Columns
+
+In `GROUP BY` query, `datetime` and `PERIOD()` columns return the same value, period's start time, in ISO format. In this case, `date_format(PERIOD(5 minute))` can be omitted.
+
+```sql
+SELECT entity, datetime, date_format(PERIOD(5 minute)), AVG(value) 
+  FROM gc_invocations_per_minute 
+WHERE time >= current_hour AND time < next_hour
+  GROUP BY entity, PERIOD(5 minute)
+```
+
+Columns specified in `GROUP BY` clause should also be included in `SELECT` columns.
+
+
 ### Versioning Columns
 
 Versioning columns (version_tatus, version_source, version_time) are currently not supported.
 
 ## Aliases
 
-Column and table aliases can be added with quoted or double-quoted literal value or with `AS` keyword.
+Table and column aliases can be added with quoted or double-quoted literal value or with `AS` keyword.
 
 ```
-SELECT tbl.value*100 AS "cpu_percent", tbl.time "sample-time" 
+SELECT tbl.value*100 AS "cpu_percent", tbl.time 'sample-time'
   FROM "cpu_busy" tbl 
-  WHERE datetime > now - 1*MINUTE
+WHERE datetime > now - 1*MINUTE
 ```
 
 The underlying column and table names, or expression text are included in table schema section of the metadata.
@@ -129,7 +232,7 @@ Alias should start with letter [a-zA-Z], followed by letter, digit or underscore
 
 ## Arithmetic Operators
 
-Arithmetic operators, including `+`, `-`, `*`, `/`, and `%` can be applied to one or multiple numeric data type columns.
+Arithmetic operators, including `+`, `-`, `*`, and `/` can be applied to one or multiple numeric data type columns.
 
 ```sql
 SELECT datetime, sum(value), sum(value + 100) / 2 
@@ -252,7 +355,7 @@ SELECT entity, period(5 MINUTE), avg(value)
   GROUP BY entity, period(5 MINUTE, LINEAR)
 ```
 
-> The interpolation functions is applied after HAVING filter.
+> The interpolation function is applied after HAVING filter.
 
 [Interpolation Examples in Chartlab](https://apps.axibase.com/chartlab/d8c03f11/3/)
 
@@ -350,8 +453,6 @@ The PERCENTILE function accepts `percentile` parameter (0 to 100) and `value` pa
 * JOIN
 * OUTER JOIN
 * LAST_TIME
-
-
 
 ## Time Formatting Functions
 

@@ -230,19 +230,19 @@ The server enforces the following maximum lengths for command lines:
 
 | **Command** | **Maximum Length, bytes** |
 |:---|:---|
-| series | 256*1024  |
-| property | 256*1024  |
-| message  | 256*1024  |
+| series | 128*1024  |
+| property | 128*1024  |
+| message  | 128*1024  |
 | other | 1024  |
 
-> The client must split a command that is too long into multiple commands.
+The client must split a command that is too long into multiple commands.
 
 ### Schema
 
-* New entities, metrics, and tags are automatically created when inserting data.
+* New entities, metrics, and tags are created automatically when inserting data.
 * The number of unique identifiers is subject to the following default limits: 
 
-|**Type**| **Max Identifier**|
+|**Type**| **Maximum Identifier**|
 |:---|:---|
 |metric| 65535|
 |entity| 16777215|
@@ -253,7 +253,7 @@ The server enforces the following maximum lengths for command lines:
 
 ### Time Field
 
-The timestamp field encodes the time of an observation or message as determined by the source and can be specified with `ms`, `s`, or `d` fields.
+The timestamp field encodes the time of an observation or an event as determined by the source and can be specified with `ms`, `s`, or `d` fields.
 
 |**Field**|**Type**|**Description**|
 |:---|:---|:---|
@@ -261,6 +261,8 @@ The timestamp field encodes the time of an observation or message as determined 
 |s|int|UNIX seconds since 1970-01-01T00:00:00Z|
 |d|string|[ISO 8601 date format](/api/data/date-format.md). Supported formats:<br>UTC timezone (Z) = yyyy-MM-dd'T'HH:mm:ss[.SSS]'Z', for example 2016-06-09T16:15:04.005Z<br>Timezone offset = yyyy-MM-dd'T'HH:mm:ss[.SSS]±hh:mm, for example 2016-06-09T12:15:04.005-04:00<br>Time zone +hh:mm is ahead of UTC and timezone -hh:mm is behind UTC.|
 
+* Minimum time that can be stored in the database is 1970-01-01T00:00:00.001 UTC.
+* Maximum date that can be specified in ISO format is 9999-12-31T23:59:59.999 UTC.
 * If timestamp field in seconds or milliseconds is less than or equal 0, or if it's empty in case of d: prefix, the time is set to server's current time.
 * If timestamp field is not specified, time is set to current server time.
 
