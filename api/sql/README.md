@@ -1,4 +1,4 @@
-# Overview
+Ôªø# Overview
 
 Axibase Time Series Database supports SQL for retrieving time series data from the database.
 
@@ -18,7 +18,7 @@ Scheduled execution allows for generated report files to be distributed to email
 
 The database supports only `SELECT` statements at this time. 
 
-The `SELECT` statement consists of select expression, a query with optional clauses.
+The `SELECT` statement consists of a select expression and a query with optional clauses.
 
 ```sql
 SELECT datetime, entity, value -- SELECT expression
@@ -44,21 +44,19 @@ SELECT datetime, entity, value
 
 In the example above, "mpstat.cpu_busy" table contains records for `mpstat.cpu_busy` metric.
 
-Virtual tables are currently supported only for series. Access to properties, messages, ÙÚ‚ alerts is currently not available.
+Virtual tables are currently supported only for series. Access to properties, messages, and alerts is currently not available.
 
 ### Clauses
 
-Supported clauses:
-
-* WHERE columns: entity, tags.{name}, time
-* ORDER BY
-* LIMIT (offset), count
-* GROUP BY time, period, entity, tags.{name}
-* HAVING filter for grouped rows
-* ROW_NUMBER returns row index (starting with 1) within the group. The function can be used to limit the number of rows returned for each group.
-* JOIN
-* OUTER JOIN
-* LAST_TIME
+* **WHERE** columns: entity, tags.{name}, time
+* **ORDER BY**
+* **LIMIT** (offset), count
+* **GROUP BY** time, period, entity, tags.{name}
+* **HAVING** filter for grouped rows
+* **JOIN**
+* **OUTER JOIN**
+* **ROW_NUMBER** returns row index (starting with 1) within the group. The function can be used to limit the number of rows returned for each group.
+* **LAST_TIME**
 
 ### Processing Sequence
 
@@ -73,7 +71,7 @@ Supported clauses:
 
 ## Columns
 
-## Predefined Columns
+### Predefined Columns
 
 Since the underlying data is physically stored in the same shared partitioned table, all virtual tables have the same set of pre-defined columns:
 
@@ -87,7 +85,7 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`entity`|string|Entity name.|
 |`tags`|string|All series tags, concatenated to `name1=value;name2=value` format.<br>In addition, `SELECT` statement supports `tags.*` syntax which expands to multiple columns.|
 |`tags.{name}`|string|Series tag value.|
-|`entity.tags` *or* `entity.tags.{name}`|string|
+|`entity.tags.{name}`|string|Entity tag value.|
 
 New columns can be created by applying functions and arithmetic expressions to existing columns.
 
@@ -98,7 +96,7 @@ SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
   WHERE datetime > now - 1*MINUTE
 ```
 
-`SELECT` all columns (*) is supported only for detailed queries.
+> `SELECT *` syntax is not supported with `GROUP BY` clause.
 
 ```
 SELECT *
@@ -109,8 +107,7 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 ```
 
 ```ls
-datetime | entity | cpu | mem
-:---|:---|---:|---:|
+cpu_busy.entity | memfree.entity | cpu_busy.time | memfree.time | cpu_busy.value | memfree.value
 nurswgvml006 | nurswgvml006 | 1466082161000 | 1466082161000 | 3.0 | null
 nurswgvml006 | nurswgvml006 | 1466082162000 | 1466082162000 | null | 70652.0
 nurswgvml006 | nurswgvml006 | 1466082177000 | 1466082177000 | 16.0 | 74588.0
@@ -118,9 +115,11 @@ nurswgvml006 | nurswgvml006 | 1466082192000 | 1466082192000 | null | 72536.0
 nurswgvml006 | nurswgvml006 | 1466082193000 | 1466082193000 | 7.1 | null
 ```
 
-## Tag Columns
+### Series Tag Columns
 
-Tags values can be included in resultset by specifying tags.* or tags.{tag-name} as column name.
+Tags values are referenced in `SELECT` expression by specifying `tags.*`, `tags`, or `tags.{tag-name}` as column name.
+
+`tags` and `tags.{tag-name}` syntax can also be used in `WHERE`, `ORDER`, `GROUP BY` and other clauses.
 
 ```sql
 SELECT datetime, entity, value, tags.* 
@@ -130,6 +129,27 @@ SELECT datetime, entity, value, tags.*
 ```sql
 SELECT datetime, entity, value, tags.mount_point, tags.file_system 
   FROM "df.disk_used_percent" WHERE datetime > now - 1*MINUTE
+```
+
+### Entity Tag Columns
+
+Entity tag values can be included in `SELECT` expression by specifying `entity.tags.{tag-name}` as column name.
+
+```sql
+SELECT entity, entity.tags.os, entity.tags.app, avg(value) 
+  FROM "mpstat.cpu_busy"
+WHERE time > current_hour
+  GROUP BY entity 
+```
+
+```ls
+entity | entity.tags.os | entity.tags.app | avg(value)
+nurswgvml006 | Linux | Hadoop/HBASE | 21.7
+nurswgvml007 | Linux | ATSD | 9.7
+nurswgvml010 | Linux | SVN, Jenkins, Redmine | 6.6
+nurswgvml011 | Linux | HMC Simulator, mysql | 5.4
+nurswgvml102 | Linux | Router | 1.2
+nurswgvml502 | null | null | 4.9
 ```
 
 ### Group By Columns
@@ -307,7 +327,6 @@ SELECT entity, avg(value) AS Cpu_Avg
 
 ```ls
 entity | Cpu_Avg
----|---:
 nurswgvml006 | 7.81
 nurswgvml007 | 9.68
 ```
@@ -325,7 +344,6 @@ SELECT datetime, avg(value) AS Cpu_Avg
 
 ```ls
 datetime | Cpu_Avg
----|---:
 2016-06-17T11:00:00.000Z | 8.15
 2016-06-17T11:05:00.000Z | 5.39
 2016-06-17T11:10:00.000Z | 4.96
@@ -344,7 +362,6 @@ ORDER BY avg(value) DESC
 
 ```ls
 entity | avg(value)
----|---:
 nurswgvml006 | 22.9
 nurswgvml007 | 9.9
 nurswgvml010 | 6.5
@@ -362,12 +379,10 @@ ORDER BY avg(value) DESC
 ```
 
 ```ls
-entity | avg(value)
----|---:
-nurswgvml006 | 22.9
-nurswgvml007 | 9.9
+| entity | avg(value) |
+|nurswgvml006 | 22.9 |
+|nurswgvml007 | 9.9 |
 ```
-
 
 ## Joins
 
@@ -390,7 +405,6 @@ Since timestamps for each of metric are identical in this particular case, `JOIN
 
 ```ls
 datetime | entity | t1.value | t2.value | t3.value
-:---|:---|---:|---:|
 2016-06-16T13:00:01.000Z | nurswgvml006 | 13.3 | 21.0 | 2.9
 2016-06-16T13:00:17.000Z | nurswgvml006 | 1.0 | 2.0 | 13.0
 2016-06-16T13:00:33.000Z | nurswgvml006 | 0.0 | 1.0 | 0.0
@@ -410,7 +424,6 @@ The result contains only 2 records out of 75. This is because for `JOIN` to merg
 
 ```ls
 datetime | entity | cpu | mem
-:---|:---|---:|---:|
 2016-06-16T13:02:57.000Z | nurswgvml006 | 16.0 | 74588.0
 2016-06-16T13:07:17.000Z | nurswgvml006 | 16.0 | 73232.0
 ```
@@ -427,9 +440,8 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
   AND entity = 'nurswgvml006'
 ```
 
-```ls
+```ls	
 datetime | entity | t1.value | t2.value | t1.tags.file_system | t1.tags.mount_point
-:---|:---|---:|---:|:---|:---
 2016-06-16T13:00:14.000Z | nurswgvml006 | 1743057372 | 83 | //u113452.nurstr021/backup | /mnt/u113452
 2016-06-16T13:00:29.000Z | nurswgvml006 | 1743057372 | 83 | //u113452.nurstr021/backup | /mnt/u113452
 2016-06-16T13:00:44.000Z | nurswgvml006 | 1743057372 | 83 | //u113452.nurstr021/backup | /mnt/u113452
@@ -451,7 +463,6 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 
 ```ls
 datetime | entity | cpu | mem
-:---|:---|---:|---:|
 2016-06-16T13:02:41.000Z | nurswgvml006 | 3.0 | null
 2016-06-16T13:02:42.000Z | nurswgvml006 | null | 70652.0
 2016-06-16T13:02:57.000Z | nurswgvml006 | 16.0 | 74588.0
@@ -473,7 +484,6 @@ WHERE datetime >= '2016-06-16T13:02:40.000Z' AND datetime < '2016-06-16T13:10:00
 
 ```ls
 datetime | entity | avg_cpu | avg_mem
-:---|:---|---:|---:|
 2016-06-16T13:02:00.000Z | nurswgvml006 | 9.5 | 72620.0
 2016-06-16T13:03:00.000Z | nurswgvml006 | 6.1 | 70799.0
 2016-06-16T13:04:00.000Z | nurswgvml006 | 15.1 | 71461.0
@@ -490,8 +500,6 @@ WHERE datetime >= '2016-06-16T13:02:40.000Z' AND datetime < '2016-06-16T13:10:00
   AND entity = 'nurswgvml006'
   GROUP BY entity, period(1 MINUTE)
 ```
-
-
 
 ## Query URL
 
@@ -589,9 +597,9 @@ FROM "mpstat.cpu_busy"
   LIMIT 1
 ```
 
-```elm
-value  time           date_format(time)         date_format(time,'yyyy-MM-dd'T'HH:mm:ss.SSSZ')  date_format(time,'yyyy-MM-dd HH:mm:ss.SSS')
-5.1    1466069048000  2016-06-16T09:24:08.000Z  2016-06-16T09:24:08.000+0000                    2016-06-16 09:24:08.000
+```ls
+value | time | date_format(time) | date_format(time,'yyyy-MM-dd'T'HH:mm:ss.SSSZ') | date_format(time,'yyyy-MM-dd HH:mm:ss.SSS')
+5.0 | 1466166325000 | 2016-06-17T12:25:25.000Z | 2016-06-17T12:25:25.000+0000 | 2016-06-17 12:25:25.000
 ```
 
 ## Case Sensitivity
