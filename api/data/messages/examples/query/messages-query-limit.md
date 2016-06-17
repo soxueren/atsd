@@ -2,32 +2,7 @@
 
 ## Description
 
-## Request
-
-### URI
-```elm
-POST https://atsd_host:8443/api/v1/messages/insert
-```
-### Payload
-```json
-[
-  {
-    "entity": "nurswgvml007",
-    "message": "NURSWGVML007 ssh: error: connect_to localhost port 8881: failed.",
-    "date": "2016-06-17T08:01:14.232Z"
-  },
-  {
-    "entity": "nurswgvml007",
-    "message": "NURSWGVML007 ssh: error: connect_to localhost port 8881: failed.",
-    "date": "2016-06-17T08:02:14.232Z"
-  },
-  {
-    "entity": "nurswgvml007",
-    "message": "NURSWGVML007 ssh: error: connect_to localhost port 8881: failed.",
-    "date": "2016-06-17T08:03:14.232Z"
-  }
-]
-```
+Apply limit to select last N messages.
 
 ## Request
 
@@ -40,7 +15,7 @@ POST https://atsd_host:8443/api/v1/messages/query
 [
   {
     "entity": "nurswgvml007",
-    "limit": 2.9,
+    "limit": 2,
     "startDate": "2016-06-16T00:00:00.000Z",
     "endDate": "2016-06-18T00:00:00.000Z"
   }

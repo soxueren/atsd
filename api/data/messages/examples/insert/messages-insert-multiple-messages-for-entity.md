@@ -2,6 +2,8 @@
 
 ## Description
 
+One insert request can combine messages for different entities, types, sources, tags, messages and times. In the example below, both messages will be persisted despite all fields being equal because entity names are different.
+
 ## Request
 
 ### URI
@@ -13,13 +15,13 @@ POST https://atsd_host:8443/api/v1/messages/insert
 [{
     "entity": "nurswgvml006",
     "type": "application",
-    "message": "NURSWGVML007 ssh: error: connect_to localhost port 8881: failed.",
+    "message": "ssh: error: connect_to localhost port 8881: failed.",
     "severity": "MAJOR",
     "source": "atsd"
 },{
     "entity": "nurswgvml007",
     "type": "application",
-    "message": "NURSWGVML007 ssh: error: connect_to localhost port 8881: failed.",
+    "message": "ssh: error: connect_to localhost port 8881: failed.",
     "severity": "MAJOR",
     "source": "atsd"
 }]

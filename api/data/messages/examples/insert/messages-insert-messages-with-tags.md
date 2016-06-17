@@ -1,6 +1,8 @@
-# Message Insert With Tags
+# Insert Message With Tags
 
 ## Description
+
+Message primary key is entity, type, source, and time. Tags and message are extended fields.
 
 ## Request
 
@@ -13,9 +15,9 @@ POST https://atsd_host:8443/api/v1/messages/insert
 [{
     "entity": "nurswgvml007",
     "type": "application",
+	"source": "atsd",
     "message": "NURSWGVML007 ssh: error: connect_to localhost port 8881: failed.",
-    "tags": {"path": "/", "name": "sda"},
-    "source": "atsd"
+    "tags": {"path": "/", "name": "sda"}
 }]
 ```
 

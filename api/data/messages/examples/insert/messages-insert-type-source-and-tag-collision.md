@@ -2,6 +2,8 @@
 
 ## Description
 
+Message tags `{"type": "hello", "source": "world"}` are discarded since they conflict with predefined `type` and `source` fields.
+
 ## Request
 
 ### URI
@@ -13,9 +15,9 @@ POST https://atsd_host:8443/api/v1/messages/insert
 [{
     "entity": "nurswgvml007",
     "type": "application",
+	"source": "atsd",
     "message": "NURSWGVML007 ssh: error: connect_to localhost port 8882: failed.",
-    "tags": {"type": "application", "source": "atsd"},
-    "source": "atsd"
+    "tags": {"type": "hello", "source": "world"}
 }]
 ```
 

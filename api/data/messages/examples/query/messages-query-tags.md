@@ -2,25 +2,7 @@
 
 ## Description
 
-## Request
-
-### URI
-```elm
-POST https://atsd_host:8443/api/v1/messages/insert
-```
-### Payload
-```json
-[
-  {
-    "entity": "nurswgvml007",
-    "message": "NURSWGVML007 ssh: error: connect_to localhost port 8881: failed.",
-    "tags": {
-      "path": "/",
-      "name": "sda"
-    }
-  }
-]
-```
+Query messages matching particular tags.
 
 ## Request
 
@@ -33,7 +15,10 @@ POST https://atsd_host:8443/api/v1/messages/query
 [
   {
     "entity": "nurswgvml007",
-    "tags": {},
+    "tags": {
+      "name": "sda",
+      "path": "/"
+    },
     "startDate": "2016-06-15T14:13:57.383Z",
     "endDate": "2016-06-17T14:13:57.383Z"
   }

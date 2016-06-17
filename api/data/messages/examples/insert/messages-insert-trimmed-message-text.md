@@ -2,6 +2,8 @@
 
 ## Description
 
+Leading and trailing non-printable characters are discarded in the message field.
+
 ## Request
 
 ### URI

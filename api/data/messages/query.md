@@ -155,12 +155,11 @@ curl  https://atsd_host:8443/api/v1/messages/query \
 ```
 
 ## Additional Examples
-* [Query with null or without type/source value](/api/data/messages/examples/query/messages-query-null-without-type-source-value-message.md)
-* [Query without necessarily indicate tags](/api/data/messages/examples/query/messages-query-without-necessarily-indicate-tags.md)
-* [Thresholds times for query](/api/data/messages/examples/query/messages-query-thresholds-times-query.md)
-* [Inability of the zero time interval](/api/data/messages/examples/query/messages-query-inability-zero-time-interval.md)
-* [The integer value of the field "count" object "interval"](/api/data/messages/examples/query/messages-query-integer-value-field.md)
-* [Query with features field "limit"](/api/data/messages/examples/query/messages-query-features-field-limit.md)
+* [Query all types and sources for entity](examples/query/messages-query-all-types.md)
+* [Query specified tags](examples/query/messages-query-tags.md)
+* [Query for min/max ISO date](examples/query/messages-query-min-max-iso-date.md)
+* [Query with fractional interval](examples/query/messages-query-fractional-interval.md)
+* [Query with limit](examples/query/messages-query-limit.md)
 
 
 

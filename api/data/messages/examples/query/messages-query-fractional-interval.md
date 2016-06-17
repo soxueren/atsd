@@ -2,6 +2,8 @@
 
 ## Description
 
+Query with interval specified as fractional number.
+
 ## Request
 
 ### URI
