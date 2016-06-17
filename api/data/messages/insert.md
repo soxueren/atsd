@@ -103,6 +103,7 @@ curl https://atsd_host:8443/api/v1/messages/insert \
 * [Duplicate tags messages](/api/data/messages/examples/insert/messages-insert-discarded-duplicate-tags-messages.md)
 * [Multi-line text messages](/api/data/messages/examples/insert/messages-insert-multi-line-message-text.md)
 * [Multi-line tags messages](/api/data/messages/examples/insert/messages-insert-multi-line-message-tags.md)
+* [Trimmed message text](/api/data/messages/examples/insert/messages-insert-trimmed-message-text.md)
 * [Message with type/source and tag collision](/api/data/messages/examples/insert/messages-insert-type-source-and-tag-collision.md)
 
 
