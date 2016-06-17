@@ -157,7 +157,7 @@ curl  https://atsd_host:8443/api/v1/messages/query \
 * [Thresholds times for query](/api/data/messages/examples/query/messages-query-thresholds-times-query.md)
 * [Inability of the zero time interval](/api/data/messages/examples/query/messages-query-inability-zero-time-interval.md)
 * [The integer value of the field "count" object "interval"](/api/data/messages/examples/query/messages-query-integer-value-field.md)
-
+* [Query with features field "limit"](/api/data/messages/examples/query/messages-query-features-field-limit.md)
 
 
 
