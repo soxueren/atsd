@@ -1,0 +1,21 @@
+# ....
+
+## Description
+
+## Request
+
+### URI
+```elm
+POST https://atsd_host:8443/api/v1/messages/query
+```
+### Payload
+```json
+[
+  {
+    "entity": "nurswgvml007",
+    "startDate": "2016-06-16T00:00:00.000Z",
+    "interval":{"count":1, "unit":"MILLISECOND"}
+  }
+]
+```
+
