@@ -31,7 +31,7 @@ POST
 | config   | string   | [**Required**] Parser Name as configured on **Configuration:Parsers CSV** page.|
 | encoding      | string   | File encoding. Default: UTF-8.|
 | default-entity| string | Default entity name applied to commands contained in the file. |
-| metric-prefix | string | Metric prefix prepended to metric names extracted from the file. |
+| metric-prefix | string | Prefix prepended to metric names extracted from the file. |
 | wait | boolean | Wait until processing of the file into commands is completed by the server. Default: false.<br>If wait is disabled, the file is processed by the server asynchronously. | 
 | rules | boolean | Process commands in the rule engine. Default: false | 
 | time | string | Date in ISO 8601 format, applied to commands if the file doesn't contain any time columns. | 
@@ -41,7 +41,7 @@ POST
 ### Payload
 
 * Payload is CSV file attached as plain text, containing an optional header line and one or multiple data rows.
-* Names (metric name, property type, key names, tag names) containing non-printable characters will be normalized by replacing them with underscore. <br>Multiple underscores are collapsed into one underscore.
+* Names (metric name, property type, key names, tag names) containing non-printable characters will be normalized by replacing them with underscore.
 
 ## Response 
 

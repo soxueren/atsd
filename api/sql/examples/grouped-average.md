@@ -1,63 +1,18 @@
-## Grouped Average
+# Grouped Average
 
 5 minute average value for one metric, two entities, sorted by entity name
 
-> Query
+## Query
 
 ```sql
-SELECT entity, period(5 MINUTE) AS "period", avg(value) AS CPU_Avg FROM mpstat.cpu_busy 
-  WHERE entity IN ('nurswgvml007', 'nurswgvml011') AND time between now - 1 * hour AND now 
+SELECT entity, period(5 MINUTE) AS "period", avg(value) AS CPU_Avg 
+  FROM mpstat.cpu_busy 
+WHERE entity IN ('nurswgvml007', 'nurswgvml011') 
+  AND time between now - 1 * hour AND now 
   GROUP BY entity, period(5 MINUTE)
 ```
 
-> Response
-
-```json
-{
-    "columns": [
-        {
-            "name": "entity",
-            "metric": "mpstat.cpu_busy",
-            "label": "entity",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "period(5 MINUTE)",
-            "metric": "mpstat.cpu_busy",
-            "label": "period",
-            "type": "LONG",
-            "numeric": true
-        },
-        {
-            "name": "avg(value)",
-            "metric": "mpstat.cpu_busy",
-            "label": "CPU_Avg",
-            "type": "FLOAT",
-            "numeric": true
-        }
-    ],
-    "rows": [
-        [
-            "nurswgvml007",
-            1446037200000,
-            75.47466666666666
-        ],
-        [
-            "nurswgvml007",
-            1446037500000,
-            24.44388888888889
-        ],
-        [
-            "nurswgvml007",
-            1446037800000,
-            19.04421052631579
-        ]
-    ]
-}
-```
-
-**SQL Console Response**
+## Results
 
 | entity       | period        | CPU_Avg            | 
 |--------------|---------------|--------------------| 

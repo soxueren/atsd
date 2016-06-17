@@ -1,72 +1,17 @@
-## Datetime Format
+# Datetime Format
 
-`datetime` is used to return time in ISO format without offset: `2015-04-07T08:14:28.231Z`
+`datetime` column returns time in ISO format.
 
-> Query
+## Query
 
 ```sql
-SELECT datetime, time, value, entity FROM mpstat.cpu_busy 
- WHERE entity LIKE '%00%' AND datetime BETWEEN '2015-04-09T14:00:00Z' AND '2015-04-09T14:05:00Z'
+SELECT datetime, time, value, entity 
+  FROM mpstat.cpu_busy 
+WHERE entity LIKE '%00%' 
+  AND datetime BETWEEN '2015-04-09T14:00:00Z' AND '2015-04-09T14:05:00Z'
 ```
 
-> Response
-
-```json
-{
-    "columns": [
-        {
-            "name": "datetime",
-            "label": "datetime",
-            "metric": "mpstat.cpu_busy",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "time",
-            "label": "time",
-            "metric": "mpstat.cpu_busy",
-            "type": "LONG",
-            "numeric": true
-        },
-        {
-            "name": "value",
-            "label": "value",
-            "metric": "mpstat.cpu_busy",
-            "type": "FLOAT",
-            "numeric": true
-        },
-        {
-            "name": "entity",
-            "label": "entity",
-            "metric": "mpstat.cpu_busy",
-            "type": "STRING",
-            "numeric": false
-        }
-    ],
-    "rows": [
-        [
-            "2015-04-09T14:00:01Z",
-            1428588001000,
-            3.8,
-            "nurswgvml007"
-        ],
-        [
-            "2015-04-09T14:00:18Z",
-            1428588018000,
-            14,
-            "nurswgvml007"
-        ],
-        [
-            "2015-04-09T14:00:34Z",
-            1428588034000,
-            16.83,
-            "nurswgvml006"
-        ]
-    ]
-}
-```
-
-**SQL Console Response**
+## Results
 
 | datetime             | time          | value |
 |----------------------|---------------|-------|

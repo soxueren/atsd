@@ -1,80 +1,18 @@
-## Last Time
+# Last Time
 
 Returns the last time of a stored value in a table for a key (metric + entity + tags).
 
-> Query
+## Query
 
 ```sql
 SELECT entity, datetime, AVG(cpu_busy.value)
- FROM cpu_busy
- WHERE time > now - 1 * hour 
- GROUP BY entity, period(15 minute)
- WITH time > last_time - 30 * minute
+  FROM cpu_busy
+WHERE time > now - 1 * hour 
+  GROUP BY entity, period(15 minute)
+  WITH time > last_time - 30 * minute
 ```
 
-> Response
-
-```json
-{
-    "columns": [
-        {
-            "name": "entity",
-            "metric": "cpu_busy",
-            "label": "entity",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "datetime",
-            "metric": "cpu_busy",
-            "label": "datetime",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "AVG(cpu_busy.value)",
-            "metric": "cpu_busy",
-            "label": "AVG(cpu_busy.value)",
-            "type": "FLOAT",
-            "numeric": true
-        }
-    ],
-    "rows": [
-        [
-            "awsswgvml001",
-            "2015-11-13T09:15:00Z",
-            2.416666666666667
-        ],
-        [
-            "awsswgvml001",
-            "2015-11-13T09:30:00Z",
-            2.9978571428571428
-        ],
-        [
-            "awsswgvml001",
-            "2015-11-13T09:45:00Z",
-            1.245
-        ],
-        [
-            "nurswgvml003",
-            "2015-11-13T09:15:00Z",
-            9.274705882352942
-        ],
-        [
-            "nurswgvml003",
-            "2015-11-13T09:30:00Z",
-            3.659107142857143
-        ],
-        [
-            "nurswgvml003",
-            "2015-11-13T09:45:00Z",
-            1.0004347826086957
-        ]
-    ]
-}
-```
-
-**SQL Console Response**
+## Results
 
 | entity       | datetime             | AVG(cpu_busy.value) | 
 |--------------|----------------------|---------------------| 

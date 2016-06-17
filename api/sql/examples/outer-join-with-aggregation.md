@@ -1,7 +1,7 @@
-## Outer Join with Aggregation
+# Outer Join with Aggregation
 
 
-> Query
+## Query
 
 ```sql
 SELECT entity, time, AVG(cpu_busy.value), AVG(disk_used.value)
@@ -11,64 +11,7 @@ SELECT entity, time, AVG(cpu_busy.value), AVG(disk_used.value)
  GROUP BY entity, period(15 minute)
 ```
 
-> Response
-
-```json
-{
-    "columns": [
-        {
-            "name": "entity",
-            "metric": "cpu_busy",
-            "label": "entity",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "time",
-            "metric": "cpu_busy",
-            "label": "time",
-            "type": "LONG",
-            "numeric": true
-        },
-        {
-            "name": "AVG(cpu_busy.value)",
-            "metric": "cpu_busy",
-            "label": "AVG(cpu_busy.value)",
-            "type": "FLOAT",
-            "numeric": true
-        },
-        {
-            "name": "AVG(disk_used.value)",
-            "metric": "disk_used",
-            "label": "AVG(disk_used.value)",
-            "type": "FLOAT",
-            "numeric": true
-        }
-    ],
-    "rows": [
-        [
-            "awsswgvml001",
-            1447402500000,
-            1.396,
-            31993319.733333334
-        ],
-        [
-            "awsswgvml001",
-            1447403400000,
-            5.485,
-            31993651.82222222
-        ],
-        [
-            "awsswgvml001",
-            1447404300000,
-            7.332,
-            31993992.266666666
-        ]
-    ]
-}
-```
-
-**SQL Console Response**
+## Results
 
 | entity       | time          | AVG(cpu_busy.value) | AVG(disk_used.value) | 
 |--------------|---------------|---------------------|----------------------| 

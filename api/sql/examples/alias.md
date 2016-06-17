@@ -1,90 +1,24 @@
-## Alias
+# Alias
 
-An `alias` can be set in single (`'alias'`) or double qoatations (`"alias"`).
+A column or table `alias` can be specified in single (`'alias'`) or double-quotes (`"alias"`).
 
 Unquoted `alias` must begin with a letter followed by letters, underscores, digits (0-9).
 
-> Query
+## Query
 
 ```sql
-SELECT time, value, entity, metric AS "measurement" FROM mpstat.cpu_busy 
- WHERE entity = 'nurswgvml006' AND time BETWEEN now - 5 * minute AND now
+SELECT datetime, value, entity, metric AS "measurement" 
+  FROM mpstat.cpu_busy 
+WHERE entity = 'nurswgvml006' 
+  AND time BETWEEN now - 5 * minute AND now
 ```
 
-> OR
+## Results
 
-```sql
-SELECT time, value, entity, metric AS 'measurement' FROM mpstat.cpu_busy 
- WHERE entity = 'nurswgvml006' AND time BETWEEN now - 5 * minute AND now
 ```
-
-> Response
-
-```json
-{
-    "columns": [
-        {
-            "name": "time",
-            "metric": "mpstat.cpu_busy",
-            "label": "time",
-            "type": "LONG",
-            "numeric": true
-        },
-        {
-            "name": "value",
-            "metric": "mpstat.cpu_busy",
-            "label": "value",
-            "type": "FLOAT",
-            "numeric": true
-        },
-        {
-            "name": "entity",
-            "metric": "mpstat.cpu_busy",
-            "label": "entity",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "metric",
-            "metric": "mpstat.cpu_busy",
-            "label": "measurement",
-            "type": "STRING",
-            "numeric": false
-        }
-    ],
-    "rows": [
-        [
-            1446038385000,
-            9.09,
-            "nurswgvml006",
-            "mpstat.cpu_busy"
-        ],
-        [
-            1446038401000,
-            8,
-            "nurswgvml006",
-            "mpstat.cpu_busy"
-        ],
-        [
-            1446038417000,
-            8,
-            "nurswgvml006",
-            "mpstat.cpu_busy"
-        ]
-    ]
-}
+datetime	value	entity	measurement
+2016-06-17T19:16:00.000Z	3.0	nurswgvml006	cpu_busy
+2016-06-17T19:16:16.000Z	3.0	nurswgvml006	cpu_busy
+2016-06-17T19:16:32.000Z	4.0	nurswgvml006	cpu_busy
+2016-06-17T19:16:48.000Z	3.0	nurswgvml006	cpu_busy
 ```
-
-**SQL Console Response**
-
-| time          | value | entity       |
-|---------------|-------|--------------|
-| 1446038417000 | 8.0   | nurswgvml006 |
-| 1446038433000 | 100.0 | nurswgvml006 |
-| 1446038449000 | 30.3  | nurswgvml006 |
-| 1446038465000 | 17.0  | nurswgvml006 |
-| 1446038481000 | 11.0  | nurswgvml006 |
-| 1446038497000 | 90.82 | nurswgvml006 | 
-| 1446038513000 | 19.0  | nurswgvml006 | 
-| 1446038529000 | 27.27 | nurswgvml006 | 
-| 1446038545000 | 12.12 | nurswgvml006 | 

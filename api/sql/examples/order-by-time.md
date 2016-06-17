@@ -1,63 +1,27 @@
-## ORDER BY Time
+# ORDER BY Time
 
-> Query
+## Query
 
 ```sql
-SELECT time, value FROM mpstat.cpu_busy 
- WHERE entity = 'nurswgvml007' 
- AND time BETWEEN now - 1 * hour AND now 
- ORDER BY time
+SELECT datetime, value 
+  FROM mpstat.cpu_busy 
+WHERE entity = 'nurswgvml007' 
+  AND datetime BETWEEN now - 1 * hour AND now 
+  ORDER BY time
 ```
 
-> Response
+## Results
 
-```json
-{
-    "columns": [
-        {
-            "name": "time",
-            "metric": "mpstat.cpu_busy",
-            "label": "time",
-            "type": "LONG",
-            "numeric": true
-        },
-        {
-            "name": "value",
-            "metric": "mpstat.cpu_busy",
-            "label": "value",
-            "type": "FLOAT",
-            "numeric": true
-        }
-    ],
-    "rows": [
-        [
-            1446033764000,
-            48.96
-        ],
-        [
-            1446033780000,
-            42.42
-        ],
-        [
-            1446033796000,
-            12.24
-        ]
-    ]
-}
-```
+| datetime                 | value | 
+|--------------------------|-------| 
+| 2016-06-17T18:34:32.000Z | 6.1   | 
+| 2016-06-17T18:34:48.000Z | 2.0   | 
+| 2016-06-17T18:35:04.000Z | 83.3  | 
+| 2016-06-17T18:35:20.000Z | 5.0   | 
+| 2016-06-17T18:35:36.000Z | 5.0   | 
+| 2016-06-17T18:35:52.000Z | 3.0   | 
+| 2016-06-17T18:36:08.000Z | 4.0   | 
+| 2016-06-17T18:36:25.000Z | 7.0   | 
+| 2016-06-17T18:36:41.000Z | 4.0   | 
+| 2016-06-17T18:36:57.000Z | 3.0   | 
 
-**SQL Console Response**
-
-| time          | value | 
-|---------------|-------| 
-| 1446033812000 | 22.45 | 
-| 1446033828000 | 12.33 | 
-| 1446033844000 | 19.0  | 
-| 1446033860000 | 7.07  | 
-| 1446033876000 | 13.13 | 
-| 1446033892000 | 24.24 | 
-| 1446033908000 | 27.27 | 
-| 1446033924000 | 34.0  | 
-| 1446033940000 | 9.0   | 
-| 1446033956000 | 11.11 | 
-| 1446033972000 | 40.4  | 

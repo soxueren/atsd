@@ -1,39 +1,25 @@
-## Time Condition
+# Time Condition
 
-> Query
+## Query
 
 ```sql
 SELECT time, value FROM mpstat.cpu_busy 
  WHERE entity = 'nurswgvml007' 
- AND time > 1428352721000 
- AND time < 1428352721000
+ AND time > 1466100000000 
+ AND time < 1466200000000
 ```
 
-> Response - returns an array with 1 record:
+## Results
 
-```json
-{
-    "columns": [
-        {
-            "name": "time",
-            "label": "time",
-            "metric": "mpstat.cpu_busy",
-            "type": "LONG",
-            "numeric": true
-        },
-        {
-            "name": "value",
-            "label": "value",
-            "metric": "mpstat.cpu_busy",
-            "type": "FLOAT",
-            "numeric": true
-        }
-    ],
-    "rows": [
-        [
-            1438263969000,
-            43.96
-        ]
-    ]
-}
+```
+| time          | value | 
+|---------------|-------| 
+| 1466100003000 | 37.2  | 
+| 1466100019000 | 3.1   | 
+| 1466100035000 | 4.0   | 
+| 1466100051000 | 32.6  | 
+| 1466100067000 | 6.1   | 
+| 1466100083000 | 1.0   | 
+| 1466100099000 | 3.1   | 
+| 1466100115000 | 5.0   | 
 ```

@@ -1,8 +1,8 @@
-## ROW_NUMBER with ORDER BY time & avg
+# ROW_NUMBER with ORDER BY time & avg
 
 `tags` - concatenates all tags in one column.
 
-> Query
+## Query
 
 ```sql
 SELECT entity, tags, datetime, Avg(value)
@@ -12,136 +12,7 @@ SELECT entity, tags, datetime, Avg(value)
   ORDER BY entity
 ```
 
-> Response
-
-```json
-{
-    "columns": [
-        {
-            "name": "entity",
-            "metric": "df.disk_used",
-            "label": "entity",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "tags",
-            "metric": "df.disk_used",
-            "label": "tags",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "datetime",
-            "metric": "df.disk_used",
-            "label": "datetime",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "Avg(value)",
-            "metric": "df.disk_used",
-            "label": "Avg(value)",
-            "type": "FLOAT",
-            "numeric": true
-        }
-    ],
-    "rows": [
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvda1;mount_point=/",
-            "2015-10-27T09:30:00Z",
-            2423047.6363636362
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvda1;mount_point=/",
-            "2015-10-27T09:15:00Z",
-            2422970.3333333335
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvda1;mount_point=/",
-            "2015-10-27T09:00:00Z",
-            2422834.1333333333
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvda1;mount_point=/",
-            "2015-10-27T08:45:00Z",
-            2422771.0508474577
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvda1;mount_point=/",
-            "2015-10-27T08:30:00Z",
-            2422685.4
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvdf;mount_point=/backup",
-            "2015-10-27T09:30:00Z",
-            65340120
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvdf;mount_point=/backup",
-            "2015-10-27T09:15:00Z",
-            65340120
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvdf;mount_point=/backup",
-            "2015-10-27T09:00:00Z",
-            65340120
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvdf;mount_point=/backup",
-            "2015-10-27T08:45:00Z",
-            65340120
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvdf;mount_point=/backup",
-            "2015-10-27T08:30:00Z",
-            65340120
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvdh1;mount_point=/data",
-            "2015-10-27T09:30:00Z",
-            24648080
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvdh1;mount_point=/data",
-            "2015-10-27T09:15:00Z",
-            24612871.133333333
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvdh1;mount_point=/data",
-            "2015-10-27T09:00:00Z",
-            24668438.666666668
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvdh1;mount_point=/data",
-            "2015-10-27T08:45:00Z",
-            24779230.237288136
-        ],
-        [
-            "awsswgvml001",
-            "file_system=/dev/xvdh1;mount_point=/data",
-            "2015-10-27T08:30:00Z",
-            24724325.266666666
-        ]
-    ]
-}
-```
-
-**SQL Console Response**
+## Results
 
 | entity       | tags                                                                             | datetime             | Avg(value)           | 
 |--------------|----------------------------------------------------------------------------------|----------------------|----------------------| 

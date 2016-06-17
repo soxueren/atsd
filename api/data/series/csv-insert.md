@@ -38,7 +38,7 @@ POST
 * Payload is plain text in CSV format containing a header line and data rows.
 * Last time in the file must be terminated with line feed.
 * The header must begin with `time` or `date` column, followed by at least one metric column containing numeric values.
-* Metric names containing space characters will be normalized. <br>Space will be replaced with underscore and multiple underscored will be collapsed into one underscore.
+* Metric names containing space characters will be normalized by replacing space character with underscore.
 * Time must be specified in Unix milliseconds if `time` column is used, and in ISO format if `date` column is used.
 * Separator must be comma.
 * It is recommended that samples are sorted by time in ascending order.

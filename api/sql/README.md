@@ -306,7 +306,7 @@ The behaviour can be changed by referencing an interpolation function as part of
 ```sql
 SELECT entity, period(5 MINUTE), avg(value)
   FROM "mpstat.cpu_busy" WHERE time > current_hour 
-  GROUP BY entity, period(5 MINUTE, LINEAR)
+GROUP BY entity, period(5 MINUTE, LINEAR)
 ```
 
 > The interpolation function is applied after HAVING filter.
@@ -319,10 +319,10 @@ SELECT entity, period(5 MINUTE), avg(value)
 
 ```sql
 SELECT entity, avg(value) AS Cpu_Avg 
-  FROM "cpu_busy"
-  WHERE entity IN ('nurswgvml007', 'nurswgvml006', 'nurswgvml011') 
+  FROM "mpstat.cpu_busy"
+WHERE entity IN ('nurswgvml007', 'nurswgvml006', 'nurswgvml011') 
   AND time > current_hour
-  GROUP BY entity
+GROUP BY entity
 ```
 
 ```ls
@@ -331,15 +331,14 @@ nurswgvml006 | 7.81
 nurswgvml007 | 9.68
 ```
 
-
 ATSD provides a special grouping column `PERIOD` which calculates the start of the interval to which the record belongs.
 
 ```sql
 SELECT datetime, avg(value) AS Cpu_Avg 
   FROM "mpstat.cpu_busy"
-  WHERE entity IN ('nurswgvml007', 'nurswgvml006', 'nurswgvml011') 
+WHERE entity IN ('nurswgvml007', 'nurswgvml006', 'nurswgvml011') 
   AND time > current_hour
-  GROUP BY period(5 MINUTE)
+GROUP BY period(5 MINUTE)
 ```
 
 ```ls
@@ -347,6 +346,24 @@ datetime | Cpu_Avg
 2016-06-17T11:00:00.000Z | 8.15
 2016-06-17T11:05:00.000Z | 5.39
 2016-06-17T11:10:00.000Z | 4.96
+```
+
+### HAVING filter
+
+The `HAVING` clause enables filtering of grouped rows.
+
+```sql
+SELECT entity, avg(value) AS Cpu_Avg 
+  FROM "mpstat.cpu_busy"
+WHERE entity IN ('nurswgvml007', 'nurswgvml006', 'nurswgvml011') 
+  AND time > current_hour
+GROUP BY entity
+  HAVING avg(value) > 8
+```
+
+```ls
+entity | Cpu_Avg
+nurswgvml007 | 9.68
 ```
 
 ## Ordering
@@ -617,23 +634,25 @@ Tag values and property values are case-sensitive.
 - [Basic](examples/basic-query.md)
 - [Counter Aggregator](examples/counter-aggregator.md)
 - [Datetime Format](examples/datetime-format.md)
+- [Select All](examples/select-all.md)
+- [Select Entity Tags As Columns](examples/select-entity-tags-as-columns.md)
+- [Time Condition](examples/time-condition.md)
+- [Order By Time](examples/order-by-time.md)
 - [Entity with Tags](examples/entity-with-tags.md)
 - [Filter by Tag](examples/filter-by-tag.md)
 - [Group by Query with Order By](examples/group-by-query-with-order-by.md)
 - [Grouped Average](examples/grouped-average.md)
-- [Inner Join](examples/inner-join.md)
 - [Last Time](examples/last-time.md)
 - [Max Value Time](examples/max-value-time.md)
 - [Not Equal Operator](examples/not-equal-operator.md)
-- [Order By Time](examples/order-by-time.md)
+- [Join](examples/inner-join.md)
+- [Join Using Entity](examples/using-entity.md)
 - [Outer Join With Aggregation](examples/outer-join-with-aggregation.md)
 - [Outer Join](examples/outer-join.md)
 - [Row Number Function](examples/row-number-function.md)
 - [Row Number With Order By Avg](examples/row-number-with-order-by-avg.md)
 - [Row Number With Order By Time & Avg](examples/row-number-with-order-by-time&avg.md)
 - [Row Number With Order By Time](examples/row-number-with-order-by-time.md)
-- [Select All](examples/select-all.md)
-- [Select Entity Tags As Columns](examples/select-entity-tags-as-columns.md)
-- [Time Condition](examples/time-condition.md)
-- [Using Entity](examples/using-entity.md)
+
+
 

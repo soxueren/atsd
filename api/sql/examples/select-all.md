@@ -1,6 +1,6 @@
-## SELECT All
+# SELECT All
 
-> Query
+## Query
 
 ```sql
 SELECT * FROM mpstat.cpu_busy 
@@ -8,54 +8,7 @@ SELECT * FROM mpstat.cpu_busy
  AND time between now - 1 * hour AND now
 ```
 
-> Response
-
-```json
-{
-    "columns": [
-        {
-            "name": "entity",
-            "metric": "mpstat.cpu_busy",
-            "label": "entity",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "time",
-            "metric": "mpstat.cpu_busy",
-            "label": "time",
-            "type": "LONG",
-            "numeric": true
-        },
-        {
-            "name": "value",
-            "metric": "mpstat.cpu_busy",
-            "label": "value",
-            "type": "FLOAT",
-            "numeric": true
-        }
-    ],
-    "rows": [
-        [
-            "nurswgvml007",
-            1446034164000,
-            10
-        ],
-        [
-            "nurswgvml007",
-            1446034180000,
-            8.08
-        ],
-        [
-            "nurswgvml007",
-            1446034196000,
-            17
-        ]
-    ]
-}
-```
-
-**SQL Console Response**
+## Results 
 
 | entity       | time          | value | 
 |--------------|---------------|-------| 

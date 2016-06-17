@@ -1,8 +1,8 @@
-## Row Number Function
+# Row Number Function
 
 This function numbers rows according to grouping columns (example: `entity, tags`), orders rows (example `time DESC`), and then filters each row with predicate based on `row_number` function value (`WITH row_number(entity, tags ORDER BY time DESC) <= 3`).
 
-> Query
+## Query
 
 ```sql
 SELECT entity, time, AVG(cpu_busy.value)
@@ -12,59 +12,7 @@ SELECT entity, time, AVG(cpu_busy.value)
  WITH row_number(entity, tags ORDER BY time DESC) <= 3
 ```
 
-> Response
-
-```json
-{
-    "columns": [
-        {
-            "name": "entity",
-            "metric": "cpu_busy",
-            "label": "entity",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "time",
-            "metric": "cpu_busy",
-            "label": "time",
-            "type": "LONG",
-            "numeric": true
-        },
-        {
-            "name": "AVG(cpu_busy.value)",
-            "metric": "cpu_busy",
-            "label": "AVG(cpu_busy.value)",
-            "type": "FLOAT",
-            "numeric": true
-        }
-    ],
-    "rows": [
-        [
-            "awsswgvml001",
-            1447407000000,
-            5.095000000000001
-        ],
-        [
-            "awsswgvml001",
-            1447406100000,
-            2.1333333333333337
-        ],
-        [
-            "awsswgvml001",
-            1447405200000,
-            28.466666666666665
-        ],
-        [
-            "nurswgvml003",
-            1447407000000,
-            6.43608695652174
-        ]
-    ]
-}
-```
-
-**SQL Console Response**
+## Results
 
 | entity       | time          | AVG(cpu_busy.value) | 
 |--------------|---------------|---------------------| 

@@ -1,8 +1,8 @@
-## ROW_NUMBER with ORDER BY time
+# ROW_NUMBER with ORDER BY time
 
 `tags.*` - every tag will have its own column in the response.
 
-> Query
+## Query
 
 ```sql
 SELECT entity, tags.*, datetime, Avg(value)
@@ -12,123 +12,7 @@ SELECT entity, tags.*, datetime, Avg(value)
   ORDER BY entity
 ```
 
-> Response
-
-```json
-{
-    "columns": [
-        {
-            "name": "entity",
-            "metric": "df.disk_used",
-            "label": "entity",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "tags.mount_point",
-            "metric": "df.disk_used",
-            "label": "tags.mount_point",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "tags.file_system",
-            "metric": "df.disk_used",
-            "label": "tags.file_system",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "datetime",
-            "metric": "df.disk_used",
-            "label": "datetime",
-            "type": "STRING",
-            "numeric": false
-        },
-        {
-            "name": "Avg(value)",
-            "metric": "df.disk_used",
-            "label": "Avg(value)",
-            "type": "FLOAT",
-            "numeric": true
-        }
-    ],
-    "rows": [
-        [
-            "awsswgvml001",
-            "/",
-            "/dev/xvda1",
-            "2015-10-27T08:30:00Z",
-            2422637
-        ],
-        [
-            "awsswgvml001",
-            "/backup",
-            "/dev/xvdf",
-            "2015-10-27T08:30:00Z",
-            65340120
-        ],
-        [
-            "awsswgvml001",
-            "/data",
-            "/dev/xvdh1",
-            "2015-10-27T08:30:00Z",
-            24745145
-        ],
-        [
-            "nurswgvml003",
-            "/",
-            "/dev/disk/by-uuid/28b8099a-f2fd-4b72-826c-4b270404deff",
-            "2015-10-27T08:30:00Z",
-            2424204.5714285714
-        ],
-        [
-            "nurswgvml003",
-            "/home/store",
-            "/dev/sdb1",
-            "2015-10-27T08:30:00Z",
-            139204048
-        ],
-        [
-            "nurswgvml003",
-            "/",
-            "rootfs",
-            "2015-10-27T08:30:00Z",
-            2424204.5714285714
-        ],
-        [
-            "nurswgvml006",
-            "/",
-            "/dev/mapper/vg_nurswgvml006-lv_root",
-            "2015-10-27T08:30:00Z",
-            8311659.428571428
-        ],
-        [
-            "nurswgvml006",
-            "/media/datadrive",
-            "/dev/sdc1",
-            "2015-10-27T08:30:00Z",
-            47807372
-        ],
-        [
-            "nurswgvml007",
-            "/",
-            "/dev/mapper/vg_nurswgvml007-lv_root",
-            "2015-10-27T08:30:00Z",
-            9581887.42857143
-        ],
-        [
-            "nurswgvml007",
-            "/mnt/share",
-            "10.102.0.2:/home/store/share",
-            "2015-10-27T08:30:00Z",
-            139204032
-        ]
-    ]
-}
-```
-
-**SQL Console Response**
+## Results
 
 | entity       | tags.mount_point | tags.file_system                                       | datetime             | Avg(value)          | 
 |--------------|------------------|--------------------------------------------------------|----------------------|---------------------| 
