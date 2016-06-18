@@ -6,14 +6,14 @@ In this example the "not equal" operator `!=`, is used to exclude grouped rows w
 
 ```sql
 SELECT entity, tags.mount_point AS mp, tags.file_system AS FS,
-  MIN(disk_used.value), MAX(disk_used.value),  FIRST(disk_used.value), LAST(disk_used.value),
-  DELTA(disk_used.value), COUNT(disk_used.value),  AVG(cpu_busy.value) 
-FROM cpu_busy
-  JOIN USING entity disk_used
+  MIN(df.disk_used.value), MAX(df.disk_used.value),  FIRST(df.disk_used.value), LAST(df.disk_used.value),
+  DELTA(df.disk_used.value), COUNT(df.disk_used.value),  AVG(mpstat.cpu_busy.value) 
+FROM mpstat.cpu_busy
+  JOIN USING entity df.disk_used
 WHERE time > now - 60 * minute
   GROUP BY entity, tags.mount_point, tags.file_system
-  HAVING DELTA(disk_used.value) != 0
-  ORDER BY DELTA(disk_used.value)
+  HAVING DELTA(df.disk_used.value) != 0
+  ORDER BY DELTA(df.disk_used.value)
   DESC
 ```
 

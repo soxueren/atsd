@@ -5,9 +5,9 @@
 ## Join without `USING entity`
 
 ```sql
-SELECT entity, datetime, AVG(cpu_busy.value), AVG(disk_used.value), tags.*
-  FROM cpu_busy
-JOIN disk_used
+SELECT entity, datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value), tags.*
+  FROM mpstat.cpu_busy
+JOIN df.disk_used
   WHERE time > current_hour
   AND entity = 'nurswgvml007'
 GROUP BY entity, tags, period(15 minute)
@@ -21,9 +21,9 @@ No records.
 ## Join with `USING entity`
 
 ```sql
-SELECT entity, datetime, AVG(cpu_busy.value), AVG(disk_used.value), tags.*
-  FROM cpu_busy
-JOIN USING entity disk_used
+SELECT entity, datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value), tags.*
+  FROM mpstat.cpu_busy
+JOIN USING entity df.disk_used
   WHERE time > current_hour
   AND entity = 'nurswgvml007'
 GROUP BY entity, tags, period(15 minute)
@@ -42,9 +42,9 @@ GROUP BY entity, tags, period(15 minute)
 ## Outer Join Query without `USING entity`
 
 ```sql
-SELECT entity, datetime, AVG(cpu_busy.value), AVG(disk_used.value), tags.*
-  FROM cpu_busy
-OUTER JOIN disk_used
+SELECT entity, datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value), tags.*
+  FROM mpstat.cpu_busy
+OUTER JOIN df.disk_used
   WHERE time > current_hour
   AND entity = 'nurswgvml007'
 GROUP BY entity, tags, period(15 minute)
@@ -64,9 +64,9 @@ GROUP BY entity, tags, period(15 minute)
 ## OUTER JOIN with `USING entity`
 
 ```sql
-SELECT entity, datetime, AVG(cpu_busy.value), AVG(disk_used.value), tags.*
-  FROM cpu_busy
-OUTER JOIN USING entity disk_used
+SELECT entity, datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value), tags.*
+  FROM mpstat.cpu_busy
+OUTER JOIN USING entity df.disk_used
   WHERE time > previous_hour
   AND entity = 'nurswgvml007'
 GROUP BY entity, tags, period(15 minute)

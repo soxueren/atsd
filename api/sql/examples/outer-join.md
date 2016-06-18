@@ -6,8 +6,8 @@ Outer Join missing column values filled with NULL.
 
 ```sql
 SELECT *
-  FROM cpu_busy
-OUTER JOIN disk_used
+  FROM mpstat.cpu_busy
+OUTER JOIN df.disk_used
   WHERE time > current_hour
   AND entity = 'nurswgvml007'
 ```

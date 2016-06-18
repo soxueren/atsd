@@ -5,7 +5,7 @@ Average value for one metric, one entity.
 ## Query
 
 ```sql
-SELECT avg(value) AS CPU_Avg 
+SELECT entity, avg(value)
  FROM mpstat.cpu_busy 
 WHERE entity = 'nurswgvml007' 
  AND time >= previous_day AND time < now
@@ -14,6 +14,7 @@ WHERE entity = 'nurswgvml007'
 ## Results
 
 ```ls
-CPU_Avg
-10.2
+| entity       | avg(value) | 
+|--------------|------------| 
+| nurswgvml007 | 11.3       | 
 ```

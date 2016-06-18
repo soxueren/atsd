@@ -3,10 +3,11 @@
 ## Query
 
 ```sql
-SELECT * FROM mpstat.cpu_busy 
- WHERE entity = 'nurswgvml007' 
-AND time between now - 1 * hour AND now
- LIMIT 3
+SELECT * 
+  FROM mpstat.cpu_busy 
+WHERE entity = 'nurswgvml007' 
+  AND time between now - 1 * hour AND now
+LIMIT 3
 ```
 
 ## Results 
@@ -22,11 +23,12 @@ AND time between now - 1 * hour AND now
 ## Query for Series with Tags
 
 ```sql
-SELECT * FROM disk_used
- WHERE entity = 'nurswgvml007' 
- AND time > now - 1 * hour
- ORDER BY time
- LIMIT 5
+SELECT * 
+  FROM df.disk_used
+WHERE entity = 'nurswgvml007' 
+  AND time > now - 1 * hour
+ORDER BY time
+  LIMIT 5
 ```
 
 ## Results

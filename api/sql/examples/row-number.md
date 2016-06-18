@@ -9,7 +9,7 @@ Partition is a subset of all rows in the resultset grouped by equal values of pa
 Assuming that the below resultset was partitioned by entity and then ordered by time within each partition, the row numbers would be as follows: 
 
 ```ls
-|--------------|--------------------------|------:| ROW_NUMBER
+|--------------|--------------------------|-------| ROW_NUMBER
 | nurswgvml006 | 2016-06-18T12:00:05.000Z | 66.0  |     1
 | nurswgvml006 | 2016-06-18T12:00:21.000Z | 8.1   |     2
 | nurswgvml007 | 2016-06-18T12:00:03.000Z | 18.2  |     1
@@ -47,7 +47,7 @@ The input data for the specified interval contains 11 rows, 2 rows for 5 entitie
 
 ```sql
 SELECT entity, datetime, value
-  FROM cpu_busy
+  FROM mpstat.cpu_busy
 WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30.000Z"
   ORDER BY entity, time
 ```
@@ -76,7 +76,7 @@ WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30
 
 ```sql
 SELECT entity, datetime, value
-  FROM cpu_busy
+  FROM mpstat.cpu_busy
 WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30.000Z"
   WITH ROW_NUMBER(entity ORDER BY time) <= 1
   ORDER BY entity, time
@@ -103,7 +103,7 @@ Reverse ordering is accomplished with `ORDER BY time DESC` condition in ROW_NUMB
 
 ```sql
 SELECT entity, datetime, value
-  FROM cpu_busy
+  FROM mpstat.cpu_busy
 WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30.000Z"
   WITH ROW_NUMBER(entity ORDER BY time DESC) <= 1
   ORDER BY entity, time
@@ -130,7 +130,7 @@ Maximum value for each partition can be queried with `ORDER BY value desc` condi
 
 ```sql
 SELECT entity, datetime, value
-  FROM cpu_busy
+  FROM mpstat.cpu_busy
 WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30.000Z"
   WITH ROW_NUMBER(entity ORDER BY value DESC) <= 1
   ORDER BY entity, time
@@ -140,7 +140,7 @@ WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30
 
 ```ls
 | entity       | datetime                 | value | 
-|--------------|--------------------------|------:| 
+|--------------|--------------------------|-------| 
 | nurswgvml006 | 2016-06-18T12:00:05.000Z | 66.0  | 
 | nurswgvml007 | 2016-06-18T12:00:19.000Z | 67.7  | 
 | nurswgvml010 | 2016-06-18T12:00:14.000Z | 0.5   | 

@@ -5,8 +5,8 @@ Returns the last time of a stored value in a table for a key (metric + entity + 
 ## Query
 
 ```sql
-SELECT entity, datetime, AVG(cpu_busy.value)
-  FROM cpu_busy
+SELECT entity, datetime, AVG(mpstat.cpu_busy.value)
+  FROM mpstat.cpu_busy
 WHERE time > now - 1 * hour 
   GROUP BY entity, period(15 minute)
   WITH time > last_time - 30 * minute

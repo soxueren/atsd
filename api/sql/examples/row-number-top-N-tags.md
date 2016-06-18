@@ -6,7 +6,7 @@ Retrieve top-3 15-minute periods with maximum average disk usage, for each disk 
 
 ```sql
 SELECT entity, tags.*, datetime, avg(value)
-  FROM disk_used 
+  FROM df.disk_used 
 WHERE datetime > now - 1 * day
   AND tags.file_system LIKE '/dev/*'
 GROUP BY entity, tags, period(15 minute)
