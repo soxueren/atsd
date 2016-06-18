@@ -2,6 +2,10 @@
 
 Axibase Time Series Database supports SQL for retrieving time series data from the database.
 
+The SQL statements can be executed interactively via the SQL console as well as on schedule. 
+
+Scheduled execution allows for generated report files to be distributed to email subscribers or stored on a local file system.
+
 The data can be exported in the following formats:
 
 |**Endpoint**|**Formats**|
@@ -9,10 +13,6 @@ The data can be exported in the following formats:
 |API  |CSV, JSON|
 |Web Interface  |CSV, JSON, HTML|
 |Scheduler|CSV, JSON, Excel|
-
-The SQL statements can be executed both in adhoc manner as well as on schedule. 
-
-Scheduled execution allows for generated report files to be distributed to email subscribers or stored on a local file system.
 
 ## Syntax
 
@@ -102,20 +102,19 @@ SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
 > `SELECT *` syntax is not supported with `GROUP BY` clause.
 
 ```
-SELECT *
-  FROM "mpstat.cpu_busy" t1 
+SELECT * FROM "mpstat.cpu_busy" t1 
   OUTER JOIN "meminfo.memfree" t2
 WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
   AND entity = 'nurswgvml006'
 ```
 
 ```ls
-cpu_busy.entity | memfree.entity | cpu_busy.time | memfree.time | cpu_busy.value | memfree.value
-nurswgvml006 | nurswgvml006 | 1466082161000 | 1466082161000 | 3.0 | null
-nurswgvml006 | nurswgvml006 | 1466082162000 | 1466082162000 | null | 70652.0
-nurswgvml006 | nurswgvml006 | 1466082177000 | 1466082177000 | 16.0 | 74588.0
-nurswgvml006 | nurswgvml006 | 1466082192000 | 1466082192000 | null | 72536.0
-nurswgvml006 | nurswgvml006 | 1466082193000 | 1466082193000 | 7.1 | null
+| cpu_busy.entity | memfree.entity | cpu_busy.time | memfree.time  | cpu_busy.value | memfree.value | 
+|-----------------|----------------|---------------|---------------|----------------|---------------| 
+| nurswgvml006    | nurswgvml006   | 1466082001000 | 1466082001000 | 37.1           | null          | 
+| nurswgvml006    | nurswgvml006   | 1466082012000 | 1466082012000 | null           | 67932.0       | 
+| nurswgvml006    | nurswgvml006   | 1466082017000 | 1466082017000 | 16.0           | null          | 
+| nurswgvml006    | nurswgvml006   | 1466082027000 | 1466082027000 | null           | 73620.0       | 
 ```
 
 ### Series Tag Columns
@@ -152,7 +151,9 @@ WHERE datetime > now - 5 * minute
 
 ```ls
 | entity       | count(value) | tags.mount_point | tags.file_system | 
+|--------------|--------------|------------------|------------------| 
 | nurswgvml010 | 20.0         | /                | /dev/sda1        | 
+
 ```
 
 ### Entity Tag Columns
@@ -167,13 +168,14 @@ WHERE time > current_hour
 ```
 
 ```ls
-entity | entity.tags.os | entity.tags.app | avg(value)
-nurswgvml006 | Linux | Hadoop/HBASE | 21.7
-nurswgvml007 | Linux | ATSD | 9.7
-nurswgvml010 | Linux | SVN, Jenkins, Redmine | 6.6
-nurswgvml011 | Linux | HMC Simulator, mysql | 5.4
-nurswgvml102 | Linux | Router | 1.2
-nurswgvml502 | null | null | 4.9
+| entity       | entity.tags.os | entity.tags.app       | avg(value) | 
+|--------------|----------------|-----------------------|------------| 
+| nurswgvml006 | Linux          | Hadoop/HBASE          | 99.8       | 
+| nurswgvml007 | Linux          | ATSD                  | 16.0       | 
+| nurswgvml010 | Linux          | SVN, Jenkins, Redmine | 3.9        | 
+| nurswgvml011 | Linux          | HMC Simulator, mysql  | 5.9        | 
+| nurswgvml102 | Linux          | Router                | 1.2        | 
+| nurswgvml502 | null           | null                  | 3.1        | 
 ```
 
 ### Group By Columns
@@ -352,9 +354,11 @@ GROUP BY entity
 ```
 
 ```ls
-entity | Cpu_Avg
-nurswgvml006 | 7.81
-nurswgvml007 | 9.68
+| entity       | Cpu_Avg | 
+|--------------|---------| 
+| nurswgvml006 | 99.8    | 
+| nurswgvml007 | 15.2    | 
+| nurswgvml011 | 5.7     | 
 ```
 
 ATSD provides a special grouping column `PERIOD` which calculates the start of the interval to which the record belongs.
@@ -368,10 +372,11 @@ GROUP BY period(5 MINUTE)
 ```
 
 ```ls
-datetime | Cpu_Avg
-2016-06-17T11:00:00.000Z | 8.15
-2016-06-17T11:05:00.000Z | 5.39
-2016-06-17T11:10:00.000Z | 4.96
+| datetime                 | Cpu_Avg | 
+|--------------------------|---------| 
+| 2016-06-18T22:00:00.000Z | 43.2    | 
+| 2016-06-18T22:05:00.000Z | 35.3    | 
+| 2016-06-18T22:10:00.000Z | 5.0     | 
 ```
 
 ### HAVING filter
@@ -384,12 +389,14 @@ SELECT entity, avg(value) AS Cpu_Avg
 WHERE entity IN ('nurswgvml007', 'nurswgvml006', 'nurswgvml011') 
   AND time > current_hour
 GROUP BY entity
-  HAVING avg(value) > 8
+  HAVING avg(value) > 10
 ```
 
 ```ls
-entity | Cpu_Avg
-nurswgvml007 | 9.68
+| entity       | Cpu_Avg | 
+|--------------|---------| 
+| nurswgvml006 | 99.8    | 
+| nurswgvml007 | 14.3    | 
 ```
 
 ## Partitioning
@@ -400,7 +407,7 @@ Partition is a subset of all rows in the resultset grouped by equal values of pa
 
 For example, assuming that the below resultset was partitioned by entity and then ordered by time within each partition, the row numbers would be as follows: 
 
-```
+```ls
 |--------------|--------------------------|------:| ROW_NUMBER
 | nurswgvml006 | 2016-06-18T12:00:05.000Z | 66.0  |     1
 | nurswgvml006 | 2016-06-18T12:00:21.000Z | 8.1   |     2
@@ -431,20 +438,22 @@ Examples:
 
 ```sql
 SELECT entity, datetime, value
-  FROM cpu_busy
+  FROM mpstat.cpu_busy
 WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30.000Z"
   WITH ROW_NUMBER(entity ORDER BY time) <= 1
   ORDER BY entity, time
 ```
 
+```ls
 | entity       | datetime                 | value | 
-|--------------|--------------------------|------:| 
+|--------------|--------------------------|-------| 
 | nurswgvml006 | 2016-06-18T12:00:05.000Z | 66.0  | 
 | nurswgvml007 | 2016-06-18T12:00:03.000Z | 18.2  | 
 | nurswgvml010 | 2016-06-18T12:00:14.000Z | 0.5   | 
 | nurswgvml011 | 2016-06-18T12:00:10.000Z | 100.0 | 
 | nurswgvml102 | 2016-06-18T12:00:02.000Z | 0.0   | 
 | nurswgvml502 | 2016-06-18T12:00:01.000Z | 13.7  | 
+```
 
 ## Ordering
 
@@ -458,11 +467,14 @@ ORDER BY avg(value) DESC
 ```
 
 ```ls
-entity | avg(value)
-nurswgvml006 | 22.9
-nurswgvml007 | 9.9
-nurswgvml010 | 6.5
-nurswgvml011 | 5.5
+| entity       | avg(value) | 
+|--------------|------------| 
+| nurswgvml006 | 19.2       | 
+| nurswgvml007 | 13.2       | 
+| nurswgvml011 | 5.1        | 
+| nurswgvml502 | 4.3        | 
+| nurswgvml010 | 4.3        | 
+| nurswgvml102 | 1.2        | 
 ```
 
 In combination with `LIMIT`, ordering can be used to execute **top-N** queries.
@@ -476,9 +488,10 @@ ORDER BY avg(value) DESC
 ```
 
 ```ls
-| entity | avg(value) |
-|nurswgvml006 | 22.9 |
-|nurswgvml007 | 9.9 |
+| entity       | avg(value) | 
+|--------------|------------| 
+| nurswgvml006 | 19.3       | 
+| nurswgvml007 | 13.2       | 
 ```
 
 ## Joins
@@ -503,10 +516,12 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 Since timestamps for each of metric are identical in this particular case, `JOIN` produces merged rows for all the detailed records which have equivalent values for entity and time.
 
 ```ls
-datetime | entity | t1.value | t2.value | t3.value
-2016-06-16T13:00:01.000Z | nurswgvml006 | 13.3 | 21.0 | 2.9
-2016-06-16T13:00:17.000Z | nurswgvml006 | 1.0 | 2.0 | 13.0
-2016-06-16T13:00:33.000Z | nurswgvml006 | 0.0 | 1.0 | 0.0
+| datetime                 | entity       | t1.value | t2.value | t3.value | 
+|--------------------------|--------------|----------|----------|----------| 
+| 2016-06-16T13:00:01.000Z | nurswgvml006 | 13.3     | 21.0     | 2.9      | 
+| 2016-06-16T13:00:17.000Z | nurswgvml006 | 1.0      | 2.0      | 13.0     | 
+| 2016-06-16T13:00:33.000Z | nurswgvml006 | 0.0      | 1.0      | 0.0      | 
+
 ```
 
 However, when merging records for irregular metrics collected by independent scripts, `JOIN` results will contain a small subset of rows with coincidentally identical times.
@@ -522,9 +537,10 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 The result contains only 2 records out of 75. This is because for `JOIN` to merge detailed records from multiple metrics into one row, the records should have the same time. 
 
 ```ls
-datetime | entity | cpu | mem
-2016-06-16T13:02:57.000Z | nurswgvml006 | 16.0 | 74588.0
-2016-06-16T13:07:17.000Z | nurswgvml006 | 16.0 | 73232.0
+| datetime                 | entity       | cpu  | mem     | 
+|--------------------------|--------------|------|---------| 
+| 2016-06-16T13:02:57.000Z | nurswgvml006 | 16.0 | 74588.0 | 
+| 2016-06-16T13:07:17.000Z | nurswgvml006 | 16.0 | 73232.0 | 
 ```
 
 This is typically the case when multiple metrics are inserted with one command or when time is controlled externally, as in the example above, where metrics 'cpu_system', 'cpu_user', 'cpu_iowait' are all timestamped by the same collector script with the same time during each `mpstat` command invocation.
@@ -540,10 +556,12 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 ```
 
 ```ls	
-datetime | entity | t1.value | t2.value | t1.tags.file_system | t1.tags.mount_point
-2016-06-16T13:00:14.000Z | nurswgvml006 | 1743057372 | 83 | //u113452.nurstr021/backup | /mnt/u113452
-2016-06-16T13:00:29.000Z | nurswgvml006 | 1743057372 | 83 | //u113452.nurstr021/backup | /mnt/u113452
-2016-06-16T13:00:44.000Z | nurswgvml006 | 1743057372 | 83 | //u113452.nurstr021/backup | /mnt/u113452
+| datetime                 | entity       | t1.value     | t2.value | t1.tags.file_system             | t1.tags.mount_point | 
+|--------------------------|--------------|--------------|----------|---------------------------------|---------------------| 
+| 2016-06-16T13:00:14.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452        | 
+| 2016-06-16T13:00:29.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452        | 
+| 2016-06-16T13:00:44.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452        | 
+| 2016-06-16T13:00:59.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452        | 
 ```
 
 ### OUTER JOIN
@@ -561,13 +579,13 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 `OUTER JOIN` for detailed records, without period aggregation, produces rows that have NULLs in value columns because the underlying metric didn't record any value at the specified time.
 
 ```ls
-datetime | entity | cpu | mem
-2016-06-16T13:02:41.000Z | nurswgvml006 | 3.0 | null
-2016-06-16T13:02:42.000Z | nurswgvml006 | null | 70652.0
-2016-06-16T13:02:57.000Z | nurswgvml006 | 16.0 | 74588.0
-2016-06-16T13:03:12.000Z | nurswgvml006 | null | 72536.0
-2016-06-16T13:03:13.000Z | nurswgvml006 | 7.1 | null
-2016-06-16T13:03:27.000Z | nurswgvml006 | null | 71676.0
+| datetime                 | entity       | cpu  | mem     | 
+|--------------------------|--------------|------|---------| 
+| 2016-06-16T13:00:01.000Z | nurswgvml006 | 37.1 | null    | 
+| 2016-06-16T13:00:12.000Z | nurswgvml006 | null | 67932.0 | 
+| 2016-06-16T13:00:17.000Z | nurswgvml006 | 16.0 | null    | 
+| 2016-06-16T13:00:27.000Z | nurswgvml006 | null | 73620.0 | 
+| 2016-06-16T13:00:33.000Z | nurswgvml006 | 1.0  | null    | 
 ```
 
 To regularize the series, apply `GROUP BY` with period aggregation and apply one of statistical functions to return one value for the period, for each series.
@@ -582,11 +600,11 @@ WHERE datetime >= '2016-06-16T13:02:40.000Z' AND datetime < '2016-06-16T13:10:00
 ```
 
 ```ls
-datetime | entity | avg_cpu | avg_mem
-2016-06-16T13:02:00.000Z | nurswgvml006 | 9.5  | 72620.0
-2016-06-16T13:03:00.000Z | nurswgvml006 | 6.1  | 70799.0
-2016-06-16T13:04:00.000Z | nurswgvml006 | 15.1 | 71461.0
-2016-06-16T13:05:00.000Z | nurswgvml006 | 93.3 | 69193.0
+| datetime                 | entity       | avg_cpu | avg_mem  | 
+|--------------------------|--------------|---------|----------| 
+| 2016-06-16T13:02:00.000Z | nurswgvml006 | 9.5     | 72620.0  | 
+| 2016-06-16T13:03:00.000Z | nurswgvml006 | 6.1     | 70799.0  | 
+| 2016-06-16T13:04:00.000Z | nurswgvml006 | 15.1    | 71461.0  | 
 ```
 
 Choice of statistical function(s) depends on the use case. While `AVG` and percentile functions would smooth the values, `LAST` or `FIRST` functions can be applied to select a subset of raw values.
@@ -612,17 +630,19 @@ This allows merging of series with different tags, including merging a series wi
 
 ```sql
 SELECT entity, datetime, AVG(t1.value), AVG(t2.value), tags.*
-  FROM cpu_busy t1
+  FROM mpstat.cpu_busy t1
 JOIN USING entity disk_used t2
   WHERE time > current_hour
   AND entity = 'nurswgvml007' 
 GROUP BY entity, tags, period(1 minute)
 ```
 
+```ls
 | entity       | datetime                 | AVG(t1.value) | AVG(t2.value) | disk_used.tags.mount_point | disk_used.tags.file_system          | 
 |--------------|--------------------------|--------------:|--------------:|----------------------------|-------------------------------------| 
 | nurswgvml007 | 2016-06-18T10:03:00.000Z | 100.0         | 1744011571.0  | /mnt/u113452               | //u113452.nurstr003/backup     | 
 | nurswgvml007 | 2016-06-18T10:03:00.000Z | 100.0         | 8686400.0     | /                          | /dev/mapper/vg_nurswgvml007-lv_root | 
+```
 
 >  Records returned by a `JOIN USING entity` are filtered to include series tags with last insert date greater than start date specified in the query.
 
@@ -723,8 +743,9 @@ FROM "mpstat.cpu_busy"
 ```
 
 ```ls
-value | time | date_format(time) | date_format(time,'yyyy-MM-dd'T'HH:mm:ss.SSSZ') | date_format(time,'yyyy-MM-dd HH:mm:ss.SSS')
-5.0 | 1466166325000 | 2016-06-17T12:25:25.000Z | 2016-06-17T12:25:25.000+0000 | 2016-06-17 12:25:25.000
+| value | time          | date_format(time)        | date_format(time,'yyyy-MM-dd'T'HH:mm:ss.SSSZ') | date_format(time,'yyyy-MM-dd HH:mm:ss.SSS') | 
+|-------|---------------|--------------------------|------------------------------------------------|---------------------------------------------| 
+| 7.1   | 1466287841000 | 2016-06-18T22:10:41.000Z | 2016-06-18T22:10:41.000+0000                   | 2016-06-18 22:10:41.000                     | 
 ```
 
 ## Case Sensitivity
