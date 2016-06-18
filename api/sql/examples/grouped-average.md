@@ -14,6 +14,7 @@ WHERE entity IN ('nurswgvml007', 'nurswgvml011')
 
 ## Results
 
+```ls
 | entity       | period        | CPU_Avg            | 
 |--------------|---------------|--------------------| 
 | nurswgvml007 | 1446037200000 | 76.94454545454546  | 
@@ -27,4 +28,4 @@ WHERE entity IN ('nurswgvml007', 'nurswgvml011')
 | nurswgvml007 | 1446039600000 | 24.24578947368421  | 
 | nurswgvml007 | 1446039900000 | 15.909444444444444 | 
 | nurswgvml007 | 1446040200000 | 16.4               | 
- 
+ ```

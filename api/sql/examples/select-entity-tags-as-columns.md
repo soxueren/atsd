@@ -12,6 +12,7 @@ WHERE time > now - 1*HOUR
 
 ## Results
 
+```ls
 | entity       | os    | ip          | avg(value)   | tags.mount_point          | tags.file_system                                       | 
 |--------------|-------|-------------|--------------|---------------------------|--------------------------------------------------------| 
 | nurswgvml006 | Linux | 10.102.0.5  | 1744011571.0 | /mnt/u113452              | //u113452.nurstr003/backup                             | 
@@ -30,4 +31,5 @@ WHERE time > now - 1*HOUR
 | nurswgvml010 | Linux | 10.102.0.9  | 6480247.9    | /                         | /dev/sda1                                              | 
 | nurswgvml010 | Linux | 10.102.0.9  | 30440670.4   | /app                      | /dev/sdb1                                              | 
 | nurswgvml102 | Linux | 10.102.0.1  | 1528738.8    | /                         | rootfs                                                 | 
+```
 

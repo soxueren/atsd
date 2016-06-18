@@ -1,6 +1,6 @@
 # Outer Join
 
-Outer Join missing column values with NULL.
+Outer Join missing column values filled with NULL.
 
 ## Query
 
@@ -13,16 +13,20 @@ OUTER JOIN disk_used
 ```
 
 ## Results
-| cpu_busy.entity | disk_used.entity | cpu_busy.time | disk_used.time | cpu_busy.value | disk_used.value | disk_used.tags.mount_point | disk_used.tags.file_system      | 
-|--------------|--------------|---------------|---------------|------|-----------|------|-------------------------------------| 
-| nurswgvml007 | nurswgvml007 | 1466192293000 | 1466192293000 | null | 8666448.0 | /    | /dev/mapper/vg_nurswgvml007-lv_root | 
-| nurswgvml007 | nurswgvml007 | 1466192308000 | 1466192308000 | null | 8667224.0 | /    | /dev/mapper/vg_nurswgvml007-lv_root | 
-| nurswgvml007 | nurswgvml007 | 1466192323000 | 1466192323000 | null | 8668068.0 | /    | /dev/mapper/vg_nurswgvml007-lv_root | 
-| nurswgvml007 | nurswgvml007 | 1466192338000 | 1466192338000 | null | 8668920.0 | /    | /dev/mapper/vg_nurswgvml007-lv_root | 
-| nurswgvml007 | nurswgvml007 | 1466190009000 | 1466190009000 | 3.0  | null      | null | null                                | 
-| nurswgvml007 | nurswgvml007 | 1466190025000 | 1466190025000 | 4.0  | null      | null | null                                | 
-| nurswgvml007 | nurswgvml007 | 1466190041000 | 1466190041000 | 5.0  | null      | null | null                                | 
-| nurswgvml007 | nurswgvml007 | 1466190057000 | 1466190057000 | 5.0  | null      | null | null                                | 
+
+```ls
+| cpu_busy.entity | disk_used.entity | cpu_busy.time | disk_used.time | cpu_busy.value | disk_used.value | disk_used.tags.mount_point | disk_used.tags.file_system          | 
+|-----------------|------------------|---------------|----------------|----------------|-----------------|----------------------------|-------------------------------------| 
+| nurswgvml007    | nurswgvml007     | 1466289428000 | 1466289428000  | null           | 1744011571.0    | /mnt/u113452               | //u113452.nurstr003/backup          | 
+| nurswgvml007    | nurswgvml007     | 1466289443000 | 1466289443000  | null           | 1744011571.0    | /mnt/u113452               | //u113452.nurstr003/backup          | 
+| nurswgvml007    | nurswgvml007     | 1466289458000 | 1466289458000  | null           | 1744011571.0    | /mnt/u113452               | //u113452.nurstr003/backup          | 
+| nurswgvml007    | nurswgvml007     | 1466289428000 | 1466289428000  | null           | 8729956.0       | /                          | /dev/mapper/vg_nurswgvml007-lv_root | 
+| nurswgvml007    | nurswgvml007     | 1466289443000 | 1466289443000  | null           | 8730752.0       | /                          | /dev/mapper/vg_nurswgvml007-lv_root | 
+| nurswgvml007    | nurswgvml007     | 1466289458000 | 1466289458000  | null           | 8731676.0       | /                          | /dev/mapper/vg_nurswgvml007-lv_root | 
+| nurswgvml007    | nurswgvml007     | 1466289426000 | 1466289426000  | 15.3           | null            | null                       | null                                | 
+| nurswgvml007    | nurswgvml007     | 1466289442000 | 1466289442000  | 3.1            | null            | null                       | null                                | 
+| nurswgvml007    | nurswgvml007     | 1466289458000 | 1466289458000  | 4.0            | null            | null                       | null                                | 
+```
 
 
 

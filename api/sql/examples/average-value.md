@@ -1,4 +1,4 @@
-## Average Value Query
+# Average Value Query
 
 Average value for one metric, one entity.
 
@@ -13,7 +13,7 @@ WHERE entity = 'nurswgvml007'
 
 ## Results
 
-```
+```ls
 CPU_Avg
 10.2
 ```

@@ -13,6 +13,7 @@ WHERE time > current_hour
 
 ## Results
 
+```ls
 | entity       | MAX(value) | Max Time            | 
 |--------------|------------|---------------------| 
 | awsswgvml001 | 100.0      | 2015-10-28 14:03:09 | 
@@ -22,3 +23,4 @@ WHERE time > current_hour
 | nurswgvml010 | 88.49      | 2015-10-28 14:10:00 | 
 | nurswgvml011 | 11.11      | 2015-10-28 14:05:01 | 
 | nurswgvml102 | 41.0       | 2015-10-28 14:04:53 | 
+```

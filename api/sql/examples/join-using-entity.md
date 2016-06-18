@@ -32,10 +32,12 @@ GROUP BY entity, tags, period(15 minute)
 
 ## Results
 
+```ls
 | entity       | datetime                 | AVG(cpu_busy.value) | AVG(disk_used.value) | disk_used.tags.mount_point | disk_used.tags.file_system          | 
 |--------------|--------------------------|--------------------:|---------------------:|----------------------------|-------------------------------------| 
 | nurswgvml007 | 2016-06-18T10:00:00.000Z | 39.7                | 1744011571.0         | /mnt/u113452               | //u113452.your-backup.de/backup     | 
 | nurswgvml007 | 2016-06-18T10:00:00.000Z | 39.7                | 8699302.7            | /                          | /dev/mapper/vg_nurswgvml007-lv_root | 
+```
 
 ## Outer Join Query without `USING entity`
 
@@ -51,11 +53,13 @@ GROUP BY entity, tags, period(15 minute)
 
 ## Results
 
+```ls
 | entity       | datetime                 | AVG(cpu_busy.value) | AVG(disk_used.value) | disk_used.tags.mount_point | disk_used.tags.file_system          | 
 |--------------|--------------------------|--------------------:|---------------------:|----------------------------|-------------------------------------| 
 | nurswgvml007 | 2016-06-18T10:00:00.000Z | null                | 1744011571.0         | /mnt/u113452               | //u113452.your-backup.de/backup     | 
 | nurswgvml007 | 2016-06-18T10:00:00.000Z | null                | 8700117.1            | /                          | /dev/mapper/vg_nurswgvml007-lv_root | 
 | nurswgvml007 | 2016-06-18T10:00:00.000Z | 10.0                | null                 | null                       | null                                | 
+```
 
 ## OUTER JOIN with `USING entity`
 
@@ -71,10 +75,11 @@ GROUP BY entity, tags, period(15 minute)
 
 ## Results
 
+```ls
 | entity       | datetime                 | AVG(cpu_busy.value) | AVG(disk_used.value) | disk_used.tags.mount_point | disk_used.tags.file_system          | 
 |--------------|--------------------------|--------------------:|---------------------:|----------------------------|-------------------------------------| 
 | nurswgvml007 | 2016-06-18T10:00:00.000Z | 10.0                | 1744011571.0         | /mnt/u113452               | //u113452.your-backup.de/backup     | 
 | nurswgvml007 | 2016-06-18T10:00:00.000Z | 10.0                | 8700117.1            | /                          | /dev/mapper/vg_nurswgvml007-lv_root | 
-
+```
 
 

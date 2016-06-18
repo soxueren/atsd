@@ -6,13 +6,14 @@ Result table contains rows with table1.entity = table2.entity and table1.time = 
 
 ```sql
 SELECT *
-FROM cpu_busy
+  FROM cpu_busy
 JOIN cpu_idle
-WHERE time > now - 1 * hour
+  WHERE time > now - 1 * hour
 ```
 
 ## Results
 
+```ls
 | entity       | time          | cpu_busy.value | 
 |--------------|---------------|----------------|
 | awsswgvml001 | 1447400465000 | 100.0          | 
@@ -25,3 +26,4 @@ WHERE time > now - 1 * hour
 | awsswgvml001 | 1447400892000 | 1.03           | 
 | awsswgvml001 | 1447400953000 | 3.03           |
 | awsswgvml001 | 1447401014000 | 14.42          | 
+```

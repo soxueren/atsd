@@ -15,9 +15,10 @@ WHERE entity = 'nurswgvml006'
 
 ## Results
 
-| datetime                 | value | entity       | measurement | 
-|--------------------------|------:|--------------|-------------| 
+```ls
+| datetime                 | value | entity       | measurement |
 | 2016-06-17T19:16:00.000Z | 3.0   | nurswgvml006 | cpu_busy    | 
 | 2016-06-17T19:16:16.000Z | 3.0   | nurswgvml006 | cpu_busy    | 
 | 2016-06-17T19:16:32.000Z | 4.0   | nurswgvml006 | cpu_busy    | 
 | 2016-06-17T19:16:48.000Z | 3.0   | nurswgvml006 | cpu_busy    | 
+```

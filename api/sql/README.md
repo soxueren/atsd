@@ -204,7 +204,7 @@ Unquoted alias should start with letter [a-zA-Z], followed by letter, digit or u
 
 `AS` keyword is optional.
 
-```
+```sql
 SELECT tbl.value*100 AS "cpu_percent", tbl.time 'sample-time'
   FROM "mpstat.cpu_busy" tbl 
 WHERE datetime > now - 1*MINUTE
@@ -762,7 +762,6 @@ Tag values and property values are case-sensitive.
 
 - [Alias](examples/alias.md)
 - [Average Value](examples/average-value.md)
-- [Basic](examples/basic.md)
 - [Counter Aggregator](examples/counter-aggregator.md)
 - [Datetime Format](examples/datetime-format.md)
 - [Select All](examples/select-all.md)
