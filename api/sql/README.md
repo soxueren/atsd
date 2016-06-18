@@ -101,7 +101,7 @@ SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
 
 > `SELECT *` syntax is not supported with `GROUP BY` clause.
 
-```
+```sql
 SELECT * FROM "mpstat.cpu_busy" t1 
   OUTER JOIN "meminfo.memfree" t2
 WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
@@ -140,7 +140,7 @@ WHERE entity = 'nurswgvml010' AND datetime > now - 1*MINUTE
 
 `tags` and `tags.{tag-name}` syntax can also be used in `WHERE`, `ORDER`, `GROUP BY` and other clauses.
 
-```
+```sql
 SELECT entity, count(value), tags.*
  FROM disk_used
 WHERE datetime > now - 5 * minute
@@ -272,6 +272,8 @@ The period contains the following fields:
 | unit  | [**Required**] [Time unit](/api/series/time-unit.md) such as `MINUTE`, `HOUR`, `DAY`. |
 | interpolation  | Interpolation function, such as `LINEAR`. Default: `NONE`. Refer to [interpolation](#interpolation). |
 | align| Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
+
+Period syntax:
 
 ```sql
 PERIOD({count} {unit} [, interpolation [, align]])
@@ -558,10 +560,10 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 ```ls	
 | datetime                 | entity       | t1.value     | t2.value | t1.tags.file_system             | t1.tags.mount_point | 
 |--------------------------|--------------|--------------|----------|---------------------------------|---------------------| 
-| 2016-06-16T13:00:14.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452        | 
-| 2016-06-16T13:00:29.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452        | 
-| 2016-06-16T13:00:44.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452        | 
-| 2016-06-16T13:00:59.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452        | 
+| 2016-06-16T13:00:14.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452             | 
+| 2016-06-16T13:00:29.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452             | 
+| 2016-06-16T13:00:44.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452             | 
+| 2016-06-16T13:00:59.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452             | 
 ```
 
 ### OUTER JOIN
@@ -640,7 +642,7 @@ GROUP BY entity, tags, period(1 minute)
 ```ls
 | entity       | datetime                 | AVG(t1.value) | AVG(t2.value) | disk_used.tags.mount_point | disk_used.tags.file_system          | 
 |--------------|--------------------------|--------------:|--------------:|----------------------------|-------------------------------------| 
-| nurswgvml007 | 2016-06-18T10:03:00.000Z | 100.0         | 1744011571.0  | /mnt/u113452               | //u113452.nurstr003/backup     | 
+| nurswgvml007 | 2016-06-18T10:03:00.000Z | 100.0         | 1744011571.0  | /mnt/u113452               | //u113452.nurstr003/backup          | 
 | nurswgvml007 | 2016-06-18T10:03:00.000Z | 100.0         | 8686400.0     | /                          | /dev/mapper/vg_nurswgvml007-lv_root | 
 ```
 
