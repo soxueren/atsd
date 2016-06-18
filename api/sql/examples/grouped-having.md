@@ -1,6 +1,6 @@
-# Not Equal Operator
+# Grouped and Having
 
-In this example the "not equal" operator `!=`, is used to exclude values equal to zero from the results.
+In this example the "not equal" operator `!=`, is used to exclude grouped rows with aggregation function delta equal to zero from the results.
 
 ## Query
 

@@ -1,6 +1,6 @@
 # Grouped Average
 
-5 minute average value for one metric, two entities, sorted by entity name
+5 minute average value for one metric, two entities.
 
 ## Query
 

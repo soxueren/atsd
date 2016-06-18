@@ -5,7 +5,8 @@
 ```sql
 SELECT * FROM mpstat.cpu_busy 
  WHERE entity = 'nurswgvml007' 
- AND time between now - 1 * hour AND now
+AND time between now - 1 * hour AND now
+ LIMIT 3
 ```
 
 ## Results 
@@ -15,12 +16,27 @@ SELECT * FROM mpstat.cpu_busy
 | nurswgvml007 | 1446034244000 | 35.71 | 
 | nurswgvml007 | 1446034260000 | 39.78 | 
 | nurswgvml007 | 1446034276000 | 16.0  | 
-| nurswgvml007 | 1446034292000 | 10.1  | 
-| nurswgvml007 | 1446034308000 | 9.0   | 
-| nurswgvml007 | 1446034324000 | 12.12 | 
-| nurswgvml007 | 1446034340000 | 10.31 | 
-| nurswgvml007 | 1446034356000 | 8.08  | 
-| nurswgvml007 | 1446034372000 | 10.1  | 
-| nurswgvml007 | 1446034388000 | 12.87 | 
-| nurswgvml007 | 1446034404000 | 9.09  | 
-| nurswgvml007 | 1446034420000 | 8.25  | 
+
+## Query for Series with Tags
+
+```sql
+SELECT * FROM disk_used
+ WHERE entity = 'nurswgvml007' 
+ AND time > now - 1 * hour
+ ORDER BY time
+ LIMIT 5
+```
+
+## Results
+
+| entity       | time          | value        | tags.mount_point | tags.file_system                    | 
+|--------------|---------------|--------------|------------------|-------------------------------------| 
+| nurswgvml007 | 1466279748000 | 8693952.0    | /                | /dev/mapper/vg_nurswgvml007-lv_root | 
+| nurswgvml007 | 1466279748000 | 1744011571.0 | /mnt/u113452     | //u113452.nurstr003/backup          | 
+| nurswgvml007 | 1466279763000 | 8694648.0    | /                | /dev/mapper/vg_nurswgvml007-lv_root | 
+| nurswgvml007 | 1466279763000 | 1744011571.0 | /mnt/u113452     | //u113452.nurstr003/backup          | 
+| nurswgvml007 | 1466279778000 | 8695440.0    | /                | /dev/mapper/vg_nurswgvml007-lv_root | 
+
+
+
+

@@ -55,8 +55,11 @@ Virtual tables are currently supported only for series. Access to properties, me
 * **HAVING** filter for grouped rows
 * **JOIN**
 * **OUTER JOIN**
-* **ROW_NUMBER** returns row index (starting with 1) within the group. The function can be used to limit the number of rows returned for each group.
-* **LAST_TIME**
+
+### Functions
+
+* **ROW_NUMBER** returns row index within each partition.
+* **LAST_TIME** returns last insert time in millisecond for each series
 
 ### Processing Sequence
 
@@ -117,18 +120,39 @@ nurswgvml006 | nurswgvml006 | 1466082193000 | 1466082193000 | 7.1 | null
 
 ### Series Tag Columns
 
-Tags values are referenced in `SELECT` expression by specifying `tags.*`, `tags`, or `tags.{tag-name}` as column name.
+Tag values are referenced in `SELECT` expression by specifying `tags.*`, `tags`, or `tags.{tag-name}` as column name.
+
+* `tags.*` expands to multiple columns
+* `tags` concatenates tags to `name1=value1;name2=value2` format
+* `tags.{tag-name}` creates a column for a specific tag
+
+```sql
+SELECT datetime, entity, value, tags.*, tags, tags.mount_point, tags.file_system
+  FROM disk_used 
+WHERE entity = 'nurswgvml010' AND datetime > now - 1*MINUTE
+  ORDER BY time
+```
+
+```ls
+| datetime                 | entity       | value      | tags.mount_point | tags.file_system | tags                                   | tags.mount_point | tags.file_system | 
+| 2016-06-18T11:22:35.000Z | nurswgvml010 | 6478200.0  | /                | /dev/sda1        | file_system=/dev/sda1;mount_point=/    | /                | /dev/sda1        | 
+| 2016-06-18T11:22:35.000Z | nurswgvml010 | 30440664.0 | /app             | /dev/sdb1        | file_system=/dev/sdb1;mount_point=/app | /app             | /dev/sdb1        | 
+```
 
 `tags` and `tags.{tag-name}` syntax can also be used in `WHERE`, `ORDER`, `GROUP BY` and other clauses.
 
-```sql
-SELECT datetime, entity, value, tags.* 
-  FROM "df.disk_used_percent" WHERE datetime > now - 1*MINUTE
+```
+SELECT entity, count(value), tags.*
+ FROM disk_used
+WHERE datetime > now - 5 * minute
+ AND entity = 'nurswgvml010'
+ AND tags.mount_point = '/'
+ GROUP BY entity, tags
 ```
 
-```sql
-SELECT datetime, entity, value, tags.mount_point, tags.file_system 
-  FROM "df.disk_used_percent" WHERE datetime > now - 1*MINUTE
+```ls
+| entity       | count(value) | tags.mount_point | tags.file_system | 
+| nurswgvml010 | 20.0         | /                | /dev/sda1        | 
 ```
 
 ### Entity Tag Columns
@@ -168,11 +192,15 @@ Columns referenced in the `SELECT` statement must be included in the `GROUP BY` 
 
 ### Versioning Columns
 
-Versioning columns (version_tatus, version_source, version_time) are currently not supported.
+Versioning columns (`version_tatus`, `version_source`, `version_time`) are currently not supported.
 
 ## Aliases
 
-Table and column aliases can be added with quoted or double-quoted literal value or with `AS` keyword.
+Table and column aliases can be unquoted added or enclosed in quotes or double-quotes.
+
+Unquoted alias should start with letter [a-zA-Z], followed by letter, digit or underscore.
+
+`AS` keyword is optional.
 
 ```
 SELECT tbl.value*100 AS "cpu_percent", tbl.time 'sample-time'
@@ -180,9 +208,7 @@ SELECT tbl.value*100 AS "cpu_percent", tbl.time 'sample-time'
 WHERE datetime > now - 1*MINUTE
 ```
 
-The underlying column and table names, or expression text are included in table schema section of the metadata.
-
-Alias should start with letter [a-zA-Z], followed by letter, digit or underscore.
+For aliased columns, the underlying column and table names, or expression text are included in table schema section of the metadata.
 
 ## Arithmetic Operators
 
@@ -366,6 +392,60 @@ entity | Cpu_Avg
 nurswgvml007 | 9.68
 ```
 
+## Partitioning
+
+Partitioning is implemented with `ROW_NUMBER()` function which returns sequential number of a row within a partition of result set, starting at 1 for the first row in each partition.
+
+Partition is a subset of all rows in the resultset grouped by equal values of partitioning columns.
+
+For example, assuming that the below resultset was partitioned by entity and then ordered by time within each partition, the row numbers would be as follows: 
+
+```
+|--------------|--------------------------|------:| ROW_NUMBER
+| nurswgvml006 | 2016-06-18T12:00:05.000Z | 66.0  |     1
+| nurswgvml006 | 2016-06-18T12:00:21.000Z | 8.1   |     2
+| nurswgvml007 | 2016-06-18T12:00:03.000Z | 18.2  |     1
+| nurswgvml007 | 2016-06-18T12:00:19.000Z | 67.7  |     2
+| nurswgvml010 | 2016-06-18T12:00:14.000Z | 0.5   |     1
+| nurswgvml011 | 2016-06-18T12:00:10.000Z | 100.0 |     1
+| nurswgvml011 | 2016-06-18T12:00:26.000Z | 4.0   |     2
+| nurswgvml011 | 2016-06-18T12:00:29.000Z | 0.0   |     3
+```
+
+### ROW_NUMBER Syntax
+
+```sql
+ROW_NUMBER({partitioning columns} ORDER BY {ordering columns [direction]})
+```
+
+* {partitioning columns} can be `entity`, `tags`, or `entity, tags`
+* {ordering columns [direction]} can be any in the `FROM` clause with optional ASC|DESC direction.
+
+Examples:
+
+* `ROW_NUMBER(entity ORDER BY time)`
+* `ROW_NUMBER(entity, tags ORDER BY time DESC)`
+* `ROW_NUMBER(entity, tags ORDER BY time DESC, avg(value))`
+ 
+ The returned number can be used to filter rows within each partition, for example to return only top-N records from each partition:
+
+```sql
+SELECT entity, datetime, value
+  FROM cpu_busy
+WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30.000Z"
+  WITH ROW_NUMBER(entity ORDER BY time) <= 1
+  ORDER BY entity, time
+```
+
+| entity       | datetime                 | value | 
+|--------------|--------------------------|------:| 
+| nurswgvml006 | 2016-06-18T12:00:05.000Z | 66.0  | 
+| nurswgvml007 | 2016-06-18T12:00:03.000Z | 18.2  | 
+| nurswgvml010 | 2016-06-18T12:00:14.000Z | 0.5   | 
+| nurswgvml011 | 2016-06-18T12:00:10.000Z | 100.0 | 
+| nurswgvml102 | 2016-06-18T12:00:02.000Z | 0.0   | 
+| nurswgvml502 | 2016-06-18T12:00:01.000Z | 13.7  | 
+
 ## Ordering
 
 Rows returned in the resultset can be sorted in ascending or descending order with `ORDER BY` clause.
@@ -407,7 +487,9 @@ Data for multiple tables (metrics) can be merged by joining virtual tables with 
 
 ### JOIN
 
-Unlike standard SQL, `JOIN` clauses in ATSD do not support any conditions (columns) on which to perform a join. Instead the rows are joined by entity, row (or period) time, and all series tags (if present).
+`JOIN` clause allows merging records for multiple metrics into one resultset, even if data collected for the underlying series is not synchronized on time.
+
+The default `JOIN` condition is time, entity and series tags. The condition can be modified with `USING entity` clause in which case series tags are ignored, and records are joined on time and entity instead.
 
 ```sql
 SELECT datetime, entity, t1.value, t2.value, t3.value
@@ -501,8 +583,8 @@ WHERE datetime >= '2016-06-16T13:02:40.000Z' AND datetime < '2016-06-16T13:10:00
 
 ```ls
 datetime | entity | avg_cpu | avg_mem
-2016-06-16T13:02:00.000Z | nurswgvml006 | 9.5 | 72620.0
-2016-06-16T13:03:00.000Z | nurswgvml006 | 6.1 | 70799.0
+2016-06-16T13:02:00.000Z | nurswgvml006 | 9.5  | 72620.0
+2016-06-16T13:03:00.000Z | nurswgvml006 | 6.1  | 70799.0
 2016-06-16T13:04:00.000Z | nurswgvml006 | 15.1 | 71461.0
 2016-06-16T13:05:00.000Z | nurswgvml006 | 93.3 | 69193.0
 ```
@@ -517,6 +599,32 @@ WHERE datetime >= '2016-06-16T13:02:40.000Z' AND datetime < '2016-06-16T13:10:00
   AND entity = 'nurswgvml006'
   GROUP BY entity, period(1 MINUTE)
 ```
+
+### JOIN with USING entity
+
+`USING entity` modifies the default JOIN condition. 
+
+When `USING entity` is specified, rows are joined by entity and time instead of entity, time, and series tags.
+
+This allows merging of series with different tags, including merging a series without tags with a series containing multiple tags.
+
+`USING entity` is supported by both inner and outer JOIN.
+
+```sql
+SELECT entity, datetime, AVG(t1.value), AVG(t2.value), tags.*
+  FROM cpu_busy t1
+JOIN USING entity disk_used t2
+  WHERE time > current_hour
+  AND entity = 'nurswgvml007' 
+GROUP BY entity, tags, period(1 minute)
+```
+
+| entity       | datetime                 | AVG(t1.value) | AVG(t2.value) | disk_used.tags.mount_point | disk_used.tags.file_system          | 
+|--------------|--------------------------|--------------:|--------------:|----------------------------|-------------------------------------| 
+| nurswgvml007 | 2016-06-18T10:03:00.000Z | 100.0         | 1744011571.0  | /mnt/u113452               | //u113452.nurstr003/backup     | 
+| nurswgvml007 | 2016-06-18T10:03:00.000Z | 100.0         | 8686400.0     | /                          | /dev/mapper/vg_nurswgvml007-lv_root | 
+
+>  Records returned by a `JOIN USING entity` are filtered to include series tags with last insert date greater than start date specified in the query.
 
 ## Query URL
 
@@ -630,29 +738,27 @@ Tag values and property values are case-sensitive.
 ## Examples
 
 - [Alias](examples/alias.md)
-- [Average Value](examples/average-value-query.md)
-- [Basic](examples/basic-query.md)
+- [Average Value](examples/average-value.md)
+- [Basic](examples/basic.md)
 - [Counter Aggregator](examples/counter-aggregator.md)
 - [Datetime Format](examples/datetime-format.md)
 - [Select All](examples/select-all.md)
 - [Select Entity Tags As Columns](examples/select-entity-tags-as-columns.md)
 - [Time Condition](examples/time-condition.md)
 - [Order By Time](examples/order-by-time.md)
-- [Entity with Tags](examples/entity-with-tags.md)
 - [Filter by Tag](examples/filter-by-tag.md)
 - [Group by Query with Order By](examples/group-by-query-with-order-by.md)
 - [Grouped Average](examples/grouped-average.md)
+- [Group with Having](examples/group-having.md)
 - [Last Time](examples/last-time.md)
 - [Max Value Time](examples/max-value-time.md)
-- [Not Equal Operator](examples/not-equal-operator.md)
-- [Join](examples/inner-join.md)
-- [Join Using Entity](examples/using-entity.md)
+- [Grouped and Having](examples/grouped-having.md)
+- [Join](examples/join.md)
+- [Join Using Entity](examples/join-using-entity.md)
 - [Outer Join With Aggregation](examples/outer-join-with-aggregation.md)
 - [Outer Join](examples/outer-join.md)
-- [Row Number Function](examples/row-number-function.md)
-- [Row Number With Order By Avg](examples/row-number-with-order-by-avg.md)
-- [Row Number With Order By Time & Avg](examples/row-number-with-order-by-time&avg.md)
-- [Row Number With Order By Time](examples/row-number-with-order-by-time.md)
+- [Partitioning using Row Number Function](examples/row-number.md)
+- [Top-N Query using Row Number Function](examples/row-number-top-N-tags.md)
 
 
 

@@ -1,8 +1,8 @@
 # Alias
 
-A column or table `alias` can be specified in single (`'alias'`) or double-quotes (`"alias"`).
+Table and column aliases can be unquoted added or enclosed in quotes or double-quotes.
 
-Unquoted `alias` must begin with a letter followed by letters, underscores, digits (0-9).
+Unquoted `alias` should start with letter [a-zA-Z], followed by letter, digit or underscore.
 
 ## Query
 
@@ -15,10 +15,9 @@ WHERE entity = 'nurswgvml006'
 
 ## Results
 
-```
-datetime	value	entity	measurement
-2016-06-17T19:16:00.000Z	3.0	nurswgvml006	cpu_busy
-2016-06-17T19:16:16.000Z	3.0	nurswgvml006	cpu_busy
-2016-06-17T19:16:32.000Z	4.0	nurswgvml006	cpu_busy
-2016-06-17T19:16:48.000Z	3.0	nurswgvml006	cpu_busy
-```
+| datetime                 | value | entity       | measurement | 
+|--------------------------|------:|--------------|-------------| 
+| 2016-06-17T19:16:00.000Z | 3.0   | nurswgvml006 | cpu_busy    | 
+| 2016-06-17T19:16:16.000Z | 3.0   | nurswgvml006 | cpu_busy    | 
+| 2016-06-17T19:16:32.000Z | 4.0   | nurswgvml006 | cpu_busy    | 
+| 2016-06-17T19:16:48.000Z | 3.0   | nurswgvml006 | cpu_busy    | 
