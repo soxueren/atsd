@@ -40,7 +40,7 @@ An array of query objects containing the following filtering fields:
 | type | string | **[Required]** Property type name. <br>Use `$entity_tags` type to retrieve entity tags. |
 | key | object | Object with `name=value` fields, for example `"key": {"file_system": "/"}`<br>Matches records with _exact_ or _partial_ key fields based on `exactMatch` parameter value.|
 | exactMatch | boolean | `key` match operator. _Exact_ match if true, _partial_ match if false. Default: **false**.<br>_Exact_ match selects a record with exactly the same `key` as requested.<br>_Partial_ match selects records with key that contains requested fields but may also include other fields.|
-| keyTagExpression| string | Expression for matching properties with specified keys or tags.<br>Example: `file_system LIKE '/u*'` or `tags.fs_type == 'ext4'`.<br>Use `lower()` function to ignore case, for example `lower(file_system) LIKE '/u*'`|
+| keyTagExpression| string | Expression for matching properties with specified keys or tags.<br>Example: `keys.file_system LIKE '/u*'` or `tags.fs_type == 'ext4'`.<br>Use `lower()` function to ignore case, for example `lower(keys.file_system) LIKE '/u*'`|
 
 * Key and tag values are case-insensitive.
 
