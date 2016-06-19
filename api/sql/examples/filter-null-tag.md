@@ -1,4 +1,4 @@
-# Filter by Tag
+# Select Series without Specified Tag
 
 Select series without specified tag, using `NOT tags.tag4 != ''` condition.
 

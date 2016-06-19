@@ -780,7 +780,7 @@ Entity names, metric names, and tag names are also case-insensitive.
 
 Tag values are **case-sensitive**.
 
-```
+```sql
 SELECT metric, entity, datetime, value, tags.*
   FROM Disk_Used
 WHERE datetime > now - 5 * minute
