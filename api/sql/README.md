@@ -804,7 +804,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc#database-capabiliti
 * `WITH` operator is supported only in `WITH ROW_NUMBER` clause.
 * `UNION`, `EXCEPT` and `INTERSECT` operators are not supported.
 * Ordering with column numbers, for example `ORDER BY 2, 1` is not supported.
-* `DISTINCT` operator are not supported.
+* `DISTINCT` operator is not supported.
 
 In particular cases it's possible to emulate DISTINCT operator with GROUP BY clause, for example, the following query would produce the same results as DISTINCT:
 
@@ -865,6 +865,3 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 - [Outer Join](examples/outer-join.md)
 - [Partitioning using Row Number Function](examples/row-number.md)
 - [Top-N Query using Row Number Function](examples/row-number-top-N-tags.md)
-
-
-
