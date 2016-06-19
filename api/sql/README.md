@@ -250,7 +250,9 @@ SELECT avg(metric1.value*2), sum(metric1.value + metric2.value)
   WHERE time > now - 10 * minute 
 ```
 
-## Wildcards
+## Match Expressions
+
+### LIKE Expression
 
 `?` and `*` wildcards are supported in `LIKE` expressions with backslash available as an escape character.
 
@@ -258,14 +260,25 @@ SELECT avg(metric1.value*2), sum(metric1.value + metric2.value)
 SELECT datetime, entity, value, tags.mount_point, tags.file_system 
   FROM "df.disk_used_percent" 
   WHERE tags.file_system LIKE '/dev/*'
-  AND datetime > now - 1*MINUTE
+  AND datetime > now - 1*HOUR
+```
+
+### REGEX Expression
+
+REGEX expression matches column value against a regex pattern and returns true if the text is matched.
+
+```sql
+SELECT datetime, entity, value, tags.mount_point, tags.file_system 
+  FROM "df.disk_used_percent" 
+  WHERE tags.file_system REGEX '.*mapp.*'
+  AND datetime > now - 1*HOUR
 ```
 
 ## Time Condition
 
 Time condition is specified in `WHERE` clause using `time` or `datetime` columns.
 
-The `time` column accepts Unix milliseconds whereas `datetime` column accepts literal date in ISO 8601 format.
+The `time` column accepts Unix milliseconds whereas `datetime` column accepts literal date in ISO 8601 format with optional millisecond precision.
 
 ```sql
 SELECT datetime, entity, value 
