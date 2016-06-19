@@ -214,7 +214,7 @@ Columns referenced in the `SELECT` statement must be included in the `GROUP BY` 
 
 ### Versioning Columns
 
-Versioning columns (`version_tatus`, `version_source`, `version_time`) are currently not supported.
+Versioning columns (`version_status`, `version_source`, `version_time`, `version_datetime`) are currently not supported.
 
 ## Aliases
 
@@ -309,7 +309,7 @@ SELECT entity, date_format(PERIOD(5 minute, NONE, END_TIME)), AVG(value)
 The period specified in `GROUP BY` clause can be entered without _align_ and _interpolation_ fields in `SELECT` statement:
 
 ```sql
-SELECT entity, date_format(PERIOD(5 minute), AVG(value) 
+SELECT entity, date_format(PERIOD(5 minute)), AVG(value) 
   FROM gc_invocations_per_minute 
   WHERE time >= current_hour AND time < next_hour
   GROUP BY entity, PERIOD(5 minute, NONE, END_TIME)
@@ -479,9 +479,7 @@ WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30
 
 ## Ordering
 
-By default, rows returned by a query are sorted by entity (ascending), tags(ascending), and time(ascending).
-
-The default sorting order can be modified with `ORDER BY` clause.
+The default sort order is undefined. Ordering can be applied by specifying `ORDER BY` clause.
 
 ```sql
 SELECT entity, avg(value) FROM "mpstat.cpu_busy"
@@ -685,6 +683,15 @@ WHERE datetime >= '2016-06-16T13:02:40.000Z' AND datetime < '2016-06-16T13:10:00
 
 >  Note that records returned by a `JOIN USING entity` condition include series with last insert date greater than start date specified in the query.
 
+## Query Performance
+
+The most efficient query path is **metric+entity+date+tags**.
+
+Query execution speed can be improved by adopting the following guidelines for the `WHERE` clause:
+
+* Specify start time and end time whenever possible to limit the scan range.
+* Specify entity name whenever possible to avoid a scan of all rows in the virtual table.
+
 ## Query URL
 
 API SQL endpoint is located at: `https://atsd_server:8443/sql?q={QUERY}`
@@ -699,7 +706,7 @@ https://atsd_server:8443/sql?q=SELECT+time%2C+value%2C+entity+FROM+mpstat.cpu_bu
 
 ## Authorization
 
-The rows returned for the SQL query are filtered on the server according to the user's entity read permissions.
+The rows returned for the SQL query are filtered by the server according to the user's entity read permissions.
 
 This means that the same query executed by users with different permissions may produce different results.
 
@@ -870,6 +877,8 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 - [Time Condition](examples/time-condition.md)
 - [Order By Time](examples/order-by-time.md)
 - [Filter by Tag](examples/filter-by-tag.md)
+- [All Tags](examples/all-tags.md)
+- [Select series without Tag](examples/filter-null-tag.md)
 - [Group by Query with Order By](examples/group-by-query-with-order-by.md)
 - [Grouped Average](examples/grouped-average.md)
 - [Group with Having](examples/group-having.md)
