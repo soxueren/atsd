@@ -56,7 +56,7 @@ Typically the `WHERE` clause includes a [time condition](#time-condition) for wh
 
 The clause can be built from multiple conditions each comparing values using common comparison operators: `<, >, <=, >=, =, and !=`. The result of comparison is a boolean value, true/false, whereas conditions can be combined by the logical operators `AND`, `OR`, and `NOT`.  `AND` takes precedence over `OR` and `NOT` takes precedence of both. Arithmetic operators such as `*`, `-`, `+`, `/` may be applied to values before they are compared.
 
-```
+```sql
 SELECT entity, datetime, value, tags.*
   FROM disk_used
 WHERE datetime > now - 15 * minute
@@ -268,22 +268,28 @@ Time condition is specified in `WHERE` clause using `time` or `datetime` columns
 The `time` column accepts Unix milliseconds whereas `datetime` column accepts literal date in ISO 8601 format.
 
 ```sql
-SELECT datetime, entity, value FROM "mpstat.cpu_busy" 
-  WHERE time >= 1465685363345 AND datetime < '2016-06-10T14:00:15.020Z'
+SELECT datetime, entity, value 
+  FROM "mpstat.cpu_busy" 
+WHERE time >= 1465685363345 AND datetime < '2016-06-10T14:00:15.020Z'
 ```
 
 Both columns support [End Time](/end-time-syntax.md) syntax.
 
 ```sql
-SELECT datetime, entity, value FROM "mpstat.cpu_busy" 
-  WHERE time >= previous_minute
+SELECT datetime, entity, value 
+  FROM "mpstat.cpu_busy" 
+WHERE time >= previous_minute
 ```
 
 ## Period
 
 Period is a repeating time interval used to group detailed values occurred in the period into buckets in order to apply aggregation functions.
 
-The period contains the following fields:
+Period syntax:
+
+```sql
+PERIOD({count} {unit} [, interpolation [, align]])
+```
 
 | **Name** | **Description** |
 |:---|:---|
@@ -292,11 +298,6 @@ The period contains the following fields:
 | interpolation  | Interpolation function, such as `LINEAR`. Default: `NONE`. Refer to [interpolation](#interpolation). |
 | align| Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
 
-Period syntax:
-
-```sql
-PERIOD({count} {unit} [, interpolation [, align]])
-```
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute, NONE, END_TIME)), AVG(value) 
@@ -526,7 +527,7 @@ The syntax follows the SQL-92 notation using the JOIN clause as opposed to enume
 Since joined tables always contain the same predefined columns, join condition doesn't have to be specified explicitly, similar to NATURAL JOIN in standard SQL:
 
 | **ATSD SQL** | **Standard SQL Equivalent** |
-|---|---|
+|:---|---|
 | JOIN | JOIN ON t1.time AND t2.time AND t1.entity = t2.entity AND t1.tags = t2.tags |
 | JOIN USING entity | JOIN ON t1.time AND t2.time AND t1.entity = t2.entity |
 | OUTER JOIN | FULL OUTER JOIN ON t1.time AND t2.time AND t1.entity = t2.entity AND t1.tags = t2.tags |
