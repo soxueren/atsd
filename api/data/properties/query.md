@@ -4,6 +4,7 @@
 
 Retrieve property records matching specified filters.
 
+
 ## Request
 
 ### Path
@@ -37,10 +38,11 @@ An array of query objects containing the following filtering fields:
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 | type | string | **[Required]** Property type name. <br>Use `$entity_tags` type to retrieve entity tags. |
-| key | object | Object with `name=value` fields. <br>Matches records with _exact_ or _partial_ key fields. See `exactMatch` parameter below. <br>Key names are case-insensitive, key values are case-sensitive.<br>Example: `{"file_system": "/"}`.<br>Example: assuming records `{"k-1":"v-1"}` (**A**) and `{"k-1":"v-1","k-2","v-2"}` (**B**) exist.<br> _Exact_ match for key `{"k-1":"v-1"}` will select record **A**.<br>_Partial_ match for key `{"k-1":"v-1"}` will select records **A** and **B**.<br>_Exact_ match for empty key `{}` will select no records.<br>_Partial_ match for empty key `{}` will select records **A** and **B**. |
-| exactMatch | boolean | `key` match operator. _Exact_ match if true, _partial_ match if false. Default: **false**.<br>_Exact_ match selects a record with exactly the same `key` as requested.<br>_Partial_ match selects records with key that contains requested fields but may also include other fields.<br>`exactMatch` field is always set to false, when querying `$entity_tags` type.|
-| keyTagExpression| string | Expression for matching properties with specified keys or tags.<br>Example: `file_system LIKE '/u*'` or `tags.fs_type == 'ext4'`.<br>Names are case-insensitive whereas values are case-sensitive. <br>`file_system LIKE '/u*'` will match `/user123` but not `/User123`.<br>Use `lower()` function to ignore case, for example `lower(file_system) LIKE '/u*'`|
-|keyExpression|string|[_Deprecated_] Replaced by keyTagExpression.|
+| key | object | Object with `name=value` fields, for example `"key": {"file_system": "/"}`<br>Matches records with _exact_ or _partial_ key fields based on `exactMatch` parameter value.|
+| exactMatch | boolean | `key` match operator. _Exact_ match if true, _partial_ match if false. Default: **false**.<br>_Exact_ match selects a record with exactly the same `key` as requested.<br>_Partial_ match selects records with key that contains requested fields but may also include other fields.|
+| keyTagExpression| string | Expression for matching properties with specified keys or tags.<br>Example: `file_system LIKE '/u*'` or `tags.fs_type == 'ext4'`.<br>Use `lower()` function to ignore case, for example `lower(file_system) LIKE '/u*'`|
+
+* Key and tag values are case-insensitive.
 
 ### Entity Filter Fields
 
@@ -73,6 +75,34 @@ An array of matching property objects containing the following fields:
 | key | object | Object containing `name=value` fields that uniquely identify the property record. <br>Example: `{"file_system": "/","mount_point":"sda1"}`|
 | tags | object | Object containing `name=value` fields that are not part of the key and contain descriptive information about the property record. <br>Example: `{"fs_type": "ext4"}`. |
 | date | string | ISO 8601 date when the property record was last modified. |
+
+## Key Match Example
+
+Assuming property records A,B,C, and D exist:
+
+```ls
+| record | type   | entity | key-1 | key-2 | 
+|--------|--------|--------|-------|-------| 
+| A      | type-1 | e-1    | val-1 | val-2 | 
+| B      | type-1 | e-2    | val-1 |       | 
+| C      | type-1 | e-3    |       | VAL-3 | 
+| D      | type-1 | e-4    |       |       | 
+```
+
+Queries would return the following records:
+
+```ls
+| exactMatch | key                     | match   | 
+|------------|-------------------------|---------| 
+| true       |                         | D       | 
+| false      |                         | A;B;C;D | 
+| true       | key-1=val-1             | B       | 
+| false      | key-1=val-1             | A;B     | 
+| true       | key-1=val-1;key-2=val-2 | A       | 
+| false      | key-1=val-1;key-2=val-2 | A       | 
+| false      | key-2=val-3             |         | 
+| false      | key-2=VAL-3             | C       | 
+```
 
 ## Example
 
@@ -127,11 +157,3 @@ curl  https://atsd_host:8443/api/v1/properties/query \
 ```
 
 ### Additional Examples
-
-
-
-
-
-
-
-

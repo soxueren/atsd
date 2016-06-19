@@ -34,8 +34,10 @@ An array of objects containing fields for filtering records for deletion.
 | entity | string | [**Required**] Entity name. <br>Set entity to `*` to delete records for all entities.|
 | startDate | string | ISO 8601 date or [endtime](/end-time-syntax.md) keyword. <br>Delete records updated at or after the specified time. |
 | endDate | string | ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Delete records updated before the specified time. |
-| key | object | Object with `name=value` fields. <br>Deletes records with _exact_ or _partial_ key fields. See `exactMatch` parameter below. <br>Key names are case-insensitive, key values are case-sensitive.<br>Example: `{"file_system": "/"}`.<br>Example: assuming records `{"k-1":"v-1"}` (**A**) and `{"k-1":"v-1","k-2","v-2"}` (**B**) exist.<br> _Exact_ match for key `{"k-1":"v-1"}` will delete record **A**.<br>_Partial_ match for key `{"k-1":"v-1"}` will delete records **A** and **B**.<br>_Exact_ match for empty key `{}` will delete no records.<br>_Partial_ match for empty key `{}` will delete records **A** and **B**. |
+| key | object | Object with `name=value` fields, for example `{"file_system": "/"}`.<br>Deletes records with _exact_ or _partial_ key fields based on `exactMatch` parameter below.|
 | exactMatch | boolean | `key` match operator. _Exact_ match if true, _partial_ match if false. Default: **true**.<br>_Exact_ match deletes a record with exactly the same `key` as requested.<br>_Partial_ match deletes records with key that contains requested fields but may also include other fields.|
+
+* Key and tag values are case-insensitive.
 
 ## Response
 
@@ -46,6 +48,34 @@ None.
 ### Errors
 
 None.
+
+## Key Match Example
+
+Assuming property records A,B,C, and D exist:
+
+```ls
+| record | type   | entity | key-1 | key-2 | 
+|--------|--------|--------|-------|-------| 
+| A      | type-1 | e-1    | val-1 | val-2 | 
+| B      | type-1 | e-2    | val-1 |       | 
+| C      | type-1 | e-3    |       | VAL-3 | 
+| D      | type-1 | e-4    |       |       | 
+```
+
+Queries would delete the following record:
+
+```ls
+| exactMatch | key                     | delete  | 
+|------------|-------------------------|---------| 
+| true       |                         | D       | 
+| false      |                         | A;B;C;D | 
+| true       | key-1=val-1             | B       | 
+| false      | key-1=val-1             | A;B     | 
+| true       | key-1=val-1;key-2=val-2 | A       | 
+| false      | key-1=val-1;key-2=val-2 | A       | 
+| false      | key-2=val-3             |         | 
+| false      | key-2=VAL-3             | C       | 
+```
 
 ## Example
 
