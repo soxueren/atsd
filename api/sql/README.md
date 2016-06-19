@@ -714,55 +714,29 @@ Scheduled queries are always executed under administrative permissions.
 
 ## Keywords
 
-* AND 
-* AS 
-* ASC
-* BETWEEN
-* BY
-* DESC
-* FROM
-* GROUP
-* HAVING
-* IN
-* INNER
-* INTERPOLATE
-* JOIN 
-* LIKE 
-* LIMIT 
-* NOT 
-* OR
-* ORDER 
-* OUTER 
-* PERIOD 
-* REGEX 
-* ROW_NUMBER
-* SELECT 
-* USING
-* VALUE 
-* WHERE 
-* WITH 
+|             |             |             |             |
+|-------------|-------------|-------------|-------------| 
+| AND         | AS          | ASC         | BETWEEN     | 
+| BY          | DESC        | FROM        | GROUP       | 
+| HAVING      | IN          | INNER       | INTERPOLATE | 
+| JOIN        | LIKE        | LIMIT       | NOT         | 
+| OR          | ORDER       | OUTER       | PERIOD      | 
+| REGEX       | ROW_NUMBER  | SELECT      | USING       | 
+| VALUE       | WHERE       | WITH        |             | 
 
 ## Aggregation Functions
 
 The following functions aggregate values in a column by producing a single value from a list of values appearing in a column.
 
-* SUM
-* AVG
-* MIN
-* MAX
-* COUNT
-* COUNTER
-* DELTA
-* FIRST
-* LAST
-* MAX_VALUE_TIME
-* MIN_VALUE_TIME
-* PERCENTILE
-* STDDEV
-* WAVG
-* WTAVG
+|                |                |                |                | 
+|----------------|----------------|----------------|----------------| 
+| SUM            | AVG            | MIN            | MAX            | 
+| COUNT          | COUNTER        | DELTA          | FIRST          | 
+| LAST           | MAX_VALUE_TIME | MIN_VALUE_TIME | PERCENTILE     | 
+| STDDEV         | WAVG           | WTAVG          |                |
 
-The functions accept `value` column name or a numeric expression as a parameter, for example  `avg(value)` or `avg(t1.value + t2.value)`.
+
+The functions accept `value` as column name or a numeric expression as a parameter, for example  `avg(value)` or `avg(t1.value + t2.value)`.
 The PERCENTILE function accepts `percentile` parameter (0 to 100) and `value` column name, for example `percentile(75, value)`.
 The COUNT function counts the number of rows in the resultset and accepts *, for example `COUNT(*)`.
 
