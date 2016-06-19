@@ -6,20 +6,21 @@
     * [Distributions](installation#installation-guides)
 * [API](api)
     * [Data](api/data#overview)
-      * Series
-      * Properties
-      * Messages
-      * Alerts
+      * Series: [query](api/data/series/query.md), [insert](api/data/series/insert.md), [csv insert](series/csv-insert.md), [url query](series/url-query.md)
+      * Properties: [query](properties/query.md), [insert](properties/insert.md), [url query](properties/url-query.md), [type query](properties/type-query.md), [delete](properties/delete.md)
+      * Messages: [query](messages/query.md), [insert](messages/insert.md), [statistics](messages/stats-query.md)
+      * Alerts: [query](alerts/query.md), [update](alerts/update.md), [delete](alerts/delete.md), [history query](alerts/history-query.md)
     * [Meta](api/meta#overview)
       * Metrics
       * Entities
       * Entity Groups
     * [Network](api/network#network-api)
-      * series
-      * property
-      * message
-      * csv
-      * nmon
+      * [series](api/network/series.md)
+      * [property](api/network/property.md)
+      * [message](api/network/message.md)
+      * [csv](api/network/csv.md)
+      * [nmon](api/network/nmon.md)
+	  * [command](api/network/nmon.md)
     * [SQL](api/sql#overview)   
 * [API Clients](api#api-clients)
     * [R](https://github.com/axibase/atsd-api-r)
