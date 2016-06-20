@@ -94,17 +94,17 @@ curl https://atsd_host:8443/api/v1/messages/insert \
 ```
 
 ## Additional Examples
-* [Message with Date](/api/data/messages/examples/insert/messages-insert-messages-with-date.md)
-* [Message with Tags](/api/data/messages/examples/insert/messages-insert-messages-with-tags.md)
-* [Multiple Messages with Date](/api/data/messages/examples/insert/messages-insert-multiple-messages-for-date.md)
-* [Multiple Messages with Entity](/api/data/messages/examples/insert/messages-insert-multiple-messages-for-entity.md)
-* [Non-persisted Message](/api/data/messages/examples/insert/messages-insert-non-persisted-messages.md)
-* [Duplicate text messages](/api/data/messages/examples/insert/messages-insert-discarded-duplicate-text-messages.md)
-* [Duplicate tags messages](/api/data/messages/examples/insert/messages-insert-discarded-duplicate-tags-messages.md)
-* [Multi-line text messages](/api/data/messages/examples/insert/messages-insert-multi-line-message-text.md)
-* [Multi-line tags messages](/api/data/messages/examples/insert/messages-insert-multi-line-message-tags.md)
-* [Trimmed message text](/api/data/messages/examples/insert/messages-insert-trimmed-message-text.md)
-* [Message with type/source and tag collision](/api/data/messages/examples/insert/messages-insert-type-source-and-tag-collision.md)
+* [Message with Date](examples/insert/messages-insert-messages-with-date.md)
+* [Message with Tags](examples/insert/messages-insert-messages-with-tags.md)
+* [Multiple Messages with Date](examples/insert/messages-insert-multiple-messages-for-date.md)
+* [Multiple Messages with Entity](examples/insert/messages-insert-multiple-messages-for-entity.md)
+* [Non-persisted Message](examples/insert/messages-insert-non-persisted-messages.md)
+* [Duplicate text messages](examples/insert/messages-insert-discarded-duplicate-text-messages.md)
+* [Duplicate tags messages](examples/insert/messages-insert-discarded-duplicate-tags-messages.md)
+* [Multi-line text messages](examples/insert/messages-insert-multi-line-message-text.md)
+* [Multi-line tags messages](examples/insert/messages-insert-multi-line-message-tags.md)
+* [Trimmed message text](examples/insert/messages-insert-trimmed-message-text.md)
+* [Message with type/source and tag collision](examples/insert/messages-insert-type-source-and-tag-collision.md)
 
 
 
