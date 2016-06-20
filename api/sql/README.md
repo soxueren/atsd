@@ -2,7 +2,7 @@
 
 Axibase Time Series Database supports SQL query language for retrieving time series data.
 
-The SQL statements can be executed interactively via the SQL console as well as on schedule. 
+The SQL statements can be executed interactively via the SQL console as well as on [schedule](scheduled-sql.md). 
 
 Scheduled execution allows for generated report files to be distributed to email subscribers or stored on a local file system.
 
@@ -736,6 +736,8 @@ Scheduled queries are always executed under administrative permissions.
 | OR          | ORDER       | OUTER       | PERIOD      | 
 | REGEX       | ROW_NUMBER  | SELECT      | USING       | 
 | VALUE       | WHERE       | WITH        |             | 
+
+In addition, [endtime](/end-time-syntax.md#keywords) keywords such as `NOW`, `PREVIOUS_HOUR` and [interval units](/end-time-syntax.md#interval-units) such as `MINUTE`, `HOUR` are also reserved.
 
 ## Aggregation Functions
 
