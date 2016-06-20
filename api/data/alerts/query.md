@@ -97,7 +97,7 @@ POST https://atsd_host:8443/api/v1/alerts/query
 	"metrics": ["loadavg.5m", "message"],
 	"entity": "nurswgvml007",
 	"minSeverity": 4,
-    	"startDate": "2016-05-25T04:00:00Z",
+    	"startDate": "2016-05-07T04:00:00Z",
 	"endDate":   "2016-06-25T05:00:00Z"
 }]
 ```
