@@ -4,6 +4,10 @@
 
 Upload CSV file for parsing into series, properties, or messages with the specified CSV parser.
 
+File can be optionally compressed with gzip or zip. 
+
+Multiple files can be compressed with .zip/.tar.gz and uploaded in one request.  
+
 ## Request
 
 ### Path 
@@ -30,6 +34,7 @@ POST
 |:---|:---|:---|
 | config   | string   | [**Required**] Parser Name as configured on **Configuration:Parsers CSV** page.|
 | encoding      | string   | File encoding. Default: UTF-8.|
+| fileName      | string   | [**Required** if file content is compressed (.gz, .tar.gz, .zip)] Name of the file being sent.  |
 | default-entity| string | Default entity name applied to commands contained in the file. |
 | metric-prefix | string | Prefix prepended to metric names extracted from the file. |
 | wait | boolean | Wait until processing of the file into commands is completed by the server. Default: false.<br>If wait is disabled, the file is processed by the server asynchronously. | 

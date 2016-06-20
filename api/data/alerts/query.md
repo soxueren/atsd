@@ -67,7 +67,7 @@ An array of matching alert objects containing the following fields:
 | entity | string | Entity name. |
 | metric | string | Metric name.  |
 | rule | string | Rule name. |
-| severity  | string | [Severity](/api/data/severity.md) code.  |
+| severity  | number | [Severity](/api/data/severity.md) code.  |
 | tags | object | Object containing `name=value` pairs, for example `tags: {"path": "/", "name": "sda"}` |
 | repeatCount | integer | Number of times when the expression evaluated to true sequentially.  |
 | textValue | string | Text value.  |
