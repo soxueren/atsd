@@ -1,8 +1,6 @@
-# Query Specified Tags
+# Filter Messages for Minimum Severity
 
 ## Description
-
-Query messages matching particular tags.
 
 ## Request
 
@@ -15,12 +13,9 @@ POST https://atsd_host:8443/api/v1/messages/query
 [
   {
     "entity": "nurswgvml007",
-    "tags": {
-      "name": "sda",
-      "path": "/"
-    },
-    "startDate": "2016-06-15T14:13:57.383Z",
-    "endDate": "2016-06-17T14:13:57.383Z"
+    "minSeverity": "NORMAL",
+    "startDate": "2016-06-17T13:05:00Z",
+    "endDate": "2016-06-21T13:10:00.000Z"
   }
 ]
 ```
@@ -34,13 +29,9 @@ POST https://atsd_host:8443/api/v1/messages/query
     "entity": "nurswgvml007",
     "type": "default",
     "source": "default",
-    "severity": "NORMAL",
-    "tags": {
-      "name": "sda",
-      "path": "/"
-    },
+    "severity": "CRITICAL",
     "message": "NURSWGVML007 ssh: error: connect_to localhost port 8881: failed.",
-    "date": "2016-06-16T08:56:37.432Z"
+    "date": "2016-06-20T06:40:07.094Z"
   }
 ]
 ```

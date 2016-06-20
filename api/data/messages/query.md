@@ -157,9 +157,13 @@ curl  https://atsd_host:8443/api/v1/messages/query \
 ## Additional Examples
 * [Query all types and sources for entity](examples/query/messages-query-all-types.md)
 * [Query specified tags](examples/query/messages-query-tags.md)
+* [Query that contain the specified Tag](examples/query/messages-query-contain-specifield-tags.md)
 * [Query for min/max ISO date](examples/query/messages-query-min-max-iso-date.md)
 * [Query with fractional interval](examples/query/messages-query-fractional-interval.md)
 * [Query with limit](examples/query/messages-query-limit.md)
+* [Multiple entities for specified type](examples/query/messages-query-multiple-entities-specified-type.md)
+* [Filter messages for specified severity](examples/query/messages-query-filter-messages-specified-severity.md)
+* [Filter messages for minimum severity](examples/query/messages-query-filter-messages-minimum-severity.md)
 
 
 
