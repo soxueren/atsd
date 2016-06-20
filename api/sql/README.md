@@ -14,6 +14,27 @@ The data returned by SQL statements can be exported in the following formats:
 |Web Interface  |CSV, JSON, HTML|
 |Scheduler|CSV, JSON, Excel|
 
+* [Syntax](#syntax)
+  * [Columns](#columns)
+  * [Aliases](#aliases)
+  * [Time Condition](#time-condition)
+  * [Aggregation Functions](#aggregation-functions)
+  * [Time Formatting Functions](#time-formatting-functions)
+  * [Arithmetic Operators](#arithmetic-operators)
+  * [Match Expressions](#match-expressions)
+  * [Processing Sequence](#processing-sequence)
+  * [Keywords](#keywords)
+* [Period](#period)
+* [Interpolation](#interpolation)
+* [Grouping](#grouping)
+* [Partitioning](#partitioning)
+* [Ordering](#ordering)
+* [Joins](#joins)
+* [Authorization](#authorization)
+* [Performance](#query-performance)
+* [Unsupported/non-standard Features](#unsupported-standard-sql-features)
+* [Examples](#examples)
+
 ## Syntax
 
 The database supports only `SELECT` statements at this time. 
@@ -78,7 +99,7 @@ WHERE datetime > now - 15 * minute
 * **ROW_NUMBER** returns row index within each partition.
 * **LAST_TIME** returns last insert time in millisecond for each series
 
-### Processing Sequence
+## Processing Sequence
 
 * **FROM** retrieves records from virtual tables.
 * **JOIN** merges records from different tables.
@@ -322,11 +343,13 @@ SELECT entity, date_format(PERIOD(5 minute, NONE, END_TIME)), AVG(value)
 The period specified in `GROUP BY` clause can be entered without _align_ and _interpolation_ fields in `SELECT` statement:
 
 ```sql
-SELECT entity, date_format(PERIOD(5 minute)), AVG(value) 
+SELECT entity, datetime, AVG(value) 
   FROM gc_invocations_per_minute 
   WHERE time >= current_hour AND time < next_hour
   GROUP BY entity, PERIOD(5 minute, NONE, END_TIME)
 ```
+
+In grouping queries, `time` column returns the same value as `PERIOD()` and `datetime` returns the same value as `date_format(PERIOD())`.
 
 ### Period Alignment
 
