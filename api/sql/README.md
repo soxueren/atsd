@@ -897,6 +897,8 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 - [Last Time](examples/last-time.md)
 - [Max Value Time](examples/max-value-time.md)
 - [Grouped and Having](examples/grouped-having.md)
+- [Interpolation](examples/interpolate.md)
+- [Interpolation Edges](examples/interpolate-edges.md)
 - [Join](examples/join.md)
 - [Join Using Entity](examples/join-using-entity.md)
 - [Outer Join With Aggregation](examples/outer-join-with-aggregation.md)
