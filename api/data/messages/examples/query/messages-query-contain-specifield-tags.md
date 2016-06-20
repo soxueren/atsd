@@ -16,7 +16,7 @@ POST https://atsd_host:8443/api/v1/messages/query
     "type": "logger",
     "limit": 5,
     "tags": {
-      "level": "INFO",
+      "level": "*",
       "thread": "*",
       "command": "com.axibase.tsd.Server"
     },
@@ -47,28 +47,28 @@ POST https://atsd_host:8443/api/v1/messages/query
   {
     "entity": "nurswgvml007",
     "type": "logger",
-    "source": "default",
-    "severity": "NORMAL",
+    "source": "com.axibase.tsd.service.nmon.nmonparser",
+    "severity": "WARNING",
     "tags": {
-      "level": "INFO",
-      "thread": "qtp1011680252-242",
+      "level": "WARN",
+      "thread": "tcp-server-worker thread-7",
       "command": "com.axibase.tsd.Server"
     },
-    "message": "Expression entity group 'scollector-linux' updated",
-    "date": "2016-06-20T14:13:57.383Z"
+    "message": "Header not found for row 'CPU06,T0005,0.0,2.9,0.0,97.1', parser default, file aix03_160620_0545.nmon",
+    "date": "2016-06-20T10:10:03.922Z"
   },
   {
     "entity": "nurswgvml007",
     "type": "logger",
-    "source": "com.axibase.tsd.service.csv.parsingstatistics",
+    "source": "com.axibase.tsd.web.csv.csvcontroller",
     "severity": "NORMAL",
     "tags": {
       "level": "INFO",
-      "thread": "applicationExecutor-6",
+      "thread": "qtp997634665-205",
       "command": "com.axibase.tsd.Server"
     },
-    "message": "Parser 'nginx-status'. read: 3, filtered 0, skipped 0, cells skipped 0",
-    "date": "2016-06-20T09:43:52.709Z"
+    "message": "Start processing csv, config: nginx-status",
+    "date": "2016-06-20T10:09:40.222Z"
   }
 ]
 ```
