@@ -3,13 +3,13 @@
 
 * Installation
     * [Requirements](administration/requirements.md)
-    * [Distributions](installation#installation-guides)
+    * [Distributions](installation/README.md#installation-guides)
 * [API](api)
     * [Data](api/data#overview)
-      * Series: [query](api/data/series/query.md), [insert](api/data/series/insert.md), [csv insert](series/csv-insert.md), [url query](series/url-query.md)
-      * Properties: [query](properties/query.md), [insert](properties/insert.md), [url query](properties/url-query.md), [type query](properties/type-query.md), [delete](properties/delete.md)
-      * Messages: [query](messages/query.md), [insert](messages/insert.md), [statistics](messages/stats-query.md)
-      * Alerts: [query](alerts/query.md), [update](alerts/update.md), [delete](alerts/delete.md), [history query](alerts/history-query.md)
+      * Series: [query](api/data/series/query.md), [insert](api/data/series/insert.md), [csv insert](api/data/series/csv-insert.md), [url query](api/data/series/url-query.md)
+      * Properties: [query](api/data/properties/query.md), [insert](api/data/properties/insert.md), [url query](api/data/properties/url-query.md), [type query](api/data/properties/type-query.md), [delete](api/data/properties/delete.md)
+      * Messages: [query](api/data/messages/query.md), [insert](api/data/messages/insert.md), [statistics](api/data/messages/stats-query.md)
+      * Alerts: [query](api/data/alerts/query.md), [update](api/data/alerts/update.md), [delete](api/data/alerts/delete.md), [history query](api/data/alerts/history-query.md)
     * [Meta](api/meta#overview)
       * Metrics
       * Entities
