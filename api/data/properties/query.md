@@ -60,7 +60,7 @@ An array of query objects containing the following filtering fields:
 |:---|:---|:---|
 | limit   | integer | Maximum number of records to be returned. Default: 0.<br>Limit is not applied if the parameter value <= 0. | 
 | last | boolean | Return only records with the update time equal to the maximum update time of matched records. Default: false. |
-| offset | integer | Difference, in milliseconds, between maximum update time of matched records and update time of the current record. Default: 0.<br>If the difference exceeds `offset`, the record is excluded from results. |   
+| offset | integer | Exclude records based on difference, in milliseconds, between maximum update time of matched records and update time of the current record. Default: -1 (not applied).<br>If `offset >=0` and the difference exceeds `offset`, the record is excluded from results. <br>`offset=0` is equivalent to `last=true`.|   
 
 ## Response 
 
@@ -102,6 +102,33 @@ Queries would return the following records:
 | false      | key-1=val-1;key-2=val-2 | A       | 
 | false      | key-2=val-3             |         | 
 | false      | key-2=VAL-3             | C       | 
+```
+
+## Offset example
+
+Assuming property records A,B,C and D exist and time represents their update time in milliseconds:
+
+```ls
+| record | type   | entity | key-1 | time | 
+|--------|--------|--------|-------|------| 
+| A      | type-1 | e-1    | val-1 |  100 | 
+| B      | type-1 | e-2    | val-2 |  200 | 
+| C      | type-1 | e-3    | val-1 |  200 | 
+| D      | type-1 | e-4    | val-2 |  150 | 
+```
+
+max(time) = 200
+
+Queries would return the following records:
+
+```ls
+
+| offset | match   | 
+|     -1 | A;B;C;D | Offset filter is not applied.
+|      0 | B;C     | Only records with update time = max(time) are included.
+|      1 | B;C     |
+|     50 | B;C;D   | C time difference = max(time)-150=50. C is included because difference is <= offset of 50.
+|    200 | A;B;C;D | Time difference for all records is <= offset of 200. All records included.
 ```
 
 ## Example
