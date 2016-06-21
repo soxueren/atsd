@@ -2,11 +2,13 @@
 
 ## Description
 
-Upload CSV file for parsing into series, properties, or messages with the specified CSV parser.
+Upload CSV file or multiple CSV files for parsing into series, properties, or messages with the specified CSV parser.
 
-File can be optionally compressed with gzip or zip. 
+File(s) can be optionally compressed with gzip or zip. 
 
-Multiple files can be compressed with .zip/.tar.gz and uploaded in one request.  
+Multiple files can be archived with zip/tar and uploaded as one .zip/.tar.gz archive.  
+
+The method supports processing of file attached as data as well as part of multi-part payload.
 
 ## Request
 
@@ -24,9 +26,17 @@ POST
 
 ### Headers
 
+File Data mode:
+
 |**Header**|**Value**|
 |:---|:---|
-| Content-Type | `text/csv` |
+| Content-Type | `text/csv` - for plain text CSV file.<br>`application/gzip` - for compressed gzip file (.gz) or archive (.tar.gz).<br>`application/zip` - for compressed zip file and archive (.zip)|
+
+Multi-part mode:
+
+|**Header**|**Value**|
+|:---|:---|
+| Content-Type | `multipart/*`, for example `multipart/form-data` or  `multipart/mixed`|
 
 ### Parameters
 
@@ -34,7 +44,7 @@ POST
 |:---|:---|:---|
 | config   | string   | [**Required**] Parser Name as configured on **Configuration:Parsers CSV** page.|
 | encoding      | string   | File encoding. Default: UTF-8.|
-| filename      | string   | [**Required** for archived files] Name of the file or archive being sent, for example text.csv, text.zip, text.tar.gz.<br>The archive can contain multiple files all of which will be processed.<br>Archive compression, if any, is determined based on file extension.<br>Supported archive format: zip and tar.gz.<br>Supported file extensions for the uploaded archive: .gz, .tar.gz, .zip.  |
+| filename      | string   | [**Required** for archived files] Name of the file or archive being sent, for example text.csv, files.zip, files.tar.gz.<br>The archive may contain multiple files, all of which will be processed.<br>Archive compression is determined based on file extension.<br>Supported archive formats: zip and tar.gz.<br>Supported file extensions for the uploaded archive: .gz, .tar.gz, .zip.  |
 | default-entity| string | Default entity name applied to commands contained in the file. |
 | metric-prefix | string | Prefix added to all metric names extracted from the file. |
 | wait | boolean | Wait until processing of the file into commands is completed by the server. Default: false.<br>If wait is disabled, the file is processed by the server asynchronously. | 
@@ -45,8 +55,8 @@ POST
 
 ### Payload
 
-* Payload is CSV file attached as plain text, containing an optional header line and one or multiple data rows.
-* Names (metric name, property type, key names, tag names) containing non-printable characters will be normalized by replacing them with underscore.
+* File attached as data.
+* Multi-part content containing the file.
 
 ## Response 
 
@@ -55,6 +65,10 @@ POST
 None.
 
 ### Errors
+
+## Processing
+
+* Names (metric name, property type, key names, tag names) containing non-printable characters will be normalized by replacing them with underscore.
 
 ## Example 
 
