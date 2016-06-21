@@ -6,9 +6,9 @@ Upload CSV file or multiple CSV files for parsing into series, properties, or me
 
 File(s) can be optionally compressed with gzip or zip. 
 
-Multiple files can be archived with zip/tar and uploaded as one .zip/.tar.gz archive.  
+Multiple files can be archived with zip/tar and uploaded as one zip or tar.gz archive.
 
-The method supports processing of file attached as data as well as part of multi-part payload.
+The method supports processing of the uploaded file attached as data as well as a part in multi-part payload.
 
 ## Request
 
@@ -30,13 +30,13 @@ File Data mode:
 
 |**Header**|**Value**|
 |:---|:---|
-| Content-Type | `text/csv` - for plain text CSV file.<br>`application/gzip` - for compressed gzip file (.gz) or archive (.tar.gz).<br>`application/zip` - for compressed zip file and archive (.zip)|
+| Content-Type | `text/csv` - for plain text CSV file.<br>`application/zip` - for compressed zip file and archive (**.zip**)<br>`application/gzip` or `application/x-gzip` - for compressed gzip file (**.gz**) or archive (**.tar.gz**).|
 
 Multi-part mode:
 
 |**Header**|**Value**|
 |:---|:---|
-| Content-Type | `multipart/*`, for example `multipart/form-data` or  `multipart/mixed`|
+| Content-Type | `multipart/*`, for example `multipart/form-data` or  `multipart/mixed`. <br>Content type for the file part itself should be set as described in File Data mode above.|
 
 ### Parameters
 
@@ -44,7 +44,7 @@ Multi-part mode:
 |:---|:---|:---|
 | config   | string   | [**Required**] Parser Name as configured on **Configuration:Parsers CSV** page.|
 | encoding      | string   | File encoding. Default: UTF-8.|
-| filename      | string   | [**Required** for archived files] Name of the file or archive being sent, for example text.csv, files.zip, files.tar.gz.<br>The archive may contain multiple files, all of which will be processed.<br>Archive compression is determined based on file extension.<br>Supported archive formats: zip and tar.gz.<br>Supported file extensions for the uploaded archive: .gz, .tar.gz, .zip.  |
+| filename      | string   | [**Required** for archived files uploaded in File Data mode] <br>Name of the file or archive being sent, for example text.csv, files.zip, files.tar.gz.<br>The archive may contain multiple files, all of which will be processed.<br>Archive compression is determined based on file extension.<br>Supported archive formats: zip and tar.gz.<br>Supported file extensions for the uploaded archive: .gz, .tar.gz, .zip.  |
 | default-entity| string | Default entity name applied to commands contained in the file. |
 | metric-prefix | string | Prefix added to all metric names extracted from the file. |
 | wait | boolean | Wait until processing of the file into commands is completed by the server. Default: false.<br>If wait is disabled, the file is processed by the server asynchronously. | 
@@ -56,7 +56,11 @@ Multi-part mode:
 ### Payload
 
 * File attached as data.
-* Multi-part content containing the file. Part name containing the uploaded file should be named `filedata`
+* Multi-part content containing the file. Part name containing the uploaded file should be named `filedata` and include `filename` parameter:
+
+```
+Content-Disposition: form-data; name="filedata"; filename="arch.tar.gz"
+```
 
 ## Response 
 
