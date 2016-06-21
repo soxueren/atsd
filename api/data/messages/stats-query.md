@@ -67,7 +67,7 @@ Refer to message [query](query.md#message-filter-fields) fields.
 
 An array of `series` objects containing message filter fields and message counter fields.
 
-Tags used for grouping are returned in tags object.
+Tags used for grouping are returned in the `tags` object.
 
 ### Fields
 
