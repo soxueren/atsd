@@ -127,7 +127,7 @@ Queries would return the following records:
 |     -1 | A;B;C;D | Offset filter is not applied.
 |      0 | B;C     | Only records with update time = max(time) are included.
 |      1 | B;C     |
-|     50 | B;C;D   | C time difference = max(time)-150=50. C is included because difference is <= offset of 50.
+|     50 | B;C;D   | D time difference = max(time)-150=50. D is included because difference is <= offset of 50.
 |    200 | A;B;C;D | Time difference for all records is <= offset of 200. All records included.
 ```
 
