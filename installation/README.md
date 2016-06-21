@@ -2,11 +2,11 @@
 
 ## License
 
-By installing ATSD you agree to **[Axibase Time Series Database License Terms and Conditions](https://axibase.com/wp-content/uploads/2014/12/ATSD-Community-Edition-Software-License.pdf)**.
+By installing Axibase Time Series Database you agree to its **[License Terms and Conditions](https://axibase.com/wp-content/uploads/2014/12/ATSD-Community-Edition-Software-License.pdf)**.
 
 ## Requirements
 
-* OS and hardware [requirements](/administration/requirements.md).
+* OS and hardware [requirements](/administration/requirements.md)
 
 ## Installation Guides
 
@@ -24,4 +24,8 @@ By installing ATSD you agree to **[Axibase Time Series Database License Terms an
 
 ## Tutorials
 
-* [Getting Started](/tutorials/getting-started.md).
+* [Getting Started Guide](/tutorials/getting-started.md)
+
+## Documentation
+
+* [Documentation](/README.md#axibase-time-series-database-documentation)

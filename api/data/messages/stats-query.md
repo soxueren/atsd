@@ -4,6 +4,8 @@
 
 Retrieve message counters for the specified filters as series.
 
+If period aggregation is enabled, the series contains the number of messages in each period. Otherwise, the series contains the total number of messages within the specified timespan.
+
 ## Request
 
 ### Path
@@ -42,7 +44,7 @@ Refer to message [query](query.md#message-filter-fields) fields.
 |:---|:---|:---|
 |metric|string | [**Required**] Must be set to `message-count`. |
 |groupKeys|array | Array of message tags used for grouping: `type`, `source`, `entity`, etc, for example `"groupKeys": ["entity", "type"]` |
-|aggregate|object | Period [aggregator](/api/data/series/aggregate.md), typically used with `COUNT` function to calculate the number of messages received per period.<br>`"aggregate" : { "type" : "COUNT", "period": { "count" : 1, "unit" : "HOUR" } }` |
+|aggregate|object | Period [aggregator](/api/data/series/aggregate.md). Only `COUNT` type is supported. <br>`"aggregate":{"type":"COUNT", "period":{"count":1,"unit":"HOUR"}}` |
 
 ### Entity Filter Fields
 
