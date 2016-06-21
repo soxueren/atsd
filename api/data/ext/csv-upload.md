@@ -56,7 +56,7 @@ Multi-part mode:
 ### Payload
 
 * File attached as data.
-* Multi-part content containing the file.
+* Multi-part content containing the file. Part name containing the uploaded file should be named `filedata`
 
 ## Response 
 
@@ -93,5 +93,11 @@ time,cpu_user,cpu_system,waitio
 None.
 
 ## Additional Examples
+
+### curl upload
+
+```sh
+curl -i -user admin:pwd -F filedata=@test.tar.gz http://atsd_host:8088/api/v1/csv?config=noc-parser
+```
 
 
