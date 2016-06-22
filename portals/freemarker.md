@@ -207,15 +207,28 @@ Default interval is 24 hours.
 ##### atsd_last
 
 ```javascript
-gatsd_last('entity', 'metric', 'tag1=v1,tag2=v2')
+atsd_last("entity", "metric", "tag1=v1,tag2=v2")
 ```
 
-Returns double.
+Retrieves last value (a number) for the specified entity, metric, and series tags. 
 
-Retrieves the last value for time series or null.
+If the series has multiple tags, the last argument must include all tags. 
 
+```javascript
+atsd_last("nurswgvml007", "disk_size", "mount_point=/,file_system=/dev/mapper/vg_nurswgvml007-lv_root")
 ```
-atsd_last("nurswgvml007", "nmon.cpu.idle%", "id")
+
+If the series has no tags, the last argument may be omitted or set to empty string.
+
+```javascript
+atsd_last("nurswgvml007", "cpu_busy")
+```
+
+The returned value is formatted according to server locale, for example 13325 is formatted as 13,325. To remove formatting append ?c at the end of the function or assigned variable.
+
+```javascript
+<#assign total = atsd_last("nurswgvml007", "disk_size", "mount_point=/,file_system=/dev/mapper/vg_nurswgvml007-lv_root") >
+  total-value = ${total?c}
 ```
 
 ##### memberOf
