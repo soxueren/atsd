@@ -210,7 +210,7 @@ Default interval is 24 hours.
 atsd_last("entity", "metric", "tag1=v1,tag2=v2")
 ```
 
-Retrieves last value (a number) for the specified entity, metric, and series tags. 
+Retrieves last value (a number) for the specified entity, metric, and series tags. The value is searched for a timespan of 2 hours.
 
 If the series has multiple tags, the last argument must include all tags. 
 

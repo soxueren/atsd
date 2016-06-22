@@ -728,16 +728,22 @@ Query execution speed can be improved by adopting the following guidelines for t
 * Specify start time and end time whenever possible to limit the scan range.
 * Specify entity name whenever possible to avoid a scan of all rows in the virtual table.
 
-## Query URL
+## API Endpoint
 
-API SQL endpoint is located at: `https://atsd_server:8443/sql?q={QUERY}`
+API SQL endpoint is located at: `https://atsd_server:8443/api/sql?q={QUERY}&outputFormat={FORMAT}`
 
-The `{QUERY}` parameter value must be URL-encoded.
+* Method: GET or POST
+* Path: /api/sql
+
+|**Parameter**|**Type**|**Description**|
+|:---|:---|:---|
+|q | string| SELECT query text. The value must be URL-encoded.|
+|outputFormat | string|Output format: `csv` or `json`. Default: `json`|
 
 ### Query URL Example
 
 ```elm
-https://atsd_server:8443/sql?q=SELECT+time%2C+value%2C+entity+FROM+mpstat.cpu_busy+WHERE+time+%3E%3D+previous_hour
+https://atsd_server:8443/api/sql?q=SELECT%20*%20FROM%20cpu_busy%20WHERE%20datetime%20%3E%20now%20-%201*HOUR
 ```
 
 ## Authorization
@@ -760,7 +766,7 @@ Scheduled queries are always executed under administrative permissions.
 | REGEX       | ROW_NUMBER  | SELECT      | USING       | 
 | VALUE       | WHERE       | WITH        |             | 
 
-In addition, [endtime](/end-time-syntax.md#keywords) keywords such as `NOW`, `PREVIOUS_HOUR` and [interval units](/end-time-syntax.md#interval-units) such as `MINUTE`, `HOUR` are also reserved.
+In addition, [endtime](/end-time-syntax.md#keywords) keywords such as `NOW`, `PREVIOUS_HOUR` and [interval units](/end-time-syntax.md#interval-units) such as `MINUTE`, `HOUR` are reserved.
 
 ## Aggregation Functions
 
