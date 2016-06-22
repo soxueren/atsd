@@ -1,8 +1,11 @@
 # Entity: Create or Replace
 ## Description
 
-Create an entity with specified properties and tags or replace the properties and tags of an existing entity.
-This method creates a new entity or replaces the properties and tags of an existing entity. 
+Create an entity with specified fields and tags or replaces the fields and tags of an existing entity.
+
+In case of an existing entity, all the current entity tags will be replaced with entity tags specified in the request.
+
+If the request doesn't contain any tags, current entity tags will be deleted.
 
 ## Request
 
@@ -30,16 +33,12 @@ None.
 
 ### Fields
 
-| **Field**                            | **Description**                                                                             |
-|---|---|
-| enabled                             | Enabled status. Incoming data is discarded for disabled entities.                           |
-|tags|User-defined tags, `"tagKey": "tagValue"`, like `"tags": {"alias": "vmware_host"}`|
+| **Field** | **Type** | **Description** |
+|:---|:---|:---|
+| enabled | boolean | Data collection status. Default: true. For disabled entities data such as series, properties, and messages is discarded. |
+| tags |object|Object containing entity tags, for example `"tags": {"location": "NUR-2", "env": "production"}` |
 
-
-<aside class="notice">
-If only a subset of fields is provided for an existing entity, the remaining properties will be set to default values and tags will be deleted.
-</aside>
-
+* If `enabled` field is not specified in the request, it is reset to its default value which is `true`.
 
 ## Response
 
@@ -65,9 +64,11 @@ PUT https://atsd_host:8443/api/v1/entities/nurswgvml006
 
 ```css
 {
+  "enabled": true,
   "tags": {
-     "alias": "vmware_host"
-        }
+    "location": "NUR-2",
+    "env": "production"
+  }
 }
 ```
 
@@ -78,7 +79,7 @@ curl https://atsd_host:8443/api/v1/entities/nurswgvml006 \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request PUT \
-  --data '{"tags": {"alias": "vmware_host"}}'
+  --data '{"enabled":true,"tags":{"env":"production","location":"NUR-2"}}'
   ```
   
 

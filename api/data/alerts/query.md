@@ -2,7 +2,7 @@
 
 ## Description
 
-Retrieve a list of **open** alerts matching specified fields.
+Retrieve a list of **open** alerts matching specified filters.
 
 ## Request
 
@@ -38,8 +38,8 @@ An array of query objects containing the following filtering fields:
 |:---|:---|:---|
 | rules       | array | Array of rules which produced the alerts.        |
 | metrics     | array | Array of metric names for which the alerts were created. |
-| severities  | array | Array of [severity code or names](/api/data/severity.md)   |
-| minSeverity |  string   | Minimal [code or name](/api/data/severity.md) severity filter.  |
+| severities  | array | Array of [severity names](/api/data/severity.md)   |
+| minSeverity |  string   | Minimal [name](/api/data/severity.md) severity filter.  |
 
 > Note that `tags` filter is not supported.
 
@@ -67,7 +67,7 @@ An array of matching alert objects containing the following fields:
 | entity | string | Entity name. |
 | metric | string | Metric name.  |
 | rule | string | Rule name. |
-| severity  | number | [Severity](/api/data/severity.md) code.  |
+| severity  | string | [Severity](/api/data/severity.md) name.  |
 | tags | object | Object containing `name=value` pairs, for example `tags: {"path": "/", "name": "sda"}` |
 | repeatCount | integer | Number of times when the expression evaluated to true sequentially.  |
 | textValue | string | Text value.  |
@@ -96,8 +96,8 @@ POST https://atsd_host:8443/api/v1/alerts/query
 [{
 	"metrics": ["loadavg.5m", "message"],
 	"entity": "nurswgvml007",
-	"minSeverity": 4,
-    	"startDate": "2016-05-07T04:00:00Z",
+	"minSeverity": "MINOR",
+    "startDate": "2016-05-07T04:00:00Z",
 	"endDate":   "2016-06-25T05:00:00Z"
 }]
 ```
@@ -128,7 +128,7 @@ curl https://atsd_host:8443/api/v1/alerts/query \
         "repeatCount": 106,
         "textValue": "61.365",
         "metric": "disk_used_percent",
-        "severity": 6,
+        "severity": "CRITICAL",
         "rule": "disk_low",
         "acknowledged": false,
         "openDate": "2015-05-12T13:39:37Z",
