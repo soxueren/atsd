@@ -1,4 +1,4 @@
-# Stats-Query With Multiple Entities
+# Stats-Query With Multiple Entities and Group
 
 ## Description
 
@@ -18,6 +18,9 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
       "nurswgvml006"
     ],
     "metric": "message-count",
+    "groupKeys": [
+      "entity"
+    ],
     "aggregate": {
       "types": [
         "COUNT"
@@ -39,7 +42,7 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
 ```json
 [
   {
-    "entity": "nurswgvml007_nurswgvml006",
+    "entity": "nurswgvml006",
     "metric": "message-count",
     "tags": {},
     "type": "HISTORY",
@@ -53,7 +56,26 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
     "data": [
       {
         "d": "2016-06-01T00:00:00.000Z",
-        "v": 223165
+        "v": 130850
+      }
+    ]
+  },
+  {
+    "entity": "nurswgvml007",
+    "metric": "message-count",
+    "tags": {},
+    "type": "HISTORY",
+    "aggregate": {
+      "type": "COUNT",
+      "period": {
+        "count": 1,
+        "unit": "MONTH"
+      }
+    },
+    "data": [
+      {
+        "d": "2016-06-01T00:00:00.000Z",
+        "v": 92315
       }
     ]
   }

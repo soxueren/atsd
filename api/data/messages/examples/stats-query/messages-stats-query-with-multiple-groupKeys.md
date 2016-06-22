@@ -15,6 +15,7 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
   {
     "entities": "nurswgvml006",
     "metric": "message-count",
+    
     "groupKeys": [
       "entity",
       "type",
