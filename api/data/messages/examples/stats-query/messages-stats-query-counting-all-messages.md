@@ -31,6 +31,13 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
     "metric": "message-count",
     "tags": {},
     "type": "HISTORY",
+    "aggregate": {
+      "type": "COUNT",
+      "interval": {
+        "count": 600000,
+        "unit": "MILLISECOND"
+      }
+    },
     "data": [
       {
         "d": "2016-06-20T14:00:00.000Z",
