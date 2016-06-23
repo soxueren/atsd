@@ -215,15 +215,15 @@ curl  https://atsd_host:8443/api/v1/messages/stats/query \
 ```
 
 ## Additional Examples
-* [Counting all Messages](examples/stats-query/messages-stats-query-counting-all-messages.md)
-* [Stats-query with multiple entities](examples/stats-query/messages-stats-query-with-multiple-entities.md)
-* [Stats-query with multiple entities and group](examples/stats-query/messages-stats-query-with-multiple-entities-group.md)
-* [Stats-query with multiple groupKeys](examples/stats-query/messages-stats-query-with-multiple-groupKeys.md)
-* [Stats-query with type groupKey](examples/stats-query/messages-stats-query-with-type-groupKey.md)
-* [Stats-query with count type](examples/stats-query/messages-stats-query-with-count-type-aggregate-field.md)
-* [Stats-query with interpolation](examples/stats-query/messages-stats-query-with-interpolation.md)
+* [Counting all Messages for an Entity](examples/stats-query/messages-stats-query-counting-all-messages-for-entity.md)
+* [Multiple Entities Counted as 1 Series, no Grouping](examples/stats-query/messages-stats-query-multiple-entities-counted-series.md)
+* [Entity Array with Message Counts Grouped by Entity](examples/stats-query/messages-stats-query-entity-array-with-message-counts-grouped.md)
+* [Message Counts Grouped by Multiple Fields](examples/stats-query/messages-stats-query-message-counts-grouped-multiple-fields.md)
+* [Message Counts Grouped by Type](examples/stats-query/messages-stats-query-message-counts-grouped-type.md)
+* [Message Count per Period](examples/stats-query/messages-stats-query-message-count-per-period.md)
+* [Interpolate Counts for Missing Periods with 0 value](examples/stats-query/messages-stats-query-interpolate-counts-for-missing-periods.md)
 * [Milliseconds timeFormat](examples/stats-query/messages-stats-query-with-milliseconds-time-format.md)
-* [Stats-query with control field](examples/stats-query/messages-stats-query-with-control-requestid-field.md)
+* [Multiple Queries for Different Message Types](examples/stats-query/messages-stats-query-multiple-queries-different-message-types.md)
 
 
 

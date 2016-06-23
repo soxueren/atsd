@@ -1,4 +1,4 @@
-# Stats-Query With Multiple GroupKeys
+# Message Counts Grouped by Multiple Fields
 
 ## Description
 

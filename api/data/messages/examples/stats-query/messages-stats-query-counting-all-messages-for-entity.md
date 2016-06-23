@@ -1,4 +1,4 @@
-# Counting all Messages
+# Counting all Messages for an Entity
 
 ## Description
 

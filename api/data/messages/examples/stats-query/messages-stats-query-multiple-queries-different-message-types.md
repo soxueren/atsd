@@ -1,4 +1,4 @@
-# Stats-Query With Control requestId Field
+# Multiple Queries for Different Message Types
 
 ## Description
 
@@ -15,6 +15,7 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
   {
     "entities": "nurswgvml006",
     "metric": "message-count",
+    "type": "logger",
     "aggregate": {
       "types": [
         "COUNT"
@@ -24,13 +25,14 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
         "unit": "MINUTE"
       }
     },
-    "startDate": "2016-06-20T14:00:00.000Z",
-    "endDate": "2016-06-20T15:00:00.000Z",
+    "startDate": "2016-06-18T09:00:00.000Z",
+    "endDate": "2016-06-18T10:00:00.000Z",
     "requestId": 1
   },
   {
     "entities": "nurswgvml006",
     "metric": "message-count",
+    "type": "backup",
     "aggregate": {
       "types": [
         "COUNT"
@@ -40,8 +42,8 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
         "unit": "MINUTE"
       }
     },
-    "startDate": "2016-06-20T16:00:00.000Z",
-    "endDate": "2016-06-20T17:00:00.000Z",
+    "startDate": "2016-06-18T00:00:00.000Z",
+    "endDate": "2016-06-18T10:00:00.000Z",
     "requestId": 2
   }
 ]
@@ -56,7 +58,9 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
     "requestId": "1",
     "entity": "nurswgvml006",
     "metric": "message-count",
-    "tags": {},
+    "tags": {
+      "type": "logger"
+    },
     "type": "HISTORY",
     "aggregate": {
       "type": "COUNT",
@@ -67,28 +71,28 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
     },
     "data": [
       {
-        "d": "2016-06-20T14:00:00.000Z",
-        "v": 40
+        "d": "2016-06-18T09:00:00.000Z",
+        "v": 30
       },
       {
-        "d": "2016-06-20T14:10:00.000Z",
-        "v": 15
+        "d": "2016-06-18T09:10:00.000Z",
+        "v": 9
       },
       {
-        "d": "2016-06-20T14:20:00.000Z",
-        "v": 40
+        "d": "2016-06-18T09:20:00.000Z",
+        "v": 16
       },
       {
-        "d": "2016-06-20T14:30:00.000Z",
-        "v": 20
+        "d": "2016-06-18T09:30:00.000Z",
+        "v": 22
       },
       {
-        "d": "2016-06-20T14:40:00.000Z",
-        "v": 23
+        "d": "2016-06-18T09:40:00.000Z",
+        "v": 19
       },
       {
-        "d": "2016-06-20T14:50:00.000Z",
-        "v": 38
+        "d": "2016-06-18T09:50:00.000Z",
+        "v": 25
       }
     ]
   },
@@ -96,7 +100,9 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
     "requestId": "2",
     "entity": "nurswgvml006",
     "metric": "message-count",
-    "tags": {},
+    "tags": {
+      "type": "backup"
+    },
     "type": "HISTORY",
     "aggregate": {
       "type": "COUNT",
@@ -107,28 +113,8 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
     },
     "data": [
       {
-        "d": "2016-06-20T16:00:00.000Z",
-        "v": 41
-      },
-      {
-        "d": "2016-06-20T16:10:00.000Z",
-        "v": 15
-      },
-      {
-        "d": "2016-06-20T16:20:00.000Z",
-        "v": 9
-      },
-      {
-        "d": "2016-06-20T16:30:00.000Z",
-        "v": 14
-      },
-      {
-        "d": "2016-06-20T16:40:00.000Z",
-        "v": 25
-      },
-      {
-        "d": "2016-06-20T16:50:00.000Z",
-        "v": 25
+        "d": "2016-06-18T03:10:00.000Z",
+        "v": 4
       }
     ]
   }

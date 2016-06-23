@@ -1,4 +1,4 @@
-# Stats-Query With Type COUNT Aggregate Field 
+# Interpolate Counts for Missing Periods with 0 value
 
 ## Description
 
@@ -20,11 +20,15 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
         "COUNT"
       ],
       "period": {
-        "count": 5,
+        "count": 1,
         "unit": "MINUTE"
+      },
+      "interpolate": {
+        "type": "VALUE",
+        "value": 0
       }
     },
-    "startDate": "2016-06-20T14:00:00.000Z",
+    "startDate": "2016-06-20T14:05:00.000Z",
     "endDate": "2016-06-20T14:10:00.000Z"
   }
 ]
@@ -43,18 +47,30 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
     "aggregate": {
       "type": "COUNT",
       "period": {
-        "count": 5,
+        "count": 1,
         "unit": "MINUTE"
       }
     },
     "data": [
       {
-        "d": "2016-06-20T14:00:00.000Z",
-        "v": 23
+        "d": "2016-06-20T14:05:00.000Z",
+        "v": 11
       },
       {
-        "d": "2016-06-20T14:05:00.000Z",
-        "v": 17
+        "d": "2016-06-20T14:06:00.000Z",
+        "v": 0
+      },
+      {
+        "d": "2016-06-20T14:07:00.000Z",
+        "v": 6
+      },
+      {
+        "d": "2016-06-20T14:08:00.000Z",
+        "v": 0
+      },
+      {
+        "d": "2016-06-20T14:09:00.000Z",
+        "v": 0
       }
     ]
   }
