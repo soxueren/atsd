@@ -5,7 +5,9 @@ Create an entity with specified fields and tags or replaces the fields and tags 
 
 In case of an existing entity, all the current entity tags will be replaced with entity tags specified in the request.
 
-If the request doesn't contain any tags, current entity tags will be deleted.
+If the replace request for an existing entity doesn't contain any tags, current entity tags will be deleted.
+
+The replace request for an existing entity doesn't delete any series, properties, or metrics.
 
 ## Request
 

@@ -221,8 +221,8 @@ Use CSV escaping methods in core libraries where available, for example [StringE
 
 ### Case Sensitivity
 
-* Field names are case-insensitive and are converted to lowercase when stored in ATSD.
-* Field values are case-sensitive and are stored as submitted, except for property key values, which are converted to lowercase.
+* Field names are case-insensitive and are converted to lower case when stored in the database.
+* Field values are case-sensitive and are stored as submitted, except for entity name, metric name, and property type which are converted to lower case.
 
 ### Command Length Limits
 

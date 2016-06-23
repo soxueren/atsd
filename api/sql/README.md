@@ -42,9 +42,10 @@ The database supports only `SELECT` statements at this time.
 The `SELECT` statement consists of a `SELECT` expression, a `FROM` query, a `WHERE` clause, and other optional clauses for grouping, filtering, and ordering the results.
 
 ```sql
-SELECT datetime, entity, value -- SELECT expression
-  FROM "mpstat.cpu_busy" -- query
-  WHERE datetime > now - 1 * HOUR -- clause(s)
+SELECT datetime, entity, value     -- SELECT expression
+  FROM "mpstat.cpu_busy"           -- query
+WHERE datetime > now - 1 * HOUR    -- WHERE clause
+  LIMIT 1                          -- other clauses
 ```
 
 ### SELECT expression
@@ -60,7 +61,7 @@ Virtual table represents a subset of records for the given metric stored by the 
 ```sql
 SELECT datetime, entity, value 
   FROM "mpstat.cpu_busy" 
-  WHERE datetime > now - 1*MINUTE
+WHERE datetime > now - 1*MINUTE
 ```
 
 In the example above, "mpstat.cpu_busy" table contains records for `mpstat.cpu_busy` metric.
@@ -79,7 +80,7 @@ The clause can be built from multiple conditions each comparing values using com
 
 ```sql
 SELECT entity, datetime, value, tags.*
-  FROM disk_used
+  FROM df.disk_used
 WHERE datetime > now - 15 * minute
   AND (entity IN ('nurswgvml007', 'nurswgvml010') 
        OR tags.file_system LIKE '/dev/*'
@@ -167,7 +168,7 @@ Tag values are referenced in `SELECT` expression by specifying `tags.*`, `tags`,
 
 ```sql
 SELECT datetime, entity, value, tags.*, tags, tags.mount_point, tags.file_system
-  FROM disk_used 
+  FROM df.disk_used 
 WHERE entity = 'nurswgvml010' AND datetime > now - 1*MINUTE
   ORDER BY time
 ```
@@ -182,7 +183,7 @@ WHERE entity = 'nurswgvml010' AND datetime > now - 1*MINUTE
 
 ```sql
 SELECT entity, count(value), tags.*
- FROM disk_used
+ FROM df.disk_used
 WHERE datetime > now - 5 * minute
  AND entity = 'nurswgvml010'
  AND tags.mount_point = '/'
@@ -648,7 +649,7 @@ This allows merging of virtual tables with different tag columns, including merg
 ```sql
 SELECT entity, datetime, AVG(t1.value), AVG(t2.value), tags.*
   FROM mpstat.cpu_busy t1
-JOIN USING entity disk_used t2
+JOIN USING entity df.disk_used t2
   WHERE time > current_hour
   AND entity = 'nurswgvml007' 
 GROUP BY entity, tags, period(1 minute)
@@ -826,7 +827,7 @@ Tag values are **case-sensitive**.
 
 ```sql
 SELECT metric, entity, datetime, value, tags.*
-  FROM Disk_Used
+  FROM df.disk_used
 WHERE datetime > now - 5 * minute
   AND entity = 'NurSwgvml007' 
   AND tags.file_system = '/dev/mapper/vg_nurswgvml007-lv_root'
@@ -835,7 +836,7 @@ WHERE datetime > now - 5 * minute
 ```ls
 | metric    | entity       | datetime                 | value     | tags.mount_point | tags.file_system                    | 
 |-----------|--------------|--------------------------|-----------|------------------|-------------------------------------| 
-| disk_used | nurswgvml007 | 2016-06-19T06:12:26.000Z | 8715136.0 | /                | /dev/mapper/vg_nurswgvml007-lv_root | 
+| df.disk_used | nurswgvml007 | 2016-06-19T06:12:26.000Z | 8715136.0 | /                | /dev/mapper/vg_nurswgvml007-lv_root | 
 ```
 
 Changing the case of tag value condition `tags.file_system = '/DEV/mapper/vg_nurswgvml007-lv_root'` would cause an error **TAG_VALUE not found**.

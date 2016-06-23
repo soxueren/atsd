@@ -76,13 +76,14 @@ Refer to [ISO 8601 date format examples](date-format.md).
 
 ## Syntax
 
-* entity, metric, property type, property key name, and tag name must consist from printable characters.
-* entity, metric, property type, property key name, property key value, and tag name is case-insensitive and is converted to lowercase when stored in ATSD. Other values are case-sensitive and are stored as received.
+* Entity name, metric name, property type, and key/tag names must consist from printable characters.
+* Field names are case-insensitive and are converted to lower case when stored in the database.
+* Field values are case-sensitive and are stored as submitted, except for entity name, metric name, and property type which are converted to lower case.
 * Values are trimmed of starting and trailing line breaks (CR,LF symbols).
 
 ## Wildcards
 
-`*` wildcard is supported in entity filter and tag values. 
+`*` and `?` wildcards are supported in entity name and tag value.
 
 Literal symbols `?` and `*` should be escaped with single backslash.
 
