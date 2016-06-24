@@ -138,7 +138,10 @@ curl https://atsd_host:8443/api/v1/alerts/query \
 ```
 
 ## Additional Examples
-
+* [Multiple Entities for Specified Rule](examples/query/alerts-query-multiple-entity-specified-rule.md)
+* [Multiple Metrics for Specified Entity](examples/query/alerts-query-multiple-metrics-specified-entity.md)
+* [Multiple Rules for Specified Metric](examples/query/alerts-query-multiple-rules-specified-metric.md)
+* [Filter Alerts for Severities](examples/query/alerts-query-filter-alerts-severities.md)
 
 
 
