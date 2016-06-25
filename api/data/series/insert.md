@@ -11,23 +11,13 @@ Insert a timestamped array of numbers for a given series identified by metric, e
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/series/insert` | `application/json` |
 
-```elm
-/api/v1/series/insert
-```
+### Parameters
 
-### Method
-
-```
-POST 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
+None.
 
 ### Fields
 
@@ -43,7 +33,7 @@ The request contains an array of series objects each containing an array of time
 |forecastName| string | Forecast name. <br>Applicable when `type` is set to `FORECAST`. <br>`forecastName` can be used to store a custom forecast identified by name. <br>If `forecastName` is omitted, the values overwrite the default forecast.  |
 | data | array | [**Required**] Array of `{"t":number,"v":number}` objects, <br>where `t` is time in UNIX milliseconds and `v` is the metric's numeric value at time `t`. <br>Time can be also specified in ISO format using `d` field, for example:<br>`{"d":"2016-06-01T12:08:42.518Z", "v":50.8}`<br>To insert `NaN` (not a number), set `v` to `null`, for example: `{"t":1462427358127, "v":null}`<br>If `type` is set to `FORECAST`, the object `{t,v}` can include an additional `s` field containing standard deviation of the forecast value `v`, for example  `{"t":1462427358127, "v":80.4, "s":12.3409}` |
 
-### Number Representation
+#### Number Representation
 
 * The string representation of the inserted number consists of an optional sign, '+' ('\u002B') or '-' ('\u002D'), followed by a sequence of zero or more decimal digits ("the integer"), optionally followed by a fraction, optionally followed by an exponent.
 * The exponent consists of the character 'e' ('\u0065') or 'E' ('\u0045') followed by an optional sign, '+' ('\u002B') or '-' ('\u002D'), followed by one or more decimal digits.

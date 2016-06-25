@@ -6,33 +6,19 @@ Retrieve series objects containing time:value arrays for specified filters.
 
 ## Request
 
-### Path
-
-```elm
-/api/v1/series/query
-```
-
-### Method
-
-```
-POST 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/series/query` | `application/json` |
 
 ### Parameters
 
 None.
 
-## Fields
+### Fields
 
 An array of query objects containing the following filtering fields:
 
-### Series Filter Fields
+#### Series Filter Fields
 
 | **Field** | **Type** | **Description** |
 |---|---|---|
@@ -40,30 +26,30 @@ An array of query objects containing the following filtering fields:
 | tags | object  | Object with `name=value` fields. <br>Matches series with tags that contain the same fields but may also include other fields. <br>Tag field values support `?` and `*` wildcards. |
 | type | string | Type of underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default: `HISTORY` |
 
-### Entity Filter Fields
+#### Entity Filter Fields
 
 * [**Required**]
 * Refer to [entity filter](../filter-entity.md).
 
-### Date Filter Fields
+#### Date Filter Fields
 
 * [**Required**]
 * Refer to [date filter](../filter-date.md).
 
-### Forecast Filters
+#### Forecast Filters
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 |forecastName| string | Unique forecast name. Identifies a custom forecast by name. If `forecastName` is not set, then the default forecast computed by the database will be returned. `forecastName` is applicable only when `type` is set to `FORECAST` or `FORECAST_DEVIATION` |
 
-### Versioning Filters
+#### Versioning Filters
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 | versioned | boolean |Returns version status, source, and change date if metric is versioned. Default: false. |
 | versionFilter | string | Expression to filter value history (versions) by version status, source or time, for example: `version_status = 'Deleted'` or `version_source LIKE '*user*'`. To filter by version `time`, use `date()` function, for example, `version_time > date('2015-08-11T16:00:00Z')` or `version_time > date('current_day')`. The `date()` function accepts [endtime](/end-time-syntax.md) syntax.|
 
-### Control Filter Fields
+#### Control Filter Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
@@ -74,7 +60,7 @@ An array of query objects containing the following filtering fields:
 | requestId | string | Optional identifier used to associate `query` object in request with `series` objects in response. |
 | timeFormat |string| Time format for data array. `iso` or `milliseconds`. Default: `iso`. |
 
-### Processor Fields
+#### Processor Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|

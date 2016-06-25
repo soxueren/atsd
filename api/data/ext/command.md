@@ -10,27 +10,17 @@ Commands are processed sequentially. In case of error, the server terminates par
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/command` | `text/plain` |
 
-```elm
-/api/v1/command
-```
+### Parameters
 
-### Method
-
-```
-POST 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | text/plain |
+None.
 
 ### Fields
 
-The request must contains array of commands in plain-text format, separated by line feed. Each command is subject to its syntax rules:
+An array of network commands in plain-text format, separated by line feed:
 
 * [series](/api/network/series.md)
 * [property](/api/network/property.md)

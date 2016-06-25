@@ -4,25 +4,23 @@
 
 Retrieve series values for the specified entity, metric, and optional series tags in CSV and JSON format. 
 
-## Request 
+## Request
 
-### Path
-
-```elm
-/api/v1/series/{csv|json}/{entity}/{metric}
-```
-
-### Method 
-
-```
-GET
-```
-
-### Headers
-
-None.
+| **Method** | **Path** |
+|:---|:---|
+| GET | `/api/v1/series/{format}/{entity}/{metric}` |
 
 ### Parameters 
+
+#### Path Parameters
+
+| **Name** | **Description** |
+|:---|:---|
+| entity | Entity name. |
+| metric | Metric name. |
+| format | Response format: `csv` or `json`. |
+
+#### Query String Parameters
 
 |**Parameters**|**Type**|**Description**|
 |:---|:---|:---|
@@ -33,7 +31,7 @@ None.
 |last|boolean|Performs GET instead of scan. Retrieves only 1 most recent value. Default value: false|
 |columns|string|Columns included in CSV format response. <br>Possible values: time, date (time in ISO), entity, metric, t:{name}, value. <br>Default: time, entity, metric, requested tag names, value
 
-### Date Parameters
+#### Query String Date Parameters
 
 * [**Required**]
 * `interval` specified as `{count}-{timeunit}`, for example `1-hour`

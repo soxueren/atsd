@@ -4,27 +4,17 @@
 
 Returns an array of property types for the entity. 
 
-## Request 
+## Request
 
-### Path
-
-```elm
-/api/v1/properties/{entity}/types
-```
-
-### Method 
-
-```
-GET
-```
-
-### Headers
-
-None.
+| **Method** | **Path** |
+|:---|:---|
+| GET | `/api/v1/properties/{entity}/types` |
 
 ### Parameters
 
-None.
+| **Name** | **In** | **Description** |
+|:---|:---|:---|
+| entity | path | Entity name. |
 
 ### Fields
 

@@ -9,23 +9,13 @@ Insert an array of properties.
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/properties/insert` | `application/json` |
 
-```elm
-/api/v1/properties/insert
-```
+### Parameters
 
-### Method
-
-```
-POST 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
+None.
 
 ### Fields
 

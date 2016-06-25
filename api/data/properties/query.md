@@ -4,36 +4,21 @@
 
 Retrieve property records matching specified filters.
 
-
 ## Request
 
-### Path
-
-```elm
-/api/v1/properties/query
-```
-
-### Method
-
-```
-POST 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/properties/query` | `application/json` |
 
 ### Parameters
 
 None.
 
-## Fields
+### Fields
 
 An array of query objects containing the following filtering fields:
 
-### Property Filter Fields
+#### Property Filter Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
@@ -44,17 +29,17 @@ An array of query objects containing the following filtering fields:
 
 * Key and tag values are case-insensitive.
 
-### Entity Filter Fields
+#### Entity Filter Fields
 
 * [**Required**]
 * Refer to [entity filter](../filter-entity.md).
 
-### Date Filter Fields
+#### Date Filter Fields
 
 * [**Required**]
 * Refer to [date filter](../filter-date.md).
 
-### Result Filter Fields
+#### Result Filter Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|

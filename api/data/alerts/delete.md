@@ -6,23 +6,9 @@ Delete specified alerts by id from the memory store.
 
 ## Request
 
-### Path
-
-```elm
-/api/v1/alerts/delete
-```
-
-### Method
-
-```
-POST
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/alerts/delete` | `application/json` |
 
 ### Parameters
 
@@ -30,11 +16,11 @@ None.
 
 ### Fields
 
-An array of objects containing 'id' field identifying alert in the database.
+An array of objects containing an 'id' field to identify the alerts to be deleted.
 
 |**Field**|**Description**|
 |:---|:---|
-|id|Alert id.|
+|id|Alert id|
 
 ## Response
 

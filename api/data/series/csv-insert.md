@@ -8,30 +8,16 @@ The CSV header should include a leading time column and one or multiple numeric 
 
 ## Request
 
-### Path 
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/series/csv/{entity}?[&{tag-name}={tag-value}]` | `text/csv` |
 
-```elm
-/api/v1/series/csv/{entity}?[&{tag-name}={tag-value}]
-```
+### Parameters
 
-### Method
-
-```
-POST 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | `text/csv` |
-
-### Fields
-
-| **Field** | **Type** | **Description** |
+| **Name** | **In** | **Description** |
 |:---|:---|:---|
-| entity   | string   | [**Required**] entity name |
-| tag      | string   | `tag=value` parameter pairs |
+| entity | path | Entity name. |
+| tag | path | `tag=value` parameter pairs. |
 
 ### Payload
 

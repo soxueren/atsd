@@ -6,23 +6,13 @@ Delete property records that match specified filters.
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/properties/delete` | `application/json` |
 
-```elm
-/api/v1/properties/delete
-```
+### Parameters
 
-### Method
-
-```
-POST 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
+None.
 
 ### Fields
 

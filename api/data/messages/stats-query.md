@@ -8,37 +8,23 @@ If period aggregation is enabled, the series contains the number of messages in 
 
 ## Request
 
-### Path
-
-```elm
-/api/v1/messages/stats/query
-```
-
-### Method
-
-```
-POST 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/messages/stats/query` | `application/json` |
 
 ### Parameters
 
 None.
 
-## Fields
+### Fields
 
 An array of query objects containing the following filtering fields:
 
-### Message Filter Fields
+#### Message Filter Fields
 
 Refer to message [query](query.md#message-filter-fields) fields.
 
-### Message Counter Fields
+#### Message Counter Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
@@ -46,17 +32,17 @@ Refer to message [query](query.md#message-filter-fields) fields.
 |groupKeys|array | Array of message tags used for grouping: `type`, `source`, `entity`, etc, for example `"groupKeys": ["entity", "type"]` |
 |aggregate|object | Period [aggregator](/api/data/series/aggregate.md). Only `COUNT` type is supported. <br>`"aggregate":{"type":"COUNT", "period":{"count":1,"unit":"HOUR"}}` |
 
-### Entity Filter Fields
+#### Entity Filter Fields
 
 * [**Required**]
 * Refer to [entity filter](../filter-entity.md).
 
-### Date Filter Fields
+#### Date Filter Fields
 
 * [**Required**]
 * Refer to [date filter](../filter-date.md).
 
-### Control Fields
+#### Control Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|

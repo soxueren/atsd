@@ -6,56 +6,42 @@ Retrieve message records for the specified filters.
 
 ## Request
 
-### Path
-
-```elm
-/api/v1/messages/query
-```
-
-### Method
-
-```
-POST 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/messages/query` | `application/json` |
 
 ### Parameters
 
 None.
 
-## Fields
+### Fields
 
 An array of query objects containing the following filtering fields:
 
-### Message Filter Fields
+#### Message Filter Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 |type       |  string   | Message type. |
 |source       |  string   | Message source. |
 |tags	      | object  | Object with `name=value` fields. <br>Matches records with tags that contain the same fields but may also include other fields. |
-|severity     |  string   | Severity [code or name](/api/data/severity.md).  <br>Matches records with the specified severity.<br>Can be specified as string or as number.|
+|severity     |  string   | Severity [name](/api/data/severity.md).  <br>Matches records with the specified severity.|
 |severities   |  array   | Am array of severity [codes or names](/api/data/severity.md).  <br>Matches records with one of the the specified severities.<br>Array elements can be specified as string or as number.|
 |minSeverity  |  string   | Minimum [code or name](/api/data/severity.md) severity filter. <br>Can be specified as string or as number. |
 
-* `severity`, `minSeverity`, and `severities` elements can be specified as string or as number. The fields are case-insensitive. The database returns severity names, even if the request contained severity codes.
+* `severity`, `minSeverity`, and `severities` values are case-insensitive.
 
-### Entity Filter Fields
+#### Entity Filter Fields
 
 * [**Required**]
 * Refer to [entity filter](../filter-entity.md).
 
-### Date Filter Fields
+#### Date Filter Fields
 
 * [**Required**]
 * Refer to [date filter](../filter-date.md).
 
-### Result Filter Fields
+#### Result Filter Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|

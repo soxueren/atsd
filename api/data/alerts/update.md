@@ -10,23 +10,9 @@ If `acknowledged` property is not specified, the alert will be un-acknowledged.
 
 ## Request
 
-### Path
-
-```elm
-/api/v1/alerts/update
-```
-
-### Method
-
-```
-POST
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/alerts/update` | `application/json` |
 
 ### Parameters
 
@@ -34,7 +20,7 @@ None.
 
 ### Fields
 
-An array of objects containing 'id' property identifying alert in the database and `acknowledge` status.
+An array of objects containing an 'id' field to identify the alert and its new `acknowledge` status.
 
 |**Field**|**Type**|**Required**|**Description**|
 |:---|:---|:---|:---|

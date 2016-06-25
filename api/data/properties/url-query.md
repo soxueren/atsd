@@ -4,21 +4,20 @@
 
 Retrieve property records for the specified entity and type.
 
-## Request 
+## Request
 
-### Path
+| **Method** | **Path** |
+|:---|:---|
+| GET | `/api/v1/properties/{entity}/types/{type}` |
 
-```elm
-/api/v1/properties/{entity}/types/{type}
-```
+### Parameters
 
-### Method 
+| **Name** | **In** | **Description** |
+|:---|:---|:---|
+| entity | path | Entity name. |
+| type | path | Property type. |
 
-```
-GET
-```
-
-### Headers
+### Fields
 
 None.
 

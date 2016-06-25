@@ -6,17 +6,9 @@ Upload nmon file for parsing.
 
 ## Request
 
-### Path 
-
-```elm
-/api/v1/nmon
-```
-
-### Method
-
-```
-POST 
-```
+| **Method** | **Path** |
+|:---|:---|
+| POST | `/api/v1/nmon` |
 
 ### Headers
 
@@ -25,7 +17,7 @@ POST
 | Content-Type | `text/csv` or `text/plain` |
 | Content-Disposition | `form-data; filename=fname`, for example <br>`Content-Disposition: form-data; filename=NURSWGVML070_160318_1012.nmon` |
 
-### Parameters
+### Query String Parameters
 
 | **Field** | **Type** | **Description** |
 |:---|:---|:---|

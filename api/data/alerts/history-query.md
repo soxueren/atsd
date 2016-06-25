@@ -6,50 +6,36 @@ Retrieve a list of **closed** alerts matching specified fields.
 
 ## Request
 
-### Path
-
-```elm
-/api/v1/alerts/history/query
-```
-
-### Method
-
-```
-POST 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/alerts/history/query` | `application/json` |
 
 ### Parameters
 
 None.
 
-## Fields
+### Fields
 
 An array of query objects containing the following filtering fields:
 
-### Alert Filter Fields
+#### Alert Filter Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 | rule       | string | Rule name.        |
 | metric     | string | Metric name. |
 
-### Entity Filter Fields
+#### Entity Filter Fields
 
 * [**Required**]
 * Refer to [entity filter](../filter-entity.md).
 
-### Date Filter Fields
+#### Date Filter Fields
 
 * [**Required**]
 * Refer to [date filter](../filter-date.md).
 
-### Result Filter Fields
+#### Result Filter Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|

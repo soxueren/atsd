@@ -11,29 +11,17 @@ Insert messages.
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/messages/insert` | `application/json` |
 
-```elm
-/api/v1/messages/insert
-```
+### Parameters
 
-## Method 
-
-```
-POST 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
-
-## Request
-
-An array of message objects.
+None.
 
 ### Fields
+
+An array of message objects.
 
 | **Field** | **Type** | **Description** |
 |---|---|---|

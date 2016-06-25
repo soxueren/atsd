@@ -12,17 +12,9 @@ The method supports processing of the uploaded file attached as data as well as 
 
 ## Request
 
-### Path 
-
-```elm
-/api/v1/csv
-```
-
-### Method
-
-```
-POST 
-```
+| **Method** | **Path** |
+|:---|:---|
+| POST | `/api/v1/csv` |
 
 ### Headers
 
@@ -38,7 +30,7 @@ Multi-part mode:
 |:---|:---|
 | Content-Type | `multipart/*`, for example `multipart/form-data` or  `multipart/mixed`. <br>Content type for the file part itself should be set as described in File Data mode above.|
 
-### Parameters
+### Query String Parameters
 
 | **Field** | **Type** | **Description** |
 |:---|:---|:---|
@@ -55,7 +47,7 @@ Multi-part mode:
 
 ### Payload
 
-* File attached as data.
+* File attached as data, or
 * Multi-part content containing the file. Part name containing the uploaded file should be named `filedata` and include `filename` parameter:
 
 ```

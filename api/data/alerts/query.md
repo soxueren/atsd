@@ -6,33 +6,19 @@ Retrieve a list of **open** alerts matching specified filters.
 
 ## Request
 
-### Path
-
-```elm
-/api/v1/alerts/query
-```
-
-### Method
-
-```
-POST 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| POST | `/api/v1/alerts/query` | `application/json` |
 
 ### Parameters
 
 None.
 
-## Fields
+### Fields
 
 An array of query objects containing the following filtering fields:
 
-### Alert Filter Fields
+#### Alert Filter Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
@@ -43,12 +29,12 @@ An array of query objects containing the following filtering fields:
 
 > Note that `tags` filter is not supported.
 
-### Entity Filter Fields
+#### Entity Filter Fields
 
 * [**Required**]
 * Refer to [entity filter](../filter-entity.md).
 
-### Date Filter Fields
+#### Date Filter Fields
 
 * [**Required**]
 * Date conditions are applied to alert `openDate`.
