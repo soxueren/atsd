@@ -4,7 +4,7 @@
 |:---|:---|:---|
 | count  | number | Number of time units contained in the period. |
 | unit  | string | [Time unit](time-unit.md) such as `MINUTE`, `HOUR`, `DAY`. |
-| align| string | Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.|
+| align| string | Alignment of the period's start/end time. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.|
 
 ## Alignment
 
@@ -19,3 +19,17 @@ The default `CALENDAR` alignment can be changed to `START_TIME`, `END_TIME`, or 
 In case of `START_TIME` and `FIRST_VALUE_TIME`, start of the first period is determined according to the start of the selection interval or time of the first value, respectively.
 
 In case of `END_TIME`, end of the last period is determined according to the end of the selection interval.
+
+## Examples
+
+```json
+"period": { "count": 1, "unit": "HOUR" }
+```
+
+```json
+"period": { "count": 5, "unit": "MINUTE" }
+```
+
+```json
+"period": { "count": 5, "unit": "MINUTE", "align": "END_TIME" }
+```

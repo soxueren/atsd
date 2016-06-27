@@ -103,16 +103,16 @@ curl https://atsd_host:8443/api/v1/series/insert \
   ```
 
 ## Additional Examples
-* [ISO Time Format](/api/data/series/examples/series-insert-iso-time-format.md)
-* [Scientific Notation](https://github.com/axibase/atsd-docs/blob/master/api/data/series/examples/series-insert-scietific-notation.md)
-* [Not A Number](https://github.com/axibase/atsd-docs/blob/master/api/data/series/examples/series-insert-nan.md)
-* [Multiple Samples](https://github.com/axibase/atsd-docs/blob/master/api/data/series/examples/series-insert-multiple-samples.md)
-* [Series with Tags](/api/data/series/examples/series-insert-with-tags.md)
-* [Multiple Series](/api/data/series/examples/insert-multiple-series.md)
-* [Forecast](/api/data/series/examples/insert-forecast.md)
-* [Named Forecast](https://github.com/axibase/atsd-docs/blob/master/api/data/series/examples/insert-named-forecast.md)
-* [Forecast Deviation](https://github.com/axibase/atsd-docs/blob/master/api/data/series/examples/series-insert-forecast-deviation.md)
-* [Versioned Metric](/api/data/series/examples/versioned-metric.md)
+* [ISO Time Format](examples/insert-iso-time-format.md)
+* [Scientific Notation](examples/insert-scientific-notation.md)
+* [Not A Number](examples/insert-nan.md)
+* [Multiple Samples](examples/insert-multiple-samples.md)
+* [Series with Tags](examples/insert-with-tags.md)
+* [Multiple Series](examples/insert-multiple-series.md)
+* [Forecast](examples/insert-forecast.md)
+* [Named Forecast](examples/insert-named-forecast.md)
+* [Forecast Deviation](examples/insert-forecast-deviation.md)
+* [Versioned Metric](/examples/insert-versioned-metric.md)
 
 
 
