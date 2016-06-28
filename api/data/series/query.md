@@ -145,7 +145,7 @@ POST https://atsd_host:8443/api/v1/series/query
 ### Entity Filter
 
 * [Multiple Entities](examples/query-entity-array.md)
-* [Multiple Entities Including Entities without Data](examples/query-entity-array.md)
+* [Multiple Entities Including Entities without Data](examples/query-entity-array-nodata.md)
 * [Entity Wildcard](examples/query-entity-wildcard.md)
 * [Entity Expression: Name](examples/query-entity-expr-name.md)
 * [Entity Expression: Entity Tags](examples/query-entity-expr-entity-tags.md)
