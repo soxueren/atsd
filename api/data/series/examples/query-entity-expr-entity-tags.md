@@ -1,4 +1,4 @@
-# Series Query: Filter based on Entity Tags
+# Series Query: Entity Expression with Entity Tags
 
 ## Description
 

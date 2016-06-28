@@ -1,6 +1,5 @@
 # Aggregation
 
-
 ## Statistics
 
 | **Name** |

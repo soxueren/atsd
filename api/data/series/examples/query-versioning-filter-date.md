@@ -1,4 +1,4 @@
-# Series Query: Versioned Metric - Filter Status
+# Series Query: Versioned Metric - Filter Date
 
 ## Description
 

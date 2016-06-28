@@ -1,4 +1,4 @@
-# Series Query: Unknown tag returns warning
+# Series Query: Entity Expression with Properties
 
 ## Description
 

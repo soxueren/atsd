@@ -1,4 +1,4 @@
-# Series Query: Regularize
+# Series Query: Calculate All Supported Statistical Functions for each period
 
 ## Description
 
@@ -9,6 +9,8 @@ The query can contain multiple aggregation functions in `period:types` array.
 Threshold function require a threshold range object with min/max thresholds.
 
 The response contains separate series for each function.
+
+[List of aggregation functions](/api/data/aggregation.md)
 
 ## Request
 

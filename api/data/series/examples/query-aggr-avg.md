@@ -1,8 +1,8 @@
-# Series Query: Regularize
+# Series Query: Calculate Average Value per Period
 
 ## Description
 
-Assign detailed values to repeating periods and compute average to values in each period.
+Assign detailed values to repeating periods and compute average of all values in the given period.
 
 ## Request
 

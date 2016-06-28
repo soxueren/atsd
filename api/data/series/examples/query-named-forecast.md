@@ -1,4 +1,4 @@
-# Named Forecast Example
+# Series Query: Named Forecast
 
 ## Request
 
@@ -7,11 +7,8 @@
     {
         "entity": "duckduckgo",
         "metric": "direct.queries",
-        "tags": {},
         "forecastName": "DuckDuckGo1",
         "type": "FORECAST",
-        "requestId": 0,
-        "timeFormat": "iso",
         "startDate": "2015-05-01T00:00:00Z",
         "endDate": "2015-07-30T00:00:00Z"
     }
@@ -23,10 +20,8 @@
 ```json
 [
     {
-        "requestId": "0",
         "entity": "duckduckgo",
         "metric": "direct.queries",
-        "tags": {},
         "type": "FORECAST",
         "aggregate": {
             "type": "DETAIL"

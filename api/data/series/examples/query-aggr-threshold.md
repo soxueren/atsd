@@ -1,4 +1,4 @@
-# Series Query: Counter Aggregator
+# Series Query: Threshold Aggregators
 
 ## Description
 

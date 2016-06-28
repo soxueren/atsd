@@ -1,8 +1,8 @@
-# Series Query: Unknown tag returns warning
+# Series Query: Entity Array
 
 ## Description
 
-Query data for multiple defined entities.
+Query data for multiple entities.
 
 The response contains multiple separate series for each entity, including entities without data in the specified timespan.
 

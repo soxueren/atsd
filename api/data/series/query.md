@@ -124,6 +124,7 @@ POST https://atsd_host:8443/api/v1/series/query
 * [ISO Millisecond Precision](examples/query-iso-range-millis.md)
 * [ISO hh:mm Timezone](examples/query-iso-hhmm-timezone.md)
 * [ISO: All Data Range](examples/query-iso-range-all.md)
+* [Interval Window](examples/query-interval-window.md)
 * [End Date and Interval](examples/query-end-date-interval.md)
 * [EndTime Syntax](examples/query-endtime-syntax.md)
 * [EndTime Syntax with Expression](examples/query-endtime-syntax-expression.md)
@@ -131,7 +132,7 @@ POST https://atsd_host:8443/api/v1/series/query
 * [EndTime: Previous Hour](examples/query-endtime-previousday.md)
 * [EndTime: Hour Window](examples/query-endtime-hour-window.md)
 * [Response Time Format](examples/query-response-time-format.md)
-* [Cache Range](examples/query-cache-range.md)
+* [Cache Range](examples/query-range-cache.md)
 
 ### Series Tags
 
@@ -155,9 +156,9 @@ POST https://atsd_host:8443/api/v1/series/query
 ### Multiple Queries
 
 * [Multiple Queries](examples/query-multiple.md)
-* [Multiple Queries With Request Id](examples/query-multiple-queries-request-id.md)
+* [Multiple Queries With Request Id](examples/query-multiple-request-id.md)
 * [Multiple Queries for Unknown Entity](examples/query-multiple-unknown-entity.md)
-* [Multiple Queries with Limit](examples/query-multiple-queries-limit.md)
+* [Multiple Queries with Limit](examples/query-multiple-limit.md)
 
 ### Control Fields
 
@@ -177,7 +178,6 @@ POST https://atsd_host:8443/api/v1/series/query
 * [Maximum Value Times](examples/query-aggr-minmax-value.md)
 * [Maximum Value Time (2)](examples/query-aggr-max-value-time.md)
 * [Threshold](examples/query-aggr-threshold.md)
-* [Threshold with Calendar](examples/query-aggr-threshold-calendar.md)
 * [Threshold with Working Minutes](examples/query-aggr-threshold-sla.md)
 * [Interpolation](examples/query-aggr-interpolation.md)
 

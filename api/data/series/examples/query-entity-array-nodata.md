@@ -1,4 +1,4 @@
-# Series Query: Unknown tag returns warning
+# Series Query: Multiple Entities including entities without data
 
 ## Description
 
