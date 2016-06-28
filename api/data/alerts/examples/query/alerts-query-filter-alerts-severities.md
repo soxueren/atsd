@@ -15,15 +15,18 @@ POST https://atsd_host:8443/api/v1/alerts/query
   {
     "metrics": [
       "nmon.cpu_total.busy%",
-      "message"
+      "message",
+      "disk_used_percent",
+      "property"
     ],
     "entity": "nurswgvml007",
     "severities": [
-      "MINOR",
-      "NORMAL"
+      "FATAL",
+      "CRITICAL",
+      "WARN"
     ],
     "startDate": "2016-06-20T04:00:00Z",
-    "endDate": "2016-06-25T05:00:00Z"
+    "endDate": "now"
   }
 ]
 ```
@@ -35,19 +38,21 @@ POST https://atsd_host:8443/api/v1/alerts/query
 [
   {
     "entity": "nurswgvml007",
-    "tags": {},
-    "repeatCount": 0,
-    "textValue": "netstat",
-    "metric": "message",
-    "severity": "NORMAL",
-    "rule": "alert-app",
-    "openDate": "2016-06-24T15:00:30.970Z",
-    "lastEventDate": "2016-06-24T15:00:30.970Z",
+    "tags": {
+      "file_system": "/dev/mapper/vg_nurswgvml007-lv_root",
+      "mount_point": "/"
+    },
+    "repeatCount": 5268,
+    "textValue": "65.967",
+    "metric": "disk_used_percent",
+    "severity": "CRITICAL",
+    "rule": "disk_low_alert",
+    "openDate": "2016-06-27T15:59:40.257Z",
+    "lastEventDate": "2016-06-28T13:59:27.870Z",
     "acknowledged": false,
-    "openValue": 0,
-    "value": 0,
-    "message": "netstat",
-    "id": 155
+    "openValue": 65.7791,
+    "value": 65.9666,
+    "id": 7
   }
 ]
 ```

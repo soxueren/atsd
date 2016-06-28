@@ -15,12 +15,14 @@ POST https://atsd_host:8443/api/v1/alerts/query
   {
     "metrics": [
       "nmon.cpu_total.busy%",
-      "message"
+      "message",
+      "property",
+      "disk_used_percent"
     ],
     "entity": "nurswgvml007",
-    "minSeverity": "1",
+    "minSeverity": "CRITICAL",
     "startDate": "2016-06-23T04:00:00Z",
-    "endDate": "2016-06-28T05:00:00Z"
+    "endDate": "now"
   }
 ]
 ```
@@ -32,18 +34,21 @@ POST https://atsd_host:8443/api/v1/alerts/query
 [
   {
     "entity": "nurswgvml007",
-    "tags": {},
-    "repeatCount": 1,
-    "textValue": "22.6",
-    "metric": "nmon.cpu_total.busy%",
-    "severity": "WARNING",
-    "rule": "nmon_cpu_alert",
-    "openDate": "2016-06-27T11:24:36.193Z",
-    "lastEventDate": "2016-06-27T11:25:36.233Z",
+    "tags": {
+      "file_system": "/dev/mapper/vg_nurswgvml007-lv_root",
+      "mount_point": "/"
+    },
+    "repeatCount": 5236,
+    "textValue": "66.133",
+    "metric": "disk_used_percent",
+    "severity": "CRITICAL",
+    "rule": "disk_low_alert",
+    "openDate": "2016-06-27T15:59:40.257Z",
+    "lastEventDate": "2016-06-28T13:51:27.196Z",
     "acknowledged": false,
-    "openValue": 21.2,
-    "value": 22.6,
-    "id": 408
+    "openValue": 65.7791,
+    "value": 66.1326,
+    "id": 7
   }
 ]
 ```
