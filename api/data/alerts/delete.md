@@ -80,3 +80,7 @@ curl https://atsd_host:8443/api/v1/alerts/delete \
 None.
 
 ## Additional Examples
+* [Multiple Id Delete](examples/delete/alerts-delete-multiple-id.md)
+
+
+
