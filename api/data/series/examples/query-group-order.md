@@ -1,30 +1,80 @@
-# Aggregate Group Order Example
+# Series Query: Group/Aggregate Sequence
+
+## Description
+
+Group merges multiple series into one. If group is applied after aggregation, it merges aggregate values.
+
+The sequence can be controlled with `order` parameter.
+
+Default order is to aggregate first, group second.
 
 ## Request
 
+### URI
+
+```elm
+POST https://atsd_host:8443/api/v1/series/query
+```
+
+### Payload
+
 ```json
-[{
-  "startDate": "2015-08-01T00:00:00.000Z",
-  "endDate": "2015-08-01T02:00:00.000Z",
-  "timeFormat": "iso",
-  "entity": "nurswgvml006",
-  "metric": "df.disk_used",
-  "aggregate": {
+[
+  {
+    "startDate": "2016-06-26T03:40:00Z",
+    "endDate":   "2016-06-26T03:41:00Z",
+    "entity": "nurswgvml007",
+    "metric": "disk_used",
+    "aggregate": {
+      "type": "DELTA",
+      "period": { "count": 1, "unit": "MINUTE" },
+      "order": 0
+    },
+    "group": {
+      "type": "SUM",
+      "period": { "count": 1, "unit": "MINUTE" },
+      "order": 1
+    }
+  }
+]
+```
+
+## Response
+
+### Payload
+
+```json
+[
+  {
+    "entity": "nurswgvml007",
+    "metric": "disk_used",
+    "tags": {},
+    "type": "HISTORY",
+    "aggregate": {
       "type": "DELTA",
       "period": {
-          "count": 1,
-          "unit": "HOUR"
+        "count": 1,
+        "unit": "MINUTE",
+        "align": "CALENDAR"
       },
-      "counter": false,
-      "order": 0
-  },
-  "group": {
+      "counter": false
+    },
+    "group": {
       "type": "SUM",
       "period": {
-          "count": 1,
-          "unit": "HOUR"
+        "count": 1,
+        "unit": "MINUTE",
+        "align": "CALENDAR"
       },
       "order": 1
+    },
+    "data": [
+      {
+        "d": "2016-06-26T03:40:00.000Z",
+        "v": 7248
+      }
+    ]
   }
-}]
+]
 ```
+

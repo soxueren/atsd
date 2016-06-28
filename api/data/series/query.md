@@ -78,8 +78,6 @@ The default processor sequence is follows:
 
 The sequence can be modified by specifying an `order` field in each processor, in which case processors steps are executed in the ascending order as specified in `order` field. 
 
-The [following example](examples/query-group-order.md) outlines how to aggregate series first, and group it second.
-
 ## Example
 
 ### Request
@@ -138,6 +136,7 @@ POST https://atsd_host:8443/api/v1/series/query
 ### Series Tags
 
 * [Defined Tags](examples/query-tags-defined.md)
+* [Multiple Tag Values](examples/query-tags-multiple.md)
 * [Wildcard: All Values](examples/query-tags-wildcard.md)
 * [Wildcard: Expression](examples/query-tags-wildcard-expression.md)
 * [Unknown Tag](examples/query-tags-unknown.md)
@@ -179,28 +178,31 @@ POST https://atsd_host:8443/api/v1/series/query
 * [Maximum Value Time (2)](examples/query-aggr-max-value-time.md)
 * [Threshold](examples/query-aggr-threshold.md)
 * [Threshold with Calendar](examples/query-aggr-threshold-calendar.md)
+* [Threshold with Working Minutes](examples/query-aggr-threshold-sla.md)
 * [Interpolation](examples/query-aggr-interpolation.md)
 
-<!--
 ### Period
 
-* [Period EndTime Align](examples/query-period-endtime.md)
+* [Multiple Periods](examples/query-period-multiple.md)
+* [Period Alignment: EndTime](examples/query-period-endtime.md)
 * [Period Misalignment](examples/query-period-misalignment.md)
-* [Period/StartDate Mismatch](examples/query-aggr-period-extended.md)
 
-### Group
+### Rate
 
-* [Group Order](examples/query-group-order.md)
+* [Rate of Change](examples/query-rate.md)
 
 ### Forecast
 
 * [Named Forecast](examples/query-named-forecast.md)
 
+### Group
+
+* [Group Order](examples/query-group-order.md)
+
 ### Versioning
 
 * [Versioning](examples/query-versioning.md)
 * [Versioning: Status Filter](examples/query-versioning-filter-status.md)
-* [Versioning: Value Filter](examples/query-versioning-filter-value.md)
+* [Versioning: Source Filter](examples/query-versioning-filter-source.md)
 * [Versioning: Date Filter](examples/query-versioning-filter-date.md)
 * [Versioning: Composite Filter](examples/query-versioning-filter-composite.md)
--->

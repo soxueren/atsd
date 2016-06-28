@@ -32,7 +32,7 @@ The data returned by SQL statements can be exported in the following formats:
 * [Joins](#joins)
 * [Authorization](#authorization)
 * [Performance](#query-performance)
-* [Unsupported/non-standard Features](#unsupported-standard-sql-features)
+* [Unsupported Features](#unsupported-sql-features)
 * [Examples](#examples)
 
 ## Syntax
@@ -170,7 +170,7 @@ Tag values are referenced in `SELECT` expression by specifying `tags.*`, `tags`,
 SELECT datetime, entity, value, tags.*, tags, tags.mount_point, tags.file_system
   FROM df.disk_used 
 WHERE entity = 'nurswgvml010' AND datetime > now - 1*MINUTE
-  ORDER BY time
+  ORDER BY datetime
 ```
 
 ```ls
@@ -500,7 +500,7 @@ SELECT entity, datetime, value
   FROM mpstat.cpu_busy
 WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30.000Z"
   WITH ROW_NUMBER(entity ORDER BY time) <= 1
-  ORDER BY entity, time
+  ORDER BY entity, datetime
 ```
 
 ```ls
@@ -841,17 +841,18 @@ WHERE datetime > now - 5 * minute
 
 Changing the case of tag value condition `tags.file_system = '/DEV/mapper/vg_nurswgvml007-lv_root'` would cause an error **TAG_VALUE not found**.
 
-## Unsupported Standard SQL Features
+## Unsupported SQL Features
 
 While the [differences](https://github.com/axibase/atsd-jdbc#database-capabilities) between SQL dialect implemented in ATSD and standard SQL are numerous, the following exceptions to widely used constructs are worth mentioning:
 
 * Subqueries are not supported.
-* `WITH` operator is supported only in `WITH ROW_NUMBER` clause.
+* Self-joins are not supported.
 * `UNION`, `EXCEPT` and `INTERSECT` operators are not supported.
+* `WITH` operator is supported only in `WITH ROW_NUMBER` clause.
 * Ordering with column numbers, for example `ORDER BY 2, 1` is not supported.
 * `DISTINCT` operator is not supported.
 
-In particular cases it's possible to emulate DISTINCT operator with GROUP BY clause, for example, the following query would produce the same results as DISTINCT:
+In particular cases it's possible to emulate `DISTINCT` operator with `GROUP BY` clause as illustrated below:
 
 ```sql
 SELECT entity
@@ -866,24 +867,7 @@ SELECT DISTINCT entity
 WHERE time > now - 1 * MINUTE
 ```
 
-## Non-standard Features
 
-* Numeric operations on NULL produce NaN instead of NULL in standard SQL
-
-```sql
-SELECT datetime, entity, t1.value, t2.value, t1.value-t2.value
-FROM "mpstat.cpu_busy" t1 
-  OUTER JOIN "mmeinfo.memfree" t2
-WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
-  AND entity = 'nurswgvml006'
-```
-
-```ls
-| datetime                 | entity       | t1.value | t2.value | t1.value-t2.value | 
-|--------------------------|--------------|----------|----------|-------------------| 
-| 2016-06-16T13:00:01.000Z | nurswgvml006 | 37.1     | null     | NaN               | 
-| 2016-06-16T13:00:12.000Z | nurswgvml006 | null     | 67932.0  | NaN               | 
-```
 
 ## Examples
 

@@ -125,4 +125,4 @@ time,entity,metric,value
 
 ## Additional Examples
 
-[CSV file Query](https://github.com/axibase/atsd-docs/blob/master/api/data/examples/series-url-query-csv-format.md)
+[CSV Format Query](examples/url-query-csv-format.md)

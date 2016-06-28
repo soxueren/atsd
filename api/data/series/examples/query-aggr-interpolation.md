@@ -1,4 +1,4 @@
-# Series Query: Regularize
+# Series Query: Interpolate
 
 ## Description
 

@@ -5,7 +5,7 @@
 Query detailed data for the specified `endDate` and `interval`. In this case `startDate` is computed as `endDate` minus `interval`.
 
 ```ls
-2016-06-26T13:15:00Z - 15 MINUTE = 2016-06-26T13:00:00Z = startDate
+2016-06-26T13:05:00Z - 5 MINUTE = 2016-06-26T13:00:00Z = startDate
 ```
 
 Similarly, the time range can be specified as `startDate` and `interval` in which case `endDate` will be computed as `startDate` plus `interval`.
