@@ -16,7 +16,7 @@ None.
 
 ### Fields
 
-An array of query objects containing the following filtering fields:
+An array of query objects containing the following fields:
 
 #### Alert Filter Fields
 
@@ -25,7 +25,8 @@ An array of query objects containing the following filtering fields:
 | rules       | array | Array of rules which produced the alerts.        |
 | metrics     | array | Array of metric names for which the alerts were created. |
 | severities  | array | Array of [severity names](/api/data/severity.md)   |
-| minSeverity |  string   | Minimal [name](/api/data/severity.md) severity filter.  |
+| minSeverity |  string   | Minimal severity [name](/api/data/severity.md) filter.  |
+| acknowledged |  boolean   | Acknowledgement status. If set, filters alerts for the specified status. |
 
 > Note that `tags` filter is not supported.
 
@@ -95,7 +96,7 @@ curl https://atsd_host:8443/api/v1/alerts/query \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
-  --data '[{"metrics":["loadavg.5m","message"],"entity":"nurswgvml007","minSeverity":4}]'
+  --data '[{"metrics":["loadavg.5m","message"],"entity":"nurswgvml007","minSeverity":"CRITICAL"}]'
 ```
 
 ### Response

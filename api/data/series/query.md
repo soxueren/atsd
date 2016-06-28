@@ -190,6 +190,7 @@ POST https://atsd_host:8443/api/v1/series/query
 ### Rate
 
 * [Rate of Change](examples/query-rate.md)
+* [Rate of Change with Aggregation](examples/query-rate-aggr.md)
 
 ### Forecast
 
