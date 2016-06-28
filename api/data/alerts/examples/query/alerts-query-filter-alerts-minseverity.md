@@ -22,7 +22,8 @@ POST https://atsd_host:8443/api/v1/alerts/query
     "startDate": "2016-06-23T04:00:00Z",
     "endDate": "2016-06-28T05:00:00Z"
   }
-]```
+]
+```
 
 ## Response
 

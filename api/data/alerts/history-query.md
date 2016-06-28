@@ -137,3 +137,8 @@ curl  https://atsd_host:8443/api/v1/alerts/history \
 ```
 
 ## Additional Examples
+* [History Query with Specified Rule](examples/history-query/alerts-history-query-with-specified-rule.md)
+* [History Query with Specified Metric](examples/history-query/alerts-history-query-with-specified-metric.md)
+
+
+
