@@ -374,26 +374,112 @@ In grouping queries, `time` column returns the same value as `PERIOD()` and `dat
 
 ### Period Alignment
 
-By default, periods are aligned to calendar grid according based on period's time unit.
+By default, periods are aligned to calendar grid according to time unit specified in the period.
 
-For example, `period(1 HOUR)` starts at 0 minutes of each hour in the timespan.
+For example, `period(1 HOUR)` starts at 0 minutes of each hour within the timespan.
 
 For DAY, WEEK, MONTH, QUARTER, and YEAR units the start of the day is determined according to server timezone.
 
 The default `CALENDAR` alignment can be changed to `START_TIME`, `END_TIME`, or `FIRST_VALUE_TIME`.
 
-In case of `START_TIME` and `FIRST_VALUE_TIME`, start of the first period is determined according to the start of the selection interval or time of the first value, respectively.
+| **Alignment** | **Description**|
+|:---|:---|
+| CALENDAR | Period start is rounded down to the nearest time unit. |
+| START_TIME | First period begins at start time specified in the query. |
+| FIRST_VALUE_TIME | First period begins at the time of first retrieved value. |
+| END_TIME | Last period ends on end time specified in the query. |
 
-In case of `END_TIME`, end of the last period is determined according to the end of the selection interval.
-
-For `START_TIME` and `END_TIME` options, `WHERE` clause must contain start and end time of the selection interval, respectively.
+* For `START_TIME` and `END_TIME` options, `WHERE` clause must contain start and end time of the selection interval, respectively.
 
 ```sql
-SELECT entity, date_format(PERIOD(5 MINUTE)), COUNT(value) 
+SELECT entity, date_time, COUNT(value) 
   FROM "mpstat.cpu_busy"
 WHERE datetime >= now-1*HOUR AND datetime < now
   AND entity = 'nurswgvml006'
 GROUP BY entity, PERIOD(5 MINUTE, NONE, END_TIME)
+```
+
+#### `CALENDAR` Alignment
+
+Calendar alignment rounds the time to next unit and increments period until period start is equal or greater than startDate. 
+
+The next time unit for `DAY` is `MONTH`.
+
+The next time unit for `WEEK` is the first Monday of the given `MONTH`.
+
+For instance, if period unit is `MINUTE`, the time is rounded to start of the hour (next unit) containing `startDate`.
+
+Example: `45 MINUTE` with `startDate` of `2016-06-20T15:05:00Z`.
+Time is rounded to `15:00` and then incremented by 45 minutes until period start is >= `2016-06-20T15:05:00Z`.
+Such period is `[2016-06-20T15:45:00Z - 2016-06-20T16:30:00Z)`.
+
+| **Period** | **Start Date** | **End Date** | **1st Period** | **2nd Period** | **Last Period** |
+|:---|:---|:---|:---|:---|:---|
+| `45 MINUTE` | `2016-06-20T15:05:00Z` | `2016-06-24T00:00:00Z` | `2016-06-20T15:45:00Z` | `2016-06-20T16:30:00Z` | `2016-06-23T23:15:00Z` |
+| `45 MINUTE` | `2016-06-20T15:00:00Z` | `2016-06-24T00:00:00Z` | `2016-06-20T15:00:00Z` | `2016-06-20T15:45:00Z` | `2016-06-23T23:15:00Z` |
+| `1 HOUR` | `2016-06-20T16:00:00Z` | `2016-06-24T00:00:00Z` | `2016-06-20T16:00:00Z` | `2016-06-20T17:00:00Z` | `2016-06-23T23:00:00Z` |
+| `1 HOUR` | `2016-06-20T16:05:00Z` | `2016-06-23T23:55:00Z` | `2016-06-20T17:00:00Z` | `2016-06-20T18:00:00Z` | `2016-06-23T23:00:00Z` |
+| `1 HOUR` | `2016-06-20T16:30:00Z` | `2016-06-24T00:00:00Z` | `2016-06-20T17:00:00Z` | `2016-06-20T18:00:00Z` | `2016-06-23T23:00:00Z` |
+| `7 HOUR` | `2016-06-20T16:00:00Z` | `2016-06-24T00:00:00Z` | `2016-06-20T21:00:00Z` | `2016-06-21T04:00:00Z` | `2016-06-23T19:00:00Z` |
+| `10 HOUR` | `2016-06-20T16:00:00Z` | `2016-06-24T00:00:00Z` | `2016-06-20T20:00:00Z` | `2016-06-21T06:00:00Z` | `2016-06-23T18:00:00Z` |
+| `1 DAY` | `2016-06-01T16:00:00Z` | `2016-06-24T00:00:00Z` | `2016-06-02T00:00:00Z` | `2016-06-03T00:00:00Z` | `2016-06-23T00:00:00Z` |
+| `2 DAY` | `2016-06-01T16:00:00Z` | `2016-06-24T00:00:00Z` | `2016-06-03T00:00:00Z` | `2016-06-05T00:00:00Z` | `2016-06-23T00:00:00Z` |
+| `5 DAY` | `2016-06-01T16:00:00Z` | `2016-06-24T00:00:00Z` | `2016-06-06T00:00:00Z` | `2016-06-11T00:00:00Z` | `2016-06-21T00:00:00Z` |
+| `1 WEEK` | `2016-06-01T16:00:00Z` | `2016-06-24T00:00:00Z` | `2016-06-06T00:00:00Z` | `2016-06-13T00:00:00Z` | `2016-06-20T00:00:00Z` |
+| `1 WEEK` | `2016-05-01T16:00:00Z` | `2016-05-24T00:00:00Z` | `2016-05-02T00:00:00Z` | `2016-05-09T00:00:00Z` | `2016-05-23T00:00:00Z` |
+| `1 WEEK` | `2016-06-01T00:00:00Z` | `2016-06-02T00:00:00Z` | `-` 1st Monday is 2016-06-06. | `-` | `-` |
+
+#### `END_TIME` Alignment
+
+* If end time in the query is inclusive, 1 millisecond is added to period end time since period end time must be exclusive.
+
+```sql
+SELECT entity, datetime, COUNT(value) FROM "mpstat.cpu_busy"
+WHERE datetime >= '2016-06-18T10:02:00.000Z' AND datetime < '2016-06-18T10:32:00.000Z'
+  AND entity = 'nurswgvml007'
+GROUP BY entity, PERIOD(10 MINUTE, NONE, END_TIME)
+```
+
+```ls
+| entity       | datetime                 | COUNT(value) | 
+|--------------|--------------------------|--------------| 
+| nurswgvml007 | 2016-06-18T10:02:00.000Z | 38.0         | 
+| nurswgvml007 | 2016-06-18T10:12:00.000Z | 37.0         | 
+| nurswgvml007 | 2016-06-18T10:22:00.000Z | 38.0         | 
+```
+
+```sql
+SELECT entity, datetime, COUNT(value) FROM "mpstat.cpu_busy"
+WHERE datetime >= '2016-06-18T10:02:00.000Z' AND datetime <= '2016-06-18T10:32:00.000Z'
+  AND entity = 'nurswgvml007'
+GROUP BY entity, PERIOD(10 MINUTE, NONE, END_TIME)
+```
+
+```ls
+| entity       | datetime                 | COUNT(value) | 
+|--------------|--------------------------|--------------| 
+| nurswgvml007 | 2016-06-18T10:02:00.001Z | 38.0         | 
+| nurswgvml007 | 2016-06-18T10:12:00.001Z | 37.0         | 
+| nurswgvml007 | 2016-06-18T10:22:00.001Z | 38.0         | 
+```
+
+#### `START_TIME` Alignment
+
+1 millisecond is added to period start if start time in the query is exclusive.
+
+```sql
+SELECT entity, datetime, COUNT(value) FROM "mpstat.cpu_busy"
+WHERE datetime > '2016-06-18T10:02:00.000Z' AND datetime < '2016-06-18T10:32:00.000Z'
+  AND entity = 'nurswgvml007'
+GROUP BY entity, PERIOD(10 MINUTE, NONE, START_TIME)
+```
+
+```ls
+| entity       | datetime                 | COUNT(value) | 
+|--------------|--------------------------|--------------| 
+| nurswgvml007 | 2016-06-18T10:02:00.001Z | 38.0         | 
+| nurswgvml007 | 2016-06-18T10:12:00.001Z | 37.0         | 
+| nurswgvml007 | 2016-06-18T10:22:00.001Z | 38.0         | 
 ```
 
 ## Interpolation
