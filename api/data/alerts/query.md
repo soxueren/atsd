@@ -153,6 +153,7 @@ curl https://atsd_host:8443/api/v1/alerts/query \
 * [Rules: All Value](examples/query/alerts-query-rules-all-value.md)
 
 ### Metric Filter
+* [Alerts for Defined Metric](examples/query/alerts-query-defined-metric.md)
 * [Multiple Metrics for Specified Entity](examples/query/alerts-query-multiple-metrics-specified-entity.md)
 * [Metrics: All Value](examples/query/alerts-query-metrics-all-value.md)
 * [Alerts for Message Commands](examples/query/alerts-query-message-commands.md)
