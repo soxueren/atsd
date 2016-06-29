@@ -16,8 +16,8 @@ POST https://atsd_host:8443/api/v1/alerts/history/query
     "metric": "disk_used_percent",
     "endDate": "2016-06-25T18:00:00Z",
     "interval": {
-      "count": 300,
-      "unit": "HOUR"
+      "count": 1,
+      "unit": "DAY"
     },
     "limit": 2
   }

@@ -1,4 +1,4 @@
-# Multiple Metrics for Specified Entity
+# Alerts for Last Hour
 
 ## Description
 
@@ -13,12 +13,8 @@ POST https://atsd_host:8443/api/v1/alerts/query
 ```json
 [
   {
-    "metrics": [
-      "disk_used_percent",
-      "nmon.cpu_total.busy%"
-    ],
     "entity": "nurswgvml007",
-    "startDate": "2016-06-27T04:00:00Z",
+    "startDate": "now - 1 * HOUR",
     "endDate": "now"
   }
 ]
@@ -30,37 +26,37 @@ POST https://atsd_host:8443/api/v1/alerts/query
 ```json
 [
   {
-    "entity": "nurswgvml007",
     "tags": {
       "file_system": "/dev/mapper/vg_nurswgvml007-lv_root",
       "mount_point": "/"
     },
-    "repeatCount": 271,
-    "textValue": "65.844",
+    "entity": "nurswgvml007",
+    "repeatCount": 127,
+    "textValue": "65.926",
     "metric": "disk_used_percent",
     "severity": "CRITICAL",
     "rule": "disk_low_alert",
-    "openDate": "2016-06-29T07:19:01.131Z",
-    "lastEventDate": "2016-06-29T08:26:51.295Z",
+    "openDate": "2016-06-29T09:35:40.018Z",
+    "lastEventDate": "2016-06-29T10:07:26.637Z",
     "acknowledged": false,
-    "openValue": 65.8802,
-    "value": 65.8436,
+    "openValue": 65.7822,
+    "value": 65.9261,
     "id": 3
   },
   {
-    "entity": "nurswgvml007",
     "tags": {},
-    "repeatCount": 1,
-    "textValue": "9.8",
+    "entity": "nurswgvml007",
+    "repeatCount": 2,
+    "textValue": "5.8",
     "metric": "nmon.cpu_total.busy%",
     "severity": "WARNING",
     "rule": "nmon_cpu_alert",
-    "openDate": "2016-06-29T08:25:15.384Z",
-    "lastEventDate": "2016-06-29T08:26:15.397Z",
+    "openDate": "2016-06-29T10:05:16.792Z",
+    "lastEventDate": "2016-06-29T10:07:16.812Z",
     "acknowledged": false,
-    "openValue": 35.7,
-    "value": 9.8,
-    "id": 81
+    "openValue": 15,
+    "value": 5.8,
+    "id": 41
   }
 ]
 ```

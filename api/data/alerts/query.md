@@ -138,11 +138,37 @@ curl https://atsd_host:8443/api/v1/alerts/query \
 ```
 
 ## Additional Examples
-* [Multiple Entities for Specified Rule](examples/query/alerts-query-multiple-entity-specified-rule.md)
+
+### Entity Filter
+* [Multiple Entities](examples/query/alerts-query-multiple-entity.md)
+* [Entity Wildcard](examples/query/alerts-query-entity-wildcard.md)
+* [Entity Expression: Name]
+* [Entity Expression: Entity Tags]
+* [Entity Expression: Entity Properties]
+* [Entity Group](examples/query/alerts-query-entity-group.md)
+
+### Rule Filter
+* [Alerts for Defined Rule](examples/query/alerts-query-defined-rule.md)
+* [Multiple Ruless for Specified Entity](examples/query/alerts-query-multiple-rules-specified-entity.md)
+* [Rules: All Value](examples/query/alerts-query-rules-all-value.md)
+
+### Metric Filter
 * [Multiple Metrics for Specified Entity](examples/query/alerts-query-multiple-metrics-specified-entity.md)
-* [Multiple Rules for Specified Metric](examples/query/alerts-query-multiple-rules-specified-metric.md)
+* [Metrics: All Value](examples/query/alerts-query-metrics-all-value.md)
+* [Alerts for Message Commands](examples/query/alerts-query-message-commands.md)
+* [Alerts for Property Commands](examples/query/alerts-query-property-commands.md)
+
+### Time Range
+* [Alerts for Last Hour](examples/query/alerts-query-last-hour.md)
+
+### Alerts Severity
 * [Filter Alerts for Severities](examples/query/alerts-query-filter-alerts-severities.md)
 * [Filter Alerts for minSeverity](examples/query/alerts-query-filter-alerts-minseverity.md)
+
+### Filter Status
+* [Filter Alerts for Unacknowledged Status](examples/query/alerts-query-filter-unacknowledged-status.md)
+* [Filter Alerts for Acknowledged Status](examples/query/alerts-query-filter-acknowledged-status.md)
+
 
 
 
