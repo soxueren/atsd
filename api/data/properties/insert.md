@@ -7,6 +7,11 @@ Insert an array of properties.
 * Entity name, property type, key names, and tag names cannot contain non-printable characters. They are case-insensitive and are converted to lower case when stored. 
 * Key values and tag values are case-sensitive and are stored as submitted.
 
+Date limits:
+
+* Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 millisecond from Epoch time.
+* Maximum date that can be stored by the database is **2106-02-07T07:28:14.999Z**, or 4294970894999 milliseconds from Epoch time.
+
 ## Request
 
 | **Method** | **Path** | **Content-Type Header**|

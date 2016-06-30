@@ -40,13 +40,8 @@ None.
 |------------------------------------------|---------------------------------------------------------------------------------------------|
 | name                                     | Entity name (unique)                                                                        |
 | enabled                                  | Enabled status. Incoming data is discarded for disabled entities                            |
-| lastInsertTime                           | Last time value was received by ATSD for this entity. Time specified in epoch milliseconds. |
 |lastInsertDate|Last time value was received by ATSD for this metric. Time specified in ISO format.|
 |tags as requested by tags parameter|User-defined tags|
-
-<aside class="notice">
-If `timeFormat=iso` is set in the request, then `lastInsertDate` will be returned. If `timeFormat` is set to the default value (milliseconds), then `lastInsertTime` will be returned.
-</aside>
 
 ### Errors
 

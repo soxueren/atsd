@@ -7,7 +7,13 @@ Insert a timestamped array of numbers for a given series identified by metric, e
 * Entity name, metric name, and tag names can contain only printable characters. Names are case-insensitive and are converted to lower case when stored.
 * Tag values are case-sensitive and are stored as submitted.
 * New entities, metrics, and tag names are created automatically.
-* New metrics are initialized with `float` data type by default. To store number in another datatype, create or update the metric using the web interface or Meta API [metric update method](/api/meta/metric/update.md).
+* New metrics are initialized with `float` data type by default. To store number in another data type, create or update the metric using the web interface or Meta API [metric update method](/api/meta/metric/update.md).
+
+Date limits:
+
+* Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 millisecond from Epoch time.
+* Maximum date that can be stored by the database is **2106-02-07T07:28:14.999Z**, or 4294970894999 milliseconds from Epoch time.
+* If millisecond date is negative, it is replaced with current server time.
 
 ## Request
 
@@ -31,7 +37,7 @@ The request contains an array of series objects each containing an array of time
 | type | string | Type of inserted data: `HISTORY`, `FORECAST`. Default value: `HISTORY` |
 | version | object | Object containing version source and status fields for versioned metrics.<br>`{"source":string, "status":string}` |
 |forecastName| string | Forecast name. <br>Applicable when `type` is set to `FORECAST`. <br>`forecastName` can be used to store a custom forecast identified by name. <br>If `forecastName` is omitted, the values overwrite the default forecast.  |
-| data | array | [**Required**] Array of `{"t":number,"v":number}` objects, <br>where `t` is time in UNIX milliseconds and `v` is the metric's numeric value at time `t`. <br>Time can be also specified in ISO format using `d` field, for example:<br>`{"d":"2016-06-01T12:08:42.518Z", "v":50.8}`<br>To insert `NaN` (not a number), set `v` to `null`, for example: `{"t":1462427358127, "v":null}`<br>If `type` is set to `FORECAST`, the object `{t,v}` can include an additional `s` field containing standard deviation of the forecast value `v`, for example  `{"t":1462427358127, "v":80.4, "s":12.3409}` |
+| data | array | [**Required**] Array of `{"t":number,"v":number}` objects, <br>where `t` is time in UNIX milliseconds and `v` is the metric's numeric value at time `t`. <br>Time can be also specified in ISO format using `d` field, for example:<br>`{"d":"2016-06-01T12:08:42.518Z", "v":50.8}`<br>To insert `NaN` (not a number), set `v` to `null`, for example: `{"t":1462427358127, "v":null}`<br>If `type` is set to `FORECAST`, the object `{t,v}` can include an additional `s` field containing standard deviation of the forecast value `v`, for example  `{"t":1462427358127, "v":80.4, "s":12.3409}`.<br>If time is negative milliseconds, the server replaces it with current server time. |
 
 #### Number Representation
 

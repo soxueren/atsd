@@ -4,9 +4,11 @@
 
 Query all detailed data for the series using ISO date format.
 
-The database accepts data timestamped at or after Epoch time (1970-01-01T00:00:00.000 UTC).
+The database accepts data timestamped at or after Epoch time which is **1970-01-01T00:00:00.000 UTC**.
 
-ISO parser is currently limited to 4 digits in the year part, hence maximum date is limited to year 9999.
+Maximum timestamp that can be stored by the database is **2106-02-07T07:28:14.999Z**.
+
+Since ISO parser is currently limited to **4** digits in the year part, maximum year specified in ISO format is **9999**.
 
 ## Request
 

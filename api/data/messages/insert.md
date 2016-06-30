@@ -9,6 +9,11 @@ Insert messages.
 * Field values are trimmed of leading and trailing non-printable characters including tab, line feed, and space.  
 * Primary key of the message is composed of type, source, entity, and time. Messages that have the same primary key but different values in other fields such as message text or tags are deduplicated by discarding all duplicates except one.
 
+Date limits:
+
+* Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 millisecond from Epoch time.
+* Maximum date that can be stored by the database is **2106-02-07T07:28:14.999Z**, or 4294970894999 milliseconds from Epoch time.
+
 ## Request
 
 | **Method** | **Path** | **Content-Type Header**|

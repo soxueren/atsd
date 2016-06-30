@@ -136,12 +136,12 @@ curl https://atsd_host:8443/api/v1/alerts/query \
 ### Rule Filter
 * [Alerts for Specified Rule](examples/query/alerts-query-defined-rule.md)
 * [Multiple Rules for Specified Entity](examples/query/alerts-query-multiple-rules-specified-entity.md)
-* [Rules: All Value](examples/query/alerts-query-rules-all-value.md)
+* [All Rules](examples/query/alerts-query-rules-all-value.md)
 
 ### Metric Filter
 * [Alerts for Specified Metric](examples/query/alerts-query-defined-metric.md)
 * [Multiple Metrics for Specified Entity](examples/query/alerts-query-multiple-metrics-specified-entity.md)
-* [Metrics: All Values](examples/query/alerts-query-metrics-all-value.md)
+* [All Metrics](examples/query/alerts-query-metrics-all-value.md)
 * [Alerts for `message` Command](examples/query/alerts-query-message-commands.md)
 * [Alerts for `property` Command](examples/query/alerts-query-property-commands.md)
 
@@ -153,8 +153,8 @@ curl https://atsd_host:8443/api/v1/alerts/query \
 * [Alerts for Minimum Severity](examples/query/alerts-query-filter-alerts-minseverity.md)
 
 ### Filter Status
-* [Alerts for Unacknowledged Status](examples/query/alerts-query-filter-unacknowledged-status.md)
-* [Alerts for Acknowledged Status](examples/query/alerts-query-filter-acknowledged-status.md)
+* [Unacknowledged Alerts](examples/query/alerts-query-filter-unacknowledged-status.md)
+* [Acknowledged Alerts](examples/query/alerts-query-filter-acknowledged-status.md)
 
 
 
