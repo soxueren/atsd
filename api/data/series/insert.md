@@ -118,7 +118,7 @@ curl https://atsd_host:8443/api/v1/series/insert \
 * [Forecast](examples/insert-forecast.md)
 * [Named Forecast](examples/insert-named-forecast.md)
 * [Forecast Deviation](examples/insert-forecast-deviation.md)
-* [Versioned Metric](/examples/insert-versioned-metric.md)
+* [Versioned Metric](examples/insert-versioned-metric.md)
 
 
 
