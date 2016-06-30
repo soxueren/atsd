@@ -2,6 +2,8 @@
 
 ## Description
 
+Select alerts that match one of the specified severities.
+
 ## Request
 
 ### URI

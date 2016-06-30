@@ -2,6 +2,8 @@
 
 ## Description
 
+Select alerts for entities matching name pattern.
+
 ## Request
 
 ### URI

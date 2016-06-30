@@ -2,6 +2,8 @@
 
 ## Description
 
+Select alerts for multiple entities and a given rule.
+
 ## Request
 
 ### URI

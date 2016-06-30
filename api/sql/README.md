@@ -923,6 +923,10 @@ WHERE datetime > now - 5 * minute
 
 Changing the case of tag value condition `tags.file_system = '/DEV/mapper/vg_nurswgvml007-lv_root'` would cause an error **TAG_VALUE not found**.
 
+## NULL
+
+Arithmetic operations with `NULL` produce `NULL`.
+
 ## Unsupported SQL Features
 
 While the [differences](https://github.com/axibase/atsd-jdbc#database-capabilities) between SQL dialect implemented in ATSD and standard SQL are numerous, the following exceptions to widely used constructs are worth mentioning:

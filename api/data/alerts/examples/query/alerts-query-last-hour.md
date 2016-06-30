@@ -2,6 +2,8 @@
 
 ## Description
 
+Select all alerts that were open during the last hour.
+
 ## Request
 
 ### URI

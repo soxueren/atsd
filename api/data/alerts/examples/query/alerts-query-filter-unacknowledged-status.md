@@ -2,6 +2,8 @@
 
 ## Description
 
+Select unacknowledged alerts. 
+
 ## Request
 
 ### URI

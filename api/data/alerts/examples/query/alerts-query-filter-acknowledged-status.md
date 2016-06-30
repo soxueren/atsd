@@ -2,6 +2,8 @@
 
 ## Description
 
+Select acknowledged alerts for all entities.
+
 ## Request
 
 ### URI

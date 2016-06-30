@@ -2,6 +2,8 @@
 
 ## Description
 
+Select alerts with severity equal or greater then specified (CRITICAL).
+
 ## Request
 
 ### URI

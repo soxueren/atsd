@@ -1,6 +1,8 @@
-# Rules: All Value
+# Rules: Alerts for Entity
 
 ## Description
+
+Select alerts for the specified entity.
 
 ## Request
 

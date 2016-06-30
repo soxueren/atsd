@@ -2,6 +2,8 @@
 
 ## Description
 
+Select alerts for multiple metrics for a given entity.
+
 ## Request
 
 ### URI

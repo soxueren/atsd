@@ -2,6 +2,8 @@
 
 ## Description
 
+Select alerts for the specified rule.
+
 ## Request
 
 ### URI

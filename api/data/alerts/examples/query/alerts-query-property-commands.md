@@ -2,6 +2,8 @@
 
 ## Description
 
+Select alerts that were generated for `property` commands.
+
 ## Request
 
 ### URI

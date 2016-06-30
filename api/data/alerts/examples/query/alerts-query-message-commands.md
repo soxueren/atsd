@@ -2,6 +2,8 @@
 
 ## Description
 
+Select alerts that were generated for `message` commands.
+
 ## Request
 
 ### URI

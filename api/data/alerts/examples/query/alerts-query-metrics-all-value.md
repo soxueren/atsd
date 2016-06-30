@@ -1,6 +1,8 @@
-# Metrics: All Value
+# Metrics: Alerts for Entity
 
 ## Description
+
+Select alerts for all metrics for a given entity.
 
 ## Request
 
