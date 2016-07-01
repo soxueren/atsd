@@ -1,4 +1,4 @@
-# Rules: Alerts for Entity
+# Rules: All Value
 
 ## Description
 

@@ -16,7 +16,7 @@ None.
 
 ### Fields
 
-An array of query objects containing the following fields:
+An array of query objects containing the following filtering fields:
 
 #### Alert Filter Fields
 
@@ -80,13 +80,18 @@ POST https://atsd_host:8443/api/v1/alerts/query
 #### Payload
 
 ```json
-[{
-	"metrics": ["loadavg.5m", "message"],
-	"entity": "nurswgvml007",
-	"minSeverity": "MINOR",
+[
+  {
+    "metrics": [
+      "loadavg.5m",
+      "message"
+    ],
+    "entity": "nurswgvml007",
+    "minSeverity": "MINOR",
     "startDate": "2016-05-07T04:00:00Z",
-	"endDate":   "2016-06-25T05:00:00Z"
-}]
+    "endDate": "2016-06-25T05:00:00Z"
+  }
+]
 ```
 
 #### curl
@@ -96,7 +101,7 @@ curl https://atsd_host:8443/api/v1/alerts/query \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request POST \
-  --data '[{"metrics":["loadavg.5m","message"],"entity":"nurswgvml007","minSeverity":"CRITICAL"}]'
+  --data '[{"metrics":["loadavg.5m","message"],"entity":"nurswgvml007","minSeverity":4}]'
 ```
 
 ### Response
@@ -131,30 +136,37 @@ curl https://atsd_host:8443/api/v1/alerts/query \
 ### Entity Filter
 * [Multiple Entities](examples/query/alerts-query-multiple-entity.md)
 * [Entity Wildcard](examples/query/alerts-query-entity-wildcard.md)
+* [Entity Expression: Name](examples/query/alerts-query-entity-expression-name.md)
+* [Entity Expression: Entity Tags](examples/query/alerts-query-entity-expression-entity-tags.md)
+* [Entity Expression: Entity Properties](examples/query/alerts-query-entity-expression-entity-properties.md)
 * [Entity Group](examples/query/alerts-query-entity-group.md)
 
 ### Rule Filter
-* [Alerts for Specified Rule](examples/query/alerts-query-defined-rule.md)
-* [Multiple Rules for Specified Entity](examples/query/alerts-query-multiple-rules-specified-entity.md)
-* [All Rules](examples/query/alerts-query-rules-all-value.md)
+* [Alerts for Defined Rule](examples/query/alerts-query-defined-rule.md)
+* [Multiple Ruless for Specified Entity](examples/query/alerts-query-multiple-rules-specified-entity.md)
+* [Rules: All Value](examples/query/alerts-query-rules-all-value.md)
 
 ### Metric Filter
-* [Alerts for Specified Metric](examples/query/alerts-query-defined-metric.md)
+* [Alerts for Defined Metric](examples/query/alerts-query-defined-metric.md)
 * [Multiple Metrics for Specified Entity](examples/query/alerts-query-multiple-metrics-specified-entity.md)
-* [All Metrics](examples/query/alerts-query-metrics-all-value.md)
-* [Alerts for `message` Command](examples/query/alerts-query-message-commands.md)
-* [Alerts for `property` Command](examples/query/alerts-query-property-commands.md)
+* [Metrics: All Value](examples/query/alerts-query-metrics-all-value.md)
+* [Alerts for Message Commands](examples/query/alerts-query-message-commands.md)
+* [Alerts for Property Commands](examples/query/alerts-query-property-commands.md)
+
+### Multiple Queries
+* [Multiple Queries](examples/query/alerts-query-multiple-queries.md)
+* [Multiple Queries for Unknown Entity](examples/query/alerts-query-multiple-queries-unknown-entity.md)
 
 ### Time Range
 * [Alerts for Last Hour](examples/query/alerts-query-last-hour.md)
 
 ### Alerts Severity
-* [Alerts for Specified Severities](examples/query/alerts-query-filter-alerts-severities.md)
-* [Alerts for Minimum Severity](examples/query/alerts-query-filter-alerts-minseverity.md)
+* [Filter Alerts for Severities](examples/query/alerts-query-filter-alerts-severities.md)
+* [Filter Alerts for minSeverity](examples/query/alerts-query-filter-alerts-minseverity.md)
 
 ### Filter Status
-* [Unacknowledged Alerts](examples/query/alerts-query-filter-unacknowledged-status.md)
-* [Acknowledged Alerts](examples/query/alerts-query-filter-acknowledged-status.md)
+* [Filter Alerts for Unacknowledged Status](examples/query/alerts-query-filter-unacknowledged-status.md)
+* [Filter Alerts for Acknowledged Status](examples/query/alerts-query-filter-acknowledged-status.md)
 
 
 
