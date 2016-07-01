@@ -1,6 +1,11 @@
 # Series Insert Not A Number 
 
+## Description
+
+Insert Not a Number (NaN) as `null` value.  
+
 ## Request
+
 ### URI
 ```elm
 POST https://atsd_host:8443/api/v1/series/insert
@@ -13,7 +18,7 @@ POST https://atsd_host:8443/api/v1/series/insert
         "metric": "mpstat.cpu_busy",
         "data": [
             {
-                "t": 1462427358127,
+                "d": "2016-06-05T05:49:25.127Z",
                 "v": null
             }
         ]

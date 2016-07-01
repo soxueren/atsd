@@ -4,6 +4,13 @@
 
 Computes statistics for the specified time periods. By default, the periods are aligned with the beginning of calendar units as specified in period.
 
+Aggregation process:
+
+1. Load detailed data within the specified `startDate` and `endDate` into each series separately.
+2. Split each series time:value array into periods based on [alignment](period.md#alignment) parameter.
+3. Discard period with start time earlier than `startDate`.
+4. Apply [statistical function](/api/data/aggregation.md) to value in each period and return a modified time:value array for each series where time is the period start time and value is the function result.
+
 ## Fields
 
 | **Name** | **Type**  | **Description**   |
