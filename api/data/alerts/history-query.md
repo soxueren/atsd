@@ -4,8 +4,7 @@
 
 Retrieve a list of **closed** alerts matching specified fields.
 
-## Request
- 
+## Request 
 | **Method** | **Path** | **Content-Type Header**|
 |:---|:---|---:|
 | POST | `/api/v1/alerts/history/query` | `application/json` |
