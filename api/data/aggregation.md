@@ -1,15 +1,18 @@
 # Aggregation
 
-## Statistics
+## Statistical Functions
 
 | **Name** |
 |:---|
-| DETAIL |
-| COUNT |
 | MIN | 
 | MAX | 
 | AVG | 
-| SUM | 
+| SUM |
+| COUNT | 
+| FIRST | 
+| LAST | 
+| DELTA | 
+| COUNTER | 
 | PERCENTILE_999 | 
 | PERCENTILE_995 | 
 | PERCENTILE_99 | 
@@ -18,9 +21,6 @@
 | PERCENTILE_75 | 
 | PERCENTILE_50 or MEDIAN | 
 | STANDARD_DEVIATION | 
-| FIRST | 
-| LAST | 
-| DELTA | 
 | WAVG | 
 | WTAVG | 
 | THRESHOLD_COUNT | 
@@ -28,3 +28,6 @@
 | THRESHOLD_PERCENT | 
 | MIN_VALUE_TIME |
 | MAX_VALUE_TIME |
+| DETAIL |
+
+
