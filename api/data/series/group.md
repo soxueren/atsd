@@ -1,14 +1,16 @@
 # Group Processor
 
-Merges multiple series into one series using a grouping function.
+Groups multiple input series into one series and applies a grouping function to grouped values. 
+
+If the `period` is not specified, values are grouped at all unique timestamps in the input series, otherwise values are grouped by period.
 
 | **Parameter** | **Type** | **Description**  |
 |:---|:---|:---|
-| type          | string          | **[Required]** Grouping [function](#grouping-functions) applied to values of the merged series. |
-| interpolate   | object           | [Interpolation](#interpolation) function to compute missing values for merged series . Default value: `NONE` |
-| period      | object           | [Period](period.md). Splits merged series into periods and apply grouping function to values in each period separately. <br>If period is undefined, and the query includes both `aggregate` and `group` objects, group inherits period from `aggregate` object.|
-| truncate      | boolean           | Discards samples at the beginning of the interval until values for all merged series are established. Default value: false  |
-| order         | number           | Change the order in which `aggregate` and `group` are executed, the higher the value of `order` the later in the sequence the task will be executed.   |
+| type          | string          | **[Required]** Grouping [function](#grouping-functions) applied to values of the input series. |
+| period      | object           | [Period](period.md). Splits the merged series into periods and applies the grouping function to values in each period separately. <br>Default: undefined. If period is undefined, and the query includes both `group` and `aggregate` objects, period is inherited from `aggregate` object.|
+| interpolate   | object           | [Interpolation](#interpolation) function to fill gaps in input series (no period) or in grouped series (if period is specified). Default value: `NONE` |
+| truncate      | boolean           | Discards samples at the beginning of the interval until values for all input series are established. Default: false.  |
+| order         | number           | Controls the processing order. If `group` order exceeds `aggregation` order, `group` is executed first. Default: 0.  |
 
 ## Grouping Functions
 
@@ -109,7 +111,7 @@ On the other hand, `SUM` returns 3 (3 + null->0) at 2016-06-25T08:00:05Z because
 [{"entity":"*","metric":"m-1","tags":{},"entities":["e-1","e-2"],"type":"HISTORY",
 	"aggregate":{"type":"DETAIL"},
 	"group":{"type":"SUM","order":0},
-data":[
+"data":[
 	{"d":"2016-06-25T08:00:00.000Z","v":12.0},
 	{"d":"2016-06-25T08:00:05.000Z","v":3.0},
 	{"d":"2016-06-25T08:00:10.000Z","v":5.0},
@@ -392,7 +394,7 @@ The `Group -> Aggregation` merges series first, and then splits the merged serie
 
 At the first stage, grouping produces the following `SUM` series:
 
-```
+```json
 [
   {
     "startDate": "2016-06-25T08:00:00Z",
@@ -420,7 +422,7 @@ At the first stage, grouping produces the following `SUM` series:
 
 The grouped SUM series is then aggregated into periods.
 
-* Note that if period is not specified, the grouping function automatically applies aggregation for the same period as aggregate function.<br>To avoid this, specify `"period": {"count": 1, "unit": "MILLISECOND"}` in `group`.
+> Note that if period is not specified, the grouping function automatically applies aggregation for the same period as aggregate function.<br>To avoid this, specify `"period": {"count": 1, "unit": "MILLISECOND"}` in `group`.
 
 ```json
 [
