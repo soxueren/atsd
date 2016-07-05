@@ -925,7 +925,7 @@ Changing the case of tag value condition `tags.file_system = '/DEV/mapper/vg_nur
 
 ## NULL
 
-Arithmetic operations with `NULL` produce `NULL`.
+Scalar expressions such as _number+NULL_ yield `NULL` if any operand is `NULL`, however `NULL`s are ignored by aggregate functions. 
 
 ## Unsupported SQL Features
 
@@ -957,19 +957,29 @@ WHERE time > now - 1 * MINUTE
 
 API SQL endpoint is located at: `https://atsd_server:8443/api/sql?q={QUERY}&outputFormat={FORMAT}`
 
-* Method: GET or POST
-* Path: /api/sql
+### Path
+
+Path is `/api/sql`
+
+### GET
 
 |**Parameter**|**Type**|**Description**|
 |:---|:---|:---|
-|q | string| SELECT query text. The value must be URL-encoded.|
-|outputFormat | string|Output format: `csv` or `json`. Default: `json`|
+|outputFormat | query string|Output format: `csv` or `json`. Default: `json`|
+|q | query string| SELECT query text. The value must be URL-encoded.|
+
+### POST
+
+|**Parameter**|**Type**|**Description**|
+|:---|:---|:---|
+|outputFormat | query string|Output format: `csv` or `json`. Default: `json`|
+| | payload| SELECT query text.|
 
 ### Metadata
 
-Resultset exported in JSON document incorporates metadata including table schema with column names.
+Resultset in JSON format incorporates metadata including table and column schema.
 
-The schema can be used by API clients to transform text into language-specific data types.
+The schema can be used by API clients to cast primitive JSON types (number, string, boolean) into language-specific data types.
 
 Sample SQL result files:
 

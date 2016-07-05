@@ -179,6 +179,7 @@ POST https://atsd_host:8443/api/v1/series/query
 * [Maximum Value Time (2)](examples/query-aggr-max-value-time.md)
 * [Threshold](examples/query-aggr-threshold.md)
 * [Threshold with Working Minutes](examples/query-aggr-threshold-sla.md)
+* [Average Threshold Percentage](query-aggr-threshold-avg-multiple.md)
 * [Interpolation](examples/query-aggr-interpolation.md)
 
 ### Period
