@@ -188,6 +188,17 @@ POST https://atsd_host:8443/api/v1/series/query
 * [Period Alignment: EndTime](examples/query-period-endtime.md)
 * [Period Misalignment](examples/query-period-misalignment.md)
 
+### Group
+
+* [Group Order](examples/query-group-order.md)
+* [Group Without Aggregation](examples/query-group-no-aggr.md)
+* [Group Without Aggregation: Truncate](examples/query-group-no-aggr-truncate.md)
+* [Group Without Aggregation: Extend](examples/query-group-no-aggr-extend.md)
+* [Group Without Aggregation: Interpolate](examples/query-group-no-aggr-interpolate.md)
+* [Group Aggregation](examples/query-group-aggr.md)
+* [Group > Aggregation](examples/query-group-order-aggr-group.md)
+* [Aggregation > Group](examples/query-group-order-group-aggr.md)
+
 ### Rate
 
 * [Rate of Change](examples/query-rate.md)
@@ -196,10 +207,6 @@ POST https://atsd_host:8443/api/v1/series/query
 ### Forecast
 
 * [Named Forecast](examples/query-named-forecast.md)
-
-### Group
-
-* [Group Order](examples/query-group-order.md)
 
 ### Versioning
 

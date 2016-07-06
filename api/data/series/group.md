@@ -138,11 +138,13 @@ On the other hand, `SUM` returns 3 (3 + null->0) at 2016-06-25T08:00:05Z because
 
 Truncation discards timestamps at the beginning of the interval until all of the merged values have a value.
 
-The first time is MAX(MIN(series_sample_time)).
-
 The example below uses `startDate` of **2016-06-25T08:00:01Z**
 
+The first time is MAX(MIN(series_sample_time)), the last time is MIN(MAX(series_sample_time)).
+
 MAX(MIN(series_sample_time)) = 2016-06-25T08:00:15.000Z.
+
+MIN(MAX(series_sample_time)) = 2016-06-25T08:00:45.000Z.
 
 ```ls
 | datetime                 | e1.value | e2.value | SUM | 
@@ -152,10 +154,12 @@ MAX(MIN(series_sample_time)) = 2016-06-25T08:00:15.000Z.
 | 2016-06-25T08:00:15.000Z | 8        | 8        | 16  | 
 | 2016-06-25T08:00:30.000Z | 3        | 13       | 16  | 
 | 2016-06-25T08:00:45.000Z | 5        | 15       | 20  | 
-| 2016-06-25T08:00:59.000Z | -        | 19       | 19  | NOT discarded because time > MAX(MIN(series_sample_time))
+| 2016-06-25T08:00:59.000Z | -        | 19       | 19  | discarded because time > MIN(MAX(series_sample_time))
 ```
 
 Samples for series e-1 at 2016-06-25T08:00:05.000Z and at 2016-06-25T08:00:10.000Z are discarded because there is no value for series e-2 until 2016-06-25T08:00:15.000Z.
+
+Sample for series e-2 at 2016-06-25T08:00:59.000Z is discarded because there is no value for series e-1 after 2016-06-25T08:00:45.000Z.
 
 ```json
 [
@@ -179,8 +183,7 @@ Samples for series e-1 at 2016-06-25T08:00:05.000Z and at 2016-06-25T08:00:10.00
 "data":[
 	{"d":"2016-06-25T08:00:15.000Z","v":16.0},
 	{"d":"2016-06-25T08:00:30.000Z","v":16.0},
-	{"d":"2016-06-25T08:00:45.000Z","v":20.0},
-	{"d":"2016-06-25T08:00:59.000Z","v":19.0}
+	{"d":"2016-06-25T08:00:45.000Z","v":20.0}
 ]}]
 ```
 
@@ -190,7 +193,6 @@ Samples for series e-1 at 2016-06-25T08:00:05.000Z and at 2016-06-25T08:00:10.00
 | 2016-06-25T08:00:15.000Z | 8        | 8        | 16  | 
 | 2016-06-25T08:00:30.000Z | 3        | 13       | 16  | 
 | 2016-06-25T08:00:45.000Z | 5        | 15       | 20  | 
-| 2016-06-25T08:00:59.000Z | -        | 19       | 19  |
 ```
 
 ### Extend
@@ -237,6 +239,21 @@ An opposite operation to truncation, extend adds missing values at the beginning
 ]}]
 ```
 
+Extend is similar to interpolation where missing values at the beginning of in interval are interpolated with NEXT type, and missing values at the end of the interval are interpolated with PREVIOUS type.
+
+```ls
+| datetime                 | e1.value | e2.value | SUM | 
+|--------------------------|----------|----------|-----| 
+| 2016-06-25T08:00:05.000Z | 3        | 8 +(NEXT)| 11  |
+| 2016-06-25T08:00:10.000Z | 5        | 8 +(NEXT)| 13  |
+| 2016-06-25T08:00:15.000Z | 8        | 8        | 16  | 
+| 2016-06-25T08:00:30.000Z | 3        | 13       | 16  | 
+| 2016-06-25T08:00:45.000Z | 5        | 15       | 20  | 
+| 2016-06-25T08:00:59.000Z | 5 +(PREV)| 19       | 24  |
+```
+
+Since `extend` is performed prior to truncation, `truncate` setting has no effect on extended results.
+
 ### Interpolation
 
 Interpolation can fill the gaps in merged series. The interpolation function is applied to two consecutive samples to calculate an interim value for a known timestamp.
@@ -267,7 +284,7 @@ Interpolation can fill the gaps in merged series. The interpolation function is 
 	{"d":"2016-06-25T08:00:15.000Z","v":16.0},
 	{"d":"2016-06-25T08:00:30.000Z","v":16.0},
 	{"d":"2016-06-25T08:00:45.000Z","v":20.0},
-	{"d":"2016-06-25T08:00:59.000Z","v":24.0}
+	{"d":"2016-06-25T08:00:59.000Z","v":19.0}
 ]}]
 ```
 
@@ -280,7 +297,7 @@ Interpolation can fill the gaps in merged series. The interpolation function is 
 | 2016-06-25T08:00:15.000Z | 8        | 8        | 16  | 
 | 2016-06-25T08:00:30.000Z | 3        | 13       | 16  | 
 | 2016-06-25T08:00:45.000Z | 5        | 15       | 20  | 
-| 2016-06-25T08:00:59.000Z | 5  (PREV)| 19       | 24  | 
+| 2016-06-25T08:00:59.000Z | -        | 19       | 19  | 
 ```
 
 ### Group Aggregation
