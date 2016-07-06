@@ -16,13 +16,13 @@ Retrieve series values for the specified entity, metric, and optional series tag
 
 | **Name** | **Description** |
 |:---|:---|
-| entity | Entity name. |
-| metric | Metric name. |
-| format | Response format: `csv` or `json`. |
+| entity | **[Required]** Entity name. |
+| metric | **[Required]** Metric name. |
+| format | **[Required]** Response format: `csv` or `json`. |
 
 #### Query String Parameters
 
-|**Parameters**|**Type**|**Description**|
+|**Name**|**Type**|**Description**|
 |:---|:---|:---|
 |t:name|string|Tag name, prefixed by `t:`. Tag value specified as parameter value, for example, `&t:file_system=/tmp`. <br>Multiple values for the same tag can be specified by repeating parameter, for example, `&t:file_system=/tmp&&t:file_system=/home/export`|
 |aggregate|string|[Statistical function](/api/data/aggregation.md#statistics) to compute aggregate results from detailed values in each period|
@@ -33,9 +33,13 @@ Retrieve series values for the specified entity, metric, and optional series tag
 
 #### Query String Date Parameters
 
-* [**Required**]
-* `interval` specified as `{count}-{timeunit}`, for example `1-hour`
-* Refer to [date filter](../filter-date.md).
+* **[Required]** Refer to [date filter](../filter-date.md).
+
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| startDate | string | Start date in ISO format or endtime syntax. |
+| endDate | string | End date in ISO format or endtime syntax. |
+| interval | string | Interval specified as `{count}-{timeunit}`, for example `1-hour`. |
 
 ## Response
 

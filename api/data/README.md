@@ -64,8 +64,8 @@ Supported date input formats:
 Refer to [ISO 8601 date format examples](date-format.md).
 
 * Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 millisecond from Epoch time.
-* Maximum date that can be stored by the database is **2106-02-07T07:28:14.999Z**, or 4294970894999 milliseconds from Epoch time.
-* Maximum date that can be specified in ISO format when querying data is 9999-12-31T23:59:59.999 UTC.
+* Maximum date that can be stored by the database is **2106-02-07T06:59:59.999Z**, or 4294969199999 milliseconds from Epoch time.
+* Maximum date that can be specified in ISO format when querying data is **9999-12-31T23:59:59.999** UTC.
 
 ## Number Formatting
 

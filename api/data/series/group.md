@@ -195,17 +195,17 @@ Samples for series e-1 at 2016-06-25T08:00:05.000Z and at 2016-06-25T08:00:10.00
 
 ### Extend
 
-An opposite operation to truncation, extend adds missing values at the beginning and end of the interval so that all merged series have values when grouping function is applied.
+An opposite operation to truncation, extend adds missing values at the beginning and end of the interval so that all merged series have values when the grouping function is applied.
 
 ```ls
 | datetime                 | e1.value | e2.value | SUM | 
 |--------------------------|----------|----------|-----| 
-| 2016-06-25T08:00:05.000Z | 3        | 8 +      | 11  | e2.value extended
-| 2016-06-25T08:00:10.000Z | 5        | 8 +      | 13  | e2.value extended 
+| 2016-06-25T08:00:05.000Z | 3        | 8 +      | 11  | e2.value extended to start at the beginning of the interval
+| 2016-06-25T08:00:10.000Z | 5        | 8 +      | 13  | e2.value extended to start at the beginning of the interval
 | 2016-06-25T08:00:15.000Z | 8        | 8        | 16  | 
 | 2016-06-25T08:00:30.000Z | 3        | 13       | 16  | 
 | 2016-06-25T08:00:45.000Z | 5        | 15       | 20  | 
-| 2016-06-25T08:00:59.000Z | 5 +      | 19       | 24  | e1.value extended
+| 2016-06-25T08:00:59.000Z | 5 +      | 19       | 24  | e1.value extended until the end of the interval
 ```
 
 ```json

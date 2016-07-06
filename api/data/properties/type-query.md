@@ -14,11 +14,7 @@ Returns an array of property types for the entity.
 
 | **Name** | **In** | **Description** |
 |:---|:---|:---|
-| entity | path | Entity name. |
-
-### Fields
-
-None.
+| entity | path | **[Required]** Entity name. |
 
 ## Response
 

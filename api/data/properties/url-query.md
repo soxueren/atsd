@@ -14,8 +14,8 @@ Retrieve property records for the specified entity and type.
 
 | **Name** | **In** | **Description** |
 |:---|:---|:---|
-| entity | path | Entity name. |
-| type | path | Property type. |
+| entity | path | **[Required]** Entity name. |
+| type | path | **[Required]** Property type. |
 
 ### Fields
 
