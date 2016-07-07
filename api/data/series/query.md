@@ -195,9 +195,10 @@ POST https://atsd_host:8443/api/v1/series/query
 * [Group Without Aggregation: Truncate](examples/query-group-no-aggr-truncate.md)
 * [Group Without Aggregation: Extend](examples/query-group-no-aggr-extend.md)
 * [Group Without Aggregation: Interpolate](examples/query-group-no-aggr-interpolate.md)
-* [Group Aggregation](examples/query-group-aggr.md)
-* [Group > Aggregation](examples/query-group-order-aggr-group.md)
-* [Aggregation > Group](examples/query-group-order-group-aggr.md)
+* [Group Without Aggregation: Wildcard and Entity Group](examples/query-group-no-aggr-entity-group.md)
+* [Group With Period Aggregation](examples/query-group-aggr.md)
+* [Group > Period Aggregation](examples/query-group-order-aggr-group.md)
+* [Period Aggregation > Group](examples/query-group-order-group-aggr.md)
 
 ### Rate
 
