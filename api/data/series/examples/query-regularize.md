@@ -28,9 +28,11 @@ POST https://atsd_host:8443/api/v1/series/query
     "endDate":   "2016-06-27T14:15:00Z",
     "entity": "nurswgvml007",
     "metric": "cpu_busy",
-    "aggregate": {"period": {"count": 1, "unit": "MINUTE"},
-                  "type": "FIRST",
-                  "interpolate": "LINEAR"}
+    "aggregate": {
+	   "period": {"count": 1, "unit": "MINUTE"},
+       "type": "FIRST",
+       "interpolate": {"type": "LINEAR"}
+    }
   }
 ]
 ```

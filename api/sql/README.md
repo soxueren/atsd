@@ -156,6 +156,15 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 | nurswgvml006    | nurswgvml006   | 1466082027000 | 1466082027000 | null           | 73620.0       | 
 ```
 
+`time` and `datetime` column are interchangeable and may be used as aliases, for example in the `GROUP BY` clause and `SELECT` expression.
+
+```sql
+SELECT entity, datetime, count(*)
+  FROM "df.disk_used"
+WHERE datetime >= "2016-07-03T21:02:00Z" AND datetime < "2016-07-03T21:02:15Z"
+  GROUP BY entity, time
+```
+
 ### Series Tag Columns
 
 Tag values are referenced in `SELECT` expression by specifying `tags.*`, `tags`, or `tags.{tag-name}` as column name.
@@ -222,7 +231,7 @@ WHERE time > current_hour
 
 ### Group By Columns
 
-In `GROUP BY` query, `datetime` and `PERIOD()` columns return the same value, period's start time, in ISO format. In this case, `date_format(PERIOD(5 minute))` can be omitted.
+In `GROUP BY` query, `datetime` and `PERIOD()` columns return the same value, the period's start time, in ISO format. In this case, `date_format(PERIOD(5 minute))` can be omitted.
 
 ```sql
 SELECT entity, datetime, date_format(PERIOD(5 minute)), AVG(value) 
@@ -870,33 +879,38 @@ The COUNT function counts the number of rows in the resultset and accepts *, for
 
 ## Time Formatting Functions
 
-`date_format` function formats Unix millisecond time to a string in user-defined date format. 
+`date_format` function formats Unix millisecond time to a string in user-defined date format and optional time zone. 
 
 ```java
-date_format(long milliseconds[, time format])
+date_format(long milliseconds[, time_format[, time_zone]])
 ```
 
-If the time format argument is not provided, ISO 8601 format is applied.
+If the `time_format` argument is not provided, ISO 8601 format is applied.
+
+The `time_zone` parameter accepts GTM offset or a [time zone name](/api/network/timezone-abnf.md) and allows formatting dates in a time zone, different from the server's time zone.
 
 Examples:
 
 * `date_format(time)`
 * `date_format(max_value_time(value))`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss')`
+* `date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PST')`
+* `date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00')`
 
 ```sql
 SELECT value, time, date_format(time), 
-  date_format(time, "yyyy-MM-dd'T'HH:mm:ss.SSSZ"),
-  date_format(time, 'yyyy-MM-dd HH:mm:ss.SSS')
+  date_format(time, "yyyy-MM-dd'T'HH:mm:ssZ"),
+  date_format(time, 'yyyy-MM-dd HH:mm:ss'),
+  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PST')
 FROM "mpstat.cpu_busy"
   WHERE datetime > now - 5 * minute
   LIMIT 1
 ```
 
 ```ls
-| value | time          | date_format(time)        | date_format(time,'yyyy-MM-dd'T'HH:mm:ss.SSSZ') | date_format(time,'yyyy-MM-dd HH:mm:ss.SSS') | 
-|-------|---------------|--------------------------|------------------------------------------------|---------------------------------------------| 
-| 7.1   | 1466287841000 | 2016-06-18T22:10:41.000Z | 2016-06-18T22:10:41.000+0000                   | 2016-06-18 22:10:41.000                     | 
+| value | time          | date_format(time)        | date_format(time,'yyyy-MM-dd'T'HH:mm:ssZ') | date_format(time,'yyyy-MM-dd HH:mm:ss') | date_format(time,'yyyy-MM-dd HH:mm:ss','PST') | 
+|-------|---------------|--------------------------|--------------------------------------------|-----------------------------------------|-----------------------------------------------| 
+| 7.1   | 1468046047000 | 2016-07-09T06:34:07.000Z | 2016-07-09T06:34:07+0000                   | 2016-07-09 06:34:07                     | 2016-07-08 23:34:07                           | 
 ```
 
 ## Case Sensitivity
