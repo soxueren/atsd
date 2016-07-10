@@ -2,41 +2,23 @@
 
 ## Description 
 
-Return a list of metrics, their properties, and optional metric tags.
+Retrieve a list of metrics matching the specified filter conditions.
 
 ## Request
 
-### Path
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/api/v1/metrics` |
 
-```elm
-/api/v1/metrics
-```
-
-### Method
-
-```
-GET 
-```
-
-### Headers
-
-None.
-
-### Parameters
+### Query Parameters 
 
 |**Parameter**|**Type**|**Description**|
 |:---|:---|:---|
-|expression|string|Include metrics that match an [expression](../expression.md) filter.|
-|minInsertDate|iso_date|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
-|maxInsertDate|iso_date|Include metrics with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
-|tags|string|Comma-separated list of metric tags to be included in the response.<br>For example, `tags=table,unit`<br>Specify `tags=*` to include all metric tags.|
-|limit|integer|Limit response to first N metrics, ordered by name.|
-
-_All parameters are optional. Expression must be URL-encoded._
-
-### Fields
-
-None.
+| expression |string|Include metrics that match an [expression](../expression.md) filter.|
+| minInsertDate |string|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| maxInsertDate |string|Include metrics with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| limit |integer|Maximum number of metrics to retrieve, ordered by name.|
+| tags |string|Comma-separated list of metric tags to be included in the response.<br>For example, `tags=table,unit`<br>Specify `tags=*` to include all metric tags.|
 
 ## Response 
 
@@ -144,11 +126,11 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
 
 ## Additional Examples
 
-* [List metrics by name](../examples/list-metrics-by-name.md)
-* [List metrics by name and tag](../examples/list-metrics-by-name-and-tag.md)
-* [List metrics with tag `table`](../examples/list-metrics-with-tag-table.md)
-* [List metrics by maxInsertDate](../examples/list-metrics-by-maxinsertdate.md)
-* [List metrics by minInsertDate](../examples/list-metrics-by-mininsertdate.md)
+* [List metrics by name](examples/list-metrics-by-name.md)
+* [List metrics by name and tag](examples/list-metrics-by-name-and-tag.md)
+* [List metrics with tag `table`](examples/list-metrics-with-tag-table.md)
+* [List metrics by maxInsertDate](examples/list-metrics-by-maxinsertdate.md)
+* [List metrics by minInsertDate](examples/list-metrics-by-mininsertdate.md)
 
 
 

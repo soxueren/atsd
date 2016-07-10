@@ -2,50 +2,35 @@
 
 ## Description
 
-Replace entities in the entity group with the specified collection.
+Replace entities in the entity group with the specified entity list.
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| PUT | `/api/v1/entity-groups/{group}/entities` | `application/json` |
 
-```elm
-/api/v1/entity-groups/{group}/entities
-```
+### Path Parameters 
 
-### Method
-
-```
-PUT
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
-
-### Parameters
-
-None.
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| group |string|Entity group name.|
 
 ### Fields
 
-| **Field**  | **Required** | **Description**                                                                                |
-|----------------|--------------|------------------------------------------------------------------------------------------------|
-| createEntities | no       | Automatically create new entities from the submitted list if such entities don't already exist. Default value: true|
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| createEntities | boolean | Automatically create new entities from the submitted list if such entities don't exist. Default: true. |
+| entities | array | An array of entity names to be added as members. |
 
-<aside class="notice">
-All existing entities that are not included in the collection will be removed.
-If the specified collection is empty, all entities are removed from the group (replace with empty collection).
-</aside>
+* All existing members that are not included in the request will be removed from members.
+* If the entity list in the request is empty, all entities are removed from the group and are replaced with an empty list.
 
 ## Response
 
 ### Fields
 
 None.
-
-### Errors
 
 ## Example
 

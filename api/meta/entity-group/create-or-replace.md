@@ -2,53 +2,38 @@
 
 ## Description
 
-Create an entity group with specified properties and tags or replace properties and tags for an existing entity group.
-This method creates a new entity group or replaces the properties and tags of an existing entity group. 
+Create an entity group with specified fields and tags or replace the fields and tags of an existing entity group.
 
-<aside class="notice">
-If only a subset of fields is provided for an existing entity group, the remaining properties and tags will be deleted.
-</aside>
+In case of an existing entity group, all the current tags will be replaced with tags specified in the request.
+
+If the replace request for an existing entity group doesn't contain any tags, the current tags will be deleted.
+
+The replace request for an existing entity group doesn't affect the list of its member entities, since the internal identifier of the entity group remains the same.
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| PUT | `/api/v1/entity-groups/{group}` | `application/json` |
 
-```elm
-/api/v1/entity-groups/{entity-group}
-```
+### Path Parameters 
 
-### Method
-
-```
-PUT 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
-
-### Parameters
-
-None.
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| group |string|Entity group name.|
 
 ### Fields
 
-|Field | Description|
-|---|---|
-| expression | Entity group expression|
-|tags | User-defined tags, `"tagKey": "tagValue"`, like `"tags": {"os_level": "aix 6.3"}`|
+| **Name** | **Type** | **Description** |
+|:---|:---|:---|
+| expression | string| Group membership expression. The expression is applied to entities to automatically add/remove members of this group.|
+| tags | object| Object containing entity group tags, where field name represents tag name and field value is tag value.<br>`{"tag-1":string,"tag-2":string}`.  |
 
 ## Response
 
 ### Fields
 
 None. 
-
-### Errors
-
-None.
 
 ## Example
 
@@ -57,19 +42,27 @@ None.
 #### URI
 
 ```elm
-PUT https://atsd_host:8443/api/v1/entity-groups/nmon-aix
+PUT https://atsd_host:8443/api/v1/entity-groups/nmon-collectors
 ```
 
 #### Payload
-???
+
+```json
+{
+    "tags": {
+        "collector": "nmon"
+    }
+}
+```
+
 #### curl
 
 ```elm
-curl https://atsd_host:8443/api/v1/entity-groups/nmon-aix \
+curl https://atsd_host:8443/api/v1/entity-groups/nmon-collectors \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request PUT \
-  --data ???
+  --data '{"tags": {"collector": "nmon"}}
  ```
  
 ### Response

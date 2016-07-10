@@ -2,39 +2,32 @@
 
 ## Description
 
-Delete entities from entity group.
+Remove specified entities from members of the specified entity group.
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| PATCH | `/api/v1/entity-groups/{group}/entities` | `application/json` |
 
-```elm
- /api/v1/entity-groups/{group}/entities
-```
+### Path Parameters 
 
-### Method
-
-```
-PATCH
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
-
-### Parameters
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| group |string|Entity group name.|
 
 ### Fields
+
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| action | string | **[Required]** Must be set to `delete` for this action. |
+| entities | array | An array of entity names to be removed as members. |
 
 ## Response
 
 ### Fields
 
 None.
-
-### Errors
 
 ## Example
 
@@ -77,5 +70,5 @@ None.
 
 ## Additional examples
 
-* [Delete all entities](./examples/delete-all-entities.md)
-* [Multiple Actions](./examples/multiple-actions.md)
+* [Delete all entities](examples/delete-all-entities.md)
+* [Multiple Actions](examples/multiple-actions.md)

@@ -2,45 +2,29 @@
 
 ## Description
 
-Update specified properties and tags for an existing metric.
+Update fields and tags of the specified metric. 
 
-Properties and tags that are not specified in the request are left unchanged.
+Unlike the [replace method](create-or-replace.md), fields and tags that are not specified in the request are left unchanged.
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| PATCH | `/api/v1/metrics/{metric}` | `application/json` |
 
-```elm
-/api/v1/metrics/{metric}
-```
+### Path Parameters 
 
-### Method
-
-```
-PATCH
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
-
-### Parameters
-
-None.
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| metric |string|Metric name.|
 
 ### Fields
 
-Refer to Fields specified in [Metrics List](list.md#fields) method.
+Refer to Fields specified in [Metrics List](list.md#fields-1) method.
 
 ## Response
 
 ### Fields
-
-None.
-
-### Errors
 
 None.
 

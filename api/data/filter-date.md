@@ -2,59 +2,84 @@
 
 Date fields define the time range for selecting the data.
 
-* Date filter is **required**. 
-* `startDate` is inclusive and `endDate` is exclusive.
-
 | **Name** | **Type** | **Description** |
 |:---|:---|:---|
 |startDate|	string | Start of the selection interval. <br>ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Matches records timestamped at or after `startDate`.<br>Examples: `2016-05-25T00:15:00.194Z`, `2016-05-25T`, `current_hour` |
 | endDate |	string | End of the selection interval. <br>ISO 8601 date or [endtime](/end-time-syntax.md) keyword.<br>Matches records timestamped before `endDate`.<br>Examples: `2016-05-25T00:15:00Z`, `previous_day - 1 * HOUR`|
 | interval|	object | Duration of the selection interval, specified as `count` and `unit`. <br>Example: `{"count": 5, "unit": "MINUTE"}`|
 
-* One of the following field combinations is required:
+* `startDate` is inclusive and `endDate` is exclusive.
+
+## Required Fields
+
+* Date filter is **required** in one of the following field combinations.
 
 | **Fields**  | **Notes** |
 |:---|:---|
-|`startDate` and `endDate`||
+|`startDate` and `endDate`| |
 |`startDate` and `interval`|`endDate` will be set to `startDate` + `interval`|
 |`endDate` and `interval`|`startDate` will be set to `endDate` - `interval`|
-|`interval`|`endDate` will be set to current server time, `startDate` will be set to `endDate` - `interval`|
+|`interval`|`endDate` will be set to current server time<br>`startDate` will be set to `endDate` - `interval`|
 
-
-
-## Supported ISO Date Formats
+## ISO Date Formats
 
 See [date format](date-format.md) for supported ISO formats.
 
 ## Examples
 
-At or after `2016-05-30T07:00:00Z` and before `2016-05-30T08:00:00Z`
+At or after `2016-05-30 14:00` and before `2016-05-30 15:00` in UTC time zone:
 
-- `"startDate":"2016-05-30T07:00:00Z", "endDate":"2016-05-30T08:00:00Z"`
+```json
+"startDate":"2016-05-30T14:00:00Z", "endDate":"2016-05-30T15:00:00Z"
+```
 
-At or after `2016-05-30T10:00:00Z` and before current server time.
+At or after `2016-05-30 06:00` and before `2016-05-30 07:00` in PST time zone (GMT-8:00):
 
-- `"startDate":"2016-05-30T10:00:00Z", "endDate":"now"`
+```json
+"startDate":"2016-05-30T06:00:00-08:00", "endDate":"2016-05-30T07:00:00-08:00"
+```
 
-Last 2 hours, ending with current server time.
+At or after `2016-05-30T10:00:00Z` and before current server time:
 
-- `"interval":{"count":2, "unit":"HOUR"}`
+```json
+"startDate":"2016-05-30T10:00:00Z", "endDate":"now"
+```
 
-Last 2 hours.
+Last 2 hours, ending with current server time:
 
-- `"interval":{"count":2, "unit":"HOUR"}, "endDate":"now"`
+```json
+"interval":{"count":2, "unit":"HOUR"}
+```
 
-Last 2 hours of the previous day.
+Last 2 hours:
 
-- `"interval":{"count":2, "unit":"HOUR"}, "endDate":"current_day"`
+```json
+"interval":{"count":2, "unit":"HOUR"}, "endDate":"now"
+```
 
-Last hour, rounded.
+Last 2 hours of the previous day:
 
-- `"startDate":"previous_hour", "interval":{"count":1, "unit":"HOUR"}`
+```json
+"interval":{"count":2, "unit":"HOUR"}, "endDate":"current_day"
+```
 
-All the data until now.
+Last hour, rounded:
 
-- `"startDate":"1970-01-01T00:00:00Z", "endDate":"now"`
+```json
+"startDate":"previous_hour", "endDate": "current_hour"
+```
+
+All the data until now:
+
+```json
+"startDate":"1970-01-01T00:00:00Z", "endDate":"now"
+```
+
+All the data:
+
+```json
+"startDate":"1970-01-01T00:00:00.000Z", "endDate":"9999-12-31T23.59.59.999Z"
+```
 
 
 

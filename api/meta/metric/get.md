@@ -6,39 +6,21 @@ Retrieve properties and tags for the specified metric.
 
 ## Request
 
-### Path 
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/api/v1/metrics/{metric}` |
 
-```elm
-/api/v1/metrics/{metric}
-```
+### Path Parameters
 
-### Method 
-
-```
-GET
-```
-
-### Headers
-
-None.
-
-### Parameters
-
-None.
-
-### Fields
-
-None.
+| **Name** | **Description** |
+|:---|:---|
+| metric | **[Required]** Metric name. |
 
 ## Response
 
 ### Fields
 
-Refer to Fields in [Metrics: List](list.md#fields)
-
-### Errors
-
-None.
+Refer to Response Fields in [Metrics: List](list.md#fields-1)
 
 ## Example
 

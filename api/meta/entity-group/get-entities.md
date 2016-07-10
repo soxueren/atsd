@@ -2,48 +2,35 @@
 
 ## Description
 
+Retrieve a list of entities that are members of the specified entity group and are matching the specified filter conditions.
+
 ## Request
 
-### Path
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/api/v1/entity-groups/{group}/entities` |
 
-```elm
-/api/v1/entity-groups/{group}/entities
-```
-### Method
+### Path Parameters
 
-```
-GET
-```
+| **Name** | **Description** |
+|:---|:---|
+| group | **[Required]** Entity group name. |
 
-### Headers
+### Query Parameters 
 
-None.
-
-### Parameters
-
-None.
-
-### Fields
-
-|**Field**|**Required**|**Description**|
-|---|---|---|
-|active|no| Filter entities by `last_insert_time`. If `active = true`, only entities with positive `last_insert_time` are included in the response|
-|expression|no|Use `name` variable for entity name. Use `*` placeholder in `like` expressions|
-|tags|no|Specify entity tags to be included in the response|
-|limit|no|Limit response to first N entities, ordered by name.|
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| expression |string|Expression to include entities by name or by entity tags. Use `name` variable for entity name. Wildcard `*` is supported.|
+| minInsertDate |string|Include entities with last insert date at or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| maxInsertDate |string|Include entities with last insert date less than specified time.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| limit |integer|Maximum number of entities to retrieve, ordered by name.|
+| tags |string|Comma-separated list of entity tags to be included in the response.<br>For example, `tags=table,unit`<br>Specify `tags=*` to include all entity tags.|
 
 ## Response
 
 ### Fields
 
-| **Field**                                 | **Description**                                                                             |
-|------------------------------------------|---------------------------------------------------------------------------------------------|
-| name                                     | Entity name (unique)                                                                        |
-| enabled                                  | Enabled status. Incoming data is discarded for disabled entities                            |
-|lastInsertDate|Last time value was received by ATSD for this metric. Time specified in ISO format.|
-|tags as requested by tags parameter|User-defined tags|
-
-### Errors
+Refer to fields specified in [Entity List](/api/meta/entiyt/list.md#fields) method.
 
 ## Example
 
@@ -52,7 +39,7 @@ None.
 #### URI
 
 ```elm
-GET https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities?timeFormat=iso&tags=*&limit=3
+GET https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities?tags=*&limit=3
 ```
 
 #### Payload
@@ -62,7 +49,7 @@ None.
 #### curl
 
 ```elm
-curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities?timeFormat=iso&tags=*&limit=3 \
+curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities?tags=*&limit=3 \
   --insecure --verbose --user {username}:{password} \
   --request GET 
   ```

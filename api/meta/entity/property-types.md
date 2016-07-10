@@ -2,46 +2,37 @@
 
 ## Description
 
-Returns an array of property types for the entity. 
+Retrieve a list property types for the entity. 
 
 ## Request
 
-### Path
+## Request
 
-```elm
-/api/v1/entities/{entity}/property-types
-```
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/api/v1/entities/{entity}/property-types` |
 
-### Method
+### Path Parameters 
 
-```
-GET 
-```
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| entity |string|Entity name.|
 
-### Headers
+### Query Parameters 
 
-None.
-
-### Parameters
-
-| **Parameter** | **Required** | **Description**                 |
-|---------------|--------------|---------------------------------|
-| startTime        | no        | Return only property types that have been collected after the specified time. |
-
-### Fields
-
-None.
+| **Parameter** | **Type** | **Description** |
+|:---|:---|:---|
+| minInsertDate | string | Include property types that have been collected at or after the specified date. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax. |
 
 ## Response
 
+An array of strings.
+
 ### Fields
 
-
-| **Field**       | **Description**                                                                                        |
-|----------------|--------------------------------------------------------------------------------------------------------|
-| type | Property type name                                                                                            |
-
-### Errors
+| **Name**       | **Description** |
+|:---|:---|
+| type | Property type name |
 
 ## Example
 

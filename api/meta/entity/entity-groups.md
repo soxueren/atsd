@@ -2,41 +2,30 @@
 
 ## Description
 
-Returns an array of Entity Groups to which the entity belongs. Entity-group tags are included in the reponse.
+Retrieve a list of entity groups to which the specified entity belongs.
 
 ## Request
 
-### Path
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/api/v1/entities/{entity}/groups` |
 
-```elm
-/api/v1/entities/{entity}/groups
-```
+### Path Parameters 
 
-### Method
-
-```
-GET 
-```
-
-### Headers
-
-None.
-
-### Parameters
-
-None.
-
-### Fields
-
-None.
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| entity |string|Entity name.|
 
 ## Response
 
+An array of objects containing the following fields describing an entity group.
+
 ### Fields
 
-### Errors
-
-None.
+| **Name** | **Type** | **Description** |
+|:---|:---|:---|
+| name | string| Entity group name. |
+| tags | object | Entity group tags. |
 
 ## Example
 

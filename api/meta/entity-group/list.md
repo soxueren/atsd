@@ -4,45 +4,27 @@
 
 ## Request
 
-### Path
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/api/v1/entity-groups` |
 
-```elm
-/api/v1/entity-groups
-```
+### Query Parameters 
 
-### Method
-
-```
-GET
-```
-
-### Headers
-
-None.
-
-### Parameters
-
-|**Parameter**|**Required**|**Description**|
-|---|---|---|
-|expression|no|Use `name` variable for entity group name. Use `*` placeholder in `like` expressions|
-|tags|no|Specify entity group tags to be included in the response|
-|limit|no|Limit response to first N entity groups, ordered by name.|
-
-### Fields
-
-None.
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| expression |string|Expression to include entity groups by name or tags. Use `name` variable for group name. Wildcard `*` is supported.|
+| limit |integer|Maximum number of entity groups to retrieve, ordered by name.|
+| tags |string|Comma-separated list of entity group tags to be included in the response.<br>For example, `tags=table,unit`<br>Specify `tags=*` to include all entity group tags.|
 
 ## Response
 
 ### Fields
 
-| **Name**   | **Description**                                   |
-|------------|---------------------------------------------------|
-| name       | Entity group name (unique)                        |
-| expression | Entity group expression                           |
-| tags       | Entity group tags, as requested by tags parameter |
-
-### Errors
+| **Name** | **Type** | **Description** |
+|:---|:---|:---|
+| name | string| Entity group name. |
+| expression | string | Group membership expression. The expression is applied to entities to automatically add/remove members of this group.|
+| tags | object | Entity group tags, as requested with `tags` parameter. |
 
 ## Example
 

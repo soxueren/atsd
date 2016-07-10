@@ -2,46 +2,35 @@
 
 ## Description
 
-Returns a list of metrics collected by the entity. The list is based on memory cache which is rebuilt on ATSD restart.
+Retrieve a list of metrics collected by the entity.
 
 ## Request
 
-### Path
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/api/v1/entities/{entity}/metrics` |
 
-```elm
-/api/v1/entities/{entity}/metrics
-```
+### Path Parameters 
 
-### Method
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| entity |string|Entity name.|
 
-```
-GET
-```
+### Query Parameters 
 
-### Headers
-
-None.
-
-### Parameters
-
-None.
-
-### Fields
-
-|**Fields**|**Required**|**Description**|
-|---|---|---|---|
-|active|no| Filter metrics by `last_insert_time`. If `active = true`, only metrics with positive `last_insert_time` are included in the response|
-|expression|no|Use name variable for entity name. Use * placeholder in like expressions|
-|tags|no|Specify metric tags to be included in the response|
-|limit|no|Limit response to first N metrics, ordered by name.|
+|**Name**|**Type**|**Description**|
+|:--|:--|:--|
+| expression |string|Expression to include metrics by name or tags. Use `name` variable for metric name. Wildcard `*` is supported.|
+| minInsertDate |string|Include metrics with last insert date at or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| maxInsertDate |string|Include metrics with last insert date less than specified time.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| limit |integer|Maximum number of metrics to retrieve, ordered by name.|
+| tags |string|Comma-separated list of metric tags to be included in the response.<br>For example, `tags=table,unit`<br>Specify `tags=*` to include all metric tags.|
 
 ## Response
 
 ### Fields
 
-Refer to Fields specified in [Metrics List](list.md#fields) method.
-
-### Errors
+Refer to Fields specified in [Metrics List](/api/meta/metric/list.md#fields) method.
 
 ## Example
 
@@ -70,7 +59,7 @@ curl https://atsd_host:8443/api/v1/entities/nurswgvml007/metrics?timeFormat=iso&
 ```json
 [
     {
-        "name": "active",
+        "name": "mpstat.cpu_busy",
         "enabled": true,
         "dataType": "FLOAT",
         "counter": false,
@@ -81,7 +70,7 @@ curl https://atsd_host:8443/api/v1/entities/nurswgvml007/metrics?timeFormat=iso&
         "lastInsertDate": "2015-09-04T16:10:21.000Z"
     },
     {
-        "name": "active(anon)",
+        "name": "df.disk_used",
         "enabled": true,
         "dataType": "FLOAT",
         "counter": false,

@@ -2,38 +2,30 @@
 
 ## Description 
 
-Returns a list of **series** for the metric. Each series is identified with metric name, entity name, and optional series tags.
+Returns a list of **series** for the metric. 
+
+Each series is identified by metric name, entity name, and optional series tags.
 
 ## Request
 
-### Path
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/api/v1/metrics/{metric}/series` |
 
-```elm
-/api/v1/metrics/{metric}/series
-```
+### Path Parameters
 
-### Method
+| **Name** | **Description** |
+|:---|:---|
+| metric | **[Required]** Metric name. |
 
-```
-GET 
-```
-
-### Headers
-
-None.
-
-### Parameters
+### Query Parameters
 
 | **Parameter** |**Type**| **Description** |
 |:---|:---|:---|
 | entity | string| Include series for the specified entity name. |
-| tags.{tag=name} | string | Filter series by specified tag value.|
-|minInsertDate|string|Include series with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
-|maxInsertDate|string|Include series with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
-
-### Fields
-
-None.
+| tags.{tag=name} | string | Include series with the specified series tag values.<br>Example: `?tags.mount_point=/` or `?entity=nurswgvml007&tags.mount_point=/`|
+| minInsertDate |string|Include series with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| maxInsertDate |string|Include series with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 
 ## Response
 

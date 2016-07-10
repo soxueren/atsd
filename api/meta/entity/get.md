@@ -2,43 +2,25 @@
 
 ## Description 
 
-Retrieve properties and tags for the specified entity.
+Retrieve information about the specified entity including its tags.
 
 ## Request
 
-### Path 
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/api/v1/entities/{entity}` |
 
-```elm
-/api/v1/entities/{entity}
-```
+### Path Parameters
 
-### Method 
-
-```
-GET
-```
-
-### Headers 
-
-None.
-
-### Parameters
-
-None.
-
-### Fields 
-
-None.
+| **Name** | **Description** |
+|:---|:---|
+| entity | **[Required]** Entity name. |
 
 ## Response
 
 ### Fields
 
-Refer to Response Fields in [Entities: List](list.md)
-
-### Errors
-
-None.
+Refer to Response Fields in [Entities: List](list.md#fields-1)
 
 ## Example
 

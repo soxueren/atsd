@@ -2,52 +2,34 @@
 
 ## Description
 
+Retrieve a list of entities matching the specified filter conditions.
+
 ## Request
 
-### Path
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/api/v1/entities` |
 
-```elm
-/api/v1/entities
-```
+### Query Parameters 
 
-### Method
-
-```
-GET
-```
-
-### Headers
-
-None.
-
-### Parameters
-
-None.
-
-### Fields
-
-|**Fields**|**Required**|**Description**|
-|---|---|---|
-|active|no|Filter entities by last insert time. If `active = true`, only entities with positive `last_insert_time` are included in the response|
-|expression|no|Use `name` variable for entity name. Use `*` placeholder in `like` expresions|
-|tags|no|Specify entity tags to be included in the response, use `tags=*` as a wildcard (returns all existing tags)|
-|minInsertDate|no|return entities with lastInsertTime equal or greater than specified time, accepts iso date format|
-|maxInsertDate|no|return entities with lastInsertTime less than specified time, accepts iso date format|
-|limit|no|Limit response to first N entities, ordered by name.|
-
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| expression |string|Expression to include entities by name or tags. Use `name` variable for entity name. Wildcard `*` is supported.|
+| minInsertDate |string|Include entities with last insert date at or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| maxInsertDate |string|Include entities with last insert date less than specified time.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| limit |integer|Maximum number of entities to retrieve, ordered by name.|
+| tags |string|Comma-separated list of entity tags to be included in the response.<br>For example, `tags=table,unit`<br>Specify `tags=*` to include all entity tags.|
 
 ## Response
 
 ### Fields
 
-| **Field**                            | **Description**                                                                             |
-|---|---|
-| name                                | Entity name (unique)                                                                        |
-| enabled                             | Enabled status. Incoming data is discarded for disabled entities                            |
- |lastInsertDate|Last time value was received by ATSD for this metric. Time specified in ISO format.|
-|tags as requested by tags parameter|User-defined tags|
-
-### Errors
+| **Name** | **Type** | **Description** |
+|:---|:---|:---|
+| name | string| Entity name. |
+| enabled | boolean | Enabled status. Incoming data is discarded for disabled entities. |
+| lastInsertDate | string |Last time, in ISO format, when a value was received by the database for this entity. |
+| tags | object | Entity tags, as requested with `tags` parameter. |
 
 ## Example
 
@@ -81,8 +63,8 @@ curl https://atsd_host:8443/api/v1/entities?timeFormat=iso&limit=2&expression=na
         "lastInsertDate": "2015-09-04T15:43:36.000Z"
     },
     {
-        "name": "nurswgdkr002/",
-        "enabled": true
+        "name": "nurswgvml001",
+        "enabled": false
     }
 ]
 ```
@@ -93,7 +75,4 @@ curl https://atsd_host:8443/api/v1/entities?timeFormat=iso&limit=2&expression=na
 * [List entities by minInsertDate](./examples/list-entities-by-mininsertdate.md)
 * [List all tags for all entities starting with name](examples/list-all-tags-for-all-entities-with-name.md)
 * [List entities by name and tag](examples/list-entities-by-tag-containing-hbase.md)
-
-
-
 

@@ -2,42 +2,25 @@
 
 ## Description
 
-Delete the entity. Delete the entity from any Entity Groups that it belongs to.
+Delete the specified entity and delete it from any Entity Groups that it belongs to.
+
 Data collected by the entity will be removed asynchronously in the background.
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| DELETE | `/api/v1/entities/{entity}` | `application/json` |
 
-```elm
-/api/v1/entities/{entity}
-```
+### Path Parameters 
 
-### Method
-
-```
-DELETE 
-```
-
-### Headers 
-
-None.
-
-### Parameters
-
-None.
-
-### Fields
-
-None.
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| entity |string|Entity name.|
 
 ## Response
 
 ### Fields
-
-None.
-
-### Errors
 
 None.
 
@@ -48,7 +31,7 @@ None.
 #### URI
 
 ```elm
-DELETE https://atsd_host:8443/api/v1/entities/hostmain
+DELETE https://atsd_host:8443/api/v1/entities/nurswgvml001
 ```
 #### Payload
 
@@ -57,7 +40,7 @@ None.
 #### curl 
 
 ```elm
-curl https://atsd_host:8443/api/v1/entities/hostmain \
+curl https://atsd_host:8443/api/v1/entities/nurswgvml001 \
   --insecure --verbose --user {username}:{password} \
   --request DELETE
 ```

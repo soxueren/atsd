@@ -2,51 +2,32 @@
 
 ## Description
 
-Update specified properties and tags for the given entity. PATCH method updates specified properties and tags for an existing entity. Properties and tags that are not specified are left unchanged.
+Update fields and tags of the specified entity. 
+
+Unlike the [replace method](create-or-replace.md), fields and tags that are not specified in the request are left unchanged.
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| PATCH | `/api/v1/entities/{entity}` | `application/json` |
 
-```elm
-/api/v1/entities/{entity}
-```
+### Path Parameters 
 
-### Method
-
-```
-PATCH 
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
-
-### Parameters
-
-None.
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| entity |string|Entity name.|
 
 ### Fields
 
-| **Field**                            | **Description**                                                                             |
-|---|---|
-| enabled                             | Enabled status. Incoming data is discarded for disabled entities.                           |
-|tags|User-defined tags, `"tagKey": "tagValue"`, like `"tags": {"alias": "vmware_host"}`|
-
-
-<aside class="notice">
-If only a subset of fields is provided for an existing entity, the remaining properties will be set to default values and tags will be deleted.
-</aside>
+|**Name**|**Type**|**Description**|
+|:---|:---|
+| enabled | boolean | Enabled status. Default: true. Incoming data is discarded for a disabled entity.|
+| tags | object | Object containing entity tags, where field name represents tag name and field value is tag value.<br>`{"tag-1":string,"tag-2":string}`|
 
 ## Response
 
 ### Fields
-
-None.
-
-### Errors
 
 None.
 

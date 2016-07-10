@@ -2,41 +2,25 @@
 
 ## Description
 
-Delete the specified metric. Data collected for the metric is removed asynchronously in the background.
+Delete the specified metric. 
+
+Data collected for the metric will be removed asynchronously in the background.
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| DELETE | `/api/v1/metrics/{metric}` | `application/json` |
 
-```elm
-/api/v1/metrics/{metric}
-```
+### Path Parameters 
 
-### Method
-
-```
-DELETE
-```
-
-### Headers
-
-None.
-
-### Parameters
-
-None.
-
-### Fields
-
-None.
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| metric |string|Metric name.|
 
 ## Response
 
 ### Fields
-
-None.
-
-### Errors
 
 None.
 

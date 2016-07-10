@@ -1,56 +1,43 @@
 # Entity: Create or Replace
+
 ## Description
 
-Create an entity with specified fields and tags or replaces the fields and tags of an existing entity.
+Create an entity with specified fields and tags or replace the fields and tags of an existing entity.
 
 In case of an existing entity, all the current entity tags will be replaced with entity tags specified in the request.
 
-If the replace request for an existing entity doesn't contain any tags, current entity tags will be deleted.
+If the replace request for an existing entity doesn't contain any tags, the current tags will be deleted.
 
-The replace request for an existing entity doesn't delete any series, properties, or metrics.
+The replace request for an existing entity doesn't affect any series, properties, or metrics since the internal identifier of the entity remains the same.
 
 ## Request
 
-### Path
+## Request
 
-```elm
-/api/v1/entities/{entity}
-```
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| PUT | `/api/v1/entities/{entity}` | `application/json` |
 
-### Method
+### Path Parameters 
 
-```
-PUT
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
-
-###  Parameters
-
-None.
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| entity |string|Entity name.|
 
 ### Fields
 
 | **Field** | **Type** | **Description** |
 |:---|:---|:---|
-| enabled | boolean | Data collection status. Default: true. For disabled entities data such as series, properties, and messages is discarded. |
-| tags |object|Object containing entity tags, for example `"tags": {"location": "NUR-2", "env": "production"}` |
+| enabled | boolean | Data collection status. Default: true. Incoming data is discarded for a disabled entity.  |
+| tags |object|Object containing entity tags, where field name represents tag name and field value is tag value.<br>`{"tag-1":string,"tag-2":string}` |
 
-* If `enabled` field is not specified in the request, it is reset to its default value which is `true`.
+* If a field is not specified in the request, it will be reset to its default value.
 
 ## Response
 
 ### Fields 
 
 None.
-
-### Errors
-
-None. 
 
 ## Example
 

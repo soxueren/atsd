@@ -6,36 +6,15 @@ Returns 200 status code. Typically used to check connectivity, authentication an
 
 ## Request
 
-### Path
-
-```elm
-/ping
-```
-### Method
-
-```
-GET
-```
-
-### Headers
-
-None.
-
-### Parameters
-
-None.
-
-### Fields
-
-None.
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/ping` |
 
 ## Response
 
 ### Fields
 
 None.
-
-### Errors
 
 ## Example
 
@@ -54,7 +33,3 @@ None.
 ### Response
 
 None.
-
-## Additional examples
-
-

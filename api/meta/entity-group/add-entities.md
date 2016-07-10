@@ -2,35 +2,27 @@
 
 ## Description
 
-Add specified entities to entity group.
+Add entities as members to the specified entity group.
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| PATCH | `/api/v1/entity-groups/{group}/entities` | `application/json` |
 
-```elm
- /api/v1/entity-groups/{group}/entities
-```
+### Path Parameters 
 
-### Method
-
-```
-PATCH
-```
-
-### Headers
-
-None.
-
-### Parameters
-
-None.
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| group |string|Entity group name.|
 
 ### Fields
 
-| **Field**  | **Required** | **Description**                                                                                |
-|----------------|--------------|-------------------|------------------------------------------------------------------------------------------------|
-| createEntities | no       | Automatically create new entities from the submitted list if such entities don't already exist. Default value: true |
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| action | string | **[Required]** Must be set to `add` for this action. |
+| createEntities | boolean | Automatically create new entities from the submitted list if such entities don't exist. Default: true. |
+| entities | array | An array of entity names to be added as members. |
 
 ## Response
 
@@ -38,7 +30,13 @@ None.
 
 None.
 
-### Errors
+### Response
+
+If createEntities is false, and the request contains a non-existing entity, the following error will be raised:
+
+```json
+{"error":"com.axibase.tsd.service.DictionaryNotFoundException: ENTITY not found for name: 'e-111'"}
+```
 
 ## Example
 
@@ -73,7 +71,7 @@ curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request PATCH \
-  --data '[{"action" : "add","createEntities": true,"entities" : [{"name":"nurswgvml010"},{"name":"nurswgvml011"}]}]'
+  --data '[{"action" : "add","entities" : [{"name":"nurswgvml010"},{"name":"nurswgvml011"}]}]'
   ```
   
 ### Response
@@ -81,4 +79,5 @@ curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities \
 None.
 
 ## Additional examples
-* [Add multiple entities](./examples/add-multiple-entities.md)
+
+* [Add multiple entities](examples/add-multiple-entities.md)

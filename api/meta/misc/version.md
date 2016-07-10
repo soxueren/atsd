@@ -6,37 +6,18 @@ Returns database version including licensing details.
 
 ## Request
 
-### Path
-
-```elm
-/version
-```
-### Method
-
-```
-GET
-```
-
-### Headers
-
-None.
-
-### Parameters
-
-None.
-
-### Fields
-
-None.
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/version` |
 
 ## Response
 
 ### Fields
 
-| **Field**  | **Description** |
-|:---|:---|
-| buildInfo  | Database version information    |
-| license | Database license details  |
+| **Name** | **Type** | **Description** |
+|:---|:---|:---|
+| buildInfo  | object | Database version information. |
+| license | object | Database license details.  |
 
 ### Errors
 
@@ -80,7 +61,4 @@ curl https://atsd_host:8443/version \
 	}
 }
 ```
-
-## Additional examples
-
 

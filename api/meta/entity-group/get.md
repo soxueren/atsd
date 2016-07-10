@@ -2,36 +2,25 @@
 
 ## Description
 
-
-Displays entity group properties and all tags.
+Retrieve information about the specified entity group including its tags.
 
 ## Request
 
-### Path
+| **Method** | **Path** | 
+|:---|:---|---:|
+| GET | `/api/v1/entity-groups/{group}` |
 
-```elm
- /api/v1/entity-groups/{group}
- ```
- 
-### Method
+### Path Parameters
 
-```
-GET
-```
-
-### Headers
-
-None.
-
-### Parameters
-
-### Fields
+| **Name** | **Description** |
+|:---|:---|
+| group | **[Required]** Entity group name. |
 
 ## Response
 
 ### Fields
 
-### Errors
+Refer to Response Fields in [Entity Groups: List](list.md#fields)
 
 ## Example
 

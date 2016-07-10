@@ -2,47 +2,33 @@
 
 ## Description 
 
-Create a metric with specified properties and tags or replace an existing metric.
+Create a metric with specified fields and tags or replace the fields and tags of an existing metric.
 
-If the metric exists, all of its current properties and tags will be overwritten with fields specified in the request.
+In case of an existing metric, all the current metric tags will be replaced with metric tags specified in the request.
 
-In order to update only specific fields specified in the request, use [Metric: Update](update.md) method.
+If the replace request for an existing metric doesn't contain any tags, current metric tags will be deleted.
+
+The replace request for an existing metric doesn't affect any series data since the internal identifier of the metric remains the same.
 
 ## Request
 
-### Path
+| **Method** | **Path** | **Content-Type Header**|
+|:---|:---|---:|
+| PUT | `/api/v1/metrics/{metric}` | `application/json` |
 
-```elm
-/api/v1/metrics/{metric}
-```
+### Path Parameters 
 
-### Method
-
-```
-PUT
-```
-
-### Headers
-
-|**Header**|**Value**|
-|:---|:---|
-| Content-Type | application/json |
-
-### Parameters
-
-None.
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| metric |string|Metric name.|
 
 ### Fields
 
-Refer to Fields specified in [Metrics List](list.md#fields) method.
+Refer to Fields specified in [Metrics List](list.md#fields-1) method.
 
 ## Response
 
 ### Fields
-
-None.
-
-### Errors
 
 None.
 
