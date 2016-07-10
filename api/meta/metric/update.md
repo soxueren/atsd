@@ -20,7 +20,7 @@ Unlike the [replace method](create-or-replace.md), fields and tags that are not 
 
 ### Fields
 
-Refer to Fields specified in [Metrics List](list.md#fields-1) method.
+Refer to Fields specified in [Metrics List](list.md#fields) method.
 
 ## Response
 

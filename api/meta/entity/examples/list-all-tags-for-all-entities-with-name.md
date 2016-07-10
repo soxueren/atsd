@@ -1,17 +1,17 @@
-# List all tags for all entities starting with `nurswgvml00`
+# List Entities starting with `nurswgvml00`
 
 ## Request
 
 ### URI
 
 ```elm
-http://atsd_hostname:8088/api/v1/entities?timeFormat=iso&expression=name%20like%20%27nurswgvml00*%27&tags=*
+http://atsd_hostname:8088/api/v1/entities?timeFormat=iso&expression=name%20LIKE%20%27nurswgvml00*%27&tags=*
 ```
 
 ### Expression 
 
 ```
-expression=name like 'nurswgvml00*'&tags=*
+expression=name LIKE 'nurswgvml00*'
 ```
 
 ## Response

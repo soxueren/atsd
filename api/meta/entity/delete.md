@@ -2,7 +2,7 @@
 
 ## Description
 
-Delete the specified entity and delete it from any Entity Groups that it belongs to.
+Delete the specified entity and delete it as member from any entity groups that it belongs to.
 
 Data collected by the entity will be removed asynchronously in the background.
 

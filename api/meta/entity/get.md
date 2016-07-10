@@ -20,7 +20,7 @@ Retrieve information about the specified entity including its tags.
 
 ### Fields
 
-Refer to Response Fields in [Entities: List](list.md#fields-1)
+Refer to Response Fields in [Entities: List](list.md#fields)
 
 ## Example
 

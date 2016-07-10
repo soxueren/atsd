@@ -2,7 +2,9 @@
 
 ## Description
 
-List all entities whose name includes car
+List all entities whose name includes `car`.
+
+Expression: `name LIKE '*car*'`
 
 ## Request
 
@@ -19,17 +21,17 @@ http://127.0.0.1:8088/api/v1/entities?limit=10&expression=name%20like%20%27*car*
    {
       "name":"car",
       "enabled":true,
-      "lastInsertTime":1462427358127
+      "lastInsertDate": "2016-05-19T08:13:40.000Z"
    },
    {
       "name":"sport-car",
       "enabled":true,
-      "lastInsertTime":1456044144000
+      "lastInsertDate": "2016-05-19T08:13:45.000Z"
    },
    {
       "name":"card",
       "enabled":true,
-      "lastInsertTime":1456012800000
+      "lastInsertDate": "2016-05-19T08:13:40.000Z"
    }
 ]
 ```

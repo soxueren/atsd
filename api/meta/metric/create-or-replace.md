@@ -24,7 +24,7 @@ The replace request for an existing metric doesn't affect any series data since 
 
 ### Fields
 
-Refer to Fields specified in [Metrics List](list.md#fields-1) method.
+Refer to Fields specified in [Metrics List](list.md#fields) method.
 
 ## Response
 

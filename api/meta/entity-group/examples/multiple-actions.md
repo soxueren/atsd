@@ -2,11 +2,9 @@
 
 ## Descriprion
 
-This method supports multiple actions for the same entity group. It can be used to delete and add entities within one request.
+The PATCH method provides a way to execute multiple membership actions for the same entity group in one request.
 
-<aside class="notice">
-The server cannot execute a request containing multiple actions atomically. The server will abort processing on first error, previously executed actions will not be rolled back.
-</aside>
+Note that the server cannot execute a request containing multiple actions atomically. The server will abort processing on first error, and previously completed actions will not be rolled back.
 
 ## Request
 

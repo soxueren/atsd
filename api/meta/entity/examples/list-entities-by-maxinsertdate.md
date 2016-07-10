@@ -2,7 +2,7 @@
 
 ## Description
 
-List entities with `lastInsertDate` less than 2016-05-19T08:13:40.000Z
+List entities with last insert date before 2016-05-19T08:13:40.000Z.
 
 ## Request
 
@@ -13,22 +13,18 @@ GET https://atsd_server:8443/api/v1/entities?maxInsertDate=2016-05-19T08:13:40.0
 ```
 
 ## Response
+
 ```json
 [
    {
-      "name":"car",
-      "enabled":true,
-      "lastInsertTime":1462427358127
-   },
-   {
       "name":"nurswgvml017",
       "enabled":true,
-      "lastInsertTime":1462427358127
+      "lastInsertDate": "2016-05-19T08:11:23.000Z"
    },
    {
-      "name":"number",
+      "name":"nurswgvml01",
       "enabled":true,
-      "lastInsertTime":1462427358127
+      "lastInsertDate": "2016-05-19T08:12:00.000Z"
    }
 ]
 ```

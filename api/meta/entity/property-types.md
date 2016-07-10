@@ -22,7 +22,7 @@ Retrieve a list property types for the entity.
 
 | **Parameter** | **Type** | **Description** |
 |:---|:---|:---|
-| minInsertDate | string | Include property types that have been collected at or after the specified date. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax. |
+| minInsertDate | string | Include property types with last collection date at or after the specified date. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax. |
 
 ## Response
 

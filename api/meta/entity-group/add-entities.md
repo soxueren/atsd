@@ -80,4 +80,4 @@ None.
 
 ## Additional examples
 
-* [Add multiple entities](examples/add-multiple-entities.md)
+* [Multiple Actions](examples/multiple-actions.md)

@@ -20,7 +20,7 @@ Retrieve properties and tags for the specified metric.
 
 ### Fields
 
-Refer to Response Fields in [Metrics: List](list.md#fields-1)
+Refer to Response Fields in [Metrics: List](list.md#fields)
 
 ## Example
 

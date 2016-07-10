@@ -1,6 +1,6 @@
 # List entities by minInsertDate
 
-List entities with `lastInsertDate` equal or greater than 2016-05-18T22:13:40.000Z
+List entities with last insert date at or after 2016-05-18T22:13:40Z.
 
 ## Request
 
@@ -15,19 +15,14 @@ GET https://atsd_host:8443/api/v1/entities?minInsertDate=2016-05-18T22:13:40.000
 ```json
 [
    {
-      "name":"weather",
+      "name":"nurswgvml201",
       "enabled":true,
-      "lastInsertTime":1464267381000
+      "lastInsertDate": "2016-05-18T22:13:55.000Z"
    },
    {
-      "name":"animal",
+      "name":"nurswgvml221",
       "enabled":true,
-      "lastInsertTime":1463654306731
-   },
-   {
-      "name":"plant",
-      "enabled":true,
-      "lastInsertTime":1464267373920
+      "lastInsertDate": "2016-05-18T22:13:41.012Z"
    }
 ]
 ```

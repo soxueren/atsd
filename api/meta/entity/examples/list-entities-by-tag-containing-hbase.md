@@ -5,13 +5,13 @@
 ### URI
 
 ```elm
-GET https://atsd_server:8443/api/v1/entities?timeFormat=iso&limit=2&tags=app&expression=name%20like%20%27nur%27%20and%20lower%28tags.app%29%20like%20%27hbase%27
+GET https://atsd_server:8443/api/v1/entities?timeFormat=iso&limit=2&tags=app&expression=name%20LIKE%20%27nur%27%20and%20lower%28tags.app%29%20LIKE%20%27hbase%27
 ```
 
 ### Expression
 
 ```
-name like 'nur*' and `lower(tags.app)` like '*hbase*'
+name LIKE 'nur*' and lower(tags.app) LIKE '*hbase*'
 ```
 
 ## Response
@@ -33,6 +33,7 @@ name like 'nur*' and `lower(tags.app)` like '*hbase*'
     }
 }]
 ```
-<aside class="success">
-Note: 'lower(text)' is a utility function. Alternatively, any Java string functions can be used to modify values, for example: 'tags.app.toLowerCase()'
-</aside>
+
+> 'lower(text)' is a built-in utility string function. 
+> Alternatively, any Java string functions can be used to modify the value, for example: 'tags.app.toLowerCase()'
+

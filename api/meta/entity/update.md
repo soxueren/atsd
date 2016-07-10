@@ -21,9 +21,9 @@ Unlike the [replace method](create-or-replace.md), fields and tags that are not 
 ### Fields
 
 |**Name**|**Type**|**Description**|
-|:---|:---|
+|:---|:---|:---|
 | enabled | boolean | Enabled status. Default: true. Incoming data is discarded for a disabled entity.|
-| tags | object | Object containing entity tags, where field name represents tag name and field value is tag value.<br>`{"tag-1":string,"tag-2":string}`|
+| tags | object | Object containing entity tags, where field name represents tag name and field value is tag value.<br>Example : `{"tag-1":string,"tag-2":string}`|
 
 ## Response
 
