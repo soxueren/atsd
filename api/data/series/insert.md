@@ -7,13 +7,9 @@ Insert a timestamped array of numbers for a given series identified by metric, e
 * Entity name, metric name, and tag names can contain only printable characters. Names are case-insensitive and are converted to lower case when stored.
 * Tag values are case-sensitive and are stored as submitted.
 * New entities, metrics, and tag names are created automatically.
-* New metrics are initialized with `float` data type by default. To store number in another data type, create or update the metric using the web interface or Meta API [metric update method](/api/meta/metric/update.md).
-
-Date limits:
-
-* Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 millisecond from Epoch time.
-* Maximum date that can be stored by the database is **2106-02-07T06:59:59.999Z**, or 4294969199999 milliseconds from Epoch time.
-* If millisecond date is negative, it is replaced with current server time.
+* New metrics are initialized with `float` data type by default.
+* If an insert for a new metric contains `version` in the first [Sample](#sample-object), the metric will be registered as versioned.
+* To change the data type, create or update the metric using the web interface or [metric update API method](/api/meta/metric/update.md).
 
 ## Request
 
@@ -29,15 +25,39 @@ None.
 
 The request contains an array of series objects each containing an array of timestamped samples. 
 
-|**Field**|**Type**|**Description**|
+|**Name**|**Type**|**Description**|
 |:---|:---|:---|
 | entity | string | [**Required**] Entity name |
 | metric | string | [**Required**] Metric name |
 | tags | object | Object containing series tags, where field name represents tag name and field value is tag value.<br>`{"tag-1":string,"tag-2":string}` |
-| type | string | Type of inserted data: `HISTORY`, `FORECAST`. Default value: `HISTORY` |
-| version | object | Object containing version source and status fields for versioned metrics.<br>`{"source":string, "status":string}` |
-|forecastName| string | Forecast name. <br>Applicable when `type` is set to `FORECAST`. <br>`forecastName` can be used to store a custom forecast identified by name. <br>If `forecastName` is omitted, the values overwrite the default forecast.  |
-| data | array | [**Required**] Array of `{"t":number,"v":number}` objects, <br>where `t` is time in UNIX milliseconds and `v` is the metric's numeric value at time `t`. <br>Time can be also specified in ISO format using `d` field, for example:<br>`{"d":"2016-06-01T12:08:42.518Z", "v":50.8}`<br>To insert `NaN` (not a number), set `v` to `null`, for example: `{"t":1462427358127, "v":null}`<br>If `type` is set to `FORECAST`, the object `{t,v}` can include an additional `s` field containing standard deviation of the forecast value `v`, for example  `{"t":1462427358127, "v":80.4, "s":12.3409}`.<br>If time is negative milliseconds, the server replaces it with current server time. |
+| type | string | Type of inserted data: `HISTORY`, `FORECAST`. Default: `HISTORY` |
+| forecastName | string | Forecast name. <br>Applicable if `type` is `FORECAST`.<br>`forecastName` can be used to store a custom forecast identified by name. <br>If `forecastName` is omitted, the values overwrite the default forecast.  |
+| data | array | [**Required**] Array of [Sample](#sample-object) objects, for example `[{"d":"2016-06-01T12:08:42.518Z", "v":50.8}]`.|
+
+#### Sample Object
+
+* The sample object contains a numeric value and the time when it was observed.
+* The object may contain sample time in Epoch milliseconds (`t` field) or ISO format (`d` field).
+* If sample time is before `1970-01-01T00:00:00Z`, it will be replaced with current server time.
+* Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 millisecond from Epoch time.
+* Maximum date that can be stored by the database is **2106-02-07T06:59:59.999Z**, or 4294969199999 milliseconds from Epoch time.
+
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| t | integer | [**Required**] Sample time in Epoch milliseconds, for example `{"t":1464782922000, "v":50.8}`.|
+| d | string | [**Required**] Sample time in ISO format, for example `{"d":"2016-06-01T12:08:42Z", "v":50.8}`. |
+| v | number | [**Required**] Numeric sample value at time `t`/`d`. <br>`null` is supported and will be stored as `NaN` (Not a Number), for example `{"d":"2016-06-01T12:08:42Z", "v": null}` |
+| s | number | Standard deviation of the forecast value `v`, for example  `{"d":"2016-06-01T12:08:42Z", "v":50.8, "s":12.340}`.<br>Applicable if `type` is `FORECAST`.|
+| version | object | Object containing version source and status fields for versioned metrics.<br>`{"source":string, "status":string}`.<br>Applicable if the metric is versioned. |
+
+`data` example:
+
+```json
+"data": [
+	{ "d": "2016-06-05T05:49:18.127Z", "v": 17.7 },
+	{ "d": "2016-06-05T05:49:25.127Z", "v": 14.0 }
+]
+```
 
 #### Number Representation
 
