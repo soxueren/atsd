@@ -16,11 +16,16 @@ Replace entities in the entity group with the specified entity list.
 |:---|:---|:---|
 | group |string|Entity group name.|
 
-### Fields
+### Query Parameters 
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
 | createEntities | boolean | Automatically create new entities from the submitted list if such entities don't exist. Default: true. |
+
+### Fields
+
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
 | entities | array | An array of entity names to be added as members. |
 
 * All existing members that are not included in the request will be removed from members.
@@ -39,7 +44,7 @@ None.
 #### URI
 
 ```elm
-PUT https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities
+PUT https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities?createEntities=true
 ```
 
 #### Payload
@@ -54,7 +59,7 @@ PUT https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities
 #### curl
 
 ```elm
-curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities \
+curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities?createEntities=true \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
   --request PUT \
