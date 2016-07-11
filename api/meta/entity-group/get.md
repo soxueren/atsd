@@ -4,6 +4,8 @@
 
 Retrieve information about the specified entity group including its tags.
 
+Entity group with non-empty expression is managed by the server. Adding/removing members of expression-based groups is not supported.
+
 ## Request
 
 | **Method** | **Path** | 

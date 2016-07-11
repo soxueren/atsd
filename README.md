@@ -8,6 +8,7 @@
 	  * [RedHat/CentOS (yum)](installation/redhat-centos-yum.md)
 	  * [RedHat/CentOS (rpm)](installation/redhat-centos-rpm.md)
 	  * [SUSE Linux Enterprise Server (rpm)](installation/sles-rpm.md)
+	  * [Docker (image)](installation/docker.md)
 	  * [VMware VM](installation/vmware-esxi-server-vsphere.md)
 	  * [Oracle VirtualBox VM](installation/virtualbox.md)
 	  * [Other](installation/other-distributions.md)

@@ -2,6 +2,10 @@
 
 ## Description
 
+Retrieve a list of entity groups.
+
+Entity group with non-empty expression s managed by the server. Adding/removing members of expression-based groups is not supported.
+
 ## Request
 
 | **Method** | **Path** | 
@@ -14,7 +18,7 @@
 |:---|:---|:---|
 | expression |string|Expression to include entity groups by name or tags. Use `name` variable for group name. Wildcard `*` is supported.|
 | limit |integer|Maximum number of entity groups to retrieve, ordered by name.|
-| tags |string|Comma-separated list of entity group tags to be included in the response.<br>For example, `tags=table,unit`<br>Specify `tags=*` to include all entity group tags.|
+| tags |string|Comma-separated list of entity group tag names to be displayed in the response.<br>For example, `tags=environment,os-type`<br>Specify `tags=*` to print all entity group tags.|
 
 ## Response
 

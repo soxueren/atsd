@@ -4,6 +4,8 @@
 
 Replace entities in the entity group with the specified entity list.
 
+Entity group must have an empty expression in order to be manageable with this method.
+
 ## Request
 
 | **Method** | **Path** | **Content-Type Header**|

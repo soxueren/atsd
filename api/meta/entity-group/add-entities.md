@@ -4,6 +4,8 @@
 
 Add entities as members to the specified entity group.
 
+Entity group must have an empty expression in order to be manageable with this method.
+
 ## Request
 
 | **Method** | **Path** | **Content-Type Header**|
