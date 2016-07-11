@@ -76,7 +76,13 @@ Columns referenced in the `WHERE` clause are replaced by their value for the giv
 
 Typically the `WHERE` clause includes a [time condition](#time-condition) for which the data must be analyzed, although this is not required.
 
-The clause can be built from multiple conditions each comparing values using common comparison operators: `<, >, <=, >=, =, and !=`. The result of comparison is a boolean value, true/false, whereas conditions can be combined by the logical operators `AND`, `OR`, and `NOT`.  `AND` takes precedence over `OR` and `NOT` takes precedence of both. Arithmetic operators such as `*`, `-`, `+`, `/` may be applied to values before they are compared.
+The clause can be built from multiple conditions each comparing values using common comparison operators: `<, >, <=, >=, =, <>, and !=`. 
+
+> Note that `!=` and `<>` operators cannot be applied to time columns: `time` and `datetime`.
+
+The result of comparison is a boolean value, true/false, whereas conditions can be combined by the logical operators `AND`, `OR`, and `NOT`.  `AND` takes precedence over `OR` and `NOT` takes precedence over both. 
+
+Arithmetic operators such as `*`, `-`, `+`, `/`, and `%` (modulo) may be applied to values before they are compared.
 
 ```sql
 SELECT entity, datetime, value, tags.*
@@ -285,7 +291,7 @@ For aliased columns, the underlying column and table names, or expression text a
 
 ## Arithmetic Operators
 
-Arithmetic operators, including `+`, `-`, `*`, and `/` can be applied to one or multiple numeric data type columns.
+Arithmetic operators, including `+`, `-`, `*`, `/`, and `%` (modulo) can be applied to one or multiple numeric data type columns.
 
 ```sql
 SELECT datetime, sum(value), sum(value + 100) / 2 
@@ -300,6 +306,8 @@ SELECT avg(metric1.value*2), sum(metric1.value + metric2.value)
   JOIN metric2
   WHERE time > now - 10 * minute 
 ```
+
+The modulo operator `%` returns the remainder of one number divided by another, for example `14 % 3` (= 2).
 
 ## Match Expressions
 
@@ -327,7 +335,7 @@ SELECT datetime, entity, value, tags.mount_point, tags.file_system
 
 ## Time Condition
 
-Time condition is specified in `WHERE` clause using `time` or `datetime` columns.
+Time condition is specified in the `WHERE` clause using `time` or `datetime` columns.
 
 The `time` column accepts Unix milliseconds whereas `datetime` column accepts literal date in ISO 8601 format with optional millisecond precision.
 
@@ -344,6 +352,8 @@ SELECT datetime, entity, value
   FROM "mpstat.cpu_busy" 
 WHERE time >= previous_minute
 ```
+
+> Note that `!=` and `<>` operators are not supported with time columns: `time` and `datetime`.
 
 ## Period
 

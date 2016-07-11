@@ -23,7 +23,7 @@ Retrieve a list of metrics collected by the entity.
 | expression | string | Expression to include metrics by name or tags. Use `name` variable for metric name. Wildcard `*` is supported.|
 | minInsertDate | string | Include metrics with last insert date at or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 | maxInsertDate | string | Include metrics with last insert date less than specified time.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
-| useEntityInsertTime | boolean | If true, `lastInsertDate` is calculated for the specified entity and metric.<br>Otherwise, lastInsertDate represents last time for all entities. Default: false. |
+| useEntityInsertTime | boolean | If true, `lastInsertDate` is calculated for the specified entity and metric.<br>Otherwise, `lastInsertDate` represents last time for all entities. Default: false. |
 | limit | integer | Maximum number of metrics to retrieve, ordered by name. |
 | tags | string | Comma-separated list of metric tags to be included in the response.<br>For example, `tags=table,unit`<br>Specify `tags=*` to include all metric tags.|
 
