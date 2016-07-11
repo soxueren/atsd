@@ -4,7 +4,7 @@
 
 Retrieve a list of entity groups.
 
-Entity group with non-empty expression s managed by the server. Adding/removing members of expression-based groups is not supported.
+Membership in entity groups with non-empty expression are managed by the server. Adding/removing members of expression-based groups is not supported.
 
 ## Request
 
