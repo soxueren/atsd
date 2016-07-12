@@ -22,9 +22,10 @@ An array of query objects containing the following filtering fields:
 
 | **Field** | **Type** | **Description** |
 |---|---|---|
+| type | string | Type of underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default: `HISTORY` |
 | metric | string | [**Required**] Metric name |
 | tags | object  | Object with `name=value` fields. <br>Matches series with tags that contain the same fields but may also include other fields. <br>Tag field values support `?` and `*` wildcards. |
-| type | string | Type of underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default: `HISTORY` |
+| exactMatch | boolean | `tags` match operator. _Exact_ match if true, _partial_ match if false. Default: **false**.<br>_Exact_ match selects series with exactly the same `tags` as requested.<br>_Partial_ match selects series with tags that contain requested tags but may also include other tags.|
 
 #### Entity Filter Fields
 
@@ -140,6 +141,7 @@ POST https://atsd_host:8443/api/v1/series/query
 * [Multiple Tag Values](examples/query-tags-multiple.md)
 * [Wildcard: All Values](examples/query-tags-wildcard.md)
 * [Wildcard: Expression](examples/query-tags-wildcard-expression.md)
+* [Exact Tag Match](examples/query-tags-exact-match.md)
 * [Unknown Tag](examples/query-tags-unknown.md)
 
 ### Entity Filter
