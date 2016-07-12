@@ -1111,6 +1111,7 @@ Scheduled queries are always executed under administrative permissions.
 - [Interpolation Edges](examples/interpolate-edges.md)
 - [Join](examples/join.md)
 - [Join Using Entity](examples/join-using-entity.md)
+- [Join: Derived Series](examples/join-derived-series.md)
 - [Outer Join With Aggregation](examples/outer-join-with-aggregation.md)
 - [Outer Join](examples/outer-join.md)
 - [Partitioning using Row Number Function](examples/row-number.md)
