@@ -4,13 +4,13 @@
 
 Add entities as members to the specified entity group.
 
-Entity group must have an empty expression in order to be manageable with this method.
+> Entity group must have an empty expression in order to be manageable with this method.
 
 ## Request
 
 | **Method** | **Path** | **Content-Type Header**|
 |:---|:---|---:|
-| PATCH | `/api/v1/entity-groups/{group}/entities` | `application/json` |
+| POST | `/api/v1/entity-groups/{group}/entities/add` | `application/json` |
 
 ### Path Parameters 
 
@@ -18,13 +18,22 @@ Entity group must have an empty expression in order to be manageable with this m
 |:---|:---|:---|
 | group |string|Entity group name.|
 
-### Fields
+### Query Parameters 
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-| action | string | **[Required]** Must be set to `add` for this action. |
 | createEntities | boolean | Automatically create new entities from the submitted list if such entities don't exist. Default: true. |
-| entities | array | An array of entity names to be added as members. |
+
+### Payload
+
+An array of entity names.
+
+```json
+[
+  "entity-1",
+  "entity-2"
+]
+```
 
 ## Response
 
@@ -47,33 +56,26 @@ If createEntities is false, and the request contains a non-existing entity, the 
 #### URI
 
 ```elm
-PATCH https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities
+POST https://atsd_host:8443/api/v1/entity-groups/nmon-aix/entities/add
 ```
 
 #### Payload
 
 ```json
 [
-  {
-    "action" : "add",
-    "createEntities": true,
-    "entities" : 
-        [
-            {"name":"nurswgvml010"},
-            {"name":"nurswgvml011"}
-        ]
-  }
+  "nurswgvml010", 
+  "nurswgvml011"
 ]
 ```
 
 #### curl
 
 ```elm
-curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities \
+curl https://atsd_host:8443/api/v1/entity-groups/nmon-aix/entities/add \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
-  --request PATCH \
-  --data '[{"action" : "add","entities" : [{"name":"nurswgvml010"},{"name":"nurswgvml011"}]}]'
+  --request POST \
+  --data '["nurswgvml010", "nurswgvml011"]'
   ```
   
 ### Response
@@ -82,4 +84,3 @@ None.
 
 ## Additional examples
 
-* [Multiple Actions](examples/multiple-actions.md)

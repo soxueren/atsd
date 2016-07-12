@@ -4,13 +4,15 @@
 
 Remove specified entities from members of the specified entity group.
 
-Entity group must have an empty expression in order to be manageable with this method.
+To delete all entities, submit an empty array `[]` with [replace entities](replace-entities.md) method.
+
+> Entity group must have an empty expression in order to be manageable with this method.
 
 ## Request
 
 | **Method** | **Path** | **Content-Type Header**|
 |:---|:---|---:|
-| PATCH | `/api/v1/entity-groups/{group}/entities` | `application/json` |
+| POST | `/api/v1/entity-groups/{group}/entities/delete` | `application/json` |
 
 ### Path Parameters 
 
@@ -18,12 +20,16 @@ Entity group must have an empty expression in order to be manageable with this m
 |:---|:---|:---|
 | group |string|Entity group name.|
 
-### Fields
+### Payload
 
-|**Name**|**Type**|**Description**|
-|:---|:---|:---|
-| action | string | **[Required]** Must be set to `delete` for this action. |
-| entities | array | An array of entity names to be removed as members. |
+An array of entity names to be removed as members.
+
+```json
+[
+  "entity-1",
+  "entity-2"
+]
+```
 
 ## Response
 
@@ -38,32 +44,26 @@ None.
 #### URI
 
 ```elm
-PATCH https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities
+POST https://atsd_host:8443/api/v1/entity-groups/nmon-aix/entities/delete
 ```
 
 #### Payload
 
 ```json
 [
-  {
-    "action" : "delete",
-    "entities" : 
-        [
-            {"name":"nurswgvml007"},
-            {"name":"nurswgvml006"}
-        ]
-  }
+  "nurswgvml010", 
+  "nurswgvml011"
 ]
 ```
 
 #### curl
 
 ```
-curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities \
+curl https://atsd_host:8443/api/v1/entity-groups/nmon-aix/entities/delete \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
-  --request PATCH \
-  --data '[{"action" : "delete","entities" : [{"name":"nurswgvml007"},{"name":"nurswgvml006"}] }]'
+  --request POST \
+  --data '["nurswgvml010", "nurswgvml011"]'
 ```
 
 ### Response
@@ -71,6 +71,3 @@ curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities \
 None.
 
 ## Additional examples
-
-* [Delete all entities](examples/delete-all-entities.md)
-* [Multiple Actions](examples/multiple-actions.md)

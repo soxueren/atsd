@@ -1,16 +1,20 @@
-# Entity Group: Set (Replace) Entities
+# Entity Group: Set Entities
 
 ## Description
 
-Replace entities in the entity group with the specified entity list.
+Set members of the entity group from the specified entity list.
 
-Entity group must have an empty expression in order to be manageable with this method.
+All existing members that are not included in the request will be removed from members.
+
+If the array in the request is empty, all entities are removed from the group and are replaced with an empty list.
+
+> Entity group must have an empty expression in order to be manageable with this method.
 
 ## Request
 
 | **Method** | **Path** | **Content-Type Header**|
 |:---|:---|---:|
-| PUT | `/api/v1/entity-groups/{group}/entities` | `application/json` |
+| POST | `/api/v1/entity-groups/{group}/entities/set` | `application/json` |
 
 ### Path Parameters 
 
@@ -24,14 +28,16 @@ Entity group must have an empty expression in order to be manageable with this m
 |:---|:---|:---|
 | createEntities | boolean | Automatically create new entities from the submitted list if such entities don't exist. Default: true. |
 
-### Fields
+### Payload
 
-|**Name**|**Type**|**Description**|
-|:---|:---|:---|
-| entities | array | An array of entity names to be added as members. |
+An array of entity names to be set as members of this group.
 
-* All existing members that are not included in the request will be removed from members.
-* If the entity list in the request is empty, all entities are removed from the group and are replaced with an empty list.
+```json
+[
+  "entity-1",
+  "entity-2"
+]
+```
 
 ## Response
 
@@ -46,26 +52,26 @@ None.
 #### URI
 
 ```elm
-PUT https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities?createEntities=true
+POST https://atsd_host:8443/api/v1/entity-groups/nmon-aix/entities/set?createEntities=true
 ```
 
 #### Payload
 
 ```json
 [
-{"name":"nurswgvml007"},
-{"name":"nurswgvml006"}
+  "nurswgvml010", 
+  "nurswgvml011"
 ]
 ```
 
 #### curl
 
 ```elm
-curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities?createEntities=true \
+curl https://atsd_host:8443/api/v1/entity-groups/nmon-aix/entities/set?createEntities=true \
   --insecure --verbose --user {username}:{password} \
   --header "Content-Type: application/json" \
-  --request PUT \
-  --data '[{"name":"nurswgvml007"},{"name":"nurswgvml006"}]'
+  --request POST \
+  --data '["nurswgvml010", "nurswgvml011"]'
   ```
 ### Response
 
