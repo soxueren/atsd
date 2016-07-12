@@ -29,7 +29,7 @@
     * [Meta](api/meta#overview)
       * Metrics: [list](api/meta/metric/list.md), [get](api/meta/metric/get.md), [update](api/meta/metric/update.md), [delete](api/meta/metric/delete.md), [creare/replace](api/meta/metric/create-or-replace.md), [series](api/meta/metric/series.md)
       * Entities: [list](api/meta/entity/list.md), [get](api/meta/entity/get.md), [update](api/meta/entity/update.md), [delete](api/meta/entity/delete.md), [creare/replace](api/meta/entity/create-or-replace.md), [metrics](api/meta/entity/metrics.md), [entity-groups](api/meta/entity/entity-groups.md), [property-types](api/meta/entity/property-types.md)
-      * Entity Groups: [list](api/meta/entity-group/list.md), [get](api/meta/entity-group/get.md), [update](api/meta/entity-group/update.md), [delete](api/meta/entity-group/delete.md), [creare/replace](api/meta/entity-group/create-or-replace.md), [get-entities](api/meta/entity-group/get-entities.md), [add-entities](api/meta/entity-group/add-entities.md), [replace-entities](api/meta/entity-group/replace-entities.md), [delete-entities](api/meta/entity-group/delete-entities.md)
+      * Entity Groups: [list](api/meta/entity-group/list.md), [get](api/meta/entity-group/get.md), [update](api/meta/entity-group/update.md), [delete](api/meta/entity-group/delete.md), [creare/replace](api/meta/entity-group/create-or-replace.md), [get-entities](api/meta/entity-group/get-entities.md), [add-entities](api/meta/entity-group/add-entities.md), [set-entities](api/meta/entity-group/set-entities.md), [delete-entities](api/meta/entity-group/delete-entities.md)
     * [SQL](api/sql#overview)  
 		* [Syntax](api/sql#syntax)
 		* [Interpolation](api/sql#interpolation)
