@@ -86,7 +86,7 @@ Arithmetic operators such as `*`, `-`, `+`, `/`, and `%` (modulo) may be applied
 
 ```sql
 SELECT entity, datetime, value, tags.*
-  FROM df.disk_used
+  FROM "df.disk_used"
 WHERE datetime > now - 15 * minute
   AND (entity IN ('nurswgvml007', 'nurswgvml010') 
        OR tags.file_system LIKE '/dev/*'
@@ -141,7 +141,7 @@ New columns can be created by applying functions and arithmetic expressions to e
 SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
   FROM "cpu_system" t1
   JOIN "cpu_user" t2
-  WHERE datetime > now - 1*MINUTE
+WHERE datetime > now - 1*MINUTE
 ```
 
 The full list of predefined columns may be requested with `SELECT *` syntax, except for queries with `GROUP BY` clause.
@@ -154,15 +154,33 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 ```
 
 ```ls
-| cpu_busy.entity | memfree.entity | cpu_busy.time | memfree.time  | cpu_busy.value | memfree.value | 
-|-----------------|----------------|---------------|---------------|----------------|---------------| 
-| nurswgvml006    | nurswgvml006   | 1466082001000 | 1466082001000 | 37.1           | null          | 
-| nurswgvml006    | nurswgvml006   | 1466082012000 | 1466082012000 | null           | 67932.0       | 
-| nurswgvml006    | nurswgvml006   | 1466082017000 | 1466082017000 | 16.0           | null          | 
-| nurswgvml006    | nurswgvml006   | 1466082027000 | 1466082027000 | null           | 73620.0       | 
+| t1.entity       | t1.datetime              | t1.value       | t2.entity      | t2.datetime              | t2.value      | 
+|-----------------|--------------------------|----------------|----------------|--------------------------|---------------| 
+| nurswgvml006    | 2016-06-16T13:00:01.000Z | 37.1           | nurswgvml006   | 2016-06-16T13:00:01.000Z | null          | 
+| nurswgvml006    | 2016-06-16T13:00:12.000Z | null           | nurswgvml006   | 2016-06-16T13:00:12.000Z | 67932.0       | 
+| nurswgvml006    | 2016-06-16T13:00:17.000Z | 16.0           | nurswgvml006   | 2016-06-16T13:00:17.000Z | null          | 
+| nurswgvml006    | 2016-06-16T13:00:27.000Z | null           | nurswgvml006   | 2016-06-16T13:00:27.000Z | 73620.0       | 
 ```
 
-`time` and `datetime` column are interchangeable and may be used as aliases, for example in the `GROUP BY` clause and `SELECT` expression.
+In case of `JOIN` query, `SELECT *` syntax can be applied to each table separately.
+
+```sql
+SELECT t1.*, t2.value FROM "mpstat.cpu_busy" t1 
+  OUTER JOIN "meminfo.memfree" t2
+WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
+  AND entity = 'nurswgvml006'
+```
+
+```ls
+| t1.entity       | t1.datetime              | t1.value       | t2.value | 
+|-----------------|--------------------------|----------------|----------| 
+| nurswgvml006    | 2016-06-16T13:00:01.000Z | 37.1           | null     | 
+| nurswgvml006    | 2016-06-16T13:00:12.000Z | null           | 67932.0  | 
+| nurswgvml006    | 2016-06-16T13:00:17.000Z | 16.0           | null     | 
+| nurswgvml006    | 2016-06-16T13:00:27.000Z | null           | 73620.0  | 
+```
+
+`time` and `datetime` column are interchangeable and may be used as equivalents, for example in the `GROUP BY` clause and `SELECT` expression.
 
 ```sql
 SELECT entity, datetime, count(*)
@@ -183,7 +201,7 @@ Tag values are referenced in `SELECT` expression by specifying `tags.*`, `tags`,
 
 ```sql
 SELECT datetime, entity, value, tags.*, tags, tags.mount_point, tags.file_system
-  FROM df.disk_used 
+  FROM "df.disk_used" 
 WHERE entity = 'nurswgvml010' AND datetime > now - 1*MINUTE
   ORDER BY datetime
 ```
@@ -198,11 +216,11 @@ WHERE entity = 'nurswgvml010' AND datetime > now - 1*MINUTE
 
 ```sql
 SELECT entity, count(value), tags.*
- FROM df.disk_used
+ FROM "df.disk_used"
 WHERE datetime > now - 5 * minute
  AND entity = 'nurswgvml010'
  AND tags.mount_point = '/'
- GROUP BY entity, tags
+GROUP BY entity, tags
 ```
 
 ```ls
@@ -215,24 +233,44 @@ WHERE datetime > now - 5 * minute
 
 Entity tag values can be included in `SELECT` expression by specifying `entity.tags.{tag-name}` as column name.
 
-`tags` is a map object whose properties can be accessed with key. If the property is not present, the `entity.tags.{tag-name}` expression returns NULL.
+`entity.tags` is a map object whose properties can be accessed with `{tag-name}` key.
+
+If there is no record for the specified key, the `entity.tags.{tag-name}` expression returns NULL.
 
 ```sql
 SELECT entity, entity.tags.os, entity.tags.app, avg(value) 
   FROM "mpstat.cpu_busy"
-WHERE time > current_hour
+WHERE datetime > current_hour
   GROUP BY entity 
 ```
 
 ```ls
 | entity       | entity.tags.os | entity.tags.app       | avg(value) | 
 |--------------|----------------|-----------------------|------------| 
-| nurswgvml006 | Linux          | Hadoop/HBASE          | 99.8       | 
-| nurswgvml007 | Linux          | ATSD                  | 16.0       | 
-| nurswgvml010 | Linux          | SVN, Jenkins, Redmine | 3.9        | 
-| nurswgvml011 | Linux          | HMC Simulator, mysql  | 5.9        | 
-| nurswgvml102 | Linux          | Router                | 1.2        | 
-| nurswgvml502 | null           | null                  | 3.1        | 
+| nurswgvml006 | Linux          | Hadoop/HBASE          | 29.9       | 
+| nurswgvml007 | Linux          | ATSD                  | 32.4       | 
+| nurswgvml009 | null           | Oracle EM             | 35.9       | 
+| nurswgvml010 | Linux          | SVN, Jenkins, Redmine | 6.4        | 
+| nurswgvml011 | Linux          | HMC Simulator, mysql  | 5.6        | 
+| nurswgvml102 | Linux          | Router                | 1.5        | 
+| nurswgvml502 | null           | null                  | 16.3       | 
+```
+
+To filter records with or without specified entity tags, use `IS NULL` and `IS NOT NULL` conditions:
+
+```sql
+SELECT entity, entity.tags.os, entity.tags.app, avg(value) 
+  FROM "mpstat.cpu_busy"
+WHERE datetime > current_hour
+  AND entity.tags.os IS NULL
+GROUP BY entity 
+```
+
+```ls
+| entity       | entity.tags.os | entity.tags.app | avg(value) | 
+|--------------|----------------|-----------------|------------| 
+| nurswgvml009 | null           | Oracle EM       | 37.2       | 
+| nurswgvml502 | null           | null            | 15.4       | 
 ```
 
 ### Group By Columns
@@ -241,7 +279,7 @@ In `GROUP BY` query, `datetime` and `PERIOD()` columns return the same value, th
 
 ```sql
 SELECT entity, datetime, date_format(PERIOD(5 minute)), AVG(value) 
-  FROM gc_invocations_per_minute 
+  FROM "mpstat.cpu_busy"
 WHERE time >= current_hour AND time < next_hour
   GROUP BY entity, PERIOD(5 minute)
 ```
@@ -296,7 +334,7 @@ Arithmetic operators, including `+`, `-`, `*`, `/`, and `%` (modulo) can be appl
 ```sql
 SELECT datetime, sum(value), sum(value + 100) / 2 
   FROM gc_invocations_per_minute 
-  WHERE time > now - 10 * minute 
+WHERE time > now - 10 * minute 
   GROUP BY period(2 minute)
 ```
 
@@ -304,7 +342,7 @@ SELECT datetime, sum(value), sum(value + 100) / 2
 SELECT avg(metric1.value*2), sum(metric1.value + metric2.value) 
   FROM metric1 
   JOIN metric2
-  WHERE time > now - 10 * minute 
+WHERE time > now - 10 * minute 
 ```
 
 The modulo operator `%` returns the remainder of one number divided by another, for example `14 % 3` (= 2).
@@ -318,7 +356,7 @@ The modulo operator `%` returns the remainder of one number divided by another, 
 ```sql
 SELECT datetime, entity, value, tags.mount_point, tags.file_system 
   FROM "df.disk_used_percent" 
-  WHERE tags.file_system LIKE '/dev/*'
+WHERE tags.file_system LIKE '/dev/*'
   AND datetime > now - 1*HOUR
 ```
 
@@ -375,8 +413,8 @@ PERIOD({count} {unit} [, interpolation [, align]])
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute, NONE, END_TIME)), AVG(value) 
-  FROM gc_invocations_per_minute 
-  WHERE time >= current_hour AND time < next_hour
+  FROM "mpstat.cpu_busy" 
+WHERE time >= current_hour AND time < next_hour
   GROUP BY entity, PERIOD(5 minute, NONE, END_TIME)
 ```
 
@@ -384,8 +422,8 @@ The period specified in `GROUP BY` clause can be entered without _align_ and _in
 
 ```sql
 SELECT entity, datetime, AVG(value) 
-  FROM gc_invocations_per_minute 
-  WHERE time >= current_hour AND time < next_hour
+  FROM "mpstat.cpu_busy" 
+WHERE time >= current_hour AND time < next_hour
   GROUP BY entity, PERIOD(5 minute, NONE, END_TIME)
 ```
 
@@ -776,8 +814,8 @@ This allows merging of virtual tables with different tag columns, including merg
 ```sql
 SELECT entity, datetime, AVG(t1.value), AVG(t2.value), tags.*
   FROM mpstat.cpu_busy t1
-JOIN USING entity df.disk_used t2
-  WHERE time > current_hour
+  JOIN USING entity df.disk_used t2
+WHERE time > current_hour
   AND entity = 'nurswgvml007' 
 GROUP BY entity, tags, period(1 minute)
 ```
@@ -821,7 +859,7 @@ SELECT datetime, entity, avg(t1.value) as avg_cpu, avg(t2.value) as avg_mem
   OUTER JOIN "meminfo.memfree" t2
 WHERE datetime >= '2016-06-16T13:02:40.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
   AND entity = 'nurswgvml006'
-  GROUP BY entity, period(1 MINUTE)
+GROUP BY entity, period(1 MINUTE)
 ```
 
 ```ls
@@ -842,7 +880,7 @@ SELECT datetime, entity, LAST(t1.value) as cpu, LAST(t2.value) as mem
   OUTER JOIN "meminfo.memfree" t2
 WHERE datetime >= '2016-06-16T13:02:40.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
   AND entity = 'nurswgvml006'
-  GROUP BY entity, period(1 MINUTE)
+GROUP BY entity, period(1 MINUTE)
 ```
 
 >  Note that records returned by a `JOIN USING entity` condition include series with last insert date greater than start date specified in the query.
@@ -906,12 +944,16 @@ Examples:
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss')`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PST')`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00')`
+* `date_format(time, 'yyyy-MM-dd HH:mm:ss ZZ', 'PDT')`
 
 ```sql
-SELECT value, time, date_format(time), 
+SELECT time, date_format(time), 
   date_format(time, "yyyy-MM-dd'T'HH:mm:ssZ"),
   date_format(time, 'yyyy-MM-dd HH:mm:ss'),
-  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PST')
+  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PST'),
+  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00'),
+  date_format(time, 'yyyy-MM-dd HH:mm:ss ZZ', 'PST'),
+  date_format(time, 'yyyy-MM-dd HH:mm:ss ZZ', 'PST')
 FROM "mpstat.cpu_busy"
   WHERE datetime > now - 5 * minute
   LIMIT 1
@@ -923,11 +965,24 @@ FROM "mpstat.cpu_busy"
 | 7.1   | 1468046047000 | 2016-07-09T06:34:07.000Z | 2016-07-09T06:34:07+0000                   | 2016-07-09 06:34:07                     | 2016-07-08 23:34:07                           | 
 ```
 
+```ls
+| format                                                 | date_format value          | 
+|--------------------------------------------------------|----------------------------| 
+| time                                                   | 1468411675000              | 
+| date_format(time)                                      | 2016-07-13T12:07:55.000Z   | 
+| date_format(time,'yyyy-MM-dd'T'HH:mm:ss.SSS'Z'','UTC') | 2016-07-13T12:07:55.000Z   | 
+| date_format(time,'yyyy-MM-dd HH:mm:ss')                | 2016-07-13 12:07:55        | 
+| date_format(time,'yyyy-MM-dd HH:mm:ss','PST')          | 2016-07-13 05:07:55        | 
+| date_format(time,'yyyy-MM-dd HH:mm:ss','GMT-08:00')    | 2016-07-13 04:07:55        | 
+| date_format(time,'yyyy-MM-dd HH:mm:ss Z','PST')        | 2016-07-13 05:07:55 -0700  | 
+| date_format(time,'yyyy-MM-dd HH:mm:ss ZZ','PST')       | 2016-07-13 05:07:55 -07:00 | 
+```
+
 ## Case Sensitivity
 
-SQL keywords are case-insensitive.
+SQL keywords are case-**in**sensitive.
 
-Entity names, metric names, and tag names are also case-insensitive. 
+Entity names, metric names, and tag names are also case-**in**sensitive. 
 
 Tag values are **case-sensitive**.
 
@@ -951,18 +1006,18 @@ Changing the case of tag value condition `tags.file_system = '/DEV/mapper/vg_nur
 
 Scalar expressions such as _number+NULL_ yield `NULL` if any operand is `NULL`, however `NULL`s are ignored by aggregate functions. 
 
+`IS NULL` and `IS NOT NULL` conditions are supported for `tags.{name}` and `tags.entity.{name}` columns in the `WHERE` clause.
+
 ## Unsupported SQL Features
 
 While the [differences](https://github.com/axibase/atsd-jdbc#database-capabilities) between SQL dialect implemented in ATSD and standard SQL are numerous, the following exceptions to widely used constructs are worth mentioning:
 
-* Subqueries are not supported.
 * Self-joins are not supported.
+* Subqueries are not supported.
 * `UNION`, `EXCEPT` and `INTERSECT` operators are not supported.
 * `WITH` operator is supported only in `WITH ROW_NUMBER` clause.
 * Ordering with column numbers, for example `ORDER BY 2, 1` is not supported.
-* `DISTINCT` operator is not supported.
-
-In particular cases it's possible to emulate `DISTINCT` operator with `GROUP BY` clause as illustrated below:
+* `DISTINCT` operator is not supported, although it can be emulated in particular cases with `GROUP BY` clause as illustrated below:
 
 ```sql
 SELECT entity
@@ -990,14 +1045,14 @@ Path is `/api/sql`
 |**Parameter**|**Type**|**Description**|
 |:---|:---|:---|
 |outputFormat | query string|Output format: `csv` or `json`. Default: `json`|
-|q | query string| SELECT query text. The value must be URL-encoded.|
+|q | query string| Query text which must be URL-encoded.|
 
 ### POST
 
 |**Parameter**|**Type**|**Description**|
 |:---|:---|:---|
 |outputFormat | query string|Output format: `csv` or `json`. Default: `json`|
-| | payload| SELECT query text.|
+| | payload| Query text.|
 
 ### Metadata
 
