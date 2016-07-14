@@ -10,7 +10,7 @@ user, this is the easiest and fastest way to install ATSD.
 
 ## Download
 
-* [axibase.com](https://axibase.com/public/atsd_ce.ova)
+* [https://axibase.com/public/atsd_ce.ova](https://axibase.com/public/atsd_ce.ova)
 
 ## Prerequisites
 

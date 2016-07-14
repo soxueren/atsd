@@ -12,6 +12,7 @@
 	  * [VMware VM](installation/vmware-esxi-server-vsphere.md)
 	  * [Oracle VirtualBox VM](installation/virtualbox.md)
 	  * [Other](installation/other-distributions.md)
+      * [Remote HBase Installation](installation/remote-hbase-installation.md)	  
 * [API](api)
     * [Network](api/network#network-api)
       * [series](api/network/series.md)

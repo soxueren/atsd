@@ -13,14 +13,14 @@ By installing Axibase Time Series Database you agree to its **[License Terms and
 | **Distribution** | **Format** | **Installation Guide** |
 | :--- | --- | :---: |
 | Ubuntu/Debian | apt | [View](ubuntu-debian-apt.md)|
-| Ubuntu/Debian  | deb | [View](ubuntu-debian-deb.md) |
+| Ubuntu/Debian  | [deb](https://axibase.com/public/atsd_ce_deb_latest.htm) | [View](ubuntu-debian-deb.md) |
 | Docker | image | [View](docker.md)|
 | RedHat/CentOS| yum | [View](redhat-centos-yum.md)|
-| RedHat/CentOS| rpm | [View](redhat-centos-rpm.md)|
-| SUSE Linux Enterprise Server | rpm   | [View](sles-rpm.md)|
-| VMware Virtual Machine  | ova  | [View](vmware-esxi-server-vsphere.md)|
-| Oracle VirtualBox Virtual Machine | ova  | [View](virtualbox.md)|
-| Other distributions (including ARM devices) | tar.gz | [View](other-distributions.md)|
+| RedHat/CentOS| [rpm](https://axibase.com/public/atsd_ce_rpm_latest.htm) | [View](redhat-centos-rpm.md)|
+| SUSE Linux Enterprise Server | [rpm](https://axibase.com/public/atsd_ce_rpm_latest.htm)   | [View](sles-rpm.md)|
+| VMware Virtual Machine  | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](vmware-esxi-server-vsphere.md)|
+| Oracle VirtualBox Virtual Machine | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](virtualbox.md)|
+| Other distributions (including ARM devices) | [tar.gz](https://axibase.com/public/atsd_ce_distrib_latest.htm) | [View](other-distributions.md)|
 
 ## Tutorials
 
