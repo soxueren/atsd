@@ -338,7 +338,6 @@ WHERE time >= current_hour AND time < next_hour
 
 Columns referenced in the `SELECT` statement must be included in the `GROUP BY` clause.
 
-
 ### Versioning Columns
 
 Versioning columns (`version_status`, `version_source`, `version_time`, `version_datetime`) are currently not supported.
@@ -386,7 +385,7 @@ Arithmetic operators, including `+`, `-`, `*`, `/`, and `%` (modulo) can be appl
 ```sql
 SELECT datetime, sum(value), sum(value + 100) / 2 
   FROM gc_invocations_per_minute 
-WHERE time > now - 10 * minute 
+WHERE datetime > now - 10 * minute 
   GROUP BY period(2 minute)
 ```
 
@@ -394,7 +393,7 @@ WHERE time > now - 10 * minute
 SELECT avg(metric1.value*2), sum(metric1.value + metric2.value) 
   FROM metric1 
   JOIN metric2
-WHERE time > now - 10 * minute 
+WHERE datetime > now - 10 * minute 
 ```
 
 The modulo operator `%` returns the remainder of one number divided by another, for example `14 % 3` (= 2).
@@ -452,22 +451,37 @@ Period is a repeating time interval used to group detailed values occurred in th
 Period syntax:
 
 ```sql
-PERIOD({count} {unit} [, interpolation [, align]])
+PERIOD({count} {unit} [, option])
+
+option = interpolate | align | extend
+interpolate = PREVIOUS | NEXT | LINEAR | VALUE {number}
+extend = EXTEND
+align = START_TIME, END_TIME, FIRST_VALUE_TIME, CALENDAR
+```
+
+Options are separated by comma and can be specified in any order.
+
+```sql
+PERIOD(5 MINUTE)
+PERIOD(5 MINUTE, END_TIME)
+PERIOD(5 MINUTE, CALENDAR, VALUE 0)
+PERIOD(5 MINUTE, VALUE 0, EXTEND)
 ```
 
 | **Name** | **Description** |
 |:---|:---|
 | count  | [**Required**] Number of time units contained in the period. |
 | unit  | [**Required**] [Time unit](/api/series/time-unit.md) such as `MINUTE`, `HOUR`, `DAY`. |
-| interpolation  | Interpolation function, such as `LINEAR`. Default: `NONE`. Refer to [interpolation](#interpolation). |
-| align| Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
+| interpolate  | [Interpolation function](#interpolation), such as `LINEAR` or `VALUE 0`.|
+| extend  | Adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.|
+| align | Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
 
 
 ```sql
-SELECT entity, date_format(PERIOD(5 minute, NONE, END_TIME)), AVG(value) 
+SELECT entity, date_format(PERIOD(5 minute, END_TIME)), AVG(value) 
   FROM "mpstat.cpu_busy" 
-WHERE time >= current_hour AND time < next_hour
-  GROUP BY entity, PERIOD(5 minute, NONE, END_TIME)
+WHERE datetime >= current_hour AND datetime < next_hour
+  GROUP BY entity, PERIOD(5 minute, END_TIME)
 ```
 
 The period specified in `GROUP BY` clause can be entered without _align_ and _interpolation_ fields in `SELECT` statement:
@@ -475,8 +489,8 @@ The period specified in `GROUP BY` clause can be entered without _align_ and _in
 ```sql
 SELECT entity, datetime, AVG(value) 
   FROM "mpstat.cpu_busy" 
-WHERE time >= current_hour AND time < next_hour
-  GROUP BY entity, PERIOD(5 minute, NONE, END_TIME)
+WHERE datetime >= current_hour AND datetime < next_hour
+  GROUP BY entity, PERIOD(5 minute, END_TIME)
 ```
 
 In grouping queries, `time` column returns the same value as `PERIOD()` and `datetime` returns the same value as `date_format(PERIOD())`.
@@ -505,7 +519,7 @@ SELECT entity, date_time, COUNT(value)
   FROM "mpstat.cpu_busy"
 WHERE datetime >= now-1*HOUR AND datetime < now
   AND entity = 'nurswgvml006'
-GROUP BY entity, PERIOD(5 MINUTE, NONE, END_TIME)
+GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 ```
 
 #### `CALENDAR` Alignment
@@ -548,7 +562,7 @@ Such period is `[2016-06-20T15:45:00Z - 2016-06-20T16:30:00Z)`.
 SELECT entity, datetime, COUNT(value) FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-18T10:02:00.000Z' AND datetime < '2016-06-18T10:32:00.000Z'
   AND entity = 'nurswgvml007'
-GROUP BY entity, PERIOD(10 MINUTE, NONE, END_TIME)
+GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
 ```
 
 ```ls
@@ -563,7 +577,7 @@ GROUP BY entity, PERIOD(10 MINUTE, NONE, END_TIME)
 SELECT entity, datetime, COUNT(value) FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-18T10:02:00.000Z' AND datetime <= '2016-06-18T10:32:00.000Z'
   AND entity = 'nurswgvml007'
-GROUP BY entity, PERIOD(10 MINUTE, NONE, END_TIME)
+GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
 ```
 
 ```ls
@@ -582,7 +596,7 @@ GROUP BY entity, PERIOD(10 MINUTE, NONE, END_TIME)
 SELECT entity, datetime, COUNT(value) FROM "mpstat.cpu_busy"
 WHERE datetime > '2016-06-18T10:02:00.000Z' AND datetime < '2016-06-18T10:32:00.000Z'
   AND entity = 'nurswgvml007'
-GROUP BY entity, PERIOD(10 MINUTE, NONE, START_TIME)
+GROUP BY entity, PERIOD(10 MINUTE, START_TIME)
 ```
 
 ```ls
@@ -597,32 +611,44 @@ GROUP BY entity, PERIOD(10 MINUTE, NONE, START_TIME)
 
 By the default, if a period specified in `GROUP BY` clause doesn't contain any detailed values or the period has been filtered out with `HAVING` clause, it will be excluded from the results.
 
-The behaviour can be changed by referencing an interpolation function as part of `PERIOD` clause.
+The behaviour can be changed by referencing an interpolation function as part of the `PERIOD` clause.
 
 | **Name** | **Description** |
 |:---|:---|
-| NONE | No interpolation. Periods without any raw values are excluded from results. |
-| PREVIOUS | Set value for the period based on the previous period's value. |
-| NEXT | Set value for the period based on the next period's value. |
-| LINEAR | Calculate period value using linear interpolation between previous and next period values. |
-| VALUE| Set value for the period to a specific number. |
+| `PREVIOUS` | Set value for the period based on the previous period's value. |
+| `NEXT` | Set value for the period based on the next period's value. |
+| `LINEAR` | Calculate period value using linear interpolation between previous and next period values. |
+| `VALUE {d}`| Set value for the period to number `d`. |
 
 ```sql
 SELECT entity, period(5 MINUTE), avg(value)
-  FROM "mpstat.cpu_busy" WHERE time > current_hour 
+  FROM "mpstat.cpu_busy" WHERE datetime > current_hour 
 GROUP BY entity, period(5 MINUTE, LINEAR)
 ```
 
-> Note that interpolation function is applied after HAVING filter which can remove existing (non-empty) periods due to other conditions.
+### `EXTEND` Option
 
-Interpolation examples:
+Include an optional `EXTEND` parameter to the `PERIOD` clause to append missing periods at the beginning and the end of the selection interval. 
+
+Period values at the beginning of the interval are interpolated with `NEXT` function, whereas values at the end are interpolated with `PREVIOUS` function.
+
+```sql
+SELECT entity, period(5 MINUTE), avg(value)
+  FROM "mpstat.cpu_busy" WHERE datetime > current_hour 
+GROUP BY entity, period(5 MINUTE, VALUE 0, EXTEND)
+```
+
+### `HAVING` Filter 
+
+The interpolation function is applied after `HAVING` filter which can remove existing (non-empty) periods with other conditions. 
+
+Periods removed by the `HAVING` filter will be interpolated similar to missing periods.
+
+### Interpolation Examples
 
 - [Interpolation](examples/interpolate.md)
 - [Interpolation Edges](examples/interpolate-edges.md)
-
-Chartlab examples:
-
-- [Interpolation](https://apps.axibase.com/chartlab/d8c03f11/3/)
+- [Chartlab](https://apps.axibase.com/chartlab/d8c03f11/3/)
 
 ## Grouping
 
@@ -632,7 +658,7 @@ Chartlab examples:
 SELECT entity, avg(value) AS Cpu_Avg 
   FROM "mpstat.cpu_busy"
 WHERE entity IN ('nurswgvml007', 'nurswgvml006', 'nurswgvml011') 
-  AND time > current_hour
+  AND datetime > current_hour
 GROUP BY entity
 ```
 
@@ -650,7 +676,7 @@ ATSD provides a special grouping column `PERIOD` which calculates the start of t
 SELECT datetime, avg(value) AS Cpu_Avg 
   FROM "mpstat.cpu_busy"
 WHERE entity IN ('nurswgvml007', 'nurswgvml006', 'nurswgvml011') 
-  AND time > current_hour
+  AND datetime > current_hour
 GROUP BY period(5 MINUTE)
 ```
 
@@ -670,7 +696,7 @@ The `HAVING` clause enables filtering of grouped rows.
 SELECT entity, avg(value) AS Cpu_Avg 
   FROM "mpstat.cpu_busy"
 WHERE entity IN ('nurswgvml007', 'nurswgvml006', 'nurswgvml011') 
-  AND time > current_hour
+  AND datetime > current_hour
 GROUP BY entity
   HAVING avg(value) > 10
 ```
@@ -744,7 +770,7 @@ The default sort order is undefined. Ordering can be applied by specifying `ORDE
 
 ```sql
 SELECT entity, avg(value) FROM "mpstat.cpu_busy"
-  WHERE time > current_day
+  WHERE datetime > current_day
   GROUP BY entity 
 ORDER BY avg(value) DESC, entity
 ```
@@ -764,7 +790,7 @@ In combination with `LIMIT`, ordering can be used to execute **top-N** queries.
 
 ```sql
 SELECT entity, avg(value) FROM "mpstat.cpu_busy"
-  WHERE time > current_day
+  WHERE datetime > current_day
   GROUP BY entity 
 ORDER BY avg(value) DESC
   LIMIT 2
@@ -874,7 +900,7 @@ This allows merging of virtual tables with different tag columns, including merg
 SELECT entity, datetime, AVG(t1.value), AVG(t2.value), tags.*
   FROM mpstat.cpu_busy t1
   JOIN USING entity df.disk_used t2
-WHERE time > current_hour
+WHERE datetime > current_hour
   AND entity = 'nurswgvml007' 
 GROUP BY entity, tags, period(1 minute)
 ```
@@ -1081,14 +1107,14 @@ While the [differences](https://github.com/axibase/atsd-jdbc#database-capabiliti
 ```sql
 SELECT entity
   FROM "mpstat.cpu_busy"
-WHERE time > now - 1 * MINUTE
+WHERE datetime > now - 1 * MINUTE
   GROUP BY entity
 ```
 
 ```sql
 SELECT DISTINCT entity
   FROM "mpstat.cpu_busy"
-WHERE time > now - 1 * MINUTE
+WHERE datetime > now - 1 * MINUTE
 ```
 
 ## API Endpoint
