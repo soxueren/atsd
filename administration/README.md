@@ -1,5 +1,6 @@
 # Administration
 - [Deployment](deploymentm.md#deployment)
+- [Standalone Deployment](atsd-standalone-installation.md)
 - [Setting up the email client](setting-up-email-client.md#setting-up-the-email-client)
 - [User Authentication](user-authentiication.md#user-authentication)
   - [Form-based Authentication for UI views](user-authentiication.md#form-based-authentication-for-ui-views)
