@@ -561,9 +561,16 @@ SELECT entity, period(5 MINUTE), avg(value)
 GROUP BY entity, period(5 MINUTE, LINEAR)
 ```
 
-> The interpolation function is applied after HAVING filter.
+> Note that interpolation function is applied after HAVING filter which can remove existing (non-empty) periods due to other conditions.
 
-[Interpolation Examples in Chartlab](https://apps.axibase.com/chartlab/d8c03f11/3/)
+Interpolation examples:
+
+- [Interpolation](examples/interpolate.md)
+- [Interpolation Edges](examples/interpolate-edges.md)
+
+Chartlab examples:
+
+- [Interpolation](https://apps.axibase.com/chartlab/d8c03f11/3/)
 
 ## Grouping
 
