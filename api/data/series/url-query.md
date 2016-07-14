@@ -87,8 +87,7 @@ curl https://atsd_host:8443/api/v1/series/csv/nurswgvml007/mpstat.cpu_busy?start
 #### json
 
 ```json
-{
-  "series": [
+[
     {
       "entity": "nurswgvml007",
       "metric": "mpstat.cpu_busy",
@@ -113,7 +112,6 @@ curl https://atsd_host:8443/api/v1/series/csv/nurswgvml007/mpstat.cpu_busy?start
       ]
     }
   ]
-}
 ```
 
 #### csv
