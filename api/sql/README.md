@@ -472,7 +472,7 @@ PERIOD(5 MINUTE, VALUE 0, EXTEND)
 |:---|:---|
 | count  | [**Required**] Number of time units contained in the period. |
 | unit  | [**Required**] [Time unit](/api/series/time-unit.md) such as `MINUTE`, `HOUR`, `DAY`. |
-| interpolate  | [Interpolation function](#interpolation), such as `LINEAR` or `VALUE 0`.|
+| interpolate  | [Interpolation function](#interpolation), such as `LINEAR` or `VALUE 0`, applied to add missing periods.|
 | extend  | Adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.|
 | align | Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
 
@@ -484,7 +484,16 @@ WHERE datetime >= current_hour AND datetime < next_hour
   GROUP BY entity, PERIOD(5 minute, END_TIME)
 ```
 
-The period specified in `GROUP BY` clause can be entered without _align_ and _interpolation_ fields in `SELECT` statement:
+The period specified in `GROUP BY` clause can be entered without option fields in the `SELECT` expression. 
+
+```sql
+SELECT entity, PERIOD(5 minute), AVG(value) 
+  FROM "mpstat.cpu_busy" 
+WHERE datetime >= current_hour AND datetime < next_hour
+  GROUP BY entity, PERIOD(5 minute, END_TIME)
+```
+
+In grouping queries, `time` column returns the same value as `PERIOD()` and `datetime` returns the same value as `date_format(PERIOD())`.
 
 ```sql
 SELECT entity, datetime, AVG(value) 
@@ -492,8 +501,6 @@ SELECT entity, datetime, AVG(value)
 WHERE datetime >= current_hour AND datetime < next_hour
   GROUP BY entity, PERIOD(5 minute, END_TIME)
 ```
-
-In grouping queries, `time` column returns the same value as `PERIOD()` and `datetime` returns the same value as `date_format(PERIOD())`.
 
 ### Period Alignment
 
@@ -670,7 +677,7 @@ GROUP BY entity
 | nurswgvml011 | 5.7     | 
 ```
 
-ATSD provides a special grouping column `PERIOD` which calculates the start of the interval to which the record belongs.
+A special grouping column `PERIOD` calculates the start and end of the period to which the record belongs.
 
 ```sql
 SELECT datetime, avg(value) AS Cpu_Avg 
@@ -690,7 +697,7 @@ GROUP BY period(5 MINUTE)
 
 ### HAVING filter
 
-The `HAVING` clause enables filtering of grouped rows.
+The `HAVING` clause enables filtering of grouped rows. The clause supports only aggregation functions.
 
 ```sql
 SELECT entity, avg(value) AS Cpu_Avg 
