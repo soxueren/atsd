@@ -6,7 +6,7 @@
 SELECT time, value 
   FROM mpstat.cpu_busy 
 WHERE entity = 'nurswgvml007' 
-  AND time > 1466100000000 AND time < 1466200000000
+  AND time >= 1466100000000 AND time < 1466200000000
 LIMIT 3
 ```
 

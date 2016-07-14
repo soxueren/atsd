@@ -131,9 +131,11 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`value`|number|Series value.|
 |`metric`|string|Metric name, same as virtual table name.|
 |`entity`|string|Entity name.|
-|`tags`|string|All series tags, concatenated to `name1=value;name2=value` format.<br>In addition, `SELECT` statement supports `tags.*` syntax which expands to multiple columns.|
 |`tags.{name}`|string|Series tag value.|
+|`tags`|string|All series tags, concatenated to `name1=value;name2=value` format in one column.|
+|`tags.*`|string|Expands to multiple columns, each column containing a separate series tag.|
 |`entity.tags.{name}`|string|Entity tag value.|
+|`entity.groups`|string|List of entity groups, to which the entity belongs, separated by semi-colon `;`.|
 
 New columns can be created by applying functions and arithmetic expressions to existing columns.
 
@@ -144,7 +146,7 @@ SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
 WHERE datetime > now - 1*MINUTE
 ```
 
-The full list of predefined columns may be requested with `SELECT *` syntax, except for queries with `GROUP BY` clause.
+The list of available predefined columns may be requested with `SELECT *` syntax, except for queries with `GROUP BY` clause.
 
 ```sql
 SELECT * FROM "mpstat.cpu_busy" t1 
@@ -180,7 +182,7 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 | nurswgvml006    | 2016-06-16T13:00:27.000Z | null           | 73620.0  | 
 ```
 
-`time` and `datetime` column are interchangeable and may be used as equivalents, for example in the `GROUP BY` clause and `SELECT` expression.
+`time` and `datetime` column are interchangeable and can be used as equivalents, for example in the `GROUP BY` clause and `SELECT` expression.
 
 ```sql
 SELECT entity, datetime, count(*)
@@ -273,6 +275,56 @@ GROUP BY entity
 | nurswgvml502 | null           | null            | 15.4       | 
 ```
 
+### Entity Group Column
+
+`entity.group` column contains a list of entity groups to which the entity belongs.
+
+The column can be specified in `SELECT` expression to print out the ordered list of entity group names, separated by semi-colon.
+
+```sql
+SELECT datetime, entity, value, entity.groups
+  FROM cpu_busy
+WHERE entity LIKE 'nurswgvml00*'
+  AND datetime > current_hour
+ORDER BY datetime 
+```
+
+```ls
+| datetime                 | entity       | value | entity.groups                            | 
+|--------------------------|--------------|-------|------------------------------------------| 
+| 2016-07-14T15:00:06.000Z | nurswgvml009 | 3.0   | nur-collectors;nmon-linux                | 
+| 2016-07-14T15:00:07.000Z | nurswgvml007 | 44.7  | java-loggers;nur-collectors;nmon-linux   | 
+| 2016-07-14T15:00:16.000Z | nurswgvml006 | 4.0   | nur-collectors;nmon-linux;nmon-sub-group | 
+```
+
+`entity.group` column can be referenced in the `WHERE` clause to filter results based on group membership.
+
+Supported syntax:
+
+```sql
+entity.groups IN ('group-1', 'group-2') -- entity belongs to one of the groups listed in IN clause
+entity.groups NOT IN ('group-1', 'group-1') -- entity does NOT belong to any of the groups listed in IN clause
+'group-1' IN entity.groups -- entity belongs to the specified group
+'group-1' NOT IN entity.groups -- entity does NOT belong to the specified group
+```
+
+Entity Group names are case-sensitive.
+
+```sql
+SELECT datetime, entity, value, entity.groups
+  FROM cpu_busy
+WHERE 'java-loggers' IN entity.groups
+  AND datetime > current_hour
+ORDER BY datetime
+```
+
+```ls
+| datetime                 | entity       | value | entity.groups                            | 
+|--------------------------|--------------|-------|------------------------------------------| 
+| 2016-07-14T15:00:07.000Z | nurswgvml007 | 44.7  | java-loggers;nur-collectors;nmon-linux   | 
+| 2016-07-14T15:00:21.000Z | nurswgvml102 | 4.0   | java-loggers;network-rtr                 | 
+```
+
 ### Group By Columns
 
 In `GROUP BY` query, `datetime` and `PERIOD()` columns return the same value, the period's start time, in ISO format. In this case, `date_format(PERIOD(5 minute))` can be omitted.
@@ -295,7 +347,7 @@ Versioning columns (`version_status`, `version_source`, `version_time`, `version
 
 Table and column aliases can be unquoted or enclosed in quotes or double-quotes.
 
-Unquoted alias should start with letter [a-zA-Z], followed by letter, digit or underscore.
+Unquoted alias should start with letter `[a-zA-Z]`, followed by letter, digit or underscore.
 
 `AS` keyword is optional.
 
@@ -1160,6 +1212,7 @@ Scheduled queries are always executed under administrative permissions.
 - [Select Entity Tags As Columns](examples/select-entity-tags-as-columns.md)
 - [Time Condition](examples/time-condition.md)
 - [Order By Time](examples/order-by-time.md)
+- [Filter by Entity](examples/filter-by-entity.md)
 - [Filter by Tag](examples/filter-by-tag.md)
 - [All Tags](examples/all-tags.md)
 - [Select series without Tag](examples/filter-null-tag.md)
