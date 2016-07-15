@@ -1,4 +1,4 @@
-# Time Condition
+# Filter by Date
 
 ## Query with Milliseconds
 
@@ -7,7 +7,6 @@ SELECT time, value
   FROM mpstat.cpu_busy 
 WHERE entity = 'nurswgvml007' 
   AND time >= 1466100000000 AND time < 1466200000000
-LIMIT 3
 ```
 
 ## Results
@@ -27,7 +26,6 @@ SELECT datetime, value
   FROM mpstat.cpu_busy 
 WHERE entity = 'nurswgvml007' 
   AND datetime >= "2016-06-18T20:00:00.000Z" AND datetime < "2016-06-18T21:00:00.000Z"
-LIMIT 3
 ```
 
 ## Results
@@ -42,12 +40,13 @@ LIMIT 3
 
 ## Query with endtime
 
+Both `time` and `datetime` columns support [endtime](/end-time-syntax.md) syntax.
+
 ```sql
 SELECT datetime, value 
   FROM mpstat.cpu_busy 
 WHERE entity = 'nurswgvml007' 
   AND datetime >= previous_hour AND time < current_hour
-LIMIT 3
 ```
 
 ## Results

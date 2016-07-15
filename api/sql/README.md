@@ -470,11 +470,11 @@ PERIOD(5 MINUTE, VALUE 0, EXTEND)
 
 | **Name** | **Description** |
 |:---|:---|
-| count  | [**Required**] Number of time units contained in the period. |
-| unit  | [**Required**] [Time unit](/api/series/time-unit.md) such as `MINUTE`, `HOUR`, `DAY`. |
-| interpolate  | [Interpolation function](#interpolation), such as `LINEAR` or `VALUE 0`, applied to add missing periods.|
-| extend  | Adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.|
-| align | Alignment of the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
+| count | [**Required**] Number of time units contained in the period. |
+| unit | [**Required**] [Time unit](/api/series/time-unit.md) such as `MINUTE`, `HOUR`, `DAY`. |
+| interpolate | Apply [interpolation function](#interpolation), such as `LINEAR` or `VALUE 0`, to add missing periods.|
+| extend | Add missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.|
+| align | Align the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
 
 
 ```sql
@@ -645,7 +645,7 @@ SELECT entity, period(5 MINUTE), avg(value)
 GROUP BY entity, period(5 MINUTE, VALUE 0, EXTEND)
 ```
 
-### `HAVING` Filter 
+### `HAVING` Filter
 
 The interpolation function is applied after `HAVING` filter which can remove existing (non-empty) periods with other conditions. 
 
@@ -653,8 +653,9 @@ Periods removed by the `HAVING` filter will be interpolated similar to missing p
 
 ### Interpolation Examples
 
-- [Interpolation](examples/interpolate.md)
-- [Interpolation Edges](examples/interpolate-edges.md)
+- [Interpolate](examples/interpolate.md)
+- [Interpolate Edges](examples/interpolate-edges.md)
+- [Interpolate with Extend](examples/interpolate-extend.md)
 - [Chartlab](https://apps.axibase.com/chartlab/d8c03f11/3/)
 
 ## Grouping
@@ -1234,33 +1235,62 @@ This means that the same query executed by users with different permissions may 
 
 Scheduled queries are always executed under administrative permissions.
 
-
 ## Examples
 
-- [Alias](examples/alias.md)
+### Selecting
+
+- [All Columns](examples/select-all-columns.md)
+- [Defined Columns](examples/select-pre-defined-columns.md)
+- [All Series Tags](examples/select-all-tags.md)
+- [Entity Tag Columns](examples/select-entity-tag-columns.md)
+- [Metric Tag Columns](examples/select-metric-tag-columns.md)
+- [Column Alias](examples/alias-column.md)
+- [Table Alias](examples/alias-table.md)
+- [Datetime Format](examples/datetime-format.md)
+- [Limit Row Count](examples/limit.md)
+
+### Filtering
+
+- [Filter by Date](examples/filter-by-date.md)
+- [Filter by Series Tag](examples/filter-by-series-tag.md)
+- [Filter by NULL Series Tag](examples/filter-null-tag.md)
+- [Filter by Entity](examples/filter-by-entity.md)
+- [Filter by Entity Tag](examples/filter-by-entity-tag.md)
+- [Filter by Entity Group](examples/filter-by-entity-group.md)
+
+### Ordering
+
+- [Order By Time](examples/order-by-time.md)
+
+### Aggregation
+
 - [Average Value](examples/average-value.md)
 - [Counter Aggregator](examples/counter-aggregator.md)
-- [Datetime Format](examples/datetime-format.md)
-- [Select All](examples/select-all.md)
-- [Select Entity Tags As Columns](examples/select-entity-tags-as-columns.md)
-- [Time Condition](examples/time-condition.md)
-- [Order By Time](examples/order-by-time.md)
-- [Filter by Entity](examples/filter-by-entity.md)
-- [Filter by Tag](examples/filter-by-tag.md)
-- [All Tags](examples/all-tags.md)
-- [Select series without Tag](examples/filter-null-tag.md)
+- [Max Value Time](examples/max-value-time.md)
+
+### Grouping
+
 - [Group by Query with Order By](examples/group-by-query-with-order-by.md)
 - [Grouped Average](examples/grouped-average.md)
 - [Group with Having](examples/group-having.md)
-- [Last Time](examples/last-time.md)
-- [Max Value Time](examples/max-value-time.md)
 - [Grouped and Having](examples/grouped-having.md)
-- [Interpolation](examples/interpolate.md)
-- [Interpolation Edges](examples/interpolate-edges.md)
+- [Last Time](examples/last-time.md)
+
+### Interpolation
+
+- [Interpolate](examples/interpolate.md)
+- [Interpolate with Extend](examples/interpolate-extend.md)
+- [Interpolate Edges](examples/interpolate-edges.md)
+
+### Joins
+
 - [Join](examples/join.md)
 - [Join Using Entity](examples/join-using-entity.md)
 - [Join: Derived Series](examples/join-derived-series.md)
 - [Outer Join With Aggregation](examples/outer-join-with-aggregation.md)
 - [Outer Join](examples/outer-join.md)
+
+### Partitioning
+
 - [Partitioning using Row Number Function](examples/row-number.md)
 - [Top-N Query using Row Number Function](examples/row-number-top-N-tags.md)
