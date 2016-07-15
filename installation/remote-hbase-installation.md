@@ -125,14 +125,6 @@ hbase.client.scanner.timeout.period = 120000
 hbase.regionserver.lease.period = 120000
 ```
 
-## Configure JMX
-
-Set read-only permissions on `jmx.password` file.
-
-```
-sudo chmod 600 /opt/atsd/atsd/conf/jmx.password
-```
-
 ## Request License Key
 
 Remote HBase connection requires a license key. 
