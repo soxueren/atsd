@@ -141,8 +141,8 @@ New columns can be created by applying functions and arithmetic expressions to e
 
 ```sql
 SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
-  FROM "cpu_system" t1
-  JOIN "cpu_user" t2
+  FROM "mpstat.cpu_system" t1
+  JOIN "mpstat.cpu_user" t2
 WHERE datetime > now - 1*MINUTE
 ```
 
@@ -336,7 +336,7 @@ WHERE time >= current_hour AND time < next_hour
   GROUP BY entity, PERIOD(5 minute)
 ```
 
-Columns referenced in the `SELECT` statement must be included in the `GROUP BY` clause.
+Columns referenced in the `SELECT` expression must be included in the `GROUP BY` clause.
 
 ### Versioning Columns
 
@@ -1244,10 +1244,12 @@ Scheduled queries are always executed under administrative permissions.
 - [All Series Tags](examples/select-all-tags.md)
 - [Entity Tag Columns](examples/select-entity-tag-columns.md)
 - [Metric Tag Columns](examples/select-metric-tag-columns.md)
+- [Computed Columns](examples/select-computed-columns.md)
 - [Column Alias](examples/alias-column.md)
 - [Table Alias](examples/alias-table.md)
 - [Datetime Format](examples/datetime-format.md)
 - [Limit Row Count](examples/limit.md)
+- [Limit by Partition](examples/limit-partition.md)
 
 ### Filtering
 
@@ -1257,16 +1259,22 @@ Scheduled queries are always executed under administrative permissions.
 - [Filter by Entity](examples/filter-by-entity.md)
 - [Filter by Entity Tag](examples/filter-by-entity-tag.md)
 - [Filter by Entity Group](examples/filter-by-entity-group.md)
+- [Filter Not-a-Number](examples/filter-not-a-number.md)
 
 ### Ordering
 
 - [Order By Time](examples/order-by-time.md)
+- [Order By Value](examples/order-by-value.md)
+- [Order By Multiple Columns](examples/order-by-multiple-columns.md)
 
 ### Aggregation
 
-- [Average Value](examples/average-value.md)
-- [Counter Aggregator](examples/counter-aggregator.md)
-- [Max Value Time](examples/max-value-time.md)
+- [Average Value](examples/aggregate.md)
+- [Percentiles](examples/aggregate-percentiles.md)
+- [Counter Aggregator](examples/aggregate-counter.md)
+- [Max Value Time](examples/aggregate-max-value-time.md)
+- [Period Aggregation](examples/aggregate-period.md)
+- [Sliding Window Statistics](examples/aggregate-sliding-window.md)
 
 ### Grouping
 
@@ -1282,6 +1290,11 @@ Scheduled queries are always executed under administrative permissions.
 - [Interpolate with Extend](examples/interpolate-extend.md)
 - [Interpolate Edges](examples/interpolate-edges.md)
 
+### Partitioning
+
+- [Partitioning using Row Number Function](examples/row-number.md)
+- [Top-N Query using Row Number Function](examples/row-number-top-N-tags.md)
+
 ### Joins
 
 - [Join](examples/join.md)
@@ -1289,8 +1302,3 @@ Scheduled queries are always executed under administrative permissions.
 - [Join: Derived Series](examples/join-derived-series.md)
 - [Outer Join With Aggregation](examples/outer-join-with-aggregation.md)
 - [Outer Join](examples/outer-join.md)
-
-### Partitioning
-
-- [Partitioning using Row Number Function](examples/row-number.md)
-- [Top-N Query using Row Number Function](examples/row-number-top-N-tags.md)
