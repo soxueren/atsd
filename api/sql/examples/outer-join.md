@@ -8,7 +8,7 @@ Outer Join missing column values filled with NULL.
 SELECT *
   FROM mpstat.cpu_busy
 OUTER JOIN df.disk_used
-  WHERE time > current_hour
+  WHERE datetime > current_hour
   AND entity = 'nurswgvml007'
 ```
 

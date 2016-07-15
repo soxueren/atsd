@@ -1,4 +1,4 @@
-# Query All Tags
+# Select All Series Tags
 
 If the series contain different tags, the `tags.*` expression will be expand to all unique tag names.
 

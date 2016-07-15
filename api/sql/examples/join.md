@@ -6,7 +6,7 @@
 SELECT entity, datetime, t1.value, t2.value
   FROM cpu_busy t1
 JOIN cpu_idle t2
-  WHERE time > now - 1 * hour
+  WHERE datetime > now - 1 * hour
 ```
 
 ## Results

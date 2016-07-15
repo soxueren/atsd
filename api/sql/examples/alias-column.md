@@ -1,4 +1,4 @@
-# Alias
+# Column Alias
 
 Column aliases can be unquoted or enclosed in quotes or double-quotes.
 

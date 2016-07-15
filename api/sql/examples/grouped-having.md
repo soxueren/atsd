@@ -10,7 +10,7 @@ SELECT entity, tags.mount_point AS mp, tags.file_system AS FS,
   DELTA(df.disk_used.value), COUNT(df.disk_used.value),  AVG(mpstat.cpu_busy.value) 
 FROM mpstat.cpu_busy
   JOIN USING entity df.disk_used
-WHERE time > now - 60 * minute
+WHERE datetime > now - 60 * minute
   GROUP BY entity, tags.mount_point, tags.file_system
   HAVING DELTA(df.disk_used.value) != 0
   ORDER BY DELTA(df.disk_used.value)

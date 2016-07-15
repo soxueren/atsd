@@ -7,7 +7,7 @@
 SELECT entity, datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value)
  FROM mpstat.cpu_busy
 OUTER JOIN df.disk_used
- WHERE time > current_hour
+ WHERE datetime > current_hour
 GROUP BY entity, period(15 minute)
 ```
 
