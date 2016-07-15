@@ -1,4 +1,4 @@
-# Derived Series
+# Join - Derived Series
 
 Derived series, computed from multiple underlying series, can be produced with JOIN.
 

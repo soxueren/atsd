@@ -1,4 +1,4 @@
-# Select Series without Specified Tag
+# Filter Series without Specified Tag
 
 Select series without the specified tag using `tags.{name} IS NULL` condition.
 

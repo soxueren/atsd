@@ -1,4 +1,4 @@
-# Select Not-a-Number
+# Filter Not-a-Number
 
 Not a number value is returned as `NaN` string, across all formats: HTML, JSON, CSV.
 

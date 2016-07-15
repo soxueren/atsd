@@ -1,4 +1,4 @@
-# Query with Join Using Entity
+# Join Using Entity
 
 `USING entity` modifies the default JOIN condition, it uses entity to join rows from merged tables instead of the default entity and tags.
 

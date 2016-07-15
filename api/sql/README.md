@@ -1292,8 +1292,8 @@ Scheduled queries are always executed under administrative permissions.
 
 ### Partitioning
 
-- [Partitioning using Row Number Function](examples/row-number.md)
-- [Top-N Query using Row Number Function](examples/row-number-top-N-tags.md)
+- [Partitioning using Row Number Function](examples/partition-row-number.md)
+- [Top-N Query using Row Number Function](examples/partition-row-number-top-N-tags.md)
 
 ### Joins
 
