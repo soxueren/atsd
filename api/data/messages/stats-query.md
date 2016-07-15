@@ -2,9 +2,9 @@
 
 ## Description
 
-Retrieve message counters for the specified filters as series.
+Retrieve message counters as series for the specified filters.
 
-If period aggregation is enabled, the series contains the number of messages in each period. Otherwise, the series contains the total number of messages within the specified timespan.
+If period aggregation is enabled, the series contains the number of messages in each period. Otherwise, the series contains the total number of messages within the specified interval.
 
 ## Request
 

@@ -24,7 +24,7 @@
 
 By default, periods are aligned to calendar grid according to time unit specified in the period.
 
-For example, `period(1 HOUR)` starts at 0 minutes of each hour within the timespan.
+For example, `period(1 HOUR)` starts at 0 minutes/0 seconds of each hour within the selection interval.
 
 For DAY, WEEK, MONTH, QUARTER, and YEAR units the start of the day is determined according to server timezone.
 
@@ -37,7 +37,7 @@ The default `CALENDAR` alignment can be changed to `START_TIME`, `END_TIME`, or 
 | FIRST_VALUE_TIME | First period begins at the time of first retrieved value. |
 | END_TIME | Last period ends on end time specified in the query. |
 
-#### `CALENDAR` Alignment
+### `CALENDAR` Alignment
 
 Calendar alignment rounds the time to next unit and increments period until period start is equal or greater than startDate. 
 
@@ -47,9 +47,27 @@ The next time unit for `WEEK` is the first Monday of the given `MONTH`.
 
 For instance, if period unit is `MINUTE`, the time is rounded to start of the hour (next unit) containing `startDate`.
 
-Example: `45 MINUTE` with `startDate` of `2016-06-20T15:05:00Z`.
-Time is rounded to `15:00` and then incremented by 45 minutes until period start is >= `2016-06-20T15:05:00Z`.
-Such period is `[2016-06-20T15:45:00Z - 2016-06-20T16:30:00Z)`.
+#### Example 1
+
+`45 MINUTE`-period with `startDate` of `2016-06-20T15:05:00Z`.
+
+Time is rounded to `15:00` and then incremented by 45 minutes until period start time is >= `2016-06-20T15:05:00Z`.
+
+The period that first satisfies this condition is `[2016-06-20T15:45:00Z - 2016-06-20T16:30:00Z)`.
+
+#### Example 2
+
+`365 DAY`-period with `startDate` of `2014-12-21T00:00:00Z` and `endDate` of `2016-12-20T00:00:00Z`.
+
+Since time unit is `DAY`, time is rounded to 1st day of the month containing `startDate`, which is `2014-12-01T00:00:00Z`.
+
+The first period is `[2014-12-01T00:00:00Z - 2015-12-01T00:00:00Z)` and its start time is **outside** of the selection interval.
+
+The next period is `[2015-12-01T00:00:00Z - 2016-12-01T00:00:00Z)` and its start time is within the selection interval.
+
+The 3rd period is `[2016-12-01T00:00:00Z - 2017-12-01T00:00:00Z)` and its start time is also within the selection interval, although it will contain data within `[2016-12-01T00:00:00Z - 2016-12-20T00:00:00Z)` interval being limited by `endDate`.
+
+#### Calculation Examples
 
 ```ls
 | Period     | Start Date            | End Date              | 1st Period            | 2nd Period            | Last Period          | 
@@ -64,6 +82,8 @@ Such period is `[2016-06-20T15:45:00Z - 2016-06-20T16:30:00Z)`.
 | 1 DAY      | 2016-06-01T16:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-02T00:00:00Z  | 2016-06-03T00:00:00Z  | 2016-06-23T00:00:00Z | 
 | 2 DAY      | 2016-06-01T16:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-03T00:00:00Z  | 2016-06-05T00:00:00Z  | 2016-06-23T00:00:00Z | 
 | 5 DAY      | 2016-06-01T16:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-06T00:00:00Z  | 2016-06-11T00:00:00Z  | 2016-06-21T00:00:00Z | 
+| 10 DAY     | 2016-06-03T16:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-10T00:00:00Z  | 2016-06-20T00:00:00Z  | 2016-06-20T00:00:00Z | 
+| 365 DAY    | 2016-06-03T16:00:00Z  | 2017-06-24T00:00:00Z  | 2017-06-01T00:00:00Z  | -                     | -                    |
 | 1 WEEK     | 2016-06-01T16:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-06T00:00:00Z  | 2016-06-13T00:00:00Z  | 2016-06-20T00:00:00Z | 
 | 1 WEEK     | 2016-05-01T16:00:00Z  | 2016-05-24T00:00:00Z  | 2016-05-02T00:00:00Z  | 2016-05-09T00:00:00Z  | 2016-05-23T00:00:00Z | 
 | 1 WEEK     | 2016-06-01T00:00:00Z  | 2016-06-02T00:00:00Z  | - 1st Monday Jun-06.  | -                     | -                    | 

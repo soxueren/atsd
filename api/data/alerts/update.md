@@ -2,7 +2,7 @@
 
 ## Description
 
-Change acknowledgement status of the specified alerts.
+Change acknowledgement status of the specified open alerts.
 
 This method can be used to acknowledge and un-acknowledge alerts with `"acknowledged": true|false` property in the request.
 
