@@ -465,7 +465,7 @@ Options are separated by comma and can be specified in any order.
 PERIOD(5 MINUTE)
 PERIOD(5 MINUTE, END_TIME)
 PERIOD(5 MINUTE, CALENDAR, VALUE 0)
-PERIOD(5 MINUTE, VALUE 0, EXTEND)
+PERIOD(5 MINUTE, LINEAR, EXTEND)
 ```
 
 | **Name** | **Description** |
@@ -473,7 +473,7 @@ PERIOD(5 MINUTE, VALUE 0, EXTEND)
 | count | [**Required**] Number of time units contained in the period. |
 | unit | [**Required**] [Time unit](/api/series/time-unit.md) such as `MINUTE`, `HOUR`, `DAY`. |
 | interpolate | Apply [interpolation function](#interpolation), such as `LINEAR` or `VALUE 0`, to add missing periods.|
-| extend | Add missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.|
+| extend | Add missing periods at the beginning and end of the selection interval using `VALUE {n}` or `NEXT` and `PREVIOUS` interpolation functions.|
 | align | Align the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
 
 
@@ -637,13 +637,20 @@ GROUP BY entity, period(5 MINUTE, LINEAR)
 
 Include an optional `EXTEND` parameter to the `PERIOD` clause to append missing periods at the beginning and the end of the selection interval. 
 
-Period values at the beginning of the interval are interpolated with `NEXT` function, whereas values at the end are interpolated with `PREVIOUS` function.
+Leading and trailing period values are set with `VALUE {n}` function if it's specified. 
+
+```sql
+period(5 MINUTE, VALUE 0, EXTEND)
+```
+
+In absence of `VALUE {n}` function period values at the beginning of the interval are interpolated with `NEXT` function, whereas values at the end are interpolated with `PREVIOUS` function.
 
 ```sql
 SELECT entity, period(5 MINUTE), avg(value)
   FROM "mpstat.cpu_busy" WHERE datetime > current_hour 
-GROUP BY entity, period(5 MINUTE, VALUE 0, EXTEND)
+GROUP BY entity, period(5 MINUTE, LINEAR, EXTEND)
 ```
+
 
 ### `HAVING` Filter
 
