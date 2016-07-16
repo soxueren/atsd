@@ -31,10 +31,10 @@ https://apps.axibase.com/chartlab/d8c03f11/3/
 ### Aggregated Data
 
 ```ls
-| datetime                 | AVG(value)        | 
-|--------------------------|-------------------| 
-| 2016-02-19T13:30:00.000Z | 4.870000004768372 | 
-| 2016-02-19T13:50:00.000Z | 100               | 
+| datetime                 | avg(value) | 
+|--------------------------|------------| 
+| 2016-02-19T13:30:00.000Z | 4.9        | 
+| 2016-02-19T13:50:00.000Z | 100.0      | 
 ```
 
 ## Request : No Interpolation
@@ -50,7 +50,7 @@ https://apps.axibase.com/chartlab/d8c03f11/3/
       "interpolate": { "type": "NONE" }
     },
     "startDate": "2016-02-19T13:30:00.000Z",
-    "endDate": "2016-02-19T14:00:00.000Z"
+    "endDate":   "2016-02-19T14:00:00.000Z"
   }
 ]
 ```
@@ -80,7 +80,7 @@ https://apps.axibase.com/chartlab/d8c03f11/3/
       "interpolate": { "type": "LINEAR" }
     },
     "startDate": "2016-02-19T13:30:00.000Z",
-    "endDate": "2016-02-19T14:00:00.000Z"
+    "endDate":   "2016-02-19T14:00:00.000Z"
   }
 ]
 ```
@@ -110,7 +110,7 @@ https://apps.axibase.com/chartlab/d8c03f11/3/
       "interpolate": { "type": "PREVIOUS" }
     },
     "startDate": "2016-02-19T13:30:00.000Z",
-    "endDate": "2016-02-19T14:00:00.000Z"
+    "endDate":   "2016-02-19T14:00:00.000Z"
   }
 ]
 ```
@@ -140,7 +140,7 @@ https://apps.axibase.com/chartlab/d8c03f11/3/
       "interpolate": {"type":"VALUE","value":0}
     },
     "startDate": "2016-02-19T13:30:00.000Z",
-    "endDate": "2016-02-19T14:00:00.000Z"
+    "endDate":   "2016-02-19T14:00:00.000Z"
   }
 ]
 ```
@@ -161,6 +161,20 @@ https://apps.axibase.com/chartlab/d8c03f11/3/
 
 `extend` setting adds missing periods at the beginning and the end of the interval.
 
+* If `VALUE {n}` interpolation function is specified, the `EXTEND` option sets empty leading/trailing period values to equal `{n}`.
+* Without `VALUE {n}` function, the `EXTEND` option adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.
+
+1-minute averages between 13:30 and 13:35 without EXTEND:
+
+```ls
+| datetime                 | avg(value) | 
+|--------------------------|------------| 
+| 2016-02-19T13:30:00.000Z | 5.0        | 
+| 2016-02-19T13:31:00.000Z | 4.5        | 
+```
+
+## Request : EXTEND
+
 ```json
 [
   {
@@ -169,10 +183,10 @@ https://apps.axibase.com/chartlab/d8c03f11/3/
     "aggregate": {
       "type": "AVG",
       "period": {"count": 1, "unit": "MINUTE"},    
-      "interpolate": { "type": "VALUE", "value": 0, "extend": true }
+      "interpolate": { "extend": true }
     },
     "startDate": "2016-02-19T13:30:00.000Z",
-    "endDate": "2016-02-19T13:40:00.000Z"
+    "endDate":   "2016-02-19T13:35:00.000Z"
   }
 ]
 ```
@@ -181,20 +195,125 @@ https://apps.axibase.com/chartlab/d8c03f11/3/
 
 ```json
 [{"entity":"nurswgvml007","metric":"cpu_busy","tags":{},"type":"HISTORY",
-	"aggregate":{"type":"AVG","period":{"count":1,"unit":"MINUTE","align":"CALENDAR"}},
+"aggregate":{"type":"AVG","period":{"count":1,"unit":"MINUTE","align":"CALENDAR"}},
 "data":[
 	{"d":"2016-02-19T13:30:00.000Z","v":5.040000021457672},
 	{"d":"2016-02-19T13:31:00.000Z","v":4.5299999713897705},
-	{"d":"2016-02-19T13:32:00.000Z","v":0.0},
-	{"d":"2016-02-19T13:33:00.000Z","v":0.0},
-	{"d":"2016-02-19T13:34:00.000Z","v":0.0},
-	{"d":"2016-02-19T13:35:00.000Z","v":0.0},
-	{"d":"2016-02-19T13:36:00.000Z","v":0.0},
-	{"d":"2016-02-19T13:37:00.000Z","v":0.0},
-	{"d":"2016-02-19T13:38:00.000Z","v":0.0},
-	{"d":"2016-02-19T13:39:00.000Z","v":0.0}
+	{"d":"2016-02-19T13:32:00.000Z","v":4.5299999713897705},
+	{"d":"2016-02-19T13:33:00.000Z","v":4.5299999713897705},
+	{"d":"2016-02-19T13:34:00.000Z","v":4.5299999713897705}
 ]}]
 ```
+
+## Request : EXTEND and LINEAR Interpolate
+
+10-second period between 13:30 and 13:33.
+
+Data:
+
+```
+| datetime                 | avg(value) | 
+|--------------------------|------------| 
+| 2016-02-19T13:30:10.000Z | 4.0        | 
+| 2016-02-19T13:30:20.000Z | 3.0        | 
+| 2016-02-19T13:30:40.000Z | 4.0        | 
+| 2016-02-19T13:30:50.000Z | 9.1        | 
+| 2016-02-19T13:31:10.000Z | 3.1        | 
+| 2016-02-19T13:31:30.000Z | 6.0        | 
+```
+
+### Query
+
+```json
+[
+  {
+    "entity": "nurswgvml007",
+    "metric": "cpu_busy",
+    "aggregate": {
+      "type": "AVG",
+      "period": {"count": 10, "unit": "SECOND"},    
+      "interpolate": { "type": "LINEAR", "extend": true }
+    },
+    "startDate": "2016-02-19T13:30:00.000Z",
+    "endDate":   "2016-02-19T13:33:00.000Z"
+  }
+]
+```
+
+### Response
+
+```json
+[{"entity":"nurswgvml007","metric":"cpu_busy","tags":{},"type":"HISTORY",
+"aggregate":{"type":"AVG","period":{"count":10,"unit":"SECOND","align":"CALENDAR"}},
+"data":[
+	{"d":"2016-02-19T13:30:00.000Z","v":4.0},
+	{"d":"2016-02-19T13:30:10.000Z","v":4.0},
+	{"d":"2016-02-19T13:30:20.000Z","v":3.0299999713897705},
+	{"d":"2016-02-19T13:30:30.000Z","v":3.534999966621399},
+	{"d":"2016-02-19T13:30:40.000Z","v":4.039999961853027},
+	{"d":"2016-02-19T13:30:50.000Z","v":9.09000015258789},
+	{"d":"2016-02-19T13:31:00.000Z","v":6.075000047683716},
+	{"d":"2016-02-19T13:31:10.000Z","v":3.059999942779541},
+	{"d":"2016-02-19T13:31:20.000Z","v":4.5299999713897705},
+	{"d":"2016-02-19T13:31:30.000Z","v":6.0},
+	{"d":"2016-02-19T13:31:40.000Z","v":6.0},
+	{"d":"2016-02-19T13:31:50.000Z","v":6.0},
+	{"d":"2016-02-19T13:32:00.000Z","v":6.0},
+	{"d":"2016-02-19T13:32:10.000Z","v":6.0},
+	{"d":"2016-02-19T13:32:20.000Z","v":6.0},
+	{"d":"2016-02-19T13:32:30.000Z","v":6.0},
+	{"d":"2016-02-19T13:32:40.000Z","v":6.0},
+	{"d":"2016-02-19T13:32:50.000Z","v":6.0}
+]}]
+```
+
+## Request : EXTEND and VALUE Interpolate
+
+### Query
+
+```json
+[
+  {
+    "entity": "nurswgvml007",
+    "metric": "cpu_busy",
+    "aggregate": {
+      "type": "AVG",
+      "period": {"count": 10, "unit": "SECOND"},    
+      "interpolate": { "type": "VALUE", "value": -10, "extend": true }
+    },
+    "startDate": "2016-02-19T13:30:00.000Z",
+    "endDate":   "2016-02-19T13:33:00.000Z"
+  }
+]
+```
+
+### Response
+
+```json
+[{"entity":"nurswgvml007","metric":"cpu_busy","tags":{},"type":"HISTORY",
+"aggregate":{"type":"AVG","period":{"count":10,"unit":"SECOND","align":"CALENDAR"}},
+"data":[
+	{"d":"2016-02-19T13:30:00.000Z","v":-10.0},
+	{"d":"2016-02-19T13:30:10.000Z","v":4.0},
+	{"d":"2016-02-19T13:30:20.000Z","v":3.0299999713897705},
+	{"d":"2016-02-19T13:30:30.000Z","v":-10.0},
+	{"d":"2016-02-19T13:30:40.000Z","v":4.039999961853027},
+	{"d":"2016-02-19T13:30:50.000Z","v":9.09000015258789},
+	{"d":"2016-02-19T13:31:00.000Z","v":-10.0},
+	{"d":"2016-02-19T13:31:10.000Z","v":3.059999942779541},
+	{"d":"2016-02-19T13:31:20.000Z","v":-10.0},
+	{"d":"2016-02-19T13:31:30.000Z","v":6.0},
+	{"d":"2016-02-19T13:31:40.000Z","v":-10.0},
+	{"d":"2016-02-19T13:31:50.000Z","v":-10.0},
+	{"d":"2016-02-19T13:32:00.000Z","v":-10.0},
+	{"d":"2016-02-19T13:32:10.000Z","v":-10.0},
+	{"d":"2016-02-19T13:32:20.000Z","v":-10.0},
+	{"d":"2016-02-19T13:32:30.000Z","v":-10.0},
+	{"d":"2016-02-19T13:32:40.000Z","v":-10.0},
+	{"d":"2016-02-19T13:32:50.000Z","v":-10.0}
+]}]
+```
+
 
 
 

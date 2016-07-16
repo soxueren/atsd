@@ -1,6 +1,6 @@
 # Interpolate with Extend
 
-* If `VALUE {n}` interpolation functions is specified in the `PERIOD` clause, the `EXTEND` option sets empty leading/trailing period values to equal `{n}`.
+* If `VALUE {n}` interpolation function is specified in the `PERIOD` clause, the `EXTEND` option sets empty leading/trailing period values to equal `{n}`.
 * Without `VALUE {n}` function, the `EXTEND` option adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.
 
 ## Data
