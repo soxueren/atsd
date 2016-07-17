@@ -1,0 +1,9 @@
+tag,time,_index,value,status,questionable,substituted,annotated,annotations
+AXI.NN-1000-80/OD-PV.CV,7/8/2016 4:45:31 AM,1,2.334466,0,False,False,False,
+AXI.NN-1000-80/OD-PV.CV,7/8/2016 4:45:47 AM,1,2.333587,0,False,False,False,
+AXI.NN-1000-20/PV01.CV,7/9/2016 2:01:23 PM,1,30.9205,0,False,False,False,
+AXI.NN-1000:Unit_Procedure,7/13/2016 2:45:01 PM,1,Inactive,0,False,False,False,
+AXI.NN-1000-20/PV01.CV,7/9/2016 2:02:56 PM,1,28.67456,0,False,False,False,
+AXI.NN-1000-20B/TOTAL.CV,7/9/2016 6:20:49 AM,1,2412.157,0,False,False,False,
+AXI.NN-1000-20B/TOTAL.CV,7/9/2016 7:06:53 AM,1,2470.166,0,False,False,False,
+AXI.NN-1000-00/UNIT-STATUS.CVS,7/8/2016 8:56:36 AM,1,Process,0,False,False,False,
