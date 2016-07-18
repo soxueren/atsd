@@ -29,7 +29,7 @@ metric m:{metric} p:{data-type} v:{versioned} t:{tag-1}={text} t:{tag-2}={text}
 Rules inherited from [base ABNF](base-abnf.md).
 
 ```properties
-command = "metric" MSP metric [MSP data-type] [MSP versioned] 1*(MSP tag)
+command = "metric" MSP metric [MSP data-type] [MSP versioned] *(MSP tag)
 metric = "m:" NAME
 data-type = "p:" ("short" / "integer" / "long" / "float" / "double" / "decimal")
 versioned = "v:" ("true" / "false")
