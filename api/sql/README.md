@@ -132,10 +132,16 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`metric`|string|Metric name, same as virtual table name.|
 |`entity`|string|Entity name.|
 |`tags.{name}`|string|Series tag value.|
-|`tags`|string|All series tags, concatenated to `name1=value;name2=value` format in one column.|
+|`tags`|string|All series tags, concatenated to `name1=value;name2=value` format.|
 |`tags.*`|string|Expands to multiple columns, each column containing a separate series tag.|
 |`entity.tags.{name}`|string|Entity tag value.|
+|`entity.tags`|string|All entity tags, concatenated to `name1=value;name2=value` format.|
+|`metric.tags.{name}`|string|Metric tag value.|
+|`metric.tags`|string|All metric tags, concatenated to `name1=value;name2=value` format.|
+|`metric.tags.*`|string|Expands to multiple columns, each column containing a separate metric tag.|
 |`entity.groups`|string|List of entity groups, to which the entity belongs, separated by semi-colon `;`.|
+
+Tag columns `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}` where `{name}` contains reserved characters such as `-`,`*`,`,` should be enclosed in quotes or double quotes, for example, `entity.tags."file-system"`.
 
 New columns can be created by applying functions and arithmetic expressions to existing columns.
 
@@ -195,11 +201,9 @@ WHERE datetime >= "2016-07-03T21:02:00Z" AND datetime < "2016-07-03T21:02:15Z"
 
 Tag values are referenced in `SELECT` expression by specifying `tags.*`, `tags`, or `tags.{tag-name}` as column name.
 
-`tags` is a map object whose properties can be accessed with key. When specified in SELECT expression, tags.* creates multiple columns for each key in the map. If the property is not present, the `tags.{tag-name}` expression returns NULL.
+`tags` is a map object whose properties can be accessed with key. When specified in SELECT expression, tags.* creates multiple columns for each key in the map. 
 
-* `tags.*` expands to multiple columns
-* `tags` concatenates tags to `name1=value1;name2=value2` format
-* `tags.{tag-name}` creates a column for a specific tag
+If the property is not present, the `tags.{tag-name}` expression returns NULL.
 
 ```sql
 SELECT datetime, entity, value, tags.*, tags, tags.mount_point, tags.file_system
@@ -233,7 +237,7 @@ GROUP BY entity, tags
 
 ### Entity Tag Columns
 
-Entity tag values can be included in `SELECT` expression by specifying `entity.tags.{tag-name}` as column name.
+Entity tag values can be included in `SELECT` expression by specifying `entity.tags.{tag-name}` or `{entity.tags}` as column name.
 
 `entity.tags` is a map object whose properties can be accessed with `{tag-name}` key.
 
@@ -273,6 +277,31 @@ GROUP BY entity
 |--------------|----------------|-----------------|------------| 
 | nurswgvml009 | null           | Oracle EM       | 37.2       | 
 | nurswgvml502 | null           | null            | 15.4       | 
+```
+
+### Metric Tag Columns
+
+Metric tag values can be included in `SELECT` expression by specifying `metric.tags.*`, `metric.tags`, or `metric.tags.{tag-name}` as column name.
+
+`metric.tags` is a map object whose properties can be accessed with `{tag-name}` key.
+
+If there is no record for the specified key, the `metric.tags.{tag-name}` expression returns NULL.
+
+Metric tag columns are supported only in `SELECT` expression.
+
+```sql
+SELECT entity, avg(value), metric.tags.*, metric.tags, metric.tags.table
+  FROM "mpstat.cpu_busy"
+WHERE datetime > current_hour
+  GROUP BY entity 
+```
+
+```ls
+| entity       | avg(value) | metric.tags.source | metric.tags.table | metric.tags                | metric.tags.table | 
+|--------------|------------|--------------------|-------------------|----------------------------|-------------------| 
+| nurswgvml006 | 13.1       | iostat             | System            | source=iostat;table=System | System            | 
+| nurswgvml007 | 10.8       | iostat             | System            | source=iostat;table=System | System            | 
+| nurswgvml009 | 21.2       | iostat             | System            | source=iostat;table=System | System            | 
 ```
 
 ### Entity Group Column
