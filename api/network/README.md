@@ -14,6 +14,10 @@ You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language that 
 * [csv](csv.md)
 * [nmon](nmon.md)
 
+### Meta Commands
+
+* [metric](metric.md)
+
 ### Control Commands
 
 * [ping](ping.md)
@@ -306,6 +310,12 @@ echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:1
 
 cat command-in.log
 ```
+
+## TCP Client Examples
+
+* [Java: AtsdTcpClient.java](examples/AtsdTcpClient.java)
+* [Java: AtsdSendExample.java](examples/AtsdTcpClient.java)
+* [Java: AtsdParseExample.java](examples/AtsdParseExample.java)
 
 ## Dropped Commands
 

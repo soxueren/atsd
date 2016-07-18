@@ -8,8 +8,6 @@ Entity, property type and property keys (`k:` fields) form a composite primary k
 
 When a property record is inserted into the database, it overwrites an existing record with the same composite primary key: **entity+type[+key]**.
 
-Use reserved `$entity_tags` type to insert/update entity tags with this property command.
-
 ## Syntax
 
 ```css
@@ -19,7 +17,13 @@ property e:{entity} t:{type} k:{key-1}={value} k:{key-2}={value} v:{tag-1}={text
 * Entity name, property type, key names, and tag names are case-insensitive and are converted to lower case when stored. 
 * Key values and tag values are case-sensitive and are stored as submitted.
 * Tag names may duplicate key names specified in the same command.
-* At least one tag is required
+* At least one tag is required.
+
+## Reserved Property Types
+
+| **Type** | **Description** |
+|:---|:---|
+| `$entity_tags` | Insert entity tags for the specified entity from the included key and tag fields. |
 
 ### Fields
 
@@ -28,7 +32,7 @@ property e:{entity} t:{type} k:{key-1}={value} k:{key-2}={value} v:{tag-1}={text
 | e         | string           | **[Required]** Entity name. |
 | t         | string           | **[Required]** Property type. |
 | k         | string           | Property key name and text value. Multiple. |
-| v         | string           | **[Required]** Property tag name and text value. At least one. |
+| v         | string           | **[Required]** Property tag name and text value. At least one required. |
 | s         | integer          | Time in UNIX seconds. | 
 | ms        | integer          | Time in UNIX milliseconds. | 
 | d         | string           | Time in ISO format. | 
