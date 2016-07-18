@@ -22,15 +22,15 @@ message e:{entity} t:type={type} t:source={source} t:severity={severity} t:tag={
 
 ### Fields
 
-| **Field** | **Required** | **Description** |
+| **Field** | **Type** | **Description** |
 |:---|:---|:---|
-| e         | yes          | Entity name. |
-| t         | no           | Tags, including reserved tags: `type`, `source`, [`severity`](/api/data/severity.md). |
-| m         | no           | Message text. |
-| p         | no           | Persist message in the database. Default: true.<br>If disabled, the message is only processed by the rule-engine.
-| s         | no           | Time in UNIX seconds. | 
-| ms        | no           | Time in UNIX milliseconds. | 
-| d         | no           | Time in ISO format. | 
+| e         | string       | **[Required]** Entity name. |
+| t         | string       | Tags, including reserved tags: `type`, `source`, [`severity`](/api/data/severity.md). |
+| m         | string       | Message text. |
+| p         | boolean      | Persist message in the database. Default: true.<br>If disabled, the message is only processed by the rule-engine. |
+| s         | integer      | Time in UNIX seconds. | 
+| ms        | integer      | Time in UNIX milliseconds. | 
+| d         | string       | Time in ISO format. | 
 
 * If time fields are omitted, the record is inserted with the current server time.
 * Message text or at least one tag is required, otherwise the message will be dropped silently.

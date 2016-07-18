@@ -6,7 +6,7 @@ Insert timestamped numeric values for the specified entity, series tags and one 
 
 New entities, metrics, and tags will be created automatically.
 
-New metrics will be initialized with `float` data type by default.<br>To insert metric samples with another datatype, create or update metric properties using [Meta API](/api/meta/metric/create-or-replace.md) or the web interface.
+New metrics will be initialized with `float` data type by default.<br>To insert metric samples with another data type, create or update metric properties using [Meta API](/api/meta/metric/create-or-replace.md) or the web interface.
 
 ## Syntax
 
@@ -16,14 +16,14 @@ series e:{entity} m:{metric-1}={number} m:{metric-2}={number} t:{tag-1}={text} t
 
 ### Fields
 
-| **Field** | **Required** | **Description** |
+| **Field** | **Type** | **Description** |
 |:---|:---|:---|
-| e         | yes          | Entity name. |
-| m         | yes          | Metric name and numeric value. Multiple. |
-| t         | no           | Tag name and text value. Multiple. |
-| s         | no           | Time in UNIX seconds. | 
-| ms        | no           | Time in UNIX milliseconds. | 
-| d         | no           | Time in ISO format. | 
+| e         | string          | **[Required]** Entity name. |
+| m         | string          | **[Required]** Metric name and numeric value. Multiple. |
+| t         | string          | Tag name and text value. Multiple. |
+| s         | integer         | Time in UNIX seconds. | 
+| ms        | integer         | Time in UNIX milliseconds. | 
+| d         | string          | Time in ISO format. | 
 
 > If time fields are omitted, the values are inserted with the current server time.
 
@@ -74,7 +74,7 @@ series e:server001 m:disk_used_percent=20.5 m:disk_size_mb=10240 t:mount_point=/
 
 [Versioning](http://axibase.com/products/axibase-time-series-database/data-model/versioning/) enables tracking of time-series value changes for the purpose of audit trail and traceable data reconciliation.
 
-Versioning is disabled by default. It can be enabled for particular metrics by setting Versioning checkbox to selected on Metric Editor page.
+Versioning is disabled by default. It can be enabled for particular metrics by setting Versioning check box to selected on Metric Editor page.
 
 To insert versioning fields use reserved tags:
 

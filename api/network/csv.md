@@ -18,14 +18,14 @@ csv p:{parser} e:{entity} r:{metric_prefix} z:{timezone} t:{timeout}
 
 ### Fields
 
-| **Field** | **Required** | **Description** |
+| **Field** | **Type** | **Description** |
 |:---|:---|:---|
-| p         | yes          | CSV Parser name from **Admin: CSV Parsers** page |
-| e         | no           | Default entity name                       |
-| r         | no           | Metric prefix applied to all metrics in the file                           |
-| z         | no           | Timezone applied when parsing timestamps in local time, e.g. GMT<br>Java [Time Zone ID](timezone-abnf.md)  |
-| o | no | Server read timeout in seconds. For example: 60 |
-| t         | no           | One or multiple series tag key=value pairs. For example: t:location=SPB   |
+| p         | yes          | **[Required]** CSV Parser name from `Admin: CSV Parsers` page. |
+| e         | string       | Default entity name                       |
+| r         | string       | Metric prefix applied to all metrics in the file                           |
+| z         | string       | Timezone applied when parsing timestamps in local time, e.g. GMT<br>Java [Time Zone ID](timezone-abnf.md)  |
+| o         | integer      | Server read timeout in seconds. For example: `o:60` |
+| t         | string       | One or multiple series tag key=value pairs. For example: t:location=SVL   |
 
 > Tags specified in `t:` fields override `Default Tags` with the same name specified in CSV parser configuration.
 
