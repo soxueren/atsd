@@ -39,5 +39,5 @@ tag = "v:" NAME "=" VALUE
 ## Examples
 
 ```ls
-metric m:temperature p:long v:versioning=false t:unit=Celsius
+metric m:temperature p:long v:false t:unit=Celsius
 ```
