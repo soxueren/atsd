@@ -124,21 +124,12 @@ Email output of the above commands to Axibase support and copy the provided key 
 
 Copy `/opt/atsd/hbase/lib/atsd.jar` to `/usr/lib/hbase/lib` directory on each HBase region server.
 
-### Enable Co-processors
+### Enable ATSD Coprocessors
 
-Add the following `property` to `/etc/hbase/conf/hbase-site.xml`.
+Open Cloudera Manager, select the target HBase cluster/service, open Configuration tab, search for setting `hbase.coprocessor.region.classes` and enter the following names. 
 
-```
-<property>
-    <name>hbase.coprocessor.region.classes</name>
-    <value>com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint, com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint</value>
-</property>
-```
-
-Alternatively, open Cloudera Manager, select the target cluster, HBase service, open Configuration tab, search for HBase Coprocessor Region Classes setting (`hbase.coprocessor.region.classes`) and enter the following Coprocessor names. 
-
-* com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint
 * com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint
+* com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint
 
 ![](images/cloudera-manager-coprocessor-config.png)
 
