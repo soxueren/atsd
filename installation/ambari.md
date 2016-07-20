@@ -119,7 +119,7 @@ Email output of the above commands to Axibase support and copy the provided key 
 
 ### Deploy ATSD coprocessors 
 
-Copy `/opt/atsd/hbase/lib/atsd.jar` to `/usr/lib/hbase/lib` directory on each HBase region server.
+Copy `/opt/atsd/hbase/lib/atsd.jar` to `/usr/hdp/{hdp_version}/hbase/lib/` directory on each HBase region server.
 
 ### Enable ATSD Coprocessors
 
