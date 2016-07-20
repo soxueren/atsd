@@ -138,6 +138,10 @@ Open Cloudera Manager, select the target HBase cluster/service, open Configurati
 
 ![](images/cloudera-manager-coprocessor-config.png)
 
+### Increase Maximum Heap Size on Region Servers
+
+![](images/cdh-region-heap.png)
+
 ### Restart HBase Region Servers
 
 ## Check for port conflicts
