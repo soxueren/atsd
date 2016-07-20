@@ -38,7 +38,11 @@ Multi-part mode:
 | encoding      | string   | File encoding. Default: UTF-8.|
 | filename      | string   | [**Required** for archived files uploaded in File Data mode] <br>Name of the file or archive being sent, for example text.csv, files.zip, files.tar.gz.<br>The archive may contain multiple files, all of which will be processed.<br>Archive compression is determined based on file extension.<br>Supported archive formats: zip and tar.gz.<br>Supported file extensions for the uploaded archive: .gz, .tar.gz, .zip.  |
 | default-entity| string | Default entity name applied to commands contained in the file. |
+| entity-prefix | string | Prefix added to all entity names extracted from the file. |
+| entity-tags | string | Comma-separated list of entity tags added as series, message, or property tags to parsed commands. |
+| default-metric| string | Default metric name applied to values in the numeric column contained in the file. |
 | metric-prefix | string | Prefix added to all metric names extracted from the file. |
+| metric-tags | string | Comma-separated list of metric tags added as series, message, or property tags to parsed commands. |
 | wait | boolean | Wait until processing of the file into commands is completed by the server. Default: false.<br>If wait is disabled, the file is processed by the server asynchronously. | 
 | rules | boolean | Process commands in the rule engine. Default: false | 
 | time | string | Date in ISO 8601 format, applied to commands if the file doesn't contain any time columns. | 

@@ -18,26 +18,36 @@ csv p:{parser} e:{entity} r:{metric_prefix} z:{timezone} t:{timeout}
 
 ### Fields
 
-| **Field** | **Type** | **Description** |
+| **Name** | **Type** | **Description** |
 |:---|:---|:---|
-| p         | yes          | **[Required]** CSV Parser name from `Admin: CSV Parsers` page. |
-| e         | string       | Default entity name                       |
-| r         | string       | Metric prefix applied to all metrics in the file                           |
-| z         | string       | Timezone applied when parsing timestamps in local time, e.g. GMT<br>Java [Time Zone ID](timezone-abnf.md)  |
-| o         | integer      | Server read timeout in seconds. For example: `o:60` |
-| t         | string       | One or multiple series tag key=value pairs. For example: t:location=SVL   |
+| p         | yes          | **[Required]** Parser name from `Configuration> Parsers: CSV` page. |
+| e         | string       | Default entity name. |
+| ep        | string       | Entity prefix applied to all entity names in the file. |
+| et        | string       | Entity tags.<br>Comma separated list of entity tags added as series, message, or property tags to parsed commands. |
+| m         | string       | Default metric name. |
+| mp        | string       | Metric prefix applied to all metric names in the file. |
+| mt        | string       | Metric tags.<br>Comma separated list of metric tags added as series, message, or property tags to parsed commands. |
+| z         | string       | Timezone applied when parsing dates specified in local time, for example GMT.<br>Java [Time Zone ID](timezone-abnf.md)  |
+| o         | integer      | Server read timeout in seconds, for example `o:60` |
+| t         | string       | One or multiple series tag key=value pairs, for example: `t:location=SVL` |
 
-> Tags specified in `t:` fields override `Default Tags` with the same name specified in CSV parser configuration.
+> Tags specified in `t:` fields override `Default Tags` with the same name specified in the CSV parser configuration.
 
 ### ABNF Syntax
 
 Rules inherited from [base ABNF](base-abnf.md).
 
 ```properties
-command = "csv" MSP parser [MSP entity] [MSP metric-prefix] [MSP timezone] [MSP timeout] *(MSP tag)
+command = "csv" MSP parser [MSP entity] [MSP entity-prefix] [MSP entity-tags] 
+                           [MSP metric] [MSP metric-prefix] [MSP metric-tags] 
+						   [MSP timezone] [MSP timeout] *(MSP tag)
 parser = "p:" NAME
 entity = "e:" NAME
-metric-prefix = "r:" NAME
+entity-prefix = "ep:" NAME
+entity-tags = "et:" NAME *("," NAME)
+metric = "m:" NAME
+metric-prefix = "mp:" NAME
+metric-tags = "mt:" NAME *("," NAME)
 timezone = "z:" TIMEZONE
 timeout = "o:" POSITIVE_INTEGER
 tag = "t:" NAME "=" VALUE
@@ -46,7 +56,7 @@ tag = "t:" NAME "=" VALUE
 ## Examples
 
 ```ls
-csv p:was-csv-parser e:nurswgvml007 z:PST t:environment=prod
+csv p:was-csv-parser e:nurswgvml007 t:environment=prod
 date,jvm.memory_used_pct,jvm.system_load
 2016-05-22T00:00:00Z,46.6,1.2
 2016-05-22T00:00:30Z,46.4,0.8
