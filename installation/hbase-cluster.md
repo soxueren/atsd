@@ -1,4 +1,4 @@
-# Installation on Distributed HBase Cluster using Cloudera Manager
+# Installation on Distributed HBase Cluster
 
 ## Create `axibase` user
 
@@ -45,6 +45,7 @@ Add `JAVA_HOME` path to the `axibase` user environment in `.bashrc`.
 ```
 sudo su axibase
 echo "export JAVA_HOME=${absolute path to JDK 7 home directory}" >> ~/.bashrc
+source ~/.bashrc
 exit
 ```
 
@@ -64,15 +65,15 @@ The Zookeeper client port is specified in:
 * Zookeeper host: `/etc/zookeeper/conf.dist/zoo.cfg` > `clientPort` setting
 * HBase host: `/etc/hbase/conf.dist/hbase-site.xml` > `hbase.zookeeper.property.clientPort` setting
 
-## Download ATSD EE
+## Download ATSD Enterprise Edition
 
-### CDH (Cloudera Distribution Hadoop) 5.5.x
+### HBase 1.0.x
 
 ```
 curl -O https://www.axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
 ```
 
-### CDH (Cloudera Distribution Hadoop) 5.6.x+
+### HBase 1.1.+
 
 ```
 curl -O https://www.axibase.com/public/atsd_ee_hbase_1.2.2.tar.gz
@@ -131,12 +132,14 @@ Copy `/opt/atsd/hbase/lib/atsd.jar` to `/usr/lib/hbase/lib` directory on each HB
 
 ### Enable ATSD Coprocessors
 
-Open Cloudera Manager, select the target HBase cluster/service, open Configuration tab, search for setting `hbase.coprocessor.region.classes` and enter the following names. 
+Add the following `property` to `{HBASE_HOME}/conf/hbase-site.xml`.
 
-* com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint
-* com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint
-
-![](images/cloudera-manager-coprocessor-config.png)
+```
+<property>
+    <name>hbase.coprocessor.region.classes</name>
+    <value>com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint, com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint <!--, org.apache.hadoop.hbase.coprocessor.example.BulkDeleteEndpoint--></value>
+</property>
+```
 
 ### Restart HBase Region Servers
 

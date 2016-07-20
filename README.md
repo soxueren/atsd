@@ -12,7 +12,9 @@
 	  * [VMware VM](installation/vmware-esxi-server-vsphere.md)
 	  * [Oracle VirtualBox VM](installation/virtualbox.md)
 	  * [Other](installation/other-distributions.md)
-      * [Remote HBase Installation](installation/remote-hbase-installation.md)	  
+	* Cluster Distributions
+      * [HBase Cluster](installation/hbase-cluster.md)	
+      * [Cloudera Hadoop Distribution](installation/cloudera.md)  
 * [API](api)
     * [Network](api/network#network-api)
       * [series](api/network/series.md)
