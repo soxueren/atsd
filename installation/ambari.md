@@ -59,18 +59,12 @@ Escape character is '^]'.
 
 The Zookeeper client port is specified in:
 
-* Zookeeper host: `/etc/zookeeper/conf.dist/zoo.cfg` > `clientPort` setting
-* HBase host: `/etc/hbase/conf.dist/hbase-site.xml` > `hbase.zookeeper.property.clientPort` setting
+* Zookeeper host: `/usr/hdp/{hdp_version}/etc/zookeeper/conf.dist/zoo.cfg` > `clientPort` setting
+* HBase host: `/usr/hdp/{hdp_version}/hbase/conf/hbase-site.xml` > `hbase.zookeeper.property.clientPort` setting
 
 ## Download ATSD EE
 
-### CDH (Cloudera Distribution Hadoop) 5.5.x
-
-```
-curl -O https://www.axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
-```
-
-### CDH (Cloudera Distribution Hadoop) 5.6.x+
+### HDP (Horton Data Platform) 2.3.x
 
 ```
 curl -O https://www.axibase.com/public/atsd_ee_hbase_1.2.2.tar.gz
@@ -95,12 +89,12 @@ Set `hbase.zookeeper.quorum` to Zookeeper hostname `zookeeper-host`
 
 If Zookeeper client port is different from 2181, set `hbase.zookeeper.property.clientPort` accordingly.
 
-If Zookeeper Znode parent is not `/hbase`, set `zookeeper.znode.parent` to the actual value.
+Set Zookeeper Znode parent accordingly to `HBase host` > `/usr/hdp/{hdp_version}/hbase/conf/hbase-site.xml` > `zookeeper.znode.parent`
 
 ```
 hbase.zookeeper.quorum = zookeeper-host
 hbase.zookeeper.property.clientPort = 2181
-zookeeper.znode.parent = /hbase
+zookeeper.znode.parent = /hbase-unsecure
 hbase.rpc.timeout = 120000 
 hbase.client.scanner.timeout.period = 120000
 ```
@@ -129,12 +123,12 @@ Copy `/opt/atsd/hbase/lib/atsd.jar` to `/usr/lib/hbase/lib` directory on each HB
 
 ### Enable ATSD Coprocessors
 
-Open Cloudera Manager, select the target HBase cluster/service, open Configuration tab, search for setting `hbase.coprocessor.region.classes` and enter the following names. 
+Open Ambari Services, select the target HBase, open Configs tab, search for setting `hbase.coprocessor.region.classes` and enter the following names separated by comma. 
 
 * com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint
 * com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint
 
-![](images/cloudera-manager-coprocessor-config.png)
+![](images/ambari-manager-coprocessor-config.png)
 
 ### Restart HBase Region Servers
 
