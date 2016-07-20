@@ -1,4 +1,4 @@
-# Installation on Distributed HBase Cluster using Cloudera Manager
+# Installation on Distributed HBase Cluster using Apache Ambari
 
 ## Create `axibase` user
 
