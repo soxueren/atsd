@@ -32,7 +32,7 @@ Multi-part mode:
 
 ### Query String Parameters
 
-| **Field** | **Type** | **Description** |
+| **Name** | **Type** | **Description** |
 |:---|:---|:---|
 | config   | string   | [**Required**] Parser Name as configured on **Configuration:Parsers CSV** page.|
 | encoding      | string   | File encoding. Default: UTF-8.|
@@ -44,6 +44,7 @@ Multi-part mode:
 | time | string | Date in ISO 8601 format, applied to commands if the file doesn't contain any time columns. | 
 | timezone | string | Timezone applied to timestamps specified in local time. | 
 | test | boolean | Parse and validate the file without actually processing and storing commands. Default: false. | 
+| t:{name} | string | One or multiple default tags, inserted as series/property/message tags depending on command type, for example: `&t:location=SVL&t:site=QB1`.<br>Tag names should not contain whitespace. |
 
 ### Payload
 

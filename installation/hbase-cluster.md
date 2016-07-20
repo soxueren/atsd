@@ -45,7 +45,6 @@ Add `JAVA_HOME` path to the `axibase` user environment in `.bashrc`.
 ```
 sudo su axibase
 echo "export JAVA_HOME=${absolute path to JDK 7 home directory}" >> ~/.bashrc
-source ~/.bashrc
 exit
 ```
 
@@ -171,6 +170,10 @@ Review the start log for any errors:
 tail -f /opt/atsd/atsd/logs/atsd.log
 ```
 
+You should see **ATSD start completed** message at the end of the start.log.
+
+Web interface is accessible on port 8088 (http) and 8443 (https).
+
 ## Enable ATSD Autostart
 
 To configure ATSD for automated restart on server reboot, add the following line to `/etc/rc.local` before `return 0` line.
@@ -178,3 +181,16 @@ To configure ATSD for automated restart on server reboot, add the following line
 ```
 su - axibase -c /opt/atsd/atsd/bin/start-atsd.sh
 ```
+
+## Troubleshooting
+
+* Review [troubleshooting guide](troubleshooting.md).
+
+## Validation
+
+* [Verify database installation](verifying-installation.md).
+
+## Post-installation Steps
+
+* [Basic configuration](post-installation.md).
+* [Getting Started guide](/tutorials/getting-started.md).

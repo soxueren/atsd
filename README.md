@@ -15,6 +15,7 @@
 	* Cluster Distributions
       * [HBase Cluster](installation/hbase-cluster.md)	
       * [Cloudera Hadoop Distribution](installation/cloudera.md)  
+	  * [Ambari](installation/ambari.md)
 * [API](api)
     * [Network](api/network#network-api)
       * [series](api/network/series.md)

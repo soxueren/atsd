@@ -64,11 +64,11 @@ The Zookeeper client port is specified in:
 
 ## Download ATSD EE
 
-### HDP (Horton Data Platform) 2.3.x
-
 ```
 curl -O https://www.axibase.com/public/atsd_ee_hbase_1.2.2.tar.gz
 ```
+
+> The above version has been tested on Stack Version - HDP (Horton Data Platform) 2.3.x.
 
 ## Extract Files
 
@@ -89,7 +89,7 @@ Set `hbase.zookeeper.quorum` to Zookeeper hostname `zookeeper-host`
 
 If Zookeeper client port is different from 2181, set `hbase.zookeeper.property.clientPort` accordingly.
 
-Set Zookeeper Znode parent accordingly to `HBase host` > `/usr/hdp/{hdp_version}/hbase/conf/hbase-site.xml` > `zookeeper.znode.parent`
+Set Zookeeper Znode parent according to setting `zookeeper.znode.parent` configured on `HBase host` > `/usr/hdp/{hdp_version}/hbase/conf/hbase-site.xml`.
 
 ```
 hbase.zookeeper.quorum = zookeeper-host
@@ -123,10 +123,11 @@ Copy `/opt/atsd/hbase/lib/atsd.jar` to `/usr/lib/hbase/lib` directory on each HB
 
 ### Enable ATSD Coprocessors
 
-Open Ambari Services, select the target HBase, open Configs tab, search for setting `hbase.coprocessor.region.classes` and enter the following names separated by comma. 
+Open Services tab in Ambari UI, select the target HBase cluster, open Configs tab, search for setting `hbase.coprocessor.region.classes` and enter the following names separated by comma. 
 
-* com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint
-* com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint
+```
+com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint, com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint
+```
 
 ![](images/ambari-manager-coprocessor-config.png)
 
@@ -160,6 +161,10 @@ Review the start log for any errors:
 tail -f /opt/atsd/atsd/logs/atsd.log
 ```
 
+You should see **ATSD start completed** message at the end of the start.log.
+
+Web interface is accessible on port 8088 (http) and 8443 (https).
+
 ## Enable ATSD Autostart
 
 To configure ATSD for automated restart on server reboot, add the following line to `/etc/rc.local` before `return 0` line.
@@ -167,3 +172,16 @@ To configure ATSD for automated restart on server reboot, add the following line
 ```
 su - axibase -c /opt/atsd/atsd/bin/start-atsd.sh
 ```
+
+## Troubleshooting
+
+* Review [troubleshooting guide](troubleshooting.md).
+
+## Validation
+
+* [Verify database installation](verifying-installation.md).
+
+## Post-installation Steps
+
+* [Basic configuration](post-installation.md).
+* [Getting Started guide](/tutorials/getting-started.md).
