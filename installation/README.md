@@ -18,9 +18,16 @@ By installing Axibase Time Series Database you agree to its **[License Terms and
 | RedHat/CentOS| yum | [View](redhat-centos-yum.md)|
 | RedHat/CentOS| [rpm](https://axibase.com/public/atsd_ce_rpm_latest.htm) | [View](redhat-centos-rpm.md)|
 | SUSE Linux Enterprise Server | [rpm](https://axibase.com/public/atsd_ce_rpm_latest.htm)   | [View](sles-rpm.md)|
-| VMware Virtual Machine  | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](vmware-esxi-server-vsphere.md)|
-| Oracle VirtualBox Virtual Machine | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](virtualbox.md)|
-| Other distributions (including ARM devices) | [tar.gz](https://axibase.com/public/atsd_ce_distrib_latest.htm) | [View](other-distributions.md)|
+| VMware VM  | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](vmware-esxi-server-vsphere.md)|
+| Oracle VirtualBox VM | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](virtualbox.md)|
+| Other (including ARM) | [tar.gz](https://axibase.com/public/atsd_ce_distrib_latest.htm) | [View](other-distributions.md)|
+
+## Installation on Cluster
+
+| **Distribution** | **Installation Guide** |
+| :--- | :--- |
+| HBase Cluster | [View](hbase-cluster.md)|
+| Cloudera Distribution Hadoop (CDH)  | [View](cloudera.md) |
 
 ## Tutorials
 

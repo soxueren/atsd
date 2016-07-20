@@ -248,7 +248,7 @@ The client must split a command that is too long into multiple commands.
 
 |**Type**| **Maximum Identifier**|
 |:---|:---|
-|metric| 65535|
+|metric| 65535 <br>16777215 in ATSD on HBase 1.x|
 |entity| 16777215|
 |tag_key| 65535|
 |tag_value| 16777215|
