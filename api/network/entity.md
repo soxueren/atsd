@@ -28,11 +28,11 @@ Rules inherited from [base ABNF](base-abnf.md).
 ```properties
 command = "entity" MSP entity 1*(MSP tag)
 entity = "e:" NAME
-tag = "v:" NAME "=" VALUE
+tag = "t:" NAME "=" VALUE
 ```
 
 ## Examples
 
 ```ls
-entity m:nurswgvml007 t:location=SVL t:environment:production
+entity m:nurswgvml007 t:location=SVL t:environment=production
 ```
