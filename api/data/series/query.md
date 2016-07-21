@@ -183,6 +183,7 @@ POST https://atsd_host:8443/api/v1/series/query
 * [Threshold with Working Minutes](examples/query-aggr-threshold-sla.md)
 * [Average Threshold Percentage](examples/query-aggr-threshold-avg-multiple.md)
 * [Interpolation](examples/query-aggr-interpolation.md)
+* [Aggregation of Interpolated Values](examples/query-aggr-interpolate-delta.md)
 
 ### Period
 
