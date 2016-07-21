@@ -2,6 +2,8 @@
 
 * If `VALUE {n}` interpolation function is specified in the `PERIOD` clause, the `EXTEND` option sets empty leading/trailing period values to equal `{n}`.
 * Without `VALUE {n}` function, the `EXTEND` option adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.
+* If the query doesn't contain a start date condition, `EXTEND` is _not_ applied to leading periods because start date is not known.
+* If the query doesn't contain an end date condition, `EXTEND` is _not_ applied to trailing periods because end date is not known.
 
 ## Data
 
@@ -11,8 +13,6 @@ SELECT datetime, value
 WHERE datetime >= '2016-06-03T09:25:00.000Z' AND datetime < '2016-06-03T09:40:00.000Z'
   AND entity = 'nurswgvml006'
 ```
-
-The 
 
 ```ls
 | datetime                 | value | 
@@ -128,7 +128,7 @@ GROUP BY PERIOD(10 second, LINEAR, EXTEND)
 | 2016-06-03T09:38:00.000Z | 0.0        | + EXTEND -> interpolated with NEXT
 | 2016-06-03T09:38:10.000Z | 0.0        | + EXTEND -> interpolated with NEXT
 | 2016-06-03T09:38:20.000Z | 0.0        | 
-| 2016-06-03T09:38:30.000Z | 2.0        | + inner -> interpolated with LINEAR
+| 2016-06-03T09:38:30.000Z | 2.0        | + inner  -> interpolated with LINEAR
 | 2016-06-03T09:38:40.000Z | 4.0        | 
 | 2016-06-03T09:38:50.000Z | 4.0        | 
 | 2016-06-03T09:39:00.000Z | 6.1        | + inner -> interpolated with LINEAR
@@ -152,7 +152,7 @@ GROUP BY PERIOD(10 second, VALUE -10, EXTEND)
 ```
 
 ```ls
-| datetime                 | avg(value) | 
+| datetime                 | avg(value) |
 |--------------------------|------------| 
 | 2016-06-03T09:37:00.000Z | -10.0      | + EXTEND -> interpolated with VALUE -10
 | 2016-06-03T09:37:10.000Z | -10.0      | + EXTEND -> interpolated with VALUE -10
@@ -173,3 +173,78 @@ GROUP BY PERIOD(10 second, VALUE -10, EXTEND)
 | 2016-06-03T09:39:40.000Z | 18.8       | 
 | 2016-06-03T09:39:50.000Z | -10.0      | + EXTEND -> interpolated with VALUE -10
 ```
+
+## Query with Incomplete Interval
+
+### Data
+
+```ls
+series d:2016-07-20T11:08:00.000Z e:e-ext m:m-ext-1=9.4
+series d:2016-07-20T11:24:00.000Z e:e-ext m:m-ext-1=5.4
+series d:2016-07-20T11:42:00.000Z e:e-ext m:m-ext-1=1.2
+series d:2016-07-20T11:42:00.000Z e:e-ext m:m-ext-1=3.0
+```
+
+```ls
+| datetime                 | value | 
+|--------------------------|-------| 
+| 2016-07-20T11:08:00.000Z | 9.4   | 
+| 2016-07-20T11:24:00.000Z | 5.4   | 
+| 2016-07-20T11:42:00.000Z | 3.0   | 
+```
+
+### Complete Interval Specified
+
+Both start and end date are specific in the `WHERE` clause. `EXTEND` option is applied to both leading and trailing periods.
+
+```sql
+SELECT datetime, avg(value)
+  FROM "m-ext-1"
+WHERE datetime >= '2016-07-20T11:00:00Z' AND datetime < '2016-07-20T12:00:00Z'
+  AND entity = 'e-ext'
+GROUP BY PERIOD(5 minute, VALUE -10, EXTEND)
+```
+
+```ls
+| datetime                 | avg(value) | 
+|--------------------------|------------| 
+| 2016-07-20T11:00:00.000Z | -10.0      | 
+| 2016-07-20T11:05:00.000Z | 9.4        | 
+| 2016-07-20T11:10:00.000Z | -10.0      | 
+| 2016-07-20T11:15:00.000Z | -10.0      | 
+| 2016-07-20T11:20:00.000Z | 5.4        | 
+| 2016-07-20T11:25:00.000Z | -10.0      | 
+| 2016-07-20T11:30:00.000Z | -10.0      | 
+| 2016-07-20T11:35:00.000Z | -10.0      | 
+| 2016-07-20T11:40:00.000Z | 3.0        | 
+| 2016-07-20T11:45:00.000Z | -10.0      | 
+| 2016-07-20T11:50:00.000Z | -10.0      | 
+| 2016-07-20T11:55:00.000Z | -10.0      | 
+```
+
+### End Date is not Specified
+
+End date is not specified in the `WHERE` clause. `EXTEND` option is **not** applied to trailing periods.
+
+```sql
+SELECT datetime, avg(value)
+  FROM "m-ext-1"
+WHERE datetime >= '2016-07-20T11:00:00Z'
+  AND entity = 'e-ext'
+GROUP BY PERIOD(5 minute, VALUE -10, EXTEND)
+```
+
+```ls
+| datetime                 | avg(value) | 
+|--------------------------|------------| 
+| 2016-07-20T11:00:00.000Z | -10.0      | 
+| 2016-07-20T11:05:00.000Z | 9.4        | 
+| 2016-07-20T11:10:00.000Z | -10.0      | 
+| 2016-07-20T11:15:00.000Z | -10.0      | 
+| 2016-07-20T11:20:00.000Z | 5.4        | 
+| 2016-07-20T11:25:00.000Z | -10.0      | 
+| 2016-07-20T11:30:00.000Z | -10.0      | 
+| 2016-07-20T11:35:00.000Z | -10.0      | 
+| 2016-07-20T11:40:00.000Z | 3.0        | 
+```
+
