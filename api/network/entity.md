@@ -27,7 +27,7 @@ Rules inherited from [base ABNF](base-abnf.md).
 
 ```properties
 command = "entity" MSP entity 1*(MSP tag)
-metric = "e:" NAME
+entity = "e:" NAME
 tag = "v:" NAME "=" VALUE
 ```
 
