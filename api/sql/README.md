@@ -20,6 +20,7 @@ The data returned by SQL statements can be exported in the following formats:
   * [Time Condition](#time-condition)
   * [Aggregation Functions](#aggregation-functions)
   * [Time Formatting Functions](#time-formatting-functions)
+  * [Mathematical Functions](#mathematical-functions)
   * [Arithmetic Operators](#arithmetic-operators)
   * [Match Expressions](#match-expressions)
   * [Processing Sequence](#processing-sequence)
@@ -1107,6 +1108,36 @@ FROM "mpstat.cpu_busy"
 | date_format(time,'yyyy-MM-dd HH:mm:ss ZZ','PST')       | 2016-07-13 05:07:55 -07:00 | 
 ```
 
+## Mathematical Functions
+
+| **Function** | **Syntax** | **Description** |
+|:---|:---|:---|
+| ABS | `ABS(num)` | Absolute value of the specified number. |
+| CEIL | `CEIL(num)` | Smallest integer that is greater than or equal to the specified number. |
+| FLOOR | `FLOOR(num)` | Largest integer that is less than or equal to the specified number. |
+| ROUND | `ROUND(num [,m])` | Number rounded to `m` decimal places. |
+| MOD | `MOD(num, m)` | Remainder of the first number divided by `m`.|
+| POWER | `POWER(num, m)`  | Number raised to power `m`. |
+| EXP | `EXP(num)` | `e` (2.71828183) raised to the power of the specified number. |
+| LN | `LN(num)` | Natural logarithm of the specified number. |
+| LOG | `LOG(num, m)`  | Base-`num` logarithm of the second number `m`. |
+| SQRT | `SQRT(num)` | Square root of the specified number. |
+
+```sql
+SELECT value, ABS(value), CEIL(value), FLOOR(value), ROUND(value), MOD(value, 3),
+  POWER(value, 2), EXP(value), LN(value), LOG(10, value), SQRT(value)
+  FROM mpstat.cpu_busy
+WHERE datetime >= now - 1 * minute
+  AND entity = 'nurswgvml007'
+```
+
+```ls
+| value | ABS(value) | CEIL(value) | FLOOR(value) | ROUND(value) | MOD(value,3) | POWER(value,2) | EXP(value) | LN(value) | LOG(10,value) | SQRT(value) | 
+|-------|------------|-------------|--------------|--------------|--------------|----------------|------------|-----------|---------------|-------------| 
+| 4.040 | 4.040      | 5.000       | 4.000        | 4.000        | 1.040        | 16.322         | 56.826     | 1.396     | 0.606         | 2.010       | 
+| 7.070 | 7.070      | 8.000       | 7.000        | 7.000        | 1.070        | 49.985         | 1176.148   | 1.956     | 0.849         | 2.659       | 
+```
+
 ## Case Sensitivity
 
 SQL keywords are case-**in**sensitive.
@@ -1281,6 +1312,7 @@ Scheduled queries are always executed under administrative permissions.
 - [Entity Tag Columns](examples/select-entity-tag-columns.md)
 - [Metric Tag Columns](examples/select-metric-tag-columns.md)
 - [Computed Columns](examples/select-computed-columns.md)
+- [Mathematical Functions](examples/select-math.md)
 - [Column Alias](examples/alias-column.md)
 - [Table Alias](examples/alias-table.md)
 - [Datetime Format](examples/datetime-format.md)
