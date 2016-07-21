@@ -2,13 +2,13 @@
 
 ## Description
 
-Returns database version including licensing details.
+Returns database version including licensing details as well as a `date` object with local time and offset.
 
 ## Request
 
 | **Method** | **Path** | 
 |:---|:---|---:|
-| GET | `/version` |
+| GET | `/api/v1/version` |
 
 ## Response
 
@@ -18,6 +18,7 @@ Returns database version including licensing details.
 |:---|:---|:---|
 | buildInfo  | object | Database version information. |
 | license | object | Database license details.  |
+| date | object | Current date, start date, and offset information.  |
 
 ### Errors
 
@@ -48,9 +49,9 @@ curl https://atsd_host:8443/version \
 ```json
 {
 	"buildInfo": {
-		"revisionNumber": "13390",
-		"buildNumber": "4129",
-		"buildId": "4129"
+		"revisionNumber": "13732",
+		"buildNumber": "4345",
+		"buildId": "4345"
 	},
 	"license": {
 		"forecastEnabled": true,
@@ -58,6 +59,16 @@ curl https://atsd_host:8443/version \
 		"remoteHbase": true,
 		"productVersion": "Enterprise Edition",
 		"dataVersioningEnabled": true
+	},
+	"date": {
+		"localDate": "2016-07-21 14:05:39.956",
+		"currentDate": "2016-07-21T14:05:39Z",
+		"timeZone": {
+			"name": "GMT0",
+			"offsetMinutes": 0
+		},
+		"startDate": "2016-07-21T13:45:18Z",
+		"currentTime": 1469109939956
 	}
 }
 ```
