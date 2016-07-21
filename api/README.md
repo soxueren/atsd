@@ -8,6 +8,7 @@
   * [message](/api/network/message.md)
   * [csv](/api/network/csv.md)
   * [nmon](/api/network/nmon.md)
+  * [entity](/api/network/entity.md)  
   * [metric](/api/network/metric.md)
   * [extended](/api/network/extended-commands.md)
 * [Data](/api/data#overview)

@@ -109,16 +109,31 @@ hbase.client.scanner.timeout.period = 120000
 
 ## Request License Key
 
-Remote HBase connection requires a license key. 
+To obtain the license key, contact Axibase support with the following information from the machine where ATSD will be installed.
 
-To obtain the license key for the given ATSD server, contact Axibase support with the following information from the machine where ATSD will be installed:
-
-```
-ip addr
-```
+* Output of `ip addr` command.
 
 ```
-hostname
+[axibase@NURSWGVML007 ~]$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 1000
+    link/ether 00:50:56:b9:35:31 brd ff:ff:ff:ff:ff:ff
+    inet 10.102.0.6/24 brd 10.102.0.255 scope global eth1
+    inet6 2a01:4f8:140:53c6::7/64 scope global
+       valid_lft forever preferred_lft forever
+    inet6 fe80::250:56ff:feb9:3531/64 scope link
+       valid_lft forever preferred_lft forever
+```
+
+* Output of `hostname` command.
+
+```
+[axibase@NURSWGVML007 ~]$ hostname
+NURSWGVML007
 ```
 
 Email output of the above commands to Axibase support and copy the provided key to `/opt/atsd/atsd/conf/license/key.properties`.

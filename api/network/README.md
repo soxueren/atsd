@@ -16,6 +16,7 @@ You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language that 
 
 ### Meta Commands
 
+* [entity](entity.md)
 * [metric](metric.md)
 
 ### Control Commands
