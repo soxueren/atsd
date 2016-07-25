@@ -17,14 +17,32 @@ public class AtsdTcpClient {
     }
 
     public void init() throws IOException {
-        log("connecting to {0}:{1,number,#}", host, port);
+        log("Connecting to {0}:{1,number,#}", host, port);
         socket = new Socket(host, port);
         writer = new PrintWriter(socket.getOutputStream(), true);
-        log("connection established to {0}:{1,number,#}", host, port);
+        log("Connection established to {0}:{1,number,#}", host, port);
+        String version = getServerVersion();
+        log("Server version: {0}", version);
+        //check the version, it should be a numeric revision number such as 13743
+        if (version == null){
+            throw new UnknownServiceException("Server failed to respond to 'version' command. Check that the client is connecting to TCP port (default 8081). Current port: " + port);
+        } else {
+            try {
+                Integer.parseInt(version);
+            } catch (NumberFormatException ne) {
+                throw new UnknownServiceException("Invalid server version: " + version);
+            }
+        }
+    }
+
+    private String getServerVersion() throws IOException {
+        writeCommand("version");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        return reader.readLine();
     }
 
     public void shutdown() {
-        log("shutting down connection to {0}:{1,number,#} > commands sent={2}", host, port, commandCounter);
+        log("Shutting down connection to {0}:{1,number,#} > commands sent={2}", host, port, commandCounter);
         try {
             writer.flush();
             writer.close();
@@ -42,7 +60,7 @@ public class AtsdTcpClient {
         commandCounter++;
         //print first 10 commands to stdout
         if (commandCounter <= 10){
-            log("command [{0,number,#}] sent: {1}", commandCounter, command);
+            log("Command [{0,number,#}] sent: {1}", commandCounter, command);
         }
     }
 
