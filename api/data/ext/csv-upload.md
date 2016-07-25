@@ -10,6 +10,12 @@ Multiple files can be archived with zip/tar and uploaded as one zip or tar.gz ar
 
 The method supports processing of the uploaded file attached as data as well as a part in multi-part payload.
 
+## Date Limits
+
+* Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 millisecond from Epoch time.
+* Maximum date that can be stored by the database is **2106-02-07T06:59:59.999Z**, or 4294969199999 milliseconds from Epoch time.
+* If the date is outside of the above range, file processing will terminate at the line containing invalid date and a corresponding error will be raised for the client.
+
 ## Request
 
 | **Method** | **Path** |

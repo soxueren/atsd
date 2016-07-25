@@ -7,7 +7,7 @@ Creates or updates entity tags of the specified entity. If the entity doesn't ex
 ## Syntax
 
 ```css
-entity e:{metric} t:{tag-1}={text} t:{tag-2}={text}
+entity e:{entity} t:{tag-1}={text} t:{tag-2}={text}
 ```
 
 * Entity name and tag names are case-insensitive and are converted to lower case when stored. 

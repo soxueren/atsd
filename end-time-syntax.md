@@ -37,7 +37,7 @@ Calendar arithmetic such as adding or subtracting a time interval is implemented
 
 | **Name** | **Alias** | **Description** |
 |:---|:---|:---|
-| 'date-format' | | Supported formats: <br>`YYYY-MM-DD HH:mm:ss` – Specific date and time <br>`YYYY-MM-DD` – 00:00:00 on specific day <br> `2015-04-22T00:00:00Z` – Date in ISO format <br>Example 1: `2015-04-22 00:00:00` <br>Example 2: `2015-04-22 00:00` <br>Example 3: `2015-04-22` | 
+| `date-format` | | Supported formats: <br>`YYYY-MM-DD HH:mm:ss` – Specific date and time <br>`YYYY-MM-DD` – 00:00:00 on specific day <br> `2015-04-22T00:00:00Z` – Date in ISO format <br>Example 1: `2015-04-22 00:00:00` <br>Example 2: `2015-04-22 00:00` <br>Example 3: `2015-04-22` | 
 
 
 ### Future Time
@@ -79,6 +79,11 @@ Calendar arithmetic such as adding or subtracting a time interval is implemented
 | previous_quarter | | 00:00:00 on the first day of of previous quarter | 
 | current_year | | 00:00:00 on the first day of the current year | 
 | previous_year | | 00:00:00 on the first day of previous year | 
+
+### Days of Week
+
+| **Name** | **Alias** | **Description** |
+|:---|:---|:---|
 | monday | mon | 00:00:00 on the most recent Monday | 
 | tuesday | tue | 00:00:00 on the most recent Tuesday | 
 | wednesday | wed | 00:00:00 on the most recent Wednesday | 
