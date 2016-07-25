@@ -144,7 +144,7 @@ Since the underlying data is physically stored in the same shared partitioned ta
 
 Tag columns `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}` where `{name}` contains reserved characters such as `-`,`*`,`,` should be enclosed in quotes or double quotes, for example, `entity.tags."file-system"`.
 
-New columns can be created by applying functions and arithmetic expressions to existing columns.
+New columns can be created by applying functions and arithmetic expressions to existing columns. The computed columns can be used both in `SELECT` expression as well as in `WHERE`, `HAVING`, and `ORDER BY` clauses.
 
 ```sql
 SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
