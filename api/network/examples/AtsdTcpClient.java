@@ -38,7 +38,9 @@ public class AtsdTcpClient {
     private String getServerVersion() throws IOException {
         writeCommand("version");
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        return reader.readLine();
+        String line = reader.readLine();
+		reader.close();
+		return line;
     }
 
     public void shutdown() {
