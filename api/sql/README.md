@@ -107,6 +107,19 @@ WHERE datetime > now - 15 * minute
 * **ROW_NUMBER** returns row index within each partition.
 * **LAST_TIME** returns last insert time in millisecond for each series
 
+### Comments
+
+Comments can be inserted into SQL statements with `--` (two hyphens) and `/* */` (multi-line) to provide descriptive information about the query and its expected results.
+
+```sql
+-- comment until line break
+
+/* 
+comment text on 
+multiple line
+*/
+```
+
 ## Processing Sequence
 
 * **FROM** retrieves records from virtual tables.
