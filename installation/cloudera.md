@@ -125,7 +125,7 @@ Copy the `keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
 
 ### Kerberos Settings
 
-Add Kerberos principal and keytab path settings to `server.properties`:
+Add Kerberos principal and `keytab` path settings to `server.properties`:
 
 ```
 # Kerberos principal, identified with username (hbase) and realm (CLOUDERA).
@@ -136,6 +136,7 @@ kerberos.keytab.path=/opt/atsd/atsd/conf/hbase.keytab
 
 > The `keytab` file needs to be updated whenever the password is changed.
 
+> For added security, ensure that `keytab` file has 400 permission (read by owner).
 
 ### Create `hbase-site.xml` file
 
