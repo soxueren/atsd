@@ -131,6 +131,7 @@ Add Kerberos principal and `keytab` path settings to `/opt/atsd/atsd/conf/server
 
 ```elm
 # Kerberos principal, identified with username (hbase) and realm (CLOUDERA).
+# Note that the login is specified without /_HOST placeholder.
 kerberos.login=hbase@CLOUDERA
 # Absolute path to Kerberos keytab file, containing encrypted key for the above principal.
 kerberos.keytab.path=/opt/atsd/atsd/conf/hbase.keytab
