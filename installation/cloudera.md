@@ -107,9 +107,87 @@ hbase.rpc.timeout = 120000
 hbase.client.scanner.timeout.period = 120000
 ```
 
+## Kerberos Authentication
+
+ATSD can be configured for Kerberos authentication with Zookeeper and Hadoop services by following these steps.
+
+### Copy `keytab` file
+
+1. Create a new `keytab` file use [ktutil](https://kb.iu.edu/d/aumh#create) utility, OR
+
+2. Locate an existing `keytab` file on an HBase master/region server:
+
+```
+find / -name "*.keytab" | xargs ls -la
+```
+
+Copy the `keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
+
+### Kerberos Settings
+
+Add Kerberos principal and keytab path settings to `server.properties`:
+
+```
+# Kerberos principal, identified with username (hbase) and realm (CLOUDERA).
+kerberos.login=hbase@CLOUDERA
+# Absolute path to Kerberos keytab file, containing encrypted key for the above principal.
+kerberos.keytab.path=/opt/atsd/atsd/conf/hbase.keytab
+```
+
+> The `keytab` file needs to be updated whenever the password is changed.
+
+
+### Create `hbase-site.xml` file
+
+Create `hbase-site.xml` file in `/opt/atsd/atsd/conf` directory. Update `keytab` file paths to actual locations.
+
+```xml
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <property>
+    <name>hbase.master.kerberos.principal</name>
+    <value>hbase/_HOST@CLOUDERA</value>
+  </property>
+   <property>
+	<name>hbase.master.keytab.file</name>
+	<value>/opt/atsd/atsd/conf/hbase.keytab</value>
+   </property>    
+  <property>
+    <name>hbase.regionserver.kerberos.principal</name>
+    <value>hbase/_HOST@CLOUDERA</value>
+  </property>
+   <property>
+	<name>hbase.regionserver.keytab.file</name>
+	<value>/opt/atsd/atsd/conf/hbase.keytab</value>
+   </property>  
+</configuration>
+```
+
+### Debugging Kerberos
+
+Debugging for Kerberos authentication can be enabled by adding `-Dsun.security.krb5.debug=true` option in `/opt/atsd/bin/atsd-start.sh`.
+
+Debug output will be redirected to `/opt/atsd/atsd/logs/error.log`
+
+```
+8893 [main] WARN  o.a.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+9049 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Login user from keytab starting...
+Java config name: null
+Native config name: /etc/krb5.conf
+Loaded from native config
+>>> KdcAccessibility: reset
+>>> KeyTabInputStream, readName(): CLOUDERA
+...
+>>> EType: sun.security.krb5.internal.crypto.Aes256CtsHmacSha1EType
+>>> KrbAsRep cons in KrbAsReq.getReply hbase/quickstart.cloudera
+5569 [main] INFO  o.a.h.security.UserGroupInformation - Login successful for user hbase/quickstart.cloudera@CLOUDERA using keytab file /opt/atsd/atsd/conf/aws.keytab 
+5570 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Login user from keytab successful 
+```
+
 ## Request License Key
 
-To obtain the license key, contact Axibase support with the following information from the machine where ATSD will be installed.
+To obtain a license key, contact Axibase support with the following information from the machine where ATSD will be installed.
 
 * Output of `ip addr` command.
 
