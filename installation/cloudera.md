@@ -99,7 +99,7 @@ If Zookeeper client port is different from 2181, set `hbase.zookeeper.property.c
 
 If Zookeeper Znode parent is not `/hbase`, set `zookeeper.znode.parent` to the actual value.
 
-```
+```elm
 hbase.zookeeper.quorum = zookeeper-host
 hbase.zookeeper.property.clientPort = 2181
 zookeeper.znode.parent = /hbase
@@ -129,7 +129,7 @@ Copy the `keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
 
 Add Kerberos principal and `keytab` path settings to `/opt/atsd/atsd/conf/server.properties` in ATSD:
 
-```
+```elm
 # Kerberos principal, identified with username (hbase) and realm (CLOUDERA).
 kerberos.login=hbase@CLOUDERA
 # Absolute path to Kerberos keytab file, containing encrypted key for the above principal.
