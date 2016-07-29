@@ -113,13 +113,13 @@ ATSD can be enabled for Kerberos authentication with Zookeeper and Hadoop servic
 
 ### Copy `keytab` file
 
-1. Create a new `keytab` file using [ktutil](https://kb.iu.edu/d/aumh#create) utility, OR
-
-2. Locate an existing `keytab` file on an HBase master/region server:
+* Locate an existing `keytab` file on an HBase master/region server.
 
 ```
 find / -name "*.keytab" | xargs ls -la
 ```
+
+* Alternatively, create a new `keytab` file using [ktutil](https://kb.iu.edu/d/aumh#create) utility.
 
 Copy the `keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
 
