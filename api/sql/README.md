@@ -155,9 +155,11 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`metric.tags.*`|string|Expands to multiple columns, each column containing a separate metric tag.|
 |`entity.groups`|string|List of entity groups, to which the entity belongs, separated by semi-colon `;`.|
 
-Tag columns `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}` where `{name}` contains reserved characters such as `-`,`*`,`,` should be enclosed in quotes or double quotes, for example, `entity.tags."file-system"`.
+Tag columns `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}` where `{name}` contains reserved characters such as `-`,`*`,`,` should be enclosed in quotes or double quotes, for example, `entity.tags."file-system"`. 
 
-New columns can be created by applying functions and arithmetic expressions to existing columns. The computed columns can be used both in `SELECT` expression as well as in `WHERE`, `HAVING`, and `ORDER BY` clauses.
+Quotes and double quotes in column names can be escaped by doubling the quote symbol, for example, if tag name is `hello"world`, the column name can be referred to as follows: `tags."hello""world"`.
+
+New columns can be created by applying functions and arithmetic expressions to existing columns. The computed columns can be included both in `SELECT` expression as well as in `WHERE`, `HAVING`, and `ORDER BY` clauses.
 
 ```sql
 SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
@@ -1328,6 +1330,7 @@ Scheduled queries are always executed under administrative permissions.
 - [Mathematical Functions](examples/select-math.md)
 - [Column Alias](examples/alias-column.md)
 - [Table Alias](examples/alias-table.md)
+- [Escape Quotes](examples/select-escape-quote.md)
 - [Datetime Format](examples/datetime-format.md)
 - [Limit Row Count](examples/limit.md)
 - [Limit by Partition](examples/limit-partition.md)
