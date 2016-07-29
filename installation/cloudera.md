@@ -117,6 +117,8 @@ ATSD can be enabled for Kerberos authentication with Zookeeper and Hadoop servic
 
 ```
 find / -name "*.keytab" | xargs ls -la
+
+-rw------- 1 hbase        hbase        448 Jul 29 16:44 /var/run/cloudera-scm-agent/process/30-hbase-MASTER/hbase.keytab
 ```
 
 * Alternatively, create a new `keytab` file using [ktutil](https://kb.iu.edu/d/aumh#create) utility.
