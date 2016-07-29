@@ -109,11 +109,11 @@ hbase.client.scanner.timeout.period = 120000
 
 ## Kerberos Authentication
 
-ATSD can be configured for Kerberos authentication with Zookeeper and Hadoop services by following these steps.
+ATSD can be enabled for Kerberos authentication with Zookeeper and Hadoop services by following these steps.
 
 ### Copy `keytab` file
 
-1. Create a new `keytab` file use [ktutil](https://kb.iu.edu/d/aumh#create) utility, OR
+1. Create a new `keytab` file using [ktutil](https://kb.iu.edu/d/aumh#create) utility, OR
 
 2. Locate an existing `keytab` file on an HBase master/region server:
 
@@ -125,7 +125,7 @@ Copy the `keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
 
 ### Kerberos Settings
 
-Add Kerberos principal and `keytab` path settings to `server.properties`:
+Add Kerberos principal and `keytab` path settings to `/opt/atsd/atsd/conf/server.properties` in ATSD:
 
 ```
 # Kerberos principal, identified with username (hbase) and realm (CLOUDERA).
@@ -181,8 +181,8 @@ Loaded from native config
 >>> KeyTabInputStream, readName(): CLOUDERA
 ...
 >>> EType: sun.security.krb5.internal.crypto.Aes256CtsHmacSha1EType
->>> KrbAsRep cons in KrbAsReq.getReply hbase/quickstart.cloudera
-5569 [main] INFO  o.a.h.security.UserGroupInformation - Login successful for user hbase/quickstart.cloudera@CLOUDERA using keytab file /opt/atsd/atsd/conf/aws.keytab 
+>>> KrbAsRep cons in KrbAsReq.getReply hbase/host01
+5569 [main] INFO  o.a.h.security.UserGroupInformation - Login successful for user hbase/host01@CLOUDERA using keytab file /opt/atsd/atsd/conf/aws.keytab 
 5570 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Login user from keytab successful 
 ```
 
