@@ -166,9 +166,9 @@ kerberos.keytab.path=/opt/atsd/atsd/conf/hbase.keytab
 
 > For added security, ensure that `keytab` file has 400 permission (read by owner).
 
-### Create `hbase-site.xml` file
+### `hbase-site.xml` file
 
-Create `hbase-site.xml` file in `/opt/atsd/atsd/conf` directory. Update `keytab` file paths to actual locations.
+Remove comments in `/opt/atsd/atsd/conf/hbase-site.xml` file and set `keytab` paths to actual locations.
 
 ```xml
 <?xml version="1.0"?>
