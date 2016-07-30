@@ -195,7 +195,7 @@ Create `hbase-site.xml` file in `/opt/atsd/atsd/conf` directory. Update `keytab`
 
 ### Debugging Kerberos
 
-Debugging for Kerberos authentication can be enabled by changing ATSD start script `/opt/atsd/atsd/bin/atsd-start.sh`.
+Debugging for Kerberos authentication can be enabled by changing ATSD start script `/opt/atsd/atsd/bin/start-atsd.sh`.
 
 ```ls
 #uncomment to enable kerberos debug
