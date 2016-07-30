@@ -99,7 +99,7 @@ If Zookeeper client port is different from 2181, set `hbase.zookeeper.property.c
 
 If Zookeeper Znode parent is not `/hbase`, set `zookeeper.znode.parent` to the actual value.
 
-```elm
+```ls
 hbase.zookeeper.quorum = zookeeper-host
 hbase.zookeeper.property.clientPort = 2181
 zookeeper.znode.parent = /hbase
@@ -125,11 +125,36 @@ find / -name "*.keytab" | xargs ls -la
 
 Copy the `keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
 
+### Configure Kerberos configuration information in `krb5.conf` file
+
+Copy `/etc/krb5.conf` from an HBase master/region server to ATSD server with the same path.
+
+```ls
+[libdefaults]
+default_realm = CLOUDERA
+dns_lookup_kdc = false
+dns_lookup_realm = false
+ticket_lifetime = 86400
+renew_lifetime = 604800
+forwardable = true
+default_tgs_enctypes = aes256-cts-hmac-sha1-96
+default_tkt_enctypes = aes256-cts-hmac-sha1-96
+permitted_enctypes = aes256-cts-hmac-sha1-96
+udp_preference_limit = 1
+[realms]
+CLOUDERA = {
+  kdc = host01
+  admin_server = host01
+}
+```
+
+Make sure that `host01` specified in kdc and admin_server properties is resolvable on the ATSD server. Add it to `/etc/hosts` if necessary.
+
 ### Kerberos Settings
 
 Add Kerberos principal and `keytab` path settings to `/opt/atsd/atsd/conf/server.properties` in ATSD:
 
-```elm
+```ls
 # Kerberos principal, identified with username (hbase) and realm (CLOUDERA).
 # Note that the login is specified without /_HOST placeholder.
 kerberos.login=hbase@CLOUDERA
@@ -170,12 +195,19 @@ Create `hbase-site.xml` file in `/opt/atsd/atsd/conf` directory. Update `keytab`
 
 ### Debugging Kerberos
 
-Debugging for Kerberos authentication can be enabled by adding `-Dsun.security.krb5.debug=true` option in `/opt/atsd/bin/atsd-start.sh`.
+Debugging for Kerberos authentication can be enabled by changing ATSD start script `/opt/atsd/atsd/bin/atsd-start.sh`.
 
-Debug output will be redirected to `/opt/atsd/atsd/logs/error.log`
+```ls
+#uncomment to enable kerberos debug
+DParams="$DParams -Dsun.security.krb5.debug=true"
+
+#uncomment to enable atsd output logging
+"$java_command" -server  -Xmx512M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="$atsd_home"/logs $DParams -classpath "$atsd_home"/conf:"$atsd_executable""${lib_jars}" com.axibase.tsd.Server >>${outLog} 2>>${errorLog} &
+```
+
+Kerberos client debug output will be redirected to `${outLog}` file which is set to `/opt/atsd/atsd/logs/out.log` by default.
 
 ```
-8893 [main] WARN  o.a.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
 9049 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Login user from keytab starting...
 Java config name: null
 Native config name: /etc/krb5.conf
@@ -185,7 +217,7 @@ Loaded from native config
 ...
 >>> EType: sun.security.krb5.internal.crypto.Aes256CtsHmacSha1EType
 >>> KrbAsRep cons in KrbAsReq.getReply hbase/host01
-5569 [main] INFO  o.a.h.security.UserGroupInformation - Login successful for user hbase/host01@CLOUDERA using keytab file /opt/atsd/atsd/conf/aws.keytab 
+5569 [main] INFO  o.a.h.security.UserGroupInformation - Login successful for user hbase/host01@CLOUDERA using keytab file /opt/atsd/atsd/conf/hbase.keytab 
 5570 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Login user from keytab successful 
 ```
 
@@ -211,10 +243,10 @@ To obtain a license key, contact Axibase support with the following information 
        valid_lft forever preferred_lft forever
 ```
 
-* Output of `hostname` command.
+* Output of `hostname -f` command.
 
 ```
-[axibase@NURSWGVML007 ~]$ hostname
+[axibase@NURSWGVML007 ~]$ hostname -f
 NURSWGVML007
 ```
 
@@ -249,7 +281,7 @@ sudo netstat -tulpn | grep "8081\|8082\|8084\|8088\|8443"
 
 If some of the above ports are taken, open `/opt/atsd/atsd/conf/server.properties` file and change ATSD listening ports accordingly.
 
-```
+```ls
 http.port = 8088
 input.port = 8081
 udp.input.port = 8082
