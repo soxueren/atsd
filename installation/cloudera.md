@@ -170,9 +170,9 @@ Create `hbase-site.xml` file in `/opt/atsd/atsd/conf` directory. Update `keytab`
 
 ### Debugging Kerberos
 
-Debugging for Kerberos authentication can be enabled by adding `-Dsun.security.krb5.debug=true` option in `/opt/atsd/bin/atsd-start.sh`.
+Debugging for Kerberos authentication can be enabled by adding `-Dsun.security.krb5.debug=true` option in `/opt/atsd/atsd/bin/start-atsd.sh`.
 
-Debug output will be redirected to `/opt/atsd/atsd/logs/error.log`
+Debug output will be redirected to `/opt/atsd/atsd/logs/err.log`
 
 ```
 8893 [main] WARN  o.a.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
