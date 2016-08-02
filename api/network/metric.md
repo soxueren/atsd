@@ -36,10 +36,10 @@ command = "metric" MSP metric [MSP data-type] [MSP label] [MSP description] [MSP
 metric = "m:" NAME
 data-type = "p:" ("short" / "integer" / "long" / "float" / "double" / "decimal")
 label = "l:" VALUE
-description = "l:" VALUE
-filter = "l:" VALUE
+description = "d:" VALUE
+filter = "f:" VALUE
 versioning = "v:" ("true" / "false")
-tag = "v:" NAME "=" VALUE
+tag = "t:" NAME "=" VALUE
 ```
 
 ## Examples
