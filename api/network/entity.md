@@ -34,5 +34,5 @@ tag = "t:" NAME "=" VALUE
 ## Examples
 
 ```ls
-entity m:nurswgvml007 t:location=SVL t:environment=production
+entity e:nurswgvml007 t:location=SVL t:environment=production
 ```

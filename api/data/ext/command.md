@@ -16,8 +16,8 @@ Supported commands:
 * [series](/api/network/series.md)
 * [property](/api/network/property.md)
 * [message](/api/network/message.md) 
-* [metric](/api/network/entity.md) 
-* [entity](/api/network/metric.md) 
+* [metric](/api/network/metric.md) 
+* [entity](/api/network/entity.md) 
 
 ## Request
 
