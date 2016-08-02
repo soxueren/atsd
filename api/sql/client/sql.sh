@@ -68,9 +68,11 @@ main() {
         queryBody="${query}"
     fi
     if test -z "$queryBody"; then
-        echo "Query body is empty. Exist."
+        echo "Query body is empty. Exit."
         exit 1
     fi
+    queryBody=$(echo "$queryBody" | sed  s/\"/\\\\\"/g)
+    #queryBody=$(echo "$queryBody" | sed  s/+/%2B/g)
 
     command="curl $ATSD_URL"
     if test -n "$output"; then
@@ -79,9 +81,10 @@ main() {
     if test "$ATSD_INSECURE" = "true"; then
         command="$command --insecure"
     fi
-    command="$command --user $ATSD_USER:$ATSD_PASSWORD --request POST --data '"
-    command="${command}outputFormat=${format}&medatada=${metadata}&q=${queryBody}'"
-    eval $command
+    command="${command} --user $ATSD_USER:$ATSD_PASSWORD --request POST"
+    command="${command} --data \"outputFormat=${format}&metadata=${metadata}\""
+    command="${command} --data-urlencode \"q=${queryBody}\""
+    eval "$command"
 }
 
 main
