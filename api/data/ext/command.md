@@ -2,11 +2,22 @@
 
 ## Description
 
-Insert [series](/api/network/series.md), [property](/api/network/property.md), and [message](/api/network/message.md) commands in Network API syntax using HTTP as a transport protocol.
+Insert data using commands in Network API syntax and HTTP as a transport protocol.
 
 Multiple commands can be submitted in one request, separated by line feed character.
 
-Commands are processed sequentially. In case of error, the server terminates parsing and discards unprocessed commands.
+Commands are processed sequentially:
+
+* In case of syntax error, the server terminates parsing and discards unprocessed commands.
+* In case of out-of-range date, the invalid command is discarded and processing continues.
+
+Supported commands:
+
+* [series](/api/network/series.md)
+* [property](/api/network/property.md)
+* [message](/api/network/message.md) 
+* [metric](/api/network/entity.md) 
+* [entity](/api/network/metric.md) 
 
 ## Request
 
@@ -18,13 +29,9 @@ Commands are processed sequentially. In case of error, the server terminates par
 
 None.
 
-### Fields
+### Payload
 
-An array of network commands in plain-text format, separated by line feed:
-
-* [series](/api/network/series.md)
-* [property](/api/network/property.md)
-* [message](/api/network/message.md)
+List of network commands, separated by line feed.
 
 ## Response
 
