@@ -68,7 +68,7 @@ main() {
         queryBody="${query}"
     fi
     if test -z "$queryBody"; then
-        echo "Query body is empty. Exist."
+        echo "Query body is empty. Exit."
         exit 1
     fi
 
@@ -80,7 +80,7 @@ main() {
         command="$command --insecure"
     fi
     command="$command --user $ATSD_USER:$ATSD_PASSWORD --request POST --data '"
-    command="${command}outputFormat=${format}&medatada=${metadata}&q=${queryBody}'"
+    command="${command}outputFormat=${format}&metadata=${metadata}&q=${queryBody}'"
     eval $command
 }
 

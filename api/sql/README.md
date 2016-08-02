@@ -1300,23 +1300,6 @@ Sample metadata:
 GET https://atsd_server:8443/api/sql?q=SELECT%20*%20FROM%20cpu_busy%20WHERE%20datetime%20%3E%20now%20-%201*HOUR
 ```
 
-### Bash Client Example
-
-Execute query specified in `/home/axibase/query.sql` file and write CSV results to `/tmp/report-1.csv`.
-
-```ls
-sql.sh -o /tmp/report-1.csv -i /home/axibase/query.sql -f csv
-```
-
-Execute query specified inline and store results in `/tmp/report-2.csv`.
-
-```ls
-sql.sh --output /tmp/report-2.csv --query "SELECT entity, value FROM cpu_busy WHERE datetime > now - 1*minute"
-```
-
-Bash client [parameters](client/README.md).
-
-
 ### `curl` Query Example
 
 ```sh
@@ -1325,6 +1308,23 @@ curl https://atsd_server:8443/api/sql  \
   --request POST \
   --data 'outputFormat=csv&q=SELECT entity, value FROM cpu_busy WHERE datetime > now - 1*MINUTE'
 ```
+
+### Bash Client Example
+
+Execute query specified in `query.sql` file and write CSV results to `/tmp/report-1.csv`.
+
+```ls
+./sql.sh -o /tmp/report-1.csv -i query.sql -f csv
+```
+
+Execute query specified inline and store results in `/tmp/report-2.csv`.
+
+```ls
+./sql.sh --output /tmp/report-2.csv --query "SELECT entity, value FROM mpstat.cpu_busy WHERE datetime > now - 1*minute LIMIT 3"
+```
+
+Bash client [parameters](client/README.md).
+
 
 ## Authorization
 
