@@ -150,3 +150,9 @@ curl http://localhost:20088/api/v1/series/insert \
 
 cat json-in.log
 ```
+
+## Examples
+
+Each Data API method provides a set of examples containing sample request and response objects. The response object illustrates all fields that are returned by that method.
+
+See also [Data API Client in Java](series/examples/DataApiExample.java).
