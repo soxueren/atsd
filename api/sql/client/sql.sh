@@ -72,7 +72,6 @@ main() {
         exit 1
     fi
     queryBody=$(echo "$queryBody" | sed  s/\"/\\\\\"/g)
-    #queryBody=$(echo "$queryBody" | sed  s/+/%2B/g)
 
     command="curl $ATSD_URL"
     if test -n "$output"; then
