@@ -64,3 +64,16 @@ Execute inline query and redirect output to a file.
 ```
 ./sql.sh -q "SELECT * FROM mpstat.cpu_busy WHERE datetime > now-1*hour LIMIT 2" > /tmp/test.csv
 ```
+
+Execute inline query with escaped double quotes.
+
+```
+./sql.sh -q "SELECT * FROM \"mpstat.cpu_busy\" WHERE datetime > now-1*hour LIMIT 5"
+```
+
+Execute a multi-line query.
+
+```
+./sql.sh -q "SELECT * FROM mpstat.cpu_busy 
+             WHERE datetime > now-1*hour LIMIT 5"
+```

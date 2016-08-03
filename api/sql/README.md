@@ -567,7 +567,7 @@ The default `CALENDAR` alignment can be changed to `START_TIME`, `END_TIME`, or 
 * For `START_TIME` and `END_TIME` options, `WHERE` clause must contain start and end time of the selection interval, respectively.
 
 ```sql
-SELECT entity, date_time, COUNT(value) 
+SELECT entity, datetime, COUNT(value) 
   FROM "mpstat.cpu_busy"
 WHERE datetime >= now-1*HOUR AND datetime < now
   AND entity = 'nurswgvml006'
