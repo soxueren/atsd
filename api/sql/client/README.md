@@ -58,3 +58,9 @@ Execute query specified in `query.sql` file and write CSV results to `/tmp/repor
 ```ls
 ./sql.sh -o /tmp/report-1.csv -i query.sql -f csv
 ```
+
+Execute inline query and redirect output to a file.
+
+```
+./sql.sh -q "SELECT * FROM mpstat.cpu_busy WHERE datetime > now-1*hour LIMIT 2" > /tmp/test.csv
+```
