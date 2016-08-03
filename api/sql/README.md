@@ -863,6 +863,24 @@ ORDER BY avg(value) DESC
 | nurswgvml007 | 13.2       | 
 ```
 
+### Collation
+
+Ordering of strings is based on their Unicode value.
+
+| **ATSD** | **MySQL** | **PostgreSQL** | **Oracle** |
+| ---- | ---- | ---- | ---- |
+| 0 U+0030 | 0 | 0 | 0 |
+| 1 U+0031 | 1 | 1 | 1 |
+| A U+0041 | A | a | A |
+| B U+0042 | a | A | B |
+| C U+0043 | B | b | C |
+| T U+0054 | b | B | T |
+| U U+0055 | C | C | U |
+| a U+0061 | t | t | a |
+| b U+0062 | T | T | b |
+| t U+0074 | U | U | t |
+| z U+007A | z | z | z |
+
 ## Joins
 
 Data for multiple virtual tables can be merged with `JOIN` and `OUTER JOIN` clauses.
