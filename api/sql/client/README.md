@@ -44,7 +44,7 @@ password=********
 Execute inline query and print results to stdout.
 
 ```ls
-./sql.sh -q "SELECT entity, value FROM mpstat.cpu_busy WHERE datetime > now - 1*minute LIMIT 3"
+./sql.sh -q "SELECT * FROM mpstat.cpu_busy WHERE datetime > now - 1*minute LIMIT 3"
 ```
 
 Execute inline query and store results in `/tmp/report-2.csv`.
