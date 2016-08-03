@@ -72,6 +72,10 @@ main() {
         exit 1
     fi
     queryBody=$(echo "$queryBody" | sed  s/\"/\\\\\"/g)
+<<<<<<< HEAD
+=======
+    #queryBody=$(echo "$queryBody" | sed  s/+/%2B/g)
+>>>>>>> e91986844d2f586e3436b96a9e407e16c6965062
 
     command="curl $ATSD_URL"
     if test -n "$output"; then
@@ -83,7 +87,10 @@ main() {
     command="${command} --user $ATSD_USER:$ATSD_PASSWORD --request POST"
     command="${command} --data \"outputFormat=${format}&metadata=${metadata}\""
     command="${command} --data-urlencode \"q=${queryBody}\""
+<<<<<<< HEAD
     #echo "$command"
+=======
+>>>>>>> e91986844d2f586e3436b96a9e407e16c6965062
     eval "$command"
 }
 
