@@ -1343,6 +1343,9 @@ Execute query specified inline and store results in `/tmp/report-2.csv`.
 
 Bash client [parameters](client/README.md).
 
+### Java Client Example
+ 
+[SQL to CSV example in Java](client/SqlCsvExample.java).
 
 ## Authorization
 

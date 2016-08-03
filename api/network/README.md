@@ -2,7 +2,7 @@
 
 Network API provides a set of plain text commands for inserting numeric time series, key=value properties, and tagged messages into Axibase Time Series Database via **TCP** and **UDP** network protocols.
 
-You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language that lets you connect to ATSD server via TCP/UDP protocol.
+You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language such as [Java](examples/AtsdTcpClient.java) that lets you connect to ATSD server via TCP/UDP protocol.
 
 ## Supported Commands
 
