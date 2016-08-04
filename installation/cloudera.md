@@ -328,14 +328,35 @@ su - axibase -c /opt/atsd/atsd/bin/start-atsd.sh
 
 ## Updating ATSD
 
-Make sure you are login as ATSD owner user.
-Execute the following command to update ATSD to latest version:
+### Option 1. Co-processor update is NOT required.
+
+Login as `axibase` user.
 
 ```bash
-/opt/atsd/atsd/bin/stop-atsd.sh
 cd ~
 curl -O https://axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
 tar -xvf atsd_ee_hbase_1.0.3.tar.gz
+/opt/atsd/atsd/bin/stop-atsd.sh
 cp atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/
 /opt/atsd/atsd/bin/start-atsd.sh
 ```
+
+### Option 2. Co-processor update is required.
+
+Login as `axibase` user.
+
+```bash
+cd ~
+curl -O https://axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
+tar -xvf atsd_ee_hbase_1.0.3.tar.gz
+```
+
+Copy `atsd/hbase/lib/atsd.jar` file to `/usr/lib/hbase/lib` directory on each HBase region server.
+
+```bash
+/opt/atsd/atsd/bin/stop-atsd.sh
+cp atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/
+/opt/atsd/atsd/bin/start-atsd.sh
+```
+
+
