@@ -325,3 +325,17 @@ su - axibase -c /opt/atsd/atsd/bin/start-atsd.sh
 
 * [Basic configuration](post-installation.md).
 * [Getting Started guide](/tutorials/getting-started.md).
+
+## Updating ATSD
+
+Make sure you are login as ATSD owner user.
+Execute the following command to update ATSD to latest version:
+
+```bash
+/opt/atsd/atsd/bin/stop-atsd.sh
+cd /tmp
+curl -O https://axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
+tar -xvf atsd_ee_hbase_1.0.3.tar.gz
+cp atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/
+/opt/atsd/atsd/bin/start-atsd.sh
+```
