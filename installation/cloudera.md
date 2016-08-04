@@ -333,7 +333,7 @@ Execute the following command to update ATSD to latest version:
 
 ```bash
 /opt/atsd/atsd/bin/stop-atsd.sh
-cd /tmp
+cd ~
 curl -O https://axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
 tar -xvf atsd_ee_hbase_1.0.3.tar.gz
 cp atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/
