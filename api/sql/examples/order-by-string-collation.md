@@ -28,7 +28,7 @@ series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=résumé  t:tag-unicode-
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=Résumé  t:tag-unicode-1=U+0052 t:tag-unicode-2=U+00E9
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=Resumes t:tag-unicode-1=U+0052 t:tag-unicode-2=U+0065
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=resumes t:tag-unicode-1=U+0072 t:tag-unicode-2=U+0065
-series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=résumés t:tag-unicode-1=U+0072 t:tag-unicode-2=U+00E9 t:tag-unicode-3=U+0073
+series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=résumés t:tag-unicode-1=U+0072 t:tag-unicode-2=U+00E9 t:tag-unicode-7=U+0073
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=a¨b t:tag-unicode-1=U+0061 t:tag-unicode-2=U+00A8
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=äb  t:tag-unicode-1=U+00E4 t:tag-unicode-2=U+0062
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=äa  t:tag-unicode-1=U+00E4 t:tag-unicode-2=U+0061
@@ -38,7 +38,7 @@ series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=äc  t:tag-unicode-1=U+0
 ## Query
 
 ```sql
-SELECT tags.'tag-1' AS 'Tag Value', tags.'tag-unicode-1' AS 'unicode-1', tags.'tag-unicode-2' AS 'unicode-2', tags.'tag-unicode-3' AS 'unicode-3'
+SELECT tags.'tag-1' AS 'Tag Value', tags.'tag-unicode-1' AS 'unicode-1', tags.'tag-unicode-2' AS 'unicode-2', tags.'tag-unicode-7' AS 'unicode-7'
   FROM 'm-order'
 WHERE entity = 'e-1'
   ORDER BY tags.'tag-1' ASC
@@ -46,8 +46,10 @@ WHERE entity = 'e-1'
 
 ## Results
 
+Ascending order.
+
 ```ls
-| Tag Value | unicode-1 | unicode-2 | unicode-3 | 
+| Tag Value | unicode-1 | unicode-2 | unicode-7 | 
 |-----------|-----------|-----------|-----------| 
 | .         | U+002E    | null      | null      | 
 | 01        | U+0030    | U+0031    | null      | 
@@ -57,12 +59,12 @@ WHERE entity = 'e-1'
 | A         | U+0041    | null      | null      | 
 | AB        | U+0041    | U+0042    | null      | 
 | B         | U+0042    | null      | null      | 
-| Resumes   | U+0052    | U+0065    | null      | 
+| Resumes   | U+0052    | U+0065    | U+0073    | 
 | Résumé    | U+0052    | U+00E9    | null      | 
 | a         | U+0061    | null      | null      | 
 | a¨b       | U+0061    | U+00A8    | null      | 
 | resume    | U+0072    | U+0065    | null      | 
-| resumes   | U+0072    | U+0065    | null      | 
+| resumes   | U+0072    | U+0065    | U+0073    | 
 | résumé    | U+0072    | U+00E9    | null      | 
 | résumés   | U+0072    | U+00E9    | U+0073    | 
 | á         | U+00E1    | null      | null      | 
