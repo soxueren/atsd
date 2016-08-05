@@ -38,7 +38,7 @@ The data returned by SQL statements can be exported in the following formats:
 
 ## Syntax
 
-The database supports only `SELECT` statements at this time. 
+The database supports only `SELECT` statements at this time.
 
 The `SELECT` statement consists of a `SELECT` expression, a `FROM` query, a `WHERE` clause, and other optional clauses for grouping, filtering, and ordering the results.
 
@@ -865,7 +865,7 @@ ORDER BY avg(value) DESC
 
 ### Collation
 
-Ordering of strings is based on their Unicode value.
+Strings are ordered [lexicographically](examples/order-by-string-collation.md), based on Unicode values. `NULL` has the lowest possible value and is listed first when sorted in ascending order.
 
 | **ATSD** | **MySQL** | **PostgreSQL** | **Oracle** |
 | ---- | ---- | ---- | ---- |
@@ -1388,6 +1388,7 @@ Scheduled queries are always executed under administrative permissions.
 - [Order By Time](examples/order-by-time.md)
 - [Order By Value](examples/order-by-value.md)
 - [Order By Multiple Columns](examples/order-by-multiple-columns.md)
+- [String Collation](examples/order-by-string-collation.md)
 
 ### Aggregation
 
