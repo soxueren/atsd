@@ -26,8 +26,8 @@ series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=α  t:tag-unicode-1=U+03
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=resume  t:tag-unicode-1=U+0072 t:tag-unicode-2=U+0065
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=résumé  t:tag-unicode-1=U+0072 t:tag-unicode-2=U+00E9
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=Résumé  t:tag-unicode-1=U+0052 t:tag-unicode-2=U+00E9
-series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=Resumes t:tag-unicode-1=U+0052 t:tag-unicode-2=U+0065
-series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=resumes t:tag-unicode-1=U+0072 t:tag-unicode-2=U+0065
+series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=Resumes t:tag-unicode-1=U+0052 t:tag-unicode-2=U+0065 t:tag-unicode-7=U+0073
+series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=resumes t:tag-unicode-1=U+0072 t:tag-unicode-2=U+0065 t:tag-unicode-7=U+0073
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=résumés t:tag-unicode-1=U+0072 t:tag-unicode-2=U+00E9 t:tag-unicode-7=U+0073
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=a¨b t:tag-unicode-1=U+0061 t:tag-unicode-2=U+00A8
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=äb  t:tag-unicode-1=U+00E4 t:tag-unicode-2=U+0062
