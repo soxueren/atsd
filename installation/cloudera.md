@@ -150,6 +150,42 @@ CLOUDERA = {
 
 Make sure that `host01` specified in kdc and admin_server properties is resolvable on the ATSD server. Add it to `/etc/hosts` if necessary.
 
+### Setup axibase principal
+
+Create axibase principal with password axibase (you can choose any) and generate corresponding keytab on HBase server.
+
+```ls
+kadmin.local <<eoj
+addprinc -pw axibase axibase@CLOUDERA
+ktadd -k axibase.keytab axibase@CLOUDERA
+eoj
+```
+
+Copy the `keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
+
+Next check HBase Secure Authorization in Cloudera HBase configuration.  
+
+![](images/cloudera-manager-authorization.png)
+
+If HBase Secure Authorization disabled you can access HBase freely. Proceed to Kerberos Settings.
+
+If HBase Secure Authorization is enabled you need to add rights for newly created principal with one of the followings 
+    
+    * add axibase to HBase superusers
+    * grant rights to axibase 
+    
+
+Adding to superusers performs via HBase Configuration
+ 
+ ![](images/cloudera-manager-superuser.png)
+
+Granting rights performs via HBase shell
+
+        kinit -k -t /path/to/hbase.keytab hbase/host01
+        hbase shell
+        grant 'axibase', 'RWXC'
+        exit
+
 ### Kerberos Settings
 
 Add Kerberos principal and `keytab` path settings to `/opt/atsd/atsd/conf/server.properties` in ATSD:
@@ -157,9 +193,9 @@ Add Kerberos principal and `keytab` path settings to `/opt/atsd/atsd/conf/server
 ```ls
 # Kerberos principal, identified with username (hbase) and realm (CLOUDERA).
 # Note that the login is specified without /_HOST placeholder.
-kerberos.login=hbase@CLOUDERA
+kerberos.login=axibase@CLOUDERA
 # Absolute path to Kerberos keytab file, containing encrypted key for the above principal.
-kerberos.keytab.path=/opt/atsd/atsd/conf/hbase.keytab
+kerberos.keytab.path=/opt/atsd/atsd/conf/axibase.keytab
 ```
 
 > The `keytab` file needs to be updated whenever the password is changed.
