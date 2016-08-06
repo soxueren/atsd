@@ -78,6 +78,13 @@ Since statistics from ITM agents will be received by ATSD without any delay, the
         url="http://atsd_host:8088"
     fi
     ```
+	
+	
+* Set username and password in the `inotify_sender.sh` script
+
+```bash
+--user=[[USER]] --password=[[PASSWORD]]
+```
 
 * Set permissions to execute the script:
     ```sh

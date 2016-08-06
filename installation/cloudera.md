@@ -111,19 +111,57 @@ hbase.client.scanner.timeout.period = 120000
 
 ATSD can be enabled for Kerberos authentication with Zookeeper and Hadoop services by following these steps.
 
-### Copy `keytab` file
+### Generate `keytab` file
 
-* Locate an existing `keytab` file on an HBase master/region server.
+#### Re-use HBase keytab
 
-```
+Locate an existing `hbase.keytab` file on an HBase master/region server.
+
+```bash
 find / -name "*.keytab" | xargs ls -la
-
 -rw------- 1 hbase        hbase        448 Jul 29 16:44 /var/run/cloudera-scm-agent/process/30-hbase-MASTER/hbase.keytab
 ```
 
-* Alternatively, create a new `keytab` file using [ktutil](https://kb.iu.edu/d/aumh#create) utility.
+Copy the `hbase.keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
 
-Copy the `keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
+#### Alternatively, create a new `axibase` principal
+
+Create an `axibase` principal and generate a corresponding `keytab` on an HBase server.
+
+```ls
+kadmin.local <<eoj
+addprinc -pw PASSWORD axibase@CLOUDERA
+ktadd -k axibase.keytab axibase@CLOUDERA
+eoj
+```
+
+Copy the `axibase.keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
+
+Next check HBase Secure Authorization settings in Cloudera HBase configuration.  
+
+![](images/cloudera-manager-authorization.png)
+
+If HBase Secure Authorization is disabled you can access HBase as is. Proceed to [Kerberos Settings](#kerberos-settings).
+
+If HBase Secure Authorization is **enabled** you need to allow the newly created `axibase` principal to access HBase using one of the following options:
+    
+* Add `axibase` to HBase superusers.
+* Grant permissions to `axibase`.
+    
+Add `axibase` to superusers via HBase Configuration:
+ 
+ ![](images/cloudera-manager-superuser.png)
+
+Alternatively, login into HBase shell and execute `grant` command to add permissions:
+
+```bash
+kinit -k -t /path/to/hbase.keytab hbase/host01
+hbase shell
+grant 'axibase', 'RWXC'
+exit
+```
+
+Copy the `axibase.keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
 
 ### Configure Kerberos configuration information in `krb5.conf` file
 
@@ -149,42 +187,6 @@ CLOUDERA = {
 ```
 
 Make sure that `host01` specified in kdc and admin_server properties is resolvable on the ATSD server. Add it to `/etc/hosts` if necessary.
-
-### Setup axibase principal
-
-Create axibase principal with password axibase (you can choose any) and generate corresponding keytab on HBase server.
-
-```ls
-kadmin.local <<eoj
-addprinc -pw axibase axibase@CLOUDERA
-ktadd -k axibase.keytab axibase@CLOUDERA
-eoj
-```
-
-Copy the `keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
-
-Next check HBase Secure Authorization in Cloudera HBase configuration.  
-
-![](images/cloudera-manager-authorization.png)
-
-If HBase Secure Authorization disabled you can access HBase freely. Proceed to Kerberos Settings.
-
-If HBase Secure Authorization is enabled you need to add rights for newly created principal with one of the followings 
-    
-    * add axibase to HBase superusers
-    * grant rights to axibase 
-    
-
-Adding to superusers performs via HBase Configuration
- 
- ![](images/cloudera-manager-superuser.png)
-
-Granting rights performs via HBase shell
-
-        kinit -k -t /path/to/hbase.keytab hbase/host01
-        hbase shell
-        grant 'axibase', 'RWXC'
-        exit
 
 ### Kerberos Settings
 
