@@ -5,7 +5,7 @@ Average value for one metric, one entity.
 ## Query
 
 ```sql
-SELECT entity, avg(value)
+SELECT avg(value)
  FROM mpstat.cpu_busy 
 WHERE entity = 'nurswgvml007' 
  AND datetime >= current_day
@@ -24,7 +24,7 @@ WHERE entity = 'nurswgvml007'
 Multiple functions.
 
 ```sql
-SELECT entity, avg(value), max(value), last(value), count(*)
+SELECT avg(value), max(value), last(value), count(*)
  FROM mpstat.cpu_busy 
 WHERE entity = 'nurswgvml007' 
  AND datetime >= current_day
