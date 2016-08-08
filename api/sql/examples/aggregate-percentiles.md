@@ -5,8 +5,7 @@ Percentiles for the given entity. `median(value)` is equivalent to `percentile(5
 ## Query
 
 ```sql
-SELECT entity, 
-  percentile(25, value) AS "p25",
+SELECT percentile(25, value) AS "p25",
   percentile(50, value) AS "p50",
   median(value),
   percentile(75, value) AS "p75",
@@ -25,7 +24,7 @@ WHERE entity = 'nurswgvml007'
 ## Results
 
 ```ls
-| entity       | p25   | p50   | median(value) | p75   | p90    | p95    | p97.5  | p99    | p99.5  | p99.9  | p99.99 | 
-|--------------|-------|-------|---------------|-------|--------|--------|--------|--------|--------|--------|--------| 
-| nurswgvml007 | 4.040 | 6.060 | 6.060         | 9.380 | 23.064 | 42.404 | 55.299 | 82.163 | 93.837 | 98.997 | 99.010 | 
+| p25   | p50   | median(value) | p75   | p90    | p95    | p97.5  | p99    | p99.5  | p99.9  | p99.99 | 
+|-------|-------|---------------|-------|--------|--------|--------|--------|--------|--------|--------| 
+| 4.040 | 6.060 | 6.060         | 9.380 | 23.064 | 42.404 | 55.299 | 82.163 | 93.837 | 98.997 | 99.010 | 
 ```
