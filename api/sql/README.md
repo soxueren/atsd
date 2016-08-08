@@ -69,6 +69,15 @@ In the example above, "mpstat.cpu_busy" table contains records for `mpstat.cpu_b
 
 Virtual tables are currently supported only for series. Access to properties, messages, and alerts is currently not available.
 
+As an alternative to specifying metric names as table names, the `FROM` query can refer to the pre-defined [`atsd_series` table](examples/select-atsd_series.md) and include `metric` name in the `WHERE` clause instead.
+
+```sql
+SELECT entity, metric, datetime, value 
+  FROM atsd_series 
+WHERE metric = 'cpu_busy' 
+  AND datetime > current_hour
+```
+
 ### WHERE Clause
 
 The `WHERE` clause is a condition which rows must satisfy in order to match the query. 
@@ -1207,7 +1216,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc#database-capabiliti
 
 * Self-joins are not supported.
 * Subqueries are not supported.
-* `UNION`, `EXCEPT` and `INTERSECT` operators are not supported.
+* `UNION`, `EXCEPT` and `INTERSECT` operators are not supported. Refer to [atsd_series table](examples/select-atsd_series.md) queries as a `UNION ALL` alternative.
 * `WITH` operator is supported only in `WITH ROW_NUMBER` clause.
 * Ordering with column numbers, for example `ORDER BY 2, 1` is not supported.
 * `DISTINCT` operator is not supported, although it can be emulated in particular cases with `GROUP BY` clause as illustrated below:
@@ -1369,6 +1378,7 @@ Scheduled queries are always executed under administrative permissions.
 - [Column Alias](examples/alias-column.md)
 - [Table Alias](examples/alias-table.md)
 - [Escape Quotes](examples/select-escape-quote.md)
+- [atsd_series Table](examples/select-atsd_series.md)
 - [Datetime Format](examples/datetime-format.md)
 - [Limit Row Count](examples/limit.md)
 - [Limit by Partition](examples/limit-partition.md)
@@ -1395,7 +1405,7 @@ Scheduled queries are always executed under administrative permissions.
 - [Average Value](examples/aggregate.md)
 - [Percentiles](examples/aggregate-percentiles.md)
 - [Counter Aggregator](examples/aggregate-counter.md)
-- [Max Value Time](examples/aggregate-max-value-time.md)
+- [Maximum Value Time](examples/aggregate-max-value-time.md)
 - [Period Aggregation](examples/aggregate-period.md)
 - [Sliding Window Statistics](examples/aggregate-sliding-window.md)
 
