@@ -309,7 +309,7 @@ Open Cloudera Manager, select the target HBase cluster/service, open Configurati
 
 ![](images/cdh-region-heap.png)
 
-### Restart HBase Region Servers
+### Restart HBase Service
 
 ## Check for port conflicts
 
