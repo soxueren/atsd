@@ -36,11 +36,10 @@ Unlike `FROM {metric}` syntax,  `FROM atsd_series` allows querying multiple metr
 ```sql
 SELECT entity, metric, datetime, value, tags
   FROM atsd_series 
-WHERE metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user') AND entity = 'nurswgvml007'
+WHERE metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user') 
+  AND entity = 'nurswgvml007'
   AND datetime > now - 2 * MINUTE
 ```
-
-> Note that `ORDER BY` is currently not supported if multiple metrics are included in the `WHERE` clause.
 
 ### Results
 
@@ -49,18 +48,31 @@ WHERE metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user') AND entity = 'nurswgvml00
 |--------------|----------|--------------------------|-------|------| 
 | nurswgvml007 | cpu_busy | 2016-08-08T15:54:47.000Z | 6.1   | null | 
 | nurswgvml007 | cpu_busy | 2016-08-08T15:55:03.000Z | 11.9  | null | 
-| nurswgvml007 | cpu_busy | 2016-08-08T15:55:19.000Z | 100.0 | null | 
-| nurswgvml007 | cpu_busy | 2016-08-08T15:55:35.000Z | 2.0   | null | 
-| nurswgvml007 | cpu_busy | 2016-08-08T15:55:51.000Z | 5.0   | null | 
-| nurswgvml007 | cpu_busy | 2016-08-08T15:56:07.000Z | 11.0  | null | 
-| nurswgvml007 | cpu_busy | 2016-08-08T15:56:23.000Z | 5.0   | null | 
 | nurswgvml007 | cpu_user | 2016-08-08T15:54:47.000Z | 5.0   | null | 
 | nurswgvml007 | cpu_user | 2016-08-08T15:55:03.000Z | 5.9   | null | 
-| nurswgvml007 | cpu_user | 2016-08-08T15:55:19.000Z | 89.0  | null | 
-| nurswgvml007 | cpu_user | 2016-08-08T15:55:35.000Z | 2.0   | null | 
-| nurswgvml007 | cpu_user | 2016-08-08T15:55:51.000Z | 4.0   | null | 
-| nurswgvml007 | cpu_user | 2016-08-08T15:56:07.000Z | 9.0   | null | 
-| nurswgvml007 | cpu_user | 2016-08-08T15:56:23.000Z | 4.0   | null | 
+```
+
+
+By default results are ordered by metric. The default sort can be modified with `ORDER BY` clause.
+
+```sql
+SELECT entity, metric, datetime, value, tags
+  FROM atsd_series 
+WHERE metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user') 
+  AND entity = 'nurswgvml007'
+  AND datetime > now - 2 * MINUTE
+  ORDER BY datetime
+```
+
+### Results
+
+```ls
+| entity       | metric   | datetime                 | value | tags | 
+|--------------|----------|--------------------------|-------|------| 
+| nurswgvml007 | cpu_busy | 2016-08-08T15:54:47.000Z | 6.1   | null | 
+| nurswgvml007 | cpu_user | 2016-08-08T15:54:47.000Z | 5.0   | null | 
+| nurswgvml007 | cpu_busy | 2016-08-08T15:55:03.000Z | 11.9  | null | 
+| nurswgvml007 | cpu_user | 2016-08-08T15:55:03.000Z | 5.9   | null | 
 ```
 
 ## Metric Condition
@@ -81,6 +93,5 @@ Queries with `atsd_series` table do not support the following capabilities:
 
 * `JOIN` queries are not supported.
 * All columns in the `SELECT` expression must be specified explicitly. Namely, `SELECT *`, `SELECT tags.*`, `SELECT metric.tags.*` are not allowed. 
-* `ORDER BY` clause is not supported when selecting data for multiple metrics.
 
 
