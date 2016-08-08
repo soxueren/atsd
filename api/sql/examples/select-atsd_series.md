@@ -2,7 +2,7 @@
 
 Querying `atsd_series` table provides an alternative syntax to specify metric name in the `WHERE` clause instead of the `FROM` query.
 
-At least one metric must be specified in `atsd_series` query. Metric names are case-insensitive. 
+At least one metric condition must be present and applicable in `atsd_series` query. Metric names are case-insensitive. 
 
 The following queries are equivalent:
 
