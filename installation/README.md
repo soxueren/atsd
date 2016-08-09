@@ -26,9 +26,9 @@ By installing Axibase Time Series Database you agree to its **[License Terms and
 
 | **Distribution** | **Installation Guide** |
 | :--- | :--- |
-| HBase Cluster | [View](hbase-cluster.md)|
 | Cloudera Distribution Hadoop (CDH)  | [View](cloudera.md) |
 | Ambari  | [View](ambari.md) |
+| HBase Cluster | [View](hbase-cluster.md)|
 
 ## Tutorials
 

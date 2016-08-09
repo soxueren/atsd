@@ -13,9 +13,9 @@
 	  * [Oracle VirtualBox VM](installation/virtualbox.md)
 	  * [Other](installation/other-distributions.md)
 	* Cluster Distributions
-      * [HBase Cluster](installation/hbase-cluster.md)	
-      * [Cloudera Hadoop Distribution](installation/cloudera.md)  
-	  * [Ambari](installation/ambari.md)
+      * [Cloudera Hadoop Distribution](installation/cloudera.md)  	
+	  * [Ambari](installation/ambari.md)	  
+      * [HBase Cluster](installation/hbase-cluster.md)
 * [API](api)
     * [Network](api/network#network-api)
       * [series](api/network/series.md)
