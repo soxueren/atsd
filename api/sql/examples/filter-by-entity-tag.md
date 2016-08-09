@@ -48,3 +48,25 @@ ORDER BY datetime
 | 2016-07-14T15:00:26.000Z | nurswgvml011 | 42.7  | HMC Simulator, mysql | 
 | 2016-07-14T15:00:33.000Z | nurswgvml006 | 15.8  | Hadoop/HBASE         | 
 ```
+
+## Filter by entity tag with comparison operator
+
+```sql
+SELECT datetime, entity, value, entity.tags.app
+  FROM cpu_busy
+WHERE entity.tags.app >= 'Ro'
+  AND datetime > now - 1*MINUTE
+ORDER BY datetime 
+```
+
+### Results
+
+```ls
+| datetime                 | entity       | value | entity.tags.app       | 
+|--------------------------|--------------|-------|-----------------------| 
+| 2016-08-09T20:25:01.000Z | nurswgvml010 | 27.6  | SVN, Jenkins, Redmine | 
+| 2016-08-09T20:25:12.000Z | nurswgvml102 | 3.0   | Router                | 
+| 2016-08-09T20:25:17.000Z | nurswgvml010 | 0.2   | SVN, Jenkins, Redmine | 
+| 2016-08-09T20:25:28.000Z | nurswgvml102 | 1.0   | Router                | 
+```
+

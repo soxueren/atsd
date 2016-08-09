@@ -86,13 +86,17 @@ Columns referenced in the `WHERE` clause are replaced by their value for the giv
 
 Typically the `WHERE` clause includes a [time condition](#time-condition) for which the data must be analyzed, although this is not required.
 
-The clause can be built from multiple conditions each comparing values using common comparison operators: `<, >, <=, >=, =, <>, and !=`. 
+The clause can be built from multiple conditions each comparing values using comparison operators:
+
+* Numeric operators: `<, >, <=, >=, =, <>, !=`.
+* String operators: `<, >, <=, >=, =, <>, !=, LIKE, REGEX`.
 
 > Note that `!=` and `<>` operators cannot be applied to time columns: `time` and `datetime`.
+> Operators `<, >, <=, >=` applied to string values, such as series/entity/metric tag values, perform [lexicographical comparison](examples/filter-operators-string.md).
 
-The result of comparison is a boolean value, true/false, whereas conditions can be combined by the logical operators `AND`, `OR`, and `NOT`.  `AND` takes precedence over `OR` and `NOT` takes precedence over both. 
+The result of evaluating a condition is a boolean value. Multiple conditions can be combined using logical operators `AND`, `OR`, and `NOT`.  Operator `AND` takes precedence over `OR` and operator `NOT` takes precedence over both `AND` and `OR`. 
 
-Arithmetic operators such as `*`, `-`, `+`, `/`, and `%` (modulo) may be applied to values before they are compared.
+Arithmetic operators `*`, `-`, `+`, `/`, and `%` (modulo) may be applied to values before they are compared.
 
 ```sql
 SELECT entity, datetime, value, tags.*
@@ -1388,6 +1392,7 @@ Scheduled queries are always executed under administrative permissions.
 - [Filter by Date](examples/filter-by-date.md)
 - [Filter by Series Tag](examples/filter-by-series-tag.md)
 - [Filter by NULL Series Tag](examples/filter-null-tag.md)
+- [Filter by Series Tag with Comparison Operators](examples/filter-operators-string.md)
 - [Filter by Entity](examples/filter-by-entity.md)
 - [Filter by Entity Tag](examples/filter-by-entity-tag.md)
 - [Filter by Entity Group](examples/filter-by-entity-group.md)
