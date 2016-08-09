@@ -92,6 +92,7 @@ The clause can be built from multiple conditions each comparing values using com
 * String operators: `<, >, <=, >=, =, <>, !=, LIKE, REGEX`.
 
 > Note that `!=` and `<>` operators cannot be applied to time columns: `time` and `datetime`.
+
 > Operators `<, >, <=, >=` applied to string values, such as series/entity/metric tag values, perform [lexicographical comparison](examples/filter-operators-string.md).
 
 The result of evaluating a condition is a boolean value. Multiple conditions can be combined using logical operators `AND`, `OR`, and `NOT`.  Operator `AND` takes precedence over `OR` and operator `NOT` takes precedence over both `AND` and `OR`. 

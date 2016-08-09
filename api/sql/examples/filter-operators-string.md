@@ -1,6 +1,6 @@
 ﻿# Filter Series with String Operators
 
-String comparison operators `<, >, <=, >=` provide a way to filter values lexicographically. 
+String comparison operators `<, >, <=, >=` provide a way to filter tag values lexicographically. 
 
 If one of the compared values is `NULL`, the condition returns `false`.
 
@@ -36,7 +36,7 @@ WHERE datetime >= "2016-06-19T11:00:00.000Z"
 
 ### Query:  <= 'val2'
 
-Note that series without `tag2` series tag (`NULL`), are not included in either result set.
+Note that series without `tag2` series tag which is the same as `NULL` value, are not included in either result set.
 
 ```sql
 SELECT datetime, value, tags.tag2
@@ -149,7 +149,7 @@ ORDER BY tags.'tag-1' ASC
 
 ### Query: numbers by numeric value if both values are numeric
 
-If all values in a string column are guaranteed to be numeric or null, the values can be compared as numbers, however ordering of such columns is still based on Unicode value (string collation).
+If all series tag values are guaranteed to be numeric or null, the values can be compared as numbers, however ordering of such columns is still based on Unicode value (string collation).
 
 #### Data
 
