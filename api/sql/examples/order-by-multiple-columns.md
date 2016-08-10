@@ -36,7 +36,7 @@ ORDER BY tags.mount_point, delta(value) DESC
 
 The query produces the same results using column numbers instead of column names. Column numbers start at 1.
 
-```
+```sql
 SELECT entity,       -- column 1
   tags.file_system,  -- column 2
   tags.mount_point,  -- column 3
