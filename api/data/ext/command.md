@@ -62,6 +62,10 @@ series e:DL1867 m:speed=450 m:altitude=12100
 message e:server001 d:2015-03-04T12:43:20+00:00 t:subject="my subject" m:"Hello, world"
 ```
 
+## Java Example
+
+* [Command Insert](examples/DataApiCommandInsertExample.java)
+
 ## Additional Examples
 
 

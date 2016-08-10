@@ -100,6 +100,10 @@ curl https://atsd_host:8443/api/v1/series/csv/nurswgvml007 \
 
 None.
 
+## Java Example
+
+* [Series CSV Insert](examples/DataApiSeriesCsvInsertExample.java)
+
 ## Additional Examples
 
 

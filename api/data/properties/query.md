@@ -168,4 +168,8 @@ curl  https://atsd_host:8443/api/v1/properties/query \
 ]
 ```
 
+## Java Example
+
+* [Properties Query](examples/DataApiPropertiesQueryExample.java)
+
 ### Additional Examples

@@ -1,4 +1,5 @@
-import org.json.simple.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.xml.bind.DatatypeConverter;
@@ -8,18 +9,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.zip.GZIPInputStream;
 
-public class DataApiExample {
+public class DataApiMessagesQueryExample {
 
     public static void main(String[] args) throws Exception {
 
         String databaseUrl = "http://10.102.0.6:8088";
         String userName = "axibase";
         String password = "********";
-        String seriesQuery = "[{ \"startDate\": \"current_minute\", \"endDate\": \"now\", \"entity\": \"*\", \"metric\": \"mpstat.cpu_busy\", \"limit\": 100 }]";
+        String query = "[{\"startDate\": \"current_day\",\"endDate\":\"now\",\"limit\":3}]";
 
-        System.out.println("Execute seriesQuery:\r\n" + seriesQuery);
+        System.out.println("Execute messages query:\r\n" + query);
 
-        URL url = new URL(databaseUrl + "/api/v1/series/query");
+        URL url = new URL(databaseUrl + "/api/v1/messages/query");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
         System.out.println("Connection established to " + databaseUrl);
@@ -33,7 +34,7 @@ public class DataApiExample {
         String authString = userName + ":" + password;
         String authEncoded = DatatypeConverter.printBase64Binary(authString.getBytes());
         conn.setRequestProperty("Authorization", "Basic " + authEncoded);
-        byte[] payload = seriesQuery.getBytes();
+        byte[] payload = query.getBytes();
 
         conn.setRequestProperty("Content-Length", Integer.toString(payload.length));
         conn.setUseCaches(false);
@@ -58,15 +59,14 @@ public class DataApiExample {
             JSONArray resultArray = (JSONArray)parser.parse(reader);
 
             for (int i = 0; i < resultArray.size(); i++){
-                JSONObject result = (JSONObject)resultArray.get(i);
-                JSONArray data = (JSONArray)result.get("data");
+                JSONObject msg = (JSONObject)resultArray.get(i);
 
-                System.out.println("series: entity= " + result.get("entity") + " : tags=" + result.get("tags"));
+                System.out.println("message: entity= " + msg.get("entity") + " : type= " + msg.get("type") + " : source= " + msg.get("source") + " : severity= " + msg.get("severity") + " : date= " + msg.get("date"));
 
-                for (int y = 0; y < data.size(); y++) {
-                    JSONObject sample = (JSONObject)data.get(y);
-                    System.out.println("\t" + sample.get("d") + " = " + sample.get("v"));
-                }
+                JSONObject tags = (JSONObject)msg.get("tags");
+
+                System.out.println("    tags= " + tags);
+                System.out.println("    message = " + msg.get("message"));
             }
 
         } else {

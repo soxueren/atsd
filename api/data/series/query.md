@@ -117,6 +117,10 @@ POST https://atsd_host:8443/api/v1/series/query
 ]
 ```
 
+## Java Example
+
+* [Series Query](examples/DataApiSeriesQueryExample.java)
+
 ## Additional Examples 
 
 ### Time Range

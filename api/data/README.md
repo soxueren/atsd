@@ -153,6 +153,14 @@ cat json-in.log
 
 ## Examples
 
-Each Data API method provides a set of examples containing sample request and response objects. The response object illustrates all fields that are returned by that method.
+Each Data API method provides a set of examples containing sample request and response objects. 
 
-See also [Data API Client in Java](series/examples/DataApiExample.java).
+The response object illustrates all fields returned by the method.
+
+Basic Java Examples:
+
+* [Series Query](series/examples/DataApiSeriesQueryExample.java)
+* [Series CSV Insert](series/examples/DataApiSeriesCsvInsertExample.java)
+* [Properties Query](properties/examples/DataApiPropertiesQueryExample.java)
+* [Message Query](messages/examples/DataApiMessagesQueryExample.java)
+* [Command Insert](ext/examples/DataApiCommandInsertExample.java)

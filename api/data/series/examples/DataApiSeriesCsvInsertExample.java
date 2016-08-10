@@ -1,0 +1,59 @@
+import javax.xml.bind.DatatypeConverter;
+import java.io.DataOutputStream;
+import java.net.HttpURLConnection;
+import java.net.InetAddress;
+import java.net.URL;
+
+public class DataApiSeriesCsvInsertExample {
+
+    public static void main(String[] args) throws Exception {
+
+        String databaseUrl = "http://10.102.0.6:8088";
+        String userName = "axibase";
+        String password = "********";
+		
+        String host = InetAddress.getLocalHost().getHostName();
+        String header = "time,runtime.memory.free,runtime.memory.max,runtime.memory.total";
+        String dataRow = System.currentTimeMillis() + "," + Runtime.getRuntime().freeMemory() + "," + Runtime.getRuntime().maxMemory() + "," + Runtime.getRuntime().totalMemory();
+        String csvContent = header + "\n" + dataRow;
+
+        System.out.println("Sending csv: \n" + csvContent);
+
+        URL url = new URL(databaseUrl + "/api/v1/series/csv/" + host);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+        System.out.println("Connection established to " + databaseUrl);
+
+        conn.setDoOutput(true);
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("charset", "utf-8");
+        conn.setRequestProperty( "Content-Type", "text/csv");
+
+        String authString = userName + ":" + password;
+        String authEncoded = DatatypeConverter.printBase64Binary(authString.getBytes());
+        conn.setRequestProperty("Authorization", "Basic " + authEncoded);
+
+        byte[] payload = csvContent.getBytes();
+
+        conn.setRequestProperty("Content-Length", Integer.toString(payload.length));
+        conn.setUseCaches(false);
+
+        DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+        wr.write(payload);
+
+        System.out.println("Request sent");
+
+        int code = conn.getResponseCode();
+
+        System.out.println("Response code: " + code);
+
+        if (code == HttpURLConnection.HTTP_OK) {
+            System.out.println("Commands sent");
+        } else {
+            System.out.println(conn.getResponseMessage());
+        }
+
+    }
+
+
+}
