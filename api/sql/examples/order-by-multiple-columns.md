@@ -32,3 +32,20 @@ ORDER BY tags.mount_point, delta(value) DESC
 | nurswgvml009 | /dev/sdb1                                              | /opt             | 30705640   | 30717788   | 12148   | -10988       | 
 ```
 
+## Query using Column Numbers
+
+The query produces the same results using column numbers instead of column names. Column numbers start at 1.
+
+```
+SELECT entity,       -- column 1
+  tags.file_system,  -- column 2
+  tags.mount_point,  -- column 3
+  min(value),        -- column 4
+  max(value),        -- column 5
+  max(value) - min(value) AS range, -- column 6
+  delta(value)       -- column 7
+ FROM df.disk_used
+WHERE datetime >= now - 1 * HOUR
+ GROUP BY entity, tags
+ORDER BY 3, 7 DESC
+```

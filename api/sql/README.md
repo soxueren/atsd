@@ -840,7 +840,7 @@ WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30
 
 ## Ordering
 
-The default sort order is undefined. Ordering can be applied by specifying `ORDER BY` clause.
+The default sort order is undefined. Row ordering can be performed by adding `ORDER BY` clause consisting of column name, column number (starting with 1), or an expression followed by direction (ASC or DESC).
 
 ```sql
 SELECT entity, avg(value) FROM "mpstat.cpu_busy"
@@ -858,6 +858,15 @@ ORDER BY avg(value) DESC, entity
 | nurswgvml010 | 4.3        | 
 | nurswgvml502 | 4.3        | 
 | nurswgvml102 | 1.2        | 
+```
+
+Column numbers can be used instead of column names. The number should be a positive integer representing the position of the column in the `SELECT` expression.
+
+```sql
+SELECT entity, avg(value) FROM "mpstat.cpu_busy"
+  WHERE datetime > current_day
+  GROUP BY entity 
+ORDER BY 2 DESC, 1
 ```
 
 In combination with `LIMIT`, ordering can be used to execute **top-N** queries.
