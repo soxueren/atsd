@@ -33,9 +33,10 @@ WHERE datetime > '2016-07-27T22:40:00.000Z'
 ```
 
 ```ls
-| tags.double"quote | tags.single'quote | tags.both'quo"tes | 
+| tags.both'quo"tes | tags.double"quote | tags.single'quote | 
 |-------------------|-------------------|-------------------| 
-| tv1               | tv2               | tv3               | 
+| tv3               | tv1               | tv2               | 
+
 ```
 
 ## Query with Escaped Column Names
