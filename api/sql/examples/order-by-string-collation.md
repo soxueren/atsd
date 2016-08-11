@@ -2,7 +2,9 @@
 
 Ordering of strings is based on their Unicode value, with `NULL` having the lowest value.
 
-## Query
+## Query - Ascending Order
+
+`NULL` is listed at the beginning of result set.
 
 ```sql
 SELECT tags.'tag-1' AS 'Tag Value', tags.'tag-unicode-1' AS 'unicode-1', tags.'tag-unicode-2' AS 'unicode-2', tags.'tag-unicode-7' AS 'unicode-7'
@@ -11,13 +13,12 @@ WHERE entity = 'e-1'
   ORDER BY tags.'tag-1' ASC
 ```
 
-## Results
-
-Ascending order.
+### Results
 
 ```ls
 | Tag Value | unicode-1 | unicode-2 | unicode-7 | 
 |-----------|-----------|-----------|-----------| 
+| null      | null      | null      | null      | 
 | .         | U+002E    | null      | null      | 
 | 01        | U+0030    | U+0031    | null      | 
 | 1         | U+0031    | null      | null      | 
@@ -49,6 +50,35 @@ Ascending order.
 | ǎ         | U+01CE    | null      | null      | 
 | α         | U+03B1    | null      | null      | 
 | а         | U+0430    | null      | null      | 
+```
+
+## Query - Descending Order With LIMIT
+
+`NULL` is listed at the end of result set.
+
+```sql
+SELECT tags.'tag-1' AS 'Tag Value', tags.'tag-unicode-1' AS 'unicode-1', tags.'tag-unicode-2' AS 'unicode-2', tags.'tag-unicode-7' AS 'unicode-7'
+  FROM 'm-order'
+WHERE entity = 'e-1'
+  ORDER BY tags.'tag-1' DESC 
+LIMIT 10
+```
+
+### Results
+
+```ls
+| Tag Value | unicode-1 | unicode-2 | unicode-7 | 
+|-----------|-----------|-----------|-----------| 
+| а         | U+0430    | null      | null      | 
+| α         | U+03B1    | null      | null      | 
+| ǎ         | U+01CE    | null      | null      | 
+| ā         | U+0101    | null      | null      | 
+| ÿ         | U+00FF    | null      | null      | 
+| é         | U+00E9    | null      | null      | 
+| äc        | U+00E4    | U+0063    | null      | 
+| äb        | U+00E4    | U+0062    | null      | 
+| äa        | U+00E4    | U+0061    | null      | 
+| ä         | U+00E4    | null      | null      | 
 ```
 
 ## Data
