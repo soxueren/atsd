@@ -1,4 +1,4 @@
-# Meta API: Metrisc Methods
+# Meta API: Metrics Methods
 
 | **Name** | **Method** | **Path** | **Content-Type** | **Description** |
 |:---|:---|:---|:---|:---|
