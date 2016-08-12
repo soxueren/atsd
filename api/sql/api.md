@@ -24,7 +24,7 @@ Scheduled queries are executed under full permissions.
 |:---|:---|:---|
 | q | string | [**Required**] Query text. |
 | outputFormat | string | Output format: `csv` or `json`. Default: `csv`. |
-| metadataFormat | string | Metadata format for CSV format. Default: `header`. <br>Supported values: `none`, `header`, `embed`, `embed-csv`. |
+| metadataFormat | string | Metadata format for CSV format. Default: `HEADER`. <br>Supported values: `NONE`, `HEADER`, `EMBED`, `COMMENTS`. |
 | limit | integer | Maximum number of rows to return. Default: 0 (not applied).<br>Applies if query text does not include `LIMIT` clause.  |
 
 ### Metadata
@@ -93,10 +93,10 @@ The `metadataFormat` parameter controls how to incorporate metadata into the CSV
 
 | **Value**| **Description** |
 |:---|:---|
-| none | Do not include metadata in the response. |
-| header | [**Default**] Add JSON-LD metadata into Base64-encoded `Link` header according to [W3C Model for Tabular Data](http://w3c.github.io/csvw/syntax/#link-header).<br>`<data:application/csvm+json;base64,eyJAY29...ifX0=>; rel="describedBy"; type="application/csvm+json"`|
-| embed | Append JSON-LD metadata to CSV header as comments prefixed by hash symbol. |
-| embed-csv | Append CSV metadata to CSV header as comments prefixed by hash symbol. |
+| NONE | Do not include metadata in the response. |
+| HEADER | [**Default**] Add JSON-LD metadata into Base64-encoded `Link` header according to [W3C Model for Tabular Data](http://w3c.github.io/csvw/syntax/#link-header).<br>`<data:application/csvm+json;base64,eyJAY29...ifX0=>; rel="describedBy"; type="application/csvm+json"`|
+| EMBED | Append JSON-LD metadata to CSV header as comments prefixed by hash symbol. |
+| COMMENTS | Append CSV metadata to CSV header as comments prefixed by hash symbol. |
 
 ## Example
 
