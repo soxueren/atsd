@@ -28,6 +28,7 @@
 	* [Partitioning](/api/sql#partitioning)
 	* [Ordering](/api/sql#ordering)
 	* [Joins](/api/sql#joins)
+	* [API Endpoint](/api/sql/api.md#sql-query-api-endpoint)
 	* [Examples](/api/sql#examples)
 
 ## API Clients

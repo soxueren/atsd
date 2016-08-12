@@ -33,6 +33,7 @@ The data returned by SQL statements can be exported in the following formats:
 * [Joins](#joins)
 * [Authorization](#authorization)
 * [Performance](#query-performance)
+* [API Endpoint](#api-endpoint)
 * [Unsupported Features](#unsupported-sql-features)
 * [Examples](#examples)
 
