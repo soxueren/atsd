@@ -24,18 +24,8 @@ Scheduled queries are executed under full permissions.
 |:---|:---|:---|
 | q | string | [**Required**] Query text. |
 | outputFormat | string | Output format: `csv` or `json`. Default: `csv`. |
-| metadataFormat | string | Metadata format for CSV format. Default: `header`. <br>Supported values: `none`, `header`, `embed`. |
+| metadataFormat | string | Metadata format for CSV format. Default: `header`. <br>Supported values: `none`, `header`, `embed`, `embed-csv`. |
 | limit | integer | Maximum number of rows to return. Default: 0 (not applied).<br>Applies if query text does not include `LIMIT` clause.  |
-
-## Response
-
-### CSV
-
-* [Example](sql.csv)
-
-### JSON
-
-* [Example](sql.json)
 
 ### Metadata
 
@@ -138,3 +128,8 @@ Bash client [parameters](client/README.md).
 ### Java Client Example
  
 [SQL to CSV example in Java](client/SqlCsvExample.java).
+
+## Response
+
+* [Sample CSV response](sql.csv)
+* [Sample JSON response](sql.json)
