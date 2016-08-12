@@ -12,20 +12,7 @@ This means that the same query executed by users with different entity permissio
 
 Scheduled queries are executed under full permissions.
 
-## GET Request
-
-| **Method** | **Path** | **Content-Type Header**|
-|:---|:---|---:|
-| GET | `/api/sql` | `text/plain` |
-
-### Parameters
-
-|**Parameter**|**Type**|**Description**|
-|:---|:---|:---|
-|outputFormat | query string|Output format: `csv` or `json`. Default: `json`|
-|q | query string| Query text which must be URL-encoded.|
-
-## POST Request
+## Request
 
 | **Method** | **Path** | **Content-Type Header**|
 |:---|:---|---:|
@@ -33,19 +20,14 @@ Scheduled queries are executed under full permissions.
 
 ### Parameters
 
-|**Parameter**|**Type**|**Description**|
+| **Name**| **Type** | **Description** |
 |:---|:---|:---|
-|outputFormat | query string|Output format: `csv` or `json`. Default: `json`|
+| q | string | [**Required**] Query text. |
+| outputFormat | string | Output format: `csv` or `json`. Default: `csv`. |
+| metadataFormat | string | Metadata format for CSV format. Default: `header`. <br>Supported values: `none`, `header`, `embed`. |
+| limit | integer | Maximum number of rows to return. Default: 0 (not applied).<br>Applies if query text does not include `LIMIT` clause.  |
 
-### Fields
-
-Payload is an SQL query text, for example:
-
-```sql
-SELECT entity, datetime, value FROM mpstat.cpu_busy WHERE datetime > now - 1*MINUTE
-```
-
-## Response 
+## Response
 
 ### CSV
 
@@ -55,17 +37,13 @@ SELECT entity, datetime, value FROM mpstat.cpu_busy WHERE datetime > now - 1*MIN
 
 * [Example](sql.json)
 
-## Metadata
+### Metadata
 
-Resultset in JSON format incorporates metadata including table and column schema.
+The response can include optional metadata to assist API clients in processing results, for example to convert text values in CSV or JSON field values into language-specific data types.
 
-The schema can be used by API clients to cast primitive JSON types (number, string, boolean) into language-specific data types.
+The metadata is specified as JSON-LD (JSON linked data) according to [W3C Model for Tabular Data](https://www.w3.org/TR/tabular-data-model/).
 
-Since structured metadata cannot be easily embedded into the CSV format, the server includes metadata as Base64-encoded `Link` header according to [W3C Model for Tabular Data](http://w3c.github.io/csvw/syntax/#link-header).
-
-```
-<data:application/csvm+json;base64,eyJAY29...ifX0=>; rel="describedBy"; type="application/csvm+json"
-```
+ATSD JSON-LD schema is published [here](http://www.axibase.com/schemas/2015/11/atsd.jsonld).
 
 Sample metadata:
 
@@ -82,12 +60,12 @@ Sample metadata:
 		"dc:publisher": {
 			"schema:name": "Axibase Time-Series Database",
 			"schema:url": {
-				"@id": "https://nur.axibase.com"
+				"@id": "https://10.102.0.6:8443"
 			}
 		},
 		"dc:title": "SQL Query",
 		"rdfs:comment": "SELECT tbl.value*100 AS \"cpu_percent\", tbl.datetime 'sample-date'\r\n  
-		                 FROM \"cpu_busy\" tbl \r\nWHERE datetime > now - 1*MINUTE",
+		                 FROM \"mpstat.cpu_busy\" tbl \r\nWHERE datetime > now - 1*MINUTE",
 		"@type": "Table",
 		"url": "sql.csv",
 		"tableSchema": {
@@ -115,13 +93,22 @@ Sample metadata:
 }
 ```
 
+### Metadata in JSON output format
+
+Results in JSON output format incorporates metadata by default, including table and column schema.
+
+### Metadata in CSV output format
+
+The `metadataFormat` parameter controls how to incorporate metadata into the CSV text.
+
+| **Value**| **Description** |
+|:---|:---|
+| none | Do not include metadata in the response. |
+| header | [**Default**] Add JSON-LD metadata into Base64-encoded `Link` header according to [W3C Model for Tabular Data](http://w3c.github.io/csvw/syntax/#link-header).<br>`<data:application/csvm+json;base64,eyJAY29...ifX0=>; rel="describedBy"; type="application/csvm+json"`|
+| embed | Append JSON-LD metadata to CSV header as comments prefixed by hash symbol. |
+| embed-csv | Append CSV metadata to CSV header as comments prefixed by hash symbol. |
+
 ## Example
-
-### URL Query Example
-
-```elm
-GET https://atsd_server:8443/api/sql?q=SELECT%20*%20FROM%20cpu_busy%20WHERE%20datetime%20%3E%20now%20-%201*HOUR
-```
 
 ### `curl` Query Example
 
@@ -129,7 +116,7 @@ GET https://atsd_server:8443/api/sql?q=SELECT%20*%20FROM%20cpu_busy%20WHERE%20da
 curl https://atsd_server:8443/api/sql  \
   --insecure  --verbose --user {username}:{password} \
   --request POST \
-  --data 'outputFormat=csv&q=SELECT entity, value FROM mpstat.cpu_busy WHERE datetime > now - 1*MINUTE'
+  --data 'q=SELECT entity, value FROM mpstat.cpu_busy WHERE datetime > now - 1*MINUTE'
 ```
 
 ### Bash Client Example
