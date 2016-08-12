@@ -1,21 +1,5 @@
 # Axibase Time Series Database Documentation
 
-* Installation
-    * [Requirements](administration/requirements.md)
-    * [Distributions](installation/#installation-guides)
-	  * [Ubuntu/Debian (apt)](installation/ubuntu-debian-apt.md)
-	  * [Ubuntu/Debian  (deb)](installation/ubuntu-debian-deb.md)
-	  * [RedHat/CentOS (yum)](installation/redhat-centos-yum.md)
-	  * [RedHat/CentOS (rpm)](installation/redhat-centos-rpm.md)
-	  * [SUSE Linux Enterprise Server (rpm)](installation/sles-rpm.md)
-	  * [Docker (image)](installation/docker.md)
-	  * [VMware VM](installation/vmware-esxi-server-vsphere.md)
-	  * [Oracle VirtualBox VM](installation/virtualbox.md)
-	  * [Other](installation/other-distributions.md)
-	* Cluster Distributions
-      * [Cloudera Hadoop Distribution](installation/cloudera.md)  	
-	  * [Ambari](installation/ambari.md)	  
-      * [HBase Cluster](installation/hbase-cluster.md)
 * [API](api)
     * [Network](api/network#network-api)
       * [series](api/network/series.md)
@@ -41,6 +25,7 @@
 		* [Partitioning](api/sql#partitioning)
 		* [Ordering](api/sql#ordering)
 		* [Joins](api/sql#joins)
+		* [API Endpoint](api/sql/api.md#sql-query-api-endpoint)
 		* [Examples](api/sql#examples)
 * [API Clients](api#api-clients)
     * [R](https://github.com/axibase/atsd-api-r)
@@ -57,6 +42,22 @@
     * [Functions](rule-engine/functions.md)
     * [Placeholders](rule-engine/placeholders.md)
     * [Email Action](rule-engine/email-action.md) 
+* Installation
+    * [Requirements](administration/requirements.md)
+    * [Distributions](installation/#installation-guides)
+	  * [Ubuntu/Debian (apt)](installation/ubuntu-debian-apt.md)
+	  * [Ubuntu/Debian  (deb)](installation/ubuntu-debian-deb.md)
+	  * [RedHat/CentOS (yum)](installation/redhat-centos-yum.md)
+	  * [RedHat/CentOS (rpm)](installation/redhat-centos-rpm.md)
+	  * [SUSE Linux Enterprise Server (rpm)](installation/sles-rpm.md)
+	  * [Docker (image)](installation/docker.md)
+	  * [VMware VM](installation/vmware-esxi-server-vsphere.md)
+	  * [Oracle VirtualBox VM](installation/virtualbox.md)
+	  * [Other](installation/other-distributions.md)
+	* Cluster Distributions
+      * [Cloudera Hadoop Distribution](installation/cloudera.md)  	
+	  * [Ambari](installation/ambari.md)	  
+      * [HBase Cluster](installation/hbase-cluster.md)	
 * Integration
     * [ActiveMQ](integration/activemq#monitoring-activemq-with-atsd)
     * [Axibase Enterprise Reporter](integration/aer#atsd-adapter)
