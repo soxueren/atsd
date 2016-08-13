@@ -30,6 +30,7 @@ The data returned by SQL statements can be exported in the following formats:
 * [Grouping](#grouping)
 * [Partitioning](#partitioning)
 * [Ordering](#ordering)
+* [Limiting](#limiting)
 * [Joins](#joins)
 * [Authorization](#authorization)
 * [Performance](#query-performance)
@@ -887,7 +888,25 @@ ORDER BY avg(value) DESC
 | nurswgvml007 | 13.2       | 
 ```
 
-### Limiting Row Count
+### Collation
+
+Strings are ordered [lexicographically](examples/order-by-string-collation.md), based on Unicode values. `NULL` has the lowest possible value and is listed first when sorted in ascending order.
+
+| **ATSD** | **MySQL** | **PostgreSQL** | **Oracle** |
+| ---- | ---- | ---- | ---- |
+| 0 U+0030 | 0 | 0 | 0 |
+| 1 U+0031 | 1 | 1 | 1 |
+| A U+0041 | A | a | A |
+| B U+0042 | a | A | B |
+| C U+0043 | B | b | C |
+| T U+0054 | b | B | T |
+| U U+0055 | C | C | U |
+| a U+0061 | t | t | a |
+| b U+0062 | T | T | b |
+| t U+0074 | U | U | t |
+| z U+007A | z | z | z |
+
+### Limiting
 
 To reduce the number of rows returned by the database for a given query, add `LIMIT` clause at the end of the query.
 
@@ -913,24 +932,6 @@ LIMIT 1
 ```
 
 The above query would scan all samples for 'm-1' metric in the database even though it would return only 1 record as instructed by `LIMIT 1` clause.
-
-### Collation
-
-Strings are ordered [lexicographically](examples/order-by-string-collation.md), based on Unicode values. `NULL` has the lowest possible value and is listed first when sorted in ascending order.
-
-| **ATSD** | **MySQL** | **PostgreSQL** | **Oracle** |
-| ---- | ---- | ---- | ---- |
-| 0 U+0030 | 0 | 0 | 0 |
-| 1 U+0031 | 1 | 1 | 1 |
-| A U+0041 | A | a | A |
-| B U+0042 | a | A | B |
-| C U+0043 | B | b | C |
-| T U+0054 | b | B | T |
-| U U+0055 | C | C | U |
-| a U+0061 | t | t | a |
-| b U+0062 | T | T | b |
-| t U+0074 | U | U | t |
-| z U+007A | z | z | z |
 
 ## Joins
 
