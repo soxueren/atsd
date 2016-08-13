@@ -24,12 +24,24 @@ ORDER BY datetime
 
 Offset starts with 0. `LIMIT 0, n` is the same as `LIMIT n`.
 
+`LIMIT 1, 3` or `LIMIT 3 OFFSET 1` returns 3 rows starting with 2nd row.
+
 ```sql
 SELECT * FROM cpu_busy
 WHERE entity = 'nurswgvml006'
   AND datetime > previous_hour AND datetime < current_hour
 ORDER BY datetime
   LIMIT 1, 3
+```
+
+Using `OFFSET` clause produces the same result:
+
+```sql
+SELECT * FROM cpu_busy
+WHERE entity = 'nurswgvml006'
+  AND datetime > previous_hour AND datetime < current_hour
+ORDER BY datetime
+  LIMIT 1 OFFSET 3
 ```
 
 ## Results

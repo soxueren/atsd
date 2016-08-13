@@ -195,7 +195,7 @@ series d:2016-07-20T11:42:00.000Z e:e-ext m:m-ext-1=3.0
 
 ### Complete Interval Specified
 
-Both start and end date are specific in the `WHERE` clause. `EXTEND` option is applied to both leading and trailing periods.
+Both start and end date are specified in the `WHERE` clause. `EXTEND` option is applied to both leading and trailing periods.
 
 ```sql
 SELECT datetime, avg(value)
@@ -224,7 +224,7 @@ GROUP BY PERIOD(5 minute, VALUE -10, EXTEND)
 
 ### End Date is not Specified
 
-End date is not specified in the `WHERE` clause. `EXTEND` option is **not** applied to trailing periods.
+End date is **not** specified in the `WHERE` clause. As a result, `EXTEND` option is **not** applied to trailing periods.
 
 ```sql
 SELECT datetime, avg(value)

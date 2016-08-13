@@ -115,7 +115,7 @@ WHERE datetime > now - 15 * minute
 * **GROUP BY**
 * **HAVING**
 * **ORDER BY**
-* **LIMIT** [offset,] count
+* **LIMIT**, **OFFSET**
 
 ### Functions
 
@@ -144,7 +144,7 @@ multiple line
 * **HAVING** filters out the buckets.
 * **SELECT** creates rows containing columns.
 * **ORDER BY** sorts rows.
-* **LIMIT** selects a subset of rows.
+* **LIMIT** selects a subset of rows with optional **OFFSET**.
 
 ## Columns
 
@@ -887,6 +887,33 @@ ORDER BY avg(value) DESC
 | nurswgvml007 | 13.2       | 
 ```
 
+### Limiting Row Count
+
+To reduce the number of rows returned by the database for a given query, add `LIMIT` clause at the end of the query.
+
+The `LIMIT` clause provides two syntax alternatives:
+
+| **Syntax** | **Example** | **Description** |
+|:---|:---|:---|
+| `LIMIT` `[offset,] count` | `LIMIT 3, 5` | Select 5 rows starting with 4th row |
+| `LIMIT` `[offset,] count` | `LIMIT 0, 5` | Select 5 rows starting with 1st row |
+| `LIMIT` count `OFFSET` offset| `LIMIT 5 OFFSET 3` | Select 5 rows starting with 4th row |
+| `LIMIT` count `OFFSET` offset| `LIMIT 5 OFFSET 0` | Select 5 rows starting with 1st row |
+
+Note that row numbering starts at 0, hence `LIMIT 0, 5` is equivalent to `LIMIT 5`.
+
+The limit applies to the number of rows returned by the database, not the number of raw samples found.
+
+```sql
+SELECT entity, avg(value) 
+  FROM 'm-1' 
+GROUP BY entity 
+  ORDER BY avg(value) DESC 
+LIMIT 1
+```
+
+The above query would scan all samples for 'm-1' metric in the database even though it would return only 1 record as instructed by `LIMIT 1` clause.
+
 ### Collation
 
 Strings are ordered [lexicographically](examples/order-by-string-collation.md), based on Unicode values. `NULL` has the lowest possible value and is listed first when sorted in ascending order.
@@ -1091,7 +1118,7 @@ Query execution speed can be improved by adopting the following guidelines for t
 | JOIN        | LIKE        | LIMIT       | NOT         | 
 | OR          | ORDER       | OUTER       | PERIOD      | 
 | REGEX       | ROW_NUMBER  | SELECT      | USING       | 
-| VALUE       | WHERE       | WITH        |             | 
+| VALUE       | WHERE       | WITH        | OFFSET      | 
 
 In addition, [endtime](/end-time-syntax.md#keywords) keywords such as `NOW`, `PREVIOUS_HOUR` and [interval units](/end-time-syntax.md#interval-units) such as `MINUTE`, `HOUR` are reserved.
 
