@@ -171,6 +171,7 @@ POST https://atsd_host:8443/api/v1/series/query
 
 * [Limit](examples/query-limit.md)
 * [Limit with Direction](examples/query-limit-direction.md)
+* [Series Limit](examples/query-series-limit.md)
 
 ### Regularize / Downsample
 
