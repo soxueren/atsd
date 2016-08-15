@@ -35,6 +35,7 @@ The data returned by SQL statements can be exported in the following formats:
 * [Authorization](#authorization)
 * [Performance](#query-performance)
 * [API Endpoint](#api-endpoint)
+* [Monitoring](#monitoring)
 * [Unsupported Features](#unsupported-sql-features)
 * [Examples](#examples)
 
@@ -1269,6 +1270,40 @@ API SQL endpoint is located at `/api/sql` path.
 
 * [JSON format](sql.json)
 * [CSV format](sql.csv)
+
+## Monitoring
+
+Monitoring query execution is an important administrative tasks in order to identify and prevent expensive and long-running queries as well as to optimize database performance.
+
+### Log Events
+
+Queries executed by the database are recorded in the main application log `atsd.log` at the INFO level. 
+
+Each query is assigned a unique identifier for correlating starting and closing events.
+
+```
+2016-08-15 18:44:01,183;INFO;qtp1878912978-182;com.axibase.tsd.service.sql.SqlQueryServiceImpl;Starting sql query execution. [uid=218], user: user003, source: scheduled, sql: SELECT entity, avg(value) AS 'Average', median(value), max(value), count(*),
+   percentile(50, value), percentile(75, value), percentile(90, value),  percentile(99, value) FROM mpstat.cpu_busy
+  WHERE time BETWEEN previous_day and current_day GROUP BY entity ORDER BY avg(value) DESC
+2016-08-15 18:44:02,369;INFO;qtp1878912978-182;com.axibase.tsd.service.sql.SqlQueryServiceImpl;Sql query execution took 1.19 s, rows returned 7. [uid=218], user: user003, sql: SELECT entity, avg(value) AS 'Average', median(value), max(value), count(*),
+   percentile(50, value), percentile(75, value), percentile(90, value),  percentile(99, value) FROM mpstat.cpu_busy
+  WHERE time BETWEEN previous_day and current_day GROUP BY entity ORDER BY avg(value) DESC
+```
+
+### Messages
+
+Execution events are also stored as messages with type=`sql` and source=`api|console|scheduled` for monitoring query performance using the built-in rule engine.
+
+The following message tags are available for filtering and grouping:
+
+| **Name** | **Description** |
+|:---|:---|
+| uid    | Unique query id which is reset on application restart. |
+| format | Result set format: csv, json, html. |
+| user   | User initiating the query. |
+| query  | Query text. |
+
+> Messages for scheduled queries include additional tags `query_name`, `query_id`, `output_path`, `email_subject`, and `email_subscribers`.
 
 ## Unsupported SQL Features
 
