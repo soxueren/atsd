@@ -51,6 +51,8 @@ WHERE datetime > now - 1 * HOUR    -- WHERE clause
   LIMIT 1                          -- other clauses
 ```
 
+The statement may be terminated with a semicolon character.
+
 ### SELECT expression
 
 The SELECT expression consists of one or multiple columns and expressions applied to query results.
@@ -135,6 +137,8 @@ comment text on
 multiple line
 */
 ```
+
+Comments are not allowed after the statement termination character `;`.
 
 ## Processing Sequence
 
