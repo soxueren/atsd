@@ -2,16 +2,19 @@
 
 ## Description
 
-Insert data using commands in Network API syntax and HTTP as a transport protocol.
+Insert data using Network API commands over HTTP.
 
-Multiple commands can be submitted in one request, separated by line feed character.
+Multiple commands can be submitted as a batch in one request, separated by line feed character.
 
-Commands are processed sequentially:
+Commands are processed sequentially.
 
-* In case of syntax error, the server terminates parsing and discards unprocessed commands.
-* In case of out-of-range date, the invalid command is discarded and processing continues.
+In case of syntax error or out-of-range date in one of commands, the invalid command is discarded and processing continues.
 
-Supported commands:
+> Note that processing behavior is different from Data Entry page which terminates processing on first invalid or out-of-range command.
+
+The method returns a JSON object containing the counters of failed, successful, and total commands.
+
+Supported Network API commands:
 
 * [series](/api/network/series.md)
 * [property](/api/network/property.md)
@@ -37,11 +40,9 @@ List of network commands, separated by line feed.
 
 ### Fields
 
-None.
-
-### Errors
-
-None.
+```json
+{"fail":2,"success":10,"total":12}
+```
 
 ## Example
 
@@ -60,6 +61,12 @@ series e:DL1866 m:speed=650 m:altitude=12300
 property e:abc001 t:disk k:name=sda v:size=203459 v:fs_type=nfs
 series e:DL1867 m:speed=450 m:altitude=12100
 message e:server001 d:2015-03-04T12:43:20+00:00 t:subject="my subject" m:"Hello, world"
+```
+
+### Response
+
+```json
+{"fail":0,"success":4,"total":4}
 ```
 
 ## Java Example
