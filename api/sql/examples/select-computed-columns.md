@@ -7,10 +7,10 @@ The computed columns can be used both in the `SELECT` expression as well as in `
 ## Query with Join
 
 ```sql
-SELECT datetime, entity, t1.value, t2.value, t1.value + t2.value AS total_cpu
-  FROM "mpstat.cpu_system" t1
-  JOIN "mpstat.cpu_user" t2
-WHERE datetime > now - 1*MINUTE
+SELECT t1.datetime AS 'datetime', t1.entity AS 'entity', t1.value, t2.value, t1.value + t2.value AS total_cpu
+    FROM "mpstat.cpu_system" t1
+    JOIN "mpstat.cpu_user" t2
+WHERE t1.datetime > now - 1*MINUTE AND t2.datetime > now - 1*MINUTE
 ```
 
 ### Results
@@ -18,10 +18,11 @@ WHERE datetime > now - 1*MINUTE
 ```ls
 | datetime                 | entity       | t1.value | t2.value | total_cpu | 
 |--------------------------|--------------|----------|----------|-----------| 
-| 2016-07-15T14:40:16.000Z | nurswgvml006 | 3.0      | 5.9      | 8.9       | 
-| 2016-07-15T14:40:32.000Z | nurswgvml006 | 1.0      | 1.0      | 2.0       | 
-| 2016-07-15T14:40:48.000Z | nurswgvml006 | 3.2      | 64.9     | 68.1      | 
-| 2016-07-15T14:40:06.000Z | nurswgvml007 | 7.4      | 34.0     | 41.5      | 
+| 2016-08-15T07:53:01.000Z | nurswgvml006 | 1.0      | 1.0      | 2.0       | 
+| 2016-08-15T07:53:17.000Z | nurswgvml006 | 1.0      | 2.0      | 3.0       | 
+| 2016-08-15T07:53:33.000Z | nurswgvml006 | 0.0      | 4.0      | 4.0       | 
+| 2016-08-15T07:53:49.000Z | nurswgvml006 | 2.0      | 4.0      | 6.0       | 
+| 2016-08-15T07:52:59.000Z | nurswgvml007 | 1.0      | 2.0      | 3.0       | 
 ```
 
 ## Query with Join and Functions
