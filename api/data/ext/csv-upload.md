@@ -67,11 +67,29 @@ Content-Disposition: form-data; name="filedata"; filename="arch.tar.gz"
 
 ## Response 
 
+The response contains a JSON object containing parsing results.
+
 ### Fields
 
-None.
+|**Name**|**Value**|
+|:---|:---|
+| startTime | Time when parsing stated. |
+| endTime | Time when parsing finished. |
+| processed | Number of lines read from file(s). |
+| source | IP address from which the request was received. |
+| parser | Parser name. |
+| errorMessage | Error message occurred while parsing the file(s). |
+| taskStatus | Parser task status. |
+| type | Action type |
+| fileName | Temporary file name assigned by the database. |
+| fileCount | File count. The count may be greater than 1 if the uploaded file is an archive. |
+| fileSize | Size of the uploaded file, in bytes. |
 
-### Errors
+In case of error, the response object is returned as follows:
+
+```json
+{"error":"IllegalArgumentException: Configuration with name = 'parser-12' not found"}
+```
 
 ## Processing
 
@@ -97,14 +115,28 @@ time,cpu_user,cpu_system,waitio
 
 ### Response
 
-None.
+```json
+{
+	"startTime": 1471337579825,
+	"endTime": 1471337579826,
+	"processed": 3,
+	"source": "10.102.0.7",
+	"parser": "my-parser",
+	"errorMessage": null,
+	"taskStatus": "COMPLETED",
+	"type": "upload",
+	"fileName": "csv-upload-6385580066693691391.csv",
+	"fileCount": 1,
+	"fileSize": 83
+}
+```
 
 ## Additional Examples
 
 ### curl upload
 
 ```sh
-curl -i -user admin:pwd -F filedata=@test.tar.gz http://atsd_host:8088/api/v1/csv?config=noc-parser
+curl --insecure -X POST --user admin:pwd -T csv-3120.csv "https://atsd_host:8443/api/v1/csv?config=parser-3120&wait=true"
 ```
 
 
