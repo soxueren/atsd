@@ -18,11 +18,11 @@ WHERE entity = 'nurswgvml006'
 ## Results
 
 ```ls
-| entity       | datetime                 | value | metric   | metric.tags                | cpu_busy.metric.tags.source | cpu_busy.metric.tags.table | metric.tags.source | 
-|--------------|--------------------------|-------|----------|----------------------------|-----------------------------|----------------------------|--------------------| 
-| nurswgvml006 | 2016-07-15T10:34:46.000Z | 4.0   | cpu_busy | source=iostat;table=System | iostat                      | System                     | iostat             | 
-| nurswgvml006 | 2016-07-15T10:35:02.000Z | 17.4  | cpu_busy | source=iostat;table=System | iostat                      | System                     | iostat             | 
-| nurswgvml006 | 2016-07-15T10:35:18.000Z | 4.0   | cpu_busy | source=iostat;table=System | iostat                      | System                     | iostat             | 
+| entity       | datetime                 | value | metric   | metric.tags                | metric.tags.source | metric.tags.table | metric.tags.source | 
+|--------------|--------------------------|-------|----------|----------------------------|--------------------|-------------------|--------------------| 
+| nurswgvml006 | 2016-08-16T10:46:13.000Z | 4.0   | cpu_busy | source=iostat;table=System | iostat             | System            | iostat             | 
+| nurswgvml006 | 2016-08-16T10:46:29.000Z | 2.0   | cpu_busy | source=iostat;table=System | iostat             | System            | iostat             | 
+| nurswgvml006 | 2016-08-16T10:46:45.000Z | 3.0   | cpu_busy | source=iostat;table=System | iostat             | System            | iostat             | 
 ```
 
 ## Query
