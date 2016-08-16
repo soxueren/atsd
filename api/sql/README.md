@@ -1378,6 +1378,7 @@ WHERE datetime > now - 1 * MINUTE
 
 - [Group by Query with Order By](examples/group-by-query-with-order-by.md)
 - [Grouped Average](examples/grouped-average.md)
+- [Group by Tags](examples/group-by-tags.md)
 - [Group with Having](examples/group-having.md)
 - [Grouped and Having](examples/grouped-having.md)
 - [Last Time](examples/last-time.md)
