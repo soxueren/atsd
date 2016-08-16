@@ -51,7 +51,7 @@ Multi-part mode:
 | metric-tags | string | Comma-separated list of metric tags added as series, message, or property tags to parsed commands. |
 | wait | boolean | Wait until processing of the file into commands is completed by the server. Default: false.<br>If wait is disabled, the file is processed by the server asynchronously. | 
 | rules | boolean | Process commands in the rule engine. Default: false | 
-| time | string | Date in ISO 8601 format, applied to commands if the file doesn't contain any time columns. | 
+| time | string | Date in ISO format or using [endtime](/end-time-syntax.md) syntax, applied to commands if the file doesn't contain a time column. | 
 | timezone | string | Timezone applied to timestamps specified in local time. | 
 | test | boolean | Parse and validate the file without actually processing and storing commands. Default: false. | 
 | t:{name} | string | One or multiple default tags, inserted as series/property/message tags depending on command type, for example: `&t:location=SVL&t:site=QB1`.<br>Tag names should not contain whitespace. |
