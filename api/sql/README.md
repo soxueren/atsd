@@ -36,6 +36,7 @@ The data returned by SQL statements can be exported in the following formats:
 * [Performance](#query-performance)
 * [API Endpoint](#api-endpoint)
 * [Monitoring](#monitoring)
+* [Optimizing](#optimizing)
 * [Unsupported Features](#unsupported-sql-features)
 * [Examples](#examples)
 
@@ -1318,6 +1319,39 @@ The following message tags are available for filtering and grouping:
 | query  | Query text. |
 
 > Messages for scheduled queries include additional tags `query_name`, `query_id`, `output_path`, `email_subject`, and `email_subscribers`.
+
+## Optimizing
+
+Given the amount of data stored in ATSD, it is fairly easy to build a query that will cause performance issues for the database.
+
+Consider the following recommendations when developing queries:
+
+- Pre-test queries on a smaller dataset in ATSD-development instance.
+- Avoid `SELECT * FROM metric` queries without any conditions.
+- Add `WHERE` clause. Include as many conditions to the `WHERE` clause as possible, in particular add entity and time conditions.
+- Make `WHERE` conditions narrow and specific, for example, specify a small time interval.
+- Avoid `ORDER BY` since it may cause a full scan.
+- Add `LIMIT 1` clause to reduce the number of rows returned. Note that `LIMIT` will not prevent expensive queries with `ORDER BY` and `GROUP BY` clauses because `LIMIT` is applied to final results and not to the number of rows read from the database.
+- Develop a simple query first. Relax/remove conditions gradually as you inspect the results. Add grouping, partitioning, and ordering to finalize the query.
+
+To inspect the results, the following `LIMIT 1` queries have been locally optimized to provide improved performance:
+
+Ascending order:
+
+```sql
+SELECT * FROM mpstat.cpu_busy LIMIT 1
+SELECT * FROM mpstat.cpu_busy ORDER BY datetime LIMIT 1
+SELECT * FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' ORDER BY datetime LIMIT 1
+```
+
+Descending order:
+
+```sql
+SELECT * FROM mpstat.cpu_busy ORDER BY time DESC LIMIT 1
+SELECT * FROM mpstat.cpu_busy ORDER BY datetime DESC LIMIT 1
+SELECT * FROM mpstat.cpu_busy WHERE datetime > current_day ORDER BY time DESC LIMIT 1
+SELECT * FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' ORDER BY datetime DESC LIMIT 1
+```
 
 ## Unsupported SQL Features
 
