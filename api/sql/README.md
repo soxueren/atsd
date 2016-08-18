@@ -41,9 +41,23 @@ The data returned by SQL statements can be exported in the following formats:
 
 ## Syntax
 
-The database supports only `SELECT` statements at this time.
-
 The `SELECT` statement consists of a `SELECT` expression, a `FROM` query, a `WHERE` clause, and other optional clauses for grouping, filtering, and ordering the results.
+
+```sql
+SELECT { * | { expr [ .* | [ AS ] alias ] } }
+  FROM metric [[ AS ] alias ]
+    [ [OUTER] JOIN metric [[ AS ] alias ] [USING entity] ]
+  [ WHERE expr(boolean) ]
+  [ WITH ROW_NUMBER expr ]
+  [ GROUP BY expr [, ...] ]
+  [ HAVING expr(boolean) ]
+[ ORDER BY expr [{ ASC | DESC }] [, ...] ]
+[ LIMIT count [ OFFSET skip ]]
+```
+
+The statement may be terminated with a semicolon character.
+
+Example:
 
 ```sql
 SELECT datetime, entity, value     -- SELECT expression
@@ -52,7 +66,7 @@ WHERE datetime > now - 1 * HOUR    -- WHERE clause
   LIMIT 1                          -- other clauses
 ```
 
-The statement may be terminated with a semicolon character.
+> The database supports only `SELECT` statements at this time.
 
 ### SELECT expression
 
