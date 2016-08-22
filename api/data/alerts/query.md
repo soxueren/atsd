@@ -41,6 +41,12 @@ An array of query objects containing the following fields:
 * Date conditions are applied to alert `openDate`.
 * Refer to [date filter](../filter-date.md).
 
+#### Result Filter Fields
+
+| **Name**  | **Type** | **Description**  |
+|:---|:---|:---|
+| limit   | integer | Maximum number of records to be returned. Default: -1.<br>Limit is not applied if the parameter value <= 0. | 
+
 ## Response 
 
 An array of matching alert objects containing the following fields:
