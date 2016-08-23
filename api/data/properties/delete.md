@@ -4,6 +4,32 @@
 
 Delete property records that match specified filters.
 
+### Delete Markers
+
+Due to the specifics of the underlying storage technology, the records deleted with this method are not instantly removed from disk. 
+
+Instead the records are masked with a so called `DELETE` marker timestamped at the delete request time. The `DELETE` marker hides all data rows that were recorded before the `DELETE` marker.
+
+The actual deletion from the disk which removes both the `DELETE` marker as well as earlier records occurs in the background as part of a scheduled procedure called `major compaction`.
+
+Properties that are re-inserted before the `major compaction` is completed with timestamps earlier than `DELETE` marker will not be visible.
+
+To identify pending `DELETE` markers for a given type and entity, run the following command in HBase shell:
+
+```bash
+scan 'atsd_properties', {'LIMIT' => 3, RAW => true, FILTER => "PrefixFilter('\"prop_type\":\"entity_name\"')"}
+```
+
+The same behavior applies to properties deleted when the entire entity is removed, except in this case the `DELETE` marker is timestamped with `Long.MAX_VALUE-1` time of `9223372036854775806`.
+
+To remove these markers, run `major compaction` on `atsd_properties` table ahead of schedule.
+
+```bash
+/opt/atsd/hbase/bin/hbase shell
+
+major_compact 'atsd_properties'
+```
+
 ## Request
 
 | **Method** | **Path** | **Content-Type Header**|
@@ -101,6 +127,3 @@ curl https://atsd_host:8443/api/v1/properties/delete \
   --data '[{ "type":"disk", "entity":"nurswgvml007", "key":{"file_system":"/","name":"sda1"} }]'
 ```
 
-### Response
-
-None.

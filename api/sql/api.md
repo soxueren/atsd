@@ -16,7 +16,7 @@ Scheduled queries are executed under full permissions.
 
 | **Method** | **Path** | **Content-Type Header**|
 |:---|:---|---:|
-| POST | `/api/sql` | `text/plain` |
+| POST | `/api/sql` | `application/x-www-form-urlencoded` |
 
 ### Parameters
 
@@ -26,6 +26,8 @@ Scheduled queries are executed under full permissions.
 | outputFormat | string | Output format: `csv` or `json`. Default: `csv`. |
 | metadataFormat | string | Metadata format for CSV format. Default: `HEADER`. <br>Supported values: `NONE`, `HEADER`, `EMBED`, `COMMENTS`. |
 | limit | integer | Maximum number of rows to return. Default: 0 (not applied).<br>Applies if query text does not include `LIMIT` clause.  |
+
+As an alternative, the query can be submitted with Content-Type `text/plain` as text payload with the other parameters included in the query string.
 
 ### Metadata
 

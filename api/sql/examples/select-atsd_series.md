@@ -2,7 +2,7 @@
 
 Querying `atsd_series` table provides an alternative syntax to specify metric name in the `WHERE` clause instead of the `FROM` query.
 
-At least one metric condition must be present and applicable in `atsd_series` query. Metric names are case-insensitive. 
+At least one metric condition must be present in the `WHERE` clause of a valid `atsd_series` query. Metric names are case-insensitive. 
 
 The following queries are equivalent:
 
@@ -92,6 +92,6 @@ WHERE (metric = 'df.disk_used' OR metric = 'df.disk_used_percent')
 Queries with `atsd_series` table do not support the following capabilities:
 
 * `JOIN` queries are not supported.
-* All columns in the `SELECT` expression must be specified explicitly. Namely, `SELECT *`, `SELECT tags.*`, `SELECT metric.tags.*` are not allowed. 
+* When multiple metrics are specified, all columns in the `SELECT` expression must be specified explicitly. Namely, `SELECT *`, `SELECT tags.*`, `SELECT metric.tags.*` are not allowed if the `WHERE` clause includes multiple metrics. 
 
 
