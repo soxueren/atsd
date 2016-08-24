@@ -5,17 +5,17 @@ Select series without the specified tag using `tags.{name} IS NULL` condition.
 ## Data
 
 ```ls
-| entity  | datetime                 | value | tags.tag4 | tags.tag2 | tags.tag1 | 
+| entity  | datetime                 | value | tags.tag1 | tags.tag2 | tags.tag4 | 
 |---------|--------------------------|-------|-----------|-----------|-----------| 
-| e-sql-1 | 2016-06-19T11:00:00.000Z | 1.0   | null      | null      | val1      | 
-| e-sql-2 | 2016-06-19T11:00:00.000Z | 2.0   | null      | val2      | val2      | 
+| e-sql-1 | 2016-06-19T11:00:00.000Z | 1.0   | val1      | null      | null      | 
+| e-sql-2 | 2016-06-19T11:00:00.000Z | 2.0   | val2      | val2      | null      | 
 | e-sql-3 | 2016-06-19T11:00:00.000Z | 3.0   | null      | val3      | null      | 
-| e-sql-4 | 2016-06-19T11:00:00.000Z | 4.0   | val4      | null      | null      | 
+| e-sql-4 | 2016-06-19T11:00:00.000Z | 4.0   | null      | null      | val4      | 
 ```
 
 ## Query
 
-Select series without `tag4` using `IS NULL` condition:
+Select series without `tag4` using `IS NULL` operator:
 
 ```sql
 SELECT entity, datetime, value, tags.*
@@ -34,23 +34,15 @@ WHERE datetime >= "2016-06-19T11:00:00.000Z" and datetime < "2016-06-19T12:00:00
 | e-sql-3 | 2016-06-19T11:00:00.000Z | 3.0   | null      | val3      | null      |
 ```
 
-## Alternative using `NOT tags.{name} != ''` 
-
-Given that tag value cannot be an empty string, series with a given tag `{name}` match the following condition `tags.{name} != ''`.
-
-`NOT tags.{name} != ''` is the negation that matches series without the given tag.
-
-In the example below, `NOT tags.tag4 != ''` selects series without `tag4`.
-
 ## Query
 
-Select series without tag4 using `NOT tags.{name} != ''` negation:
+Select series with `tag4` using `IS NOT NULL` operator:
 
 ```sql
 SELECT entity, datetime, value, tags.*
   FROM "m-metric1"
 WHERE datetime >= "2016-06-19T11:00:00.000Z" and datetime < "2016-06-19T12:00:00.000Z"
-  AND NOT tags.tag4 != ''
+  AND tags.tag4 IS NOT NULL
 ```
 
 ## Results
@@ -58,8 +50,25 @@ WHERE datetime >= "2016-06-19T11:00:00.000Z" and datetime < "2016-06-19T12:00:00
 ```ls
 | entity  | datetime                 | value | tags.tag1 | tags.tag2 | tags.tag4 | 
 |---------|--------------------------|-------|-----------|-----------|-----------| 
+| e-sql-4 | 2016-06-19T11:00:00.000Z | 4.0   | null      | null      | val4      | 
+```
+
+## Query
+
+Operators, except `IS NULL` and `IS NOT NULL`, return `NULL` if any operand is `NULL`.
+
+The query returns only two rows, because `(tags.tag1 = 'a' OR tags.tag1 != 'a')` returns `NULL` for entities e-sql-3 and e-sql-4.
+
+```sql
+SELECT entity, datetime, value, tags.*
+  FROM "m-metric1"
+WHERE datetime >= "2016-06-19T11:00:00.000Z" and datetime < "2016-06-19T12:00:00.000Z"
+  AND (tags.tag1 = 'a' OR tags.tag1 != 'a')
+```
+
+```ls
+| entity  | datetime                 | value | tags.tag1 | tags.tag2 | tags.tag4 | 
+|---------|--------------------------|-------|-----------|-----------|-----------| 
 | e-sql-1 | 2016-06-19T11:00:00.000Z | 1.0   | val1      | null      | null      | 
 | e-sql-2 | 2016-06-19T11:00:00.000Z | 2.0   | val2      | val2      | null      | 
-| e-sql-3 | 2016-06-19T11:00:00.000Z | 3.0   | null      | val3      | null      | 
-
 ```

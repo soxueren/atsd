@@ -23,6 +23,7 @@ The data returned by SQL statements can be exported in the following formats:
   * [Mathematical Functions](#mathematical-functions)
   * [Arithmetic Operators](#arithmetic-operators)
   * [Match Expressions](#match-expressions)
+  * [NULL](#null)
   * [Processing Sequence](#processing-sequence)
   * [Keywords](#keywords)
 * [Period](#period)
@@ -109,9 +110,9 @@ Typically the `WHERE` clause includes a [time condition](#time-condition) for wh
 The clause can be built from multiple conditions each comparing values using comparison operators:
 
 * Numeric operators: `<, >, <=, >=, =, <>, !=`.
-* String operators: `<, >, <=, >=, =, <>, !=, LIKE, REGEX`.
+* String operators: `<, >, <=, >=, =, <>, !=, LIKE, REGEX, IS NULL, IS NOT NULL`.
 
-> Note that `!=` and `<>` operators cannot be applied to time columns: `time` and `datetime`.
+> Operators `!=` and `<>` cannot be applied to time columns: `time` and `datetime`.
 
 > Operators `<, >, <=, >=` applied to string values, such as series/entity/metric tag values, perform [lexicographical comparison](examples/filter-operators-string.md).
 
@@ -181,12 +182,12 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`value`|number|Series value.|
 |`metric`|string|Metric name, same as virtual table name.|
 |`entity`|string|Entity name.|
-|`tags.{name}`|string|Series tag value.|
+|`tags.{name}`|string|Series tag value. Returns `NULL` if the specified tag doesn't exist for this series.|
 |`tags`|string|All series tags, concatenated to `name1=value;name2=value` format.|
 |`tags.*`|string|Expands to multiple columns, each column containing a separate series tag.|
-|`entity.tags.{name}`|string|Entity tag value.|
+|`entity.tags.{name}`|string|Entity tag value. Returns `NULL` if the specified tag doesn't exist for this entity.|
 |`entity.tags`|string|All entity tags, concatenated to `name1=value;name2=value` format.|
-|`metric.tags.{name}`|string|Metric tag value.|
+|`metric.tags.{name}`|string|Metric tag value. Returns `NULL` if the specified tag doesn't exist for this metric.|
 |`metric.tags`|string|All metric tags, concatenated to `name1=value;name2=value` format.|
 |`metric.tags.*`|string|Expands to multiple columns, each column containing a separate metric tag.|
 |`entity.groups`|string|List of entity groups, to which the entity belongs, separated by semi-colon `;`.|
@@ -253,9 +254,9 @@ WHERE datetime >= "2016-07-03T21:02:00Z" AND datetime < "2016-07-03T21:02:15Z"
 
 Tag values are referenced in `SELECT` expression by specifying `tags.*`, `tags`, or `tags.{tag-name}` as column name.
 
-`tags` is a map object whose properties can be accessed with key. When specified in SELECT expression, tags.* creates multiple columns for each key in the map. 
+`tags` is a map object whose properties can be accessed with key. When specified in SELECT expression, `tags.*` creates multiple columns for each key in the map. 
 
-If the property is not present, the `tags.{tag-name}` expression returns NULL.
+If the property is not present, the `tags.{tag-name}` expression returns `NULL`.
 
 ```sql
 SELECT datetime, entity, value, tags.*, tags, tags.mount_point, tags.file_system
@@ -269,6 +270,8 @@ WHERE entity = 'nurswgvml010' AND datetime > now - 1*MINUTE
 | 2016-06-18T11:22:35.000Z | nurswgvml010 | 6478200.0  | /                | /dev/sda1        | file_system=/dev/sda1;mount_point=/    | /                | /dev/sda1        | 
 | 2016-06-18T11:22:35.000Z | nurswgvml010 | 30440664.0 | /app             | /dev/sdb1        | file_system=/dev/sdb1;mount_point=/app | /app             | /dev/sdb1        | 
 ```
+
+To filter records with or without specified series tags, use `IS NOT NULL` or `IS NULL` operators.
 
 `tags` and `tags.{tag-name}` syntax can also be used in `WHERE`, `ORDER`, `GROUP BY` and other clauses.
 
@@ -293,7 +296,7 @@ Entity tag values can be included in `SELECT` expression by specifying `entity.t
 
 `entity.tags` is a map object whose properties can be accessed with `{tag-name}` key.
 
-If there is no record for the specified key, the `entity.tags.{tag-name}` expression returns NULL.
+If there is no record for the specified key, the `entity.tags.{tag-name}` expression returns `NULL`.
 
 ```sql
 SELECT entity, entity.tags.os, entity.tags.app, avg(value) 
@@ -314,7 +317,7 @@ WHERE datetime > current_hour
 | nurswgvml502 | null           | null                  | 16.3       | 
 ```
 
-To filter records with or without specified entity tags, use `IS NULL` and `IS NOT NULL` conditions:
+To filter records with or without specified entity tags, use `IS NOT NULL` or `IS NULL` operators:
 
 ```sql
 SELECT entity, entity.tags.os, entity.tags.app, avg(value) 
@@ -337,7 +340,7 @@ Metric tag values can be included in `SELECT` expression by specifying `metric.t
 
 `metric.tags` is a map object whose properties can be accessed with `{tag-name}` key.
 
-If there is no record for the specified key, the `metric.tags.{tag-name}` expression returns NULL.
+If there is no record for the specified key, the `metric.tags.{tag-name}` expression returns `NULL`.
 
 Metric tag columns are supported only in `SELECT` expression.
 
@@ -520,10 +523,10 @@ Both columns support [End Time](/end-time-syntax.md) syntax.
 ```sql
 SELECT datetime, entity, value 
   FROM "mpstat.cpu_busy" 
-WHERE time >= previous_minute
+WHERE time >= previous_minute AND datetime < current_minute
 ```
 
-> Note that `!=` and `<>` operators are not supported with time columns: `time` and `datetime`.
+> Operators `!=` and `<>` are **not** supported with time columns: `time` and `datetime`.
 
 ## Period
 
@@ -1269,9 +1272,30 @@ Changing the case of tag value condition `tags.file_system = '/DEV/mapper/vg_nur
 
 ## NULL
 
-Scalar expressions such as _number+NULL_ yield `NULL` if any operand is `NULL`, however `NULL`s are ignored by aggregate functions. 
+Scalar expressions with arithmetic operators such as _number+NULL_ yield `NULL` if any operand is `NULL`.
 
-`IS NULL` and `IS NOT NULL` conditions are supported for `tags.{name}` and `tags.entity.{name}` columns in the `WHERE` clause.
+Likewise, numeric and string operators, except `IS NULL` and `IS NOT NULL`, return `NULL` if any operand is `NULL`.
+
+`IS NULL` and `IS NOT NULL` operators are supported for `tags.{name}` and `tags.entity.{name}` columns in the `WHERE` clause.
+
+Assuming tags.status is `NULL`:
+
+| **Result** | **Expression** |
+|:---|:---|
+| `NULL` | `tags.status > 'a'` | 
+| `NULL` | `tags.status <= 'a'` |
+| `NULL` | `tags.status <> 'a'` |
+| `NULL` | `tags.status = NULL` |
+| `NULL` | `tags.status = NULL` |
+| `NULL` | `tags.status <> NULL` |
+| `NULL` | `tags.status = tags.status` |
+| `true` | `tags.status IS NULL` |
+| `false` | `tags.status IS NOT NULL` |
+| `NULL` | `tags.status IS NULL AND tags.status = NULL` |
+
+Since `WHERE` clause includes only rows that evaluate to `true`, conditions such as `tags.status = 'a' OR tags.status != 'a'` will not include rows with undefined tags.status column.
+
+`NULL`s are ignored by aggregate functions.
 
 ## API Endpoint
 
