@@ -1208,12 +1208,31 @@ FROM "mpstat.cpu_busy"
 |--------------------------------------------------------|----------------------------| 
 | time                                                   | 1468411675000              | 
 | date_format(time)                                      | 2016-07-13T12:07:55.000Z   | 
+| date_format(time+60000)                                | 2016-07-13T12:08:55.000Z   | 
 | date_format(time,'yyyy-MM-dd'T'HH:mm:ss.SSS'Z'','UTC') | 2016-07-13T12:07:55.000Z   | 
 | date_format(time,'yyyy-MM-dd HH:mm:ss')                | 2016-07-13 12:07:55        | 
 | date_format(time,'yyyy-MM-dd HH:mm:ss','PST')          | 2016-07-13 05:07:55        | 
 | date_format(time,'yyyy-MM-dd HH:mm:ss','GMT-08:00')    | 2016-07-13 04:07:55        | 
 | date_format(time,'yyyy-MM-dd HH:mm:ss Z','PST')        | 2016-07-13 05:07:55 -0700  | 
 | date_format(time,'yyyy-MM-dd HH:mm:ss ZZ','PST')       | 2016-07-13 05:07:55 -07:00 | 
+```
+
+The `date_format` function can also be used to print out period start and end times:
+
+```sql
+SELECT datetime AS period_start, date_format(time+60*60000) AS period_end, avg(value)
+  FROM mpstat.cpu_busy
+WHERE entity = 'nurswgvml007' 
+  AND datetime >= current_day
+GROUP BY PERIOD(1 HOUR)
+```
+
+```ls
+| period_start             | period_end               | avg(value) | 
+|--------------------------|--------------------------|------------| 
+| 2016-08-25T00:00:00.000Z | 2016-08-25T01:00:00.000Z | 7.7        | 
+| 2016-08-25T01:00:00.000Z | 2016-08-25T02:00:00.000Z | 8.2        | 
+| 2016-08-25T02:00:00.000Z | 2016-08-25T03:00:00.000Z | 6.7        | 
 ```
 
 ## Mathematical Functions

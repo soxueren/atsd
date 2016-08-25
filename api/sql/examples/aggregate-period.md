@@ -33,3 +33,26 @@ WHERE entity = 'nurswgvml007'
 | 2016-07-15T13:00:00.000Z | 12.709     | 100.000    | 45.260      | 224.000  | 
 | 2016-07-15T14:00:00.000Z | 14.204     | 100.000    | 7.000       | 213.000  | 
 ```
+
+## Query
+
+Display period start and end time using `date_format` function.
+
+
+```sql
+SELECT datetime AS period_start, date_format(time+60*60000) AS period_end, avg(value)
+  FROM mpstat.cpu_busy
+WHERE entity = 'nurswgvml007' 
+  AND datetime >= current_day
+GROUP BY PERIOD(1 HOUR)
+```
+
+## Results
+
+```ls
+| period_start             | period_end               | avg(value) | 
+|--------------------------|--------------------------|------------| 
+| 2016-08-25T00:00:00.000Z | 2016-08-25T01:00:00.000Z | 7.7        | 
+| 2016-08-25T01:00:00.000Z | 2016-08-25T02:00:00.000Z | 8.2        | 
+| 2016-08-25T02:00:00.000Z | 2016-08-25T03:00:00.000Z | 6.7        | 
+```
