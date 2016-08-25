@@ -95,7 +95,7 @@ As an alternative to specifying metric names as table names, the `FROM` query ca
 ```sql
 SELECT entity, metric, datetime, value 
   FROM atsd_series 
-WHERE metric = 'cpu_busy' 
+WHERE metric = 'mpstat.cpu_busy' 
   AND datetime > current_hour
 ```
 
@@ -199,10 +199,10 @@ Quotes and double quotes in column names can be escaped by doubling the quote sy
 New columns can be created by applying functions and arithmetic expressions to existing columns. The computed columns can be included both in `SELECT` expression as well as in `WHERE`, `HAVING`, and `ORDER BY` clauses.
 
 ```sql
-SELECT datetime, entity, t1.value + t2.value AS cpu_sysusr
+SELECT t1.datetime, t1.entity, t1.value + t2.value AS cpu_sysusr
   FROM "mpstat.cpu_system" t1
   JOIN "mpstat.cpu_user" t2
-WHERE datetime > now - 1*MINUTE
+WHERE t1.datetime > now - 1*MINUTE
 ```
 
 The list of available predefined columns may be requested with `SELECT *` syntax, except for queries with `GROUP BY` clause.
@@ -210,8 +210,8 @@ The list of available predefined columns may be requested with `SELECT *` syntax
 ```sql
 SELECT * FROM "mpstat.cpu_busy" t1 
   OUTER JOIN "meminfo.memfree" t2
-WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
-  AND entity = 'nurswgvml006'
+WHERE t1.datetime >= '2016-06-16T13:00:00.000Z' AND t1.datetime < '2016-06-16T13:10:00.000Z'
+  AND t1.entity = 'nurswgvml006'
 ```
 
 ```ls
@@ -228,8 +228,8 @@ In case of `JOIN` query, `SELECT *` syntax can be applied to each table separate
 ```sql
 SELECT t1.*, t2.value FROM "mpstat.cpu_busy" t1 
   OUTER JOIN "meminfo.memfree" t2
-WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
-  AND entity = 'nurswgvml006'
+WHERE t1.datetime >= '2016-06-16T13:00:00.000Z' AND t1.datetime < '2016-06-16T13:10:00.000Z'
+  AND t1.entity = 'nurswgvml006'
 ```
 
 ```ls
@@ -367,7 +367,7 @@ The column can be specified in `SELECT` expression to print out the ordered list
 
 ```sql
 SELECT datetime, entity, value, entity.groups
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity LIKE 'nurswgvml00*'
   AND datetime > current_hour
 ORDER BY datetime 
@@ -396,7 +396,7 @@ Entity Group names are case-sensitive.
 
 ```sql
 SELECT datetime, entity, value, entity.groups
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE 'java-loggers' IN entity.groups
   AND datetime > current_hour
 ORDER BY datetime
@@ -477,7 +477,7 @@ WHERE datetime > now - 10 * minute
 SELECT avg(metric1.value*2), sum(metric1.value + metric2.value) 
   FROM metric1 
   JOIN metric2
-WHERE datetime > now - 10 * minute 
+WHERE metric1.datetime > now - 10 * minute 
 ```
 
 The modulo operator `%` returns the remainder of one number divided by another, for example `14 % 3` (= 2).
@@ -980,12 +980,12 @@ Because join queries combine rows from multiple virtual tables with the same col
 The default `JOIN` condition is time, entity and series tags. The condition can be modified with `USING entity` clause in which case series tags are ignored, and records are joined on time and entity instead.
 
 ```sql
-SELECT datetime, entity, t1.value, t2.value, t3.value
-  FROM "cpu_system" t1
-  JOIN "cpu_user" t2 
-  JOIN "cpu_iowait" t3
-WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
-  AND entity = 'nurswgvml006'
+SELECT t1.datetime, t1.entity, t1.value, t2.value, t3.value
+  FROM "mpstat.cpu_system" t1
+  JOIN "mpstat.cpu_user" t2 
+  JOIN "mpstat.cpu_iowait" t3
+WHERE t1.datetime >= '2016-06-16T13:00:00.000Z' AND t1.datetime < '2016-06-16T13:10:00.000Z'
+  AND t1.entity = 'nurswgvml006'
 ```
 
 In this particular case, since timestamps for each of these metrics are identical, being collected by the same script, `JOIN` produces merged rows for all the detailed records.
@@ -1003,11 +1003,11 @@ This is typically the case when multiple metrics are inserted with one command o
 However, when merging records for irregular metrics collected by independent sources, `JOIN` results may contain a small subset of rows with coincidentally identical times.
 
 ```sql
-SELECT datetime, entity, t1.value as cpu, t2.value as mem
+SELECT t1.datetime, t1.entity, t1.value as cpu, t2.value as mem
   FROM "mpstat.cpu_busy" t1 
   JOIN "meminfo.memfree" t2
-WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
-  AND entity = 'nurswgvml006'
+WHERE t1.datetime >= '2016-06-16T13:00:00.000Z' AND t1.datetime < '2016-06-16T13:10:00.000Z'
+  AND t1.entity = 'nurswgvml006'
 ```
 
 The result contains only 2 records out of 75 total. This is because for `JOIN` to merge detailed records from multiple metrics into one row, the records should have the same time. 
@@ -1023,11 +1023,11 @@ The result contains only 2 records out of 75 total. This is because for `JOIN` t
 Similarly, multiple tables can be merged for series with tags, without the need to enumerate all possible tags in the join condition.
 
 ```sql
-SELECT datetime, entity, t1.value, t2.value, t1.tags.*
+SELECT t1.datetime, t1.entity, t1.value, t2.value, t1.tags.*
   FROM "df.disk_used" t1
   JOIN "df.disk_used_percent" t2
-WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
-  AND entity = 'nurswgvml006'
+WHERE t1.datetime >= '2016-06-16T13:00:00.000Z' AND t1.datetime < '2016-06-16T13:10:00.000Z'
+  AND t1.entity = 'nurswgvml006'
 ```
 
 ```ls	
@@ -1050,12 +1050,12 @@ This allows merging of virtual tables with different tag columns, including merg
 `USING entity` is supported by both inner and outer JOIN.
 
 ```sql
-SELECT entity, datetime, AVG(t1.value), AVG(t2.value), tags.*
+SELECT t1.entity, t1.datetime, AVG(t1.value), AVG(t2.value), t1.tags.*, t2.tags.*
   FROM mpstat.cpu_busy t1
   JOIN USING entity df.disk_used t2
-WHERE datetime > current_hour
-  AND entity = 'nurswgvml007' 
-GROUP BY entity, tags, period(1 minute)
+WHERE t1.datetime > current_hour
+  AND t1.entity = 'nurswgvml007' 
+GROUP BY t1.entity, t1.tags, t2.tags, t1.period(1 minute)
 ```
 
 ```ls
@@ -1070,11 +1070,11 @@ GROUP BY entity, tags, period(1 minute)
 To combine all records from joined tables, use `OUTER JOIN` which returns rows with equal time, entity, and tags as well as rows from one table for which no rows from the other satisfy the join condition.
 
 ```sql
-SELECT datetime, entity, t1.value as cpu, t2.value as mem
+SELECT t1.datetime, t1.entity, t1.value as cpu, t2.value as mem
   FROM "mpstat.cpu_busy" t1 
   OUTER JOIN "meminfo.memfree" t2
-WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
-  AND entity = 'nurswgvml006'
+WHERE t1.datetime >= '2016-06-16T13:00:00.000Z' AND t1.datetime < '2016-06-16T13:10:00.000Z'
+  AND t1.entity = 'nurswgvml006'
 ```
 
 `OUTER JOIN` for detailed records, without period aggregation, produces rows that have NULLs in value columns because the underlying metric didn't record any value at the specified time.
@@ -1092,12 +1092,12 @@ WHERE datetime >= '2016-06-16T13:00:00.000Z' AND datetime < '2016-06-16T13:10:00
 To regularize the series, apply `GROUP BY` with period aggregation and apply one of statistical functions to return one value for the period, for each series.
 
 ```sql
-SELECT datetime, entity, avg(t1.value) as avg_cpu, avg(t2.value) as avg_mem
+SELECT t1.datetime, t1.entity, avg(t1.value) as avg_cpu, avg(t2.value) as avg_mem
   FROM "mpstat.cpu_busy" t1 
   OUTER JOIN "meminfo.memfree" t2
-WHERE datetime >= '2016-06-16T13:02:40.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
-  AND entity = 'nurswgvml006'
-GROUP BY entity, period(1 MINUTE)
+WHERE t1.datetime >= '2016-06-16T13:02:40.000Z' AND t1.datetime < '2016-06-16T13:10:00.000Z'
+  AND t1.entity = 'nurswgvml006'
+GROUP BY t1.entity, t1.period(1 MINUTE)
 ```
 
 ```ls
@@ -1113,12 +1113,12 @@ Choice of statistical function to use for value columns depends on the use case.
 `AVG` and percentile functions would smooth the values, whereas `LAST` or `FIRST` functions would select a subset of raw values in a downsampling effect.
 
 ```sql
-SELECT datetime, entity, LAST(t1.value) as cpu, LAST(t2.value) as mem
+SELECT t1.datetime, t1.entity, LAST(t1.value) as cpu, LAST(t2.value) as mem
   FROM "mpstat.cpu_busy" t1 
   OUTER JOIN "meminfo.memfree" t2
-WHERE datetime >= '2016-06-16T13:02:40.000Z' AND datetime < '2016-06-16T13:10:00.000Z'
-  AND entity = 'nurswgvml006'
-GROUP BY entity, period(1 MINUTE)
+WHERE t1.datetime >= '2016-06-16T13:02:40.000Z' AND t1.datetime < '2016-06-16T13:10:00.000Z'
+  AND t1.entity = 'nurswgvml006'
+GROUP BY t1.entity, t1.period(1 MINUTE)
 ```
 
 >  Note that records returned by a `JOIN USING entity` condition include series with last insert date greater than start date specified in the query.

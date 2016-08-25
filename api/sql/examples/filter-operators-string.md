@@ -2,7 +2,7 @@
 
 String comparison operators `<, >, <=, >=` provide a way to filter tag values lexicographically. 
 
-If one of the compared values is `NULL`, the condition returns `false`.
+If one of the compared values is `NULL`, the expression returns `NULL` and such rows are excluded by the `WHERE` clause.
 
 ## NULL filter
 
@@ -11,10 +11,10 @@ If one of the compared values is `NULL`, the condition returns `false`.
 ```ls
 | entity  | datetime                 | value | tags.tag2 | > 'val2' | <= 'val2' | 
 |---------|--------------------------|-------|-----------|----------|-----------| 
-| e-sql-1 | 2016-06-19T11:00:00.000Z | 1.0   | null      | false    | false     | 
+| e-sql-1 | 2016-06-19T11:00:00.000Z | 1.0   | null      | NULL     | NULL      | 
 | e-sql-2 | 2016-06-19T11:00:00.000Z | 2.0   | val2      | false    | true      | 
 | e-sql-3 | 2016-06-19T11:00:00.000Z | 3.0   | val3      | true     | false     | 
-| e-sql-4 | 2016-06-19T11:00:00.000Z | 4.0   | null      | false    | false     | 
+| e-sql-4 | 2016-06-19T11:00:00.000Z | 4.0   | null      | NULL     | NULL      | 
 ```
 
 ### Query: > 'val2'
