@@ -32,6 +32,7 @@ SELECT datetime, entity, max(t1.value), max(t2.value), max(t1.value) + max(t2.va
   FROM "mpstat.cpu_system" t1
   JOIN "mpstat.cpu_user" t2
 WHERE datetime > now - 1*MINUTE
+GROUP BY entity, datetime
 ```
 
 ### Results
