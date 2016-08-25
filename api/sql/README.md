@@ -1331,7 +1331,7 @@ API SQL endpoint is located at `/api/sql` path.
 
 ## Monitoring
 
-Monitoring query execution is an important administrative tasks in order to optimize database performance, to identify and prevent expensive and long-running queries by providing feedback to end-users and application developers.
+Monitoring query execution is an important administrative task in order to optimize database performance, to identify and prevent expensive and long-running queries and to providing feedback to end-users and application developers.
 
 ### Query Reporting
 
@@ -1349,11 +1349,11 @@ Query Detail Fields:
 |:---|:---|
 | Status | New, Running, Completed, Error, Cancelled. |
 | Source | api, console, scheduled. |
-| User | Name of the user who initiated the query. In case of API clients and JDBC driver, username in login credentials. |
+| User | Name of the user who initiated the query.<br>For API clients, username specified in login credentials. |
 | Query Id | Unique query identifier. |
 | Query Text | Query statement text. |
 | Start Time | Query start time. |
-| Elapsed Time | Time elapsed between query start time and current time (running queries) or completion time. |
+| Elapsed Time | Time elapsed between start time and completion (or current) time. |
 | Returned Records | Number of rows returned to the client. | 
 | Records Fetched | Number of time:value pairs. |
 | Rows Fetched | Number of HBase rows. |
@@ -1371,9 +1371,9 @@ Query Detail Fields:
 
 ### Cancelling Queries
 
-A running query can be cancelled at any time if it is executing longer than expected, for example if the query doesn't include any conditions in the `WHERE` clause. 
+A running query can be cancelled at any time, for example if it is executing longer than expected. 
 
-When a query is cancelled no results are returned to the client.
+When a query is cancelled no results are returned to the client and the query is terminated with an error.
 
 ### Query Logging
 
@@ -1393,7 +1393,7 @@ Each query is assigned a unique identifier for correlating starting and closing 
 
 ### Query Control Messages
 
-Execution events are also stored as messages with type=`sql` and source=`api|console|scheduled` for monitoring query performance using the built-in rule engine.
+Execution events are also stored as messages with type=`sql` and source=`api|console|scheduled` for monitoring query performance using the built-in Rule Engine.
 
 The following message tags are available for filtering and grouping:
 
@@ -1415,12 +1415,12 @@ Consider the following recommendations when developing queries:
 - Pre-test queries on a smaller dataset in ATSD-development instance.
 - Avoid `SELECT * FROM metric` queries without any conditions.
 - Add `WHERE` clause. Include as many conditions to the `WHERE` clause as possible, in particular add entity and time conditions.
-- Make `WHERE` conditions narrow and specific, for example, specify a small time interval.
-- Avoid `ORDER BY` since it may cause a full scan.
+- Make `WHERE` conditions narrow and specific, for example, specify a smaller time interval.
+- Avoid `ORDER BY` clause since it may cause a full scan and a copy of data to a temporary table.
 - Add `LIMIT 1` clause to reduce the number of rows returned. Note that `LIMIT` will not prevent expensive queries with `ORDER BY` and `GROUP BY` clauses because `LIMIT` is applied to final results and not to the number of rows read from the database.
-- Develop a simple query first. Relax/remove conditions gradually as you inspect the results. Add grouping, partitioning, and ordering to finalize the query.
+- Develop a simple query first. Adjust conditions gradually as you inspect the results. Add grouping, partitioning, and ordering to finalize the query.
 
-To inspect the results, the following `LIMIT 1` queries have been locally optimized to provide improved performance:
+To assist in inspecting query results, the following `LIMIT 1` queries have been locally optimized to provide improved performance:
 
 Ascending order:
 
