@@ -1055,7 +1055,7 @@ SELECT t1.entity, t1.datetime, AVG(t1.value), AVG(t2.value), t1.tags.*, t2.tags.
   JOIN USING entity df.disk_used t2
 WHERE t1.datetime > current_hour
   AND t1.entity = 'nurswgvml007' 
-GROUP BY t1.entity, t1.tags, t2.tags, t1.period(1 minute)
+GROUP BY t1.entity, t1.tags, t2.tags, t1.PERIOD(1 minute)
 ```
 
 ```ls
@@ -1097,7 +1097,7 @@ SELECT t1.datetime, t1.entity, avg(t1.value) as avg_cpu, avg(t2.value) as avg_me
   OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime >= '2016-06-16T13:02:40.000Z' AND t1.datetime < '2016-06-16T13:10:00.000Z'
   AND t1.entity = 'nurswgvml006'
-GROUP BY t1.entity, t1.period(1 MINUTE)
+GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 ```
 
 ```ls
@@ -1118,7 +1118,7 @@ SELECT t1.datetime, t1.entity, LAST(t1.value) as cpu, LAST(t2.value) as mem
   OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime >= '2016-06-16T13:02:40.000Z' AND t1.datetime < '2016-06-16T13:10:00.000Z'
   AND t1.entity = 'nurswgvml006'
-GROUP BY t1.entity, t1.period(1 MINUTE)
+GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 ```
 
 >  Note that records returned by a `JOIN USING entity` condition include series with last insert date greater than start date specified in the query.
