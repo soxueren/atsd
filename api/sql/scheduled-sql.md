@@ -4,7 +4,7 @@
 
 SQL Scheduler allows for SQL query results to be distributed to email subscribers or stored on a local file system in CSV, Excel or JSON format.
 
-![Scheduler Example](sql-scheduler-example.png)
+![Scheduler Example](images/sql-scheduler-example.png)
 
 ## Query
 

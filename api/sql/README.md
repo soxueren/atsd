@@ -1331,9 +1331,51 @@ API SQL endpoint is located at `/api/sql` path.
 
 ## Monitoring
 
-Monitoring query execution is an important administrative tasks in order to identify and prevent expensive and long-running queries as well as to optimize database performance.
+Monitoring query execution is an important administrative tasks in order to optimize database performance, to identify and prevent expensive and long-running queries by providing feedback to end-users and application developers.
 
-### Log Events
+### Query Reporting
+
+The database keeps track of query executions including detailed statistics in an in-memory structure. The list of running and completed queries is available on **Admin:SQL Query Statistics** page.
+
+The list can be filtered by user, source, status, query part, and elapsed time. Additional information about the query is displayed on the query detail page. 
+
+Users with `ADMIN` role are authorized to view and cancel all queries whereas non-administrative users are restricted to viewing and cancelling only their own queries.
+
+![Query Reporting](images/sql-query-reporting.png)
+
+Query Detail Fields:
+
+| **Name** | **Description** |
+|:---|:---|
+| Status | New, Running, Completed, Error, Cancelled. |
+| Source | api, console, scheduled. |
+| User | Name of the user who initiated the query. In case of API clients and JDBC driver, username in login credentials. |
+| Query Id | Unique query identifier. |
+| Query Text | Query statement text. |
+| Start Time | Query start time. |
+| Elapsed Time | Time elapsed between query start time and current time (running queries) or completion time. |
+| Returned Records | Number of rows returned to the client. | 
+| Records Fetched | Number of time:value pairs. |
+| Rows Fetched | Number of HBase rows. |
+| Result Bytes| Number of bytes in Result objects from HBase region servers. |
+| Remote Result Bytes | Number of bytes in Result objects from remote region servers. |
+| Millis between next() | Total number of milliseconds spent between sequential scan.next() calls. |
+| RPC Calls | Number of RPC calls. |
+| RPC Remote Calls | Number of remote RPC calls. |
+| RPC Retries | Number of RPC retries. |
+| RPC Remote Retries | Number of remote RPC retries.  |
+| Regions Scanned | Number of regions scanned. |
+| Regions Not Serving | Number of NotServingRegionException caught. |
+
+![Query Details](images/sql-query-details.png)
+
+### Cancelling Queries
+
+A running query can be cancelled at any time if it is executing longer than expected, for example if the query doesn't include any conditions in the `WHERE` clause. 
+
+When a query is cancelled no results are returned to the client.
+
+### Query Logging
 
 Queries executed by the database are recorded in the main application log `atsd.log` at the INFO level. 
 
@@ -1343,12 +1385,13 @@ Each query is assigned a unique identifier for correlating starting and closing 
 2016-08-15 18:44:01,183;INFO;qtp1878912978-182;com.axibase.tsd.service.sql.SqlQueryServiceImpl;Starting sql query execution. [uid=218], user: user003, source: scheduled, sql: SELECT entity, avg(value) AS 'Average', median(value), max(value), count(*),
    percentile(50, value), percentile(75, value), percentile(90, value),  percentile(99, value) FROM mpstat.cpu_busy
   WHERE time BETWEEN previous_day and current_day GROUP BY entity ORDER BY avg(value) DESC
+ 
 2016-08-15 18:44:02,369;INFO;qtp1878912978-182;com.axibase.tsd.service.sql.SqlQueryServiceImpl;Sql query execution took 1.19 s, rows returned 7. [uid=218], user: user003, sql: SELECT entity, avg(value) AS 'Average', median(value), max(value), count(*),
    percentile(50, value), percentile(75, value), percentile(90, value),  percentile(99, value) FROM mpstat.cpu_busy
   WHERE time BETWEEN previous_day and current_day GROUP BY entity ORDER BY avg(value) DESC
 ```
 
-### Messages
+### Query Control Messages
 
 Execution events are also stored as messages with type=`sql` and source=`api|console|scheduled` for monitoring query performance using the built-in rule engine.
 
