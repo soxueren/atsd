@@ -1316,6 +1316,32 @@ Since `WHERE` clause includes only rows that evaluate to `true`, conditions such
 
 `NULL`s are ignored by aggregate functions.
 
+## Not a Number (NaN)
+
+Unlike relational databases where division by zero or square root of a negative number are likely to cause an unrecoverable error, the ATSD attempts to return special values in cases when computation result cannot be represented with real numbers. 
+
+The returned values follow [IEEE 754-2008](https://standards.ieee.org/findstds/standard/754-2008.html).
+
+* NaN for indeterminate results (0/0)
+* NaN for illegal values 
+* Signed Infinity for x/0 where x != 0
+
+> "NaN" stands for "Not a Number". 
+
+Since long (bigint) datatype do not specify `Infinity` value, the returned `Infinity` value when cast to long is set to Long.MAX_VALUE/Long.MIN_VALUE value.
+
+```sql
+SELECT value, SQRT(value-1), value/0, 1/0, -1/0, 1/0-1/0 
+  FROM mpstat.cpu_busy 
+LIMIT 1
+```
+
+```ls
+| value | SQRT(value-1) | value/0 | 1111111111/0          | 1/0 | -1/0 | 1/0-1/0 | 
+|-------|---------------|---------|-----------------------|-----|------|---------| 
+| 0.0   | NaN           | NaN     | 9223372036854775807.0 | ∞   | -∞   | NaN     |
+```
+
 ## API Endpoint
 
 API SQL endpoint is located at `/api/sql` path.
@@ -1445,6 +1471,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc#database-capabiliti
 
 * Self-joins are not supported.
 * Subqueries are not supported.
+* The database returns special values according to IEEE 754-2008 standard in case of computational error such as division by zero.
 * `UNION`, `EXCEPT` and `INTERSECT` operators are not supported. Refer to [atsd_series table](examples/select-atsd_series.md) queries for a `UNION ALL` alternative.
 * `WITH` operator is supported only in `WITH ROW_NUMBER` clause.
 * `DISTINCT` operator is not supported, although it can be emulated in particular cases with `GROUP BY` clause as illustrated below:
