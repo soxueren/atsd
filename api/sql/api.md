@@ -25,9 +25,26 @@ Scheduled queries are executed under full permissions.
 | q | string | [**Required**] Query text. |
 | outputFormat | string | Output format: `csv` or `json`. Default: `csv`. |
 | metadataFormat | string | Metadata format for CSV format. Default: `HEADER`. <br>Supported values: `NONE`, `HEADER`, `EMBED`, `COMMENTS`. |
-| limit | integer | Maximum number of rows to return. Default: 0 (not applied).<br>Applies if query text does not include `LIMIT` clause.  |
+| limit | integer | Maximum number of rows to return. Default: 0 (not applied).<br>The number of returned rows is equal to `limit` parameter or `LIMIT` clause, whichever is lower.  |
 
 As an alternative, the query can be submitted with Content-Type `text/plain` as text payload with the other parameters included in the query string.
+
+#### `limit` parameter vs `LIMIT` clause
+
+| `limit` | `LIMIT` | **Result** |
+|:---|:---|:---|
+| 5 | 3 | 3 |
+| 5 | 10 | 5 |
+| 5 | - | 5 |
+| 0 | 3 | 3 |
+| - | 3 | 3 |
+| - | - | - |
+
+```java
+    statement.setMaxRows(5);
+	statement.executeQuery("SELECT datetime, value FROM mpstat.cpu_busy LIMIT 3");
+	//results will be limited to 3 records
+```
 
 ### Metadata
 
