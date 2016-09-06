@@ -369,6 +369,22 @@ pickle.port = 8084
 https.port = 8443
 ```
 
+## Disable HBase Compactions
+
+By default ATSD triggers major HBase compaction of its key data tables on a daily schedule.
+
+Since major compactions may overload the cluster, it is recommended to trigger them less frequently or to schedule them externally, for example via Cloudera Manager:
+
+![](images/cm_major_compaction.png)
+
+To disable build-in compaction of data tables, remove them from `/opt/atsd/atsd/conf/server.properties` file as follows:
+
+```
+#this will compact only 'entity' table once a week on Saturday
+hbase.compaction.tables = entity
+hbase.compaction.schedule = 0 0 12 * * SAT
+```
+
 ## Start ATSD
 
 ```
