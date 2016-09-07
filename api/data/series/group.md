@@ -35,9 +35,14 @@ If the `period` is not specified, values are grouped at all unique timestamps in
 
 | **Name** | **Type**  | **Description**   |
 |:---|:---|:---|
-| type  | string        | Interpolation function. Default: `NONE` |
-| value | number         | Value used by `VALUE` function to fill the gaps with constant value.  |
-| extend  | boolean     | Add missing periods at the beginning and the end of the interval. Default: false.  |
+| type  | string | [**Required**] Interpolation [function](#interpolation-functions). |
+| value | number | [**Required by `VALUE` function**] Constant number used to set value for the missing periods. |
+| extend  | boolean | Add missing periods at the beginning and the end of the selection interval. Default: `false`. |
+
+Values added by `extend` setting are determined as follows:
+
+* If `VALUE {n}` interpolation function is specified, the `extend` option sets empty leading/trailing period values to equal `{n}`.
+* Without `VALUE {n}` function, the `extend` option adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.
 
 ### Interpolation Functions
 
