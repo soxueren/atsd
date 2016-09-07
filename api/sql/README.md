@@ -709,7 +709,7 @@ The behaviour can be changed by referencing an interpolation function as part of
 | `PREVIOUS` | Set value for the period based on the previous period's value. |
 | `NEXT` | Set value for the period based on the next period's value. |
 | `LINEAR` | Calculate period value using linear interpolation between previous and next period values. |
-| `VALUE {d}`| Set value for the period to number `d`. |
+| `VALUE {d}`| Set value for the period to constant number `d`. |
 
 ```sql
 SELECT entity, period(5 MINUTE), avg(value)
@@ -727,14 +727,13 @@ Leading and trailing period values are set with `VALUE {n}` function if it's spe
 period(5 MINUTE, VALUE 0, EXTEND)
 ```
 
-In absence of `VALUE {n}` function period values at the beginning of the interval are interpolated with `NEXT` function, whereas values at the end are interpolated with `PREVIOUS` function.
+Otherwise, in absence of `VALUE {n}` function, `EXTEND` option sets period values at the beginning of the interval with `NEXT` function, whereas values at the end are set with `PREVIOUS` function.
 
 ```sql
 SELECT entity, period(5 MINUTE), avg(value)
   FROM "mpstat.cpu_busy" WHERE datetime > current_hour 
 GROUP BY entity, period(5 MINUTE, LINEAR, EXTEND)
 ```
-
 
 ### `HAVING` Filter
 
