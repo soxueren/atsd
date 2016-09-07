@@ -1466,11 +1466,12 @@ SELECT * FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' ORDER BY datetime DE
 
 ## Unsupported SQL Features
 
-While the [differences](https://github.com/axibase/atsd-jdbc#database-capabilities) between SQL dialect implemented in ATSD and standard SQL are numerous, the following exceptions to widely used constructs are worth mentioning:
+While the [differences](https://github.com/axibase/atsd-jdbc#database-capabilities) between SQL dialect implemented in ATSD and SQL specification standards are numerous, the following exceptions to widely used constructs are worth mentioning:
 
-* Self-joins are not supported.
 * Subqueries are not supported.
-* The database returns special values according to IEEE 754-2008 standard in case of computational error such as division by zero.
+* Self-joins are not supported.
+* Wildcard symbol is `*`/`?` instead of `%`/`_`.
+* In case of computational errors such as division by zero, the database returns special values according to IEEE 754-2008 standard.
 * `UNION`, `EXCEPT` and `INTERSECT` operators are not supported. Refer to [atsd_series table](examples/select-atsd_series.md) queries for a `UNION ALL` alternative.
 * `WITH` operator is supported only in `WITH ROW_NUMBER` clause.
 * `DISTINCT` operator is not supported, although it can be emulated in particular cases with `GROUP BY` clause as illustrated below:
