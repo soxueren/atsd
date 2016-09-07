@@ -385,6 +385,22 @@ hbase.compaction.list = entity
 hbase.compaction.schedule = 0 0 12 * * SAT
 ```
 
+## Increase Memory
+
+Configure Java Heap memory to ATSD java process as described [here](../administration/allocating-memory.md).
+
+Increase the number of worker threads and maximum queue size by adding the following properties to `/opt/atsd/atsd/conf/server.properties`:
+
+```ls
+#series queue limit, specified as number of batches, default: 32
+#the total number of commands in queue will be equal to capacity*batch.size: 512*1024.
+series.queue.capacity = 512
+#maximum number of concurrent HBase storage worker threads, default: 4
+series.queue.pool.size = 8
+#number of series commands sent to HBase in each transaction, default: 1024
+series.batch.size = 1024
+```
+
 ## Start ATSD
 
 ```
