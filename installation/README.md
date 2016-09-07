@@ -1,9 +1,5 @@
 # Installation
 
-## License
-
-By installing Axibase Time Series Database you agree to its **[License Terms and Conditions](https://axibase.com/wp-content/uploads/2014/12/ATSD-Community-Edition-Software-License.pdf)**.
-
 ## Requirements
 
 * OS and hardware [requirements](/administration/requirements.md)
@@ -29,6 +25,10 @@ By installing Axibase Time Series Database you agree to its **[License Terms and
 | Cloudera Distribution Hadoop (CDH)  | [View](cloudera.md) |
 | Ambari  | [View](ambari.md) |
 | HBase Cluster | [View](hbase-cluster.md)|
+
+## License
+
+By installing Axibase Time Series Database you agree to the following **[Terms and Conditions](https://axibase.com/wp-content/uploads/2014/12/ATSD-Community-Edition-Software-License.pdf)**.
 
 ## Tutorials
 
