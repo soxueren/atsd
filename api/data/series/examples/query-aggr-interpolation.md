@@ -161,8 +161,8 @@ https://apps.axibase.com/chartlab/d8c03f11/3/
 
 `extend` setting adds missing periods at the beginning and the end of the interval.
 
-* If `VALUE {n}` interpolation function is specified, the `EXTEND` option sets empty leading/trailing period values to equal `{n}`.
-* Without `VALUE {n}` function, the `EXTEND` option adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.
+* If `VALUE {n}` interpolation function is specified, the `extend` option sets empty leading/trailing period values to equal `{n}`.
+* Without `VALUE {n}` function, the `extend` option adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.
 
 1-minute averages between 13:30 and 13:35 without EXTEND:
 
@@ -183,7 +183,10 @@ https://apps.axibase.com/chartlab/d8c03f11/3/
     "aggregate": {
       "type": "AVG",
       "period": {"count": 1, "unit": "MINUTE"},    
-      "interpolate": { "extend": true }
+      "interpolate": { 
+		"type": "NONE", 
+		"extend": true 
+	  }
     },
     "startDate": "2016-02-19T13:30:00.000Z",
     "endDate":   "2016-02-19T13:35:00.000Z"

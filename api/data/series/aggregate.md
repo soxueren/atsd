@@ -90,14 +90,20 @@ Example: `{ "max": 80 }` or `{ "min": 100, "max": 150 }`.
 
 By the default, if the period doesn't contain any detailed values, it will be excluded from the results.
 The behaviour can be changed by specifying an interpolation function.
+The interpolation function will add a missing period and calculate its value based on previous and next period values.
 
 #### Interpolation Fields
 
 | **Name** | **Type**  | **Description**   |
 |:---|:---|:---|
-| type  | string        | [**Required**] Interpolation function. Default: `NONE` |
-| value | number         | Value used by `VALUE` function to fill the gaps with constant value.  |
-| extend  | boolean     | Add missing periods at the beginning and the end of the interval. Default: false.  |
+| type  | string | [**Required**] Interpolation [function](#interpolation-functions). |
+| value | number | [**Required by `VALUE` function**] Constant number used to set value for the missing periods. |
+| extend  | boolean | Add missing periods at the beginning and the end of the selection interval. Default: `false`. |
+
+`extend` setting adds missing periods at the beginning and the end of the interval.
+
+* If `VALUE {n}` interpolation function is specified, the `extend` option sets empty leading/trailing period values to equal `{n}`.
+* Without `VALUE {n}` function, the `extend` option adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.
 
 #### Interpolation Functions
 
