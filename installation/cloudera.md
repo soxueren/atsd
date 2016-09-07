@@ -381,7 +381,7 @@ To disable build-in compaction of data tables, remove them from `/opt/atsd/atsd/
 
 ```
 #this will compact only 'entity' table once a week on Saturday
-hbase.compaction.tables = entity
+hbase.compaction.list = entity
 hbase.compaction.schedule = 0 0 12 * * SAT
 ```
 
