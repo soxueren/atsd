@@ -39,8 +39,8 @@ public class AtsdTcpClient {
         writeCommand("version");
         BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         String line = reader.readLine();
-		reader.close();
-		return line;
+        reader.close();
+        return line;
     }
 
     public void shutdown() {
@@ -67,6 +67,12 @@ public class AtsdTcpClient {
     }
 
     public void sendSeries(Date date, String entity, String metric, double value) throws IOException {
+        if (entity.contains(" ")) {
+            throw new IllegalArgumentException("Entity name can include only printable characters");
+        }
+        if (metric.contains(" ")) {
+            throw new IllegalArgumentException("Metric name can include only printable characters");
+        }
         String command = "series";
         command += " ms:" + date.getTime();
         command += " e:" + escape(entity);
@@ -75,12 +81,21 @@ public class AtsdTcpClient {
     }
 
     public void sendSeries(Date date, String entity, String metric, double value, Map<String, String> tags) throws IOException {
+        if (entity.contains(" ")) {
+            throw new IllegalArgumentException("Entity name can include only printable characters");
+        }
+        if (metric.contains(" ")) {
+            throw new IllegalArgumentException("Metric name can include only printable characters");
+        }
         String command = "series";
         command += " ms:" + date.getTime();
         command += " e:" + escape(entity);
         command += " m:" + escape(metric)+"=" + value;
         if (tags != null) {
             for (Map.Entry<String, String> entry : tags.entrySet()) {
+                if (entry.getKey().contains(" ")) {
+                    throw new IllegalArgumentException("Series tag name can include only printable characters");
+                }
                 command += " t:" + escape(entry.getKey()) +"=" + escape(entry.getValue());
             }
         }
@@ -88,14 +103,23 @@ public class AtsdTcpClient {
     }
 
     public void sendSeries(Date date, String entity, Map<String, Double> metrics, Map<String, String> tags) throws IOException {
+        if (entity.contains(" ")) {
+            throw new IllegalArgumentException("Entity name can include only printable characters");
+        }
         String command = "series";
         command += " ms:" + date.getTime();
         command += " e:" + escape(entity);
         for (Map.Entry<String, Double> entry : metrics.entrySet()) {
+            if (entry.getKey().contains(" ")) {
+                throw new IllegalArgumentException("Metric name can include only printable characters");
+            }
             command += " m:" + escape(entry.getKey()) +"=" + entry.getValue();
         }
         if (tags != null) {
             for (Map.Entry<String, String> entry : tags.entrySet()) {
+                if (entry.getKey().contains(" ")) {
+                    throw new IllegalArgumentException("Series tag name can include only printable characters");
+                }
                 command += " t:" + escape(entry.getKey()) +"=" + escape(entry.getValue());
             }
         }
@@ -103,11 +127,17 @@ public class AtsdTcpClient {
     }
 
     public void sendMessage(Date date, String entity, Map<String, String> tags, String message) throws IOException {
+        if (entity.contains(" ")) {
+            throw new IllegalArgumentException("Entity name can include only printable characters");
+        }
         String command = "message";
         command += " ms:" + date.getTime();
         command += " e:" + escape(entity);
         if (tags != null) {
             for (Map.Entry<String, String> entry : tags.entrySet()) {
+                if (entry.getKey().contains(" ")) {
+                    throw new IllegalArgumentException("Message tag name can include only printable characters");
+                }
                 command += " t:" + escape(entry.getKey()) +"=" + escape(entry.getValue());
             }
         }
@@ -116,17 +146,29 @@ public class AtsdTcpClient {
     }
 
     public void sendProperty(Date date, String entity, String type, Map<String, String> keys, Map<String, String> tags) throws IOException {
+        if (entity.contains(" ")) {
+            throw new IllegalArgumentException("Entity name can include only printable characters");
+        }
+        if (type.contains(" ")) {
+            throw new IllegalArgumentException("Property type can include only printable characters");
+        }
         String command = "property";
         command += " ms:" + date.getTime();
         command += " e:" + escape(entity);
         command += " t:" + escape(type);
         if (keys != null) {
             for (Map.Entry<String, String> entry : keys.entrySet()) {
+                if (entry.getKey().contains(" ")) {
+                    throw new IllegalArgumentException("Property key name can include only printable characters");
+                }
                 command += " k:" + escape(entry.getKey()) +"=" + escape(entry.getValue());
             }
         }
         if (tags != null) {
             for (Map.Entry<String, String> entry : tags.entrySet()) {
+                if (entry.getKey().contains(" ")) {
+                    throw new IllegalArgumentException("Property tag name can include only printable characters");
+                }
                 command += " v:" + escape(entry.getKey()) +"=" + escape(entry.getValue());
             }
         }
