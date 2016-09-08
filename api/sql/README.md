@@ -53,6 +53,7 @@ SELECT { * | { expr [ .* | [ AS ] alias ] } }
   [ WITH ROW_NUMBER expr ]
   [ GROUP BY expr [, ...] ]
   [ HAVING expr(boolean) ]
+  [ WITH LAST_TIME expr ]
 [ ORDER BY expr [{ ASC | DESC }] [, ...] ]
 [ LIMIT count [ OFFSET skip ]]
 ```
@@ -140,7 +141,7 @@ WHERE datetime > now - 15 * minute
 ### Functions
 
 * **ROW_NUMBER** returns row index within each partition.
-* **LAST_TIME** returns last insert time in millisecond for each series
+* **LAST_TIME** returns last insert time in millisecond for each series.
 
 ### Comments
 
@@ -862,6 +863,33 @@ WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30
 | nurswgvml502 | 2016-06-18T12:00:01.000Z | 13.7  | 
 ```
 
+### LAST_TIME Syntax
+
+The `last_time` function returns last time in milliseconds when data was received for a given series. It enables filtering records for each series based on date, specific for the given series.
+
+```sql
+WITH time comparision_operator last_time_expression
+WITH last_time_expression comparision_operator time
+```
+
+* `time` is the pre-defined time column which represents timestamp of the sample.
+* `comparision_operator` is one of `>`, `>=`, `<`, `<=`, `=`.
+* `last_time_expression` consists of `last_time` keyword and an optional `endtime` expression.
+
+```sql
+WITH time > last_time - 1 * MINUTE
+```
+
+Return avg() for the most recent hour for each series: 
+
+```sql
+SELECT entity, AVG(cpu_busy.value)
+  FROM cpu_busy
+WHERE datetime > previous_month
+  GROUP BY entity
+WITH time > last_time - 1 * HOUR
+```
+
 ## Ordering
 
 The default sort order is undefined. Row ordering can be performed by adding `ORDER BY` clause consisting of column name, column number (starting with 1), or an expression followed by direction (ASC or DESC).
@@ -1542,7 +1570,6 @@ WHERE datetime > now - 1 * MINUTE
 - [Group by Tags](examples/group-by-tags.md)
 - [Group with Having](examples/group-having.md)
 - [Grouped and Having](examples/grouped-having.md)
-- [Last Time](examples/last-time.md)
 
 ### Interpolation
 
@@ -1554,6 +1581,7 @@ WHERE datetime > now - 1 * MINUTE
 
 - [Partitioning using Row Number Function](examples/partition-row-number.md)
 - [Top-N Query using Row Number Function](examples/partition-row-number-top-N-tags.md)
+- [Last Time](examples/last-time.md)
 
 ### Joins
 
