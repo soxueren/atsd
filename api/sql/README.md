@@ -24,6 +24,7 @@ The data returned by SQL statements can be exported in the following formats:
   * [Arithmetic Operators](#arithmetic-operators)
   * [Match Expressions](#match-expressions)
   * [NULL](#null)
+  * [Not a Number](#not-a-number-nan)
   * [Processing Sequence](#processing-sequence)
   * [Keywords](#keywords)
 * [Period](#period)
@@ -33,32 +34,32 @@ The data returned by SQL statements can be exported in the following formats:
 * [Ordering](#ordering)
 * [Limiting](#limiting)
 * [Joins](#joins)
+* [Options](#options)
 * [Authorization](#authorization)
-* [Performance](#query-performance)
 * [API Endpoint](#api-endpoint)
 * [Monitoring](#monitoring)
+* [Performance](#query-performance)
 * [Optimizing](#optimizing)
 * [Unsupported Features](#unsupported-sql-features)
 * [Examples](#examples)
 
 ## Syntax
 
-The `SELECT` statement consists of a `SELECT` expression, a `FROM` query, a `WHERE` clause, and other optional clauses for grouping, filtering, and ordering the results.
+The `SELECT` statement consists of a `SELECT` expression, a `FROM` query, a `WHERE` clause, and other clauses for filtering, grouping, and ordering the results.
 
 ```sql
 SELECT { * | { expr [ .* | [ AS ] alias ] } }
   FROM metric [[ AS ] alias ]
     [ [OUTER] JOIN metric [[ AS ] alias ] [USING entity] ]
-  [ WHERE expr(boolean) ]
+[ WHERE expr(boolean) ]
   [ WITH ROW_NUMBER expr ]
-  [ GROUP BY expr [, ...] ]
+[ GROUP BY expr [, ...] ]
   [ HAVING expr(boolean) ]
   [ WITH LAST_TIME expr ]
 [ ORDER BY expr [{ ASC | DESC }] [, ...] ]
-[ LIMIT count [ OFFSET skip ]]
+  [ LIMIT count [ OFFSET skip ]]
+[ OPTION(expr) [...]]
 ```
-
-The statement may be terminated with a semicolon character.
 
 Example:
 
@@ -69,7 +70,7 @@ WHERE datetime > now - 1 * HOUR    -- WHERE clause
   LIMIT 1                          -- other clauses
 ```
 
-> The database supports only `SELECT` statements at this time.
+The statement may be terminated with a semicolon character.
 
 ### SELECT expression
 
@@ -1150,15 +1151,6 @@ GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 
 >  Note that records returned by a `JOIN USING entity` condition include series with last insert date greater than start date specified in the query.
 
-## Query Performance
-
-The most efficient query path is **metric+entity+date+tags**.
-
-Query execution speed can be improved by adopting the following guidelines for the `WHERE` clause:
-
-* Specify start time and end time whenever possible to limit the scan range.
-* Specify entity name whenever possible to avoid a scan of all rows in the virtual table.
-
 ## Keywords
 
 |             |             |             |             |
@@ -1355,7 +1347,7 @@ The returned values follow [IEEE 754-2008](https://standards.ieee.org/findstds/s
 
 > "NaN" stands for "Not a Number". 
 
-Since long (bigint) datatype do not specify `Infinity` value, the returned `Infinity` value when cast to long is set to Long.MAX_VALUE/Long.MIN_VALUE value.
+Since long/bigint datatype does not have a reserved `Infinity` value, the returned Double `Infinity` value, when cast to long, is set to `Long.MAX_VALUE`/`Long.MIN_VALUE` value.
 
 ```sql
 SELECT value, SQRT(value-1), value/0, 1/0, -1/0, 1/0-1/0 
@@ -1368,6 +1360,43 @@ LIMIT 1
 |-------|---------------|---------|-----------------------|-----|------|---------| 
 | 0.0   | NaN           | NaN     | 9223372036854775807.0 | ∞   | -∞   | NaN     |
 ```
+
+## Authorization
+
+The database filters returned records based on [entity read permissions](/administration/user-authorization.md#entity-permissions) of the user executing the query.
+
+This means that the same query executed by different users may produce different result sets.
+
+Scheduled SQL queries are executed with [All Entities: Read](/administration/user-authorization.md#all-entities-permissions) permission and are not filtered.
+
+## Options
+
+The `OPTION` clause provides hints to the database on how to best execute the given query.
+
+The query may contain multiple `OPTION` clauses specified at the end of the statement.
+
+### `ROW_MEMORY_THRESHOLD` Option
+
+`OPTION (ROW_MEMORY_THRESHOLD {n})` instructs the database to perform grouping and sorting of the results in memory as opposed to a temporary table if the number of grouped/ordered rows is within the specified threshold `{n}`.
+
+Example:
+
+```sql
+SELECT entity, datetime, avg(value), tags
+  FROM df.disk_used
+WHERE datetime > current_day
+  GROUP BY entity, tags, PERIOD(2 HOUR)
+ORDER BY entity, tags.file_system, datetime
+  OPTION (ROW_MEMORY_THRESHOLD 100000)
+```
+
+The threshold is applied to the number of rows selected from the data table, and not the number rows returned in the result set. 
+
+If `{n}` is equal 0 or negative, the results are processed using the temporary table.
+
+This clause overrides conditional allocation of shared memory established with `sql.tmp.storage.max_rows_in_memory` server setting which is set to `50*1024` rows by default. 
+
+The `sql.tmp.storage.max_rows_in_memory` limit is shared by all concurrently executing queries and may result in different response times for the same query during periods when multiple 
 
 ## API Endpoint
 
@@ -1458,6 +1487,15 @@ The following message tags are available for filtering and grouping:
 | query  | Query text. |
 
 > Messages for scheduled queries include additional tags `query_name`, `query_id`, `output_path`, `email_subject`, and `email_subscribers`.
+
+## Query Performance
+
+The most efficient query path is **metric+entity+date+tags**.
+
+Query execution speed can be improved by adopting the following guidelines for the `WHERE` clause:
+
+* Specify start time and end time whenever possible to limit the time range.
+* Specify entity name whenever possible to avoid a scan of all rows in the virtual table.
 
 ## Optimizing
 

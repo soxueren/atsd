@@ -12,7 +12,7 @@ The scheduler can execute a SELECT query as described in the [overview](README.m
 
 ## Authorization
 
-The SQL queries are executed with administrative permissions and no records are excluded from the resultset unlike adhoc queries which are filtered based on user's entity permissions.
+The SQL queries are executed with administrative permissions and no records are excluded from the resultset unlike adhoc queries which are filtered based on the user's [entity read permissions](/administration/user-authorization.md#entity-permissions).
 
 ## Schedule
 

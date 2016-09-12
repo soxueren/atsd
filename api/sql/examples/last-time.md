@@ -1,4 +1,4 @@
-# Grouped Last Time
+# Last Time
 
 The `last_time` function returns last time in milliseconds when data was received for a given series.
 
