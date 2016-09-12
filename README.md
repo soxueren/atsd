@@ -1,8 +1,8 @@
 # Axibase Time Series Database Documentation
 
 * [API](./api)
-	* [Network](./api/network#network-api)
-	  * [series](./api/network/series.md)
+	* [Network](api/network#network-api)
+	  * [series](/api/network/series.md)
 	  * [property](./api/network/property.md)
 	  * [message](./api/network/message.md)
 	  * [csv](./api/network/csv.md)
