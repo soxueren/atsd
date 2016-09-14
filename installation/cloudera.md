@@ -344,7 +344,6 @@ Open Cloudera Manager, select the target HBase cluster/service, open Configurati
 
 * com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint
 * com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint
-* com.axibase.tsd.hbase.coprocessor.MessagesStatsEndpoint
 
 ![](images/cloudera-manager-coprocessor-config.png)
 
