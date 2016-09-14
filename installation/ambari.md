@@ -141,7 +141,7 @@ Copy `/opt/atsd/hbase/lib/atsd.jar` to `/usr/hdp/{hdp_version}/hbase/lib/` direc
 Open Services tab in Ambari UI, select the target HBase cluster, open Configs tab, search for setting `hbase.coprocessor.region.classes` and enter the following names separated by comma. 
 
 ```
-com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint, com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint
+com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint, com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint, com.axibase.tsd.hbase.coprocessor.MessagesStatsEndpoint
 ```
 
 ![](images/ambari-manager-coprocessor-config.png)

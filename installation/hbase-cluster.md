@@ -151,7 +151,7 @@ Add the following `property` to `{HBASE_HOME}/conf/hbase-site.xml`.
 ```
 <property>
     <name>hbase.coprocessor.region.classes</name>
-    <value>com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint, com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint <!--, org.apache.hadoop.hbase.coprocessor.example.BulkDeleteEndpoint--></value>
+    <value>com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint, com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint, com.axibase.tsd.hbase.coprocessor.MessagesStatsEndpoint <!--, org.apache.hadoop.hbase.coprocessor.example.BulkDeleteEndpoint--></value>
 </property>
 ```
 
