@@ -545,7 +545,7 @@ extend = EXTEND
 align = START_TIME, END_TIME, FIRST_VALUE_TIME, CALENDAR
 ```
 
-Options are separated by comma and can be specified in any order.
+Period options are separated by comma and can be specified in any order.
 
 ```sql
 PERIOD(5 MINUTE)
@@ -1371,13 +1371,13 @@ Scheduled SQL queries are executed with [All Entities: Read](/administration/use
 
 ## Options
 
-The `OPTION` clause provides hints to the database on how to best execute the given query.
+The `OPTION` clause provides hints to the database optimizer on how to execute the given query most efficiently.
 
 The query may contain multiple `OPTION` clauses specified at the end of the statement.
 
 ### `ROW_MEMORY_THRESHOLD` Option
 
-`OPTION (ROW_MEMORY_THRESHOLD {n})` instructs the database to perform grouping and sorting of the results in memory as opposed to a temporary table if the number of grouped/ordered rows is within the specified threshold `{n}`.
+`OPTION (ROW_MEMORY_THRESHOLD {n})` instructs the database to perform joining, grouping, and sorting of results in memory as opposed to a temporary table if the number of grouped/ordered rows is within the specified threshold `{n}`.
 
 Example:
 
@@ -1387,16 +1387,20 @@ SELECT entity, datetime, avg(value), tags
 WHERE datetime > current_day
   GROUP BY entity, tags, PERIOD(2 HOUR)
 ORDER BY entity, tags.file_system, datetime
-  OPTION (ROW_MEMORY_THRESHOLD 100000)
+  OPTION (ROW_MEMORY_THRESHOLD 10000)
 ```
 
-The threshold is applied to the number of rows selected from the data table, and not the number rows returned in the result set. 
+If `{n}` is zero or negative, the results are processed using the temporary table.
 
-If `{n}` is equal 0 or negative, the results are processed using the temporary table.
+This clause overrides conditional allocation of shared memory established with `sql.tmp.storage.max_rows_in_memory` setting which is set to `50*1024` rows by default. 
 
-This clause overrides conditional allocation of shared memory established with `sql.tmp.storage.max_rows_in_memory` server setting which is set to `50*1024` rows by default. 
+The `sql.tmp.storage.max_rows_in_memory` limit is shared by concurrently executing queries. If a query selects more rows than remaining in shared memory, it will be processed using a temporary table which may result in increased response times during heavy read activity.
 
-The `sql.tmp.storage.max_rows_in_memory` limit is shared by all concurrently executing queries and may result in different response times for the same query during periods when multiple 
+> The row count threshold is applied to the number of rows selected from the underlying table, and not the number rows returned to the client. 
+
+**Example**. Temporary Table Grouping and In-Memory Ordering
+
+![Temp Table Grouping and In-Memory Ordering](images/in-memory-ordering.png)
 
 ## API Endpoint
 

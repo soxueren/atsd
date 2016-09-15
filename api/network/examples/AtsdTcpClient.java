@@ -96,7 +96,14 @@ public class AtsdTcpClient {
                 if (entry.getKey().contains(" ")) {
                     throw new IllegalArgumentException("Series tag name can include only printable characters");
                 }
-                command += " t:" + escape(entry.getKey()) +"=" + escape(entry.getValue());
+                if (entry.getValue() == null){
+                    throw new IllegalArgumentException("Series tag value cannot be null");
+                }
+                String val = escape(entry.getValue()).trim();
+                if (val.isEmpty()){
+                    throw new IllegalArgumentException("Series tag value cannot be empty");
+                }
+                command += " t:" + escape(entry.getKey()) +"=" + val;
             }
         }
         writeCommand(command);
@@ -120,7 +127,14 @@ public class AtsdTcpClient {
                 if (entry.getKey().contains(" ")) {
                     throw new IllegalArgumentException("Series tag name can include only printable characters");
                 }
-                command += " t:" + escape(entry.getKey()) +"=" + escape(entry.getValue());
+                if (entry.getValue() == null){
+                    throw new IllegalArgumentException("Series tag value cannot be null");
+                }
+                String val = escape(entry.getValue()).trim();
+                if (val.isEmpty()){
+                    throw new IllegalArgumentException("Series tag value cannot be empty");
+                }
+                command += " t:" + escape(entry.getKey()) +"=" + val;
             }
         }
         writeCommand(command);
@@ -138,7 +152,14 @@ public class AtsdTcpClient {
                 if (entry.getKey().contains(" ")) {
                     throw new IllegalArgumentException("Message tag name can include only printable characters");
                 }
-                command += " t:" + escape(entry.getKey()) +"=" + escape(entry.getValue());
+                if (entry.getValue() == null){
+                    throw new IllegalArgumentException("Message tag value cannot be null");
+                }
+                String val = escape(entry.getValue()).trim();
+                if (val.isEmpty()){
+                    throw new IllegalArgumentException("Message tag value cannot be empty");
+                }
+                command += " t:" + escape(entry.getKey()) +"=" + val;
             }
         }
         command += " m:" + escape(message);
@@ -161,7 +182,14 @@ public class AtsdTcpClient {
                 if (entry.getKey().contains(" ")) {
                     throw new IllegalArgumentException("Property key name can include only printable characters");
                 }
-                command += " k:" + escape(entry.getKey()) +"=" + escape(entry.getValue());
+                if (entry.getValue() == null){
+                    throw new IllegalArgumentException("Property key value cannot be null");
+                }
+                String val = escape(entry.getValue()).trim();
+                if (val.isEmpty()){
+                    throw new IllegalArgumentException("Property key value cannot be empty");
+                }
+                command += " k:" + escape(entry.getKey()) +"=" + val;
             }
         }
         if (tags != null) {
@@ -169,7 +197,14 @@ public class AtsdTcpClient {
                 if (entry.getKey().contains(" ")) {
                     throw new IllegalArgumentException("Property tag name can include only printable characters");
                 }
-                command += " v:" + escape(entry.getKey()) +"=" + escape(entry.getValue());
+                if (entry.getValue() == null){
+                    throw new IllegalArgumentException("Property tag value cannot be null");
+                }
+                String val = escape(entry.getValue()).trim();
+                if (val.isEmpty()){
+                    throw new IllegalArgumentException("Property tag value cannot be empty");
+                }
+                command += " v:" + escape(entry.getKey()) +"=" + val;
             }
         }
         writeCommand(command);
