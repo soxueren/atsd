@@ -28,3 +28,64 @@ Logs are rolled over and archived according to `/opt/atsd/atsd/conf/logging.prop
 Command processings logs should be enabled on **Admin:Input Settings** page:
 
 ![](server-logs-command-files.png)
+
+
+## Modifying command log
+
+1. Create configuration file command.log.xml:
+
+    ```
+    vim /opt/atsd/atsd/conf/command.log.xml
+    ```
+    
+    ```xml
+    <included>
+        <appender name="commandsLogRoller" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>../logs/command.log</file>
+    
+            <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+                <fileNamePattern>../logs/command.%i.log.zip</fileNamePattern>
+                <minIndex>1</minIndex>
+                <maxIndex>${command.logger.max.file.count}</maxIndex>
+            </rollingPolicy>
+    
+            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+                <maxFileSize>${command.logger.max.file.size}</maxFileSize>
+            </triggeringPolicy>
+    
+            <encoder>
+                <pattern>%date{ISO8601};%logger;%message%n</pattern>
+            </encoder>
+        </appender>
+    
+        <logger name="atsd" level="DEBUG" additivity="false"><appender-ref ref="commandsLogRoller"/></logger>
+        <logger name="atsd.internal.command" level="DEBUG" additivity="false"><appender-ref ref="commandsLogRoller"/></logger>
+    </included>
+    ```
+
+2. Add required settings to logging properties:
+
+    ```
+    vim /opt/atsd/atsd/conf/logging.properties
+    ```
+    
+    ```ls
+    command.logger.max.file.count=100
+    command.logger.max.file.size=100MB
+    ```
+
+3. Include created resource file `command.log.xml` into logback.xml:
+
+    ```
+    vim /opt/atsd/atsd/conf/logback.xml
+    ```
+    
+    ```xml
+    <?xml version="1.0" encoding="UTF-8"?>
+    <configuration scan="true">
+        <property resource="logging.properties"/>
+        <include resource="command.log.xml"/>
+        <appender name="logRoller" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        ...
+    </configuration>
+    ```
