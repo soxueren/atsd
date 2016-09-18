@@ -767,8 +767,8 @@ LIMIT 100
 ```
 
 ```ls
-| raw time | regular time | 
-|---|---| 
+| raw time             | regular time         | 
+|----------------------|----------------------| 
 | 2016-09-17T08:00:00Z | 2016-09-17T08:00:00Z |
 | ...........08:00:26Z | ...........08:00:30Z |
 | ...........08:01:14Z | ...........08:01:00Z |
@@ -808,12 +808,12 @@ The `WITH INTERPOLATE` clause applies to all tables referenced in the query and 
 
 ### Regularization Examples
 
-- [Default Mode](examples/regularize.md#none-(default))
+- [Default Mode](examples/regularize.md#default)
 - [Linear Mode](examples/regularize.md#linear)
 - [Prior Mode](examples/regularize.md#prior)
 - [Extend Mode](examples/regularize.md#extend)
-- [GROUP BY comparison](examples/regularize.md#group-by)
-- [JOIN regularized series](examples/regularize.md#join)
+- [GROUP BY comparison](examples/regularize.md#group-by-period-compared-to-with-interpolate)
+- [JOIN regularized series](examples/regularize.md#join-example)
 - [Value filter](examples/regularize.md#value-filter)
 
 ## Grouping
@@ -1684,6 +1684,16 @@ WHERE datetime > now - 1 * MINUTE
 - [Interpolate](examples/interpolate.md)
 - [Interpolate with Extend](examples/interpolate-extend.md)
 - [Interpolate Edges](examples/interpolate-edges.md)
+
+### Regularization
+
+- [Default Mode](examples/regularize.md#default)
+- [Linear Mode](examples/regularize.md#linear)
+- [Prior Mode](examples/regularize.md#prior)
+- [Extend Mode](examples/regularize.md#extend)
+- [GROUP BY comparison](examples/regularize.md#group-by-period-compared-to-with-interpolate)
+- [JOIN regularized series](examples/regularize.md#join-example)
+- [Value filter](examples/regularize.md#value-filter)
 
 ### Partitioning
 
