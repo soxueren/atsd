@@ -29,6 +29,7 @@ The data returned by SQL statements can be exported in the following formats:
   * [Keywords](#keywords)
 * [Period](#period)
 * [Interpolation](#interpolation)
+* [Regularization](#regularization)
 * [Grouping](#grouping)
 * [Partitioning](#partitioning)
 * [Ordering](#ordering)
@@ -538,12 +539,13 @@ Period syntax:
 
 ```sql
 PERIOD({count} {unit} [, option])
-
-option = interpolate | align | extend
-interpolate = PREVIOUS | NEXT | LINEAR | VALUE {number}
-extend = EXTEND
-align = START_TIME, END_TIME, FIRST_VALUE_TIME, CALENDAR
 ```
+
+`option` = interpolate | align | extend
+
+* `interpolate` = PREVIOUS | NEXT | LINEAR | VALUE {number}
+* `extend` = EXTEND
+* `align` = START_TIME, END_TIME, FIRST_VALUE_TIME, CALENDAR
 
 Period options are separated by comma and can be specified in any order.
 
@@ -750,6 +752,69 @@ Periods removed by the `HAVING` filter will be interpolated similar to missing p
 - [Interpolate with Extend](examples/interpolate-extend.md)
 - [Chartlab](https://apps.axibase.com/chartlab/d8c03f11/3/)
 
+## Regularization
+
+`WITH INTERPOLATE` clause provides a way to transform unevenly spaced time series into regular series.
+
+The underlying transformation applies linear interpolation to calculate values at regular intervals aligned to the calendar. 
+
+```sql
+SELECT datetime, value FROM mpstat.cpu_busy
+  WHERE entity = 'nurswgvml007'
+AND datetime >= '2016-09-17T08:00:00Z' AND datetime < '2016-09-17T08:02:00Z'
+  WITH INTERPOLATE(30 SECOND)
+LIMIT 100
+```
+
+```ls
+| raw time | regular time | 
+|---|---| 
+| 2016-09-17T08:00:00Z | 2016-09-17T08:00:00Z |
+| ...........08:00:26Z | ...........08:00:30Z |
+| ...........08:01:14Z | ...........08:01:00Z |
+| ...........08:01:30Z | ...........08:01:30Z |
+```
+
+Unlike `GROUP BY PERIOD` clause with `LINEAR` option, which interpolates missing periods, `WITH INTERPOLATE` clause operates on raw values.
+
+### Syntax
+
+```ls
+WITH INTERPOLATE(period [, mode])
+```
+
+* `period` defines a regular interval for aligning interpolated values, for example, `5 MINUTE`. Specified as `count unit`, similar to period.
+* `mode` determines how to calculate leading and trailing values if raw values at the start and end of the selection interval are not available.
+
+The `WITH INTERPOLATE` clause applies to all tables referenced in the query and is included in the statement prior to the `LIMIT` clause.
+
+### Regularization Modes
+
+| **Mode** | **Description**|
+|--:|:---|
+| `NONE` | [Default] * Interpolation starts at first available value and ends at last available value. <br>Intervals prior to first value and after last value are not returned. |
+| `PRIOR` | Prior value outside of the interval is retrieved and is used to set first values within the interval to the prior value until first raw value within the interval.|
+| `LINEAR` | Prior value outside of the interval is retrieved and is used to calculate an interpolated value between the outside value and the first raw value within the interval. <br>In addition, next outside value outside the interval is retrieved and is used to interpolate last value within the interval. |
+| `EXTEND` | Missing values at the beginning of the interval are set to first raw value within the interval. <br> Missing values at the end of the interval are set to last raw value within the interval.|
+
+* NaN raw values are ignored as inputs.
+* Raw values that are already aligned to calendar are shows `as is`, non-aligned values are skipped.
+* If the selection interval and possible prior scan locate only one value, the results will return only one period containing the raw value.
+* EXTEND and LINEAR options require that both start and end time are set in the WHERE clause.
+* If no prior value is found in LINEAR/PRIOR mode, interpolation starts at first available value.
+* If no next  value is found in LINEAR mode, interpolation stops at last available value.
+* `value` condition in the `WHERE` clause applies to interpolated series values instead of raw values. 
+
+### Regularization Examples
+
+- [Default Mode](examples/regularize.md#none-(default))
+- [Linear Mode](examples/regularize.md#linear)
+- [Prior Mode](examples/regularize.md#prior)
+- [Extend Mode](examples/regularize.md#extend)
+- [GROUP BY comparison](examples/regularize.md#group-by)
+- [JOIN regularized series](examples/regularize.md#join)
+- [Value filter](examples/regularize.md#value-filter)
+
 ## Grouping
 
 `GROUP BY` clause groups records into rows that have matching values for the specified grouping columns.
@@ -855,7 +920,7 @@ WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30
 
 ```ls
 | entity       | datetime                 | value | 
-|--------------|--------------------------|-------| 
+|--------------|--------------------------|------:| 
 | nurswgvml006 | 2016-06-18T12:00:05.000Z | 66.0  | 
 | nurswgvml007 | 2016-06-18T12:00:03.000Z | 18.2  | 
 | nurswgvml010 | 2016-06-18T12:00:14.000Z | 0.5   | 
@@ -904,7 +969,7 @@ ORDER BY avg(value) DESC, entity
 
 ```ls
 | entity       | avg(value) | 
-|--------------|------------| 
+|--------------|-----------:| 
 | nurswgvml006 | 19.2       | 
 | nurswgvml007 | 13.2       | 
 | nurswgvml011 | 5.1        | 
@@ -934,7 +999,7 @@ ORDER BY avg(value) DESC
 
 ```ls
 | entity       | avg(value) | 
-|--------------|------------| 
+|--------------|-----------:| 
 | nurswgvml006 | 19.3       | 
 | nurswgvml007 | 13.2       | 
 ```
@@ -1020,7 +1085,7 @@ In this particular case, since timestamps for each of these metrics are identica
 
 ```ls
 | datetime                 | entity       | t1.value | t2.value | t3.value | 
-|--------------------------|--------------|----------|----------|----------| 
+|--------------------------|--------------|---------:|---------:|---------:| 
 | 2016-06-16T13:00:01.000Z | nurswgvml006 | 13.3     | 21.0     | 2.9      | 
 | 2016-06-16T13:00:17.000Z | nurswgvml006 | 1.0      | 2.0      | 13.0     | 
 | 2016-06-16T13:00:33.000Z | nurswgvml006 | 0.0      | 1.0      | 0.0      | 
@@ -1042,7 +1107,7 @@ The result contains only 2 records out of 75 total. This is because for `JOIN` t
 
 ```ls
 | datetime                 | entity       | cpu  | mem     | 
-|--------------------------|--------------|------|---------| 
+|--------------------------|--------------|-----:|--------:| 
 | 2016-06-16T13:02:57.000Z | nurswgvml006 | 16.0 | 74588.0 | 
 | 2016-06-16T13:07:17.000Z | nurswgvml006 | 16.0 | 73232.0 | 
 ```
@@ -1061,10 +1126,10 @@ WHERE t1.datetime >= '2016-06-16T13:00:00.000Z' AND t1.datetime < '2016-06-16T13
 ```ls	
 | datetime                 | entity       | t1.value     | t2.value | t1.tags.file_system             | t1.tags.mount_point | 
 |--------------------------|--------------|--------------|----------|---------------------------------|---------------------| 
-| 2016-06-16T13:00:14.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452             | 
-| 2016-06-16T13:00:29.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452             | 
-| 2016-06-16T13:00:44.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452             | 
-| 2016-06-16T13:00:59.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup | /mnt/u113452             | 
+| 2016-06-16T13:00:14.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        | 
+| 2016-06-16T13:00:29.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        | 
+| 2016-06-16T13:00:44.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        | 
+| 2016-06-16T13:00:59.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        | 
 ```
 
 ### JOIN with USING entity
@@ -1109,7 +1174,7 @@ WHERE t1.datetime >= '2016-06-16T13:00:00.000Z' AND t1.datetime < '2016-06-16T13
 
 ```ls
 | datetime                 | entity       | cpu  | mem     | 
-|--------------------------|--------------|------|---------| 
+|--------------------------|--------------|-----:|--------:| 
 | 2016-06-16T13:00:01.000Z | nurswgvml006 | 37.1 | null    | 
 | 2016-06-16T13:00:12.000Z | nurswgvml006 | null | 67932.0 | 
 | 2016-06-16T13:00:17.000Z | nurswgvml006 | 16.0 | null    | 

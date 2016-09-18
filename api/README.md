@@ -28,6 +28,7 @@
 	* [Ordering](sql#ordering)
 	* [Limiting](sql#limiting)
 	* [Interpolation](sql#interpolation)
+	* [Regularization](sql#regularization)
 	* [Joins](sql#joins)
 	* [API Endpoint](sql/api.md#sql-query-api-endpoint)
 	* [Examples](sql#examples)

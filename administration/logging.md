@@ -46,7 +46,7 @@ On old instances of ATSD, any change in logging properties requires database res
 
 ## Modifying command.log
 
-The command log contains a record of all commands received by the database and is disabled by default. To turn it on, change settings on **Admin>Input Settings** page. No database restart is required in thsi case.
+The command log contains a record of all commands received by the database and is disabled by default. To turn it on, change settings on **Admin>Input Settings** page. No database restart is required in this case.
 
 The command log is configured to store up to 10 files of up to 10 megabytes each.  The settings can be adjusted to store more commands on instances with a high write throughput.
 

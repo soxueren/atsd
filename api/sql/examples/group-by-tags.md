@@ -1,6 +1,6 @@
 # GROUP BY tags
 
-## Query with GROOUP BY particular tag columns
+## Query with GROUP BY particular tag columns
 
 ```sql
 SELECT entity, datetime, tags.file_system, tags.mount_point, AVG(value) 
@@ -10,7 +10,7 @@ WHERE datetime > now-2*hour
   GROUP BY entity, tags.file_system, tags.mount_point, PERIOD(1 HOUR)
 ```
 
-## Query with GROOUP BY all tag columns
+## Query with GROUP BY all tag columns
 
 The query produces the same result as above assuming the list of series tags is the same, namely there are two series tags: `mount_point` and `file_system`.
 
