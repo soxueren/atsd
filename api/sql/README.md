@@ -803,6 +803,7 @@ The `WITH INTERPOLATE` clause applies to all tables referenced in the query and 
 * EXTEND and LINEAR options require that both start and end time are set in the WHERE clause.
 * If no prior value is found in LINEAR/PRIOR mode, interpolation starts at first available value.
 * If no next  value is found in LINEAR mode, interpolation stops at last available value.
+* In HBase 0.94.x `PRIOR` and `LINEAR` modes are configured to fetch raw values of up to 1 hour before and after outside of the hour-rounded selection interval.
 * `value` condition in the `WHERE` clause applies to interpolated series values instead of raw values. 
 
 ### Regularization Examples
