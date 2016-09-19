@@ -38,7 +38,7 @@ Regular `30 SECOND` series:
 
 * [Chartlab examples](https://apps.axibase.com/chartlab/3203bddb)
 
-![Regularization Modes](images/regularized_series.png)
+![Regularization Modes](../images/regularized_series.png)
 
 ### Raw Values
 
