@@ -58,8 +58,9 @@ SELECT { * | { expr [ .* | [ AS ] alias ] } }
   [ HAVING expr(boolean) ]
   [ WITH LAST_TIME expr ]
 [ ORDER BY expr [{ ASC | DESC }] [, ...] ]
-  [ LIMIT count [ OFFSET skip ]]
-[ OPTION(expr) [...]]
+  [ WITH INTERPOLATE expr ]
+[ LIMIT count [ OFFSET skip ]]
+  [ OPTION(expr) [...]]
 ```
 
 Example:
@@ -775,7 +776,7 @@ LIMIT 100
 | ...........08:01:30Z | ...........08:01:30Z |
 ```
 
-Unlike `GROUP BY PERIOD` clause with `LINEAR` option, which interpolates missing periods, `WITH INTERPOLATE` clause operates on raw values.
+Unlike `GROUP BY PERIOD` clause with `LINEAR` option, which interpolates missing periods, `WITH INTERPOLATE` clause operates on raw values. View comparison examples in [chartlab](https://apps.axibase.com/chartlab/3203bddb).
 
 ### Syntax
 
@@ -796,6 +797,8 @@ The `WITH INTERPOLATE` clause applies to all tables referenced in the query and 
 | `PRIOR` | Prior value outside of the interval is retrieved and is used to set first values within the interval to the prior value until first raw value within the interval.|
 | `LINEAR` | Prior value outside of the interval is retrieved and is used to calculate an interpolated value between the outside value and the first raw value within the interval. <br>In addition, next outside value outside the interval is retrieved and is used to interpolate last value within the interval. |
 | `EXTEND` | Missing values at the beginning of the interval are set to first raw value within the interval. <br> Missing values at the end of the interval are set to last raw value within the interval.|
+
+![Regularization Modes](images/regularized_series.png)
 
 * NaN raw values are ignored as inputs.
 * Raw values that are already aligned to calendar are shows `as is`, non-aligned values are skipped.

@@ -158,6 +158,12 @@ unknown_command e:station_1 m:temperature=32.2
 Connection closed by foreign host.
 ```
 
+The above behavior can be modified by changing `/opt/atsd/atsd/conf/server.properties` file and restarting the database.
+
+```ls
+input.disconnect.on.error = false
+```
+
 ### UDP Datagrams
 
 The UDP protocol doesn't guarantee delivery but may have a higher throughput compared to TCP due to lower overhead. 
