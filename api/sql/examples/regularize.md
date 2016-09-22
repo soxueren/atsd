@@ -322,7 +322,7 @@ WHERE t2.datetime >= '2016-09-18T14:00:00.000Z' AND t2.datetime < '2016-09-18T14
 JOINed multi-variate series:
 
 ```sql
-SELECT t1.datetime, t1.value, t2.value
+SELECT t1.entity AS 'entity', t1.datetime AS 'datetime', t1.value, t2.value
   FROM meminfo.memfree t1
   JOIN mpstat.cpu_busy t2
 WHERE t1.datetime >= '2016-09-18T14:00:00.000Z' AND t1.datetime < '2016-09-18T14:01:00.000Z'
@@ -330,12 +330,12 @@ WHERE t1.datetime >= '2016-09-18T14:00:00.000Z' AND t1.datetime < '2016-09-18T14
 ```
 
 ```ls
-| t1.datetime              | t1.value  | t2.value | 
-|--------------------------|-----------|----------| 
-| 2016-09-18T14:00:00.000Z | 2866265.3 | 20.2     | 
-| 2016-09-18T14:00:15.000Z | 3808685.9 | 53.9     | 
-| 2016-09-18T14:00:30.000Z | 2236282.9 | 62.2     | 
-| 2016-09-18T14:00:45.000Z | 1467670.9 | 56.2     | 
+| entity       | datetime                 | t1.value  | t2.value | 
+|--------------|--------------------------|-----------|----------| 
+| nurswgvml006 | 2016-09-18T14:00:00.000Z | 2866265.3 | 20.2     |
+| nurswgvml006 | 2016-09-18T14:00:15.000Z | 3808685.9 | 53.9     | 
+| nurswgvml007 | 2016-09-18T14:00:30.000Z | 2236282.9 | 62.2     | 
+| nurswgvml007 | 2016-09-18T14:00:45.000Z | 1467670.9 | 56.2     | 
 ```
 
 Without interpolation, a join of Series 1 and Series 2 would have produced an empty result because their sample times are different.
