@@ -51,6 +51,7 @@ curl https://atsd_host:8443/api/v1/metrics/cpu_busy \
   "name": "cpu_busy",
   "enabled": true,
   "dataType": "FLOAT",
+  "interpolate":"LINEAR",
   "counter": false,
   "persistent": true,
   "tags": {},

@@ -158,11 +158,26 @@ unknown_command e:station_1 m:temperature=32.2
 Connection closed by foreign host.
 ```
 
+If connection is terminated due to client error, all valid commands sent prior to the first invalid command will be stored. 
+
+Due to the fact that channel closing on client error may take some time, the database may also store a few valid command received after the discarded command.
+
+```
+valid command   - stored
+...             - stored
+valid command   - stored
+invalid command - discarded -> initiate channel closing
+valid command   - possibly stored if present in buffer
+...
+```
+
 The above behavior can be modified by changing `/opt/atsd/atsd/conf/server.properties` file and restarting the database.
 
 ```ls
 input.disconnect.on.error = false
 ```
+
+This will cause the database to maintain client connections even if one of the received commands was malformed or unknown.
 
 ### UDP Datagrams
 

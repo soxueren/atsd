@@ -793,7 +793,7 @@ The `WITH INTERPOLATE` clause applies to all tables referenced in the query and 
 
 | **Mode** | **Description**|
 |--:|:---|
-| `NONE` | [Default] * Interpolation starts at first available value and ends at last available value. <br>Intervals prior to first value and after last value are not returned. |
+| `NONE` | [Default] * Interpolation starts at first available value and ends at last available value. <br>Intervals prior to first value and after last value are not returned. <br>First period's value is set to the first raw value.|
 | `PRIOR` | Prior value outside of the interval is retrieved and is used to set first values within the interval to the prior value until first raw value within the interval.|
 | `LINEAR` | Prior value outside of the interval is retrieved and is used to calculate an interpolated value between the outside value and the first raw value within the interval. <br>In addition, next outside value outside the interval is retrieved and is used to interpolate last value within the interval. |
 | `EXTEND` | Missing values at the beginning of the interval are set to first raw value within the interval. <br> Missing values at the end of the interval are set to last raw value within the interval.|

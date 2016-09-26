@@ -31,7 +31,8 @@ Retrieve a list of metrics matching the specified filter conditions.
 |description |Metric description.|
 |tags|An object containing tags as names and values.<br>For example, `"tags": {"table": "axibase-collector"}`|
 |dataType|[Data Type](#data-types).|
-|timePrecision|SECONDS or MILLISECONDS|
+|interpolate|Interpolation mode: LINEAR or PREVIOUS. <br>Used in SQL `WITH INTERPOLATE` clause when interpolation mode is set to `AUTO`, for example, `WITH INTERPOLATE(1 MINUTE, AUTO)`. |
+|timePrecision|Time precision: SECONDS or MILLISECONDS.|
 |enabled|Enabled status. Incoming data is discarded for disabled metrics.|
 |persistent |Persistence status. Non-persistent metrics are not stored in the database and are only processed by the rule engine.|
 |filter |Persistence filter [expression](../expression.md). Discards series that do not match this filter.|
@@ -108,7 +109,8 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
     "retentionInterval": 0,
     "invalidAction": "NONE",
     "lastInsertDate": "2016-05-19T00:15:02.000Z",
-    "versioned": true
+    "versioned": true,
+	"interpolate":"LINEAR"
   },
   {
     "name": "temperature",
@@ -119,7 +121,8 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
     "retentionInterval": 0,
     "invalidAction": "NONE",
     "lastInsertDate": "2016-05-18T00:35:12.000Z",
-    "versioned": false
+    "versioned": false,
+	"interpolate":"LINEAR"
   }
 ]
 ```

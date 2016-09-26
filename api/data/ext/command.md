@@ -75,5 +75,15 @@ message e:server001 d:2015-03-04T12:43:20+00:00 t:subject="my subject" m:"Hello,
 
 ## Additional Examples
 
+### curl
+
+```bash
+curl https://atsd_host:8443/api/v1/command \
+  --insecure --verbose --user collector:******** \
+  --header "Content-Type: text/plain" \
+  --request POST \
+  --data-binary $'series e:DL1866 m:speed=650 m:altitude=12300\nproperty e:abc001 t:disk k:name=sda v:size=203459 v:fs_type=nfs'
+```
+
 
 
