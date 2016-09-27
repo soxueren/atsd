@@ -57,8 +57,8 @@ SELECT { * | { expr [ .* | [ AS ] alias ] } }
 [ GROUP BY expr [, ...] ]
   [ HAVING expr(boolean) ]
   [ WITH LAST_TIME expr ]
-[ ORDER BY expr [{ ASC | DESC }] [, ...] ]
   [ WITH INTERPOLATE expr ]
+[ ORDER BY expr [{ ASC | DESC }] [, ...] ]
 [ LIMIT count [ OFFSET skip ]]
   [ OPTION(expr) [...]]
 ```
@@ -763,7 +763,7 @@ The underlying transformation applies linear interpolation to calculate values a
 SELECT datetime, value FROM mpstat.cpu_busy
   WHERE entity = 'nurswgvml007'
 AND datetime >= '2016-09-17T08:00:00Z' AND datetime < '2016-09-17T08:02:00Z'
-  WITH INTERPOLATE(30 SECOND)
+  WITH INTERPOLATE(30 SECOND, AUTO)
 LIMIT 100
 ```
 
@@ -781,33 +781,58 @@ Unlike `GROUP BY PERIOD` clause with `LINEAR` option, which interpolates missing
 ### Syntax
 
 ```ls
-WITH INTERPOLATE(period [, mode])
+WITH INTERPOLATE (period [, interpolation_mode[, boundary_mode[, fill_mode [, alignment]]]])
 ```
 
-* `period` defines a regular interval for aligning interpolated values, for example, `5 MINUTE`. Specified as `count unit`, similar to period.
-* `mode` determines how to calculate leading and trailing values if raw values at the start and end of the selection interval are not available.
+```sql
+WITH INTERPOLATE (1 MINUTE, LINEAR, OUTER, NAN, START_TIME)
+```
 
-The `WITH INTERPOLATE` clause applies to all tables referenced in the query and is included in the statement prior to the `LIMIT` clause.
+| **Parameter** | **Description**|
+|---:|:---|
+| `period` | Defines a regular interval for aligning interpolated values, for example, `5 MINUTE`. Specified as `count unit`. |
+| `interpolation_mode` | Determines a linear interpolation or a step-like function to calculate values at regular timestamps from neighboring values. |
+| `boundary_mode` | Specifies, whether raw values outside of the selection interval should be retrieved in order to interpolate values at the leading and trailing timestamps.  |
+| `fill_mode` | Specifies how missing values at the leading and trailing timestamps should be filled. |
+| `alignment` | Aligns the first timestamp based on start of the selection interval or based on calendar. |
 
-### Regularization Modes
+The `WITH INTERPOLATE` clause applies to all tables referenced in the query and is included in the statement prior to the `ORDER BY` and `LIMIT` clauses.
 
-| **Mode** | **Description**|
+### Interpolation Mode
+
+| **Name** | **Description**|
 |--:|:---|
-| `NONE` | [Default] * Interpolation starts at first available value and ends at last available value. <br>Intervals prior to first value and after last value are not returned. <br>First period's value is set to the first raw value.|
-| `PRIOR` | Prior value outside of the interval is retrieved and is used to set first values within the interval to the prior value until first raw value within the interval.|
-| `LINEAR` | Prior value outside of the interval is retrieved and is used to calculate an interpolated value between the outside value and the first raw value within the interval. <br>In addition, next outside value outside the interval is retrieved and is used to interpolate last value within the interval. |
-| `EXTEND` | Missing values at the beginning of the interval are set to first raw value within the interval. <br> Missing values at the end of the interval are set to last raw value within the interval.|
+| `LINEAR` | Calculates the value at the desired timestamp by linear interpolating prior and next values. |
+| `PREVIOUS` | Sets the value at the desired timestamp based on peviously recorded raw value.<br>This step-like function is appropriate for metrics with discrete values (digital signal) or in cases where value is updated on change.|
+| `AUTO` | [Default] Applies an interpolation function (`LINEAR` or `PREVIOUS`) based on metric's Interpolation setting.<br>If multiple metrics are specified in the query, `AUTO` applies its own interpolation mode for each metric.  |
 
-![Regularization Modes](images/regularized_series.png)
+### Boundary Mode
 
-* NaN raw values are ignored as inputs.
-* Raw values that are already aligned to calendar are shows `as is`, non-aligned values are skipped.
-* If the selection interval and possible prior scan locate only one value, the results will return only one period containing the raw value.
-* EXTEND and LINEAR options require that both start and end time are set in the `WHERE` clause.
-* If no prior value is found in LINEAR/PRIOR mode, interpolation starts at first available value.
-* If no next  value is found in LINEAR mode, interpolation stops at last available value.
-* In HBase 0.94.x `PRIOR` and `LINEAR` modes are configured to fetch raw values of up to 1 hour before and after outside of the hour-rounded selection interval.
-* `value` condition in the `WHERE` clause applies to interpolated series values instead of raw values. 
+| **Name** | **Description**|
+|--:|:---|
+| `INNER` | [Default] Performs calculation based on raw values located within the specified selection interval. |
+| `OUTER` | Retrieves prior and next raw values outside of the selection interval in order to interpolate leading and trailing values. |
+
+### Fill Mode
+
+| **Name** | **Description**|
+|--:|:---|
+| `NONE` | [Default] Ignores rows (excludes them from results) for periods without interpolated values. |
+| `NAN` | Sets value to `NaN` (Not a Number) for periods without interpolated values. |
+| `EXTEND` | Missing values at the beginning of the interval are set to first raw value within the interval.<br>Missing values at the end of the interval are set to last raw value within the interval.<br>This option requires that both start and end time are specified in the query.|
+
+### Alignment
+
+| **Name** | **Description**|
+|--:|:---|
+| `START_TIME` | Starts regular timestamps at the start time of the selection interval .<br>This option requires that both start and end time are specified in the query. |
+| `CALENDAR` | [Default] Aligns regular timestamps according to server calendar. |
+
+![Interpolation Modes](images/interpolation_modes.png)
+
+* NaN (Not-A-Number) raw values are ignored from interpolation.
+* `value` condition in the `WHERE` clause applies to interpolated series values instead of raw values.
+* In HBase 0.94.x the `OUTER` boundary mode fetches raw values of up to 1 hour before and after the hour-rounded selection interval.
 
 ### Regularization Examples
 
