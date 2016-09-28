@@ -6,13 +6,15 @@ The underlying transformation calculates values at regular intervals using linea
 
 Unlike `GROUP BY PERIOD` clause with `LINEAR` option, which interpolates missing periods, `WITH INTERPOLATE` clause operates on raw values.
 
+Refer to an example in [Chartlab](https://apps.axibase.com/chartlab/471a2a40) that illustrates the difference between interpolating raw and aggregated values.
+
 The regularized series can be used in `JOIN` queries, `WHERE` condition, `ORDER BY` and `GROUP BY` clauses just like the original series.
 
 The regular times can be aligned to the server calendar or begin with the start of the selection interval.
 
 ## Calculation
 
-The interpolated values are calculated based on two neighboring values. 
+The interpolated values are calculated based on two adjacent values. 
 
 Irregular series:
 
@@ -25,7 +27,7 @@ Irregular series:
 | 2016-09-17T08:01:30Z | 2.30  |
 ```
 
-Regular `30 SECOND` series in `LINEAR` mode:
+Regular `30 SECOND` series calculated with `LINEAR` function:
 
 ```ls
 | time                 | value | 
@@ -36,7 +38,7 @@ Regular `30 SECOND` series in `LINEAR` mode:
 | 2016-09-17T08:01:30Z | 2.30  | returned "as is" because raw value is available at 08:01:30Z
 ```
 
-Regular `30 SECOND` series in `PREVIOUS` mode:
+Regular `30 SECOND` series calculated with `PREVIOUS` function:
 
 ```ls
 | time                 | value | 
@@ -78,7 +80,7 @@ SELECT datetime, value FROM metric1
 | 2016-09-17T23:04:00.000Z | -23.400 | 
 ```
 
-### Interpolation Mode: LINEAR
+### Interpolation Function: LINEAR
 
 Values at regular times are linearly interpolated between neighboring values.
 
@@ -107,7 +109,7 @@ AND datetime >= '2016-09-17T08:00:00Z' AND datetime < '2016-09-17T08:06:00Z'
 | 2016-09-17T08:04:30.000Z |  6.783 |
 ```
 
-Boundary mode `OUTER` retrieves values outside of the selection interval to be used for interpolating leading/trailing values.
+Boundary parameter `OUTER` retrieves values outside of the selection interval to be used for interpolating leading/trailing values.
 
 ```sql
 SELECT datetime, value FROM metric1
@@ -137,7 +139,7 @@ Next value outside the interval, found at 23:04:00, is used to interpolate last 
 | 2016-09-17T08:05:30.000Z |  6.577 | - interpolated between values at 08:04:48 and 23:04:00
 ```
 
-### Interpolation Mode: PREVIOUS
+### Interpolation Function: PREVIOUS
 
 Values at regular times are set to the previous value.
 
@@ -165,12 +167,12 @@ AND datetime >= '2016-09-17T08:00:00Z' AND datetime < '2016-09-17T08:06:00Z'
 | 2016-09-17T08:05:30.000Z |   6.600 | - set to previous value at 08:04:48
 ```
 
-### Interpolation Mode: AUTO
+### Interpolation Function: AUTO
 
-In AUTO mode, values are interpolated based on Interpolate setting for each metric separately.
+In `AUTO` mode, values are interpolated based on **Interpolate** setting for each metric separately.
 
-* metric1 Interpolate Mode: `LINEAR` (default)
-* metric2 Interpolate Mode: `PREVIOUS`
+* metric1 **Interpolate** setting: `LINEAR`
+* metric2 **Interpolate** setting: `PREVIOUS`
 
 ```sql
 SELECT metric, datetime, value FROM atsd_series 
@@ -192,7 +194,7 @@ WITH INTERPOLATE(30 SECOND, AUTO, OUTER)
 | metric2 | 2016-09-17T08:01:00.000Z | 4.400   | - interpolated with PREVIOUS
 ```
 
-### Fill Mode: NONE
+### Fill: NONE
 
 Missing periods that cannot be interpolated are ignored and not included in the resultset.
 
@@ -213,7 +215,7 @@ Value at 08:00:00 because prior value in `INNER` mode was no available for linea
 | 2016-09-17T08:01:00.000Z |  7.658 | 
 ```
 
-### Fill Mode: NAN
+### Fill: NAN
 
 Missing periods that cannot be interpolated are returned with `NaN` (Not a Number) value.
 
@@ -234,7 +236,7 @@ Value at 08:00:00 because prior value in `INNER` mode was no available for linea
 | 2016-09-17T08:01:00.000Z |  7.658 | 
 ```
 
-### Fill Mode: EXTEND
+### Fill: EXTEND
 
 Missing periods at the beginning of the selection interval that cannot be interpolated are set to first raw value.
 
@@ -407,7 +409,7 @@ WITH INTERPOLATE(30 SECOND, LINEAR, OUTER)
 
 `WITH INTERPOLATE` transformation regularizes all series returned by the query to the same timestamps so that their values can be joined.
 
-Series **t1**. This series is set to PREVIOUS interpolation mode.
+Series **t1**. This series is interpolated with `PREVIOUS` function.
 
 ```sql
 SELECT t1.entity, t1.datetime, t1.value
@@ -425,7 +427,7 @@ WHERE t1.datetime >= '2016-09-18T14:00:00.000Z' AND t1.datetime < '2016-09-18T14
 | nurswgvml006 | 2016-09-18T14:00:51.000Z | 68156.0  | 
 ```
 
-Series **t2**. This series is set to LINEAR interpolation mode.
+Series **t2**. This series is interpolated with `LINEAR` function.
 
 ```sql
 SELECT t2.entity, t2.datetime, t2.value

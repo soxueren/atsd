@@ -757,14 +757,14 @@ Periods removed by the `HAVING` filter will be interpolated similar to missing p
 
 `WITH INTERPOLATE` clause provides a way to transform unevenly spaced time series into regular series.
 
-The underlying transformation applies linear interpolation to calculate values at regular intervals aligned to the calendar. 
+The underlying transformation applies a linear interpolation or a step function to calculate values at regular intervals.
 
 ```sql
-SELECT datetime, value FROM mpstat.cpu_busy
-  WHERE entity = 'nurswgvml007'
-AND datetime >= '2016-09-17T08:00:00Z' AND datetime < '2016-09-17T08:02:00Z'
-  WITH INTERPOLATE(30 SECOND, AUTO)
-LIMIT 100
+SELECT datetime, value 
+  FROM mpstat.cpu_busy
+WHERE entity = 'nurswgvml007'
+  AND datetime >= '2016-09-17T08:00:00Z' AND datetime < '2016-09-17T08:02:00Z'
+WITH INTERPOLATE(30 SECOND)
 ```
 
 ```ls
@@ -776,37 +776,37 @@ LIMIT 100
 | ...........08:01:30Z | ...........08:01:30Z |
 ```
 
-Unlike `GROUP BY PERIOD` clause with `LINEAR` option, which interpolates missing periods, `WITH INTERPOLATE` clause operates on raw values. View comparison examples in [Chartlab](https://apps.axibase.com/chartlab/471a2a40).
-
 ### Syntax
 
 ```ls
-WITH INTERPOLATE (period [, interpolation_mode[, boundary_mode[, fill_mode [, alignment]]]])
+WITH INTERPOLATE (period [, function[, boundary[, fill [, alignment]]]])
 ```
 
-Example:
+`WITH INTERPOLATE` clause applies to all tables (metrics) referenced in the query and is included in the statement prior to the `ORDER BY` and `LIMIT` clauses.
+
+**Example**:
 
 ```sql
 WITH INTERPOLATE (1 MINUTE, LINEAR, OUTER, NAN, START_TIME)
 ```
 
-Parameters:
+**Parameters**:
 
 | **Name** | **Description**|
 |:---|:---|
 | `period` | Defines a regular interval for aligning interpolated values, for example, `5 MINUTE`. Specified as `count unit`. |
-| `interpolation_mode` | Determines a linear interpolation or a step-like function to calculate values at regular timestamps from neighboring values. |
-| `boundary_mode` | Specifies, whether raw values outside of the selection interval should be retrieved in order to interpolate values at the leading and trailing timestamps.  |
-| `fill_mode` | Specifies how missing values at the leading and trailing timestamps should be filled. |
-| `alignment` | Aligns the first timestamp based on start of the selection interval or based on calendar. |
+| `function` | Defines an interpolation function, linear or step, to calculate values at regular timestamps based on adjacent values. |
+| `boundary` | Specifies, whether raw values outside of the selection interval should be retrieved to interpolate leading and trailing values.  |
+| `fill` | Specifies how missing values at the beginning and the end of selection interval should be filled. |
+| `alignment` | Aligns regular timestamps based on calendar or starts them at the beginning of the selection interval. |
 
-`WITH INTERPOLATE` clause applies to all tables referenced in the query and is included in the statement prior to the `ORDER BY` and `LIMIT` clauses.
+**Implementation Notes**:
 
 * NaN (Not-A-Number) raw values are ignored from interpolation.
-* `value` condition in the `WHERE` clause applies to interpolated series values instead of raw values.
+* `value` condition in the `WHERE` clause applies to interpolated series values instead of raw values, i.e. filtering out raw values prior to interpolation is not supported.
 * In HBase 0.94.x the `OUTER` boundary mode fetches raw values of up to 1 hour before and after the hour-rounded selection interval.
 
-### Interpolation Mode
+### Interpolation Function
 
 | **Name** | **Description**|
 |:---|:---|
@@ -814,14 +814,14 @@ Parameters:
 | `PREVIOUS` | Sets the value at the desired timestamp based on peviously recorded raw value.<br>This step-like function is appropriate for metrics with discrete values (digital signal) or in cases where value is updated on change.|
 | `AUTO` | [**Default**] Applies an interpolation function (`LINEAR` or `PREVIOUS`) based on metric's Interpolation setting.<br>If multiple metrics are specified in the query, `AUTO` applies its own interpolation mode for each metric.  |
 
-### Boundary Mode
+### Boundary
 
 | **Name** | **Description**|
 |:---|:---|
 | `INNER` | [**Default**] Performs calculation based on raw values located within the specified selection interval. |
 | `OUTER` | Retrieves prior and next raw values outside of the selection interval in order to interpolate leading and trailing values. |
 
-### Fill Mode
+### Fill
 
 | **Name** | **Description**|
 |:---|:---|
@@ -841,10 +841,10 @@ Parameters:
 
 ### Regularization Examples
 
-- [LINEAR Mode](examples/regularize.md#interpolation-mode-linear)
-- [PREVIOUS Mode](examples/regularize.md#interpolation-mode-previous)
-- [AUTO Mode](examples/regularize.md#interpolation-mode-auto)
-- [Fill Modes](examples/regularize.md#fill-mode-nan)
+- [LINEAR Function](examples/regularize.md#interpolation-mode-linear)
+- [PREVIOUS (Step) Function](examples/regularize.md#interpolation-mode-previous)
+- [AUTO Function](examples/regularize.md#interpolation-mode-auto)
+- [Fill](examples/regularize.md#fill-mode-nan)
 - [Alignment](examples/regularize.md#alignment)
 - [GROUP BY comparison](examples/regularize.md#group-by-period-compared-to-with-interpolate)
 - [JOIN regularized series](examples/regularize.md#join-example)
