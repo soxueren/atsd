@@ -4,19 +4,19 @@
 
 The underlying transformation calculates values at regular intervals using linear or step interpolation. 
 
-Unlike `GROUP BY PERIOD` clause with `LINEAR` option, which interpolates missing periods, `WITH INTERPOLATE` clause operates on raw values.
-
-Refer to an example in [Chartlab](https://apps.axibase.com/chartlab/471a2a40) that illustrates the difference between interpolating raw and aggregated values.
+Unlike `GROUP BY PERIOD` clause with `LINEAR` option, which interpolates missing periods, `WITH INTERPOLATE` clause operates on raw values. Refer to an example in [Chartlab](https://apps.axibase.com/chartlab/471a2a40) that illustrates the difference between interpolating raw and aggregated values.
 
 The regularized series can be used in `JOIN` queries, `WHERE` condition, `ORDER BY` and `GROUP BY` clauses just like the original series.
 
-The regular times can be aligned to the server calendar or begin with the start of the selection interval.
+The regular times can be aligned based on server calendar or based on start time specified in the query.
 
 ## Calculation
 
-The interpolated values are calculated based on two adjacent values. 
+The interpolated values are calculated from two adjacent values. 
 
-Irregular series:
+If a raw value exists at the regularized timestamp, it is used "as is" irrespective of neighboring values.
+
+### Irregular series:
 
 ```ls
 | time                 | value | 
@@ -27,7 +27,7 @@ Irregular series:
 | 2016-09-17T08:01:30Z | 2.30  |
 ```
 
-Regular `30 SECOND` series calculated with `LINEAR` function:
+### Regular `30 SECOND` series calculated with `LINEAR` function
 
 ```ls
 | time                 | value | 
@@ -38,7 +38,7 @@ Regular `30 SECOND` series calculated with `LINEAR` function:
 | 2016-09-17T08:01:30Z | 2.30  | returned "as is" because raw value is available at 08:01:30Z
 ```
 
-Regular `30 SECOND` series calculated with `PREVIOUS` function:
+### Regular `30 SECOND` series calculated with `PREVIOUS` function
 
 ```ls
 | time                 | value | 
