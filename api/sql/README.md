@@ -800,6 +800,10 @@ WITH INTERPOLATE (1 MINUTE, LINEAR, OUTER, NAN, START_TIME)
 | `fill` | Method for filling missing values at the beginning and the end of the selection interval. |
 | `alignment` | Aligns regular timestamps based on calendar or based on start time. |
 
+[![](images/chartlab.png)](https://apps.axibase.com/chartlab/712f37cb)
+
+![INTERPOLATE Parameters](images/regularize_sinusoid.png)
+
 ### Interpolation Function
 
 | **Name** | **Description**|
@@ -834,8 +838,6 @@ WITH INTERPOLATE (1 MINUTE, LINEAR, OUTER, NAN, START_TIME)
 |:---|:---|
 | `CALENDAR` | [**Default**] Aligns regular timestamps according to server calendar. |
 | `START_TIME` | Starts regular timestamps at the start time of the selection interval .<br>This option requires that both start and end time are specified in the query. |
-
-![Interpolation Modes](images/interpolation_modes.png)
 
 ### Regularization Examples
 
