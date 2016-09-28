@@ -51,7 +51,7 @@ If a raw value exists at the regularized timestamp, it is used "as is" irrespect
 
 ## Examples
 
-[![](images/chartlab.png)](https://apps.axibase.com/chartlab/712f37cb)
+[![](../images/chartlab.png)](https://apps.axibase.com/chartlab/712f37cb)
 
 ![Interpolation Options](../images/regularize_sinusoid.png)
 
