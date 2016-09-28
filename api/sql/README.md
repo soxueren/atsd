@@ -779,7 +779,7 @@ WITH INTERPOLATE(30 SECOND)
 ### Syntax
 
 ```ls
-WITH INTERPOLATE (period [, function[, boundary[, fill [, alignment]]]])
+WITH INTERPOLATE (period [, inter_func[, boundary[, fill [, alignment]]]])
 ```
 
 `WITH INTERPOLATE` clause applies to all tables (metrics) referenced in the query and is included in the statement prior to the `ORDER BY` and `LIMIT` clauses.
@@ -794,11 +794,11 @@ WITH INTERPOLATE (1 MINUTE, LINEAR, OUTER, NAN, START_TIME)
 
 | **Name** | **Description**|
 |:---|:---|
-| `period` | Defines a regular interval for aligning interpolated values, for example, `5 MINUTE`. Specified as `count unit`. |
-| `function` | Defines an interpolation function, linear or step, to calculate values at regular timestamps based on adjacent values. |
-| `boundary` | Specifies, whether raw values outside of the selection interval should be retrieved to interpolate leading and trailing values.  |
-| `fill` | Specifies how missing values at the beginning and the end of selection interval should be filled. |
-| `alignment` | Aligns regular timestamps based on calendar or starts them at the beginning of the selection interval. |
+| `period` | Regular interval for aligning interpolated values, for example, `5 MINUTE`. Specified as `count unit`. |
+| `inter_func` | Interpolation function, linear or previous (step), to calculate values at regular timestamps based on adjacent values. |
+| `boundary` | Should raw values outside of the selection interval be retrieved to interpolate leading and trailing values.  |
+| `fill` | Method for filling missing values at the beginning and the end of the selection interval. |
+| `alignment` | Aligns regular timestamps based on calendar or based on start time. |
 
 **Implementation Notes**:
 
