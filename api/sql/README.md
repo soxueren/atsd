@@ -107,7 +107,7 @@ WHERE metric = 'mpstat.cpu_busy'
 
 The `WHERE` clause is a condition which rows must satisfy in order to match the query.
 
-Columns referenced in the `WHERE` clause are replaced by their value for the given row. The clause is then evaluated for each row, and if true, the row is included in the result set.  
+Columns referenced in the `WHERE` clause are replaced by their value for the given row. The clause is then evaluated for each row, and if true, the row is included in the result set.
 
 Typically the `WHERE` clause includes a [time condition](#time-condition) for which the data must be analyzed, although this is not required.
 
