@@ -249,7 +249,7 @@ AND datetime >= '2016-09-17T08:00:00Z' AND datetime < '2016-09-17T08:06:00Z'
   WITH INTERPOLATE(30 SECOND, LINEAR, INNER, EXTEND)
 ```
 
-The value at 08:00:00 is set to first raw value because the prior value in the `INNER` mode was not available for linear interpolation.
+The value at 08:00:00 is set to first raw value at 08:00:18 because the prior value at 02:00:05 was not available in the `INNER` mode.
 
 ```ls
 | datetime                 | value  |
@@ -309,7 +309,7 @@ The `GROUP BY PERIOD()` clause calculates for all values in each period by apply
 
 If the period doesn't have any values, the period is omitted from the results.
 
-An optional `LINEAR` directive for the `GROUP BY PERIOD()` clause changes the default behavior and returns results from missing periods by applying linear interpolation between values of the neighboring periods.
+An optional `LINEAR` directive for the `GROUP BY PERIOD()` clause changes the default behavior and returns results for missing periods by applying linear interpolation between values of the neighboring periods.
 
 * [Chartlab examples](https://apps.axibase.com/chartlab/471a2a40)
 
@@ -468,7 +468,9 @@ Without interpolation, a join of Series 1 and Series 2 would have produced an em
 
 ### `value` Filter
 
-value condition in which the `WHERE` clause is applied to interpolated values.
+The `WITH INTERPOLATE` clause modifies how values are compared in the `WHERE` clause.
+
+If the `WITH INTERPOLATE` clause is included in the query, the value condition compares interpolated values instead of raw values.
 
 ```sql
 SELECT datetime, value
@@ -476,6 +478,8 @@ SELECT datetime, value
 WHERE datetime >= '2016-09-18T14:03:30.000Z' AND datetime <= '2016-09-18T14:04:30.000Z'
   AND entity = 'nurswgvml006'
 ```
+
+Raw values:
 
 ```ls
 | datetime                 | value |
@@ -486,7 +490,7 @@ WHERE datetime >= '2016-09-18T14:03:30.000Z' AND datetime <= '2016-09-18T14:04:3
 | 2016-09-18T14:04:26.000Z | 100.0 |
 ```
 
-Without the `INTERPOLATE` transformation, raw values can be filtered out with the `value` condition as usual.
+Without the `WITH INTERPOLATE` clause, the `WHERE` clause filters raw values.
 
 ```sql
 SELECT datetime, value
@@ -504,7 +508,7 @@ WHERE datetime >= '2016-09-18T14:03:30.000Z' AND datetime <= '2016-09-18T14:04:3
 | 2016-09-18T14:04:10.000Z | 7.1   |
 ```
 
-Once the `INTERPOLATE` clause is added, the value filter is applied to the interpolated values instead of raw values.
+If the `WITH INTERPOLATE` clause is added, the value filter is applied to the interpolated values instead of raw values.
 
 The following queries produce the same result because `value < 100` is no longer applied to raw values. As such, the sample at 14:04:26 remains in the series for the purpose of interpolation.
 
