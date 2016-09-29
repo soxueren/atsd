@@ -1,6 +1,6 @@
 # SQL Query API Endpoint
 
-## Description 
+## Description
 
 Execute an SQL query and retrieve results in CSV or JSON format.
 
@@ -73,7 +73,7 @@ Sample metadata:
 			}
 		},
 		"dc:title": "SQL Query",
-		"rdfs:comment": "SELECT tbl.value*100 AS \"cpu_percent\", tbl.datetime 'sample-date'\r\n  
+		"rdfs:comment": "SELECT tbl.value*100 AS \"cpu_percent\", tbl.datetime 'sample-date'\r\n
 		                 FROM \"mpstat.cpu_busy\" tbl \r\nWHERE datetime > now - 1*MINUTE",
 		"@type": "Table",
 		"url": "sql.csv",
@@ -145,7 +145,7 @@ Execute query specified inline and store results in `/tmp/report-2.csv`.
 Bash client [parameters](client/README.md).
 
 ### Java Client Example
- 
+
 [SQL to CSV example in Java](client/SqlCsvExample.java).
 
 ## Response

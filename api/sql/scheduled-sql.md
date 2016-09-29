@@ -41,7 +41,7 @@ cron Expression Examples:
 `0/10 * * * * ?` | Every 10 seconds.
 `0 0/15 * * * ?` | Every 15 minutes.
 `0 * * * * ?` | Every minute.
-`0 0 0 * * ?` | Every day at 0:00.  
+`0 0 0 * * ?` | Every day at 0:00.
 `0 5,35 * * * ?` | Every hour at 5th and 35th minute.
 
 ## Formats
@@ -131,10 +131,10 @@ Instead, when enabled, metadata included in the output file as part of the heade
 #publisher,Axibase Time-Series Database,https://nur.axibase.com
 #created,2016-06-12T15:56:39.106Z
 #title,SQL Query
-#comment,"SELECT entity, avg(value) AS 'Average', median(value), max(value), count(*)  
-#FROM cpu_busy 
-#  WHERE time BETWEEN previous_day and current_day 
-#  GROUP BY entity 
+#comment,"SELECT entity, avg(value) AS 'Average', median(value), max(value), count(*)
+#FROM cpu_busy
+#  WHERE time BETWEEN previous_day and current_day
+#  GROUP BY entity
 #  ORDER BY avg(value) DESC"
 #name,entity,Average,median(value),max(value),count(*)
 #datatype,string,double,double,double,double
