@@ -1384,13 +1384,42 @@ WHERE datetime >= now - 1 * minute
 | 7.070 | 7.070      | 8.000       | 7.000        | 7.000        | 1.070        | 49.985         | 1176.148   | 1.956     | 0.849         | 2.659       |
 ```
 
+## String Functions
+
+| **Function** | **Syntax** | **Description** |
+|:---|:---|:---|
+| UPPER | `UPPER(str)` | Converts characters in the specified string to upper case. |
+| LOWER | `LOWER(str)` | Converts characters in the specified string to lower case. |
+| REPLACE | `REPLACE(str-1, str-2, str-3)` | Replaces all occurrences of `str-2` with `str-3` in the specified string `str-1`.|
+| LENGTH | `LENGTH(str)` | Number of characters in the specified string. |
+| LOCATE | `LOCATE(str-1, str-2[, start-index])` | Index at which `str-2` is found in `str-1`. Returns 0 if not found. |
+| SUBSTR | `SUBSTR(str, start-index[, length])` | Substring of `str` starting at `start-index` with maximum length of `length`.  |
+| CONCAT | `CONCAT(str-1, str-1)` | Concatenates `str-1` and `str-2`. |
+| ISNULL | `ISNULL(str-1, str-2)`  | Returns `str-2` if `str-1` is `NULL`. |
+
+```sql
+SELECT datetime, UPPER(REPLACE(entity, 'nurswg', '')) as 'entity', value,
+  SUBSTR(tags.file_system, 12) as fs, tags.mount_point as mp
+FROM df.disk_used
+  WHERE datetime > now - 1*minute
+AND LOWER(tags.file_system) LIKE '*root'
+  ORDER BY datetime
+```
+
+```ls
+| datetime                 | entity | value   | fs                       | mp |
+|--------------------------|--------|---------|--------------------------|----|
+| 2016-09-29T16:42:00.000Z | VML007 | 8055520 | /vg_nurswgvml007-lv_root | /  |
+| 2016-09-29T16:42:03.000Z | VML006 | 8312544 | /vg_nurswgvml006-lv_root | /  |
+```
+
 ## Case Sensitivity
 
-SQL keywords are case-**in**sensitive.
+SQL keywords are case-insensitive.
 
-Entity column values, metric column values, and tag names are also case-**in**sensitive.
+Entity column values, metric column values, and tag names are also case-insensitive.
 
-Tag _values_ are **case-sensitive**.
+Tag column values are **case-sensitive**.
 
 ```sql
 SELECT metric, entity, datetime, value, tags.*
@@ -1401,8 +1430,8 @@ WHERE datetime > now - 5 * minute
 ```
 
 ```ls
-| metric    | entity       | datetime                 | value     | tags.mount_point | tags.file_system                    |
-|-----------|--------------|--------------------------|-----------|------------------|-------------------------------------|
+| metric       | entity       | datetime                 | value     | tags.mount_point | tags.file_system                    |
+|--------------|--------------|--------------------------|-----------|------------------|-------------------------------------|
 | df.disk_used | nurswgvml007 | 2016-06-19T06:12:26.000Z | 8715136.0 | /                | /dev/mapper/vg_nurswgvml007-lv_root |
 ```
 
