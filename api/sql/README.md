@@ -21,6 +21,7 @@ The data returned by SQL statements can be exported in the following formats:
   * [Aggregation Functions](#aggregation-functions)
   * [Time Formatting Functions](#time-formatting-functions)
   * [Mathematical Functions](#mathematical-functions)
+  * [String Functions](#string-functions)
   * [Arithmetic Operators](#arithmetic-operators)
   * [Match Expressions](#match-expressions)
   * [NULL](#null)
@@ -843,12 +844,6 @@ WITH INTERPOLATE (1 MINUTE, LINEAR, OUTER, NAN, START_TIME)
 
 - [LINEAR Function](examples/regularize.md#interpolation-function-linear)
 - [PREVIOUS (Step) Function](examples/regularize.md#interpolation-function-previous)
-- [AUTO Function](examples/regularize.md#interpolation-function-auto)
-- [Fill](examples/regularize.md#fill-nan)
-- [Alignment](examples/regularize.md#alignment)
-- [GROUP BY comparison](examples/regularize.md#group-by-period-compared-to-with-interpolate)
-- [JOIN regularized series](examples/regularize.md#join-example)
-- [Value filter](examples/regularize.md#value-filter)
 
 ## Grouping
 
@@ -1390,12 +1385,12 @@ WHERE datetime >= now - 1 * minute
 |:---|:---|
 | `UPPER(s)` | Converts characters in the specified string to upper case. |
 | `LOWER(s)` | Converts characters in the specified string to lower case. |
-| `REPLACE(s-1, s-2, s-3)` | Replaces all occurrences of `s-2` with `s-3` in the specified string `s-1`.|
+| `REPLACE(s-1, s-2, s-3)` | Replaces all occurrences of `s-2` with `s-3` in the specified string `s-1`.<br>If `s-2` is not found, the function returns the original string `s-1`.|
 | `LENGTH(s)` | Number of characters in the specified string. |
-| `LOCATE(s-1, s-2 [, start])` | Position at which `s-1` is found in `s-2`, after optional `start` position. <br>The first character has a position of 1. The function returns 0 if string `s-1` is not found. |
-| `SUBSTR(str, start[, length])` | Substring of `str` starting at `start` position with maximum length of `length`. <br>The first character has a position of 1. <br>If `start` position is 0, the function treats similar to position of 1.|
-| `CONCAT(s-1, s-1)` | Concatenates `s-1` and `s-2`. |
+| `CONCAT (s-1, s-2 [, s-N] )` | Concatenates multiple strings into one string. <br>`NULL` values are concatenated as empty strings.|
 | `ISNULL(s-1, s-2)`  | Returns `s-2` if `s-1` is `NULL`. |
+| `LOCATE(s-1, s-2 [, start])` | Position at which `s-1` is found in `s-2`, after optional `start` position. <br>The first character has a position of 1. The function returns 0 if string `s-1` is not found. |
+| `SUBSTR(str, start[, length])` | Substring of `str` starting at `start` position with maximum length of `length`. <br>The first character has a position of 1. <br>`start` position of 0 is processed similarly to position 1.|
 
 ```sql
 SELECT datetime, UPPER(REPLACE(entity, 'nurswg', '')) as 'entity', value,
@@ -1750,13 +1745,14 @@ WHERE datetime > now - 1 * MINUTE
 
 ### Regularization
 
-- [Default Mode](examples/regularize.md#default)
-- [Linear Mode](examples/regularize.md#linear)
-- [Prior Mode](examples/regularize.md#prior)
-- [Extend Mode](examples/regularize.md#extend)
-- [GROUP BY comparison](examples/regularize.md#group-by-period-compared-to-with-interpolate)
+- [Linear Function](examples/regularize.md#interpolation-function-linear)
+- [Previous (Step) Function](examples/regularize.md#interpolation-function-previous)
+- [Auto Function](examples/regularize.md#interpolation-function-auto)
+- [Fill](examples/regularize.md#fill-nan)
+- [Alignment](examples/regularize.md#alignment)
+- [Comparison with GROUP BY](examples/regularize.md#group-by-period-compared-to-with-interpolate)
 - [JOIN regularized series](examples/regularize.md#join-example)
-- [Value filter](examples/regularize.md#value-filter)
+- [Interpolated Value Filter](examples/regularize.md#value-filter)
 
 ### Partitioning
 
