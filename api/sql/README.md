@@ -935,7 +935,9 @@ ROW_NUMBER({partitioning columns} ORDER BY {ordering columns [direction]})
 Examples:
 
 * `ROW_NUMBER(entity ORDER BY time)`
+
 * `ROW_NUMBER(entity, tags ORDER BY time DESC)`
+
 * `ROW_NUMBER(entity, tags ORDER BY time DESC, avg(value))`
 
  The returned number can be used to filter rows within each partition, for example to return only top-N records from each partition:
@@ -1248,15 +1250,18 @@ GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 
 ## Keywords
 
-|             |             |             |             |
+```
 |-------------|-------------|-------------|-------------|
 | AND         | AS          | ASC         | BETWEEN     |
 | BY          | DESC        | FROM        | GROUP       |
 | HAVING      | IN          | INNER       | INTERPOLATE |
-| JOIN        | LIKE        | LIMIT       | NOT         |
-| OR          | ORDER       | OUTER       | PERIOD      |
-| REGEX       | ROW_NUMBER  | SELECT      | USING       |
-| VALUE       | WHERE       | WITH        | OFFSET      |
+| JOIN        | LAST_TIME   | LIKE        | LIMIT       |
+| NOT         | OFFSET      | OPTION      | OR          |
+| ORDER       | OUTER       | PERIOD      | REGEX       |
+| ROW_NUMBER  | SELECT      | USING       | VALUE       |
+| WHERE       | WITH        |             |             |
+|-------------|-------------|-------------|-------------|
+ ```
 
 In addition, [endtime](/end-time-syntax.md#keywords) keywords such as `NOW`, `PREVIOUS_HOUR` and [interval units](/end-time-syntax.md#interval-units) such as `MINUTE`, `HOUR` are reserved.
 
@@ -1264,13 +1269,14 @@ In addition, [endtime](/end-time-syntax.md#keywords) keywords such as `NOW`, `PR
 
 The following functions aggregate values in a column by producing a single value from a list of values appearing in a column.
 
-|                |                |                |                |
+```
 |----------------|----------------|----------------|----------------|
 | SUM            | AVG            | MIN            | MAX            |
 | COUNT          | COUNTER        | DELTA          | FIRST          |
 | LAST           | MAX_VALUE_TIME | MIN_VALUE_TIME | PERCENTILE     |
 | STDDEV         | WAVG           | WTAVG          |                |
-
+|----------------|----------------|----------------|----------------|
+```
 
 The functions accept `value` as column name or a numeric expression as a parameter, for example  `avg(value)` or `avg(t1.value + t2.value)`.
 The PERCENTILE function accepts `percentile` parameter (0 to 100) and `value` column name, for example `percentile(75, value)`.
@@ -1501,7 +1507,14 @@ The query may contain multiple `OPTION` clauses specified at the end of the stat
 
 ### `ROW_MEMORY_THRESHOLD` Option
 
-`OPTION (ROW_MEMORY_THRESHOLD {n})` instructs the database to perform joining, grouping, and sorting of results in memory as opposed to a temporary table if the number of grouped/ordered rows is within the specified threshold `{n}`.
+The database may choose to process rows in a temporary table if the query includes one of the following clauses:
+
+* `JOIN`
+* `ORDER BY`
+* `GROUP BY`
+* `WITH ROW_NUMBER`
+
+The `OPTION (ROW_MEMORY_THRESHOLD {n})` instructs the database to perform processing in memory as opposed to a temporary table if the number of rows is within the specified threshold `{n}`.
 
 Example:
 
@@ -1518,7 +1531,7 @@ If `{n}` is zero or negative, the results are processed using the temporary tabl
 
 This clause overrides conditional allocation of shared memory established with `sql.tmp.storage.max_rows_in_memory` setting which is set to `50*1024` rows by default.
 
-The `sql.tmp.storage.max_rows_in_memory` limit is shared by concurrently executing queries. If a query selects more rows than remaining in shared memory, it will be processed using a temporary table which may result in increased response times during heavy read activity.
+The `sql.tmp.storage.max_rows_in_memory` limit is shared by concurrently executing queries. If a query selects more rows than remaining in the shared memory, it will be processed using a temporary table which may result in increased response times during heavy read activity.
 
 > The row count threshold is applied to the number of rows selected from the underlying table, and not the number rows returned to the client.
 
