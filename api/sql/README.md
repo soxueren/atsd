@@ -1356,18 +1356,18 @@ GROUP BY PERIOD(1 HOUR)
 
 ## Mathematical Functions
 
-| **Function** | **Syntax** | **Description** |
-|:---|:---|:---|
-| ABS | `ABS(num)` | Absolute value of the specified number. |
-| CEIL | `CEIL(num)` | Smallest integer that is greater than or equal to the specified number. |
-| FLOOR | `FLOOR(num)` | Largest integer that is less than or equal to the specified number. |
-| ROUND | `ROUND(num [,m])` | Number rounded to `m` decimal places. |
-| MOD | `MOD(num, m)` | Remainder of the first number divided by `m`.|
-| POWER | `POWER(num, m)`  | Number raised to power `m`. |
-| EXP | `EXP(num)` | `e` (2.71828183) raised to the power of the specified number. |
-| LN | `LN(num)` | Natural logarithm of the specified number. |
-| LOG | `LOG(num, m)`  | Base-`num` logarithm of the second number `m`. |
-| SQRT | `SQRT(num)` | Square root of the specified number. |
+| **Function** | **Description** |
+|:---|:---|
+| `ABS(num)` | Absolute value of the specified number. |
+| `CEIL(num)` | Smallest integer that is greater than or equal to the specified number. |
+| `FLOOR(num)` | Largest integer that is less than or equal to the specified number. |
+| `ROUND(num [,m])` | Number rounded to `m` decimal places. |
+| `MOD(num, m)` | Remainder of the first number divided by `m`.|
+| `POWER(num, m)`  | Number raised to power `m`. |
+| `EXP(num)` | `e` (2.71828183) raised to the power of the specified number. |
+| `LN(num)` | Natural logarithm of the specified number. |
+| `LOG(num, m)`  | Base-`num` logarithm of the second number `m`. |
+| `SQRT(num)` | Square root of the specified number. |
 
 ```sql
 SELECT value, ABS(value), CEIL(value), FLOOR(value), ROUND(value), MOD(value, 3),
@@ -1386,31 +1386,31 @@ WHERE datetime >= now - 1 * minute
 
 ## String Functions
 
-| **Function** | **Syntax** | **Description** |
-|:---|:---|:---|
-| UPPER | `UPPER(str)` | Converts characters in the specified string to upper case. |
-| LOWER | `LOWER(str)` | Converts characters in the specified string to lower case. |
-| REPLACE | `REPLACE(str-1, str-2, str-3)` | Replaces all occurrences of `str-2` with `str-3` in the specified string `str-1`.|
-| LENGTH | `LENGTH(str)` | Number of characters in the specified string. |
-| LOCATE | `LOCATE(str-1, str-2[, start-index])` | Index at which `str-2` is found in `str-1`. Returns 0 if not found. |
-| SUBSTR | `SUBSTR(str, start-index[, length])` | Substring of `str` starting at `start-index` with maximum length of `length`.  |
-| CONCAT | `CONCAT(str-1, str-1)` | Concatenates `str-1` and `str-2`. |
-| ISNULL | `ISNULL(str-1, str-2)`  | Returns `str-2` if `str-1` is `NULL`. |
+| **Function** | **Description** |
+|:---|:---|
+| `UPPER(s)` | Converts characters in the specified string to upper case. |
+| `LOWER(s)` | Converts characters in the specified string to lower case. |
+| `REPLACE(s-1, s-2, s-3)` | Replaces all occurrences of `s-2` with `s-3` in the specified string `s-1`.|
+| `LENGTH(s)` | Number of characters in the specified string. |
+| `LOCATE(s-1, s-2 [, start])` | Position at which `s-1` is found in `s-2`, after optional `start` position. <br>The first character has a position of 1. The function returns 0 if string `s-1` is not found. |
+| `SUBSTR(str, start[, length])` | Substring of `str` starting at `start` position with maximum length of `length`. <br>The first character has a position of 1. <br>If `start` position is 0, the function treats similar to position of 1.|
+| `CONCAT(s-1, s-1)` | Concatenates `s-1` and `s-2`. |
+| `ISNULL(s-1, s-2)`  | Returns `s-2` if `s-1` is `NULL`. |
 
 ```sql
 SELECT datetime, UPPER(REPLACE(entity, 'nurswg', '')) as 'entity', value,
-  SUBSTR(tags.file_system, 12) as fs, tags.mount_point as mp
-FROM df.disk_used
+  SUBSTR(tags.file_system, LOCATE('vg', tags.file_system)) as fs
+FROM disk_used
   WHERE datetime > now - 1*minute
 AND LOWER(tags.file_system) LIKE '*root'
   ORDER BY datetime
 ```
 
 ```ls
-| datetime                 | entity | value   | fs                       | mp |
-|--------------------------|--------|---------|--------------------------|----|
-| 2016-09-29T16:42:00.000Z | VML007 | 8055520 | /vg_nurswgvml007-lv_root | /  |
-| 2016-09-29T16:42:03.000Z | VML006 | 8312544 | /vg_nurswgvml006-lv_root | /  |
+| datetime                 | entity | value     | fs                      |
+|--------------------------|--------|-----------|-------------------------|
+| 2016-09-30T07:57:28.000Z | VML006 | 8298304.0 | vg_nurswgvml006-lv_root |
+| 2016-09-30T07:57:29.000Z | VML007 | 8052512.0 | vg_nurswgvml007-lv_root |
 ```
 
 ## Case Sensitivity
