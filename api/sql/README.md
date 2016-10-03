@@ -2,17 +2,7 @@
 
 Axibase Time Series Database supports SQL query language for retrieving time series data.
 
-The SQL statements can be executed interactively via the SQL console as well as on [schedule](scheduled-sql.md).
-
-Scheduled execution allows for generated report files to be distributed to email subscribers or stored on a local file system.
-
-The data returned by SQL statements can be exported in the following formats:
-
-|**Endpoint**|**Formats**|
-|:---|:---|
-|API  |CSV, JSON|
-|Web Interface  |CSV, JSON, HTML|
-|Scheduler|CSV, JSON, Excel|
+The SQL statements can be executed interactively via the SQL console as well as on [schedule](#scheduler).
 
 * [Syntax](#syntax)
   * [Columns](#columns)
@@ -39,10 +29,11 @@ The data returned by SQL statements can be exported in the following formats:
 * [Options](#options)
 * [Authorization](#authorization)
 * [API Endpoint](#api-endpoint)
+* [Scheduler](#scheduler)
 * [Monitoring](#monitoring)
 * [Performance](#query-performance)
 * [Optimizing](#optimizing)
-* [Unsupported Features](#unsupported-sql-features)
+* [SQL Compatibility](#sql-compatibility)
 * [Examples](#examples)
 
 ## Syntax
@@ -181,8 +172,8 @@ Since the underlying data is physically stored in the same shared partitioned ta
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-|`time`|long|Record time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY` query with `PERIOD`, time column returns period start time, same as `PERIOD()` column specified in `GROUP BY` clause.|
-|`datetime`|string|Record time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY` query with `PERIOD`, datetime column returns period start time in ISO format, same as `date_format(PERIOD())` column specified in `GROUP BY` clause.|
+|`time`|long|Record time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY` query with `PERIOD`, time column returns period start time, same as `PERIOD()` column specified in the `GROUP BY` clause.|
+|`datetime`|string|Record time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY` query with `PERIOD`, datetime column returns period start time in ISO format, same as `date_format(PERIOD())` column specified in the `GROUP BY` clause.|
 |`period`|long|Period start time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.|
 |`value`|number|Series value.|
 |`metric`|string|Metric name, same as virtual table name.|
@@ -201,7 +192,7 @@ Tag columns `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}` where 
 
 Quotes and double quotes in column names can be escaped by doubling the quote symbol, for example, if tag name is `hello"world`, the column name can be referred to as follows: `tags."hello""world"`.
 
-New columns can be created by applying functions and arithmetic expressions to existing columns. The computed columns can be included both in `SELECT` expression as well as in `WHERE`, `HAVING`, and `ORDER BY` clauses.
+New columns can be created by applying functions and arithmetic expressions to existing columns. The computed columns can be included both in the `SELECT` expression as well as in the `WHERE`, `HAVING`, and `ORDER BY` clauses.
 
 ```sql
 SELECT t1.datetime, t1.entity, t1.value + t2.value AS cpu_sysusr
@@ -210,7 +201,7 @@ SELECT t1.datetime, t1.entity, t1.value + t2.value AS cpu_sysusr
 WHERE t1.datetime > now - 1*MINUTE
 ```
 
-The list of available predefined columns may be requested with `SELECT *` syntax, except for queries with `GROUP BY` clause.
+The list of available predefined columns may be requested with `SELECT *` syntax, except for queries with the `GROUP BY` clause.
 
 ```sql
 SELECT * FROM "mpstat.cpu_busy" t1
@@ -574,7 +565,7 @@ WHERE datetime >= current_hour AND datetime < next_hour
   GROUP BY entity, PERIOD(5 minute, END_TIME)
 ```
 
-The period specified in `GROUP BY` clause can be entered without option fields in the `SELECT` expression.
+The period specified in the `GROUP BY` clause can be entered without option fields in the `SELECT` expression.
 
 ```sql
 SELECT entity, PERIOD(5 minute), AVG(value)
@@ -609,7 +600,7 @@ The default `CALENDAR` alignment can be changed to `START_TIME`, `END_TIME`, or 
 | FIRST_VALUE_TIME | First period begins at the time of first retrieved value. |
 | END_TIME | Last period ends on end time specified in the query. |
 
-* For `START_TIME` and `END_TIME` options, `WHERE` clause must contain start and end time of the selection interval, respectively.
+* For `START_TIME` and `END_TIME` options, the `WHERE` clause must contain start and end time of the selection interval, respectively.
 
 ```sql
 SELECT entity, datetime, COUNT(value)
@@ -706,9 +697,9 @@ GROUP BY entity, PERIOD(10 MINUTE, START_TIME)
 
 ## Interpolation
 
-By the default, if a period specified in `GROUP BY` clause doesn't contain any detailed values or the period has been filtered out with `HAVING` clause, it will be excluded from the results.
+By the default, if a period specified in the `GROUP BY` clause doesn't contain any detailed values or the period has been filtered out with the `HAVING` clause, it will be excluded from the results.
 
-The behaviour can be changed by referencing an interpolation function as part of the `PERIOD` clause.
+The behaviour can be changed by referencing an interpolation function as part of the `PERIOD` function.
 
 | **Name** | **Description** |
 |:---|:---|
@@ -725,9 +716,9 @@ GROUP BY entity, period(5 MINUTE, LINEAR)
 
 ### `EXTEND` Option
 
-Include an optional `EXTEND` parameter to the `PERIOD` clause to append missing periods at the beginning and the end of the selection interval.
+Include an optional `EXTEND` parameter to the `PERIOD` function to append missing periods at the beginning and the end of the selection interval.
 
-Leading and trailing period values are set with `VALUE {n}` function if it's specified.
+Leading and trailing period values are set with the `VALUE {n}` function if it's specified.
 
 ```sql
 period(5 MINUTE, VALUE 0, EXTEND)
@@ -847,7 +838,7 @@ WITH INTERPOLATE (1 MINUTE, LINEAR, OUTER, NAN, START_TIME)
 
 ## Grouping
 
-`GROUP BY` clause groups records into rows that have matching values for the specified grouping columns.
+The `GROUP BY` clause groups records into rows that have matching values for the specified grouping columns.
 
 ```sql
 SELECT entity, avg(value) AS Cpu_Avg
@@ -930,7 +921,7 @@ ROW_NUMBER({partitioning columns} ORDER BY {ordering columns [direction]})
 ```
 
 * {partitioning columns} can be `entity`, `tags`, or `entity, tags`
-* {ordering columns [direction]} can be any in the `FROM` clause with optional ASC|DESC direction.
+* {ordering columns [direction]} can be any in the `FROM` clause with optional `ASC/DESC` direction.
 
 Examples:
 
@@ -990,7 +981,7 @@ WITH time > last_time - 1 * HOUR
 
 ## Ordering
 
-The default sort order is undefined. Row ordering can be performed by adding `ORDER BY` clause consisting of column name, column number (starting with 1), or an expression followed by direction (ASC or DESC).
+The default sort order is undefined. Row ordering can be performed by adding the `ORDER BY` clause consisting of column name, column number (starting with 1), or an expression followed by direction (ASC or DESC).
 
 ```sql
 SELECT entity, avg(value) FROM "mpstat.cpu_busy"
@@ -1056,7 +1047,7 @@ Strings are ordered [lexicographically](examples/order-by-string-collation.md), 
 
 ### Limiting
 
-To reduce the number of rows returned by the database for a given query, add `LIMIT` clause at the end of the query.
+To reduce the number of rows returned by the database for a given query, add the `LIMIT` clause at the end of the query.
 
 The `LIMIT` clause provides two syntax alternatives:
 
@@ -1079,13 +1070,13 @@ GROUP BY entity
 LIMIT 1
 ```
 
-The above query would scan all samples for 'm-1' metric in the database even though it would return only 1 record as instructed by `LIMIT 1` clause.
+The above query would scan all samples for 'm-1' metric in the database even though it would return only 1 record as instructed by the `LIMIT 1` clause.
 
 ## Joins
 
 Data for multiple virtual tables can be merged with `JOIN` and `OUTER JOIN` clauses.
 
-The syntax follows the SQL-92 notation using the JOIN clause as opposed to enumerating columns in WHERE clause according to ANSI-89.
+The syntax follows the SQL-92 notation using the `JOIN` clause as opposed to enumerating columns in the `WHERE` clause according to ANSI-89.
 
 Since joined tables always contain the same predefined columns, join condition doesn't have to be specified explicitly, similar to NATURAL JOIN in standard SQL:
 
@@ -1100,7 +1091,7 @@ Because join queries combine rows from multiple virtual tables with the same col
 
 ### JOIN
 
-`JOIN` clause allows merging records for multiple metrics into one resultset, even if data collected for the underlying series is not synchronized on time.
+The `JOIN` clause allows merging records for multiple metrics into one resultset, even if data collected for the underlying series is not synchronized on time.
 
 The default `JOIN` condition is time, entity and series tags. The condition can be modified with `USING entity` clause in which case series tags are ignored, and records are joined on time and entity instead.
 
@@ -1461,7 +1452,7 @@ Assuming tags.status is `NULL`:
 | `false` | `tags.status IS NOT NULL` |
 | `NULL` | `tags.status IS NULL AND tags.status = NULL` |
 
-Since `WHERE` clause includes only rows that evaluate to `true`, conditions such as `tags.status = 'a' OR tags.status != 'a'` will not include rows with undefined tags.status column.
+Since the `WHERE` clause includes only rows that evaluate to `true`, conditions such as `tags.status = 'a' OR tags.status != 'a'` will not include rows with undefined tags.status column.
 
 `NULL`s are ignored by aggregate functions.
 
@@ -1551,6 +1542,20 @@ API SQL endpoint is located at `/api/sql` path.
 
 * [JSON format](sql.json)
 * [CSV format](sql.csv)
+
+## Scheduler
+
+The SQL statements can be executed interactively via the SQL console as well as on [schedule](scheduled-sql.md).
+
+Scheduled execution allows for generated report files to be distributed to email subscribers or stored on a local file system.
+
+The data returned by SQL statements can be exported in the following formats:
+
+|**Endpoint**|**Formats**|
+|:---|:---|
+|API  |CSV, JSON|
+|Web Console  |CSV, JSON, HTML|
+|Scheduler|CSV, JSON, Excel|
 
 ## Monitoring
 
@@ -1646,10 +1651,10 @@ Consider the following recommendations when developing queries:
 
 - Pre-test queries on a smaller dataset in ATSD-development instance.
 - Avoid `SELECT * FROM metric` queries without any conditions.
-- Add `WHERE` clause. Include as many conditions to the `WHERE` clause as possible, in particular add entity and time conditions.
+- Add the `WHERE` clause. Include as many conditions to the `WHERE` clause as possible, in particular add entity and time conditions.
 - Make `WHERE` conditions narrow and specific, for example, specify a smaller time interval.
-- Avoid `ORDER BY` clause since it may cause a full scan and a copy of data to a temporary table.
-- Add `LIMIT 1` clause to reduce the number of rows returned. Note that `LIMIT` will not prevent expensive queries with `ORDER BY` and `GROUP BY` clauses because `LIMIT` is applied to final results and not to the number of rows read from the database.
+- Avoid the `ORDER BY` clause since it may cause a full scan and a copy of data to a temporary table.
+- Add the `LIMIT 1` clause to reduce the number of rows returned. Note that `LIMIT` will not prevent expensive queries with `ORDER BY` and `GROUP BY` clauses because `LIMIT` is applied to final results and not to the number of rows read from the database.
 - Develop a simple query first. Adjust conditions gradually as you inspect the results. Add grouping, partitioning, and ordering to finalize the query.
 
 To assist in inspecting query results, the following `LIMIT 1` queries have been locally optimized to provide improved performance:
@@ -1671,30 +1676,18 @@ SELECT * FROM mpstat.cpu_busy WHERE datetime > current_day ORDER BY time DESC LI
 SELECT * FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' ORDER BY datetime DESC LIMIT 1
 ```
 
-## Unsupported SQL Features
 
-While the [differences](https://github.com/axibase/atsd-jdbc#database-capabilities) between SQL dialect implemented in ATSD and SQL specification standards are numerous, the following exceptions to widely used constructs are worth mentioning:
+## SQL Compatibility
 
+While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabilities.md#database-capabilities) between SQL dialect implemented in ATSD and SQL specification standards are numerous, the following exceptions to widely used constructs are worth mentioning:
+
+* Wildcard symbol is `*`/`?` instead of `%`/`_`.
 * Subqueries are not supported.
 * Self-joins are not supported.
-* Wildcard symbol is `*`/`?` instead of `%`/`_`.
 * In case of computational errors such as division by zero, the database returns special values according to IEEE 754-2008 standard.
 * `UNION`, `EXCEPT` and `INTERSECT` operators are not supported. Refer to [atsd_series table](examples/select-atsd_series.md) queries for a `UNION ALL` alternative.
-* `WITH` operator is supported only in `WITH ROW_NUMBER` clause.
-* `DISTINCT` operator is not supported, although it can be emulated in particular cases with `GROUP BY` clause as illustrated below:
-
-```sql
-SELECT entity
-  FROM "mpstat.cpu_busy"
-WHERE datetime > now - 1 * MINUTE
-  GROUP BY entity
-```
-
-```sql
-SELECT DISTINCT entity
-  FROM "mpstat.cpu_busy"
-WHERE datetime > now - 1 * MINUTE
-```
+* `WITH` operator is supported only in the following clauses: `WITH ROW_NUMBER`, `WITH ITERPOLATE`.
+* `DISTINCT` operator is not supported, although it can be emulated in particular cases with the `GROUP BY` clause.
 
 ## Examples
 
@@ -1707,6 +1700,7 @@ WHERE datetime > now - 1 * MINUTE
 - [Metric Tag Columns](examples/select-metric-tag-columns.md)
 - [Computed Columns](examples/select-computed-columns.md)
 - [Mathematical Functions](examples/select-math.md)
+- [String Functions](examples/string-functions.md)
 - [Column Alias](examples/alias-column.md)
 - [Table Alias](examples/alias-table.md)
 - [Escape Quotes](examples/select-escape-quote.md)
