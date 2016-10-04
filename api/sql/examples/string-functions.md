@@ -1,6 +1,6 @@
 # String Functions
 
-String functions are supported in the `SELECT` expression, the `WHERE`, `GROUP BY`, `HAVING`, and `ORDER BY` clauses.
+String functions are supported in the `SELECT` expression, the `WHERE`, `GROUP BY`, and `ORDER BY` clauses.
 
 ## Concatenation and String Length
 
@@ -48,7 +48,7 @@ WHERE datetime > current_hour
 
 ```sql
 SELECT entity, datetime, value, tags.*, concat(entity.tags.app, '@', entity.tags.environment) AS appl
-  FROM disk_used
+  FROM df.disk_used
 WHERE datetime > previous_minute
 AND REPLACE(entity.tags.environment, 'production', 'prod') = 'prod'
   WITH ROW_NUMBER(entity ORDER BY time DESC) <= 1
@@ -63,4 +63,73 @@ AND REPLACE(entity.tags.environment, 'production', 'prod') = 'prod'
 | nurswgvml007 | 2016-10-03T13:41:32.000Z | 8220616 | /dev/mapper/vg_nurswgvml007-lv_root | /                | ATSD@prod                  | 
 | nurswgvml010 | 2016-10-03T13:41:32.000Z | 7185520 | /dev/sda1                           | /                | SVN, Jenkins, Redmine@prod | 
 ```
+
+## Group BY `NULL`
+
+```sql
+SELECT datetime, avg(value), ISNULL(entity.tags.environment, 'other') as environment
+  FROM mpstat.cpu_busy
+WHERE datetime >= previous_hour
+  GROUP BY PERIOD(1 hour), ISNULL(entity.tags.environment, 'other')
+  ORDER BY datetime
+```
+
+### Results
+
+```ls
+| datetime                 | avg(value) | environment | 
+|--------------------------|------------|-------------| 
+| 2016-10-04T05:00:00.000Z | 1.9        | other       | 
+| 2016-10-04T05:00:00.000Z | 9.5        | prod        | 
+| 2016-10-04T06:00:00.000Z | 1.9        | other       | 
+| 2016-10-04T06:00:00.000Z | 9.9        | prod        | 
+```
+
+## Format String
+
+```sql
+SELECT entity, datetime, value, tags.*, concat(entity.tags.app, '@', entity.tags.environment) AS appl
+  FROM df.disk_used
+WHERE datetime > previous_minute
+AND REPLACE(entity.tags.environment, 'production', 'prod') = 'prod'
+  WITH ROW_NUMBER(entity ORDER BY time DESC) <= 1
+```
+
+### Results
+
+```ls
+| entity       | datetime                 | value   | tags.file_system                    | tags.mount_point | appl                       | 
+|--------------|--------------------------|---------|-------------------------------------|------------------|----------------------------| 
+| nurswgvml006 | 2016-10-03T13:41:26.000Z | 8346084 | /dev/mapper/vg_nurswgvml006-lv_root | /                | Hadoop/HBASE@prod          | 
+| nurswgvml007 | 2016-10-03T13:41:32.000Z | 8220616 | /dev/mapper/vg_nurswgvml007-lv_root | /                | ATSD@prod                  | 
+| nurswgvml010 | 2016-10-03T13:41:32.000Z | 7185520 | /dev/sda1                           | /                | SVN, Jenkins, Redmine@prod | 
+```
+
+## Substring
+
+```sql
+SELECT entity, datetime, value, tags.file_system, LOCATE('/', tags.file_system, 2), SUBSTR(tags.file_system, LOCATE('/', tags.file_system, 2))
+  FROM disk_used
+WHERE datetime > current_minute
+  AND LOCATE('//', tags.file_system) != 1
+ORDER BY datetime
+```
+
+### Results
+
+```ls
+| entity       | datetime                 | value      | tags.file_system                    | LOCATE('/',tags.file_system,2) | SUBSTR(tags.file_system,LOCATE('/',tags.file_system,2)) | 
+|--------------|--------------------------|------------|-------------------------------------|--------------------------------|---------------------------------------------------------| 
+| nurswgvml301 | 2016-10-04T06:31:03.000Z | 1372532.0  | /dev/sda1                           | 5.0                            | /sda1                                                   | 
+| nurswgvml006 | 2016-10-04T06:31:06.000Z | 8359512.0  | /dev/mapper/vg_nurswgvml006-lv_root | 5.0                            | /mapper/vg_nurswgvml006-lv_root                         | 
+| nurswgvml006 | 2016-10-04T06:31:06.000Z | 53789924.0 | /dev/sdc1                           | 5.0                            | /sdc1                                                   | 
+| nurswgvml007 | 2016-10-04T06:31:07.000Z | 8514348.0  | /dev/mapper/vg_nurswgvml007-lv_root | 5.0                            | /mapper/vg_nurswgvml007-lv_root                         | 
+| nurswgvml010 | 2016-10-04T06:31:07.000Z | 7193364.0  | /dev/sda1                           | 5.0                            | /sda1                                                   | 
+| nurswgvml010 | 2016-10-04T06:31:07.000Z | 29844132.0 | /dev/sdb1                           | 5.0                            | /sdb1                                                   | 
+```
+
+
+
+
+
 
