@@ -20,7 +20,7 @@ entity e:{entity} z:{timezone} t:{tag-1}={text} t:{tag-2}={text}
 | **Field** | **Type** | **Description** |
 |:---|:---|:---|
 | e         | string           | **[Required]** Entity name. |
-| z         | string           | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in entity-specific timezone.|
+| z         | string           | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in entity-specific timezone.<br>To reset the time zone to the default value, specify it as a double-quoted empty string `z:""`. |
 | t         | string           | Entity tag name and text value. Multiple. |
 
 ### ABNF Syntax
@@ -30,7 +30,7 @@ Rules inherited from [Base ABNF](base-abnf.md).
 ```properties
 command = "entity" MSP entity [MSP timezone] 1*(MSP tag)
 entity = "e:" NAME
-timezone = "z:" TIMEZONE
+timezone = "z:" (TIMEZONE / DQUOTE DQUOTE)
 tag = "t:" NAME "=" VALUE
 ```
 

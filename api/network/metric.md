@@ -26,7 +26,7 @@ metric m:{metric} p:{data-type} l:{label} i:{interpolate} d:{description} f:{fil
 | i         | string           | Interpolation mode: linear, previous. |
 | f         | string           | Filter expression. |
 | v         | boolean          | Versioning enabled/disabled. |
-| z         | string           | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in metric-specific timezone.|
+| z         | string           | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in metric-specific timezone.<br>To reset the time zone to the default value, specify it as a double-quoted empty string `z:""`.|
 | t         | string           | [Multiple] Metric tag name and value.  |
 
 ### ABNF Syntax
@@ -41,7 +41,7 @@ interpolate = "i:" ("linear" / "previous")
 label = "l:" VALUE
 description = "d:" VALUE
 filter = "f:" VALUE
-timezone = "z:" TIMEZONE
+timezone = "z:" (TIMEZONE / DQUOTE DQUOTE)
 versioning = "v:" ("true" / "false")
 tag = "t:" NAME "=" VALUE
 ```
