@@ -250,7 +250,7 @@ WHERE datetime >= "2016-07-03T21:02:00Z" AND datetime < "2016-07-03T21:02:15Z"
 
 Tag values are referenced in the `SELECT` expression by specifying `tags.*`, `tags`, or `tags.{tag-name}` as the column name.
 
-**`tags` is a map object whose properties can be accessed with key. When specified in the `SELECT` expression, `tags.*` creates multiple columns for each key in the map.**
+`tags` is a collection whose elements can be accessed by name. When specified in the `SELECT` expression, `tags.*` creates a column for each element in the collection.
 
 If the property is not present, the `tags.{tag-name}` expression returns `NULL`.
 
