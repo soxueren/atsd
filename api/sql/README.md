@@ -172,8 +172,8 @@ Since the underlying data is physically stored in the same shared partitioned ta
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-|`time`|long|Records time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY` query with `PERIOD`, time column returns period start time, same as the `PERIOD()` column specified in the `GROUP BY` clause.|
-|`datetime`|string|Records time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY` query with `PERIOD`, datetime column returns period start time in ISO format, same as `date_format(PERIOD())` column specified in the `GROUP BY` clause.|
+|`time`|long|Observation time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY` query with `PERIOD`, time column returns period start time, same as the `PERIOD()` column specified in the `GROUP BY` clause.|
+|`datetime`|string|Observation time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY` query with `PERIOD`, datetime column returns period start time in ISO format, same as `date_format(PERIOD())` column specified in the `GROUP BY` clause.|
 |`period`|long|Period start time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.|
 |`value`|number|Series value.|
 |`metric`|string|Metric name, same as virtual table name.|
@@ -188,7 +188,7 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`metric.tags.*`|string|Expands to multiple columns, each column containing a separate metric tag.|
 |`entity.groups`|string|List of entity groups, to which the entity belongs, separated by semi-colon `;`.|
 
-For tag columns such as `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}`, where the `{name}` contains reserved characters such as `-`,`*`,`,`, the `{name}` should be enclosed in quotes or double quotes, for example, `entity.tags."file-system"`.
+For tag columns such as `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}`, where the `{name}` contains reserved characters such as `-`,`*`,`,`, the `{name}` part should be enclosed in quotes or double quotes, for example, `entity.tags."file-system"`.
 
 Quotes and double quotes in column names can be escaped by doubling the quote symbol. For example, if the tag name is `hello"world`, the column name can be referred to as follows: `tags."hello""world"`.
 
@@ -493,7 +493,7 @@ WHERE tags.file_system LIKE '/dev/*'
 
 ### REGEX Expression
 
-The REGEX expression matches column value against a regex pattern and returns true if the text is matched.
+The `REGEX` expression matches column value against a regex pattern and returns true if the text is matched.
 
 ```sql
 SELECT datetime, entity, value, tags.mount_point, tags.file_system
@@ -718,7 +718,7 @@ GROUP BY entity, period(5 MINUTE, LINEAR)
 
 Include an optional `EXTEND` parameter to the `PERIOD` function to append missing periods at the beginning and the end of the selection interval.
 
-Leading and trailing period values are set with the `VALUE {n}` function if the function is specified.
+Leading and trailing period values are set with the `VALUE {n}` function if such function is specified.
 
 ```sql
 period(5 MINUTE, VALUE 0, EXTEND)
