@@ -37,7 +37,7 @@ message e:{entity} t:type={type} t:source={source} t:severity={severity} t:tag={
 
 ### ABNF Syntax
 
-Rules inherited from [base ABNF](base-abnf.md).
+Rules inherited from [Base ABNF](base-abnf.md).
 
 ```properties
   ; message or at least one tag is required

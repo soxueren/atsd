@@ -29,7 +29,7 @@ series e:{entity} m:{metric-1}={number} m:{metric-2}={number} t:{tag-1}={text} t
 
 ### ABNF Syntax
 
-Rules inherited from [base ABNF](base-abnf.md).
+Rules inherited from [Base ABNF](base-abnf.md).
 
 ```properties
   ; entity and at least one metric is required

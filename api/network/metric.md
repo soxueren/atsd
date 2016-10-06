@@ -11,9 +11,9 @@ metric m:{metric} p:{data-type} l:{label} i:{interpolate} d:{description} f:{fil
 ```
 
 * Metric name and tag names are case-insensitive and are converted to lower case when stored. 
+* Timezone ID value is case-insensitive.
 * Other field values are case-sensitive and are stored as submitted.
 * Tag values cannot be empty.
-* At least one the following fields is required in addition to metric name: `p:`, `l:`, `d:`, `f:`, `v:`, or `t:`.
 
 ### Fields
 
@@ -26,20 +26,22 @@ metric m:{metric} p:{data-type} l:{label} i:{interpolate} d:{description} f:{fil
 | i         | string           | Interpolation mode: linear, previous. |
 | f         | string           | Filter expression. |
 | v         | boolean          | Versioning enabled/disabled. |
+| z         | string           | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in metric-specific timezone.|
 | t         | string           | [Multiple] Metric tag name and value.  |
 
 ### ABNF Syntax
 
-Rules inherited from [base ABNF](base-abnf.md).
+Rules inherited from [Base ABNF](base-abnf.md).
 
 ```properties
-command = "metric" MSP metric [MSP label] [MSP description] [MSP data-type] [MSP interpolate] [MSP filter] [MSP versioning] *(MSP tag)
+command = "metric" MSP metric [MSP label] [MSP description] [MSP data-type] [MSP interpolate] [MSP filter] [MSP timezone] [MSP versioning] *(MSP tag)
 metric = "m:" NAME
 data-type = "p:" ("short" / "integer" / "long" / "float" / "double" / "decimal")
 interpolate = "i:" ("linear" / "previous")
 label = "l:" VALUE
 description = "d:" VALUE
 filter = "f:" VALUE
+timezone = "z:" TIMEZONE
 versioning = "v:" ("true" / "false")
 tag = "t:" NAME "=" VALUE
 ```
@@ -51,5 +53,5 @@ metric m:temperature p:long v:false t:unit=Celsius
 ```
 
 ```ls
-metric m:temperature p:long v:false l:"Temperature in Celsius" t:unit=Celsius
+metric m:temperature p:long v:false l:"Temperature in Celsius" z:PST t:unit=Celsius
 ```

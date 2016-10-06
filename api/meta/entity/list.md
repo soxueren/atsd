@@ -28,6 +28,7 @@ Retrieve a list of entities matching the specified filter conditions.
 |:---|:---|:---|
 | name | string| Entity name. |
 | enabled | boolean | Enabled status. Incoming data is discarded for disabled entities. |
+| timeZone |Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](../../network/timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in entity-specific timezone.|
 | lastInsertDate | string |Last time, in ISO format, when a value was received by the database for this entity. |
 | tags | object | Entity tags, as requested with `tags` parameter. |
 

@@ -13,7 +13,7 @@
 
 ## Operators
 
-Comparision operators: `=`, `==`, `!=`, `LIKE`
+Comparison operators: `=`, `==`, `!=`, `LIKE`
 
 Logical operators: `AND`, `OR`, `NOT` as well as `&&` , `||`, `!`
 

@@ -8,9 +8,9 @@ In case of an existing entity, all the current entity tags will be replaced with
 
 If the replace request for an existing entity doesn't contain any tags, the current tags will be deleted.
 
-The replace request for an existing entity doesn't affect any series, properties, or metrics since the internal identifier of the entity remains the same.
+Fields that are set to `null` are ignored by the server and are set to their default value.
 
-## Request
+The replace request for an existing entity doesn't affect any series, properties, or metrics since the internal identifier of the entity remains the same.
 
 ## Request
 
@@ -26,12 +26,9 @@ The replace request for an existing entity doesn't affect any series, properties
 
 ### Fields
 
-| **Field** | **Type** | **Description** |
-|:---|:---|:---|
-| enabled | boolean | Data collection status. Default: true. Incoming data is discarded for a disabled entity.  |
-| tags |object|Object containing entity tags, where field name represents tag name and field value is tag value.<br>`{"tag-1":string,"tag-2":string}` |
+Refer to Fields specified in the [Entity List](list.md#fields) method.
 
-* If a field is not specified in the request, it will be reset to its default value.
+The `name` field specified in the payload is ignored by the server since it's specified in path.
 
 ## Response
 

@@ -26,6 +26,12 @@
 | Ambari  | [View](ambari.md) |
 | HBase Cluster | [View](hbase-cluster.md)|
 
+## Technical Support
+
+Email us at support-atsd@axibase.com in case of installation issues.
+
+See additional support options [here](https://axibase.com/customer-support/).
+
 ## License
 
 By installing Axibase Time Series Database you agree to the following **[Terms and Conditions](https://axibase.com/wp-content/uploads/2014/12/ATSD-Community-Edition-Software-License.pdf)**.

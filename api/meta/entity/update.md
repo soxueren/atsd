@@ -4,7 +4,9 @@
 
 Update fields and tags of the specified entity. 
 
-Unlike the [replace method](create-or-replace.md), fields and tags that are not specified in the request are left unchanged.
+Unlike the [replace method](create-or-replace.md), fields and tags that are **not** specified in the request are left unchanged.
+
+Similarly, fields that are set to `null` are ignored and are left unchanged.
 
 ## Request
 
@@ -20,10 +22,9 @@ Unlike the [replace method](create-or-replace.md), fields and tags that are not 
 
 ### Fields
 
-|**Name**|**Type**|**Description**|
-|:---|:---|:---|
-| enabled | boolean | Enabled status. Default: true. Incoming data is discarded for a disabled entity.|
-| tags | object | Object containing entity tags, where field name represents tag name and field value is tag value.<br>Example : `{"tag-1":string,"tag-2":string}`|
+Refer to Fields specified in the [Entity List](list.md#fields) method.
+
+The `name` field specified in the payload is ignored by the server since it's specified in path.
 
 ## Response
 

@@ -8,6 +8,8 @@ In case of an existing metric, all the current metric tags will be replaced with
 
 If the replace request for an existing metric doesn't contain any tags, current metric tags will be deleted.
 
+Fields that are set to `null` are ignored by the server and are set to their default value.
+
 The replace request for an existing metric doesn't affect any series data since the internal identifier of the metric remains the same.
 
 ## Request
@@ -24,7 +26,9 @@ The replace request for an existing metric doesn't affect any series data since 
 
 ### Fields
 
-Refer to Fields specified in [Metrics List](list.md#fields) method.
+Refer to Fields specified in the [Metrics List](list.md#fields) method.
+
+The `name` field specified in the payload is ignored by the server since it's specified in path.
 
 ## Response
 

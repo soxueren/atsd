@@ -32,6 +32,7 @@ Retrieve a list of metrics matching the specified filter conditions.
 |tags|An object containing tags as names and values.<br>For example, `"tags": {"table": "axibase-collector"}`|
 |dataType|[Data Type](#data-types).|
 |interpolate|Interpolation mode: LINEAR or PREVIOUS. <br>Used in SQL `WITH INTERPOLATE` clause when interpolation mode is set to `AUTO`, for example, `WITH INTERPOLATE(1 MINUTE, AUTO)`. |
+|timeZone|Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](../../network/timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in metric-specific timezone.|
 |timePrecision|Time precision: SECONDS or MILLISECONDS.|
 |enabled|Enabled status. Incoming data is discarded for disabled metrics.|
 |persistent |Persistence status. Non-persistent metrics are not stored in the database and are only processed by the rule engine.|
@@ -122,7 +123,8 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
     "invalidAction": "NONE",
     "lastInsertDate": "2016-05-18T00:35:12.000Z",
     "versioned": false,
-	"interpolate":"LINEAR"
+	"interpolate":"LINEAR",
+	"timeZone":"America/New_York"
   }
 ]
 ```

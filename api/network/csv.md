@@ -35,7 +35,7 @@ csv p:{parser} e:{entity} r:{metric_prefix} z:{timezone} t:{timeout}
 
 ### ABNF Syntax
 
-Rules inherited from [base ABNF](base-abnf.md).
+Rules inherited from [Base ABNF](base-abnf.md).
 
 ```properties
 command = "csv" MSP parser [MSP entity] [MSP entity-prefix] [MSP entity-tags] 

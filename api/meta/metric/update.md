@@ -4,7 +4,9 @@
 
 Update fields and tags of the specified metric. 
 
-Unlike the [replace method](create-or-replace.md), fields and tags that are not specified in the request are left unchanged.
+Unlike the [replace method](create-or-replace.md), fields and tags that are **not** specified in the request are left unchanged.
+
+Similarly, fields that are set to `null` are ignored and are left unchanged.
 
 ## Request
 
@@ -20,7 +22,9 @@ Unlike the [replace method](create-or-replace.md), fields and tags that are not 
 
 ### Fields
 
-Refer to Fields specified in [Metrics List](list.md#fields) method.
+Refer to Fields specified in the [Metrics List](list.md#fields) method.
+
+The `name` field specified in the payload is ignored by the server since it's specified in path.
 
 ## Response
 
