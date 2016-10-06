@@ -11,7 +11,7 @@ entity e:{entity} z:{timezone} t:{tag-1}={text} t:{tag-2}={text}
 ```
 
 * Entity name and tag names are case-insensitive and are converted to lower case when stored. 
-* Timezone ID value is case-insensitive.
+* Time Zone ID is case-insensitive.
 * Tag values are case-sensitive and are stored as submitted.
 * Tag values cannot be empty.
 

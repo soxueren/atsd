@@ -7,11 +7,11 @@ Creates or updates the specified metric including its data type, versioning, and
 ## Syntax
 
 ```css
-metric m:{metric} p:{data-type} l:{label} i:{interpolate} d:{description} f:{filter} v:{versioning} t:{tag-1}={text} t:{tag-2}={text}
+metric m:{metric} p:{data-type} l:{label} i:{interpolate} d:{description} f:{filter} v:{versioning} z:{timezone} t:{tag-1}={text} t:{tag-2}={text}
 ```
 
 * Metric name and tag names are case-insensitive and are converted to lower case when stored. 
-* Timezone ID value is case-insensitive.
+* Time Zone ID is case-insensitive.
 * Other field values are case-sensitive and are stored as submitted.
 * Tag values cannot be empty.
 

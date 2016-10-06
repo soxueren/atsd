@@ -14,9 +14,9 @@ Retrieve a list of entities matching the specified filter conditions.
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-| expression |string|Expression to include entities by name or tags. Use `name` variable for entity name. Wildcard `*` is supported.|
-| minInsertDate |string|Include entities with last insert date at or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
-| maxInsertDate |string|Include entities with last insert date less than specified time.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| expression |string|Include entities that match an [expression](../expression.md) filter. Use `name` variable for entity name. Wildcard `*` is supported.|
+| minInsertDate |string|Include entities with `lastInsertDate` equal or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| maxInsertDate |string|Include entities with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 | limit |integer|Maximum number of entities to retrieve, ordered by name.|
 | tags |string|Comma-separated list of entity tag names to be displayed in the response.<br>For example, `tags=OS,location`<br>Specify `tags=*` to print all entity tags.|
 
@@ -26,9 +26,9 @@ Retrieve a list of entities matching the specified filter conditions.
 
 | **Name** | **Type** | **Description** |
 |:---|:---|:---|
-| name | string| Entity name. |
+| name | string | Entity name. |
 | enabled | boolean | Enabled status. Incoming data is discarded for disabled entities. |
-| timeZone |Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](../../network/timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in entity-specific timezone.|
+| timeZone | string | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](../../network/timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in entity-specific timezone.|
 | lastInsertDate | string |Last time, in ISO format, when a value was received by the database for this entity. |
 | tags | object | Entity tags, as requested with `tags` parameter. |
 
