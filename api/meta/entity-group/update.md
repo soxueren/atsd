@@ -4,7 +4,9 @@
 
 Update fields and tags of the specified entity group. 
 
-Unlike the [replace method](create-or-replace.md), fields and tags that are not specified in the request are left unchanged.
+Unlike the [replace method](create-or-replace.md), fields and tags that are **not** specified in the request are left unchanged.
+
+Similarly, fields that are set to `null` are ignored and are left unchanged.
 
 ## Request
 
@@ -20,10 +22,9 @@ Unlike the [replace method](create-or-replace.md), fields and tags that are not 
 
 ### Fields
 
-| **Name** | **Type** | **Description** |
-|:---|:---|:---|
-| expression | string| Group membership expression. The expression is applied to entities to automatically add/remove members of this group.|
-| tags | object| Object containing entity group tags, where field name represents tag name and field value is tag value.<br>`{"tag-1":string,"tag-2":string}`.  |
+Refer to Fields specified in the [Entity Group List](list.md#fields) method.
+
+The `name` field specified in the payload is ignored by the server since it's specified in path.
 
 ## Response
 

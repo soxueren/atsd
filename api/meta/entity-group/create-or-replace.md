@@ -8,6 +8,8 @@ In case of an existing entity group, all the current tags will be replaced with 
 
 If the replace request for an existing entity group doesn't contain any tags, the current tags will be deleted.
 
+Fields that are set to `null` are ignored by the server and are set to their default value.
+
 The replace request for an existing entity group doesn't affect the list of its member entities, since the internal identifier of the entity group remains the same.
 
 ## Request
