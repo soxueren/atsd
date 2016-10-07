@@ -1,6 +1,6 @@
 # Join Using Entity
 
-`USING entity` modifies the default JOIN condition. It uses the entity to join rows from merged tables instead of the default entity and tags.
+`USING entity` modifies the default `JOIN` condition. It uses the entity to join rows from merged tables instead of the default entity and tags.
 
 ## Join without `USING entity`
 

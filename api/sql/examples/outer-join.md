@@ -1,6 +1,6 @@
 # Outer Join
 
-Outer Join missing column values filled with NULL.
+Outer Join missing column values filled with `NULL`.
 
 ## Query
 
@@ -27,6 +27,3 @@ OUTER JOIN df.disk_used
 | nurswgvml007    | nurswgvml007     | 1466289442000 | 1466289442000  | 3.1            | null            | null                       | null                                | 
 | nurswgvml007    | nurswgvml007     | 1466289458000 | 1466289458000  | 4.0            | null            | null                       | null                                | 
 ```
-
-
-

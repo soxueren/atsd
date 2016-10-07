@@ -1,8 +1,8 @@
 # Join - Derived Series
 
-Derived series, computed from multiple underlying series, can be produced with JOIN.
+Derived series, computed from multiple underlying series, can be produced with `JOIN`.
 
-If the samples have the same timestamps (made with the same collector), inner JOIN is sufficient.
+If the samples have the same timestamps (made with the same collector), inner `JOIN` is sufficient.
 
 ## Query
 
@@ -28,6 +28,3 @@ WHERE datetime > now - 1 * MINUTE
 | nurswgvml007 | 2016-07-12T14:21:24.000Z | 1877.6 | 149.3 | 1728.3 | 92.1   | 
 | nurswgvml007 | 2016-07-12T14:21:39.000Z | 1877.6 | 148.3 | 1729.3 | 92.1   | 
 ```
-
-
-
