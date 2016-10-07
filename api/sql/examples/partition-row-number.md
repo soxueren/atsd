@@ -2,9 +2,9 @@
 
 ## Overview
 
-ROW_NUMBER returns the sequential number of a row within a partition of a result set, starting at 1 for the first row in each partition.
+The `ROW_NUMBER` function returns the sequential number of a row within a partition of a result set, starting at 1 for the first row in each partition.
 
-A partition is a subset of all rows in the result set grouped by equal values of partitioning columns.
+Partition is a subset of all rows in the result set grouped by entity and/or tags as specified in the `ROW_NUMBER` function. Each row in the result set may belong to only one partition.
 
 Assuming that the below result set was partitioned by entity and then ordered by time within each partition, the row numbers would be as follows: 
 
@@ -97,7 +97,7 @@ WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30
 
 ## Last Record in Each Partition
 
-Reverse ordering is accomplished with the `ORDER BY time DESC` condition in the ROW_NUMBER function.
+Reverse ordering is accomplished with the `ORDER BY time DESC` condition in the `ROW_NUMBER` function.
 
 ### Query
 
@@ -124,7 +124,7 @@ WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30
 
 ## Maximum Value in Each Partition
 
-The maximum value for each partition can be queried with the `ORDER BY value desc` condition in the ROW_NUMBER function.
+The maximum value for each partition can be queried with the `ORDER BY value desc` condition in the `ROW_NUMBER` function.
 
 ### Query
 

@@ -45,7 +45,7 @@ ORDER BY datetime
 | nurswgvml006 | 2016-07-15T09:26:21.000Z | 1753141830.0 | /mnt/u113452     | //u113452.nurstr003/backup          | 
 ```
 
-## Query - JOIN
+## Query - `JOIN`
 
 If the query is joining multiple tables, the list of columns in the result set includes columns from each table.
 

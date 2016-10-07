@@ -43,7 +43,7 @@ GROUP BY entity, datetime
 | 2016-07-15T14:41:58.000Z | nurswgvml007 | 2.0           | 24.8          | 26.8                        | 25.1          | 
 ```
 
-## Query with Computed Columns in ORDER BY Clause
+## Query with Computed Columns in `ORDER BY` Clause
 
 ```sql
 SELECT entity, tags.file_system, tags.mount_point, min(value), max(value), max(value) - min(value) AS range
@@ -65,7 +65,7 @@ WHERE datetime >= now - 1 * HOUR
 | nurswgvml009 | /dev/sdb1                           | /opt             | 30847072.0 | 30852760.0 | 5688.0    | 
 ```
 
-## Query with HAVING Clause
+## Query with `HAVING` Clause
 
 ```sql
 SELECT entity, min(value), max(value), max(value) - min(value)
@@ -84,7 +84,3 @@ HAVING max(value) - min(value) > 10
 | nurswgvml010 | 0.2        | 25.1       | 24.9                  | 
 | nurswgvml502 | 0.5        | 15.5       | 15.0                  | 
 ```
-
-
-
-

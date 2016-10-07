@@ -1,6 +1,6 @@
 # Select FROM `atsd_series` Table
 
-Querying an `atsd_series` table provides an alternative syntax to specifying metric name in the `WHERE` clause instead of the `FROM` query.
+Querying an `atsd_series` table allows specifying metric name in the `WHERE` clause instead of the `FROM` query.
 
 At least one metric condition must be present in a `WHERE` clause of a valid `atsd_series` query. Metric names are case-insensitive. 
 

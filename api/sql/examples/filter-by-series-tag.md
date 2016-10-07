@@ -1,6 +1,6 @@
 # Filter by Series Tag
 
-Filter by entity and series tag using the following expression.
+Filter by entity and series tag using the `LIKE` pattern.
 
 ## Query
 

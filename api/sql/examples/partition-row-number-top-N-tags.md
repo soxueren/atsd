@@ -1,4 +1,4 @@
-# Partition - ROW_NUMBER with ORDER BY avg
+# Partition - `ROW_NUMBER` with `ORDER BY` avg
 
 Retrieve top-3 15-minute periods with maximum average disk usage, for each disk matching '/dev*' pattern.
 

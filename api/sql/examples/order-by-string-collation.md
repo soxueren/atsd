@@ -1,4 +1,4 @@
-﻿# ORDER BY String (Collation)
+﻿# `ORDER` BY String (Collation)
 
 Ordering of strings is based on their Unicode value, with `NULL` having the lowest value.
 
@@ -52,7 +52,7 @@ WHERE entity = 'e-1'
 | а         | U+0430    | null      | null      | 
 ```
 
-## Query - Descending Order With LIMIT
+## Query - Descending Order With `LIMIT`
 
 `NULL` is listed at the end of the result set.
 

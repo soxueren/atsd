@@ -116,9 +116,9 @@ GROUP BY entity, PERIOD(1 minute, LINEAR)
 | nurswgvml006 | 2016-06-03T09:39:00.000Z      | 3.00         | 
 ```
 
-## Interpolation with Constant (Fill Gaps), after HAVING Clause
+## Interpolation with Constant (Fill Gaps), after `HAVING` Clause
 
-Note that interpolation is applied after the HAVING filter excludes a subset of rows based on condition.
+Note that interpolation is applied after the rows have been filtered with the `HAVING` condition.
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute)), COUNT(value) 

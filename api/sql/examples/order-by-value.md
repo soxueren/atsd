@@ -1,4 +1,4 @@
-# ORDER BY Value
+# `ORDER` BY Value
 
 ## Query
 
@@ -23,4 +23,3 @@ ORDER BY avg(value) DESC
 | nurswgvml502 | 6          | 
 | nurswgvml102 | 1          | 
 ```
-

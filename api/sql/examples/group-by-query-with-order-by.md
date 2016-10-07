@@ -1,4 +1,4 @@
-# GROUP BY Query with ORDER BY
+# `GROUP BY` Query with `ORDER BY`
 
 ## Query
 

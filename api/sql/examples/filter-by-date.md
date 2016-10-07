@@ -38,7 +38,7 @@ WHERE entity = 'nurswgvml007'
 | 2016-06-18T20:00:43.000Z | 6.1   | 
 ```
 
-## Query with Endtime
+## Query with Endtime Syntax
 
 Both `time` and `datetime` columns support [endtime](/end-time-syntax.md) syntax.
 
@@ -59,9 +59,9 @@ WHERE entity = 'nurswgvml007'
 | 2016-06-18T20:00:43.000Z | 6.1   | 
 ```
 
-## Query using BETWEEN
+## Query using `BETWEEN`
 
-Notice that the BETWEEN condition is inclusive so subtract 1 millisecond from an AND value for a `[)` half-open range.
+Notice that the `BETWEEN` condition is inclusive so subtract 1 millisecond from an `AND` value for a `[)` half-open range.
 
 ```sql
 SELECT datetime, value FROM mpstat.cpu_busy 

@@ -29,7 +29,7 @@ WHERE entity = 'nurswgvml007'
 | 2016-04-09T14:02:42Z | 1428588162000 | 20.2  |
 ```
 
-## date_format Function
+## `date_format` Function
 
 The `date_format` function can print out the `time` column as well as any numeric column containing Epoch milliseconds, formatted with the user-defined format and time zone.
 

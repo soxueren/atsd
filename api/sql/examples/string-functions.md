@@ -1,6 +1,6 @@
 # String Functions
 
-String functions are supported in the `SELECT` expression for `WHERE`, `GROUP BY`, and `ORDER BY` clauses.
+String functions are supported in the `SELECT` expression and within `WHERE`, `GROUP BY`, and `ORDER BY` clauses.
 
 ## Concatenation and String Length
 

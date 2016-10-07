@@ -1,4 +1,4 @@
-# Interpolate with Extend
+# Interpolate with `EXTEND`
 
 * If the `VALUE {n}` interpolation function is specified in the `PERIOD` clause, the `EXTEND` option sets empty leading/trailing period values to equal `{n}`.
 * Without the `VALUE {n}` function, the `EXTEND` option adds missing periods at the beginning and end of the selection interval using the `NEXT` and `PREVIOUS` interpolation functions.
@@ -80,7 +80,7 @@ GROUP BY PERIOD(1 MINUTE, EXTEND)
 | 2016-06-03T09:39:00.000Z | 11.3       | 
 ```
 
-## Query with Inner LINEAR Interpolation and without `EXTEND` Option
+## Query with Inner `LINEAR` Interpolation and without `EXTEND` Option
 
 ```sql
 SELECT datetime, avg(value)
@@ -104,7 +104,7 @@ GROUP BY PERIOD(10 second, LINEAR)
 | 2016-06-03T09:39:40.000Z | 18.8       | 
 ```
 
-## Query with Inner LINEAR Interpolation and with `EXTEND` Option
+## Query with Inner `LINEAR` Interpolation and with `EXTEND` Option
 
 To apply interpolation both to inner periods as well as to leading/trailing periods, include both the `EXTEND` option and an interpolation function in the `PERIOD` clause.
 
@@ -139,7 +139,7 @@ GROUP BY PERIOD(10 second, LINEAR, EXTEND)
 | 2016-06-03T09:39:50.000Z | 18.8       | + EXTEND -> interpolated with PREVIOUS
 ```
 
-## Query with Inner VALUE Interpolation and with `EXTEND` Option
+## Query with Inner `VALUE` Interpolation and with `EXTEND` Option
 
 The `VALUE {n}` interpolation function applies both to inner and leading/trailing periods.
 

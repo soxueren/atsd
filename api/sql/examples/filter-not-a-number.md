@@ -2,7 +2,7 @@
 
 Not a number value is returned as a `NaN` string, across all formats: HTML, JSON, CSV.
 
-Aggregate functions ignore NaN values, except for the `count` function which counts `NaN` as any other value.  
+Aggregate functions ignore `NaN` values, except for the `count` function which counts `NaN` as any other value.  
 
 ## Query
 

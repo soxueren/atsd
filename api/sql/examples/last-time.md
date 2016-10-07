@@ -6,11 +6,11 @@ The database tracks information about last insert times, last values, and insert
 
 Unlike the data table, the last insert table is updated with a delay of 15 seconds in order to minimize write load on the system by de-duplicating frequent updates that may arrive within the 15-second interval.
 
-As a result, values returned by the last_time function may be lagging behind by a few seconds and expressions such as `WITH time > last_time` may actually produce records.
+As a result, values returned by the `last_time` function may be lagging behind by a few seconds and expressions such as `WITH time > last_time` may actually produce records.
 
 ## Query
 
-Returns most recent 30 seconds worth of data for each series.
+Returns data for the most recent 30 second interval for each series.
 
 ```sql
 SELECT * FROM mpstat.cpu_busy

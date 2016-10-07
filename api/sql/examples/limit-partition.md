@@ -1,6 +1,6 @@
 ## LIMIT by Partition
 
-The last record in each partition can be accomplished by reverse ordering partitions with the `ORDER BY time DESC` condition in a ROW_NUMBER function.
+The last record in each partition can be retrieved by reverse ordering rows within each partition using the `ORDER BY time DESC` condition.
 
 ### Query
 

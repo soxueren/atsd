@@ -1,4 +1,4 @@
-# GROUP BY Query with HAVING
+# `GROUP BY` Query with `HAVING`
 
 ## Query
 

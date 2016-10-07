@@ -1,4 +1,4 @@
-# ORDER BY Multiple Columns
+# `ORDER` BY Multiple Columns
 
 ## Query
 

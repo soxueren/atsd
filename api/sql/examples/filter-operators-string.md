@@ -4,7 +4,7 @@ The string comparison operators `<, >, <=, >=` provide a way to filter tag value
 
 If one of the compared values is `NULL`, the expression returns `NULL` and such rows are excluded by the `WHERE` clause.
 
-## NULL filter
+## `NULL` filter
 
 ### Data
 
