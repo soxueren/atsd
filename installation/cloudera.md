@@ -402,6 +402,22 @@ series.queue.pool.size = 8
 series.batch.size = 1024
 ```
 
+## RPC Encryption
+
+To enable encryption of RPC traffic between ATSD and HBase, add the following property to /opt/atsd/atsd/conf/hbase-site.xml file in ATSD:
+
+```ls
+<property>
+        <name>hbase.rpc.protection</name>
+        <value>privacy</value>
+</property>
+```
+
+Similarly, enable `hbase.rpc.protection` property on the HBase cluster:
+
+![](images/rpc-hbase.png)
+
+
 ## Start ATSD
 
 ```
