@@ -2,7 +2,7 @@
 
 ## Description
 
-Stores PI tag values as a [series](series.md) or [message](message.md) command.
+Stores PI tag values as a [series](series.md) or [messages](message.md).
 
 ## Syntax
 
@@ -45,7 +45,7 @@ The data is stored as series unless the `sv` fields contains a non-empty string 
 | ms        | integer         | **[Required]** Time in UNIX milliseconds. | 
 | nv        | string          | **[Required]** Numeric value. Either `nv` or `sv` field is required. |
 | sv        | string          | **[Required]** String value. |
-| i         | integer         | Index. Ignored if less than 1 or empty. |
+| i         | integer         | Index. Ignored if 1. |
 | ns        | integer         | Numeric status. Ignored if 0. |
 | ss        | string          | String status. Ignored if `GOOD` or empty.|
 | fa        | boolean         | Annotated flag. Ignored if `false`. |
