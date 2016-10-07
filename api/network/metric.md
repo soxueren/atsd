@@ -2,7 +2,9 @@
 
 ## Description
 
-Creates or updates the specified metric including its data type, versioning, and tags.
+Creates or updates fields and tags of the specified metric. 
+
+If the metric doesn't exist, it will be created automatically.
 
 ## Syntax
 
@@ -11,9 +13,11 @@ metric m:{metric} p:{data-type} l:{label} i:{interpolate} d:{description} f:{fil
 ```
 
 * Metric name and tag names are case-insensitive and are converted to lower case when stored. 
-* Time Zone ID is case-insensitive.
-* Other field values are case-sensitive and are stored as submitted.
+* Label, description, filter, and tag values are case-sensitive and are stored as submitted.
+* Other fields are case-insensitive.
 * Tag values cannot be empty.
+* Metric tags and fields that are not specified are left unchanged. 
+* To remove/reset a metric tag/label/description/filter/timezone, set it's value to a double-quoted empty string.
 
 ### Fields
 
