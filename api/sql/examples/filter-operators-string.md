@@ -1,10 +1,10 @@
 ﻿# Filter Series with String Operators
 
-String comparison operators `<, >, <=, >=` provide a way to filter tag values lexicographically. 
+The string comparison operators `<, >, <=, >=` provide a way to filter tag values lexicographically. 
 
 If one of the compared values is `NULL`, the expression returns `NULL` and such rows are excluded by the `WHERE` clause.
 
-## NULL filter
+## `NULL` filter
 
 ### Data
 
@@ -36,7 +36,7 @@ WHERE datetime >= "2016-06-19T11:00:00.000Z"
 
 ### Query:  <= 'val2'
 
-Note that series without `tag2` series tag which is the same as `NULL` value, are not included in either result set.
+Note that a series without a `tag2` series tag, which is the same as a `NULL` value, are not included in either result set.
 
 ```sql
 SELECT datetime, value, tags.tag2
@@ -55,7 +55,7 @@ WHERE datetime >= "2016-06-19T11:00:00.000Z"
 
 ## Collation Filter
 
-Strings are compared based on Unicode value of their characters.
+Strings are compared based on the Unicode value of their characters.
 
 ### Data
 
@@ -96,7 +96,7 @@ Strings are compared based on Unicode value of their characters.
 | а            | U+0430    | 
 ```
 
-### Query: >= to filter by character Unicode value
+### Query: >= to Filter by Character Unicode Value
 
 ```sql
 SELECT tags.'tag-1', tags.'tag-unicode-1' as 'unicode-1'
@@ -123,7 +123,7 @@ ORDER BY tags.'tag-1' ASC
 | а            | U+0430    | 
 ```
 
-### Query: numbers by character Unicode value if one of the values is a character
+### Query: Numbers by Character Unicode Value if One of the Values is a Character
 
 ```sql
 SELECT tags.'tag-1', tags.'tag-unicode-1' as 'unicode-1'
@@ -147,9 +147,9 @@ ORDER BY tags.'tag-1' ASC
 | 3            | U+0033    | 
 ```
 
-### Query: numbers by numeric value if both values are numeric
+### Query: Numbers by Numeric Value if Both Values are Numeric
 
-If all series tag values are guaranteed to be numeric or null, the values can be compared as numbers, however ordering of such columns is still based on Unicode value (string collation).
+If all series tag values are guaranteed to be numeric or null, the values can be compared as numbers, however ordering of such columns is still based on an Unicode value (string collation).
 
 #### Data
 
@@ -185,7 +185,3 @@ ORDER BY tags.'tag-1' ASC
 | 20           | U+0032    | 
 | 3            | U+0033    | 
 ```
-
-
-
-

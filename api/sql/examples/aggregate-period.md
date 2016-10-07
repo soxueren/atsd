@@ -1,4 +1,4 @@
-# Aggregate Per Period
+# Aggregate per Period
 
 Statistics per period.
 
@@ -36,7 +36,7 @@ WHERE entity = 'nurswgvml007'
 
 ## Query
 
-Display period start and end time using `date_format` function.
+Display the period start and end time using the `date_format` function.
 
 
 ```sql

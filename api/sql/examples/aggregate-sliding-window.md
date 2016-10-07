@@ -1,6 +1,6 @@
 # Aggregate - Sliding Window
 
-## Window without series tag grouping
+## Window without Series Tag Grouping
 
 ### Query
 

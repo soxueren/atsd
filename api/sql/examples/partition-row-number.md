@@ -2,11 +2,11 @@
 
 ## Overview
 
-ROW_NUMBER returns sequential number of a row within a partition of result set, starting at 1 for the first row in each partition.
+The `ROW_NUMBER` function returns the sequential number of a row within a partition of a result set, starting at 1 for the first row in each partition.
 
-Partition is a subset of all rows in the resultset grouped by equal values of partitioning columns.
+Partition is a subset of all rows in the result set grouped by entity and/or tags as specified in the `ROW_NUMBER` function. Each row in the result set may belong to only one partition.
 
-Assuming that the below resultset was partitioned by entity and then ordered by time within each partition, the row numbers would be as follows: 
+Assuming that the below result set was partitioned by entity and then ordered by time within each partition, the row numbers would be as follows: 
 
 ```ls
 |--------------|--------------------------|-------| ROW_NUMBER
@@ -41,7 +41,7 @@ Examples:
 
 ## Data
 
-The input data for the specified interval contains 11 rows, 2 rows for 5 entities, and 1 entity with 1 row.
+The input data for the specified interval contains 11 rows: 2 rows for 5 entities, and 1 entity with 1 row.
 
 ### Query
 
@@ -70,7 +70,7 @@ WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30
 | nurswgvml502 | 2016-06-18T12:00:17.000Z | 0.5   | 
 ```
 
-## First record in each partition
+## First Record in Each Partition
 
 ### Query
 
@@ -95,9 +95,9 @@ WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30
 | nurswgvml502 | 2016-06-18T12:00:01.000Z | 13.7  | 
 ```
 
-## Last record in each partition
+## Last Record in Each Partition
 
-Reverse ordering is accomplished with `ORDER BY time DESC` condition in ROW_NUMBER function.
+Reverse ordering is accomplished with the `ORDER BY time DESC` condition in the `ROW_NUMBER` function.
 
 ### Query
 
@@ -122,9 +122,9 @@ WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30
 | nurswgvml502 | 2016-06-18T12:00:17.000Z | 0.5  | 
 ```
 
-## Max value in each partition
+## Maximum Value in Each Partition
 
-Maximum value for each partition can be queried with `ORDER BY value desc` condition in ROW_NUMBER function.
+The maximum value for each partition can be queried with the `ORDER BY value desc` condition in the `ROW_NUMBER` function.
 
 ### Query
 
@@ -148,12 +148,3 @@ WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30
 | nurswgvml102 | 2016-06-18T12:00:02.000Z | 0.0   | 
 | nurswgvml502 | 2016-06-18T12:00:01.000Z | 13.7  | 
 ```
-
-
-
-
-
-
-
-
-

@@ -26,7 +26,7 @@ ORDER BY datetime
 | 2016-07-14T15:00:22.000Z | nurswgvml009 | 58.0  | Oracle EM             | 
 ```
 
-## Select entities with entity tag matching an expression.
+## Select Entities with Entity Tag Matching an Expression
 
 ### Query
 
@@ -49,7 +49,7 @@ ORDER BY datetime
 | 2016-07-14T15:00:33.000Z | nurswgvml006 | 15.8  | Hadoop/HBASE         | 
 ```
 
-## Filter by entity tag with comparison operator
+## Filter by Entity Tag with Comparison Operator
 
 ```sql
 SELECT datetime, entity, value, entity.tags.app
@@ -69,4 +69,3 @@ ORDER BY datetime
 | 2016-08-09T20:25:17.000Z | nurswgvml010 | 0.2   | SVN, Jenkins, Redmine | 
 | 2016-08-09T20:25:28.000Z | nurswgvml102 | 1.0   | Router                | 
 ```
-

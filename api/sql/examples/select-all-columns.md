@@ -1,6 +1,6 @@
 # Select All Columns
 
-`SELECT *` can be used to include all available columns in the resultset.
+`SELECT *` can be used to include all available columns in the result set.
 
 The list of available columns includes datetime, entity, value, and optional series tags, each in its own column.
 
@@ -45,7 +45,7 @@ ORDER BY datetime
 | nurswgvml006 | 2016-07-15T09:26:21.000Z | 1753141830.0 | /mnt/u113452     | //u113452.nurstr003/backup          | 
 ```
 
-## Query - JOIN
+## Query - `JOIN`
 
 If the query is joining multiple tables, the list of columns in the result set includes columns from each table.
 
@@ -68,6 +68,3 @@ WHERE entity = 'nurswgvml006'
 | nurswgvml006     | 2016-07-15T09:36:51.000Z | 5613572.0       | /                          | /dev/mapper/vg_nurswgvml006-lv_root | nurswgvml006    | 2016-07-15T09:36:51.000Z | 6.1            | 
 | nurswgvml006     | 2016-07-15T09:36:51.000Z | 53436128.0      | /media/datadrive           | /dev/sdc1                           | nurswgvml006    | 2016-07-15T09:36:51.000Z | 6.1            | 
 ```
-
-
-

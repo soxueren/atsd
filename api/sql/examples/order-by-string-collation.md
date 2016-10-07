@@ -1,10 +1,10 @@
-﻿# ORDER BY String (Collation)
+﻿# `ORDER` BY String (Collation)
 
 Ordering of strings is based on their Unicode value, with `NULL` having the lowest value.
 
 ## Query - Ascending Order
 
-`NULL` is listed at the beginning of result set.
+`NULL` is listed at the beginning of the result set.
 
 ```sql
 SELECT tags.'tag-1' AS 'Tag Value', tags.'tag-unicode-1' AS 'unicode-1', tags.'tag-unicode-2' AS 'unicode-2', tags.'tag-unicode-7' AS 'unicode-7'
@@ -52,9 +52,9 @@ WHERE entity = 'e-1'
 | а         | U+0430    | null      | null      | 
 ```
 
-## Query - Descending Order With LIMIT
+## Query - Descending Order With `LIMIT`
 
-`NULL` is listed at the end of result set.
+`NULL` is listed at the end of the result set.
 
 ```sql
 SELECT tags.'tag-1' AS 'Tag Value', tags.'tag-unicode-1' AS 'unicode-1', tags.'tag-unicode-2' AS 'unicode-2', tags.'tag-unicode-7' AS 'unicode-7'
@@ -117,4 +117,3 @@ series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=äb  t:tag-unicode-1=U+0
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=äa  t:tag-unicode-1=U+00E4 t:tag-unicode-2=U+0061
 series e:e-1 m:m-order=1 d:2016-08-01T00:00:00Z t:tag-1=äc  t:tag-unicode-1=U+00E4 t:tag-unicode-2=U+0063
 ```
-

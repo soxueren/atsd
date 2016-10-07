@@ -1,6 +1,6 @@
 # Filter Series without Specified Tag
 
-Select series without the specified tag using `tags.{name} IS NULL` condition.
+Select a series without the specified tag using the `tags.{name} IS NULL` condition.
 
 ## Data
 
@@ -15,7 +15,7 @@ Select series without the specified tag using `tags.{name} IS NULL` condition.
 
 ## Query
 
-Select series without `tag4` using `IS NULL` operator:
+Select a series without `tag4` using the `IS NULL` operator:
 
 ```sql
 SELECT entity, datetime, value, tags.*
@@ -36,7 +36,7 @@ WHERE datetime >= "2016-06-19T11:00:00.000Z" and datetime < "2016-06-19T12:00:00
 
 ## Query
 
-Select series with `tag4` using `IS NOT NULL` operator:
+Select a series with `tag4` using the `IS NOT NULL` operator:
 
 ```sql
 SELECT entity, datetime, value, tags.*

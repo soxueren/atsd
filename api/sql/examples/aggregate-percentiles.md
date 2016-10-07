@@ -1,6 +1,8 @@
 # Aggregate Percentiles
 
-Percentiles for the given entity. `median(value)` is equivalent to `percentile(50, value)`.
+Percentiles for a given entity. 
+
+`median(value)` is equivalent to `percentile(50, value)`.
 
 ## Query
 

@@ -16,7 +16,7 @@ The interpolated values are calculated based on two adjacent values.
 
 If a raw value exists at the regularized timestamp, it is used "as is" irrespective of neighboring values.
 
-### Irregular series:
+### Irregular Series:
 
 ```ls
 | time                 | value |
@@ -27,7 +27,7 @@ If a raw value exists at the regularized timestamp, it is used "as is" irrespect
 | 2016-09-17T08:01:30Z | 2.30  |
 ```
 
-### Regular `30 SECOND` series calculated with the `LINEAR` function
+### Regular `30 SECOND` Series Calculated with the `LINEAR` Function
 
 ```ls
 | time                 | value |
@@ -38,7 +38,7 @@ If a raw value exists at the regularized timestamp, it is used "as is" irrespect
 | 2016-09-17T08:01:30Z | 2.30  | returned "as is" because raw value is available at 08:01:30Z
 ```
 
-### Regular `30 SECOND` series calculated with the `PREVIOUS` function
+### Regular `30 SECOND` Series Calculated with the `PREVIOUS` Function
 
 ```ls
 | time                 | value |
@@ -80,7 +80,7 @@ SELECT datetime, value FROM metric1
 | 2016-09-17T23:04:00.000Z | -23.400 |
 ```
 
-### Interpolation Function: LINEAR
+### Interpolation Function: `LINEAR`
 
 Values at regular times are linearly interpolated between neighboring values.
 
@@ -139,7 +139,7 @@ The next value outside the interval, found at 23:04:00, is used to interpolate t
 | 2016-09-17T08:05:30.000Z |  6.577 | - interpolated between values at 08:04:48 and 23:04:00
 ```
 
-### Interpolation Function: PREVIOUS
+### Interpolation Function: `PREVIOUS`
 
 Values at regular times are set to the previous value.
 
@@ -167,9 +167,9 @@ AND datetime >= '2016-09-17T08:00:00Z' AND datetime < '2016-09-17T08:06:00Z'
 | 2016-09-17T08:05:30.000Z |   6.600 | - set to previous value at 08:04:48
 ```
 
-### Interpolation Function: AUTO
+### Interpolation Function: `AUTO`
 
-In `AUTO` mode, values are interpolated based on **Interpolate** setting for each metric separately.
+In `AUTO` mode, values are interpolated based on the **Interpolate** setting for each metric separately.
 
 * metric1 **Interpolate** setting: `LINEAR`
 * metric2 **Interpolate** setting: `PREVIOUS`
@@ -194,9 +194,9 @@ WITH INTERPOLATE(30 SECOND, AUTO, OUTER)
 | metric2 | 2016-09-17T08:01:00.000Z | 4.400   | - interpolated with PREVIOUS
 ```
 
-### Fill: NONE
+### Fill: `NONE`
 
-Missing periods that cannot be interpolated are ignored and not included in the resultset.
+Missing periods that cannot be interpolated are ignored and not included in the result set.
 
 ```sql
 SELECT datetime, value FROM metric1
@@ -215,9 +215,9 @@ The value at 08:00:00 was excluded because the prior value in the `INNER` mode w
 | 2016-09-17T08:01:00.000Z |  7.658 |
 ```
 
-### Fill: NAN
+### Fill: `NAN`
 
-Missing periods that cannot be interpolated are returned with `NaN` (Not a Number) value.
+Missing periods that cannot be interpolated are returned with the `NaN` (Not a Number) value.
 
 ```sql
 SELECT datetime, value FROM metric1
@@ -236,7 +236,7 @@ The value at 08:00:00 is `NaN` because the prior value in the `INNER` mode was n
 | 2016-09-17T08:01:00.000Z |  7.658 |
 ```
 
-### Fill: EXTEND
+### Fill: `EXTEND`
 
 Missing periods at the beginning of the selection interval that cannot be interpolated are set to first raw value.
 
@@ -303,7 +303,7 @@ AND datetime >= '2016-09-17T08:00:10Z' AND datetime < '2016-09-17T08:01:40Z'
 | 2016-09-17T08:01:10.000Z | 8.617  |
 ```
 
-### `GROUP BY PERIOD` compared to `WITH INTERPOLATE`
+### `GROUP BY PERIOD` Compared to `WITH INTERPOLATE`
 
 The `GROUP BY PERIOD()` clause calculates for all values in each period by applying an aggregation function such as average, maximum, first, last etc.
 

@@ -1,4 +1,4 @@
-# ORDER BY Time
+# `ORDER` BY Time
 
 ## Query
 
@@ -26,4 +26,3 @@ WHERE entity = 'nurswgvml007'
 | 2016-06-17T18:36:41.000Z | 4.0   | 
 | 2016-06-17T18:36:57.000Z | 3.0   | 
 ```
-

@@ -1,6 +1,6 @@
 # String Functions
 
-String functions are supported in the `SELECT` expression, the `WHERE`, `GROUP BY`, and `ORDER BY` clauses.
+String functions are supported in the `SELECT` expression and within `WHERE`, `GROUP BY`, and `ORDER BY` clauses.
 
 ## Concatenation and String Length
 
@@ -127,9 +127,3 @@ ORDER BY datetime
 | nurswgvml010 | 2016-10-04T06:31:07.000Z | 7193364.0  | /dev/sda1                           | 5.0                            | /sda1                                                   | 
 | nurswgvml010 | 2016-10-04T06:31:07.000Z | 29844132.0 | /dev/sdb1                           | 5.0                            | /sdb1                                                   | 
 ```
-
-
-
-
-
-
