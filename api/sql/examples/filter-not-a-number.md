@@ -1,8 +1,8 @@
 # Filter Not-a-Number
 
-Not a number value is returned as `NaN` string, across all formats: HTML, JSON, CSV.
+Not a number value is returned as a `NaN` string, across all formats: HTML, JSON, CSV.
 
-Aggregate functions ignore NaN values, except `count` function which counts `NaN` as any other value.  
+Aggregate functions ignore NaN values, except for the `count` function which counts `NaN` as any other value.  
 
 ## Query
 
@@ -64,5 +64,3 @@ WHERE datetime between '2016-07-15T15:40:00.000Z' AND '2016-07-15T15:41:00.000Z'
 |------------|------------|--------------| 
 | 17.25      | 10         | 3            | 
 ```
-
-

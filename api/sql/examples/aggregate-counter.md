@@ -29,7 +29,7 @@ GROUP BY period(5 minute)
 | 2015-09-30T09:55:00.000Z | 5.0          | 3.0        | 2.0          | 3.0         | 3.0            | 0.0          | 
 ```
 
-## Detailed values
+## Detailed Values
 
 ```ls
 | datetime                 | value  | 
@@ -95,5 +95,3 @@ GROUP BY period(5 minute)
 | 2015-09-30T09:57:35.040Z | 3.0    | 
 | 2015-09-30T09:58:35.257Z | 3.0    | 
 ```
-
-

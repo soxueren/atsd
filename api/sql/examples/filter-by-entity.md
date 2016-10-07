@@ -1,6 +1,6 @@
 # Filter by Entity
 
-## Filter results by entity name.
+## Filter Results by Entity Name
 
 ### Query
 
@@ -21,7 +21,7 @@ WHERE entity = 'nurswgvml007'
 | 2016-07-14T14:53:42.000Z | nurswgvml007 | 9.0   | 
 ```
 
-## Filter results excluding a particular entity.
+## Filter Results Excluding a Particular Entity
 
 ### Query
 
@@ -46,7 +46,7 @@ ORDER BY datetime
 | 2016-07-14T14:00:16.000Z | nurswgvml502 | 3.5   | 
 ```
 
-## Filter results for multiple entities.
+## Filter Results for Multiple Entities
 
 ### Query
 
@@ -71,7 +71,7 @@ ORDER BY datetime
 | 2016-07-14T14:00:38.000Z | nurswgvml006 | 21.4  | 
 ```
 
-## Filter results excluding particular entities.
+## Filter Results Excluding Particular Entities
 
 ### Query
 
@@ -96,7 +96,7 @@ ORDER BY datetime
 | 2016-07-14T15:00:26.000Z | nurswgvml011 | 42.7  | 
 ```
 
-## Filter results for entity name pattern.
+## Filter Results for Entity Name Pattern
 
 ### Query
 
@@ -123,4 +123,3 @@ ORDER BY datetime
 | 2016-07-14T14:00:36.000Z | nurswgvml009 | 100.0 | 
 | 2016-07-14T14:00:38.000Z | nurswgvml006 | 21.4  | 
 ```
-

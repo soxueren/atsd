@@ -3,15 +3,15 @@
 Supported syntax:
 
 ```sql
-entity.groups IN ('group-1', 'group-2') -- entity belongs to one of the groups listed in IN clause
-entity.groups NOT IN ('group-1', 'group-1') -- entity does NOT belong to any of the groups listed in IN clause
+entity.groups IN ('group-1', 'group-2') -- entity belongs to one of the groups listed in the IN clause
+entity.groups NOT IN ('group-1', 'group-1') -- entity does NOT belong to any of the groups listed in the IN clause
 'group-1' IN entity.groups -- entity belongs to the specified group
 'group-1' NOT IN entity.groups -- entity does NOT belong to the specified group
 ```
 
 Entity Group names are case-sensitive.
 
-## Select entities belonging to the specified entity group.
+## Select Entities Belonging to the Specified Entity Group
 
 ### Query
 
@@ -35,7 +35,7 @@ ORDER BY datetime
 | 2016-07-14T15:00:13.000Z | nurswgvml102 | 2.0   | 
 ```
 
-## Include Entity Groups column in the resultset
+## Include Entity Groups Column in the Result Set
 
 ### Query
 
@@ -47,7 +47,7 @@ WHERE 'nur-collectors' IN entity.groups
 ORDER BY datetime 
 ```
 
-### Results with Entity Groups column
+### Results with Entity Groups Column
 
 ```ls
 | datetime                 | entity       | value | entity.groups                                                                                                                                                                | 
@@ -58,5 +58,3 @@ ORDER BY datetime
 | 2016-07-14T15:00:10.000Z | nurswgvml011 | 100.0 | VMware VMs;nmon-linux;nmon-linux-beta;nur-collectors;scollector-nur;solarwind-vmware-vm;solarwinds-base;tcollector - linux                                                   | 
 | 2016-07-14T15:00:13.000Z | nurswgvml102 | 2.0   | VMware VMs;nmon-linux;nmon-linux-beta;nur-collectors;solarwind-vmware-vm;tcollector - linux                                                                                  | 
 ```
-
-

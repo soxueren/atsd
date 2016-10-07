@@ -1,9 +1,9 @@
 # Interpolate with Extend
 
-* If `VALUE {n}` interpolation function is specified in the `PERIOD` clause, the `EXTEND` option sets empty leading/trailing period values to equal `{n}`.
-* Without `VALUE {n}` function, the `EXTEND` option adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.
-* If the query doesn't contain a start date condition, `EXTEND` is _not_ applied to leading periods because start date is not known.
-* If the query doesn't contain an end date condition, `EXTEND` is _not_ applied to trailing periods because end date is not known.
+* If the `VALUE {n}` interpolation function is specified in the `PERIOD` clause, the `EXTEND` option sets empty leading/trailing period values to equal `{n}`.
+* Without the `VALUE {n}` function, the `EXTEND` option adds missing periods at the beginning and end of the selection interval using the `NEXT` and `PREVIOUS` interpolation functions.
+* If the query doesn't contain a start date condition, `EXTEND` is _not_ applied to leading periods because the start date is not known.
+* If the query doesn't contain an end date condition, `EXTEND` is _not_ applied to trailing periods because the end date is not known.
 
 ## Data
 
@@ -55,7 +55,7 @@ GROUP BY PERIOD(1 MINUTE)
 
 ## Query with `EXTEND`
 
-Query with `EXTEND` adds missing periods at the beginning of the interval by applying `NEXT` interpolation function.
+Query with `EXTEND` adds missing periods at the beginning of the interval by applying the `NEXT` interpolation function.
 
 ```sql
 SELECT datetime, avg(value)
@@ -80,7 +80,7 @@ GROUP BY PERIOD(1 MINUTE, EXTEND)
 | 2016-06-03T09:39:00.000Z | 11.3       | 
 ```
 
-## Query with inner LINEAR interpolation and without `EXTEND` option
+## Query with Inner LINEAR Interpolation and without `EXTEND` Option
 
 ```sql
 SELECT datetime, avg(value)
@@ -104,9 +104,9 @@ GROUP BY PERIOD(10 second, LINEAR)
 | 2016-06-03T09:39:40.000Z | 18.8       | 
 ```
 
-## Query with inner LINEAR interpolation and with `EXTEND` option
+## Query with Inner LINEAR Interpolation and with `EXTEND` Option
 
-To apply interpolation both to inner periods as well as to leading/trailing periods include both the `EXTEND` option and an interpolation function in the `PERIOD` clause.
+To apply interpolation both to inner periods as well as to leading/trailing periods, include both the `EXTEND` option and an interpolation function in the `PERIOD` clause.
 
 ```sql
 SELECT datetime, avg(value)
@@ -139,9 +139,9 @@ GROUP BY PERIOD(10 second, LINEAR, EXTEND)
 | 2016-06-03T09:39:50.000Z | 18.8       | + EXTEND -> interpolated with PREVIOUS
 ```
 
-## Query with inner VALUE interpolation and with `EXTEND` option
+## Query with Inner VALUE Interpolation and with `EXTEND` Option
 
-`VALUE {n}` interpolation function applies both to inner and leading/trailing periods.
+The `VALUE {n}` interpolation function applies both to inner and leading/trailing periods.
 
 ```sql
 SELECT datetime, avg(value)
@@ -195,7 +195,7 @@ series d:2016-07-20T11:42:00.000Z e:e-ext m:m-ext-1=3.0
 
 ### Complete Interval Specified
 
-Both start and end date are specified in the `WHERE` clause. `EXTEND` option is applied to both leading and trailing periods.
+Both start and end date are specified in the `WHERE` clause. The `EXTEND` option is applied to both leading and trailing periods.
 
 ```sql
 SELECT datetime, avg(value)
@@ -224,7 +224,7 @@ GROUP BY PERIOD(5 minute, VALUE -10, EXTEND)
 
 ### End Date is not Specified
 
-End date is **not** specified in the `WHERE` clause. As a result, `EXTEND` option is **not** applied to trailing periods.
+An end date is **not** specified in the `WHERE` clause. As a result, the `EXTEND` option is **not** applied to trailing periods.
 
 ```sql
 SELECT datetime, avg(value)
@@ -247,4 +247,3 @@ GROUP BY PERIOD(5 minute, VALUE -10, EXTEND)
 | 2016-07-20T11:35:00.000Z | -10.0      | 
 | 2016-07-20T11:40:00.000Z | 3.0        | 
 ```
-

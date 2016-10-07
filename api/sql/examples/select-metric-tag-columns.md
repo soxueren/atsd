@@ -4,7 +4,7 @@ Similar to series tags, metric tags can be selected with:
 
 * metric.tags - serialized to name=value;name=value
 * metric.tags.* - expand to multiple columns
-* metric.tags.{name} - include column with specific metric tag
+* metric.tags.{name} - include column with a specific metric tag
 
 ## Query
 
@@ -42,5 +42,3 @@ WHERE entity = 'nurswgvml006'
 | nurswgvml006 | 2016-07-15T10:41:27.000Z | 5614484.0    | 13.0     | file_system=/dev/mapper/vg_nurswgvml006-lv_root;mount_point=/   | table=Disk (script) | source=iostat;table=System | 
 | nurswgvml006 | 2016-07-15T10:41:27.000Z | 53361316.0   | 13.0     | file_system=/dev/sdc1;mount_point=/media/datadrive              | table=Disk (script) | source=iostat;table=System | 
 ```
-
-

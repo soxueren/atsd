@@ -1,6 +1,6 @@
 # Join Using Entity
 
-`USING entity` modifies the default JOIN condition, it uses entity to join rows from merged tables instead of the default entity and tags.
+`USING entity` modifies the default JOIN condition. It uses the entity to join rows from merged tables instead of the default entity and tags.
 
 ## Join without `USING entity`
 
@@ -81,5 +81,3 @@ GROUP BY entity, tags, period(15 minute)
 | nurswgvml007 | 2016-06-18T10:00:00.000Z | 10.0                | 1744011571.0         | /mnt/u113452               | //u113452.nurstr003/backup          | 
 | nurswgvml007 | 2016-06-18T10:00:00.000Z | 10.0                | 8700117.1            | /                          | /dev/mapper/vg_nurswgvml007-lv_root | 
 ```
-
-

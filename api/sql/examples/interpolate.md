@@ -1,6 +1,6 @@
 # Interpolate
 
-## No interpolation
+## No Interpolation
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute)), COUNT(value) 
@@ -23,7 +23,7 @@ Value for period **2016-06-03T09:30:00.000Z** is missing.
 ```
 
 
-## Fill gaps with constant value 0.
+## Fill Gaps with Constant Value 0
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute)), COUNT(value) 
@@ -44,7 +44,7 @@ GROUP BY entity, PERIOD(5 minute, VALUE 0)
 | nurswgvml007 | 2016-06-03T09:45:00.000Z      | 19           | 
 ```
 
-## Set to previous period value.
+## Set to Previous Period Value
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute)), COUNT(value) 
@@ -65,7 +65,7 @@ GROUP BY entity, PERIOD(5 minute, PREVIOUS)
 | nurswgvml007 | 2016-06-03T09:45:00.000Z      | 19           | 
 ```
 
-## Linear interpolation:
+## Linear Interpolation
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute)), COUNT(value) 
@@ -86,7 +86,7 @@ GROUP BY entity, PERIOD(5 minute, LINEAR)
 | nurswgvml007 | 2016-06-03T09:45:00.000Z      | 19           | 
 ```
 
-## Linear interpolation, 1 minute period, multiple periods are interpolated.
+## Linear Interpolation, 1 Minute Period, Multiple Periods
 
 ```sql
 SELECT entity, date_format(PERIOD(1 minute)), COUNT(value) 
@@ -116,9 +116,9 @@ GROUP BY entity, PERIOD(1 minute, LINEAR)
 | nurswgvml006 | 2016-06-03T09:39:00.000Z      | 3.00         | 
 ```
 
-## Interpolation with constant (fill gaps), after HAVING clause.
+## Interpolation with Constant (Fill Gaps), after HAVING Clause
 
-Note that interpolation is applied after HAVING filter excludes a subset of rows based on condition.
+Note that interpolation is applied after the HAVING filter excludes a subset of rows based on condition.
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute)), COUNT(value) 

@@ -1,14 +1,14 @@
-# Select FROM `atsd_series` table
+# Select FROM `atsd_series` Table
 
-Querying `atsd_series` table provides an alternative syntax to specify metric name in the `WHERE` clause instead of the `FROM` query.
+Querying an `atsd_series` table provides an alternative syntax to specifying metric name in the `WHERE` clause instead of the `FROM` query.
 
-At least one metric condition must be present in the `WHERE` clause of a valid `atsd_series` query. Metric names are case-insensitive. 
+At least one metric condition must be present in a `WHERE` clause of a valid `atsd_series` query. Metric names are case-insensitive. 
 
 The following queries are equivalent:
 
 ```sql
 SELECT entity, metric, datetime, value 
-  FROM atsd_series 
+  FROM atsd_series
 WHERE metric = 'mpstat.cpu_busy'
   AND datetime > current_hour
 ```
@@ -31,7 +31,7 @@ WHERE datetime > current_hour
 
 ## Query Multiple Metrics
 
-Unlike `FROM {metric}` syntax,  `FROM atsd_series` allows querying multiple metrics similar to `UNION ALL` operator.
+Unlike `FROM {metric}` syntax, `FROM atsd_series` allows querying multiple metrics similar to the `UNION ALL` operator.
 
 ```sql
 SELECT entity, metric, datetime, value, tags
@@ -53,7 +53,7 @@ WHERE metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user')
 ```
 
 
-By default results are ordered by metric. The default sort can be modified with `ORDER BY` clause.
+By default results are ordered by metric. The default sort can be modified with the `ORDER BY` clause.
 
 ```sql
 SELECT entity, metric, datetime, value, tags
@@ -77,7 +77,7 @@ WHERE metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user')
 
 ## Metric Condition
 
-Metrics can be selected in the `WHERE` clause using `=` operator. Both `AND` and `OR` boolean operators are supported when processing conditions in multiple-metric queries. 
+Metrics can be selected in the `WHERE` clause using the `=` operator. Both `AND` and `OR` boolean operators are supported when processing conditions in multiple-metric queries. 
 
 ```sql
 SELECT entity, metric, datetime, value, tags
@@ -89,9 +89,7 @@ WHERE (metric = 'df.disk_used' OR metric = 'df.disk_used_percent')
 
 ## Limitations
 
-Queries with `atsd_series` table do not support the following capabilities:
+Queries with the `atsd_series` table do not support the following capabilities:
 
 * `JOIN` queries are not supported.
 * When multiple metrics are specified, all columns in the `SELECT` expression must be specified explicitly. Namely, `SELECT *`, `SELECT tags.*`, `SELECT metric.tags.*` are not allowed if the `WHERE` clause includes multiple metrics. 
-
-

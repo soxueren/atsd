@@ -55,7 +55,7 @@ WHERE datetime > '2016-07-27T22:40:00.000Z'
 | tv1               | tv1               | tv2               | tv2               | tv3               | tv3               |
 ```
 
-## Query with Escaped Column Names in WHERE and ORDER BY clauses
+## Query with Escaped Column Names in WHERE and ORDER BY Clauses
 
 ```sql
 SELECT tags."double""quote", tags.'double"quote',

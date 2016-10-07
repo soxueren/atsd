@@ -1,6 +1,6 @@
 # Mathematical Functions
 
-Math functions are supported in the `SELECT` expression, the `WHERE`, `HAVING`, and `ORDER BY` clauses.
+Math functions are supported in the `SELECT` expression for `WHERE`, `HAVING`, and `ORDER BY` clauses.
 
 ## Query
 

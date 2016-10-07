@@ -1,10 +1,10 @@
 # Table Alias
 
-Table alias is typically used in `JOIN` queries to provide a convenient way of referencing columns in a specific table as part of the `SELECT` expression.
+A table alias is typically used in `JOIN` queries to provide a convenient way of referencing columns in a specific table as part of a `SELECT` expression.
 
-Similar to column aliases, the table alias can be unquoted or enclosed in quotes or double-quotes.
+Similar to column aliases, a table alias can be unquoted or enclosed in quotes or double-quotes.
 
-Unquoted `alias` should start with letter [a-zA-Z], followed by letter, digit or underscore.
+An unquoted `alias` should start with a letter [a-zA-Z], followed a by letter, digit, or underscore.
 
 ## Query
 

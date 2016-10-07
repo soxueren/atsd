@@ -1,6 +1,6 @@
 # Aggregate - Max Value Time
 
-Time when the metric value reached its maximum over the last hour
+The time when the metric value reached its maximum over the last hour.
 
 ## Query
 

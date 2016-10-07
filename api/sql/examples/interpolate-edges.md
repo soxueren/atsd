@@ -21,7 +21,7 @@ WHERE datetime >= "2016-06-19T09:10:00Z" AND datetime < "2016-06-19T09:40:00Z"
 ```
 
 
-## Data within the 10 minute half-inclusive interval [)
+## Data within the 10 minute Half-Inclusive Interval [)
 
 ```sql
 SELECT entity, datetime, value
@@ -39,7 +39,7 @@ WHERE datetime >= "2016-06-19T09:20:00Z" AND datetime < "2016-06-19T09:30:00Z"
 | nurswgvml006 | 2016-06-19T09:28:00.000Z | 18.0  | 
 ```
 
-## Grouped data within the 10 minute half-inclusive interval [)
+## Grouped Data within the 10 Minute Half-Inclusive Interval [)
 
 ```sql
 SELECT entity, datetime, MAX(value)
@@ -79,6 +79,6 @@ GROUP BY entity, PERIOD(5 minute, PREVIOUS)
 | nurswgvml006 | 2016-06-19T09:28:00.000Z | 18.0       | 
 ```
 
-* Interpolated values are calculated between neighbouring values in the resultset.
+* Interpolated values are calculated between neighboring values in the result set.
 * Even though data prior to 09:20:00 and at or after 09:30:00 exists in the database, it is outside of the start and end date specified in the `WHERE` clause.
 * Therefore, data for **leading** periods starting at 09:20:00, 09:21:00, 09:22:00 and for **trailing** period starting at 09:29:00 was not interpolated.

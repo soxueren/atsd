@@ -16,7 +16,7 @@ The interpolated values are calculated based on two adjacent values.
 
 If a raw value exists at the regularized timestamp, it is used "as is" irrespective of neighboring values.
 
-### Irregular series:
+### Irregular Series:
 
 ```ls
 | time                 | value |
@@ -27,7 +27,7 @@ If a raw value exists at the regularized timestamp, it is used "as is" irrespect
 | 2016-09-17T08:01:30Z | 2.30  |
 ```
 
-### Regular `30 SECOND` series calculated with the `LINEAR` function
+### Regular `30 SECOND` Series Calculated with the `LINEAR` Function
 
 ```ls
 | time                 | value |
@@ -38,7 +38,7 @@ If a raw value exists at the regularized timestamp, it is used "as is" irrespect
 | 2016-09-17T08:01:30Z | 2.30  | returned "as is" because raw value is available at 08:01:30Z
 ```
 
-### Regular `30 SECOND` series calculated with the `PREVIOUS` function
+### Regular `30 SECOND` Series Calculated with the `PREVIOUS` Function
 
 ```ls
 | time                 | value |
@@ -169,7 +169,7 @@ AND datetime >= '2016-09-17T08:00:00Z' AND datetime < '2016-09-17T08:06:00Z'
 
 ### Interpolation Function: AUTO
 
-In `AUTO` mode, values are interpolated based on **Interpolate** setting for each metric separately.
+In `AUTO` mode, values are interpolated based on the **Interpolate** setting for each metric separately.
 
 * metric1 **Interpolate** setting: `LINEAR`
 * metric2 **Interpolate** setting: `PREVIOUS`
@@ -196,7 +196,7 @@ WITH INTERPOLATE(30 SECOND, AUTO, OUTER)
 
 ### Fill: NONE
 
-Missing periods that cannot be interpolated are ignored and not included in the resultset.
+Missing periods that cannot be interpolated are ignored and not included in the result set.
 
 ```sql
 SELECT datetime, value FROM metric1
@@ -217,7 +217,7 @@ The value at 08:00:00 was excluded because the prior value in the `INNER` mode w
 
 ### Fill: NAN
 
-Missing periods that cannot be interpolated are returned with `NaN` (Not a Number) value.
+Missing periods that cannot be interpolated are returned with the `NaN` (Not a Number) value.
 
 ```sql
 SELECT datetime, value FROM metric1
@@ -303,7 +303,7 @@ AND datetime >= '2016-09-17T08:00:10Z' AND datetime < '2016-09-17T08:01:40Z'
 | 2016-09-17T08:01:10.000Z | 8.617  |
 ```
 
-### `GROUP BY PERIOD` compared to `WITH INTERPOLATE`
+### `GROUP BY PERIOD` Compared to `WITH INTERPOLATE`
 
 The `GROUP BY PERIOD()` clause calculates for all values in each period by applying an aggregation function such as average, maximum, first, last etc.
 
