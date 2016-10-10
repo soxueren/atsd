@@ -76,7 +76,7 @@ series e:server001 m:disk_used_percent=20.5 m:disk_size_mb=10240 t:mount_point=/
 
 [Versioning](http://axibase.com/products/axibase-time-series-database/data-model/versioning/) enables tracking of time-series value changes for the purpose of establishing an audit trail and traceable data reconciliation.
 
-Versioning is disabled by default. It can be enabled for particular metrics by setting on the Versioning check box on the Metric Editor page.
+Versioning is disabled by default. It can be enabled for particular metrics by applying the Versioning check box on the Metric Editor page.
 
 To insert versioning fields use reserved tags:
 
