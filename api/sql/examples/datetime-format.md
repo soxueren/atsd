@@ -62,6 +62,71 @@ FROM "mpstat.cpu_busy"
 | date_format(time,'yyyy-MM-dd HH:mm:ss')                | 2016-07-13 12:07:55        | 
 | date_format(time,'yyyy-MM-dd HH:mm:ss','PST')          | 2016-07-13 05:07:55        | 
 | date_format(time,'yyyy-MM-dd HH:mm:ss','GMT-08:00')    | 2016-07-13 04:07:55        | 
-| date_format(time,'yyyy-MM-dd HH:mm:ss Z','PST')        | 2016-07-13 05:07:55 -0700  | 
-| date_format(time,'yyyy-MM-dd HH:mm:ss ZZ','PST')       | 2016-07-13 05:07:55 -07:00 | 
+| date_format(time,'yyyy-MM-dd HH:mm:ssZ','PST')        | 2016-07-13 05:07:55-0700    | 
+| date_format(time,'yyyy-MM-dd HH:mm:ssZZ','PST')       | 2016-07-13 05:07:55-07:00   | 
 ```
+
+## `AUTO` timezone
+
+The `AUTO` timezone parameter applies the time zone specified for the entity and metric.
+
+The entity time zone overrides the metric time zone.
+
+If the time zone is undefined for both entity and metric, the local server time zone is used instead.
+
+Metrics:
+
+```ls
+mpstat.cpu_busy   = EDT
+mpstat.cpu_system = AEDT (Australia/Sydney)
+mpstat.cpu_user   = undefined
+```
+
+Entities:
+
+```ls
+     nurswgvml006 = CDT
+     nurswgvml007 = PDT
+     nurswgvml009 = UTC	 
+     nurswgvml010 = undefined
+```
+
+Server Time:
+
+```
+UTC
+```
+
+### Query
+
+
+```sql
+SELECT t1.entity, t1.value AS 'cpu_busy', t2.value as 'cpu_system', t3.value as 'cpu_user',
+  t1.datetime
+  ,date_format(t1.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS 'cpu_busy.local_time'
+  ,date_format(t2.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS 'cpu_system.local_time'
+  ,date_format(t3.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS 'cpu_user.local_time'
+  FROM mpstat.cpu_busy t1
+  JOIN mpstat.cpu_system t2
+  JOIN mpstat.cpu_user t3
+WHERE t1.entity LIKE 'nurswgvml0*'
+AND t1.datetime >= '2016-10-10T10:00:00.000Z' and t1.datetime <= '2016-10-10T10:01:00.000Z'
+  WITH INTERPOLATE(60 SECOND, AUTO, OUTER)
+  ORDER BY t1.datetime
+```
+
+### Query Results
+
+```ls
+                                                                                                                                    
+| t1.entity    | cpu_busy | cpu_system | cpu_user | t1.datetime              | cpu_busy:           EDT | cpu_system:         AEDT | cpu_user:        -undefined- | 
+|--------------|----------|------------|----------|--------------------------|-------------------------|--------------------------|------------------------------| 
+| nurswgvml006 | 32.3     | 6.4        | 24.7     | 2016-10-10T10:00:00.000Z | 2016-10-10 05:00:00 CDT | 2016-10-10 05:00:00 CDT  | 2016-10-10 05:00:00 CDT      | <- CDT
+| nurswgvml007 | 31.7     | 6.1        | 23.5     | 2016-10-10T10:00:00.000Z | 2016-10-10 03:00:00 PDT | 2016-10-10 03:00:00 PDT  | 2016-10-10 03:00:00 PDT      | <- PDT
+| nurswgvml009 | 57.0     | 3.0        | 6.0      | 2016-10-10T10:00:00.000Z | 2016-10-10 10:00:00 UTC | 2016-10-10 10:00:00 UTC  | 2016-10-10 10:00:00 UTC      | <- UTC
+| nurswgvml010 | 21.1     | 0.9        | 20.2     | 2016-10-10T10:00:00.000Z | 2016-10-10 06:00:00 EDT | 2016-10-10 21:00:00 AEDT | 2016-10-10 10:00:00 GMT+00:00| <- nurswgvml010 time zone is undefined, hence apply metric timezone except `cpu_user` which has no t/z.
+```
+
+
+
+
