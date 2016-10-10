@@ -1,4 +1,4 @@
-﻿# Time Zones
+﻿﻿# Time Zones
 
 | **Offset** | **Time Zone ID** | **Time Zone Name** |
 |:---|:---|:---|

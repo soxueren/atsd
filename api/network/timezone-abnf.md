@@ -16,6 +16,7 @@ time-zone-code = "Pacific/Midway" /
 "Pacific/Gambier" /
 "US/Aleutian" /
 "AST" /
+"ADT" /
 "America/Anchorage" /
 "America/Juneau" /
 "America/Metlakatla" /
@@ -38,9 +39,12 @@ time-zone-code = "Pacific/Midway" /
 "Canada/Pacific" /
 "Canada/Yukon" /
 "MST" /
+"MDT" /
+"MST7MDT" /
 "Mexico/BajaNorte" /
 "PNT" /
 "PST" /
+"PDT" /
 "PST8PDT" /
 "US/Arizona" /
 "US/Pacific" /
@@ -66,7 +70,6 @@ time-zone-code = "Pacific/Midway" /
 "Canada/East-Saskatchewan" /
 "Canada/Mountain" /
 "Canada/Saskatchewan" /
-"MST7MDT" /
 "Mexico/BajaSur" /
 "Navajo" /
 "Pacific/Galapagos" /
@@ -102,10 +105,13 @@ time-zone-code = "Pacific/Midway" /
 "America/Winnipeg" /
 "Brazil/Acre" /
 "CST" /
+"CDT" /
 "CST6CDT" /
 "Canada/Central" /
 "Chile/EasterIsland" /
 "EST" /
+"EDT" /
+"EST5EDT" /
 "Jamaica" /
 "Mexico/General" /
 "Pacific/Easter" /
@@ -170,7 +176,6 @@ time-zone-code = "Pacific/Midway" /
 "Brazil/West" /
 "Canada/Eastern" /
 "Cuba" /
-"EST5EDT" /
 "IET" /
 "PRT" /
 "US/East-Indiana" /
