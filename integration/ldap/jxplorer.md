@@ -1,45 +1,39 @@
-##Retrieving an Active Directory Certificate
+## Secure Connectiion to Active Directory 
 
-To establish SSL Connection one has to obtain certificate from AD Server.
+In order to setup a secure connection between an Axibase Time Series Database server and an Active Directory (AD) server for the purpose of LDAP user authentication, you need to import an LDAP Server Certificate from the target AD server into ATSD.
 
+There are several ways of obtaining the SSL server certificate:
 
-There are 3 ways to do it:
+1) Follow the steps as described in [Sun Java System Identity Synchronization for Windows 6.0 Installation and Configuration Guide](https://docs.oracle.com/cd/E19656-01/821-0422/aarjd/index.html)
 
-* Using Window’s Certutil
-   
-* Using LDAP
+2) Use a web browser such as Mozilla Firefox 
 
-* Using Firefox
+* Enter https, ldap hostname and SSL port in the browser address bar, for example `https://nur.axibase.com:636/`
 
-First two ways are described in [Sun Java System Identity Synchronization for Windows 6.0 Installation and Configuration Guide](https://docs.oracle.com/cd/E19656-01/821-0422/aarjd/index.html)
-The last one shown below:
-
-* Go to https://nur.axibase.com:636/
-
-* Press `Advanced` button and then `Add exception` to obtain certificate
+* Press `Advanced` button and then `Add exception` to retrieve the certificate.
 
 ![](resources/add_exception.png)
 
-* Confirm security exception
+* Confirm the security exception.
 
 ![](resources/confirm_exception.png)
 
-* Go to Firefox `Preferences` -> `Advanced` -> `Certificates` -> `View Certificates` 
+* Open Firefox `Preferences` -> `Advanced` -> `Certificates` -> `View Certificates` 
 
 ![](resources/view_certificates.png)
 
-* Select servers tab and click on required certificate to perform export 
+* Select the Servers tab and click on the required AD server certificate to export it.
 
 ![](resources/cert&export.png)
 
-### Import certificate into jxplorer 
+### Import certificate into JExplorer 
 
-* Go to `Security` -> `Trusted Servers and CAs`
+* Open `Security` -> `Trusted Servers and CAs`
 
 ![](resources/security.png)
 
-* Press on `Add Certificate`, select the required file obtained above and add it to keystore.
+* Click `Add Certificate`, select the crt file and add it to the keystore.
 
 ![](resources/add_cert.png)
 
-[NB](http://jxplorer.org/help/Setting_a_Keystore_Password.htm). The cacerts keystore file has a default password of changeit 
+[NB](http://jxplorer.org/help/Setting_a_Keystore_Password.htm). Note that the cacerts keystore file has a default password of `changeit`.
