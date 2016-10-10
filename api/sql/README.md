@@ -1282,7 +1282,9 @@ date_format(long milliseconds[, time_format[, time_zone]])
 
 If the `time_format` argument is not provided, ISO 8601 format is applied.
 
-The `time_zone` parameter accepts GTM offset or a [time zone name](/api/network/timezone-abnf.md) and allows formatting dates in a time zone, different from the server's time zone.
+The `time_zone` parameter accepts GTM offset in the format of `GMT-hh:mm` or a [time zone name](/api/network/timezone-abnf.md) and allows formatting dates in a time zone, different from the server's time zone.
+
+In addition, the `time_zone` parameter can be specified as `AUTO` in which case the date is formatted with entity-specific time zone. If the entity-specific time zone is not defined, metric-specific time zone is used instead. If neither entity- nor metric-specific time zone is specified, local server time is applied.
 
 Examples:
 
@@ -1292,24 +1294,27 @@ Examples:
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PST')`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00')`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss ZZ', 'PDT')`
+* `date_format(time, 'yyyy-MM-dd HH:mm:ss', AUTO)`
 
 ```sql
-SELECT time, date_format(time),
-  date_format(time, "yyyy-MM-dd'T'HH:mm:ssZ"),
-  date_format(time, 'yyyy-MM-dd HH:mm:ss'),
-  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PST'),
-  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00'),
-  date_format(time, 'yyyy-MM-dd HH:mm:ss ZZ', 'PST'),
-  date_format(time, 'yyyy-MM-dd HH:mm:ss ZZ', 'PST')
+SELECT entity, datetime, 
+  date_format(time) AS 'default',
+  date_format(time, "yyyy-MM-dd'T'HH:mm:ssZZ") AS 'ISO 8601',
+  date_format(time, 'yyyy-MM-dd HH:mm:ss') AS 'Local Server',
+  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00') AS 'GMT Offset',  
+  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PDT') AS 'PDT',
+  date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', 'PDT') AS ' PDT t/z',
+  date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', AUTO) AS 'AUTO: CST' -- nurswgvml006 is in US/Central
 FROM "mpstat.cpu_busy"
   WHERE datetime > now - 5 * minute
+  AND entity = 'nurswgvml006'
   LIMIT 1
 ```
 
 ```ls
-| value | time          | date_format(time)        | date_format(time,'yyyy-MM-dd'T'HH:mm:ssZ') | date_format(time,'yyyy-MM-dd HH:mm:ss') | date_format(time,'yyyy-MM-dd HH:mm:ss','PST') |
-|-------|---------------|--------------------------|--------------------------------------------|-----------------------------------------|-----------------------------------------------|
-| 7.1   | 1468046047000 | 2016-07-09T06:34:07.000Z | 2016-07-09T06:34:07+0000                   | 2016-07-09 06:34:07                     | 2016-07-08 23:34:07                           |
+| entity       | datetime                 | default                  | ISO 8601                  | Local Server        | GMT Offset          | PDT                 | PDT t/z                   | AUTO: CST                 | 
+|--------------|--------------------------|--------------------------|---------------------------|---------------------|---------------------|---------------------|---------------------------|---------------------------| 
+| nurswgvml006 | 2016-10-10T11:04:18.000Z | 2016-10-10T11:04:18.000Z | 2016-10-10T11:04:18+00:00 | 2016-10-10 11:04:18 | 2016-10-10 03:04:18 | 2016-10-10 04:04:18 | 2016-10-10 04:04:18-07:00 | 2016-10-10 06:04:18-05:00 | 
 ```
 
 ```ls
@@ -1322,8 +1327,8 @@ FROM "mpstat.cpu_busy"
 | date_format(time,'yyyy-MM-dd HH:mm:ss')                | 2016-07-13 12:07:55        |
 | date_format(time,'yyyy-MM-dd HH:mm:ss','PST')          | 2016-07-13 05:07:55        |
 | date_format(time,'yyyy-MM-dd HH:mm:ss','GMT-08:00')    | 2016-07-13 04:07:55        |
-| date_format(time,'yyyy-MM-dd HH:mm:ss Z','PST')        | 2016-07-13 05:07:55 -0700  |
-| date_format(time,'yyyy-MM-dd HH:mm:ss ZZ','PST')       | 2016-07-13 05:07:55 -07:00 |
+| date_format(time,'yyyy-MM-dd HH:mm:ssZ','PST')        | 2016-07-13 05:07:55-0700    |
+| date_format(time,'yyyy-MM-dd HH:mm:ssZZ','PST')       | 2016-07-13 05:07:55-07:00   |
 ```
 
 The `date_format` function can also be used to print out period start and end times:
