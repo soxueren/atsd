@@ -1,8 +1,8 @@
-# nmon Command
+# `nmon` Command
 
 ## Description
 
-Initiate line-by-line streaming of an nmon file. The transmission can be resumed without full header in case of disconnect.
+Initiate line-by-line streaming of a nmon file. The transmission can be resumed without a full header in case of disconnect.
 
 ## Syntax
 
@@ -23,7 +23,7 @@ nmon p:{parser} e:{entity} f:{file_name} z:{timezone} t:{timeout}
 | v         | string          | nmon script version for debugging purposes. |
 | o         | integer         | Read timeout in seconds. <br>Set to 2x snapshot interval to prevent the server from terminating an idle connection.|
 
-`f` nmon file name is used to re-read file header from its copy on the server in case of disconnect.
+The `f` nmon file name is used to re-read the file header from its copy on the server in case of disconnect.
 
 ## ABNF Syntax
 

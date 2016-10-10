@@ -5,14 +5,14 @@
 ```properties
   ; printable characters
   ; value must be enclosed in double quotes if it contains double-quote (") or equal (=) character
-  ; inner double-quote must be escaped with another double quote.
+  ; inner double-quote must be escaped with another double quote
   ; t:"tag=name"=tag-value
   ; t:"tag""=name"=tag-value
 NAME = NAME_QUOTED / 1*CHAR_SAFE
 
   ; printable and non-printable characters such as space, tab, line feed, carriage return
   ; value must be enclosed in double quotes if it contains double-quote ("), equal (=), or a non-printable character
-  ; inner double-quote must be escaped with another double quote.
+  ; inner double-quote must be escaped with another double quote
   ; m:"my=message"
   ; m:"my message"
   ; m:"my 
@@ -68,5 +68,3 @@ REAL_NUMBER = MANTISSA EXPONENT
 MANTISSA   = (POSITIVE_INTEGER [ "." *DIGIT ]) / ( "0." *"0" POSITIVE_INTEGER)
 EXPONENT   = ["E"/"e"] ( "0" / ([ "-" ] POSITIVE_INTEGER))
 ```
-
-

@@ -1,4 +1,4 @@
-# pi Command
+# `pi` Command
 
 ## Description
 
@@ -12,7 +12,7 @@ pi p:{pitag-name} {time} nv:{numeric-value} sv:{string-value} i:{index} a:{annot
 
 ## Command Type
 
-The data is stored as series unless the `sv` fields contains a non-empty string in which case the data is stored as message.
+The data is stored as a series unless the `sv` fields contains a non-empty string, in which case the data is stored as a message.
 
 ## Field Mappings
 
@@ -40,10 +40,10 @@ The data is stored as series unless the `sv` fields contains a non-empty string 
 | **Field** | **Type** | **Description** |
 |:---|:---|:---|
 | p         | string          | **[Required]** PI tag name. |
-| d         | string          | **[Required]** Time in ISO format. One of `d`, `s`, `ms` fields is required. | 
+| d         | string          | **[Required]** Time in ISO format. One of the `d`, `s`, `ms` fields is required. | 
 | s         | integer         | **[Required]** Time in UNIX seconds. | 
 | ms        | integer         | **[Required]** Time in UNIX milliseconds. | 
-| nv        | string          | **[Required]** Numeric value. Either `nv` or `sv` field is required. |
+| nv        | string          | **[Required]** Numeric value. Either the `nv` or `sv` field is required. |
 | sv        | string          | **[Required]** String value. |
 | i         | integer         | Index. Ignored if 1. |
 | ns        | integer         | Numeric status. Ignored if 0. |
@@ -94,6 +94,3 @@ pi d:2016-10-07T12:15:00Z p:WIN-ERROR sv:"Error 6 raised" i:0 ss:GOOD fa:false f
 
 -> message d:2016-10-07T12:15:00Z e:nurswgvml007 t:type=WIN-ERROR t:location=SVL m:"Error 6 raised"
 ```
-
-
-

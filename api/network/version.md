@@ -1,8 +1,8 @@
-# version Command
+# `version` Command
 
 ## Description
 
-The server responds with Axibase Time Series Database revision number.
+The server responds with the Axibase Time Series Database revision number.
 
 ## Syntax
 
@@ -31,6 +31,3 @@ version
 ```
 13216
 ```
-
-
-
