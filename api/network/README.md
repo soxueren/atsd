@@ -1,8 +1,8 @@
 # Network API
 
-Network API provides a set of plain text commands for inserting numeric time series, key=value properties, and tagged messages into Axibase Time Series Database via **TCP** and **UDP** network protocols.
+Network API provides a set of plain text commands for inserting numeric time series, key=value properties, and tagged messages into the Axibase Time Series Database (ATSD) via **TCP** and **UDP** network protocols.
 
-You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language such as [Java](examples/AtsdTcpClient.java) that lets you connect to ATSD server via TCP/UDP protocol.
+You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language such as [Java](examples/AtsdTcpClient.java) that lets you connect to the ATSD server via TCP/UDP protocol.
 
 ## Supported Commands
 
@@ -35,7 +35,7 @@ You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language such 
 
 ## Ports
 
-By default ATSD server listens for incoming commands on the following ports:
+By default, the ATSD server listens for incoming commands on the following ports:
 
 * 8081 TCP
 * 8082 UDP
@@ -48,13 +48,13 @@ To encrypt TCP traffic, setup an [SSH tunnel](http://axibase.com/products/axibas
 
 Authentication and authorization are not supported for plain text commands received over TCP and UDP protocols. 
 
-Utilize [HTTP command](../data/command.md) to send plain-text commands over http/https protocols with authentication and authorization enabled.
+Utilize the [HTTP command](../data/command.md) to send plain-text commands over http/https protocols with authentication and authorization enabled.
 
 ## Connection
 
 ### Single Command
 
-To send a single command, connect to an ATSD server, send the command in plain text and terminate the connection.
+To send a single command, connect to an ATSD server, and send the command in plain text and terminate the connection.
 
 * netcat:echo
 
@@ -111,7 +111,7 @@ Separate commands by line feed symbol `\n` (LF, `0x0A`) when sending a batch con
 
 Trailing line feed is not required for the last command in the batch.
 
-Use `-e` flag in `echo` commands to enable interpretation of backslash escapes.
+Use the `-e` flag in `echo` commands to enable interpretation of backslash escapes.
 
 ```ls
 echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:10:00Z\nseries e:station_1 m:temperature=32.1 m:humidity=82.4 d:2016-05-15T00:25:00Z" | nc atsd_host 8081
@@ -130,11 +130,11 @@ A client application can establish a persistent connection in order to continuou
 
 Trailing line feed is not required for the last command when the connection is closed.
 
-The commands are processed as they're received by the server, without buffering.
+Commands are processed as they're received by the server, without buffering.
 
 To prevent the connection from timing out the client may send [`ping`](ping.md) command at a regular interval.
 
-Clients can submit commands of different types over the same connection.
+Clients can submit different types of commands over the same connection.
 
 ```ls
 $ telnet atsd_host 8081
@@ -158,9 +158,9 @@ unknown_command e:station_1 m:temperature=32.2
 Connection closed by foreign host.
 ```
 
-If connection is terminated due to client error, all valid commands sent prior to the first invalid command will be stored. 
+If the connection is terminated due to client error, all valid commands sent prior to the first invalid command will be stored. 
 
-Due to the fact that channel closing on client error may take some time, the database may also store a few valid command received after the discarded command.
+Due to the fact that channel closing on client error may take some time, the database may also store a few valid commands received after the discarded command.
 
 ```
 valid command   - stored
@@ -171,7 +171,7 @@ valid command   - possibly stored if present in buffer
 ...
 ```
 
-The above behavior can be modified by changing `/opt/atsd/atsd/conf/server.properties` file and restarting the database.
+The above behavior can be modified by changing the `/opt/atsd/atsd/conf/server.properties` file and restarting the database.
 
 ```ls
 input.disconnect.on.error = false
@@ -221,7 +221,7 @@ echo -e "series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\nseries e:
 
 ### Line Syntax
 
-* Command must start with name such as `series` followed by space-separated fields each identified with a prefix, followed by (:) colon symbol and field name=value.
+* A command must start with a name such as `series` followed by space-separated fields each identified with a prefix, followed by a (:) colon symbol and field name=value.
 
 ```ls
 command-name field-prefix:field-name[=field-value]
@@ -232,14 +232,14 @@ command-name field-prefix:field-name[=field-value]
 
 Field name: 
 
-* Field name can contain only printable characters. 
-* If field name contains a double-quote (") or equal (=) sign, it must be enclosed in double quotes, for example: `v:"os=name"=Ubuntu` or `v:"os""name"=Ubuntu`
+* A field name can contain only printable characters. 
+* If the field name contains a double-quote (") or equal (=) sign, it must be enclosed in double quotes. For example: `v:"os=name"=Ubuntu` or `v:"os""name"=Ubuntu`
 * Any double quote character in the value must be escaped with another double quote.
 
 Field value:
 
-* Field value can contain printable and non-printable characters including space, line breaks, tab. 
-* If field value contains a double-quote (") or equal (=) sign or a non-printable character, it must be enclosed in double quotes, for example: `v:os="Ubuntu 14.04"` or `v:os="Ubuntu=""14"""`
+* A field value can contain printable and non-printable characters including space, line breaks, tab. 
+* If the field value contains a double-quote (") or equal (=) sign or a non-printable character, it must be enclosed in double quotes. For example: `v:os="Ubuntu 14.04"` or `v:os="Ubuntu=""14"""`
 * Any double quote character in the value must be escaped with another double quote.
 
 Use CSV escaping methods in core libraries where available, for example [StringEscapeUtils.escapeCsv](https://commons.apache.org/proper/commons-lang/javadocs/api-2.6/org/apache/commons/lang/StringEscapeUtils.html#escapeCsv%28java.io.Writer,%20java.lang.String%29) in Java.
@@ -248,7 +248,7 @@ Use CSV escaping methods in core libraries where available, for example [StringE
 ### Case Sensitivity
 
 * Field names are case-insensitive and are converted to lower case when stored in the database.
-* Field values are case-sensitive and are stored as submitted, except for entity name, metric name, and property type which are converted to lower case.
+* Field values are case-sensitive and are stored as submitted, except for entity name, metric name, and property type, which are converted to lower case.
 
 ### Command Length Limits
 
@@ -289,9 +289,9 @@ The timestamp field encodes the time of an observation or an event as determined
 
 Date limits:
 
-* Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 millisecond from Epoch time.
+* Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 milliseconds from Epoch time.
 * Maximum date that can be stored by the database is **2106-02-07T06:59:59.999Z**, or 4294969199999 milliseconds from Epoch time.
-* If timestamp field is not specified, time is set to current server time.
+* If the timestamp field is not specified, time is set to current server time.
 
 ### Number Formatting
 
@@ -303,8 +303,8 @@ Date limits:
 
 ## Debugging
 
-By default ATSD doesn't return acknowledgements to the client after processing data commands.
-Include `debug` command at the start of the line to instruct the server to respond with `ok` for each processed command.
+By default, ATSD doesn't return acknowledgements to the client after processing data commands.
+Include the `debug` command at the start of the line to instruct the server to respond with `ok` for each processed command.
 
 * `debug` with valid command
 
@@ -322,7 +322,7 @@ $ echo -e "debug my_command e:station_1 m:temperature=32.2" | nc atsd_host 8081
 
 ## Command Validation
 
-To validate network received from a client, launch `netcat` utility in server mode, reconfigure the client to send data to netcat port, and dump incoming data to file:
+To validate a network received from a client, launch the `netcat` utility in server mode, reconfigure the client to send data to the netcat port, and dump incoming data to file:
 
 ```elm
 nc -lk 0.0.0.0 2081 > command-in.log &
@@ -342,14 +342,14 @@ cat command-in.log
 
 Reasons why ATSD server can drop commands:
 
-* Entity, metric or tag names are not valid.
+* Entity, metric, or tag names are not valid.
 * Timestamp is negative or earlier than `1970-01-01T00:00:00Z`.
-* Timestamp field `s:`/`ms:` is not numeric or if `d` field is not in ISO format.
+* Timestamp field `s:`/`ms:` is not numeric or if the `d` field is not in ISO format.
 * Metric value could not be parsed as a number using `.` as the decimal separator. Scientific notation is supported.
-* Multiple data points for the same entity, metric and tags have the same timestamp in which case commands are considered duplicates and some of them are dropped. This could occur when commands with the same key are sent without timestamp.
-* Data is sent using UDP protocol and the client UDP send buffer or the server UDP receive buffer overflows.
+* Multiple data points for the same entity, metric, and tags have the same timestamp in which case commands are considered duplicates and some of them are dropped. This could occur when commands with the same key are sent without a timestamp.
+* Data is sent using the UDP protocol and the client UDP send buffer or the server UDP receive buffer overflows.
 * Value is below 'Min Value' or above 'Max Value' limit specified for the metric and the 'Invalid Value Action' is set to `DISCARD`.
-* Last command in multi-line UDP packed doesn't terminate with line feed symbol.
+* Last command in a multi-line UDP packed doesn't terminate with line feed symbol.
 
 To review dropped commands, open command*.log files in ATSD.
 

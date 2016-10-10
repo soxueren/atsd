@@ -1,4 +1,4 @@
-# entity Command
+# `entity` Command
 
 ## Description
 

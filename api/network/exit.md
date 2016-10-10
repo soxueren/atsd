@@ -1,4 +1,4 @@
-# exit Command
+# `exit` Command
 
 ## Description
 
@@ -31,4 +31,3 @@ exit
 ```
 Goodbye
 ```
-

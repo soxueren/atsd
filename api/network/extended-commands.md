@@ -1,6 +1,6 @@
 # Extended Commands
 
-ATSD supports the following thirt-party line protocols:
+ATSD supports the following third-party line protocols:
 
 ## tcollector
 
@@ -14,7 +14,7 @@ put sys.cpu.user 1356998400 42.5 host=webserver01 cpu=0
 
 [tcollector integration](https://axibase.com/products/axibase-time-series-database/writing-data/tcollector/)
 
-ATSD uses the `host` tag as the entity, if `host` tag is missing then entity will be `tcollector`.
+ATSD uses the `host` tag as the entity. If the `host` tag is missing then entity will be `tcollector`.
 
 ## Graphite
 
@@ -40,13 +40,6 @@ nurswgvml007.disk_used_percent:24.5|c|@0.5|#mount_point:/,disk_name:/sda
 
 [StatsD integration](http://axibase.com/products/axibase-time-series-database/writing-data/statsd/)
 
-Forward slash is supported as a control character to extract entity name. 
+Forward slash is supported as a control character to extract the entity name. 
 
 If no entity name is set, the default entity will be set as `statsd`.
-
-
-
-
-
-
-

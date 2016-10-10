@@ -1,10 +1,10 @@
-# property Command
+# `property` Command
 
 ## Description
 
-Insert property record with specified type, keys and tags for the given entity.
+Insert a property record with specified type, keys, and tags for a given entity.
 
-Entity, property type and property keys (`k:` fields) form a composite primary key of the property record in the database, whereas tags (`v:` fields) are stored as additional attributes.
+Entity, property type, and property keys (`k:` fields) form a composite primary key of the property record in the database, whereas tags (`v:` fields) are stored as additional attributes.
 
 When a property record is inserted into the database, it overwrites an existing record with the same composite primary key: **entity+type[+key]**.
 

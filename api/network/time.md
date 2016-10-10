@@ -1,4 +1,4 @@
-# time Command
+# `time` Command
 
 ## Description
 
@@ -31,5 +31,3 @@ time
 ```
 1426260311663
 ```
-
-

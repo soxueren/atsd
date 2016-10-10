@@ -1,4 +1,4 @@
-# ping Command
+# `ping` Command
 
 ## Description
 

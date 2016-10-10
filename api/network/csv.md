@@ -1,4 +1,4 @@
-# csv Command
+# `csv` Command
 
 ## Description
 
@@ -6,7 +6,7 @@ Insert plain text data in CSV/TSV format into the database.
 
 Lines are parsed and converted into commands as they're received, without buffering.
 
-The client may keep a persistent connection. To prevent the server from timing out an idle connection, set read timeout to a desired threshold with `o` field.
+The client may keep a constant connection. To prevent the server from timing out an idle connection, set read timeout to a desired threshold with the `o` field.
 
 ## Syntax
 
