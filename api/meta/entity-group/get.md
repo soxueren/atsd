@@ -2,7 +2,7 @@
 
 ## Description
 
-Retrieve information about the specified entity group including it's tags.
+Retrieve information about the specified entity group including its tags.
 
 Membership in entity groups with non-empty expression is managed by the server. Adding/removing members of expression-based groups is not supported.
 
