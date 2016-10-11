@@ -1,4 +1,4 @@
-# List entities by name
+# List Entities by Name
 
 ## Description
 

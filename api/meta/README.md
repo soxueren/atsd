@@ -1,6 +1,6 @@
 ## Overview
 
-The Meta API lets you query and update metadata about metrics, entities, and entity groups in Axibase Time Series Database. 
+The Meta API lets you query and update metadata about metrics, entities, and entity groups in the Axibase Time Series Database. 
 
 ## Categories
 
@@ -40,13 +40,13 @@ The API uses `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` methods to read and wri
 
 ## Request Headers
 
-When submitting payload with `POST`, `PUT`, and `PATCH` methods in JSON format, add header `Content-Type: application/json`.
+When submitting payload with `POST`, `PUT`, and `PATCH` methods in JSON format, add the header `Content-Type: application/json`.
 
-For correct Unicode handling, specify charset `Content-Type: application/json;chartset=UTF-8`.
+For correct Unicode handling, specify the charset `Content-Type: application/json;chartset=UTF-8`.
 
 ## URI Encoding
 
-Request parameter values and parameterized path segments such as [`/api/v1/metrics/{metric}`](metric/get.md#path) should be [URL encoded](https://tools.ietf.org/html/rfc3986#section-2.1) to translate special characters such as `: / ? # [ ] @` into a percent format that can be transmitted safely as part of the request URI.
+Requested parameter values and parameterized path segments such as [`/api/v1/metrics/{metric}`](metric/get.md#path) should be [URL encoded](https://tools.ietf.org/html/rfc3986#section-2.1) to translate special characters such as `: / ? # [ ] @` into a percent format that can be transmitted safely as part of the request URI.
 
 | **Input** | **Encoded Value** | **URI** |
 |:---|:---|:---|
@@ -63,7 +63,7 @@ Status Code: 500
 ## Response Codes
 
 * `200` status code if the request is successful.
-* `401` status code in case of unknown resource.
+* `401` status code in case of an unknown resource.
 * `403` status code in case of access denied error.
 * `4xx` status code in case of other client errors.
 * `5xx` status code in case of server error. 
@@ -82,8 +82,8 @@ Processing errors are returned in JSON format:
 
 * User [authentication](/administration/user-authentiication.md) is required.
 * All requests must be authenticated using BASIC AUTHENTICATION.
-* Authentication method is **HTTP BASIC**.
-* Client may enable session cookies to execute multiple requests without re-sending BASIC authentication header.
+* The authentication method is **HTTP BASIC**.
+* The client may enable session cookies to execute multiple requests without re-sending BASIC authentication header.
 
 ## Authorization
 
@@ -103,12 +103,12 @@ Access-Control-Allow-Origin: *
 
 ## Compression
 
-* Clients may send compressed data by adding HTTP header **Content-Encoding: gzip** to the request.
+* Clients may send compressed data by adding the HTTP header **Content-Encoding: gzip** to the request.
 
 ## Troubleshooting
 
-* Review error logs on **Admin:Server Logs** page in case the payload rejected
-* To validate json received from a client, launch `netcat` utility in server mode, reconfigure the client to send data to netcat port, and dump incoming data to file:
+* Review error logs on the **Admin:Server Logs** page in case the payload is rejected
+* To validate JSON received from a client, launch the `netcat` utility in server mode, reconfigure the client to send data to netcat port, and dump the incoming data to file:
 
 ```elm
 nc -lk localhost 20088 > json-in.log &
@@ -121,4 +121,3 @@ curl http://localhost:20088/api/v1/metrics/cpu-used-total \
 
 cat json-in.log
 ```
-

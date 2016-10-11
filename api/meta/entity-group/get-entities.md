@@ -20,7 +20,7 @@ Retrieve a list of entities that are members of the specified entity group and a
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-| expression |string|Expression to include entities by name or by entity tags. Use `name` variable for entity name. Wildcard `*` is supported.|
+| expression |string|Expression to include entities by name or by entity tags. Use the `name` variable for entity name. The wildcard `*` is supported.|
 | minInsertDate |string|Include entities with last insert date at or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 | maxInsertDate |string|Include entities with last insert date less than specified time.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 | limit |integer|Maximum number of entities to retrieve, ordered by name.|
@@ -82,4 +82,3 @@ curl https://atsd_host:8443/api/v1/entity-groups/nur-entities-name/entities?tags
 ```
 
 ## Additional examples
-
