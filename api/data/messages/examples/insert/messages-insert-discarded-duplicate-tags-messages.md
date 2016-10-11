@@ -1,4 +1,4 @@
-# Discarded duplicate tags messages
+# Discarded Duplicate Tags Messages
 
 ## Description
 

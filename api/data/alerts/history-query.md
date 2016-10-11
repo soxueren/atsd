@@ -56,7 +56,7 @@ An array of matching alert objects containing the following fields:
 | ruleFilter | string | Rule filter. |
 | severity  | string | [Severity](/api/data/severity.md) code.  |
 | tags | string | Concatenated `name=value` pairs, for example `file_system=/dev/sda1;mount_point=/` |
-| repeatCount | integer | Number of times when the expression evaluated to true sequentially.  |
+| repeatCount | integer | Number of times when the expression was evaluated to true sequentially.  |
 | alert | string | Alert message.  |
 | window | string | Window length. |
 | value | double | Last numeric value received. |
@@ -155,6 +155,3 @@ curl  https://atsd_host:8443/api/v1/alerts/history \
 
 ### Control Fields
 * [Limit](examples/history-query/alerts-history-query-limit.md)
-
-
-

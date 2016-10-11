@@ -2,12 +2,12 @@
 
 ## Description
 
-Applying periodic aggregation to a time series with varying interval between observations using FIRST/LAST statistic function provides a technique for regularizing the series, including fill gaps with interpolated values.
+Applying periodic aggregation to a time series with varying intervals between observations using the FIRST/LAST statistic function provides a technique for regularizing the series, including fill gaps with interpolated values.
 
-* FIRST function returns first observed value in each period.
-* LAST function returns last observed value in each period.
+* FIRST function returns the first observed value in each period.
+* LAST function returns the last observed value in each period.
 
-Unlike average and rank functions such as percentiles, FIRST/LAST functions do not average out the values of the underlying series.
+Unlike average and rank functions, such as percentiles, FIRST/LAST functions do not average out the values of the underlying series.
 
 The process is sometimes called downsampling.
 
@@ -80,5 +80,3 @@ POST https://atsd_host:8443/api/v1/series/query
   }
 ]
 ```
-
-

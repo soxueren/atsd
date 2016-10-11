@@ -2,7 +2,7 @@
 
 ## Description
 
-Filter versions with `version_time` field which returns value change time in milliseconds.
+Filter versions with the `version_time` field which returns value change time in milliseconds.
 
 Supported parameters:
 
@@ -10,7 +10,7 @@ Supported parameters:
 * `version_source`
 * `version_time`
 
-## Versioned Data (no filter)
+## Versioned Data (No Filter)
 
 ```json
 [
@@ -72,4 +72,3 @@ POST https://atsd_host:8443/api/v1/series/query
 	{"d":"2015-08-13T10:00:00.000Z","v":14.0,"version":{"d":"2015-08-13T13:44:00.398Z","source":"user:axibase","status":"Manual revision"}}
 ]}]
 ```
-

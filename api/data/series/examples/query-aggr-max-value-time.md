@@ -2,7 +2,7 @@
 
 ## Description
 
-Returns minimum and maximum values as well as timestamps when these values occurred for the first time in each period.
+Returns minimum and maximum values, as well as timestamps, when these values occurred for the first time in each period.
 
 * Chartlab: https://apps.axibase.com/chartlab/2350319f
 * Source data 

@@ -1,4 +1,4 @@
-# Message Insert With Trimmed Message Text
+# Message Insert with Trimmed Message Text
 
 ## Description
 

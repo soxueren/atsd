@@ -2,9 +2,9 @@
 
 ## Description
 
-Specify interval without endDate to query data for a sliding window ending with current time.
+Specify interval without `endDate` to query data for a sliding window ending with current time.
 
-If interval is specified and `endDate` is not, `endDate` is set to current server time.
+If an interval is specified and `endDate` is not, `endDate` is set to current server time.
 
 This would be equivalent to setting `endDate` to `now`.
 

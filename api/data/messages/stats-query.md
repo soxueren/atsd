@@ -2,7 +2,7 @@
 
 ## Description
 
-Retrieve message counters as series for the specified filters.
+Retrieve message counters as series for specified filters.
 
 If period aggregation is enabled, the series contains the number of messages in each period. Otherwise, the series contains the total number of messages within the specified interval.
 
@@ -212,6 +212,3 @@ curl  https://atsd_host:8443/api/v1/messages/stats/query \
 * [Interpolate Counts for Missing Periods with 0 value](examples/stats-query/messages-stats-query-interpolate-counts-for-missing-periods.md)
 * [Milliseconds timeFormat](examples/stats-query/messages-stats-query-with-milliseconds-time-format.md)
 * [Multiple Queries for Different Message Types](examples/stats-query/messages-stats-query-multiple-queries-different-message-types.md)
-
-
-

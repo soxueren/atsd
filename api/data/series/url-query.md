@@ -24,11 +24,11 @@ Retrieve series values for the specified entity, metric, and optional series tag
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-|t:name|string|Tag name, prefixed by `t:`. Tag value specified as parameter value, for example, `&t:file_system=/tmp`. <br>Multiple values for the same tag can be specified by repeating parameter, for example, `&t:file_system=/tmp&&t:file_system=/home/export`|
-|aggregate|string|[Statistical function](/api/data/aggregation.md#statistics) to compute aggregate results from detailed values in each period|
+|t:name|string|Tag name, prefixed by `t:`. Tag value specified as a parameter value, for example, `&t:file_system=/tmp`. <br>Multiple values for the same tag can be specified by repeating the parameter, for example, `&t:file_system=/tmp&&t:file_system=/home/export`|
+|aggregate|string|[Statistical function](/api/data/aggregation.md#statistics) to compute aggregate results from detailed values in each period.|
 |period|string|Duration of the aggregation period specified as `count-timeunit`, for example, `1-hour`.|
-|limit|integer|Maximum number of samples returned in response. Default value: 0|
-|last|boolean|Performs GET instead of scan. Retrieves only 1 most recent value. Default value: false|
+|limit|integer|Maximum number of samples returned in a response. Default value: 0|
+|last|boolean|Performs GET instead of a scan. Retrieves only 1 most recent value. Default value: false|
 |columns|string|Columns included in CSV format response. <br>Possible values: time, date (time in ISO), entity, metric, t:{name}, value. <br>Default: time, entity, metric, requested tag names, value
 
 #### Query String Date Parameters

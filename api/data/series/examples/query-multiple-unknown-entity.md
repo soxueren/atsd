@@ -6,7 +6,7 @@ Retrieve data for multiple series queries with different metrics, entities, and 
 
 Each query may return multiple series. The order of series in the response is arbitrary.
 
-To associate series with queries, specify `requestId` parameter.
+To associate series with queries, specify the `requestId` parameter.
 
 Errors, other than those related to syntax and security, are reported separately for each query.
 

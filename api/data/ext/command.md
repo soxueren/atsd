@@ -4,13 +4,13 @@
 
 Insert data using Network API commands over HTTP.
 
-Multiple commands can be submitted as a batch in one request, separated by line feed character.
+Multiple commands can be submitted as a batch in one request, separated by a line feed character.
 
 Commands are processed sequentially.
 
 In case of syntax error or out-of-range date in one of commands, the invalid command is discarded and processing continues.
 
-> Note that processing behavior is different from Data Entry page which terminates processing on first invalid or out-of-range command.
+> Note that processing behavior is different from the Data Entry page which terminates processing on the first invalid or out-of-range command.
 
 The method returns a JSON object containing the counters of failed, successful, and total commands.
 
@@ -84,6 +84,3 @@ curl https://atsd_host:8443/api/v1/command \
   --request POST \
   --data-binary $'series e:DL1866 m:speed=650 m:altitude=12300\nproperty e:abc001 t:disk k:name=sda v:size=203459 v:fs_type=nfs'
 ```
-
-
-

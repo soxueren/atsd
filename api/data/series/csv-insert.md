@@ -22,10 +22,10 @@ The CSV header should include a leading time column and one or multiple numeric 
 ### Payload
 
 * Payload is plain text in CSV format containing a header line and data rows.
-* Last time in the file must be terminated with line feed.
-* The header must begin with `time` or `date` column, followed by at least one metric column containing numeric values.
-* Entity and Metric names containing space characters will be normalized by replacing space character with underscore.
-* Time must be specified in Unix milliseconds if `time` column is used, and in ISO format if `date` column is used.
+* The last time in the file must be terminated with a line feed.
+* The header must begin with a `time` or `date` column, followed by at least one metric column containing numeric values.
+* Entity and Metric names containing space characters will be normalized by replacing the space character with an underscore.
+* Time must be specified in Unix milliseconds if the `time` column is used, and in ISO format if the `date` column is used.
 * Separator must be comma.
 * It is recommended that samples are sorted by time in ascending order.
 
@@ -53,10 +53,10 @@ None.
 
 ### Errors
 
-* "Empty first row" if no rows found.
+* "Empty first row" if no rows are found.
 * "CSV must have at least 2 columns" if header contains less than 2 columns.
-* "First header must be 'time' (specified in Unix milliseconds) or 'date' (ISO 8601 date)" if the name of first column in header is neither `time` nor `date`.
-* "No data" if number of data rows is 0.
+* "First header must be 'time' (specified in Unix milliseconds) or 'date' (ISO 8601 date)" if the name of the first column in the header is neither `time` nor `date`.
+* "No data" if the number of data rows is 0.
 
 ## Example 
 
@@ -105,5 +105,3 @@ None.
 * [Series CSV Insert](examples/DataApiSeriesCsvInsertExample.java)
 
 ## Additional Examples
-
-

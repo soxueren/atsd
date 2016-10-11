@@ -1,8 +1,8 @@
-# Message Insert With Type/Source and Tag Collision
+# Message Insert with Type/Source and Tag Collision
 
 ## Description
 
-Message tags `{"type": "hello", "source": "world"}` are discarded since they conflict with predefined `type` and `source` fields.
+The message tags `{"type": "hello", "source": "world"}` are discarded since they conflict with the predefined `type` and `source` fields.
 
 ## Request
 

@@ -1,4 +1,4 @@
-# Discarded duplicate text messages
+# Discarded Duplicate Text Messages
 
 ## Description
 

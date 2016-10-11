@@ -1,8 +1,8 @@
-# Series Query: Unknown tag returns warning
+# Series Query: Unknown Tag Returns Warning
 
 ## Description
 
-Query data for series that have the specified tag whereas the tag does not exist in the database. 
+Query data for series that have the specified tag, whereas the tag does not exist in the database. 
 
 ## Request
 

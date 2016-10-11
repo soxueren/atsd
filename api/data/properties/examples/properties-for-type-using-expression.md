@@ -1,4 +1,4 @@
-# Properties for type using keyTagExpression Example
+# Properties for Type Using keyTagExpression Example
 
 ## Request
 

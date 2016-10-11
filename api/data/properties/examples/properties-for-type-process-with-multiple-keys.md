@@ -1,4 +1,4 @@
-# Properties for type 'process' with multiple keys
+# Properties for Type 'process' with Multiple Keys
 
 ## Request
 

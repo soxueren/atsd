@@ -2,9 +2,9 @@
 
 ## Description
 
-When merging irregular series for multiple entities `extend=true` with interpolation allows both to fill interim values as well as to extrapolate missing values at the beginning and and of each series.
+When merging irregular series for multiple entities, `extend=true` with interpolation enables filling interim values as well as extrapolating missing values at the beginning and end of each series.
 
-Entities that have no values in the specified interval are ignored and have no impact on truncate operation.
+Entities that have no values in the specified interval are ignored and have no impact on the truncate operation.
 
 ## Detailed Data by Series
 
@@ -37,7 +37,7 @@ Entities that have no values in the specified interval are ignored and have no i
 
 ## Request
 
-The request for all entities will match entity e-3 which has data but outside of `[2016-06-25T08:00:01Z-2016-06-25T08:01:00Z)` interval.
+The request for all entities will match entity e-3, which has data but outside of the `[2016-06-25T08:00:01Z-2016-06-25T08:01:00Z)` interval.
 This e-3 entity will have no impact on `extend` and `truncate`.
 
 ### URI
@@ -96,7 +96,7 @@ POST https://atsd_host:8443/api/v1/series/query
 
 Entity group e-entities contains e-1, e-2, e-3 entities.
 
-The request for e-entities group will match entity e-3 however it has no within `[2016-06-25T08:00:01Z-2016-06-25T08:01:00Z)` interval.
+The request for e-entities group will match entity e-3; however it has no value within the `[2016-06-25T08:00:01Z-2016-06-25T08:01:00Z)` interval.
 
 e-3 entity has no impact on `extend` and `truncate`.
 
@@ -129,4 +129,3 @@ e-3 entity has no impact on `extend` and `truncate`.
 	{"d":"2016-06-25T08:00:59.000Z","v":24.0}
 ]}]
 ```
-

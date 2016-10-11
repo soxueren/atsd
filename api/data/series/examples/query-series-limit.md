@@ -2,7 +2,7 @@
 
 ## Description
 
-`seriesLimit` parameter limits the number of series returned by the server. 
+The `seriesLimit` parameter limits the number of series returned by the server. 
 
 This parameter is typically used to prevent the client/server from processing too many series.
 

@@ -2,7 +2,7 @@
 
 ## Description
 
-Assign detailed values to repeating periods and compute average of all values in the given period.
+Assign detailed values to repeating periods and compute averages of all values in the given period.
 
 ## Request
 
@@ -71,5 +71,3 @@ POST https://atsd_host:8443/api/v1/series/query
   }
 ]
 ```
-
-

@@ -1,4 +1,4 @@
-# Series Query: Defined tags
+# Series Query: Defined Tags
 
 ## Description
 

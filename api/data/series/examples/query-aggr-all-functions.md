@@ -1,10 +1,10 @@
-# Series Query: Calculate All Supported Statistical Functions for each period
+# Series Query: Calculate All Supported Statistical Functions for Each Period
 
 ## Description
 
 Aggregation is a process of grouping detailed values into repeating periods and computing aggregation function(s) on all values in each period.
 
-The query can contain multiple aggregation functions in `period:types` array.
+The query can contain multiple aggregation functions in a `period:types` array.
 
 Threshold function require a threshold range object with min/max thresholds.
 
@@ -1070,5 +1070,3 @@ POST https://atsd_host:8443/api/v1/series/query
   }
 ]
 ```
-
-

@@ -1,4 +1,4 @@
-# Series Query: Multiple Entities including entities without data
+# Series Query: Multiple Entities Including Entities without Data
 
 ## Description
 

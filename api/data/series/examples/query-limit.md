@@ -2,13 +2,13 @@
 
 ## Description
 
-Number of samples (time:value) returned for each series can be limited with `limit` parameter.
+Number of samples (time:value) returned for each series can be limited with the `limit` parameter.
 
 The limit applies to each series separately.
 
 Samples for each series are always sorted by time in ascending order.
 
-`limit` of N returns last N values.
+`limit` of N returns the last N values.
 
 ## Request
 
@@ -55,5 +55,3 @@ POST https://atsd_host:8443/api/v1/series/query
   }
 ]
 ```
-
-

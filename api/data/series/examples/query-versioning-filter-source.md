@@ -2,7 +2,7 @@
 
 ## Description
 
-Filter versions with `version_source` field.
+Filter versions with the `version_source` field.
 
 Supported parameters:
 
@@ -70,4 +70,3 @@ POST https://atsd_host:8443/api/v1/series/query
 	{"d":"2015-08-13T10:00:00.000Z","v":0.0,"version":{"d":"2015-08-13T13:40:57.578Z","source":"api:10.102.0.14","status":"Invalid"}}
 ]}]
 ```
-
