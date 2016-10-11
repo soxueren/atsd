@@ -4,7 +4,7 @@
 
 Query detailed data for the specified time range, identified with `startDate` and `endDate`.
 
-Time zone offset can be specified with Z (UTC time), or with the `�hh:mm` format.
+Time zone offset can be specified with Z (UTC time), or with the `±hh:mm` format.
 
 ```ls
 2016-02-22T08:30:08.000-05:00 === 2016-02-22T13:30:08.000Z
