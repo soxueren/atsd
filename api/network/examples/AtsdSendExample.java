@@ -46,17 +46,20 @@ public class AtsdSendExample {
         {
             Map<String, String> tags = new LinkedHashMap<String, String>();
             tags.put("source", "plant");
-            client.sendValue(new Date(), "sensor-02", "equipment", "", tags);
+            client.sendValue(new Date(), "sensor-02", "equipment", "Suspending", tags);
         }
 
         //send a numeric sample
-        client.sendPiTag(new Date(), "precipitation", "sensor-03", "", 79.0d, -1, 1, true, true, false, "Any product of the condensation of atmospheric water vapor",  null);
-
+        {
+            Map<String, String> tags = new LinkedHashMap<String, String>();
+            tags.put("precision", "digital");
+            client.sendPiComp2("precipitation", new Date(), 79.0d, -1, "QA", "sensor-03", tags);
+        }
         //send a text message
         {
             Map<String, String> tags = new LinkedHashMap<String, String>();
             tags.put("source", "plant");
-            client.sendPiTag(new Date(), "precipitation", "sensor-03", "equipment", null, 0, 0, false, true, false, "Any product of the condensation of atmospheric water vapor",  tags);
+            client.sendPiComp2("precipitation", new Date(), "Suspending", 0, "QSA", "sensor-03", tags);
         }
 
         //close the connection

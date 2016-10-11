@@ -218,7 +218,7 @@ public class AtsdTcpClient {
             tags = new HashMap<>();
         }
         String command;
-        if (null == value || value instanceof String) {
+        if (value == null || value instanceof String) {
             command = "message";
             command += " ms:" + date.getTime();
             command += " e:" + escape(entity);
@@ -263,18 +263,16 @@ public class AtsdTcpClient {
         writeCommand(command);
     }
 
-    public void sendPiTag(Date date, String piTag, String entity, String svalue, Double nvalue, int status, int index,
-                           boolean annotated, boolean substituted, boolean questionable, String annotation,
-                           Map<String, String> tags) throws IOException {
+    public void sendPiComp2(String piTag, Date date, Object value, int status, String flags,
+                            String entity, Map<String, String> tags) throws IOException {
         if (entity.contains(" ")) {
             throw new IllegalArgumentException("Entity name can include only printable characters");
         }
-        tags = filterIgnoredTags(status, index, annotated, substituted, questionable, tags);
-        tags.put("annotation", annotation);
+        tags = filterIgnoredTags(status, flags, tags);
         String command;
-        if (null == nvalue) {
+        if (value == null || value instanceof String) {
             command = "message";
-            command += " ms:" + date.getTime();
+            command += " s:" + (date.getTime() / 1000);
             command += " e:" + escape(entity);
             tags.put("type", piTag);
             for (Map.Entry<String, String> entry : tags.entrySet()) {
@@ -290,6 +288,7 @@ public class AtsdTcpClient {
                 }
                 command += " t:" + escape(entry.getKey()) + "=" + val;
             }
+            String svalue = value == null ? "" : String.valueOf(value);
             command += " m:" + escape(svalue);
         } else {
             if (piTag.contains(" ")) {
@@ -298,7 +297,7 @@ public class AtsdTcpClient {
             command = "series";
             command += " ms:" + date.getTime();
             command += " e:" + escape(entity);
-            command += " m:" + escape(piTag) + "=" + nvalue;
+            command += " m:" + escape(piTag) + "=" + String.valueOf(value);
             if (tags != null) {
                 for (Map.Entry<String, String> entry : tags.entrySet()) {
                     if (entry.getKey().contains(" ")) {
@@ -318,24 +317,22 @@ public class AtsdTcpClient {
         writeCommand(command);
     }
 
-    private Map<String, String> filterIgnoredTags(int status, int index, boolean annotated, boolean substituted, boolean questionable, Map<String, String> tags) {
+    private Map<String, String> filterIgnoredTags(int status, String flags, Map<String, String> tags) {
+        flags = flags.toLowerCase();
         if (tags == null) {
             tags = new HashMap<>();
         }
-        if (1 != index) {
-            tags.put("index", String.valueOf(index));
-        }
-        if (0 != status) {
+        if (status != 0) {
             tags.put("status", String.valueOf(status));
         }
-        if (annotated) {
-            tags.put("annotated", String.valueOf(annotated));
+        if (flags.contains("a")) {
+            tags.put("annotated", "true");
         }
-        if (substituted) {
-            tags.put("substituted", String.valueOf(substituted));
+        if (flags.contains("s")) {
+            tags.put("substituted", "true");
         }
-        if (questionable) {
-            tags.put("questionable", String.valueOf(questionable));
+        if (flags.contains("q")) {
+            tags.put("questionable", "true");
         }
         return tags;
     }
