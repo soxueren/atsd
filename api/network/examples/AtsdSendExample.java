@@ -53,13 +53,13 @@ public class AtsdSendExample {
         {
             Map<String, String> tags = new LinkedHashMap<String, String>();
             tags.put("precision", "digital");
-            client.sendPiComp2("precipitation", new Date(), 79.0d, -1, "QA", "sensor-03", tags);
+            client.sendPiComp2("precipitation", new Date(), 2, 79.0d, -1, "QA", "sensor-03", tags);
         }
         //send a text message
         {
             Map<String, String> tags = new LinkedHashMap<String, String>();
             tags.put("source", "plant");
-            client.sendPiComp2("precipitation", new Date(), "Suspending", 0, "QSA", "sensor-03", tags);
+            client.sendPiComp2("precipitation", new Date(), 3, "Suspending", 0, "QSA", "sensor-03", tags);
         }
 
         //close the connection

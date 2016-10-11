@@ -263,7 +263,7 @@ public class AtsdTcpClient {
         writeCommand(command);
     }
 
-    public void sendPiComp2(String piTag, Date date, Object value, int status, String flags,
+    public void sendPiComp2(String piTag, Date date, int index, Object value, int status, String flags,
                             String entity, Map<String, String> tags) throws IOException {
         if (entity.contains(" ")) {
             throw new IllegalArgumentException("Entity name can include only printable characters");
@@ -272,7 +272,7 @@ public class AtsdTcpClient {
         String command;
         if (value == null || value instanceof String) {
             command = "message";
-            command += " s:" + (date.getTime() / 1000);
+            command += " s:" + getSeconds(date, index);
             command += " e:" + escape(entity);
             tags.put("type", piTag);
             for (Map.Entry<String, String> entry : tags.entrySet()) {
@@ -295,7 +295,7 @@ public class AtsdTcpClient {
                 throw new IllegalArgumentException("Metric name can include only printable characters");
             }
             command = "series";
-            command += " ms:" + date.getTime();
+            command += " s:" + getSeconds(date, index);
             command += " e:" + escape(entity);
             command += " m:" + escape(piTag) + "=" + String.valueOf(value);
             if (tags != null) {
@@ -315,6 +315,10 @@ public class AtsdTcpClient {
             }
         }
         writeCommand(command);
+    }
+
+    private long getSeconds(Date date, int index) {
+        return (date.getTime() / 1000 + (index > 1 ? index - 1 : 0));
     }
 
     private Map<String, String> filterIgnoredTags(int status, String flags, Map<String, String> tags) {
