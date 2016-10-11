@@ -42,7 +42,7 @@ The API uses `GET`, `POST`, `PUT`, `PATCH`, and `DELETE` methods to read and wri
 
 When submitting payload with `POST`, `PUT`, and `PATCH` methods in JSON format, add the header `Content-Type: application/json`.
 
-For correct Unicode handling, specify the charset `Content-Type: application/json;chartset=UTF-8`.
+For correct Unicode handling, specify the chartset `Content-Type: application/json;chartset=UTF-8`.
 
 ## URI Encoding
 
