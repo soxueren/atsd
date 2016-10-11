@@ -263,19 +263,19 @@ public class AtsdTcpClient {
         writeCommand(command);
     }
 
-    public void sendPiComp2(String piTag, Date date, int index, Object value, int status, boolean annotated,
-                            boolean substituted, boolean questionable, String annotations, String entity,
+    public void sendPiComp2(String tag, Date date, int index, Object value, int status, boolean questionable,
+                            boolean substituted, boolean annotated, String annotations, String entity,
                             Map<String, String> tags) throws IOException {
         if (entity.contains(" ")) {
             throw new IllegalArgumentException("Entity name can include only printable characters");
         }
-        tags = addNonIgnoredTags(status, annotated, substituted, questionable, annotations, tags);
+        tags = addNonIgnoredTags(status, questionable, substituted, annotated, annotations, tags);
         String command;
         if (value == null || value instanceof String) {
             command = "message";
-            command += " s:" + getSeconds(date, index);
+            command += " ms:" + getMilliseconds(date, index);
             command += " e:" + escape(entity);
-            tags.put("type", piTag);
+            tags.put("type", tag);
             for (Map.Entry<String, String> entry : tags.entrySet()) {
                 if (entry.getKey().contains(" ")) {
                     throw new IllegalArgumentException("Message tag name can include only printable characters");
@@ -292,13 +292,13 @@ public class AtsdTcpClient {
             String svalue = value == null ? "" : String.valueOf(value);
             command += " m:" + escape(svalue);
         } else {
-            if (piTag.contains(" ")) {
+            if (tag.contains(" ")) {
                 throw new IllegalArgumentException("Metric name can include only printable characters");
             }
             command = "series";
-            command += " s:" + getSeconds(date, index);
+            command += " ms:" + getMilliseconds(date, index);
             command += " e:" + escape(entity);
-            command += " m:" + escape(piTag) + "=" + String.valueOf(value);
+            command += " m:" + escape(tag) + "=" + String.valueOf(value);
             if (tags != null) {
                 for (Map.Entry<String, String> entry : tags.entrySet()) {
                     if (entry.getKey().contains(" ")) {
@@ -318,12 +318,13 @@ public class AtsdTcpClient {
         writeCommand(command);
     }
 
-    private long getSeconds(Date date, int index) {
-        return (date.getTime() / 1000 + (index > 1 ? index - 1 : 0));
+    private long getMilliseconds(Date date, int index) {
+        // round date to seconds, add milliseconds based on index
+        return (1000 * (date.getTime() / 1000) + (index > 1 ? index - 1 : 0));
     }
 
-    private Map<String, String> addNonIgnoredTags(int status, boolean annotated, boolean substituted,
-                                                  boolean questionable, String annotations, Map<String, String> tags) {
+    private Map<String, String> addNonIgnoredTags(int status, boolean questionable, boolean substituted,
+                                                  boolean annotated, String annotations, Map<String, String> tags) {
         if (tags == null) {
             tags = new HashMap<>();
         }
