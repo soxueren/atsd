@@ -23,8 +23,8 @@ An array of query objects containing the following filtering fields:
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 | type | string | **[Required]** Property type name. <br>Use `$entity_tags` type to retrieve entity tags. |
-| key | object | Object with `name=value` fields, for example `"key": {"file_system": "/"}`<br>Matches records with _exact_ or _partial_ key fields based on `exactMatch` parameter value.|
-| exactMatch | boolean | `key` match operator. _Exact_ match if true, _partial_ match if false. Default: **false**.<br>_Exact_ match selects a record with exactly the same `key` as requested.<br>_Partial_ match selects records with key that contains requested fields but may also include other fields.|
+| key | object | Object with `name=value` fields, for example `"key": {"file_system": "/"}`<br>Matches records with _exact_ or _partial_ key fields based on the `exactMatch` parameter value.|
+| exactMatch | boolean | `key` match operator. _Exact_ match if true, _partial_ match if false. Default: **false**.<br>_Exact_ match selects a record with exactly the same `key` as requested.<br>_Partial_ match selects records with `key` that contains requested fields but may also include other fields.|
 | keyTagExpression| string | Expression for matching properties with specified keys or tags.<br>Example: `keys.file_system LIKE '/u*'` or `tags.fs_type == 'ext4'`.<br>Use `lower()` function to ignore case, for example `lower(keys.file_system) LIKE '/u*'`|
 
 * Key and tag values are case-insensitive.
@@ -44,7 +44,7 @@ An array of query objects containing the following filtering fields:
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 | limit   | integer | Maximum number of records to be returned. Default: 0.<br>Limit is not applied if the parameter value <= 0. | 
-| last | boolean | Return only records with the update time equal to the maximum update time of matched records. Default: false. |
+| last | boolean | Returns only records with the update time equal to the maximum update time of matched records. Default: false. |
 | offset | integer | Exclude records based on difference, in milliseconds, between maximum update time of matched records and update time of the current record. Default: -1 (not applied).<br>If `offset >=0` and the difference exceeds `offset`, the record is excluded from results. <br>`offset=0` is equivalent to `last=true`.|   
 
 ## Response 
@@ -89,9 +89,9 @@ Queries would return the following records:
 | false      | key-2=VAL-3             | C       | 
 ```
 
-## Offset example
+## Offset Example
 
-Assuming property records A,B,C and D exist and time represents their update time in milliseconds:
+Assuming property records A,B,C, and D exist and time represents their update time in milliseconds:
 
 ```ls
 | record | type   | entity | key-1 | time | 

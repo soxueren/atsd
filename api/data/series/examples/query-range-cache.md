@@ -8,7 +8,7 @@ If the last value was received outside of the specified time range, no data is r
 
 Queries for Last Insert Cache are efficient since the table contains only the last value and has fewer rows to scan.
 
-Values in Last Insert Cache table maybe delayed of up to 1 minute (cache to disk interval).
+Values in Last Insert Cache table maybe delayed up to 1 minute (cache to disk interval).
 
 ## Request
 
@@ -55,5 +55,3 @@ POST https://atsd_host:8443/api/v1/series/query
   }
 ]
 ```
-
-

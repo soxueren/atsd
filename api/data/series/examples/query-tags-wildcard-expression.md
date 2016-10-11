@@ -1,8 +1,8 @@
-# Series Query: Match tags with wildcard
+# Series Query: Match Tags with Wildcard
 
 ## Description
 
-Query data for series that have the specified tag `file_system` with that starts with `/dev`. 
+Query data for series that have the specified tag `file_system` that starts with `/dev`. 
 
 ## Request
 

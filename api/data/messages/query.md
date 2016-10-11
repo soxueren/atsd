@@ -26,8 +26,8 @@ An array of query objects containing the following filtering fields:
 |source       |  string   | Message source. |
 |tags	      | object  | Object with `name=value` fields. <br>Matches records with tags that contain the same fields but may also include other fields. |
 |severity     |  string   | Severity [name](/api/data/severity.md).  <br>Matches records with the specified severity.|
-|severities   |  array   | Am array of severity [codes or names](/api/data/severity.md).  <br>Matches records with one of the the specified severities.<br>Array elements can be specified as string or as number.|
-|minSeverity  |  string   | Minimum [code or name](/api/data/severity.md) severity filter. <br>Can be specified as string or as number. |
+|severities   |  array   | An array of severity [codes or names](/api/data/severity.md).  <br>Matches records with one of the the specified severities.<br>Array elements can be specified as a string or as a number.|
+|minSeverity  |  string   | Minimum [code or name](/api/data/severity.md) severity filter. <br>Can be specified as a string or as a number. |
 
 * `severity`, `minSeverity`, and `severities` values are case-insensitive.
 
@@ -155,6 +155,3 @@ curl  https://atsd_host:8443/api/v1/messages/query \
 * [Multiple entities for specified type](examples/query/messages-query-multiple-entities-specified-type.md)
 * [Filter messages for specified severity](examples/query/messages-query-filter-messages-specified-severity.md)
 * [Filter messages for minimum severity](examples/query/messages-query-filter-messages-minimum-severity.md)
-
-
-

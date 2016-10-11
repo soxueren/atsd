@@ -1,4 +1,4 @@
-# Series Query: Group Extend Without Aggregation
+# Series Query: Group Extend without Aggregation
 
 ## Description
 
@@ -87,7 +87,7 @@ POST https://atsd_host:8443/api/v1/series/query
 ]}]
 ```
 
-Extend is similar to interpolation where missing values at the beginning of in interval are interpolated with NEXT type, and missing values at the end of the interval are interpolated with PREVIOUS type.
+Extend is similar to interpolation where missing values at the beginning of an interval are interpolated with `NEXT` type. Missing values at the end of the interval are interpolated with `PREVIOUS` type.
 
 ```ls
 | datetime                 | e1.value | e2.value | SUM | 
@@ -100,5 +100,4 @@ Extend is similar to interpolation where missing values at the beginning of in i
 | 2016-06-25T08:00:59.000Z | 5 +(PREV)| 19       | 24  |
 ```
 
-Since `extend` is performed prior to truncation, `truncate` setting has no effect on extended results.
-
+Since `extend` is performed prior to truncation, the `truncate` setting has no effect on extended results.

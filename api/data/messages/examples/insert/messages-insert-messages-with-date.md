@@ -1,11 +1,11 @@
-# Message Insert With Date
+# Message Insert with Date
 
 ## Description
 
 Supported [ISO date](/api/data#datetime-formats) formats:
 
 * yyyy-MM-dd'T'HH:mm:ss[.SSS]'Z'
-* yyyy-MM-dd'T'HH:mm:ss[.SSS]±hh:mm
+* yyyy-MM-dd'T'HH:mm:ss[.SSS]ï¿½hh:mm
 
 Milliseconds are optional.
 

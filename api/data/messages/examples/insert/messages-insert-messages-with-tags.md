@@ -1,4 +1,4 @@
-# Insert Message With Tags
+# Insert Message with Tags
 
 ## Description
 

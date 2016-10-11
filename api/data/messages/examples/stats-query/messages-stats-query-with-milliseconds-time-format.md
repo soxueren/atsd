@@ -1,4 +1,4 @@
-# Stats-Query With Milliseconds Time Format
+# Stats-Query with Milliseconds Time Format
 
 ## Description
 
@@ -61,4 +61,3 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
   }
 ]
 ```
-

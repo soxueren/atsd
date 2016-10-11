@@ -1,4 +1,4 @@
-# Properties for type 'disk' with key
+# Properties for Type 'disk' with Key
 
 ## Request
 ### URI

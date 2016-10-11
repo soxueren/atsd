@@ -4,9 +4,9 @@
 
 Change acknowledgement status of the specified open alerts.
 
-This method can be used to acknowledge and un-acknowledge alerts with `"acknowledged": true|false` property in the request.
+This method can be used to acknowledge and un-acknowledge alerts with the `"acknowledged": true|false` property in the request.
 
-If `acknowledged` property is not specified, the alert will be un-acknowledged. 
+If the `acknowledged` property is not specified, the alert will be un-acknowledged. 
 
 ## Request
 
@@ -68,6 +68,3 @@ curl https://atsd_host:8443/api/v1/alerts/update \
 
 ## Additional Examples
 * [Multiple Id Update](examples/update/alerts-update-multiple-id.md)
-
-
-

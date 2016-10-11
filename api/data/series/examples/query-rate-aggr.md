@@ -2,7 +2,7 @@
 
 ## Description
 
-Aggregation function is applied to values returned by rate function.
+Aggregation function is applied to values returned by the rate function.
 
 ### Data
 
@@ -86,4 +86,3 @@ POST https://atsd_host:8443/api/v1/series/query
 	{"d":"2016-02-16T12:35:58.000Z","v":3763408.0}
 ]}]
 ``` 
-

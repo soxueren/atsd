@@ -2,7 +2,7 @@
 
 ## Description
 
-The `Aggregation -> Group` order creates aggregate series for each of the merged series and then performs grouping of the aggregated series.
+The `Aggregation -> Group` order creates aggregate series for each of the merged series, and then performs grouping of the aggregated series.
 
 The timestamps used for grouping combine period start times from the underlying aggregated series.
 

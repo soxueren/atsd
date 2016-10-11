@@ -2,17 +2,17 @@
 
 ## Description
 
-Upload CSV file or multiple CSV files for parsing into series, properties, or messages with the specified CSV parser.
+Upload a CSV file or multiple CSV files for parsing into series, properties, or messages with the specified CSV parser.
 
 File(s) can be optionally compressed with gzip or zip. 
 
 Multiple files can be archived with zip/tar and uploaded as one zip or tar.gz archive.
 
-The method supports processing of the uploaded file attached as data as well as a part in multi-part payload.
+This method supports processing of the uploaded attached file as data as well as a part in a multi-part payload.
 
 ## Date Limits
 
-* Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 millisecond from Epoch time.
+* Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 milliseconds from Epoch time.
 * Maximum date that can be stored by the database is **2106-02-07T06:59:59.999Z**, or 4294969199999 milliseconds from Epoch time.
 * If the date is outside of the above range, file processing will terminate at the line containing invalid date and a corresponding error will be raised for the client.
 
@@ -51,15 +51,15 @@ Multi-part mode:
 | metric-tags | string | Comma-separated list of metric tags added as series, message, or property tags to parsed commands. |
 | wait | boolean | Wait until processing of the file into commands is completed by the server. Default: false.<br>If wait is disabled, the file is processed by the server asynchronously. | 
 | rules | boolean | Process commands in the rule engine. Default: false | 
-| time | string | Date in ISO format or using [endtime](/end-time-syntax.md) syntax, applied to commands if the file doesn't contain a time column. | 
+| time | string | Date in ISO format or using [endtime](/end-time-syntax.md) syntax applies to commands if the file doesn't contain a time column. | 
 | timezone | string | Timezone applied to timestamps specified in local time. | 
 | test | boolean | Parse and validate the file without actually processing and storing commands. Default: false. | 
 | t:{name} | string | One or multiple default tags, inserted as series/property/message tags depending on command type, for example: `&t:location=SVL&t:site=QB1`.<br>Tag names should not contain whitespace. |
 
 ### Payload
 
-* File attached as data, or
-* Multi-part content containing the file. Part name containing the uploaded file should be named `filedata` and include `filename` parameter:
+* File attached as data; or
+* Multi-part content containing the file. Part name containing the uploaded file should be named `filedata` and include the `filename` parameter:
 
 ```
 Content-Disposition: form-data; name="filedata"; filename="arch.tar.gz"
@@ -140,5 +140,3 @@ curl --insecure -X POST --user admin:pwd -T csv-3120.csv "https://atsd_host:8443
 ```
 
 > Make sure that request parameter values in query string are URL-encoded, e.g. `&time=now%20-%201%20*%20hour`
-
-

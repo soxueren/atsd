@@ -4,7 +4,7 @@
 
 Query data for series with entities whose entity tags match the specified expression.
 
-Entity tags can be accessed with `tags.{name}` syntax.
+Entity tags can be accessed with the `tags.{name}` syntax.
 
 Entity object provides the following parameters that can be referenced in `entityExpression`:
 

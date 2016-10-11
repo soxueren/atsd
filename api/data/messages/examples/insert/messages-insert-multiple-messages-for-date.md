@@ -1,8 +1,8 @@
-# Multiple Messages For Date Insert
+# Multiple Messages for Date Insert
 
 ## Description
 
-Both messages will be persisted since date is different.
+Both messages will be persisted since the date is different.
 
 ## Request
 

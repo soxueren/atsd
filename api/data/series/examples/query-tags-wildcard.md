@@ -1,4 +1,4 @@
-# Series Query: Match all tags with wildcard
+# Series Query: Match All Tags with Wildcard
 
 ## Description
 

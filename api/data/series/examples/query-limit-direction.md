@@ -2,11 +2,11 @@
 
 ## Description
 
-`direction` parameter orders samples by time for the purpose of applying `limit`.
+The `direction` parameter orders samples by time for the purpose of applying `limit`.
 
 Samples for each series are always sorted by time in ascending order.
 
-With `limit` specified, `ASC` returns first N values, ordered by time. `DESC` returns last N values.
+With `limit` specified, `ASC` returns first N values ordered by time. `DESC` returns last N values.
 
 `ASC` order is implemented only when the query returns 1 series.
 
@@ -106,4 +106,3 @@ POST https://atsd_host:8443/api/v1/series/query
   }
 ]
 ```
-

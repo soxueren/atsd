@@ -10,7 +10,7 @@ Supported parameters:
 * `version_source`
 * `version_time`
 
-## Versioned Data (no filter)
+## Versioned Data (No Filter)
 
 ```json
 [
@@ -68,4 +68,3 @@ POST https://atsd_host:8443/api/v1/series/query
 	{"d":"2015-08-13T10:00:00.000Z","v":0.0,"version":{"d":"2015-08-13T13:40:57.578Z","source":"api:10.102.0.14","status":"Invalid"}}
 ]}]
 ```
-

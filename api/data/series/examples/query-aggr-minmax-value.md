@@ -2,7 +2,7 @@
 
 ## Description
 
-MAX_VALUE_TIME function returns the time in Epoch milliseconds when the maximum was reached for the first time in each period.
+The `MAX_VALUE_TIME` function returns the time in Epoch milliseconds when the maximum was reached for the first time in each period.
 
 ## Request
 
@@ -75,5 +75,3 @@ POST https://atsd_host:8443/api/v1/series/query
   }
 ]
 ```
-
-

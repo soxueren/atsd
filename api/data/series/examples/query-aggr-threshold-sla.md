@@ -1,8 +1,8 @@
-# Series Query: Threshold With Working Hours Filter
+# Series Query: Threshold with Working Hours Filter
 
 ## Description
 
-Calculate threshold violation statistics, apply working hours filter.
+To calculate threshold violation statistics, apply the working hours filter.
 
 ## Request
 
@@ -92,4 +92,3 @@ POST https://atsd_host:8443/api/v1/series/query
 	{"d":"2016-06-27T17:00:00.000Z","v":99.90738888888889}
 ]}]
 ```
-

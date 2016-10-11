@@ -1,4 +1,4 @@
-# Interpolate Counts for Missing Periods with 0 value
+# Interpolate Counts for Missing Periods with 0 Value
 
 ## Description
 
@@ -76,4 +76,3 @@ POST https://atsd_host:8443/api/v1/messages/stats/query
   }
 ]
 ```
-
