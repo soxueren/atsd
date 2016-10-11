@@ -1,4 +1,4 @@
-# The Integer Value Of The Field "count" Object "interval"
+# The Integer Value of the Field "count" Object "interval"
 
 ## Description
 
@@ -58,4 +58,3 @@ POST https://atsd_host:8443/api/v1/messages/query
   }
 ]
 ```
-

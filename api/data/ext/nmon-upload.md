@@ -23,7 +23,7 @@ Upload nmon file for parsing.
 |:---|:---|:---|
 | p   | string   | [**Required**] Parser Name as configured on **Configuration:Parsers nmon** page, or set to `default`.|
 | e      | string   | Entity name, typically name of the server where nmon file was generated.|
-| f| string | nmon file name. File name can be optionally specified in `Content-Disposition` header. |
+| f| string | nmon file name. File name can be optionally specified in the `Content-Disposition` header. |
 | z | string | Timezone applied to timestamps specified in local time. | 
 
 ### Payload
@@ -77,5 +77,3 @@ AAA,runname,nurswgvml0023
 None.
 
 ## Additional Examples
-
-

@@ -24,7 +24,7 @@ public class AtsdTcpClient {
         String version = getServerVersion();
         log("Server version: {0}", version);
         //check the version, it should be a numeric revision number such as 13743
-        if (version == null){
+        if (version == null) {
             throw new UnknownServiceException("Server failed to respond to 'version' command. Check that the client is connecting to TCP port (default 8081). Current port: " + port);
         } else {
             try {
@@ -61,7 +61,7 @@ public class AtsdTcpClient {
         writer.flush();
         commandCounter++;
         //print first 10 commands to stdout
-        if (commandCounter <= 10){
+        if (commandCounter <= 10) {
             log("Command [{0,number,#}] sent: {1}", commandCounter, command);
         }
     }
@@ -76,7 +76,7 @@ public class AtsdTcpClient {
         String command = "series";
         command += " ms:" + date.getTime();
         command += " e:" + escape(entity);
-        command += " m:" + escape(metric)+"=" + value;
+        command += " m:" + escape(metric) + "=" + value;
         writeCommand(command);
     }
 
@@ -90,20 +90,20 @@ public class AtsdTcpClient {
         String command = "series";
         command += " ms:" + date.getTime();
         command += " e:" + escape(entity);
-        command += " m:" + escape(metric)+"=" + value;
+        command += " m:" + escape(metric) + "=" + value;
         if (tags != null) {
             for (Map.Entry<String, String> entry : tags.entrySet()) {
                 if (entry.getKey().contains(" ")) {
                     throw new IllegalArgumentException("Series tag name can include only printable characters");
                 }
-                if (entry.getValue() == null){
+                if (entry.getValue() == null) {
                     throw new IllegalArgumentException("Series tag value cannot be null");
                 }
                 String val = escape(entry.getValue()).trim();
-                if (val.isEmpty()){
+                if (val.isEmpty()) {
                     throw new IllegalArgumentException("Series tag value cannot be empty");
                 }
-                command += " t:" + escape(entry.getKey()) +"=" + val;
+                command += " t:" + escape(entry.getKey()) + "=" + val;
             }
         }
         writeCommand(command);
@@ -120,21 +120,21 @@ public class AtsdTcpClient {
             if (entry.getKey().contains(" ")) {
                 throw new IllegalArgumentException("Metric name can include only printable characters");
             }
-            command += " m:" + escape(entry.getKey()) +"=" + entry.getValue();
+            command += " m:" + escape(entry.getKey()) + "=" + entry.getValue();
         }
         if (tags != null) {
             for (Map.Entry<String, String> entry : tags.entrySet()) {
                 if (entry.getKey().contains(" ")) {
                     throw new IllegalArgumentException("Series tag name can include only printable characters");
                 }
-                if (entry.getValue() == null){
+                if (entry.getValue() == null) {
                     throw new IllegalArgumentException("Series tag value cannot be null");
                 }
                 String val = escape(entry.getValue()).trim();
-                if (val.isEmpty()){
+                if (val.isEmpty()) {
                     throw new IllegalArgumentException("Series tag value cannot be empty");
                 }
-                command += " t:" + escape(entry.getKey()) +"=" + val;
+                command += " t:" + escape(entry.getKey()) + "=" + val;
             }
         }
         writeCommand(command);
@@ -152,14 +152,14 @@ public class AtsdTcpClient {
                 if (entry.getKey().contains(" ")) {
                     throw new IllegalArgumentException("Message tag name can include only printable characters");
                 }
-                if (entry.getValue() == null){
+                if (entry.getValue() == null) {
                     throw new IllegalArgumentException("Message tag value cannot be null");
                 }
                 String val = escape(entry.getValue()).trim();
-                if (val.isEmpty()){
+                if (val.isEmpty()) {
                     throw new IllegalArgumentException("Message tag value cannot be empty");
                 }
-                command += " t:" + escape(entry.getKey()) +"=" + val;
+                command += " t:" + escape(entry.getKey()) + "=" + val;
             }
         }
         command += " m:" + escape(message);
@@ -182,14 +182,14 @@ public class AtsdTcpClient {
                 if (entry.getKey().contains(" ")) {
                     throw new IllegalArgumentException("Property key name can include only printable characters");
                 }
-                if (entry.getValue() == null){
+                if (entry.getValue() == null) {
                     throw new IllegalArgumentException("Property key value cannot be null");
                 }
                 String val = escape(entry.getValue()).trim();
-                if (val.isEmpty()){
+                if (val.isEmpty()) {
                     throw new IllegalArgumentException("Property key value cannot be empty");
                 }
-                command += " k:" + escape(entry.getKey()) +"=" + val;
+                command += " k:" + escape(entry.getKey()) + "=" + val;
             }
         }
         if (tags != null) {
@@ -197,26 +197,163 @@ public class AtsdTcpClient {
                 if (entry.getKey().contains(" ")) {
                     throw new IllegalArgumentException("Property tag name can include only printable characters");
                 }
-                if (entry.getValue() == null){
+                if (entry.getValue() == null) {
                     throw new IllegalArgumentException("Property tag value cannot be null");
                 }
                 String val = escape(entry.getValue()).trim();
-                if (val.isEmpty()){
+                if (val.isEmpty()) {
                     throw new IllegalArgumentException("Property tag value cannot be empty");
                 }
-                command += " v:" + escape(entry.getKey()) +"=" + val;
+                command += " v:" + escape(entry.getKey()) + "=" + val;
             }
         }
         writeCommand(command);
     }
 
-    private String escape(String s){
-        if (s.indexOf("\"") >= 0){
+    public void sendValue(Date date, String entity, String name, Object value, Map<String, String> tags) throws IOException {
+        if (entity.contains(" ")) {
+            throw new IllegalArgumentException("Entity name can include only printable characters");
+        }
+        if (tags == null) {
+            tags = new HashMap<>();
+        }
+        String command;
+        if (value == null || value instanceof String) {
+            command = "message";
+            command += " ms:" + date.getTime();
+            command += " e:" + escape(entity);
+            tags.put("type", name);
+            for (Map.Entry<String, String> entry : tags.entrySet()) {
+                if (entry.getKey().contains(" ")) {
+                    throw new IllegalArgumentException("Message tag name can include only printable characters");
+                }
+                if (entry.getValue() == null) {
+                    throw new IllegalArgumentException("Message tag value cannot be null");
+                }
+                String val = escape(entry.getValue()).trim();
+                if (val.isEmpty()) {
+                    throw new IllegalArgumentException("Message tag value cannot be empty");
+                }
+                command += " t:" + escape(entry.getKey()) + "=" + val;
+            }
+            String message = value == null ? "" : String.valueOf(value);
+            command += " m:" + escape(message);
+        } else {
+            if (name.contains(" ")) {
+                throw new IllegalArgumentException("Metric name can include only printable characters");
+            }
+            command = "series";
+            command += " ms:" + date.getTime();
+            command += " e:" + escape(entity);
+            command += " m:" + escape(name) + "=" + String.valueOf(value);
+            for (Map.Entry<String, String> entry : tags.entrySet()) {
+                if (entry.getKey().contains(" ")) {
+                    throw new IllegalArgumentException("Series tag name can include only printable characters");
+                }
+                if (entry.getValue() == null) {
+                    throw new IllegalArgumentException("Series tag value cannot be null");
+                }
+                String val = escape(entry.getValue()).trim();
+                if (val.isEmpty()) {
+                    throw new IllegalArgumentException("Series tag value cannot be empty");
+                }
+                command += " t:" + escape(entry.getKey()) + "=" + val;
+            }
+        }
+        writeCommand(command);
+    }
+
+    public void sendPiComp2(String tag, Date date, int index, Object value, int status, boolean questionable,
+                            boolean substituted, boolean annotated, String annotations, String entity,
+                            Map<String, String> tags) throws IOException {
+        if (entity.contains(" ")) {
+            throw new IllegalArgumentException("Entity name can include only printable characters");
+        }
+        tags = addNonIgnoredTags(status, questionable, substituted, annotated, annotations, tags);
+        String command;
+        if (value == null || value instanceof String) {
+            command = "message";
+            command += " ms:" + getMilliseconds(date, index);
+            command += " e:" + escape(entity);
+            tags.put("type", tag);
+            for (Map.Entry<String, String> entry : tags.entrySet()) {
+                if (entry.getKey().contains(" ")) {
+                    throw new IllegalArgumentException("Message tag name can include only printable characters");
+                }
+                if (entry.getValue() == null) {
+                    throw new IllegalArgumentException("Message tag value cannot be null");
+                }
+                String val = escape(entry.getValue()).trim();
+                if (val.isEmpty()) {
+                    throw new IllegalArgumentException("Message tag value cannot be empty");
+                }
+                command += " t:" + escape(entry.getKey()) + "=" + val;
+            }
+            String svalue = value == null ? "" : String.valueOf(value);
+            command += " m:" + escape(svalue);
+        } else {
+            if (tag.contains(" ")) {
+                throw new IllegalArgumentException("Metric name can include only printable characters");
+            }
+            command = "series";
+            command += " ms:" + getMilliseconds(date, index);
+            command += " e:" + escape(entity);
+            command += " m:" + escape(tag) + "=" + String.valueOf(value);
+            if (tags != null) {
+                for (Map.Entry<String, String> entry : tags.entrySet()) {
+                    if (entry.getKey().contains(" ")) {
+                        throw new IllegalArgumentException("Series tag name can include only printable characters");
+                    }
+                    if (entry.getValue() == null) {
+                        throw new IllegalArgumentException("Series tag value cannot be null");
+                    }
+                    String val = escape(entry.getValue()).trim();
+                    if (val.isEmpty()) {
+                        throw new IllegalArgumentException("Series tag value cannot be empty");
+                    }
+                    command += " t:" + escape(entry.getKey()) + "=" + val;
+                }
+            }
+        }
+        writeCommand(command);
+    }
+
+    private long getMilliseconds(Date date, int index) {
+        // round date to seconds, add milliseconds based on index
+        return (1000 * (date.getTime() / 1000) + (index > 1 ? index - 1 : 0));
+    }
+
+    private Map<String, String> addNonIgnoredTags(int status, boolean questionable, boolean substituted,
+                                                  boolean annotated, String annotations, Map<String, String> tags) {
+        if (tags == null) {
+            tags = new HashMap<>();
+        }
+        if (status != 0) {
+            tags.put("status", String.valueOf(status));
+        }
+        if (annotated) {
+            tags.put("annotated", String.valueOf(annotated));
+        }
+        if (substituted) {
+            tags.put("substituted", String.valueOf(substituted));
+        }
+        if (questionable) {
+            tags.put("questionable", String.valueOf(questionable));
+        }
+        if (annotations != null && !"".equals(annotations)) {
+            tags.put("annotations", annotations);
+        }
+        return tags;
+    }
+
+    private String escape(String s) {
+        if (s.indexOf("\"") >= 0) {
             s = s.replaceAll("\"", "\"\"");
         }
-        char[] escapeChars = {'=','"', ' ','\r','\n','\t'};
-        checkQuote: for (char c : escapeChars) {
-            if (s.indexOf(c)>=0){
+        char[] escapeChars = {'=', '"', ' ', '\r', '\n', '\t'};
+        checkQuote:
+        for (char c : escapeChars) {
+            if (s.indexOf(c) >= 0) {
                 s = "\"" + s + "\"";
                 break checkQuote;
             }

@@ -159,10 +159,10 @@ https://apps.axibase.com/chartlab/d8c03f11/3/
 
 ## Request : Interpolate with Extension
 
-`extend` setting adds missing periods at the beginning and the end of the interval.
+The `extend` setting adds missing periods at the beginning and the end of the interval.
 
-* If `VALUE {n}` interpolation function is specified, the `extend` option sets empty leading/trailing period values to equal `{n}`.
-* Without `VALUE {n}` function, the `extend` option adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.
+* If the `VALUE {n}` interpolation function is specified, the `extend` option sets empty leading/trailing period values to equal `{n}`.
+* Without the `VALUE {n}` function, the `extend` option adds missing periods at the beginning and end of the selection interval using the `NEXT` and `PREVIOUS` interpolation functions.
 
 1-minute averages between 13:30 and 13:35 without EXTEND:
 
@@ -316,7 +316,3 @@ Data:
 	{"d":"2016-02-19T13:32:50.000Z","v":-10.0}
 ]}]
 ```
-
-
-
-

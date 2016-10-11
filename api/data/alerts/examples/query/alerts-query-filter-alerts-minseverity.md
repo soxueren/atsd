@@ -2,7 +2,7 @@
 
 ## Description
 
-Select alerts with severity equal or greater then specified (CRITICAL).
+Select alerts with severity equal or greater than specified (CRITICAL).
 
 ## Request
 
@@ -54,4 +54,3 @@ POST https://atsd_host:8443/api/v1/alerts/query
   }
 ]
 ```
-

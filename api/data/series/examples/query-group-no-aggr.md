@@ -1,12 +1,12 @@
-# Series Query: Group Without Aggregation
+# Series Query: Group without Aggregation
 
 ## Description
 
-Group multiple input series into one series and applies a grouping function to grouped values. 
+Groups multiple input series into one series and applies a grouping function to the grouped values. 
 
 When aggregation is disabled, the grouping function is applied to values for all unique timestamps in the merged series.
 
-In the example below, `SUM` function returns 12 (1+11) at 2016-06-25T08:00:00Z as a total of e-1 and e-2 series values, both of which have samples this timestamp.
+In the example below, the `SUM` function returns 12 (1+11) at 2016-06-25T08:00:00Z as a total of e-1 and e-2 series values, both of which have samples for this timestamp.
 
 On the other hand, `SUM` returns 3 (3 + null->0) at 2016-06-25T08:00:05Z because only e-1 series has a value at that timestamp.
 
@@ -96,4 +96,3 @@ POST https://atsd_host:8443/api/v1/series/query
 | 2016-06-25T08:00:45.000Z | 5        | 15       | 20  | 
 | 2016-06-25T08:00:59.000Z | -        | 19       | 19  |
 ```
-

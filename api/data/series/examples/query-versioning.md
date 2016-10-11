@@ -4,13 +4,13 @@
 
 Query last values and value history for versioned metrics.
 
-The `data[]` object in the response will contain multiple samples for the same timestamp if the value has history of changes.
+The `data[]` object in the response will contain multiple samples for the same timestamp if the value has a history of changes.
 
-The samples are sorted by sample time, value change time in ascending order.
+The samples are sorted by sample time, and value change time in ascending order.
 
-The version object contains value change date, source, and status, for example: `"version":{"d":"2015-08-13T14:32:42.251Z","source":"form/manual","status":"OK"}`.
+The version object contains value change date, source, and status. For example: `"version":{"d":"2015-08-13T14:32:42.251Z","source":"form/manual","status":"OK"}`.
 
-## Detailed Data (no versioning)
+## Detailed Data (No Versioning)
 
 ```ls
 | datetime                 | value | 
@@ -77,4 +77,3 @@ POST https://atsd_host:8443/api/v1/series/query
 	{"d":"2015-08-13T10:00:00.000Z","v":14.0,"version":{"d":"2015-08-13T13:44:00.398Z","source":"user:axibase","status":"Manual revision"}}
 ]}]
 ```
-

@@ -28,7 +28,7 @@ An array of query objects containing the following fields:
 | minSeverity |  string   | Minimal severity [name](/api/data/severity.md) filter.  |
 | acknowledged |  boolean   | Acknowledgement status. If set, filters alerts for the specified status. |
 
-> Note that `tags` filter is not supported.
+> Note that the `tags` filter is not supported.
 
 #### Entity Filter Fields
 
@@ -62,7 +62,7 @@ An array of matching alert objects containing the following fields:
 | rule | string | Rule name. |
 | severity  | string | [Severity](/api/data/severity.md) name.  |
 | tags | object | Object containing `name=value` pairs, for example `tags: {"path": "/", "name": "sda"}` |
-| repeatCount | integer | Number of times when the expression evaluated to true sequentially.  |
+| repeatCount | integer | Number of times when the expression was evaluated to true sequentially.  |
 | textValue | string | Text value.  |
 | value | double | Last numeric value received. |
 | openValue | double | First numeric value received.  |
@@ -173,7 +173,3 @@ curl https://atsd_host:8443/api/v1/alerts/query \
 ### Filter Status
 * [Unacknowledged Alerts](examples/query/alerts-query-filter-unacknowledged-status.md)
 * [Acknowledged Alerts](examples/query/alerts-query-filter-acknowledged-status.md)
-
-
-
-

@@ -4,9 +4,9 @@
 
 Group merges multiple series into one. If group is applied after aggregation, it merges aggregate values.
 
-The sequence can be controlled with `order` parameter.
+The sequence can be controlled with the `order` parameter.
 
-Default order is to aggregate first, group second.
+Default order is to aggregate first and group second.
 
 ## Request
 
@@ -77,4 +77,3 @@ POST https://atsd_host:8443/api/v1/series/query
   }
 ]
 ```
-

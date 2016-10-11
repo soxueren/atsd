@@ -2,7 +2,7 @@
 
 ## Description
 
-`limit` parameter applies to each series separately.
+The `limit` parameter applies to each series separately.
 
 Samples for each series are sorted by time in descending order.
 

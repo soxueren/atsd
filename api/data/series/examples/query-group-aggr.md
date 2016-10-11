@@ -1,10 +1,10 @@
-# Series Query: Group With Aggregation
+# Series Query: Group with Aggregation
 
 ## Description
 
-By default, grouping function is applied at all unique sample times from the merged series.
+By default, the grouping function is applied at all unique sample times from the merged series.
 
-To split values into periods, specify period.
+To split values into periods, specify the period.
 
 ## Detailed Data by Series
 
@@ -100,4 +100,3 @@ This is equivalent to `Group <-> Aggregation` processing in case of `SUM`+`SUM` 
   }
 ]
 ```
-

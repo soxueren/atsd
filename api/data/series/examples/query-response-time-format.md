@@ -1,4 +1,4 @@
-# Series Query: Return Data in milliseconds
+# Series Query: Return Data in Milliseconds
 
 ## Description
 

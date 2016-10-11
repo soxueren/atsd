@@ -8,7 +8,7 @@ Workflow:
 
 1. Define maximum threshold as 95. 
 2. Violation occurs if value is greater than 95. 
-3. Consecutive samples above the threshold (repeat values) are considered as 1 violation.
+3. Consecutive samples above the threshold (repeat values) are considered to be 1 violation.
 4. Calculate threshold percent for each entity grouped by 10-minute periods. 
 5. Interpolate to 100% if no data is available in the given period.
 6. Computed average threshold percentage using `group`. `group` is configured to execute after `aggregate`.
@@ -62,4 +62,3 @@ POST https://atsd_host:8443/api/v1/series/query
 	{"d":"2016-02-19T13:50:00.000Z","v":66.66666666666667}
 ]}]
 ```
-

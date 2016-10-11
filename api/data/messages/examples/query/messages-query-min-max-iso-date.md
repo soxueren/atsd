@@ -1,4 +1,4 @@
-# Thresholds times for query
+# Thresholds Times for Query
 
 ## Description
 
@@ -43,4 +43,3 @@ POST https://atsd_host:8443/api/v1/messages/query
   }
 ]
 ```
-

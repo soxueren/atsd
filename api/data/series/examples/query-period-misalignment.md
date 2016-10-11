@@ -2,13 +2,13 @@
 
 ## Description
 
-If the time range between startDate and endDate cannot be filled with a whole number of periods, some of the periods will contain a subset of data and some of the period will be excluded from resultset because their start time will be before startDate.
+If the time range between `startDate` and `endDate` cannot be filled with a whole number of periods, some of the periods will contain a subset of data and some of the periods will be excluded from the result set because their start time will be before the `startDate`.
 
 The below query produced no data because:
 
 1. With the default `CALENDAR` alignment, the 1-minute periods overlapping the time range are: `[14:20:00-14:21:00)` and `[14:21:00-14:22:00)`
-2. `[14:20:00-14:21:00)` period has 4 samples as provided below, but its start time is before the `startDate`.
-3. `[14:21:00-14:22:00)` period's start time is within the time range (period's start time is before `endDate`) however the detailed data for this period was limited with `endDate` of `14:22:01` and the period doesn't have any samples as a result. 
+2. The `[14:20:00-14:21:00)` period has 4 samples as provided below, but its start time is before the `startDate`.
+3. The `[14:21:00-14:22:00)` period's start time is within the time range (period's start time is before `endDate`); however, the detailed data for this period was limited with an `endDate` of `14:22:01` and therefore period doesn't have any samples.
 
 ## Request
 
@@ -67,5 +67,3 @@ POST https://atsd_host:8443/api/v1/series/query
 | 2016-06-27T14:20:36.000Z | 7.2   | 
 | 2016-06-27T14:20:52.000Z | 22.0  | 
 ```
-
-

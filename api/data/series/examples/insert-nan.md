@@ -2,7 +2,7 @@
 
 ## Description
 
-Insert Not a Number (NaN) as `null` value.  
+Insert Not a Number (NaN) as a `null` value.  
 
 ## Request
 

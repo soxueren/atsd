@@ -2,7 +2,7 @@
 
 ## Description
 
-Insert number value specified in scientific notation (exponent).  
+Insert a number value specified in scientific notation (exponent).  
 
 ## Request
 

@@ -1,8 +1,8 @@
-# Series Query: Group Interpolate Without Aggregation
+# Series Query: Group Interpolate without Aggregation
 
 ## Description
 
-Interpolation can fill the gaps in merged series. The interpolation function is applied to two consecutive samples to calculate an interim value for a known timestamp.
+Interpolation can fill the gaps in a merged series. The interpolation function is applied to two consecutive samples to calculate an interim value for a known timestamp.
 
 ## Detailed Data by Series
 
@@ -91,4 +91,3 @@ POST https://atsd_host:8443/api/v1/series/query
 | 2016-06-25T08:00:45.000Z | 5        | 15       | 20  | 
 | 2016-06-25T08:00:59.000Z | -        | 19       | 19  |
 ```
-

@@ -1,8 +1,8 @@
-# Query With Features Field "limit"
+# Query with Features Field "limit"
 
 ## Description
 
-Apply limit to select last N messages.
+Apply limit to select the last N messages.
 
 ## Request
 

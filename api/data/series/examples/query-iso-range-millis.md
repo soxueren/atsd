@@ -2,7 +2,7 @@
 
 ## Description
 
-Query detailed data for the specified time range, identified with startDate and endDate.
+Query detailed data for the specified time range, identified with `startDate` and `endDate`.
 
 The dates can be specified with second or millisecond precision.
 

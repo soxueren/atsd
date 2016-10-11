@@ -39,6 +39,17 @@ public class AtsdSendExample {
             client.sendProperty(new Date(), "sensor-01", "equipment", null, tags);
         }
 
+        //send a double tag
+        {
+            client.sendPiComp2("sinusoid", new Date(), 1, 0.93d, 0, false, false, false, null, "default", null);
+        }
+
+        //send a string tag
+        {
+            client.sendPiComp2("mpt-1212.alarm/pv.qv", new Date(), 1, "Suspending", 0, false, false, false,
+                    null, "mp-1212", null);
+        }
+
         //close the connection
         client.shutdown();
     }

@@ -1,4 +1,4 @@
-# Series Query: Group Truncation Without Aggregation
+# Series Query: Group Truncation without Aggregation
 
 ## Description
 
@@ -101,4 +101,3 @@ POST https://atsd_host:8443/api/v1/series/query
 | 2016-06-25T08:00:30.000Z | 3        | 13       | 16  | 
 | 2016-06-25T08:00:45.000Z | 5        | 15       | 20  | 
 ```
-

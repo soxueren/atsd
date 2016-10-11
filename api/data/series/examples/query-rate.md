@@ -2,9 +2,9 @@
 
 ## Description
 
-Compute rate of change (first derivative) by dividing change in value by change in time (milliseconds). 
+Compute the rate of change (first derivative) by dividing the change in value by the change in time (milliseconds). 
 
-If [period](/api/data/series/period.md) is specified, the `rate` function returns change per period duration. The rate is computed for each sample, except 1st.
+If a [period](/api/data/series/period.md) is specified, the `rate` function returns change per period duration. The rate is computed for each sample, except 1st.
 
 ### Data
 
@@ -67,7 +67,7 @@ POST https://atsd_host:8443/api/v1/series/query
 
 ## Request - No Period
 
-If the period is not specified, the `rate` returns delta between consecutive samples.
+If the period is not specified, the `rate` function returns delta between consecutive samples.
 
 If the interval between samples is equidistant, no period would be equivalent to period == interval, or  `{"count": 15, "unit": "SECOND"}` in the example below.
 
@@ -149,9 +149,9 @@ With counter mode OFF, the rate returns delta between consecutive samples regard
 
 With counter mode ON, the rate function ignores negative changes between consecutive samples.
 
-In the example below, sample at 2016-02-16T12:35:12.000Z was ignored.
+In the example below, the sample at 2016-02-16T12:35:12.000Z was ignored.
 
-Default behaviour is counter ON.
+The default behavior counter is ON.
 
 ### Request
 
@@ -182,6 +182,3 @@ Default behaviour is counter ON.
 	{"d":"2016-02-16T12:35:58.000Z","v":3763408.0}
 ]}]
 ```
-
-
-

@@ -2,9 +2,9 @@
 
 ## Description
 
-Query data for entities with the specified properties.
+Query data for entities with specified properties.
 
-Properties can be accessed with `properties('{property-type}').{key-name or tag-name}` function.
+Properties can be accessed with the `properties('{property-type}').{key-name or tag-name}` function.
 
 ## Request
 
