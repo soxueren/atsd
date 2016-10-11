@@ -39,29 +39,15 @@ public class AtsdSendExample {
             client.sendProperty(new Date(), "sensor-01", "equipment", null, tags);
         }
 
-        //send a numeric sample
-        client.sendValue(new Date(), "sensor-02", "humidity", 78.9d, null);
-
-        //send a text message
+        //send a double tag
         {
-            Map<String, String> tags = new LinkedHashMap<String, String>();
-            tags.put("source", "plant");
-            client.sendValue(new Date(), "sensor-02", "equipment", "Suspending", tags);
+            client.sendPiComp2("sinusoid", new Date(), 1, 0.93d, 0, false, false, false, null, "default", null);
         }
 
-        //send a numeric sample
+        //send a string tag
         {
-            Map<String, String> tags = new LinkedHashMap<String, String>();
-            tags.put("precision", "digital");
-            client.sendPiComp2("precipitation", new Date(), 2, 79.0d, -1, true, true, false,
-                    "Any product of the condensation of atmospheric water vapor", "sensor-03", tags);
-        }
-        //send a text message
-        {
-            Map<String, String> tags = new LinkedHashMap<String, String>();
-            tags.put("source", "plant");
-            client.sendPiComp2("precipitation", new Date(), 3, "Suspending", 0, true, false, true,
-                    "Any product of the condensation of atmospheric water vapor", "sensor-03", tags);
+            client.sendPiComp2("mpt-1212.alarm/pv.qv", new Date(), 1, "Suspending", 0, false, false, false,
+                    null, "mp-1212", null);
         }
 
         //close the connection
