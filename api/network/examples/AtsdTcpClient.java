@@ -263,12 +263,13 @@ public class AtsdTcpClient {
         writeCommand(command);
     }
 
-    public void sendPiComp2(String piTag, Date date, int index, Object value, int status, String flags,
-                            String entity, Map<String, String> tags) throws IOException {
+    public void sendPiComp2(String piTag, Date date, int index, Object value, int status, boolean annotated,
+                            boolean substituted, boolean questionable, String annotations, String entity,
+                            Map<String, String> tags) throws IOException {
         if (entity.contains(" ")) {
             throw new IllegalArgumentException("Entity name can include only printable characters");
         }
-        tags = filterIgnoredTags(status, flags, tags);
+        tags = addNonIgnoredTags(status, annotated, substituted, questionable, annotations, tags);
         String command;
         if (value == null || value instanceof String) {
             command = "message";
@@ -321,22 +322,25 @@ public class AtsdTcpClient {
         return (date.getTime() / 1000 + (index > 1 ? index - 1 : 0));
     }
 
-    private Map<String, String> filterIgnoredTags(int status, String flags, Map<String, String> tags) {
-        flags = flags.toLowerCase();
+    private Map<String, String> addNonIgnoredTags(int status, boolean annotated, boolean substituted,
+                                                  boolean questionable, String annotations, Map<String, String> tags) {
         if (tags == null) {
             tags = new HashMap<>();
         }
         if (status != 0) {
             tags.put("status", String.valueOf(status));
         }
-        if (flags.contains("a")) {
-            tags.put("annotated", "true");
+        if (annotated) {
+            tags.put("annotated", String.valueOf(annotated));
         }
-        if (flags.contains("s")) {
-            tags.put("substituted", "true");
+        if (substituted) {
+            tags.put("substituted", String.valueOf(substituted));
         }
-        if (flags.contains("q")) {
-            tags.put("questionable", "true");
+        if (questionable) {
+            tags.put("questionable", String.valueOf(questionable));
+        }
+        if (annotations != null && !"".equals(annotations)) {
+            tags.put("annotations", annotations);
         }
         return tags;
     }
