@@ -1,75 +1,71 @@
 # Manual update
 
-#### Login with the Axibase user
+## Login into Axibase Time Series Database Server
 
 ```sh
- su axibase                                                               
+ su axibase
 ```
 
-#### Download the latest ATSD update file
+## Download the latest ATSD build files
 
-**http://axibase.com/public/atsd_ce_update_latest.htm](http://axibase.com/public/atsd_ce_update_latest.htm "ATSD Update")**
+### Community Edition
 
-The download will contain an archive with the latest ATSD release. For
-example: atsd\_9972.tar.gz
+* [atsd_ce_update_latest](http://axibase.com/public/atsd_ce_update_latest.htm)
+
+### Enterprise Edition
+
+* [hbase 1.0.3](https://www.axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz)
+
+* [hbase 1.2.2](https://www.axibase.com/public/atsd_ee_hbase_1.2.2.tar.gz)
+
+The archive will contain the latest ATSD release with the revision number included in the file name, for example, `atsd_14358.tar.gz`.
 
 #### Unpack the archive
 
 ```sh
- tar xzf atsd_9972.tar.gz                                                 
+tar xzf atsd_14358.tar.gz
 ```
 
-```sh
- cd target                                                                
- ls                                                                       
-```
-
-#### View downloaded jar files
+#### View files in the archive
 
 ```sh
- atsd-executable.jar                                                      
- atsd.jar                                                                 
+cd target
+ls
+atsd-executable.jar
+atsd.jar
 ```
 
 #### Stop ATSD
 
 ```sh
- /opt/atsd/bin/atsd-all.sh stop                                           
+/opt/atsd/bin/atsd-all.sh stop
 ```
 
-#### Backup previous versions
+#### Copy JAR files
 
 ```sh
- cp /opt/atsd/hbase/lib/atsd.jar /opt/atsd/hbase/lib/atsd.jar_old         
-```
-
-```sh
- cp /opt/atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/atsd-executable.jar_old                                                             
-```
-
-#### Copy new versions
-
-```sh
- cp atsd.jar /opt/atsd/hbase/lib                                          
+ cp atsd.jar /opt/atsd/hbase/lib
 ```
 
 ```sh
- cp atsd-executable.jar /opt/atsd/atsd/bin                                
+ cp atsd-executable.jar /opt/atsd/atsd/bin
 ```
 
 #### Start ATSD
 
 ```sh
- /opt/atsd/bin/atsd-all.sh start                                          
+ /opt/atsd/bin/atsd-all.sh start
 ```
 
-#### Navigate to the ATSD user interface in your browser
+It may take up to 15 minutes for the database to initialize.
+
+#### Login into ATSD user interface
 
 ```sh
- http://atsd_host:8088/
+ https://atsd_host:8443/
 ```
 
-* Open **Admin:Build Info** page
-* Verify that the Revision Number matches the installed ATSD update.
+* Open the **Admin:Build Info** page.
+* Verify that the Revision Number has been updated.
 
 ![](images/ATSD_build_info.png "ATSD_build_info")

@@ -5,7 +5,7 @@ Update Axibase Time Series Database to the latest version by running `update.sh`
 The script automates the process of downloading the latest ATSD artifacts, 
 copying files, and gracefully restarting ATSD services.
 
-Access to axibase.com from the target server is required to download installation files. If the server is not connected to the Internet, switch to [manual update](update-manual.md) option.
+> Access to axibase.com from the target server is required to download installation files. If the server is not connected to the Internet, switch to [manual update](update-manual.md) option.
 
 ## Check Revision
 
@@ -43,8 +43,8 @@ To verify that ATSD is working correctly, open ATSD web interface:
  http://atsd_host:8088/
 ```
 
-* Open **Admin:Build Info** page
-* Verify that the Revision Number has been incremented compared to pre-installation stage.
+* Open the **Admin:Build Info** page
+* Verify that the Revision Number has changed compared to the pre-installation stage.
 
 ![](images/ATSD_build_info.png "ATSD_build_info")
 
