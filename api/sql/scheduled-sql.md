@@ -2,7 +2,7 @@
 
 ## Overview
 
-SQL Scheduler allows for SQL query results to be distributed to email subscribers or stored on a local file system in CSV, Excel or JSON format.
+SQL Scheduler allows for SQL query results to be distributed to email subscribers or stored on a local file system in CSV, Excel, or JSON format.
 
 ![Scheduler Example](images/sql-scheduler-example.png)
 
@@ -12,11 +12,11 @@ The scheduler can execute a SELECT query as described in the [overview](README.m
 
 ## Authorization
 
-The SQL queries are executed with administrative permissions and no records are excluded from the resultset unlike adhoc queries which are filtered based on the user's [entity read permissions](/administration/user-authorization.md#entity-permissions).
+The SQL queries are executed with administrative permissions and no records are excluded from the result set unlike adhoc queries, which are filtered based on the user's [entity read permissions](/administration/user-authorization.md#entity-permissions).
 
 ## Schedule
 
-The scheduling frequency is controlled with `Schedule` field containing a `cron` expression that determines when the task should be executed.
+The scheduling frequency is controlled with the `Schedule` field containing a `cron` expression that determines when the task should be executed.
 
 Fields in a cron expression have the following order:
 
@@ -28,7 +28,7 @@ Fields in a cron expression have the following order:
 * day-of-week
 * year **(optional)**
 
-For example, `0 0 8 * * ? *`, means the query will be executed at 08:00:00 every day.
+For example, `0 0 8 * * ? *` means that the query will be executed at 08:00:00 every day.
 
 ![Cron Expressions](http://axibase.com/wp-content/uploads/2016/03/cron_expressions.png)
 
@@ -70,9 +70,9 @@ The report file can be stored in a file on the server or sent to email subscribe
 
 ### File System
 
-Specify absolute path including file name on the server to which the report will be stored.
+Specify absolute path including the file name on the server to which the report will be stored.
 If the parent directory in the specified path doesn't exist, it will be automatically created.
-File name should match the file format. For example, if format is EXCEL, Output Path should end with ".xlsx".
+File name should match the file format. For example, if the format is EXCEL, Output Path should end with ".xlsx".
 
 Output Path may contain date placeholders so that files or their parent directories are grouped by day or month.
 
@@ -92,16 +92,16 @@ An expression like `/opt/report/daily/${yyyy-MM-dd}.csv` creates the following d
 
 To distribute report files via email specify message subject and one or multiple email addresses, separated by comma or space.
 
-In case of error, the server will still send an email if email delivery is enabled, including query error text in message body.
+In case of an error, the server will still send an email if email delivery is enabled, including query error text in the message body.
 
 ## Versioning
 
-Selecting versioning columns (version_tatus, version_source, version_time) is  currently not supported.
+Selecting versioning columns (version_tatus, version_source, version_time) is currently not supported.
 
 ## Metadata
 
 The exported files can optionally include metadata fields about the report.
-The metadata section is located in the header is prepended with hash symbol `#` and includes the following fields in "name,value" format
+The metadata section is located in the header and is prepended with the hash symbol `#` and includes the following fields in "name,value" format
 
 |**Name**|**Description**|
 |:---|:---|
@@ -110,7 +110,7 @@ The metadata section is located in the header is prepended with hash symbol `#` 
 |title | Report name, such as "CPU Busy Daily Report" |
 |command | Query statement, possible on multiple lines |
 
-In addition, the metadata header contains a list of column names in resultset and their data types.
+In addition, the metadata header contains a list of column names in the result set with their respective data types.
 
 ```
 #name,entity,Average,...
@@ -125,7 +125,7 @@ In addition, the metadata header contains a list of column names in resultset an
 ### Metadata in CSV Format
 
 Since results produced by the task must be included in one file, it is not possible to incorporate metadata in JSON format into a CSV file.
-Instead, when enabled, metadata included in the output file as part of the header with hash symbol (`#`) used as a comment symbol.
+Instead, when enabled, metadata is included in the output file as part of the header with the hash symbol (`#`) used as a comment symbol.
 
 ```
 #publisher,Axibase Time-Series Database,https://nur.axibase.com
@@ -216,7 +216,3 @@ Table schema object provides the following information about the columns in the 
 	"data": []
 }
 ```
-
-
-
-
