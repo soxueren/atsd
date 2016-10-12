@@ -18,7 +18,7 @@ Returns database version including licensing details as well as a `date` object 
 |:---|:---|:---|
 | buildInfo  | object | Database version information. |
 | license | object | Database license details.  |
-| date | object | Current date, start date, timezone and offset information.  |
+| date | object | Current date, start date, timezone, and offset information.  |
 
 ### Errors
 
@@ -72,4 +72,3 @@ curl https://atsd_host:8443/version \
 	}
 }
 ```
-

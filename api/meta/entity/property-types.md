@@ -22,7 +22,7 @@ Retrieve a list property types for the entity.
 
 | **Parameter** | **Type** | **Description** |
 |:---|:---|:---|
-| minInsertDate | string | Include property types with last collection date at or after the specified date. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax. |
+| minInsertDate | string | Include property types with last collection date at or after the specified date. <br>`minInsertDate` can be specified in ISO format or using the [endtime](/end-time-syntax.md) syntax. |
 
 ## Response
 
@@ -66,7 +66,3 @@ curl https://atsd_host:8443/api/v1/entities/nurswgvml007/property-types \
 ```
 
 ## Additional examples
-
-
-
-

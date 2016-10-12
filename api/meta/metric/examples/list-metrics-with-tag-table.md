@@ -1,4 +1,4 @@
-# List Metrics with tag 'table'
+# List Metrics with Tag 'table'
 
 ## Request
 ### URI

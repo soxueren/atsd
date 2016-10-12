@@ -1,4 +1,4 @@
-# List active metrics 
+# List Active Metrics 
 
 ## Request
 ### URI

@@ -16,7 +16,7 @@ Membership in entity groups with non-empty expression is managed by the server. 
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-| expression |string|Expression to include entity groups by name or tags. Use `name` variable for group name. Wildcard `*` is supported.|
+| expression |string|Expression to include entity groups by name or tags. Use the `name` variable for group name. The wildcard `*` is supported.|
 | limit |integer|Maximum number of entity groups to retrieve, ordered by name.|
 | tags |string|Comma-separated list of entity group tag names to be displayed in the response.<br>For example, `tags=environment,os-type`<br>Specify `tags=*` to print all entity group tags.|
 
@@ -28,7 +28,7 @@ Membership in entity groups with non-empty expression is managed by the server. 
 |:---|:---|:---|
 | name | string| Entity group name. |
 | expression | string | Group membership expression. The expression is applied to entities to automatically add/remove members of this group.|
-| tags | object | Entity group tags, as requested with `tags` parameter. |
+| tags | object | Entity group tags, as requested with the `tags` parameter. |
 
 ## Example
 
@@ -67,4 +67,3 @@ curl https://atsd_host:8443/api/v1/entity-groups?tags=os_level&limit=2&expressio
 ```
 
 ## Additional examples
-

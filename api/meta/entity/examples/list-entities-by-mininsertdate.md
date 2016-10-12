@@ -1,4 +1,4 @@
-# List entities by minInsertDate
+# List Entities by minInsertDate
 
 List entities with last insert date at or after 2016-05-18T22:13:40Z.
 

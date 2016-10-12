@@ -9,7 +9,7 @@
 
 * All the variables are string variables.
 * Tag names are case-insensitive, for example, `tags.location` and `tags.Location` are equal.
-* If tag `tag-name` is not defined, the `tags.{tag-name}` variable returns an empty string.
+* If the tag `tag-name` is not defined, the `tags.{tag-name}` variable returns an empty string.
 
 ## Operators
 
@@ -27,31 +27,31 @@ Wildcard `.` means any character.
 
 ## Examples
 
-* Return record with name equal to `nurswgvml003`
+* Returns record with name equal to `nurswgvml003`
 
 ```sql
 name = 'nurswgvml003'
 ```
 
-* Return records with name starting with `nur`
+* Returns records with name starting with `nur`
 
 ```sql
 name LIKE 'nur*'
 ```
 
-* Return records that have `location` tag defined
+* Returns records that have the `location` tag defined
 
 ```sql
 name tags.location != ''
 ```
 
-* Return records with name that starts with `nur` and with tag `os` equal to 'Linux'
+* Returns records with name that starts with `nur` and with the tag `os` equal to 'Linux'
 
 ```sql
 name LIKE 'nur*' AND tags.os = 'Linux'
 ```
 
-* Return records with tag `ip` starting with `10.` and ending with `22`
+* Returns records with the tag `ip` starting with `10.` and ending with `22`
 
 ```sql
 tags.ip LIKE '10.*22'
@@ -75,5 +75,3 @@ tags.ip LIKE '10.*22'
 | `upper`      | converts the argument to upper case                                                 |
 | `lower`      | converts the argument to lower case                                                 |
 | `collection` | returns ATSD named collection                                                       |
-
-

@@ -4,7 +4,7 @@
 
 Remove specified entities from members of the specified entity group.
 
-To delete all entities, submit an empty array `[]` with [set entities](set-entities.md) method.
+To delete all entities, submit an empty array `[]` with the [set entities](set-entities.md) method.
 
 > Entity group must have an empty expression in order to be manageable with this method.
 

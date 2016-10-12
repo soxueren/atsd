@@ -1,4 +1,4 @@
-# List entities starting with `nur`.
+# List Entities Starting with `nur`
 
 ## Request
 

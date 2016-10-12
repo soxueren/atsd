@@ -14,7 +14,7 @@ Retrieve a list of metrics matching the specified filter conditions.
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-| expression |string|Include metrics that match an [expression](../expression.md) filter. Use `name` variable for metric name. Wildcard `*` is supported.|
+| expression |string|Include metrics that match an [expression](../expression.md) filter. Use the `name` variable for metric name. The wildcard `*` is supported.|
 | minInsertDate |string|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 | maxInsertDate |string|Include metrics with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 | limit |integer|Maximum number of metrics to retrieve, ordered by name.|
@@ -38,8 +38,8 @@ Retrieve a list of metrics matching the specified filter conditions.
 |persistent | boolean | Persistence status. Non-persistent metrics are not stored in the database and are only processed by the rule engine.|
 |filter | string | Persistence filter [expression](../expression.md). Discards series that do not match this filter.|
 |lastInsertDate| string | Last time a value was received for this metric by any series. ISO date.|
-|retentionInterval| integer | Number of days to retain values for this metric in the database|
-|versioned| boolean | If set to true, enables versioning for the specified metric. <br>When metrics is versioned, the database retains the history of series value changes for the same timestamp along with `version_source` and `version_status`.|
+|retentionInterval| integer | Number of days to retain values for this metric in the database.|
+|versioned| boolean | If set to true, enables versioning for the specified metric. <br>When metrics are versioned, the database retains the history of series value changes for the same timestamp along with `version_source` and `version_status`.|
 |minValue| double | Minimum value for [Invalid Action](#invalid-actions) trigger.|
 |maxValue| double | Maximum value for [Invalid Action](#invalid-actions) trigger.|
 |invalidAction | string | [Invalid Action](#invalid-actions) type.|
@@ -59,7 +59,7 @@ Default data type for new metrics, when auto-created, is **float**.
 
 ### Invalid Actions
 
- Invalid Action is triggered if the received series value is less than Minimum value, or if it's greater than Maximum value.
+ Invalid Action is triggered if the received series value is less than the Minimum value, or if it's greater than the Maximum value.
 
 |**Action**|**Description**|
 |:---|:---|
@@ -136,7 +136,3 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
 * [List metrics with tag `table`](examples/list-metrics-with-tag-table.md)
 * [List metrics by maxInsertDate](examples/list-metrics-by-maxinsertdate.md)
 * [List metrics by minInsertDate](examples/list-metrics-by-mininsertdate.md)
-
-
-
-
