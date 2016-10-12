@@ -1,4 +1,4 @@
-# List entities by maxInsertDate
+# List Entities by maxInsertDate
 
 ## Description
 

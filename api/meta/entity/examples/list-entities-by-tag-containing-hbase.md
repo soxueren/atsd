@@ -1,4 +1,4 @@
-# List entities starting with `nur` and with tag `app` containing `hbase` 
+# List Entities Starting with `nur` and with Tag `app` Containing `hbase` 
 
 ## Request
 
@@ -36,4 +36,3 @@ name LIKE 'nur*' and lower(tags.app) LIKE '*hbase*'
 
 > 'lower(text)' is a built-in utility string function. 
 > Alternatively, any Java string functions can be used to modify the value, for example: 'tags.app.toLowerCase()'
-

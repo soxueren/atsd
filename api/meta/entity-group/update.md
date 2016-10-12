@@ -24,7 +24,7 @@ Similarly, fields that are set to `null` are ignored and are left unchanged.
 
 Refer to Fields specified in the [Entity Group List](list.md#fields) method.
 
-The `name` field specified in the payload is ignored by the server since it's specified in path.
+The `name` field specified in the payload is ignored by the server since it's specified in the path.
 
 ## Response
 
@@ -67,5 +67,3 @@ curl https://atsd_host:8443/api/v1/entity-groups/nmon-aix \
 None.
 
 ## Additional examples
-
-

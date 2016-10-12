@@ -1,4 +1,4 @@
-# List Metrics by name and tag
+# List Metrics by Name and Tag
 
 List metrics starting with `nmon` and with tag `table` starting with `CPU`
 

@@ -10,11 +10,11 @@ Retrieve a list of entities matching the specified filter conditions.
 |:---|:---|---:|
 | GET | `/api/v1/entities` |
 
-### Query Parameters 
+### Query Parameters
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-| expression |string|Include entities that match an [expression](../expression.md) filter. Use `name` variable for entity name. Wildcard `*` is supported.|
+| expression |string|Include entities that match an [expression](../expression.md) filter. Use the `name` variable for entity name. The wildcard `*` is supported.|
 | minInsertDate |string|Include entities with `lastInsertDate` equal or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 | maxInsertDate |string|Include entities with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
 | limit |integer|Maximum number of entities to retrieve, ordered by name.|
@@ -29,9 +29,9 @@ Retrieve a list of entities matching the specified filter conditions.
 | name | string | Entity name. |
 | enabled | boolean | Enabled status. Incoming data is discarded for disabled entities. |
 | interpolate | string | Interpolation mode: LINEAR or PREVIOUS. <br>Used in SQL `WITH INTERPOLATE` clause when interpolation mode is set to `AUTO`, for example, `WITH INTERPOLATE(1 MINUTE, AUTO)`.|
-| timeZone | string | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](../../network/timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in entity-specific timezone.|
+| timeZone | string | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to the [Java Time Zone](../../network/timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in entity-specific timezone.|
 | lastInsertDate | string |Last time, in ISO format, when a value was received by the database for this entity. |
-| tags | object | Entity tags, as requested with `tags` parameter. |
+| tags | object | Entity tags, as requested with the `tags` parameter. |
 
 ## Example
 
@@ -77,4 +77,3 @@ curl https://atsd_host:8443/api/v1/entities?timeFormat=iso&limit=2&expression=na
 * [List entities by minInsertDate](./examples/list-entities-by-mininsertdate.md)
 * [List all tags for all entities starting with name](examples/list-all-tags-for-all-entities-with-name.md)
 * [List entities by name and tag](examples/list-entities-by-tag-containing-hbase.md)
-

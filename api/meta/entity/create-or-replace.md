@@ -28,7 +28,7 @@ The replace request for an existing entity doesn't affect any series, properties
 
 Refer to Fields specified in the [Entity List](list.md#fields) method.
 
-The `name` field specified in the payload is ignored by the server since it's specified in path.
+The `name` field specified in the payload is ignored by the server since it's specified in the path.
 
 ## Response
 
@@ -74,4 +74,3 @@ curl https://atsd_host:8443/api/v1/entities/nurswgvml006 \
 None. 
 
 ## Additional Examples
-
