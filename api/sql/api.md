@@ -25,7 +25,7 @@ Scheduled queries are executed under full permissions.
 | q | string | [**Required**] Query text. |
 | outputFormat | string | Output format: `csv` or `json`. Default: `csv`. |
 | metadataFormat | string | Metadata format for CSV format. Default: `HEADER`. <br>Supported values: `NONE`, `HEADER`, `EMBED`, `COMMENTS`. |
-| limit | integer | Maximum number of rows to return. Default: 0 (not applied).<br>The number of returned rows is equal to `limit` parameter or `LIMIT` clause, whichever is lower.  |
+| limit | integer | Maximum number of rows to return. Default: 0 (not applied).<br>The number of returned rows is equal to the `limit` parameter or the `LIMIT` clause, whichever is lower.  |
 
 As an alternative, the query can be submitted with Content-Type `text/plain` as text payload with the other parameters included in the query string.
 
@@ -50,7 +50,7 @@ As an alternative, the query can be submitted with Content-Type `text/plain` as 
 
 The response can include optional metadata to assist API clients in processing results, for example to convert text values in CSV or JSON field values into language-specific data types.
 
-The metadata is specified as JSON-LD (JSON linked data) according to [W3C Model for Tabular Data](https://www.w3.org/TR/tabular-data-model/).
+The metadata is specified as JSON-LD (JSON linked data) according to the [W3C Model for Tabular Data](https://www.w3.org/TR/tabular-data-model/).
 
 ATSD JSON-LD schema is published [here](http://www.axibase.com/schemas/2015/11/atsd.jsonld).
 
@@ -102,11 +102,11 @@ Sample metadata:
 }
 ```
 
-### Metadata in JSON output format
+### Metadata in JSON Output Format
 
-Results in JSON output format incorporates metadata by default, including table and column schema.
+Results in the JSON output format incorporates metadata by default, including table and column schema.
 
-### Metadata in CSV output format
+### Metadata in CSV Output Format
 
 The `metadataFormat` parameter controls how to incorporate metadata into the CSV text.
 
@@ -130,7 +130,7 @@ curl https://atsd_server:8443/api/sql  \
 
 ### Bash Client Example
 
-Execute query specified in `query.sql` file and write CSV results to `/tmp/report-1.csv`.
+Execute query specified in a `query.sql` file and write CSV results to `/tmp/report-1.csv`.
 
 ```ls
 ./sql.sh -o /tmp/report-1.csv -i query.sql -f csv
