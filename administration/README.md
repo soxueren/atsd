@@ -2,7 +2,7 @@
 - [Deployment](deploymentm.md#deployment)
 - [Remote HBase Installation](../installation/remote-hbase-installation.md)
 - [Setup Email Client](setting-up-email-client.md#setting-up-the-email-client)
-- [User Authentication](user-authentiication.md#user-authentication)
+- [User Authentication](user-authentication.md#user-authentication)
   - [Form-based Authentication for UI views](user-authentiication.md#form-based-authentication-for-ui-views)
   - [Basic Authentication for API URLs](user-authentiication.md#basic-authentication-for-api-urls)
   - [Password Requirements](user-authentiication.md#password-requirements)
