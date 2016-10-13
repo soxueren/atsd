@@ -27,6 +27,7 @@ Retrieve a list of entities matching the specified filter conditions.
 | **Name** | **Type** | **Description** |
 |:---|:---|:---|
 | name | string | Entity name. |
+| label | string | Entity label. |
 | enabled | boolean | Enabled status. Incoming data is discarded for disabled entities. |
 | interpolate | string | Interpolation mode: LINEAR or PREVIOUS. <br>Used in SQL `WITH INTERPOLATE` clause when interpolation mode is set to `AUTO`, for example, `WITH INTERPOLATE(1 MINUTE, AUTO)`.|
 | timeZone | string | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to the [Java Time Zone](../../network/timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in entity-specific timezone.|
@@ -66,6 +67,7 @@ curl https://atsd_host:8443/api/v1/entities?timeFormat=iso&limit=2&expression=na
     },
     {
         "name": "nurswgvml001",
+		"label": "NURSWGDKR002.corp.axibase.com",
         "enabled": false
     }
 ]
