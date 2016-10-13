@@ -55,7 +55,7 @@ The following data types are supported for the value column.
 
 The order of [columns](#columns) in the uploaded content corresponds to the result set produced by the following query.
 
-```
+```sql
 SELECT TOP 10 pointtypex,
         picomp2.tag,
         time,
@@ -82,6 +82,7 @@ WHERE picomp2.tag = 'sinusoid'
 * `_index` column which represents a sample order for a given timestamp is ignored if `<= 1`. If `_index` exceeds `1` it is added to the timestamp as `(_index - 1)` milliseconds.
 * `tag`, `value`, and `annotations` column value must be properly escaped if the value contains comma, double quote or line break.
 * Numbers must be formatted without the grouping separator using dot as the decimal separator.
+* Empty fields are ignored.
 
 ## PI Tag to ATSD Command Mappings
 
@@ -118,7 +119,7 @@ timezone = "z:" TIMEZONE
 tag = "t:" NAME "=" VALUE
 ```
 
-## Example
+## Example - Store All Fields
 
 ```ls
 picomp2 e:nurswgvml007 t:environment=prod
@@ -126,41 +127,54 @@ Float64,sinusoid,2016-10-09 17:43:44,1,0.92,0,false,false,false,
 Float64,sinusoid,2016-10-09 17:43:58,1,0.97,0,false,false,false,
 ```
 
-## Mapping Example
+## Example - Store Base Fields
+
+```ls
+picomp2 e:nurswgvml007 t:environment=prod
+Float64,sinusoid,2016-10-09 17:43:44,,0.92,,,,,
+Float64,sinusoid,2016-10-09 17:43:58,,0.97,,,,,
+```
+
+## picomp2 Query Results
 
 ```ls
 | pointtypex | tag                          | time                | _index | value    | raw_value | status_string | status | questionable | substituted | annotated | annotations | 
 |------------|------------------------------|---------------------|--------|----------|-----------|---------------|--------|--------------|-------------|-----------|-------------| 
 | Float32    | Memory_Avail MBytes          | 2016-09-20 12:57:49 | 1      | null     | null      | Pt Created    | -253   | false        | false       | false     | null        | 
-|   -> series e:default m:Memory_Avail_MBytes=NaN status_text="Pt Created" status=-253 d:2016-09-20T12:57:49Z                                                                     |
 | Float32    | Memory_Avail MBytes          | 2016-10-11 15:38:00 | 1      | 6139.0   | 6139.0    | Good          | 0      | false        | false       | false     | null        | 
-|   -> series e:default m:Memory_Avail_MBytes=6139.0 d:2016-10-11T15:38:00Z                                                                                                       |
 | Float32    | Memory_Avail MBytes          | 2016-10-11 15:38:00 | 2      | 6139.1   | 6139.1    | Good          | 0      | false        | false       | false     | null        | 
-|   -> series e:default m:Memory_Avail_MBytes=6139.1 d:2016-10-11T15:38:00.001Z                                                                                                   |
 | Float32    | Memory_Avail MBytes          | 2016-10-11 15:38:00 | 3      | 6139.2   | 6139.2    | Good          | 0      | false        | false       | false     | null        | 
-|   -> series e:default m:Memory_Avail_MBytes=6139.2 d:2016-10-11T15:38:00.002Z                                                                                                   |
 | Float32    | Memory_Avail MBytes          | 2016-10-11 15:38:01 | 1      | 6141.0   | 6141.0    | Good          | 0      | false        | false       | false     | null        | 
-|   -> series e:default m:Memory_Avail_MBytes=6141.0 d:2016-10-11T15:38:01Z                                                                                                       |
 | Digital    | BA:ACTIVE.1                  | 2016-08-24 15:02:55 | 1      | null     | null      | Pt Created    | -253   | false        | false       | false     | null        | 
-|   -> message e:default t:type="BA:ACTIVE.1" d:2016-08-24T15:02:55Z m:"" status_text="Pt Created" status=-253                                                                    |
 | Digital    | BA:ACTIVE.1                  | 2016-08-24 15:03:17 | 1      | Inactive | -65536    | Good          | 0      | false        | false       | false     | null        | 
-|   -> message e:default t:type="BA:ACTIVE.1" d:2016-08-24T15:03:17Z m:"Inactive"                                                                                                 |
 | Digital    | BA:ACTIVE.1                  | 2016-08-24 15:04:17 | 1      | Active   | -65537    | Good          | 0      | false        | false       | false     | null        | 
-|   -> message e:default t:type="BA:ACTIVE.1" d:2016-08-24T15:04:17Z m:"Active"                                                                                                   |
 | Digital    | BA:ACTIVE.1                  | 2016-08-24 16:15:17 | 1      | Inactive | -65536    | Good          | 0      | false        | false       | false     | null        | 
-|   -> message e:default t:type="BA:ACTIVE.1" d:2016-08-24T16:15:17Z m:"Inactive"                                                                                                 |
 | Int32      | CDEP158                      | 2016-08-24 15:01:09 | 1      | null     | null      | Shutdown      | -254   | false        | false       | false     | null        | 
-|   -> series m:CDEP158=NaN status_text="Shutdown" status=-254 d:2016-08-24T15:01:09Z                                                                                             |
 | Int32      | CDEP158                      | 2016-08-24 15:03:17 | 1      | 0        | 0         | Good          | 0      | false        | false       | false     | null        | 
-|   -> series m:CDEP158=0 d:2016-08-24T15:03:17Z                                                                                                                                  |
 | Int32      | CDEP158                      | 2016-08-24 15:43:17 | 1      | 12       | 12        | Good          | 0      | false        | false       | false     | null        | 
-|   -> series m:CDEP158=12 d:2016-08-24T15:43:17Z                                                                                                                                 |
 | Int32      | CDEP158                      | 2016-08-24 16:21:20 | 1      | null     | null      | Shutdown      | -254   | false        | false       | false     | null        | 
-|   -> series m:CDEP158=NaN status_text="Shutdown" status=-254 d:2016-08-24T16:21:20Z                                                                                             |
 | Int32      | CDEP158                      | 2016-08-24 16:23:30 | 1      | 1        | 1         | Good          | 0      | false        | false       | false     | null        | 
-|   -> series m:CDEP158=1 d:2016-08-24T16:23:30Z                                                                                                                                  |
 | Int32      | CDEP158                      | 2016-08-24 22:28:30 | 1      | 43       | 43        | Good          | 0      | false        | false       | false     | null        | 
-|   -> series m:CDEP158=43 d:2016-08-24T22:28:30Z                                                                                                                                 |
 |------------|------------------------------|---------------------|--------|----------|-----------|---------------|--------|--------------|-------------|-----------|-------------| 
+```
+
+## picomp2 Commands
+
+```ls
+series e:default m:Memory_Avail_MBytes=NaN status_text="Pt Created" status=-253 d:2016-09-20T12:57:49Z
+series e:default m:Memory_Avail_MBytes=6139.0 d:2016-10-11T15:38:00Z
+series e:default m:Memory_Avail_MBytes=6139.1 d:2016-10-11T15:38:00.001Z
+series e:default m:Memory_Avail_MBytes=6139.2 d:2016-10-11T15:38:00.002Z
+series e:default m:Memory_Avail_MBytes=6141.0 d:2016-10-11T15:38:01Z
+message e:default t:type="BA:ACTIVE.1" d:2016-08-24T15:02:55Z m:"" status_text="Pt Created" status=-253
+message e:default t:type="BA:ACTIVE.1" d:2016-08-24T15:03:17Z m:"Inactive"
+message e:default t:type="BA:ACTIVE.1" d:2016-08-24T15:04:17Z m:"Active"
+message e:default t:type="BA:ACTIVE.1" d:2016-08-24T16:15:17Z m:"Inactive"
+series m:CDEP158=NaN status_text="Shutdown" status=-254 d:2016-08-24T15:01:09Z
+series m:CDEP158=0 d:2016-08-24T15:03:17Z
+series m:CDEP158=12 d:2016-08-24T15:43:17Z
+series m:CDEP158=NaN status_text="Shutdown" status=-254 d:2016-08-24T16:21:20Z
+series m:CDEP158=1 d:2016-08-24T16:23:30Z
+series m:CDEP158=43 d:2016-08-24T22:28:30Z
 ```
 
