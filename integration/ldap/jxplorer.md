@@ -26,7 +26,7 @@ There are several ways of obtaining the SSL server certificate:
 
 ![](resources/cert&export.png)
 
-### Import certificate into JExplorer 
+### Import certificate into JXplorer Keystore
 
 * Open `Security` -> `Trusted Servers and CAs`
 
@@ -36,4 +36,11 @@ There are several ways of obtaining the SSL server certificate:
 
 ![](resources/add_cert.png)
 
-[NB](http://jxplorer.org/help/Setting_a_Keystore_Password.htm). Note that the cacerts keystore file has a default password of `changeit`.
+NB. Note that the cacerts keystore file has a default password of `changeit` (see [jxplorer docs](http://jxplorer.org/help/Setting_a_Keystore_Password.htm)).
+
+### Import certificate into the ATSD Keystore File
+
+* Execute the following command in order to add `servername.corp.company.com.crt` certificate: 
+
+
+    ```keytool -importcert -keystore /opt/atsd/atsd/conf/server.keystore -storepass atsd_sec_pwd -keyalg "RSA" -trustcacerts -file servername.corp.company.com.crt```
