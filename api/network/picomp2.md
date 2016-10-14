@@ -1,10 +1,10 @@
-# picomp2 Command
+# `picomp2` Command
 
 ## Description
 
 Upload archived data retrieved from the `picomp2` table using CSV format with a pre-defined column order.
 
-The uploaded data is stored as series. If the PI Point's data type is `string`, `digital`, or `timestamp`, their values are stored in the `x:` text field.
+The uploaded data is stored as a series. If the PI Points data type is `string`, `digital`, or `timestamp`, their values are stored in the `x:` text field.
 
 ## Syntax
 
@@ -20,7 +20,7 @@ picomp2 z:{timezone} e:{entity} i:{ignore-defaults} t:{tag-name}={tag-value}
 | e         | string       | [**Required**] Default entity name. |
 | i         | boolean      | Ignore default values: `status` = `0`, `status_test` = `GOOD`, flags = `false`, `annotations` = `null` or empty. <br>Default value = `true` (ignore defaults).|
 | z         | string       | [Time Zone ID](timezone-abnf.md) applied when parsing dates, for example EST.<br>Default time zone = `UTC`. Default date format is `yyyy-MM-dd HH:mm:ss`.|
-| t         | string       | One or multiple series or message tag key=value pairs, for example: `t:location=SVL` |
+| t         | string       | One or multiple series or message tag key=value pairs, for example: `t:location=SVL`. |
 
 ### Columns
 
@@ -77,8 +77,8 @@ WHERE picomp2.tag = 'sinusoid'
 | float64    | sinusoid | 2016-08-24 17:43:44 | 1      | 0.92  | 0      | Good        | false        | false       | false     | null        | 
 ```
 
-* `_index` column which represents a sample order for a given timestamp is ignored if `<= 1`. If `_index` exceeds `1` it is added as series tag.
-* `tag`, `value`, and `annotations` column values must be properly escaped if the value contains comma, double quote or line break.
+* An `_index` column, which represents a sample order for a given timestamp, is ignored if `<= 1`. If `_index` exceeds `1` it is added as series tag.
+* `tag`, `value`, and `annotations` column values must be properly escaped if the value contains a comma, double quote, or line break.
 * Numbers must be formatted without the grouping separator using dot as the decimal separator.
 * Empty fields and fields with literal `null` values are ignored.
 
@@ -193,4 +193,3 @@ AND entity = 'default'
 | default | cdep158             | 2016-08-24T16:23:30Z | 1.0    |          | 1      | 0      | Good        | false        | false       | false     |             | 
 | default | cdep158             | 2016-08-24T22:28:30Z | 43.0   |          | 1      | 0      | Good        | false        | false       | false     |             | 
 ```
-
