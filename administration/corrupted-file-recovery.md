@@ -104,7 +104,7 @@ rsync -r /opt/atsd/hdfs-cache ~/backup/hdfs-cache
  /opt/atsd/hadoop/bin/start-dfs.sh
 ```
 
-* Wait for 1 minute. Check that HDFS was able to leave safe mode by itself. Check the safe mode status. If the safe mode is OFF, proceed to start HBase
+* Wait for 1 minute. Check that HDFS was able to leave safe mode by itself. Check the safe mode status. If safe mode is OFF, proceed to start HBase
 
 ```sh
  /opt/atsd/hadoop/bin/hadoop dfsadmin -safemode get

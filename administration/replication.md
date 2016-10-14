@@ -347,7 +347,7 @@ Stop HBase shell:
  exit
 ```
 
-**SLAVE: tThe following steps must be executed only on the slave
+**SLAVE: the following steps must be executed only on the slave
 machine.**
 
 Start HBase shell:

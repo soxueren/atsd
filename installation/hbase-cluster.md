@@ -185,7 +185,7 @@ Review the start log for any errors:
 tail -f /opt/atsd/atsd/logs/atsd.log
 ```
 
-You should see a **ATSD start completed** message at the end of the `start.log`.
+You should see an **ATSD start completed** message at the end of the `start.log`.
 
 Web interface is accessible on port 8088 (http) and 8443 (https).
 
