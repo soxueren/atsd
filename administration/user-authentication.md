@@ -12,7 +12,7 @@ The user is granted access if the hashcode of the submitted password matches the
 
 ### Basic Authentication for API
 
-HTTP requests to an API URL are required to include the `Authorization` header with type `Basic`.
+HTTP requests to an API URL are required to include `Authorization` header with type `Basic`.
 
 * Java Example:
 
@@ -48,7 +48,7 @@ Once the user is authenticated, subsequent API requests can be executed without 
 
 * Password must contain at least **six** characters by default.
 
-* The default minimum length can be adjusted in the `server.properties` file with the `user.password.min.length` setting.
+* The default minimum length can be adjusted in `server.properties` file with `user.password.min.length` setting.
 
 * Passwords are case-sensitive.
 
@@ -64,7 +64,7 @@ Once the user is authenticated, subsequent API requests can be executed without 
 
 ## Built-in Account
 
--   When accessed for the first time after the installation, the database presents a web page for configuring the default administrator account. This built-in user account is assigned an `ADMIN` role which has `All Entities: Read / Write` permissions.
+-   When accessed for the first time after the installation, the database presents a web page for configuring the default administrator account. This built-in user account is assigned `ADMIN` role which has `All Entities: Read / Write` permissions.
 
 ## Changing the Password
 
@@ -74,15 +74,16 @@ Once the user is authenticated, subsequent API requests can be executed without 
 	
 ## Resetting Password
 
--   The database doesn't store user passwords in plain text, instead storing a hashcode of the password in order to protect user credentials. Therefore it is not possible to recover a lost password, only password change/reset operation is supported.
+-   The database doesn't store user passwords in plain text, instead storing a hashcode of the password in order to protect user credentials. Therefore it is not possible to recover a lost password, only password change/reset operation is supported. 
 
 -   To reset the password for a user account:
 
-    - Open the `server.properties` file.
+    - Open `server.properties` file.
     - Add `user.password.reset.username={username}` and `user.password.reset.password={new-password}` settings and save the file.
 	- Restart ATSD.
-	- Remove the above settings from the `server.properties` file to prevent password resets on subsequent restarts.
+	- Remove the above settings from `server.properties` file to prevent password resets on subsequent restarts.
 
 ## Anonymous API Access
 
--   To enable anonymous API access, set `api.anonymous.access.enabled=true` in the `server.properties` file.
+-   To enable anonymous API access, set `api.anonymous.access.enabled=true` in `server.properties` file.
+
