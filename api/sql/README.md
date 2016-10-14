@@ -175,7 +175,8 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`time`|long|Observation time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY` query with `PERIOD`, time column returns period start time, same as the `PERIOD()` column specified in the `GROUP BY` clause.|
 |`datetime`|string|Observation time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY` query with `PERIOD`, datetime column returns period start time in ISO format, same as `date_format(PERIOD())` column specified in the `GROUP BY` clause.|
 |`period`|long|Period start time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.|
-|`value`|number|Series value.|
+|`value`|number|Series numeric value.|
+|`text`|string|Series text value.|
 |`metric`|string|Metric name, same as virtual table name.|
 |`entity`|string|Entity name.|
 |`tags.{name}`|string|Series tag value. Returns `NULL` if the specified tag doesn't exist for this series.|
@@ -201,7 +202,7 @@ SELECT t1.datetime, t1.entity, t1.value + t2.value AS cpu_sysusr
 WHERE t1.datetime > now - 1*MINUTE
 ```
 
-The list of available predefined columns may be requested with the `SELECT *` syntax, except for queries with the `GROUP BY` clause.
+The list of available predefined columns may be requested with the `SELECT *` syntax, except for queries with the `GROUP BY` clause and when multiple metrics are specified from `atsd_series` table.
 
 ```sql
 SELECT * FROM "mpstat.cpu_busy" t1
@@ -244,6 +245,35 @@ SELECT entity, datetime, count(*)
   FROM "df.disk_used"
 WHERE datetime >= "2016-07-03T21:02:00Z" AND datetime < "2016-07-03T21:02:15Z"
   GROUP BY entity, time
+```
+
+### Series Value Columns
+
+Each series sample can contain:
+
+* Numeric value, accessible with the `value` column.
+* String value, accessible with the `text` column.
+
+The text value can be inserted with [`series`](/api/network/series.md#fields) command and the series [insert](/api/data/series/insert.md) method in Data API.
+
+```ls
+series d:2016-10-13T08:00:00Z e:sensor-1 m:temperature=20.3
+series d:2016-10-13T08:15:00Z e:sensor-1 m:temperature=24.4 x:temperature="Provisional"
+series d:2016-10-13T10:30:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-5434"
+```
+
+```sql
+SELECT entity, metric, datetime, value, text 
+  FROM atsd_series 
+WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
+```
+
+```ls
+| entity   | metric      | datetime                 | value | text                           | 
+|----------|-------------|--------------------------|-------|--------------------------------| 
+| sensor-1 | temperature | 2016-10-13T08:00:00.000Z | 20.3  | null                           | 
+| sensor-1 | temperature | 2016-10-13T08:15:00.000Z | 24.4  | Provisional                    | 
+| sensor-1 | status      | 2016-10-13T10:30:00.000Z | NaN   | Shutdown by adm-user, RFC-5434 | 
 ```
 
 ### Series Tag Columns
@@ -1699,6 +1729,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [All Columns](examples/select-all-columns.md)
 - [Defined Columns](examples/select-pre-defined-columns.md)
 - [All Series Tags](examples/select-all-tags.md)
+- [Text Value Column](examples/select-text-value.md)
 - [Entity Tag Columns](examples/select-entity-tag-columns.md)
 - [Metric Tag Columns](examples/select-metric-tag-columns.md)
 - [Computed Columns](examples/select-computed-columns.md)

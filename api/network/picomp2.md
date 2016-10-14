@@ -4,9 +4,7 @@
 
 Upload archived data retrieved from the `picomp2` table using CSV format with a pre-defined column order.
 
-The uploaded data is stored as numeric series or text message based on the PI Point's data type. 
-
-PI tags with `string`, `digital`, and `timestamp` types are stored as messages, all other types are stored as series.
+The uploaded data is stored as series. If the PI Point's data type is `string`, `digital`, or `timestamp`, their values are stored in the `x:` text field.
 
 ## Syntax
 
@@ -66,7 +64,7 @@ SELECT TOP 10 pointtypex,
 		END AS value,
 		status,
         DIGSTRING(status) AS status_text,
-        questionable, substituted, annotated, annotations  
+        questionable, substituted, annotated, annotations
 FROM piarchive..picomp2 picomp2 
   JOIN pipoint..pipoint pipoint on picomp2.tag = pipoint.tag
 WHERE picomp2.tag = 'sinusoid'
@@ -79,33 +77,21 @@ WHERE picomp2.tag = 'sinusoid'
 | float64    | sinusoid | 2016-08-24 17:43:44 | 1      | 0.92  | 0      | Good        | false        | false       | false     | null        | 
 ```
 
-* `_index` column which represents a sample order for a given timestamp is ignored if `<= 1`. If `_index` exceeds `1` it is added to the timestamp as `(_index - 1)` milliseconds.
-* `tag`, `value`, and `annotations` column value must be properly escaped if the value contains comma, double quote or line break.
+* `_index` column which represents a sample order for a given timestamp is ignored if `<= 1`. If `_index` exceeds `1` it is added as series tag.
+* `tag`, `value`, and `annotations` column values must be properly escaped if the value contains comma, double quote or line break.
 * Numbers must be formatted without the grouping separator using dot as the decimal separator.
-* Empty fields are ignored.
+* Empty fields and fields with literal `null` values are ignored.
 
-## PI Tag to ATSD Command Mappings
-
-### `series` Command - all tags except `string`, `digital`, `timestamp`
+## `series` Command Mappings
 
 | **Command Field** | **Input Field** |
 |:---|:---|
-| Metric Name | `tag` column. Whitespace characters contained in the tag name will be replaced with underscore. |
+| Metric Name | `tag` column. Whitespace characters contained in the tag name replaced with underscore. |
 | Entity Name | `e` entity field.  |
 | Time        | `time` column.     |
-| Value       | `value` column. Value is set to `NaN` (Not a Number) if cell text is empty or `null`. |
-| Series Tags | `t` fields.<br>`status` and `status_text` columns if not default.<br>`questionable`, `substituted`, `annotated` fields if not `false`.<br>`annotations` column if not null/empty. |
-
-### `message` Command - `string`, `digital`, `timestamp` tags
-
-| **Command Field** | **Input Field** |
-|:---|:---|
-| Message Type   | `tag` column. Whitespace characters contained in the tag name will be replaced with underscore. |
-| Entity Name    | `e` entity field.  |
-| Time           | `time` column.        |
-| MEssage        | `value` column. Value is set to `NaN` (Not a Number) if cell text is empty or `null`. |
-| Message Source | `t:source` field, if specified. |
-| Message Tags   | `t` fields.<br>`status` and `status_text` columns if not default.<br>`questionable`, `substituted`, `annotated` fields if not `false`.<br>`annotations` column if not null/empty. |
+| Value       | `value` column if numeric.|
+| Text		  | `value` column if text. |
+| Series Tags | `status` and `status_text` columns if not default.<br>`_index` column if `>= 1`.<br>`questionable`, `substituted`, `annotated` columns if not `false`.<br>`annotations` column if not null/empty. |
 
 ### ABNF Syntax
 
@@ -122,7 +108,7 @@ tag = "t:" NAME "=" VALUE
 ## Example - Store All Fields
 
 ```ls
-picomp2 e:nurswgvml007 t:environment=prod
+picomp2 e:default t:environment=prod
 Float64,sinusoid,2016-10-09 17:43:44,1,0.92,0,false,false,false,
 Float64,sinusoid,2016-10-09 17:43:58,1,0.97,0,false,false,false,
 ```
@@ -130,7 +116,7 @@ Float64,sinusoid,2016-10-09 17:43:58,1,0.97,0,false,false,false,
 ## Example - Store Base Fields
 
 ```ls
-picomp2 e:nurswgvml007 t:environment=prod
+picomp2 e:default t:environment=prod
 Float64,sinusoid,2016-10-09 17:43:44,,0.92,,,,,
 Float64,sinusoid,2016-10-09 17:43:58,,0.97,,,,,
 ```
@@ -161,20 +147,50 @@ Float64,sinusoid,2016-10-09 17:43:58,,0.97,,,,,
 ## picomp2 Commands
 
 ```ls
-series e:default m:Memory_Avail_MBytes=NaN status_text="Pt Created" status=-253 d:2016-09-20T12:57:49Z
-series e:default m:Memory_Avail_MBytes=6139.0 d:2016-10-11T15:38:00Z
-series e:default m:Memory_Avail_MBytes=6139.1 d:2016-10-11T15:38:00.001Z
-series e:default m:Memory_Avail_MBytes=6139.2 d:2016-10-11T15:38:00.002Z
-series e:default m:Memory_Avail_MBytes=6141.0 d:2016-10-11T15:38:01Z
-message e:default t:type="BA:ACTIVE.1" d:2016-08-24T15:02:55Z m:"" status_text="Pt Created" status=-253
-message e:default t:type="BA:ACTIVE.1" d:2016-08-24T15:03:17Z m:"Inactive"
-message e:default t:type="BA:ACTIVE.1" d:2016-08-24T15:04:17Z m:"Active"
-message e:default t:type="BA:ACTIVE.1" d:2016-08-24T16:15:17Z m:"Inactive"
-series m:CDEP158=NaN status_text="Shutdown" status=-254 d:2016-08-24T15:01:09Z
-series m:CDEP158=0 d:2016-08-24T15:03:17Z
-series m:CDEP158=12 d:2016-08-24T15:43:17Z
-series m:CDEP158=NaN status_text="Shutdown" status=-254 d:2016-08-24T16:21:20Z
-series m:CDEP158=1 d:2016-08-24T16:23:30Z
-series m:CDEP158=43 d:2016-08-24T22:28:30Z
+series e:default d:2016-09-20T12:57:49Z m:Memory_Avail_MBytes=NaN t:status_text="Pt Created" t:status=-253 
+series e:default d:2016-10-11T15:38:00Z m:Memory_Avail_MBytes=6139.0 
+series e:default d:2016-10-11T15:38:00Z m:Memory_Avail_MBytes=6139.1 t:_index=2
+series e:default d:2016-10-11T15:38:00Z m:Memory_Avail_MBytes=6139.2 t:_index=3
+series e:default d:2016-10-11T15:38:01Z m:Memory_Avail_MBytes=6141.0
+series e:default d:2016-08-24T15:02:55Z x:BA:ACTIVE.1="" t:status_text="Pt Created" t:status=-253
+series e:default d:2016-08-24T15:03:17Z x:BA:ACTIVE.1=Inactive
+series e:default d:2016-08-24T15:04:17Z x:BA:ACTIVE.1=Active  
+series e:default d:2016-08-24T16:15:17Z x:BA:ACTIVE.1=Inactive
+series e:default d:2016-08-24T15:01:09Z m:CDEP158=NaN t:status_text="Shutdown" t:status=-254
+series e:default d:2016-08-24T15:03:17Z m:CDEP158=0
+series e:default d:2016-08-24T15:43:17Z m:CDEP158=12
+series e:default d:2016-08-24T16:21:20Z m:CDEP158=NaN t:status_text="Shutdown" t:status=-254
+series e:default d:2016-08-24T16:23:30Z m:CDEP158=1
+series e:default d:2016-08-24T22:28:30Z m:CDEP158=43
+```
+
+```sql
+SELECT entity, metric AS pitag, datetime, value, ISNULL(text, '') AS svalue, 
+  ISNULL(tags._index, '1') AS '_index', ISNULL(tags.status, '0') AS status, ISNULL(tags.status_text, 'Good') AS status_text,
+  ISNULL(tags.questionable, 'false') AS questionable, ISNULL(tags.substituted, 'false') AS substituted, ISNULL(tags.annotated, 'false') AS annotated, 
+  ISNULL(tags.annotations, '') AS annotations
+FROM atsd_series 
+  WHERE metric IN ('Memory_Avail_MBytes', 'BA:ACTIVE.1', 'CDEP158') 
+AND entity = 'default'
+```
+
+```ls
+| entity  | pitag               | datetime             | value  | svalue   | _index | status | status_text | questionable | substituted | annotated | annotations | 
+|---------|---------------------|----------------------|--------|----------|--------|--------|-------------|--------------|-------------|-----------|-------------| 
+| default | memory_avail_mbytes | 2016-09-20T12:57:49Z | NaN    |          | 1      | -253   | Pt Created  | false        | false       | false     |             | 
+| default | memory_avail_mbytes | 2016-10-11T15:38:00Z | 6139.0 |          | 1      | 0      | Good        | false        | false       | false     |             | 
+| default | memory_avail_mbytes | 2016-10-11T15:38:00Z | 6139.1 |          | 2      | 0      | Good        | false        | false       | false     |             | 
+| default | memory_avail_mbytes | 2016-10-11T15:38:00Z | 6139.2 |          | 3      | 0      | Good        | false        | false       | false     |             | 
+| default | memory_avail_mbytes | 2016-10-11T15:38:01Z | 6141.0 |          | 1      | 0      | Good        | false        | false       | false     |             | 
+| default | ba:active.1         | 2016-08-24T15:02:55Z | NaN    |          | 1      | -253   | Pt Created  | false        | false       | false     |             | 
+| default | ba:active.1         | 2016-08-24T15:03:17Z | NaN    | Inactive | 1      | 0      | Good        | false        | false       | false     |             | 
+| default | ba:active.1         | 2016-08-24T15:04:17Z | NaN    | Active   | 1      | 0      | Good        | false        | false       | false     |             | 
+| default | ba:active.1         | 2016-08-24T16:15:17Z | NaN    | Inactive | 1      | 0      | Good        | false        | false       | false     |             | 
+| default | cdep158             | 2016-08-24T15:01:09Z | NaN    |          | 1      | -254   | Shutdown    | false        | false       | false     |             | 
+| default | cdep158             | 2016-08-24T15:03:17Z | 0.0    |          | 1      | 0      | Good        | false        | false       | false     |             | 
+| default | cdep158             | 2016-08-24T15:43:17Z | 12.0   |          | 1      | 0      | Good        | false        | false       | false     |             | 
+| default | cdep158             | 2016-08-24T16:21:20Z | NaN    |          | 1      | -254   | Shutdown    | false        | false       | false     |             | 
+| default | cdep158             | 2016-08-24T16:23:30Z | 1.0    |          | 1      | 0      | Good        | false        | false       | false     |             | 
+| default | cdep158             | 2016-08-24T22:28:30Z | 43.0   |          | 1      | 0      | Good        | false        | false       | false     |             | 
 ```
 

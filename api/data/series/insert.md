@@ -47,6 +47,7 @@ The request contains an array of series objects, each containing an array of tim
 | d | string | [**Required**] Sample time in ISO format.<br>Example `{"d":"2016-06-01T12:08:42Z", "v":50.8}`. |
 | v | number | [**Required**] Numeric sample value at time `t`/`d`. <br>`null` is supported and will be stored as `NaN` (Not a Number).<br>Example `{"d":"2016-06-01T12:08:42Z", "v": null}` |
 | s | number | Standard deviation of the forecast value `v`.<br>Example  `{"d":"2016-06-01T12:08:42Z", "v":50.8, "s":12.340}`.<br>Applicable if `type` is `FORECAST`.|
+| x | string | Optional text sample value at time `t`/`d`. <br>Empty string `""` is supported and will be stored as `""`.<br>Example `{"d":"2016-06-01T12:08:42Z", "v": null, "x": "Shutdown"}` |
 | version | object | Object containing version source and status fields for versioned metrics.<br>`{"source":string, "status":string}`.<br>Applicable if the metric is versioned. |
 
 `data` example:
@@ -133,6 +134,8 @@ curl https://atsd_host:8443/api/v1/series/insert \
 * [ISO Time Format](examples/insert-iso-time-format.md)
 * [Scientific Notation](examples/insert-scientific-notation.md)
 * [Not A Number](examples/insert-nan.md)
+* [Number Value and Text Value](examples/insert-number-text.md)
+* [Text Value](examples/insert-text.md)
 * [Multiple Samples](examples/insert-multiple-samples.md)
 * [Series with Tags](examples/insert-with-tags.md)
 * [Multiple Series](examples/insert-multiple-series.md)
