@@ -80,6 +80,33 @@ The default processor sequence is as follows:
 
 The sequence can be modified by specifying an `order` field in each processor, in which case processor steps are executed in ascending order as specified in the `order` field. 
 
+## Response
+
+The response contains an array of series objects, each containing series identifiers and request fields and an array of timestamped value objects. 
+
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| entity | string | Entity name |
+| metric | string | Metric name |
+| tags | object | Object containing series tags. |
+| type | string | Type of inserted data: `HISTORY`, `FORECAST`. |
+| aggregate | string | Type of aggregation. |
+| data | array | Array of [Value](#value-object) objects.|
+
+#### Value Object
+
+* The value object contains a numeric and/or text value and the time when it was observed.
+* The object may contain sample time in Epoch milliseconds (`t` field) or ISO format (`d` field).
+
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
+| t | integer | Sample time in Epoch milliseconds.|
+| d | string | Sample time in ISO format. |
+| v | number | Numeric sample value at time `t`/`d`. |
+| x | string | Text sample value at time `t`/`d`. |
+| version | object | Object containing version source and status fields for versioned metrics. |
+
+
 ## Example
 
 ### Request
@@ -93,28 +120,32 @@ POST https://atsd_host:8443/api/v1/series/query
 #### Payload
 
 ```json
-[
-    {
-        "startDate": "2016-02-22T13:37:00Z",
-        "endDate": "2016-02-22T13:40:00Z",
-        "entity": "nurswgvml007",
-        "metric": "mpstat.cpu_busy"
-    }
-]
+[{
+  "startDate": "2016-10-14T17:00:00Z",
+  "endDate":   "2016-10-14T18:00:00Z",
+  "entity": "nurswgvml007",
+  "metric": "mpstat.cpu_busy"
+}]
 ```
 
 ### Response
 
 ```json
 [
-    {
-      "entity": "NURSWGVML007",
-      "metric": "mpstat.cpu_busy",
-      "data": [
-        { "d": "2015-02-22T13:37:09Z", "v": 14.0},
-        { "d": "2015-02-22T13:37:25Z", "v": 8.0}
-      ]
-    }
+  {
+    "entity": "nurswgvml007",
+    "metric": "mpstat.cpu_busy",
+    "tags": {},
+    "type": "HISTORY",
+    "aggregate": {
+      "type": "DETAIL"
+    },
+    "data": [
+		{"d":"2016-10-14T17:00:03.000Z","v":24.24},
+		{"d":"2016-10-14T17:00:19.000Z","v":39.8},
+		{"d":"2016-10-14T17:00:35.000Z","v":39.18},
+	]
+  }
 ]
 ```
 

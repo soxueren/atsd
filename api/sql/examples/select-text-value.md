@@ -177,10 +177,10 @@ series d:2016-10-04T02:09:05Z e:br-1470 x:SV6.Unit_Procedure="Inactive"
 series d:2016-10-04T02:09:09Z e:br-1470 x:SV6.Unit_Procedure="1415-Proc1"
 ```
 
- ### Query
+### Query
  
- ```sql
- SELECT t1.datetime, t1.entity, t1.value, t2.value, t3.value, t4.value, t5.value, t5.text, t6.text
+```sql
+SELECT t1.datetime, t1.entity, t1.value, t2.value, t3.value, t4.value, t5.value, t5.text, t6.text
   FROM 'SV6.PACK:R01' t1
   JOIN 'SV6.PACK:R03' t2
   JOIN 'SV6.PACK:R04' t3
@@ -190,11 +190,11 @@ series d:2016-10-04T02:09:09Z e:br-1470 x:SV6.Unit_Procedure="1415-Proc1"
 WHERE t1.datetime >= '2016-10-04T02:00:00Z' AND t2.datetime <= '2016-10-04T02:10:00Z'
   AND entity = 'br-1470'
 WITH INTERPOLATE(60 SECOND, AUTO, OUTER, EXTEND, START_TIME)
- ```
+```
  
- ### Results
+### Results
  
- ```ls
+```ls
 | t1.datetime          | t1.entity | t1.value | t2.value | t3.value | t4.value | t5.value | t5.text  | t6.text    | 
 |----------------------|-----------|----------|----------|----------|----------|----------|----------|------------| 
 | 2016-10-04T02:00:00Z | br-1470   | 97.4     | 47.7     | 26.0     | 475.0    | NaN      | 1413     | 1413-Proc3 | 
@@ -208,14 +208,14 @@ WITH INTERPOLATE(60 SECOND, AUTO, OUTER, EXTEND, START_TIME)
 | 2016-10-04T02:08:00Z | br-1470   | 68.0     | 44.5     | 23.4     | 395.0    | NaN      | 1414     | 1414-Proc3 | 
 | 2016-10-04T02:09:00Z | br-1470   | 84.8     | 35.7     | 21.9     | 455.0    | NaN      | 1414     | 1414-Proc3 | 
 | 2016-10-04T02:10:00Z | br-1470   | 92.0     | 44.3     | 18.2     | 51.0     | NaN      | 1415     | 1415-Proc1 | 
- ```
+```
  
- ### Filtered Query
+### Filtered Query
  
- The query may refer to the `text` column in the `WHERE` clause in order to filter rows by value.
+The query may refer to the `text` column in the `WHERE` clause in order to filter rows by value.
  
- ```sql
-  SELECT t1.datetime, t1.entity, t1.value, t2.value, t3.value, t4.value, t5.value, t5.text, t6.text
+```sql
+SELECT t1.datetime, t1.entity, t1.value, t2.value, t3.value, t4.value, t5.value, t5.text, t6.text
   FROM 'SV6.PACK:R01' t1
   JOIN 'SV6.PACK:R03' t2
   JOIN 'SV6.PACK:R04' t3
@@ -228,7 +228,7 @@ WHERE t1.datetime >= '2016-10-04T02:00:00Z' AND t2.datetime <= '2016-10-04T02:10
 WITH INTERPOLATE(60 SECOND, AUTO, OUTER, EXTEND, START_TIME)
  ```
  
- ```ls
+```ls
 | t1.datetime          | t1.entity | t1.value | t2.value | t3.value | t4.value | t5.value | t5.text | t6.text    | 
 |----------------------|-----------|----------|----------|----------|----------|----------|---------|------------| 
 | 2016-10-04T02:02:00Z | br-1470   | 82.4     | 42.7     | 17.9     | 35.0     | NaN      | 1414    | 1414-Proc1 | 
@@ -239,5 +239,5 @@ WITH INTERPOLATE(60 SECOND, AUTO, OUTER, EXTEND, START_TIME)
 | 2016-10-04T02:07:00Z | br-1470   | 57.0     | 41.8     | 21.5     | 335.0    | NaN      | 1414    | 1414-Proc2 | 
 | 2016-10-04T02:08:00Z | br-1470   | 68.0     | 44.5     | 23.4     | 395.0    | NaN      | 1414    | 1414-Proc3 | 
 | 2016-10-04T02:09:00Z | br-1470   | 84.8     | 35.7     | 21.9     | 455.0    | NaN      | 1414    | 1414-Proc3 | 
- ```
+```
 

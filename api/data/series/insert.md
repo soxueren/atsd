@@ -23,7 +23,7 @@ None.
 
 ### Fields
 
-The request contains an array of series objects, each containing an array of timestamped samples. 
+The request contains an array of series objects, each containing an array of timestamped value objects. 
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
@@ -32,11 +32,11 @@ The request contains an array of series objects, each containing an array of tim
 | tags | object | Object containing series tags, where field name represents tag name and field value is tag value.<br>`{"tag-1":string,"tag-2":string}` |
 | type | string | Type of inserted data: `HISTORY`, `FORECAST`. Default: `HISTORY` |
 | forecastName | string | Forecast name. <br>Applicable if `type` is `FORECAST`.<br>`forecastName` can be used to store a custom forecast identified by name. <br>If `forecastName` is omitted, the values overwrite the default forecast.  |
-| data | array | [**Required**] Array of [Sample](#sample-object) objects.<br>Example `[{"d":"2016-06-01T12:08:42.518Z", "v":50.8}]`.|
+| data | array | [**Required**] Array of [Value](#value-object) objects.<br>Example `[{"d":"2016-06-01T12:08:42.518Z", "v":50.8}]`.|
 
-#### Sample Object
+#### Value Object
 
-* The sample object contains a numeric value and the time when it was observed.
+* The value object contains a numeric and/or text value and the time when it was observed.
 * The object may contain sample time in Epoch milliseconds (`t` field) or ISO format (`d` field).
 * Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 millisecond from Epoch time.
 * Maximum date that can be stored by the database is **2106-02-07T06:59:59.999Z**, or 4294969199999 milliseconds from Epoch time.
