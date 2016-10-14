@@ -3,7 +3,7 @@
 
 > Note: `/data/` is an example of a new path used to store ATSD data.
 
-Grant ownership of the target directory to `axibase` user:
+Grant ownership of the target directory to the `axibase` user:
 
 ```sh
  sudo chown axibase /data
@@ -49,9 +49,9 @@ cp /opt/atsd/hadoop/conf/core-site.xml /opt/atsd/hadoop/conf/core-site.x
 ml.backup
 ```
 
-Open `/opt/atsd/hadoop/conf/hdfs-site.xml` file and set `dfs.name.dir`
+Open the `/opt/atsd/hadoop/conf/hdfs-site.xml` file and set `dfs.name.dir`
 and `dfs.data.dir` properties to `/data/hdfs-data-name` and
-`/data/hdfs-data` respectively:
+`/data/hdfs-data`, respectively:
 
 ```xml
  <property>
@@ -64,7 +64,7 @@ and `dfs.data.dir` properties to `/data/hdfs-data-name` and
  </property>
 ```
 
-Open `/opt/atsd/hadoop/conf/core-site.xml` file and set `hadoop.tmp.dir`
+Open the `/opt/atsd/hadoop/conf/core-site.xml` file and set the `hadoop.tmp.dir`
 property to `/data/hdfs-cache`:
 
 ```xml
@@ -81,9 +81,9 @@ Start ATSD:
 /opt/atsd/bin/atsd-all.sh start   
 ```
 
-Verify that old data is available and that new data is coming in.
+Verify that the old data is available and that the new data is coming in.
 
-Delete old data and configuration files:
+Delete the old data and configuration files:
 
 ```sh
 rm -r /opt/atsd/old               

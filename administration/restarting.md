@@ -1,6 +1,6 @@
 # Restarting
 
-ATSD provides wrapper scripts that control the start, stop
+ATSD provides wrapper scripts that control the start, stop,
 and status of ATSD and components.
 
 Use these scripts to gracefully restart ATSD.
@@ -15,11 +15,11 @@ Use these scripts to gracefully restart ATSD.
 
 | **Name** | **Description** | **Arguments** | **Example** |
 |---|:---|---|---|
-| atsd-all.sh | Start, stop and get status of all components. | start, stop, status | `/opt/atsd/bin/atsd-all.sh status` |
-| atsd-tsd.sh | Start, stop and get status of ATSD. | start, stop, status | `/opt/atsd/bin/atsd-tsd.sh stop` |
-| atsd-hbase.sh | Start, stop and get status of HBase. | start, stop, status | `/opt/atsd/bin/atsd-hbase.sh status` |
-| atsd-dfs.sh | Start, stop and get status of HDFS. | start, stop, status | `/opt/atsd/bin/atsd-dfs.sh start` |
-| update.sh | [Update ATSD](update.md "Update ATSD") in interactive mode.<br>`-t` - Upgrade and restart ATSD silently. No HBase and HDFS restart.<br>`-a` - Upgrade and restart ATSD, HBase, and HDFS silently.| -a, -t | `/opt/atsd/bin/update.sh` |
+| `atsd-all.sh` | Start, stop, and get status of all components. | start, stop, status | `/opt/atsd/bin/atsd-all.sh status` |
+| `atsd-tsd.sh` | Start, stop, and get status of ATSD. | start, stop, status | `/opt/atsd/bin/atsd-tsd.sh stop` |
+| `atsd-hbase.sh` | Start, stop, and get status of HBase. | start, stop, status | `/opt/atsd/bin/atsd-hbase.sh status` |
+| `atsd-dfs.sh` | Start, stop, and get status of HDFS. | start, stop, status | `/opt/atsd/bin/atsd-dfs.sh start` |
+| `update.sh` | [Update ATSD](update.md "Update ATSD") in interactive mode.<br>`-t` - Upgrade and restart ATSD silently. No HBase and HDFS restart.<br>`-a` - Upgrade and restart ATSD, HBase, and HDFS silently.| -a, -t | `/opt/atsd/bin/update.sh` |
 
 ## Examples
 
@@ -33,7 +33,7 @@ Use these scripts to gracefully restart ATSD.
 
 ## Docker Container
 
-To control ATSD running inside a Docker container, open `/bin/bash` session with `docker exec -it` and execute commands as usual:
+To control ATSD running inside a Docker container, open a `/bin/bash` session with `docker exec -it` and execute commands as usual:
 
 ```sh
 docker exec -it atsd /bin/bash
@@ -46,7 +46,7 @@ docker exec -it atsd tail -f /opt/atsd/atsd/logs/atsd.log
 
 ## Processes
 
-Switch to `axibase` user and run `jps`
+Switch to `axibase` user and run `jps`:
 
 ```java
 27392 Jps
@@ -73,7 +73,7 @@ DataNode - HDFS
 
 ## Safe Restart
 
-Change to script directory
+Change to script directory:
 
 ```sh
 cd /opt/atsd/bin
@@ -83,19 +83,19 @@ cd /opt/atsd/bin
 
 * Stop ATSD
 
-Stop ATSD and wait for the script to exit
+Stop ATSD and wait for the script to exit:
 
 ```
 ./atsd-tsd.sh stop
 ```
 
-Verify that `Server` process is **not** present in `jps` output
+Verify that the `Server` process is **not** present in `jps` output:
 
 ```sh
 jps
 ```
 
-If `Server` process is still running, kill it forcefully with `kill -9 {Server-pid}`
+If the `Server` process is still running, kill it forcefully with `kill -9 {Server-pid}`:
 
 * Stop HBase and wait for the script to exit
 
@@ -103,7 +103,7 @@ If `Server` process is still running, kill it forcefully with `kill -9 {Server-p
 ./atsd-hbase.sh stop
 ```
 
-Verify that `HMaster`, `HRegionServer`, `HQuorumPeer` processes are **not** present in `jps` output
+Verify that the `HMaster`, `HRegionServer`, `HQuorumPeer` processes are **not** present in the `jps` output:
 
 ```sh
 jps
@@ -141,7 +141,3 @@ Start HBase and ATSD in the reverse order
 ```sh
 ./atsd-tsd.sh start
 ```
-
-
-
-

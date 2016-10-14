@@ -5,7 +5,7 @@ machine or bare-metal server.
 
 ![](images/A3.png "A3")
 
-ATSD Enterprise Edition can be installed on multiple machines in fully distributed
+ATSD Enterprise Edition can be installed on multiple machines with the fully distributed
 configuration.
 
 

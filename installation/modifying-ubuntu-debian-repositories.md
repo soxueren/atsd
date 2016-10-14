@@ -3,18 +3,18 @@
 
 # Ubuntu OS
 
-If the repositories are unavailable, check `sources.list` file:
+If the repositories are unavailable, check the `sources.list` file:
 
 ```sh
  sudo nano /etc/apt/sources.list                                          
 ```
 
-If `sources.list` file contains: `us.` at the start of each link,
-remove: `us.` from each link and try installing the dependencies again.
+If the `sources.list` file contains `us` at the start of each link,
+remove `us` from each link and try installing the dependencies again.
 
 # Debian OS
 
-Modify `sources.list` file:
+Modify the `sources.list` file:
 
 ```sh
  sudo nano /etc/apt/sources.list                                          

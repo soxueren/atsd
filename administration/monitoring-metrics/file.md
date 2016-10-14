@@ -1,7 +1,7 @@
-# Monitoring metrics : File
+# Viewing Metrics on the Local File System
 
-
-The ATSD metrics can be retrieved from the `metrics.txt` file. This file
+To view ATSD metrics on the local file system, you can open the `metrics.txt` 
+file which is updated continuously. This file
 can be downloaded from the Server Logs page located under the Admin tab
 on the main menu of ATSD.
 

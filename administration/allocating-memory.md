@@ -1,9 +1,9 @@
-# Allocating Memory to components
+# Allocating Memory to Components
 
 
-##### Change maximum ATSD process memory
+##### Change Maximum ATSD Process Memory
 
-Open ATSD start-up script and locate java command line. Set new maximum
+Open ATSD start-up script and locate the java command line. Set new maximum
 memory size (-Xmx parameter) in megabytes:
 
 ```sh
@@ -18,9 +18,9 @@ else
 fi
 ```
 
-##### Change maximum HBase process memory
+##### Change Maximum HBase Process Memory
 
-Open HBase environment file and uncomment `export HBASE_HEAPSIZE` line.
+Open the HBase environment file and uncomment the `export HBASE_HEAPSIZE` line.
 Set new maximum memory size in megabytes:
 
 ```sh
@@ -31,9 +31,9 @@ nano /opt/atsd/hbase/conf/hbase-env.sh
 export HBASE_HEAPSIZE=4096
 ```
 
-##### Change maximum HDFS process memory
+##### Change Maximum HDFS Process Memory
 
-Open HDFS environment file and uncomment `export HADOOP_HEAPSIZE` line.
+Open the HDFS environment file and uncomment the `export HADOOP_HEAPSIZE` line.
 Set new maximum memory size in megabytes:
 
 ```sh
@@ -44,7 +44,7 @@ nano /opt/atsd/hadoop/conf/hadoop-env.sh
 export HADOOP_HEAPSIZE=4096
 ```
 
-##### Restart all components
+##### Restart All Components
 
 ```sh
 /opt/atsd/bin/atsd-all.sh stop
@@ -53,7 +53,7 @@ export HADOOP_HEAPSIZE=4096
 /opt/atsd/bin/atsd-all.sh start
 ```
 
-##### Verify that -Xmx parameter is set accordingly:
+##### Verify that -Xmx Parameter is Set Accordingly:
 
 
 ```

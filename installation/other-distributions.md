@@ -29,7 +29,7 @@ Download tar.gz archive to the target server:
  sudo /opt/atsd/install_user.sh
 ```
 
-It may take up to 5 minutes, to initialize the database. Installation on ARM devices may take up to 20 minutes.
+It may take up to 5 minutes to initialize the database. Installation on ARM devices may take up to 20 minutes.
 
 ## Check Installation
 
@@ -37,7 +37,7 @@ It may take up to 5 minutes, to initialize the database. Installation on ARM dev
 tail -f /opt/atsd/atsd/logs/start.log                                   
 ```
 
-You should see **ATSD start completed** message at the end of the start.log.
+You should see an **ATSD start completed** message at the end of the `start.log`.
 
 Web interface is accessible on port 8088 (http) and 8443 (https).
 

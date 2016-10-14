@@ -1,22 +1,21 @@
 # Enabling Swap Space
 
 
-Linux divides its physical RAM (physical memory) into blocks of memory
+Linux divides its RAM (physical memory) into blocks of memory
 called pages. Swapping is the process when a page of memory is copied to
 the allocated hard drive space, called swap space, in order to free up
 RAM. The combined size of physical memory and swap space is the amount
 of virtual memory available.
 
 If your server does not have swap space enabled, then execute the
-following commands:
+following commands.
 
-The amount of swap space is controlled by `count=` parameter, in
-kilobytes.
+The amount of swap space (in kilobytes) is controlled by the `count=` parameter.
 
-For production servers (large amount of RAM), we recommend to set swap
+For production servers (large amount of RAM), we recommend setting swap
 space equal to half of the physical memory amount.
 
-For staging/test systems (small amount of RAM), we recommend to set swap
+For staging/test systems (small amount of RAM), we recommend setting swap
 space at least equal to the physical memory amount.
 
 ```sh
@@ -40,13 +39,13 @@ space at least equal to the physical memory amount.
  on boot                                                                  
 ```
 
-Verify that swap is enabled:
+Verify that the swap is enabled:
 
 ```sh
  free                                                                     
 ```
 
-Output should contain a swap row with total and free columns not equal
+The output should contain a swap row with total and free columns not equal
 to zero:
 
 ```sh

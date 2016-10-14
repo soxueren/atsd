@@ -17,13 +17,13 @@ and copying them to the target machine with similar characteristics for offline 
 
 ## Install Dependencies
 
-### Option 1: Install dependencies from local repositories.
+### Option 1: Install Dependencies from Local Repositories.
 
 ```sh
 sudo zypper -n install java-1_7_0-openjdk-devel sysstat which net-tools iproute
 ```
 
-### Option 2: Copy dependencies from a connected machine.
+### Option 2: Copy Dependencies from a Connected Machine.
 
 On a separate machine with internet access create a directory containing the dependencies:
 
@@ -32,7 +32,7 @@ mkdir ./sles_dependencies
 cd sles_dependencies
 ```
 
-Copy the following script to `dep-download.sh`file and execute it to download the dependencies:
+Copy the following script to the `dep-download.sh`file and execute it to download the dependencies:
 
 ```sh
 nano dep-download.sh
@@ -62,7 +62,7 @@ sudo zypper -n install sles_dependencies/*.rpm
 
 ## Install ATSD
 
-Download ATSD rpm package to the target machine:
+Download the ATSD rpm package to the target machine:
 
 * `curl -O https://axibase.com/public/atsd_ce_amd64.rpm`
 * [https://axibase.com/public/atsd_ce_rpm_latest.htm](https://axibase.com/public/atsd_ce_rpm_latest.htm)
@@ -81,7 +81,7 @@ It may take up to 5 minutes to initialize the database.
 tail -f /opt/atsd/atsd/logs/start.log                                   
 ```
 
-You should see **ATSD start completed** message at the end of the start.log.
+You should see an **ATSD start completed** message at the end of the `start.log`.
 
 Web interface is accessible on port 8088 (http) and 8443 (https).
 
