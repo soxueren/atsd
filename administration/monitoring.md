@@ -54,6 +54,6 @@ List of collected metrics:
 | property_reads_per_second | Number of properties read from disk per second. |
 | property_received_per_second | Number of properties received per second. |
 | property_writes_per_second | Number of properties stored on disk per second. |
-| web_service_notifications_per_minute | Number of web service notifications sent by ATSD Rule Engine per minute. |
+| web_service_notifications_per_minute | Number of web service notifications sent by ATSD Rule Engine per minute.|
 | ws_simple_msg_per_second | Number of simple web socket messages handled per second. |
 | java_method_invoke_average java_method_invoke_count_per_second java_method_invoke_last | Tracks storage performance methods. Three different aggregations, `average`, `count per second` and `last`, are collected for the following methods: `dao.MessageDaoImpl.putBatch` `dao.PropertyDaoImpl.search` `dao.TimeSeriesDaoImpl.putBatch` `service.TimeSeriesServiceImpl.putBatch` Last and Average are collected as time in ms. |
