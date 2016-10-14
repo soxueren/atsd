@@ -2,8 +2,8 @@
 
 
 Python is a widely used general-purpose, high-level programming
-language. Its syntax allows programmers to use fewer lines of code to
-than other languages like java to express the same concept.
+language. Its syntax allows programmers to use fewer lines of code
+than other languages (for instance java) to express the same concept.
 
 Axibase has created an API Client for Python that enables developers to
 easily read and write statistics and metadata from ATSD.

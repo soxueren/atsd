@@ -2,7 +2,7 @@
 
 ## Create `axibase` user
 
-Create `axibase` user on the server where ATSD will be running.
+Create an `axibase` user on the server where ATSD will be running.
 
 ```
 sudo adduser axibase
@@ -40,7 +40,7 @@ OpenJDK Runtime Environment (rhel-2.6.6.1.el7_2-x86_64 u101-b00)
 OpenJDK 64-Bit Server VM (build 24.95-b01, mixed mode)
 ```
 
-Add `JAVA_HOME` path to the `axibase` user environment in `.bashrc`.
+Add the `JAVA_HOME` path to the `axibase` user environment in `.bashrc`.
 
 ```
 sudo su axibase
@@ -89,7 +89,7 @@ sudo chown -R axibase:axibase /opt/atsd
 
 To obtain a license key, contact Axibase support with the following information from the machine where ATSD will be installed.
 
-* Output of `ip addr` command.
+* Output of the `ip addr` command.
 
 ```
 [axibase@NURSWGVML007 ~]$ ip addr
@@ -107,7 +107,7 @@ To obtain a license key, contact Axibase support with the following information 
        valid_lft forever preferred_lft forever
 ```
 
-* Output of `hostname -f` command.
+* Output of the `hostname -f` command.
 
 ```
 [axibase@NURSWGVML007 ~]$ hostname -f
@@ -119,7 +119,7 @@ Email output of the above commands to Axibase support and copy the provided key 
 
 ## Configure HBase Connection
 
-Open `hadoop.properties` file.
+Open the `hadoop.properties` file.
 
 ```
 nano /opt/atsd/atsd/conf/hadoop.properties
@@ -143,11 +143,11 @@ hbase.client.scanner.timeout.period = 120000
 
 ATSD can be enabled for Kerberos authentication with Zookeeper and Hadoop services by following these steps.
 
-### Generate `keytab` file for `axibase` principal
+### Generate `keytab` File for `axibase` Principal
 
 Create an `axibase` principal and generate a corresponding `keytab` on the Cloudera Manager server, or on the machine where KDC service is installed.
 
-Replace realm `HADOOP.AXIBASE.COM` with the actual value specified in `/etc/krb5.conf` file on the Cloudera Manager server.
+Replace realm `HADOOP.AXIBASE.COM` with the actual value specified in the `/etc/krb5.conf` file on the Cloudera Manager server.
 
 ```ls
 kadmin.local <<eoj
@@ -156,25 +156,25 @@ ktadd -k axibase.keytab axibase@HADOOP.AXIBASE.COM
 eoj
 ```
 
-Copy the `axibase.keytab` file to `/opt/atsd/atsd/conf` directory on the ATSD server.
+Copy the `axibase.keytab` file to the `/opt/atsd/atsd/conf` directory on the ATSD server.
 
-### Authorize `axibase` principal 
+### Authorize `axibase` Principal 
 
-Check HBase Secure Authorization settings in Cloudera HBase configuration.
+Check the HBase Secure Authorization settings in the Cloudera HBase configuration.
 
 ![](images/cloudera-manager-authorization.png)
 
-If HBase Secure Authorization is disabled you can access HBase as is. Proceed to [Kerberos Settings](#kerberos-settings).
+If the HBase Secure Authorization is disabled you can access HBase as is. Proceed to [Kerberos Settings](#kerberos-settings).
 
 Otherwise, you need to allow the newly created `axibase` principal to access HBase using one of the following options:
     
-1. Add `axibase` principal to HBase superusers via HBase Configuration.
+1. Add the `axibase` principal to the HBase superusers via HBase Configuration.
 
  ![](images/cloudera-manager-superuser.png)
 
-2. Grant **RWXC** (read,write,execute,create) permissions to `axibase` principal.
+2. Grant **RWXC** (read,write,execute,create) permissions to the `axibase` principal.
 
-Login into HMaster server and locate `hbase.keytab` file.
+Login into the HMaster server and locate the `hbase.keytab` file.
 
 ```bash
 find / -name "hbase.keytab" | xargs ls -la
@@ -187,13 +187,13 @@ Obtain the fully qualified hostname of the HMaster server.
 hostname -f
 ```
 
-Authenticate with Kerberos using `hbase.keytab` file and HMaster full hostname.
+Authenticate with Kerberos using the `hbase.keytab` file and HMaster full hostname.
 
 ```bash
 kinit -k -t /var/run/cloudera-scm-agent/process/30-hbase-MASTER/hbase.keytab hbase/{master_full_hostname}
 ```
 
-Open HBase shell and execute `grant` command to grant **RWXC** permissions to `axibase` principal.
+Open HBase shell and execute the `grant` command to grant **RWXC** permissions to `axibase` principal.
 
 ```bash
 hbase shell
@@ -201,9 +201,9 @@ grant 'axibase', 'RWXC'
 exit
 ```
 
-### Configure Kerberos configuration information in `krb5.conf` file
+### Configure Kerberos Configuration Information in `krb5.conf` File
 
-Copy `/etc/krb5.conf` file from an HBase Master server to ATSD server to the same location `/etc/krb5.conf`.
+Copy the `/etc/krb5.conf` file from an HBase Master server to the ATSD server at the same location: `/etc/krb5.conf`.
 
 ```ls
 [libdefaults]
@@ -238,11 +238,11 @@ axibase.com  = HADOOP.AXIBASE.COM
 apps.axibase.com = HADOOP.AXIBASE.COM
 ```
 
-Make sure that the hostname specified in `kdc` and `admin_server` properties above is resolvable on the ATSD server. Add it to `/etc/hosts` if necessary.
+Make sure that the hostname specified in the `kdc` and `admin_server` properties above is resolvable on the ATSD server. Add it to `/etc/hosts` if necessary.
 
 ### Kerberos Settings
 
-Specify `axibase` principal and `keytab` path settings in `/opt/atsd/atsd/conf/server.properties` file in ATSD:
+Specify the `axibase` principal and `keytab` path settings in the `/opt/atsd/atsd/conf/server.properties` file in ATSD:
 
 ```ls
 # Kerberos principal, identified with username and realm.
@@ -253,11 +253,11 @@ kerberos.keytab.path=/opt/atsd/atsd/conf/axibase.keytab
 
 > The `keytab` file needs to be updated whenever the password is changed.
 
-> For added security, ensure that `keytab` file has 400 permission (read by owner).
+> For added security, ensure that the `keytab` file has 400 permission (read by owner).
 
-### `hbase-site.xml` file
+### `hbase-site.xml` File
 
-Remove comments in `/opt/atsd/atsd/conf/hbase-site.xml` file and replace the `HADOOP.AXIBASE.COM` realm with the actual value from `krb5.conf` file.
+Remove comments in the `/opt/atsd/atsd/conf/hbase-site.xml` file and replace the `HADOOP.AXIBASE.COM` realm with the actual value from the `krb5.conf` file.
 
 ```xml
 <?xml version="1.0"?>
@@ -287,7 +287,7 @@ Remove comments in `/opt/atsd/atsd/conf/hbase-site.xml` file and replace the `HA
 
 ### Debugging Kerberos
 
-Debugging for Kerberos authentication can be enabled by changing ATSD start script `/opt/atsd/atsd/bin/start-atsd.sh`.
+Debugging for Kerberos authentication can be enabled by changing the ATSD start script `/opt/atsd/atsd/bin/start-atsd.sh`.
 
 ```ls
 #uncomment to enable kerberos debug
@@ -297,7 +297,7 @@ DParams="$DParams -Dsun.security.krb5.debug=true"
 "$java_command" -server  -Xmx512M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="$atsd_home"/logs $DParams -classpath "$atsd_home"/conf:"$atsd_executable""${lib_jars}" com.axibase.tsd.Server >>${outLog} 2>>${errorLog} &
 ```
 
-Kerberos client debug output will be redirected to `${outLog}` file which is set to `/opt/atsd/atsd/logs/out.log` by default.
+Kerberos client debug output will be redirected to the `${outLog}` file, which is set to `/opt/atsd/atsd/logs/out.log` by default.
 
 ```
 5921 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Setting up kerberos auth: login:axibase@HADOOP.AXIBASE.COM keytab:/opt/atsd/atsd/conf/axibase.keytab 
@@ -334,13 +334,13 @@ default etypes for default_tkt_enctypes: 23 18.
 
 ## Configure HBase Region Servers
 
-### Deploy ATSD coprocessors 
+### Deploy ATSD Coprocessors 
 
-Copy `/opt/atsd/hbase/lib/atsd.jar` to `/usr/lib/hbase/lib` directory on each HBase region server.
+Copy `/opt/atsd/hbase/lib/atsd.jar` to the `/usr/lib/hbase/lib` directory on each HBase region server.
 
 ### Enable ATSD Coprocessors
 
-Open Cloudera Manager, select the target HBase cluster/service, open Configuration tab, search for setting `hbase.coprocessor.region.classes` and enter the following names. 
+Open Cloudera Manager, select the target HBase cluster/service, open Configuration tab, search for the setting `hbase.coprocessor.region.classes` and enter the following names. 
 
 * com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint
 * com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint
@@ -354,13 +354,13 @@ Open Cloudera Manager, select the target HBase cluster/service, open Configurati
 
 ### Restart HBase Service
 
-## Check for port conflicts
+## Check for Port Conflicts
 
 ```
 sudo netstat -tulpn | grep "8081\|8082\|8084\|8088\|8443"
 ```
 
-If some of the above ports are taken, open `/opt/atsd/atsd/conf/server.properties` file and change ATSD listening ports accordingly.
+If some of the above ports are taken, open the `/opt/atsd/atsd/conf/server.properties` file and change ATSD listening ports accordingly.
 
 ```ls
 http.port = 8088
@@ -378,7 +378,7 @@ Since major compactions may overload the cluster, it is recommended to trigger t
 
 ![](images/cm_major_compaction.png)
 
-To disable build-in compaction of data tables, remove them from `/opt/atsd/atsd/conf/server.properties` file as follows:
+To disable build-in compaction of data tables, remove them from the `/opt/atsd/atsd/conf/server.properties` file as follows:
 
 ```
 #this will compact only 'entity' table once a week on Saturday
@@ -404,7 +404,7 @@ series.batch.size = 1024
 
 ## RPC Encryption
 
-To enable encryption of RPC traffic between ATSD and HBase, add the following property to /opt/atsd/atsd/conf/hbase-site.xml file in ATSD:
+To enable encryption of RPC traffic between ATSD and HBase, add the following property to the `/opt/atsd/atsd/conf/hbase-site.xml` file in ATSD:
 
 ```ls
 <property>
@@ -413,7 +413,7 @@ To enable encryption of RPC traffic between ATSD and HBase, add the following pr
 </property>
 ```
 
-Similarly, enable `hbase.rpc.protection` property on the HBase cluster:
+Similarly, enable the `hbase.rpc.protection` property on the HBase cluster:
 
 ![](images/rpc-hbase.png)
 
@@ -430,13 +430,13 @@ Review the start log for any errors:
 tail -f /opt/atsd/atsd/logs/atsd.log
 ```
 
-You should see **ATSD start completed** message at the end of the start.log.
+You should see a **ATSD start completed** message at the end of the `start.log`.
 
 Web interface is accessible on port 8088 (http) and 8443 (https).
 
 ## Enable ATSD Autostart
 
-To configure ATSD for automated restart on server reboot, add the following line to `/etc/rc.local` before `return 0` line.
+To configure ATSD for automated restart on server reboot, add the following line to `/etc/rc.local` before the `return 0` line.
 
 ```
 su - axibase -c /opt/atsd/atsd/bin/start-atsd.sh
@@ -457,9 +457,9 @@ su - axibase -c /opt/atsd/atsd/bin/start-atsd.sh
 
 ## Updating ATSD
 
-### Option 1. Co-processor update is NOT required.
+### Option 1. Co-processor Update is NOT Required.
 
-Login as `axibase` user.
+Login as an `axibase` user.
 
 ```bash
 cd ~
@@ -470,9 +470,9 @@ cp atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/
 /opt/atsd/atsd/bin/start-atsd.sh
 ```
 
-### Option 2. Co-processor update is required.
+### Option 2. Co-processor Update is Required.
 
-Login as `axibase` user.
+Login as an `axibase` user.
 
 ```bash
 cd ~
@@ -480,12 +480,10 @@ curl -O https://axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
 tar -xvf atsd_ee_hbase_1.0.3.tar.gz
 ```
 
-Copy `atsd/hbase/lib/atsd.jar` file to `/usr/lib/hbase/lib` directory on each HBase region server.
+Copy the `atsd/hbase/lib/atsd.jar` file to the `/usr/lib/hbase/lib` directory on each HBase region server.
 
 ```bash
 /opt/atsd/atsd/bin/stop-atsd.sh
 cp atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/
 /opt/atsd/atsd/bin/start-atsd.sh
 ```
-
-

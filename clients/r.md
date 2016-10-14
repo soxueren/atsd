@@ -2,7 +2,7 @@
 
 
 R is a programming language and software environment for statistical
-computing, analysis and graphing. R language is widely used among
+computing, analysis, and graphing. R language is widely used among
 statisticians and data miners to develop statistical software and
 conduct data analytics.
 

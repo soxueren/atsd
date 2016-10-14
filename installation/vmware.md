@@ -1,13 +1,13 @@
-# Install ATSD on VMware
+# ATSD Installation on VMware
 
 ## Overview
 
-ATSD can be installed by importing an .ova image in VMware Fusion,
-VMware Workstation, VMware ESXi Server, VMware vSphere Hypervisor and
+ATSD can be installed by importing an `.ova` image in VMware Fusion,
+VMware Workstation, VMware ESXi Server, VMware vSphere Hypervisor, and
 VMware Player. This method automatically creates a virtual machine
 running Ubuntu 14.04 64bit LTS with ATSD and dependencies pre-installed
-and fully configured. The process take a few minutes with minimal input
-required from the user, this is the easiest and fastest way to install
+and fully configured. The process takes a few minutes with minimal input
+required from the user. This is the easiest and fastest way to install
 ATSD.
 
 ## Download
@@ -17,25 +17,23 @@ ATSD.
 ## Prerequisites
 
 To setup the ATSD virtual machine in VMware you must have the following
-resources available to you:
-
-Requirements:
+resources available:
 
 -   A 64-bit machine with a processor that supports virtualization. Note
     that not all 64-bit processors have this capability.
--   Have virtualization enabled in your BIOS, this is normally enabled
+-   Have virtualization enabled in your BIOS. This is normally enabled
     by default, but in some cases you may have to enter your system bios
     manually to enable virtualization.
--   At least 4 GB of RAM on Host Machine and at least 1 GB of RAM
-    allocated to the Virtual Machine.
+-   At least 4 GB of RAM on the host machine and at least 1 GB of RAM
+    allocated to the virtual machine.
 
 ## Installing ATSD in VMware Player
 
-​1. Open VMware
+​1. Open VMware.
 
 ![](images/open.png "open")
 
-​2. Click on: Open a Virtual Machine. Then select the atsd\_ce\_8760.ova
+​2. Click on: Open a virtual machine. Then select the `atsd\_ce\_8760.ova`
 file.
 
 ![](images/select-ova1.png "select ova")
@@ -54,9 +52,9 @@ of RAM and at least 1 CPU to the virtual machine.
 
 ![](images/ram1.png "ram")
 
-​6. Under Network Adapter select Bridged, if the virtual machine does
+​6. Under Network Adapter select Bridged. If the virtual machine does
 not start with this setting, then change this setting to Host-only.
-Click on Advanced and generate a new MAC address for the VM.
+Click on Advanced and generate a new MAC address for the virtual machine.
 
 ![](images/mac.png "mac")
 
@@ -83,8 +81,8 @@ for ATSD and Components to start.
 
 ![](images/screenshot_280415_15-22-59.png "screenshot_280415_15-22-59")
 
-​10. Use your browser to navigate to atsd_hostname:8088. For example:
-192.168.137.128:8088. Login to ATSD, username = axibase and password =
+​10. Use your browser to navigate to `atsd_hostname:8088`. For example:
+`192.168.137.128:8088`. Login to ATSD, username = axibase and password =
 axibase.
 
 ![](images/atsd-login1.png "atsd login")

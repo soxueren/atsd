@@ -1,10 +1,10 @@
 # Client for PHP
 
-> Check out our [GitHub](https://github.com/axibase/atsd-api-php) for
+> Check out our [GitHub](https://github.com/axibase/atsd-api-php) page for
 more Axibase developments.
 
 The ATSD Client for PHP enables PHP developers to easily read and write
-statistics and metadata from the [Axibase Times-Series
+statistics and metadata from the [Axibase Time Series
 Database](http://axibase.com/products/axibase-time-series-database/).
 With minimal effort, you can build reporting, analytic, and alerting
 solutions.
@@ -41,7 +41,7 @@ time-series values, statistics, properties, alerts, and messages.
 ## Getting Started
 
 Before you begin installing ATSD Client for PHP, you need to install a
-copy of the [Axibase Time-Series
+copy of the [Axibase Time Series
 Database](http://axibase.com/products/axibase-time-series-database/).
 Download the latest version of ATSD that is available for your Linux
 distribution.
@@ -59,7 +59,7 @@ Installing the ATSD Client:
 
 ### **Composer**
 
-Once in composer.json, specify the following:
+Once in `composer.json`, specify the following:
 
 ```json
  {                                                                        
@@ -170,7 +170,7 @@ See:
 ## Troubleshooting
 
 If you get an error like the following, ensure that the variable
-date.timezone in your php.ini is set.
+date.timezone in your `php.ini` is set.
 
 ```php
  Fatal error: Uncaught exception 'Exception' with message 'DateTime::__co 

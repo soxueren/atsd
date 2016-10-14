@@ -22,13 +22,13 @@ This step is required **only on Ubuntu 16.04** (Xenial Xerus).
 sudo add-apt-repository ppa:openjdk-r/ppa  
 ```
 
-#### Update repositories
+#### Update Repositories
 
 ```sh
 sudo apt-get update
 ```
 
-#### Add `axibase.com/public/repository/deb/` repository
+#### Add `axibase.com/public/repository/deb/` Repository
 
 ```sh
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 \
@@ -40,7 +40,7 @@ sudo sh -c 'echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./"
 >> /etc/apt/sources.list.d/axibase.list'
 ```
 
-#### Update repositories and follow the prompts to install ATSD
+#### Update Repositories and Follow the Prompts to Install ATSD
 
 ```sh
 sudo apt-get update && sudo apt-get install atsd                       
@@ -54,7 +54,7 @@ It may take up to 5 minutes to initialize the database.
 tail -f /opt/atsd/atsd/logs/start.log                                   
 ```
 
-You should see **ATSD start completed** message at the end of the start.log.
+You should see a **ATSD start completed** message at the end of the `start.log`.
 
 Web interface is accessible on port 8088 (http) and 8443 (https).
 

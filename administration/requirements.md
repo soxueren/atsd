@@ -8,7 +8,7 @@
 | RAM | 4 GB (min 1 GB) | 16 GB |
 | Disk Type | Magnetic | SSD |
 
-> Total Processor capacity computed as number of cores multiplied by clock speed, e.g. 4 x 2.5GHz = 10 GHz
+> Total Processor capacity computed as the number of cores multiplied by clock speed, e.g. 4 x 2.5GHz = 10 GHz
 
 ## Disk Space
 
@@ -33,5 +33,3 @@
 ## Hostname
 
 The target server's hostname should not be **localhost**.
-
-

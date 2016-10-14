@@ -351,6 +351,6 @@ Reasons why ATSD server can drop commands:
 * Value is below 'Min Value' or above 'Max Value' limit specified for the metric and the 'Invalid Value Action' is set to `DISCARD`.
 * Last command in a multi-line UDP packed doesn't terminate with line feed symbol.
 
-To review dropped commands, open command*.log files in ATSD.
+To review dropped commands, `open command*.log` files in ATSD.
 
 ![](dropped-commands-logs.png)

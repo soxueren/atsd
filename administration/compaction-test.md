@@ -4,13 +4,13 @@
 The purpose of this guide is to compute ATSD storage efficiency for a
 custom dataset in order to identify optimal compression and data
 encoding settings and produce sizing estimates. Please note that
-compression and encoding options are supported only in ATSD Standard and
+compression and encoding options are supported only in the ATSD Standard and
 Enterprise Edition.
 
-> Note: it is recommended that this test is performed on a test ATSD
+> Note: it is recommended that this test be performed on a test ATSD
 instance, not a production instance.
 
-Open the Metrics page found on the main menu, click CREATE button on the
+Open the Metrics page found on the main menu. Click the CREATE button on the
 bottom of the page to create new `metrics` that you are planning to load
 into ATSD with the correct data type (short, integer, long, float, double or decimal, 
 depending on the type of data you would like to store).
@@ -28,7 +28,7 @@ Stop ATSD:
 
 Data in ATSD is stored in the `atsd_d` table.
 
-Setup the ATSD compression, command depends on installed version of
+Setup the ATSD compression. The command depends on installed version of
 ATSD:
 
 ATSD Community Edition:
@@ -75,14 +75,14 @@ Perform compaction using the following URL:
  http://atsd_server:8088/compaction?all=true&historical=true              
 ```
 
-The compaction process can take a few minutes to be completed, you can
+The compaction process can take a few minutes to be completed. You can
 track its progress with the following command:
 
 ```sh
  tail -f /opt/atsd/atsd/logs/atsd.log | grep 'Compaction completed'
 ```
 
-Example output of successful compaction:
+Example output of a successful compaction:
 
 ```java
  22:02:32,100;INFO;applicationScheduler-5;com.axibase.tsd.service.compact 
@@ -95,7 +95,7 @@ After compaction has been fully completed, stop ATSD:
  /opt/atsd/bin/atsd-tsd.sh stop                                           
 ```
 
-Perform major\_compaction and record the size:
+Perform `major_compaction` and record the size:
 
 ```sh
  /opt/atsd/hbase/bin/hbase shell                                          
@@ -105,7 +105,7 @@ Perform major\_compaction and record the size:
  /opt/atsd/hadoop/bin/hadoop fs -dus /hbase/atsd_d  >> atsd_d_size.out    
 ```
 
-Now the size of ‘atsd\_d’ table in bytes is recorded in
+Now the size of ‘atsd\_d’ table in bytes is recorded in the
 `atsd_d_size.out` file.
 
 For example:

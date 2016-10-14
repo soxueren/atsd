@@ -22,9 +22,11 @@
 
 ## Start Container
 
-### Option 1: Configure collector Account Automatically
+### Option 1: Configure Collector Account Automatically
 
-Replace `collector-user` and `collector-password` to automatically create a built-in [collector account](../administration/collector-account.md). Minimum password length is **6 characters**.
+Replace `collector-user` and `collector-password` to automatically create a built-in [collector account](../administration/collector-account.md). 
+
+Minimum password length is **six** characters and the password is subject to the following [requirements](../administration/user-authentication.md#password-requirements).
 
 ```properties
 docker run \
@@ -42,7 +44,7 @@ docker run \
 
 ### Option 2: Configure User Accounts Manually
 
-If `ATSD_USER_{NAME, PASSWORD}` credentials are not specified as part of `docker run` command, no collector account will be created.
+If the `ATSD_USER_{NAME, PASSWORD}` credentials are not specified as part of the `docker run` command, no collector account will be created.
 
 In this case, you can configure both administrator and [collector](../administration/collector-account.md) accounts on initial login.
 
@@ -62,15 +64,15 @@ It may take up to 5 minutes to initialize the database.
 
 ## Launch Parameters
 
-**Name** | **Required** | **Description**
------ | ----- | -----
-`--detach` | Yes | Run container in background and print container id.
-`--hostname` | No | Assign hostname to the container.
-`--name` | No | Assign a unique name to the container.
-`--restart` | No | Auto-restart policy. _Not supported in all Docker Engine versions._
-`--publish` | No | Publish a container's port to the host
-`--env ATSD_USER_NAME` | No | Username for the built-in collector account
-`--env ATSD_USER_PASSWORD` | No | Password for the built-in collector account. Minimum length is 6 characters.
+| **Name** | **Required** | **Description** |
+|:---|:---|:---|
+|`--detach` | Yes | Run container in background and print container id. |
+|`--hostname` | No | Assign hostname to the container. |
+|`--name` | No | Assign a unique name to the container. |
+|`--restart` | No | Auto-restart policy. _Not supported in all Docker Engine versions._ |
+|`--publish` | No | Publish a container's port to the host. |
+|`--env ATSD_USER_NAME` | No | User name for the built-in collector account. |
+|`--env ATSD_USER_PASSWORD` | No | Password for the built-in collector account, subject to [password requirements](../administration/user-authentication.md#password-requirements).|
 
 ## Check Installation
 
@@ -78,9 +80,9 @@ It may take up to 5 minutes to initialize the database.
 docker logs -f atsd
 ```
 
-You should see _ATSD start completed_ message at the end of the start.log.
+You should see a _ATSD start completed_ message at the end of the `start.log` file.
 
-ATSD web interface is accessible on port 8088.
+ATSD web interface is accessible on port 8088/http and 8443/https.
 
 ## Exposed Ports
 

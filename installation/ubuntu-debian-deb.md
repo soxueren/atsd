@@ -34,7 +34,7 @@ This step is required **only on Ubuntu 16.04** (Xenial Xerus).
 sudo add-apt-repository ppa:openjdk-r/ppa  
 ```
 
-#### Update repositories and install dependencies
+#### Update Repositories and Install Dependencies
 
 ```sh
 sudo apt-get update && sudo apt-get install -y openjdk-7-jdk sysstat curl hostname
@@ -42,7 +42,7 @@ sudo apt-get update && sudo apt-get install -y openjdk-7-jdk sysstat curl hostna
 
 > If there are any issues with installing the dependencies, [check the repositories](modifying-ubuntu-debian-repositories.md "Modifying Repositories") and retry the command.
 
-#### Follow the prompts to install ATSD
+#### Follow the Prompts to Install ATSD
 
 ```sh
 sudo dpkg -i atsd_ce_amd64.deb
@@ -53,10 +53,10 @@ It may take up to 5 minutes to initialize the database.
 ## Check Installation
 
 ```sh
-tail -f /opt/atsd/atsd/logs/start.log                                   
+tail -f /opt/atsd/atsd/logs/start.log                           
 ```
 
-You should see **ATSD start completed** message at the end of the start.log.
+You should see a **ATSD start completed** message at the end of the `start.log`.
 
 Web interface is accessible on port 8088 (http) and 8443 (https).
 

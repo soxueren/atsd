@@ -19,7 +19,7 @@ and copying them to the target machine with similar characteristics for offline 
 
 ## Installation Steps
 
-Enable **axibase.com/public/repository/deb/** repository on the machine with Internet access:
+Enable the **axibase.com/public/repository/deb/** repository on the machine with Internet access:
 
 ```sh
 sudo apt-get update
@@ -35,7 +35,7 @@ sudo sh -c 'echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./"
 >> /etc/apt/sources.list.d/axibase.list'
 ```
 
-Download atsd package including its dependencies to `atsd_with_dependencies` directory.
+Download the ATSD package, including its dependencies, to the `atsd_with_dependencies` directory.
 
 ```
 sudo apt-get update
@@ -44,7 +44,7 @@ cd atsd_with_dependencies
 apt-get --print-uris --yes install atsd | grep ^\' | cut -d\' -f2 | xargs wget
 ```
 
-Copy `atsd_with_dependencies` directory to the target machine where ATSD will be installed.
+Copy the `atsd_with_dependencies` directory to the target machine where ATSD will be installed.
 
 Install dependencies:
 
@@ -66,7 +66,7 @@ It may take up to 5 minutes to initialize the database.
 tail -f /opt/atsd/atsd/logs/start.log                                   
 ```
 
-You should see **ATSD start completed** message at the end of the start.log.
+You should see a **ATSD start completed** message at the end of the `start.log`.
 
 Web interface is accessible on port 8088 (http) and 8443 (https).
 

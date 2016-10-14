@@ -2,7 +2,7 @@
 
 
 The Configuration File Editor allows the editing of ATSD configuration
-files directly in the UI. Only files that are located in the
+files directly in the user interface. Only files that are located in the
 `/opt/atsd/atsd/conf` directory can be edited.
 
 This is especially useful and convenient when editing `graphite.conf` to

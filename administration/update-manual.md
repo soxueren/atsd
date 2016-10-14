@@ -6,7 +6,7 @@
  su axibase
 ```
 
-### Download the latest ATSD build files
+### Download the Latest ATSD Build Files
 
 * [hbase 0.94](http://axibase.com/public/atsd_ce_update_latest.htm)
 
@@ -14,15 +14,15 @@
 
 * [hbase 1.2.2](https://www.axibase.com/public/atsd_ee_hbase_1.2.2.tar.gz)
 
-The archive will contain the latest ATSD release with the revision number included in the file name, for example, `atsd_14358.tar.gz`.
+The archive will contain the latest ATSD release with the revision number included in the file name. For example, `atsd_14358.tar.gz`.
 
-### Unpack the archive
+### Unpack the Archive
 
 ```sh
 tar xzf atsd_14358.tar.gz
 ```
 
-### View files in the archive
+### View Files in the Archive
 
 ```sh
 cd target
@@ -37,7 +37,7 @@ atsd.jar
 /opt/atsd/bin/atsd-all.sh stop
 ```
 
-### Copy JAR files
+### Copy JAR Files
 
 ```sh
  cp atsd.jar /opt/atsd/hbase/lib

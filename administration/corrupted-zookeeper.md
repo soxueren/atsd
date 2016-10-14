@@ -1,4 +1,4 @@
-# Restoring a corrupted zookeeper
+# Restoring a Corrupted Zookeeper
 
 
 If the HBase server did not start correctly and the file
@@ -21,9 +21,9 @@ If the HBase server did not start correctly and the file
 ```
 Then execute the following steps to fix the issue:
 
-> Note: If your ATSD installation has replication setup according [replication
+> Note: If your ATSD installation has a replication setup according to the [replication
 guide](replication.md "ATSD Replication"), execute the `add_peer` commands on the master machine again
-to restart replication after you have restored the corrupted zookeeper using this guide.*
+to restart the replication after you have restored the corrupted zookeeper using this guide.
 
 Stop HBase:
 
@@ -31,13 +31,13 @@ Stop HBase:
  /opt/atsd/hbase/bin/stop-hbase.sh                                        
 ```
 
-Make sure that hbase has stopped:
+Make sure that HBase has stopped:
 
 ```sh
  ps -ef | grep '[h]base'
 ```
 
-If there is an output, kill processes:
+If there is an output, kill the processes:
 
 ```sh
  ps -ef | grep '[h]base' | awk '{print $2}' | xargs kill
@@ -49,7 +49,7 @@ Make sure that HBase has stopped:
  ps -ef | grep '[h]base'
 ```
 
-If there is still an output, kill processes with flag –9:
+If there is still an output, kill the processes with flag –9:
 
 ```sh
  ps -ef | grep '[h]base' | awk '{print $2}' | xargs kill -9
@@ -61,8 +61,8 @@ Make sure that HBase has stopped:
  ps -ef | grep '[h]base'
 ```
 
-Determine folder that contains zookeeper temporary files. This folder is
-specified in `/opt/atsd/hbase/conf/hbase-site.xml` . Property has the
+Determine the folder that contains the zookeeper temporary files. This folder is
+specified in `/opt/atsd/hbase/conf/hbase-site.xml`. The property has the
 name `hbase.zookeeper.property.dataDir`. For example:
 
 ```sh
@@ -93,13 +93,13 @@ Check HBase shell:
  /opt/atsd/hbase/bin/hbase shell                                          
 ```
 
-The console should start, execute the `list` command:
+The console should start. Execute the `list` command:
 
 ```sh
  list                                                                     
 ```
 
-The output should be a list of tables, close the console:
+The output should be a list of tables. Close the console:
 
 ```sh
  exit                                                                     

@@ -27,7 +27,7 @@ su axibase
 
 ### Manual Option
 
-Change `JAVA_HOME` variable from old path `/usr/lib/jvm/java-1.6.0-openjdk-amd64` to new path 
+Change the `JAVA_HOME` variable from the old path `/usr/lib/jvm/java-1.6.0-openjdk-amd64` to the new path 
 `/usr/lib/jvm/java-1.7.0-openjdk-amd64` in the following files:
 
 ```sh
@@ -41,7 +41,7 @@ Change `JAVA_HOME` variable from old path `/usr/lib/jvm/java-1.6.0-openjdk-amd64
 
 ### Scripted Option
 
-Change `JAVA_HOME` variable in the following files with `sed`
+Change the `JAVA_HOME` variable in the following files with `sed`
 
 ```sh
 $: printf "/home/axibase/.bashrc\n/opt/atsd/hadoop/conf/hadoop-env.sh\n\

@@ -38,7 +38,7 @@ OpenJDK Runtime Environment (rhel-2.6.6.1.el7_2-x86_64 u101-b00)
 OpenJDK 64-Bit Server VM (build 24.95-b01, mixed mode)
 ```
 
-Add `JAVA_HOME` path to the `axibase` user environment in `.bashrc`.
+Add the `JAVA_HOME` path to the `axibase` user environment in `.bashrc`.
 
 ```
 sudo su axibase
@@ -79,7 +79,7 @@ sudo chown -R axibase:axibase /opt/atsd
 
 ## Configure HBase Connection
 
-Open `hadoop.properties` file.
+Open the `hadoop.properties` file.
 
 ```
 nano /opt/atsd/atsd/conf/hadoop.properties
@@ -89,7 +89,7 @@ Set `hbase.zookeeper.quorum` to Zookeeper hostname `zookeeper-host`
 
 If Zookeeper client port is different from 2181, set `hbase.zookeeper.property.clientPort` accordingly.
 
-Set Zookeeper Znode parent according to setting `zookeeper.znode.parent` configured on `HBase host` > `/usr/hdp/{hdp_version}/hbase/conf/hbase-site.xml`.
+Set Zookeeper Znode parent according to the setting `zookeeper.znode.parent` configured on `HBase host` > `/usr/hdp/{hdp_version}/hbase/conf/hbase-site.xml`.
 
 ```
 hbase.zookeeper.quorum = zookeeper-host
@@ -103,7 +103,7 @@ hbase.client.scanner.timeout.period = 120000
 
 To obtain the license key, contact Axibase support with the following information from the machine where ATSD will be installed.
 
-* Output of `ip addr` command.
+* Output of the `ip addr` command.
 
 ```
 [axibase@NURSWGVML007 ~]$ ip addr
@@ -121,7 +121,7 @@ To obtain the license key, contact Axibase support with the following informatio
        valid_lft forever preferred_lft forever
 ```
 
-* Output of `hostname` command.
+* Output of the `hostname` command.
 
 ```
 [axibase@NURSWGVML007 ~]$ hostname
@@ -134,11 +134,11 @@ Email output of the above commands to Axibase support and copy the provided key 
 
 ### Deploy ATSD coprocessors 
 
-Copy `/opt/atsd/hbase/lib/atsd.jar` to `/usr/hdp/{hdp_version}/hbase/lib/` directory on each HBase region server.
+Copy `/opt/atsd/hbase/lib/atsd.jar` to the `/usr/hdp/{hdp_version}/hbase/lib/` directory on each HBase region server.
 
 ### Enable ATSD Coprocessors
 
-Open Services tab in Ambari UI, select the target HBase cluster, open Configs tab, search for setting `hbase.coprocessor.region.classes` and enter the following names separated by comma. 
+Open Services tab in Ambari UI, select the target HBase cluster, open Configs tab, search for the setting `hbase.coprocessor.region.classes`, and enter the following names separated by comma. 
 
 ```
 com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint, com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint, com.axibase.tsd.hbase.coprocessor.MessagesStatsEndpoint
@@ -148,13 +148,13 @@ com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint, com.axibase.tsd.hbase.
 
 ### Restart HBase Region Servers
 
-## Check for port conflicts
+## Check for Port Conflicts
 
 ```
 sudo netstat -tulpn | grep "8081\|8082\|8084\|8088\|8443"
 ```
 
-If some of the above ports are taken, open `/opt/atsd/atsd/conf/server.properties` file and change ATSD listening ports accordingly.
+If some of the above ports are taken, open the `/opt/atsd/atsd/conf/server.properties` file and change ATSD listening ports accordingly.
 
 ```
 http.port = 8088
@@ -176,13 +176,13 @@ Review the start log for any errors:
 tail -f /opt/atsd/atsd/logs/atsd.log
 ```
 
-You should see **ATSD start completed** message at the end of the start.log.
+You should see a **ATSD start completed** message at the end of the `start.log`.
 
 Web interface is accessible on port 8088 (http) and 8443 (https).
 
 ## Enable ATSD Autostart
 
-To configure ATSD for automated restart on server reboot, add the following line to `/etc/rc.local` before `return 0` line.
+To configure ATSD for automated restart on server reboot, add the following line to `/etc/rc.local` before the `return 0` line.
 
 ```
 su - axibase -c /opt/atsd/atsd/bin/start-atsd.sh

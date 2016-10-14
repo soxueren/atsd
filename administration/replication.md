@@ -1,27 +1,27 @@
 # Replication
 
 
-This article describes how to configure replication for Axibase Time
+This article describes how to configure replication for the Axibase Time
 Series Database.
 
-The replication is Master-Slave, where all transactions on the master
-cluster are replayed on the slave cluster.
+The replication process is from master to slave, meaning where all transactions on the master
+cluster are replayed to the slave cluster.
 
 In the guide `atsd_master` is the hostname of the master host and
 `atsd_slave` is the hostname of the slave host.
 
 > Note: This guide should be executed only on new ATSD installations.
 Executing this guide on an existing ATSD installation will lead to the
-loss of all stored data on both the Master and Slave machines.**
+loss of all stored data on both the master and slave machines.
 
 > Note: If master loses connection with slave, it will accumulate all the
 data and events for the duration of the connection loss and will start
-transferring the accumulated data once connection with salve is
-re-established. No data should be lost the process.
+transferring the accumulated data once connection with slave is
+re-established. No data should be lost in the process.
 
 #### Requirements
 
-Both master and slave machines must have static a IP addresses in the
+Both the master and slave machines must have static a IP addresses in the
 local network.
 
 Both machines must have identical hardware configurations. [See ATSD
@@ -33,7 +33,7 @@ guides.](http://axibase.com/products/axibase-time-series-database/download-atsd/
 
 #### Installation
 
-**MASTER & SLAVE: The following steps must be executed on both machines
+**MASTER & SLAVE: the following steps must be executed on both machines
 – master and slave.**
 
 Stop ATSD and all components:
@@ -55,7 +55,7 @@ sudo nano /etc/hosts
  ```
 
 > Note: the following lines should not be contained in the `hosts` file.
-This is the case for both master and slave.*
+This is the case for both master and slave.
 
 ```sh
 127.0.1.1    atsd_master
@@ -65,7 +65,7 @@ This is the case for both master and slave.*
  127.0.1.1    atsd_slave
 ```
 
-Example of correct `hosts` file:
+Example of a correct `hosts` file:
 
 ```sh
  127.0.0.1    localhost
@@ -73,7 +73,7 @@ Example of correct `hosts` file:
  172.30.0.78    atsd_slave
 ```
 
-Add `hbase.replication` property to `configuration` tag in the
+Add the `hbase.replication` property to the `configuration` tag in the
 `hbase-site.xml` file:
 
 ```xml
@@ -83,7 +83,7 @@ Add `hbase.replication` property to `configuration` tag in the
 </property>
 ```
 
-**SLAVE: The following steps must be executed only on the slave
+**SLAVE: the following steps must be executed only on the slave
 machine.**
 
 Edit the `atsd-all.sh` file to disable ATSD startup:
@@ -115,7 +115,7 @@ Start Hadoop and HBase:
 ```sh
  /opt/atsd/bin/atsd-all.sh start
 ```
-Run replication configuration script:
+Run the replication configuration script:
 
 ```sh
 /opt/atsd/hbase_util/configure_replication.sh slave
@@ -123,7 +123,7 @@ Run replication configuration script:
 
 This command truncates all ATSD tables.
 
-Verify that ATSD tables are present:
+Verify that ATSD tables are present.
 
 Start HBase shell:
 
@@ -135,7 +135,7 @@ List tables:
 ```sh
  list
 ```
-Output should contain a list of ATSD tables, all starting with `atsd_`:
+The output should contain a list of ATSD tables, all starting with `atsd_`:
 
 ![](images/atsd_tables.png "atsd_tables")
 
@@ -145,7 +145,7 @@ Stop HBase shell:
 exit
 ```
 
-**MASTER: The following steps must be executed only on the
+**MASTER: the following steps must be executed only on the
 master machine.**
 
 Start Hadoop and HBase:
@@ -172,7 +172,7 @@ add_peer '1', "atsd_slave:2181:/hbase"
 ungraceful stop and your Zookeeper is corrupted, [after solving this
 issue using our
 guide](corrupted-zookeeper.md "Restoring a corrupted zookeeper"),
-be sure to execute these `add_peer` commands again to restart
+be sure to execute the `add_peer` commands again to restart the
 replication.
 
 Make sure that the peer has been added:
@@ -228,14 +228,14 @@ Stop HBase shell:
 exit
 ```
 
-#### Enabling replication for new tables
+#### Enabling Replication for New Tables
 
-If after updating ATSD or for any other reason a new table was created
-in HBase with the name containing `atsd_`, for example `atsd_new`, then
+If after updating ATSD, or for any other reason, a new table was created
+in HBase with the name containing `atsd_` (for example `atsd_new`),
 execute the following steps to make sure this table is added to
 replication.
 
-**MASTER: The following steps must be executed only on the
+**MASTER: the following steps must be executed only on the
 master machine.**
 
 Write the table schema to a file:
@@ -251,7 +251,7 @@ Copy table schema file to slave machine:
 scp atsd_new_schema.txt atsd_slave:/tmp
 ```
 
-**SLAVE: The following steps must be executed only on the slave
+**SLAVE: the following steps must be executed only on the slave
 machine.**
 
 Create the new table in the slave database:
@@ -260,7 +260,7 @@ Create the new table in the slave database:
 /opt/atsd/hbase/bin/hbase shell < /tmp/atsd_new_schema.txt
 ```
 
-**MASTER: The following steps must be executed only on the
+**MASTER: the following steps must be executed only on the
 master machine.**
 
 Enable replication for the new table:
@@ -279,7 +279,7 @@ steps:
 
 ##### Option 1:
 
-**SLAVE: The following steps must be executed only on the slave
+**SLAVE: the following steps must be executed only on the slave
 machine.**
 
 Check HBase logs for replication activity:
@@ -288,7 +288,7 @@ Check HBase logs for replication activity:
 tail -n 1000 /opt/atsd/hbase/logs/hbase-axibase-regionserver-atsd_slave.log | grep replicated
 ```
 
-The output should contain replication activity and the amount tables
+The output should contain replication activity and the of amount tables
 replicated on the slave machine:
 
 ```sh
@@ -304,10 +304,10 @@ replicated on the slave machine:
 
 ##### Option 2:
 
-**MASTER: The following steps must be executed only on the
+**MASTER: the following steps must be executed only on the
 master machine.**
 
-Open ATSD UI and navigate to Rules tab located on the main menu.
+Open ATSD user interface and navigate to Rules tab located on the main menu.
 
 ![](images/atsd_rules.png "atsd_rules")
 
@@ -330,7 +330,7 @@ Start HBase shell:
  /opt/atsd/hbase/bin/hbase shell
 ```
 
-Scan `atsd_rule` table and note down the amount of line contained in the
+Scan the `atsd_rule` table and note down the amount of line contained in the
 table:
 
 ```sh
@@ -347,7 +347,7 @@ Stop HBase shell:
  exit
 ```
 
-**SLAVE: The following steps must be executed only on the slave
+**SLAVE: tThe following steps must be executed only on the slave
 machine.**
 
 Start HBase shell:

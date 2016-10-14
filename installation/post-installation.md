@@ -2,7 +2,7 @@
 
 ## Configure Firewall
 
-* Allow remote access to ATSD network services by [adding `iptables` rules](firewall.md).
+* Allow remote access to the ATSD network services by [adding `iptables` rules](firewall.md).
 
 ## Setup Email Client
 
@@ -10,7 +10,7 @@
 
 ## Verify System Time
 
-* Open **Admin > Server Time** tab in the ATSD web interface and verify the
+* Open the **Admin > Server Time** tab in the ATSD web interface and verify the
 time and timezone information.
 * Synchronize system time or setup NTP in order to keep the server time accurate.
 

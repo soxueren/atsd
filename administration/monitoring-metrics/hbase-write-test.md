@@ -1,19 +1,18 @@
-# Monitoring metrics : HBase Write Test
+# Monitoring Metrics using the HBase Write Test
 
-
-HBase Write Test can be run directly from the ATSD UI under Admin -\>
+The HBase Write Test can be run directly from the ATSD user interface under Admin -\>
 HBase Test.
 
 Direct url: `atsd_hostname:8088/admin/hbase-test`
 
-HBase Write Test allows to:
+HBase Write Test allows you to:
 
--   Analyze the data being ingested, e.g. number of unique
-    metric/entity/tag combinations, and run a write throughput test
--   Launch Auto Test to view a matrix of throughput statistics for
-    different batch size and thread count combinations
--   Apply test results to modify default configuration parameters in
-    ATSD server.properties file:
+-   Analyze the data being ingested, i.e. the number of unique
+    metric/entity/tag combinations, and run a write throughput test.
+-   Launch an Auto Test to view a matrix of throughput statistics for
+    different batch sizes and thread count combinations.
+-   Apply test results to modify the default configuration parameters in
+    the ATSD `server.properties` file:
 
 ```properties
  series.batch.size = 1024                                                 
@@ -26,11 +25,11 @@ Auto Test Example Results:
 
 | Field | Description |
 | --- | --- |
-| Entity prefix | Entity name prefix |
-| Metric prefix | Metric name prefix |
-| Entities count | Number of entities that will be written |
-| Metrics count | Number of metrics that will be written |
-| Tags count | Number of tags that will be assigned to each series.Tag count should represent a realistic number of tags that are normally assigned to your series for the results to be accurate. |
+| Entity prefix | Entity name prefix. |
+| Metric prefix | Metric name prefix. |
+| Entities count | Number of entities that will be written. |
+| Metrics count | Number of metrics that will be written. |
+| Tags count | Number of tags that will be assigned to each series. Tag count should represent a realistic number of tags that are normally assigned to your series for the results to be accurate. |
 | Series count | Total number of series that will be stored. |
 | Batch size | Size of each test batch. |
 | Thread count | Number of threads used for each test. |

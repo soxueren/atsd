@@ -2,7 +2,7 @@
 
 
 Download the MapR M3 distribution and follow the installation
-instructions from the MapR M3 website:
+instructions from the MapR M3 website
 [https://www.mapr.com/products/hadoop-download](https://www.mapr.com/products/hadoop-download)
 to install MapR Community Edition.
 
@@ -12,7 +12,7 @@ Recommendations for installing MapR M3:
     HBase”, be sure to answer “y”
 -   Be sure to allocate at least the minimum recommended RAM amount and
     Hard Drive space for MapR
--   We recommend to install MapR on a separate Hard Drive in order to
+-   We recommend installing MapR on a separate Hard Drive in order to
     avoid issues down the line
 
 ## ATSD Installation
@@ -36,13 +36,13 @@ Stop the HBase process:
  sudo service mapr-warden stop                                            
 ```
 
-Copy atsd.jar file containing coprocessors to the hbase/lib directory:
+Copy the atsd.jar file containing coprocessors to the hbase/lib directory:
 
 ```sh
  cp /opt/atsd/hbase/lib/atsd.jar /opt/mapr/hbase/hbase-0.94.24/lib/       
 ```
 
-Start HBase. Make sure that all services are started, it may take a few
+Start HBase. Make sure that all services are started. This may take a few
 minutes:
 
 ```sh
@@ -70,7 +70,7 @@ Start ATSD:
  /opt/atsd/atsd/bin/start-atsd.sh                                         
 ```
 
-Verify that ATSD web interface is available at http://atsd_hostname:8099
+Verify that the ATSD web interface is available at http://atsd_hostname:8099
 
 ## Optional Steps
 - [Veryfing installation](veryfing-installation.md)

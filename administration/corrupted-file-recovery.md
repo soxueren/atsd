@@ -3,32 +3,32 @@
 Recommended Steps:
 
    * Wait 60 seconds after starting HBase and before running `hbase hbck`
-   * Restart HBase after running repair and make sure that status OK by hbck again
+   * Restart HBase after running repairs and make sure that the status is OK by hbck again
 
 ## Repair HBase
 
-* Check HDFS safemode status
+* Check HDFS safe mode status
 
 ```sh
  /opt/atsd/hadoop/bin/hadoop dfsadmin -safemode get
  # safe mode is ON.
 ```
 
-* If HDFS is in safe mode, force it to leave safemode manually
+* If HDFS is in safe mode, force it to leave safe mode manually
 
 ```sh
  /opt/atsd/hadoop/bin/hadoop dfsadmin -safemode leave
  # safe mode is OFF
 ```
 
-* Check that /hbase/ directory in HDFS indeed contains corrupted files
+* Check that the /hbase/ directory in HDFS indeed contains corrupted files
 
 ```
  /opt/atsd/hadoop/bin/hadoop fs -rmr -skipTrash /hbase/.logs/*
  /opt/atsd/hadoop/bin/hadoop fsck /hbase/ -openforwrite -files | grep "Status: CORRUPT"
 ```
 
-If there are no corrupted files, recovery is complete. Start ATSD as usual ```/opt/atsd/bin/atsd-all.sh start```.
+If there are no corrupted files, the recovery is complete. Start ATSD as usual: ```/opt/atsd/bin/atsd-all.sh start```.
 
 
 * Check HBase status
@@ -38,14 +38,14 @@ If there are no corrupted files, recovery is complete. Start ATSD as usual ```/o
  # status incosistent
 ```
 
-* Repair corrupted data files using hbck utility
+* Repair corrupted data files using the hbck utility
 
 ```sh
  /opt/atsd/hbase/bin/hbase hbck -repair
  # status incosistent
 ```
 
-If repairing didn't help, you will have to **remove** corrupted files.
+If repairing didn't help, you will have to **remove** the corrupted files.
 
 ## Corrupted File Deletion
 
@@ -104,7 +104,7 @@ rsync -r /opt/atsd/hdfs-cache ~/backup/hdfs-cache
  /opt/atsd/hadoop/bin/start-dfs.sh
 ```
 
-* Wait for 1 minute. Check that HDFS was able to leave safemode by itself, check safemode status and if safemofe is OFF, proceed to start HBase
+* Wait for 1 minute. Check that HDFS was able to leave safe mode by itself. Check the safe mode status. If the safe mode is OFF, proceed to start HBase
 
 ```sh
  /opt/atsd/hadoop/bin/hadoop dfsadmin -safemode get
@@ -135,7 +135,7 @@ ROW COLUMN+CELL
 ERROR: Unknown table atsd_entity!
 ```
 
-* If you get "Unknown table" exception, run ```repair``` again:
+* If you get an "Unknown table" exception, run ```repair``` again
 
 ```sh
  /opt/atsd/hbase/bin/hbase hbck -repair

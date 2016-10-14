@@ -21,12 +21,12 @@ and copying them to the target machine with similar characteristics for offline 
 
 ## Installation Steps
 
-Download ATSD rpm package to an intermediate machine with Internet access:
+Download the ATSD rpm package to an intermediate machine with Internet access:
 
 * `curl -O https://www.axibase.com/public/atsd_ce_amd64.rpm`
 * [https://axibase.com/public/atsd_ce_rpm_latest.htm](https://axibase.com/public/atsd_ce_rpm_latest.htm)
 
-Download ATSD dependencies to an intermediate machine with connected repositories:
+Download the ATSD dependencies to an intermediate machine with connected repositories:
 
 ```sh
 sudo yum install -y yum-utils
@@ -36,7 +36,7 @@ sudo yum install -y yum-utils
 sudo yumdownloader --resolve java-1.7.0-openjdk-devel sysstat which hostname net-tools iproute
 ```
 
-> See a RedHat [note](https://access.redhat.com/solutions/10154) on using yum to download packages without installation.
+> See the RedHat [note](https://access.redhat.com/solutions/10154) on using yum to download packages without installation.
 
 > If some of the above dependencies are not found, for example in case of installation on new systems, run `sudo yum update` to upgrade all packages on your operating system to the latest versions.
 
@@ -60,7 +60,7 @@ It may take up to 5 minutes to initialize the database.
 tail -f /opt/atsd/atsd/logs/start.log                                   
 ```
 
-You should see **ATSD start completed** message at the end of the start.log.
+You should see a **ATSD start completed** message at the end of the `start.log`.
 
 Web interface is accessible on port 8088 (http) and 8443 (https).
 

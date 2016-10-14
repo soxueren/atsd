@@ -1,4 +1,4 @@
-# SUSE Linux Enterprise Server: rpm package
+# SUSE Linux Enterprise Server: rpm Package
 
 ## Supported Versions
 
@@ -17,7 +17,7 @@ dependencies, use the [offline installation option](sles-offline.md).
 
 ## Download
 
-Download rpm package to the target server:
+Download the rpm package to the target server:
 
 * `curl -O https://www.axibase.com/public/atsd_ce_amd64.rpm`
 * [https://axibase.com/public/atsd_ce_rpm_latest.htm](https://axibase.com/public/atsd_ce_rpm_latest.htm)
@@ -38,7 +38,7 @@ It may take up to 5 minutes to initialize the database.
 tail -f /opt/atsd/atsd/logs/start.log                                   
 ```
 
-You should see **ATSD start completed** message at the end of the start.log.
+You should see a **ATSD start completed** message at the end of the `start.log`.
 
 Web interface is accessible on port 8088 (http) and 8443 (https).
 
