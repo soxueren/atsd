@@ -24,7 +24,7 @@
 
 ### Option 1: Configure collector Account Automatically
 
-Replace `collector-user` and `collector-password` to automatically create a built-in [collector account](../administration/collector-account.md). 
+Replace `collector-user` and `collector-password` to automatically create a built-in [collector account](../administration/collector-account.md).
 
 Minimum password length is **six** characters and the password is subject to the following [requirements](../administration/user-authentication.md#password-requirements).
 

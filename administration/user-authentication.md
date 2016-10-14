@@ -74,7 +74,7 @@ Once the user is authenticated, subsequent API requests can be executed without 
 	
 ## Resetting Password
 
--   The database doesn't store user passwords in plain text, instead storing a hashcode of the password in order to protect user credentials. Therefore it is not possible to recover a lost password, only password change/reset operation is supported. 
+-   The database doesn't store user passwords in plain text, instead storing a hashcode of the password in order to protect user credentials. Therefore it is not possible to recover a lost password, only password change/reset operation is supported.
 
 -   To reset the password for a user account:
 
