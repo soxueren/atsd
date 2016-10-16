@@ -172,22 +172,28 @@ Since the underlying data is physically stored in the same shared partitioned ta
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-|`time`|long|Observation time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY` query with `PERIOD`, time column returns period start time, same as the `PERIOD()` column specified in the `GROUP BY` clause.|
-|`datetime`|string|Observation time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY` query with `PERIOD`, datetime column returns period start time in ISO format, same as `date_format(PERIOD())` column specified in the `GROUP BY` clause.|
-|`period`|long|Period start time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.|
-|`value`|number|Series numeric value.|
-|`text`|string|Series text value.|
-|`metric`|string|Metric name, same as virtual table name.|
-|`entity`|string|Entity name.|
-|`tags.{name}`|string|Series tag value. Returns `NULL` if the specified tag doesn't exist for this series.|
-|`tags`|string|All series tags, concatenated to `name1=value;name2=value` format.|
-|`tags.*`|string|Expands to multiple columns, each column containing a separate series tag.|
-|`entity.tags.{name}`|string|Entity tag value. Returns `NULL` if the specified tag doesn't exist for this entity.|
-|`entity.tags`|string|All entity tags, concatenated to `name1=value;name2=value` format.|
-|`metric.tags.{name}`|string|Metric tag value. Returns `NULL` if the specified tag doesn't exist for this metric.|
-|`metric.tags`|string|All metric tags, concatenated to `name1=value;name2=value` format.|
-|`metric.tags.*`|string|Expands to multiple columns, each column containing a separate metric tag.|
-|`entity.groups`|string|List of entity groups, to which the entity belongs, separated by semi-colon `;`.|
+|`time`           |long     | Observation time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY` query with `PERIOD`, time column returns period start time, same as the `PERIOD()` column specified in the `GROUP BY` clause.|
+|`datetime`       |string   | Observation time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY` query with `PERIOD`, datetime column returns period start time in ISO format, same as `date_format(PERIOD())` column specified in the `GROUP BY` clause.|
+|`period`         |long     | Period start time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.|
+|`value`          |number   | Series numeric value.|
+|`text`           |string   | Series text value.|
+|`metric`         |string   | Metric name, same as virtual table name.|
+|`entity`         |string   | Entity name.|
+|`tags.{name}`    |string   | Series tag value. Returns `NULL` if the specified tag doesn't exist for this series.|
+|`tags`           |string   | All series tags, concatenated to `name1=value;name2=value` format.|
+|`tags.*`         |string   | Expands to multiple columns, each column containing a separate series tag.|
+|`metric.label`   |string   | Metric label.|
+|`metric.timeZone`|string   | Metric time zone.|
+|`metric.interpolate` |string| Metric interpolation setting.|
+|`metric.tags.{name}` |string| Metric tag value. Returns `NULL` if the specified tag doesn't exist for this metric.|
+|`metric.tags`    |string   | All metric tags, concatenated to `name1=value;name2=value` format.|
+|`metric.tags.*`  |string   | Expands to multiple columns, each column containing a separate metric tag.|
+|`entity.label`   |string   | Entity label.|
+|`entity.timeZone`|string   | Entity time zone.|
+|`entity.interpolate` |string| Entity interpolation setting.|
+|`entity.tags.{name}` |string| Entity tag value. Returns `NULL` if the specified tag doesn't exist for this entity.|
+|`entity.tags`    |string   | All entity tags, concatenated to `name1=value;name2=value` format.|
+|`entity.groups`  |string   | List of entity groups, to which the entity belongs, separated by semi-colon `;`.|
 
 For tag columns such as `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}`, where the `{name}` contains reserved characters such as `-`,`*`,`,`, the `{name}` part should be enclosed in quotes or double quotes, for example, `entity.tags."file-system"`.
 
@@ -1327,24 +1333,24 @@ Examples:
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss', AUTO)`
 
 ```sql
-SELECT entity, datetime, 
+SELECT entity, datetime, metric.timeZone AS 'Metric TZ', entity.timeZone AS 'Entity TZ',
   date_format(time) AS 'default',
   date_format(time, "yyyy-MM-dd'T'HH:mm:ssZZ") AS 'ISO 8601',
   date_format(time, 'yyyy-MM-dd HH:mm:ss') AS 'Local Server',
   date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00') AS 'GMT Offset',  
   date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PDT') AS 'PDT',
   date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', 'PDT') AS ' PDT t/z',
-  date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', AUTO) AS 'AUTO: CST' -- nurswgvml006 is in US/Central
-FROM "mpstat.cpu_busy"
+  date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', AUTO) AS 'AUTO: CST' -- nurswgvml006 is in CST
+FROM mpstat.cpu_busy
   WHERE datetime > now - 5 * minute
   AND entity = 'nurswgvml006'
   LIMIT 1
 ```
 
 ```ls
-| entity       | datetime                 | default                  | ISO 8601                  | Local Server        | GMT Offset          | PDT                 | PDT t/z                   | AUTO: CST                 | 
-|--------------|--------------------------|--------------------------|---------------------------|---------------------|---------------------|---------------------|---------------------------|---------------------------| 
-| nurswgvml006 | 2016-10-10T11:04:18.000Z | 2016-10-10T11:04:18.000Z | 2016-10-10T11:04:18+00:00 | 2016-10-10 11:04:18 | 2016-10-10 03:04:18 | 2016-10-10 04:04:18 | 2016-10-10 04:04:18-07:00 | 2016-10-10 06:04:18-05:00 | 
+| entity       | datetime             | Metric TZ | Entity TZ | default                  | ISO 8601                  | Local Server        | GMT Offset          | PDT                 | PDT t/z                   | AUTO: CST                 | 
+|--------------|----------------------|-----------|-----------|--------------------------|---------------------------|---------------------|---------------------|---------------------|---------------------------|---------------------------| 
+| nurswgvml006 | 2016-10-16T16:53:03Z | EST       | CST       | 2016-10-16T16:53:03.000Z | 2016-10-16T16:53:03+00:00 | 2016-10-16 16:53:03 | 2016-10-16 08:53:03 | 2016-10-16 09:53:03 | 2016-10-16 09:53:03-07:00 | 2016-10-16 11:53:03-05:00 | 
 ```
 
 ```ls
@@ -1730,6 +1736,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [Defined Columns](examples/select-pre-defined-columns.md)
 - [All Series Tags](examples/select-all-tags.md)
 - [Text Value Column](examples/select-text-value.md)
+- [Field Columns](examples/select-field-columns.md)
 - [Entity Tag Columns](examples/select-entity-tag-columns.md)
 - [Metric Tag Columns](examples/select-metric-tag-columns.md)
 - [Computed Columns](examples/select-computed-columns.md)

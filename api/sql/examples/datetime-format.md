@@ -99,18 +99,21 @@ UTC
 
 ### Query
 
+Metric and entity timezone can be included in the `SELECT` expression using `metric.timezone` and `entity.timezone` columns.
 
 ```sql
-SELECT t1.entity, t1.value AS 'cpu_busy', t2.value as 'cpu_system', t3.value as 'cpu_user',
-  t1.datetime
-  ,date_format(t1.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS 'cpu_busy.local_time'
-  ,date_format(t2.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS 'cpu_system.local_time'
-  ,date_format(t3.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS 'cpu_user.local_time'
+SELECT t1.entity, t1.value AS 'busy', t2.value as 'sys', t3.value as 'usr', 
+  t1.metric.timezone AS 'busy.tz', t2.metric.timezone AS 'sys.tz', t3.metric.timezone AS 'usr.tz',
+  t1.entity.timezone AS 'entity.tz',
+  t1.datetime as 'datetime'
+  ,date_format(t1.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS 'busy.auto_time'
+  ,date_format(t2.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS 'sys.auto_time'
+  ,date_format(t3.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS 'usr.auto_time'
   FROM mpstat.cpu_busy t1
   JOIN mpstat.cpu_system t2
   JOIN mpstat.cpu_user t3
 WHERE t1.entity LIKE 'nurswgvml0*'
-AND t1.datetime >= '2016-10-10T10:00:00.000Z' and t1.datetime <= '2016-10-10T10:01:00.000Z'
+AND t1.datetime >= '2016-10-10T10:00:00.000Z' and t1.datetime < '2016-10-10T10:01:00.000Z'
   WITH INTERPOLATE(60 SECOND, AUTO, OUTER)
   ORDER BY t1.datetime
 ```
@@ -118,13 +121,12 @@ AND t1.datetime >= '2016-10-10T10:00:00.000Z' and t1.datetime <= '2016-10-10T10:
 ### Query Results
 
 ```ls
-                                                                                                                                    
-| t1.entity    | cpu_busy | cpu_system | cpu_user | t1.datetime              | cpu_busy:           EDT | cpu_system:         AEDT | cpu_user:        -undefined- | 
-|--------------|----------|------------|----------|--------------------------|-------------------------|--------------------------|------------------------------| 
-| nurswgvml006 | 32.3     | 6.4        | 24.7     | 2016-10-10T10:00:00.000Z | 2016-10-10 05:00:00 CDT | 2016-10-10 05:00:00 CDT  | 2016-10-10 05:00:00 CDT      | <- CDT
-| nurswgvml007 | 31.7     | 6.1        | 23.5     | 2016-10-10T10:00:00.000Z | 2016-10-10 03:00:00 PDT | 2016-10-10 03:00:00 PDT  | 2016-10-10 03:00:00 PDT      | <- PDT
-| nurswgvml009 | 57.0     | 3.0        | 6.0      | 2016-10-10T10:00:00.000Z | 2016-10-10 10:00:00 UTC | 2016-10-10 10:00:00 UTC  | 2016-10-10 10:00:00 UTC      | <- UTC
-| nurswgvml010 | 21.1     | 0.9        | 20.2     | 2016-10-10T10:00:00.000Z | 2016-10-10 06:00:00 EDT | 2016-10-10 21:00:00 AEDT | 2016-10-10 10:00:00 GMT+00:00| <- nurswgvml010 time zone is undefined, hence apply metric timezone except `cpu_user` which has no t/z.
+| t1.entity    | busy | sys | usr  | busy.tz | sys.tz | usr.tz | entity.tz | datetime                 | busy.auto_time          | sys.auto_time            | usr.auto_time                 | 
+|--------------|------|-----|------|---------|--------|--------|-----------|--------------------------|-------------------------|--------------------------|-------------------------------| 
+| nurswgvml006 | 32.3 | 6.4 | 24.7 | EST     | AEST   | null   | CST       | 2016-10-10T10:00:00.000Z | 2016-10-10 05:00:00 CDT | 2016-10-10 05:00:00 CDT  | 2016-10-10 05:00:00 CDT       | <- CDT
+| nurswgvml007 | 31.7 | 6.1 | 23.5 | EST     | AEST   | null   | PST       | 2016-10-10T10:00:00.000Z | 2016-10-10 03:00:00 PDT | 2016-10-10 03:00:00 PDT  | 2016-10-10 03:00:00 PDT       | <- PDT
+| nurswgvml009 | 57.0 | 3.0 | 6.0  | EST     | AEST   | null   | UTC       | 2016-10-10T10:00:00.000Z | 2016-10-10 10:00:00 UTC | 2016-10-10 10:00:00 UTC  | 2016-10-10 10:00:00 UTC       | <- UTC
+| nurswgvml010 | 21.1 | 0.9 | 20.2 | EST     | AEST   | null   | null      | 2016-10-10T10:00:00.000Z | 2016-10-10 06:00:00 EDT | 2016-10-10 21:00:00 AEDT | 2016-10-10 10:00:00 GMT+00:00 | <- nurswgvml010 time zone is undefined, hence apply metric timezone except `cpu_user` which has no t/z.
 ```
 
 
