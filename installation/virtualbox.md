@@ -39,7 +39,7 @@ here.](https://www.virtualbox.org/wiki/Downloads)
 ![](images/navigate-to.png "navigate to")
 
 ​3. Open the ATSD `.ova` file and click next. For example:
-`atsd\_ce\_8760.ova`.
+atsd\_ce\_8760.ova.
 
 ![](images/open-ova1.png "open ova")
 
