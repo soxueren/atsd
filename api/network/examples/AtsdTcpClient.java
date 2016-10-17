@@ -214,52 +214,19 @@ public class AtsdTcpClient {
         if (entity.contains(" ")) {
             throw new IllegalArgumentException("Entity name can include only printable characters");
         }
-        if (tags == null) {
-            tags = new HashMap<>();
-        }
-        String command;
+        String sTags = tagsToString(tags);
+        String command = "series";
+        command += " ms:" + date.getTime();
+        command += " e:" + escape(entity);
         if (value == null || value instanceof String) {
-            command = "message";
-            command += " ms:" + date.getTime();
-            command += " e:" + escape(entity);
-            tags.put("type", name);
-            for (Map.Entry<String, String> entry : tags.entrySet()) {
-                if (entry.getKey().contains(" ")) {
-                    throw new IllegalArgumentException("Message tag name can include only printable characters");
-                }
-                if (entry.getValue() == null) {
-                    throw new IllegalArgumentException("Message tag value cannot be null");
-                }
-                String val = escape(entry.getValue()).trim();
-                if (val.isEmpty()) {
-                    throw new IllegalArgumentException("Message tag value cannot be empty");
-                }
-                command += " t:" + escape(entry.getKey()) + "=" + val;
-            }
-            String message = value == null ? "" : String.valueOf(value);
-            command += " m:" + escape(message);
+            command += " x:" + escape(name) + "=" + String.valueOf(value);
         } else {
             if (name.contains(" ")) {
                 throw new IllegalArgumentException("Metric name can include only printable characters");
             }
-            command = "series";
-            command += " ms:" + date.getTime();
-            command += " e:" + escape(entity);
             command += " m:" + escape(name) + "=" + String.valueOf(value);
-            for (Map.Entry<String, String> entry : tags.entrySet()) {
-                if (entry.getKey().contains(" ")) {
-                    throw new IllegalArgumentException("Series tag name can include only printable characters");
-                }
-                if (entry.getValue() == null) {
-                    throw new IllegalArgumentException("Series tag value cannot be null");
-                }
-                String val = escape(entry.getValue()).trim();
-                if (val.isEmpty()) {
-                    throw new IllegalArgumentException("Series tag value cannot be empty");
-                }
-                command += " t:" + escape(entry.getKey()) + "=" + val;
-            }
         }
+        command += sTags;
         writeCommand(command);
     }
 
@@ -270,51 +237,19 @@ public class AtsdTcpClient {
             throw new IllegalArgumentException("Entity name can include only printable characters");
         }
         tags = addNonIgnoredTags(status, questionable, substituted, annotated, annotations, tags);
-        String command;
+        String sTags = tagsToString(tags);
+        String command = "series";
+        command += " ms:" + getMilliseconds(date, index);
+        command += " e:" + escape(entity);
         if (value == null || value instanceof String) {
-            command = "message";
-            command += " ms:" + getMilliseconds(date, index);
-            command += " e:" + escape(entity);
-            tags.put("type", tag);
-            for (Map.Entry<String, String> entry : tags.entrySet()) {
-                if (entry.getKey().contains(" ")) {
-                    throw new IllegalArgumentException("Message tag name can include only printable characters");
-                }
-                if (entry.getValue() == null) {
-                    throw new IllegalArgumentException("Message tag value cannot be null");
-                }
-                String val = escape(entry.getValue()).trim();
-                if (val.isEmpty()) {
-                    throw new IllegalArgumentException("Message tag value cannot be empty");
-                }
-                command += " t:" + escape(entry.getKey()) + "=" + val;
-            }
-            String svalue = value == null ? "" : String.valueOf(value);
-            command += " m:" + escape(svalue);
+            command += " x:" + escape(tag) + "=" + String.valueOf(value);
         } else {
             if (tag.contains(" ")) {
                 throw new IllegalArgumentException("Metric name can include only printable characters");
             }
-            command = "series";
-            command += " ms:" + getMilliseconds(date, index);
-            command += " e:" + escape(entity);
             command += " m:" + escape(tag) + "=" + String.valueOf(value);
-            if (tags != null) {
-                for (Map.Entry<String, String> entry : tags.entrySet()) {
-                    if (entry.getKey().contains(" ")) {
-                        throw new IllegalArgumentException("Series tag name can include only printable characters");
-                    }
-                    if (entry.getValue() == null) {
-                        throw new IllegalArgumentException("Series tag value cannot be null");
-                    }
-                    String val = escape(entry.getValue()).trim();
-                    if (val.isEmpty()) {
-                        throw new IllegalArgumentException("Series tag value cannot be empty");
-                    }
-                    command += " t:" + escape(entry.getKey()) + "=" + val;
-                }
-            }
         }
+        command += sTags;
         writeCommand(command);
     }
 
@@ -346,6 +281,26 @@ public class AtsdTcpClient {
         return tags;
     }
 
+    private String tagsToString(Map<String, String> tags) {
+        StringBuilder sb = new StringBuilder();
+        if (tags != null) {
+            for (Map.Entry<String, String> entry : tags.entrySet()) {
+                if (entry.getKey().contains(" ")) {
+                    throw new IllegalArgumentException("Series tag name can include only printable characters");
+                }
+                if (entry.getValue() == null || entry.getValue().equals("null")) {
+                    throw new IllegalArgumentException("Series tag value cannot be null");
+                }
+                String val = escape(entry.getValue()).trim();
+                if (val.isEmpty()) {
+                    throw new IllegalArgumentException("Series tag value cannot be empty");
+                }
+                sb.append(" t:").append(escape(entry.getKey())).append("=").append(val);
+            }
+        }
+        return sb.toString();
+    }
+
     private String escape(String s) {
         if (s.indexOf("\"") >= 0) {
             s = s.replaceAll("\"", "\"\"");
@@ -364,5 +319,4 @@ public class AtsdTcpClient {
     private static void log(String message, Object... arguments) {
         System.out.println(MessageFormat.format(message, arguments));
     }
-
 }
