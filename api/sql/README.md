@@ -1644,6 +1644,8 @@ A running query can be cancelled at any time, for example if it is executing lon
 
 When a query is cancelled results are not returned to the client and the query is terminated with an error.
 
+A query submitted via the `/api/sql` endpoint can be [cancelled](api.md#cancelling-the-query) by submitting a request to `/api/sql/cancel?queryId=myid` url and referencing the user-defined handle with the `queryId` parameter.
+
 ### Query Logging
 
 Queries executed by the database are recorded in the main application log `atsd.log` at the INFO level.

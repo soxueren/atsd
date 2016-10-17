@@ -25,6 +25,7 @@ Scheduled queries are executed under full permissions.
 | q | string | [**Required**] Query text. |
 | outputFormat | string | Output format: `csv` or `json`. Default: `csv`. |
 | metadataFormat | string | Metadata format for CSV format. Default: `HEADER`. <br>Supported values: `NONE`, `HEADER`, `EMBED`, `COMMENTS`. |
+| queryId | string | User-defined handle submitted at the request time in order to identify the query, if it needs to be cancelled. |
 | limit | integer | Maximum number of rows to return. Default: 0 (not applied).<br>The number of returned rows is equal to the `limit` parameter or the `LIMIT` clause, whichever is lower.  |
 
 As an alternative, the query can be submitted with Content-Type `text/plain` as text payload with the other parameters included in the query string.
@@ -45,6 +46,12 @@ As an alternative, the query can be submitted with Content-Type `text/plain` as 
 	statement.executeQuery("SELECT datetime, value FROM mpstat.cpu_busy LIMIT 3");
 	//results will be limited to 3 records
 ```
+
+### Cancelling the Query
+
+The client may cancel an active query by submitting a request to `/api/sql/cancel?queryId=myid` endpoint.
+
+The `queryId` identifies the query to be cancelled. 
 
 ### Metadata
 
