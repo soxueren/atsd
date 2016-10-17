@@ -2,44 +2,44 @@
 
 Provide the following artifacts as part of your support request related to a server-side issue.
 
-1. ATSD Version Information
+## 1. ATSD Version Information
 
-   A. **Admin: Build Info** page: Revision Number and HBase Version.
+* A. **Admin: Build Info** page: Revision Number and HBase Version.
    
-   B. **Admin: Server Properties** page. Select/copy rows to a text file.
+* B. **Admin: Server Properties** page. Select/copy rows to a text file.
    
-   C. **Admin: System Info** page. Select/copy rows to a text file.
+* C. **Admin: System Info** page. Select/copy rows to a text file.
    
-2. Operating System Information
+## 2. Operating System Information
 
-   A. Output of system commands:
+* A. Output of system commands:
    
 ```bash
    cat /etc/*-release
    cat /proc/version 
 ```
  
-3. Log Files
+## 3. Log Files
 
-   A. Archive (tar.gz) of `*.log` and `*.zip` files in the `/opt/atsd/atsd/logs` directory.
+* A. Archive (tar.gz) of `*.log` and `*.zip` files in the `/opt/atsd/atsd/logs` directory.
    
-   B. Archive (tar.gz) of the local `/opt/atsd/hadoop/logs/` directory or from the HBase RegionServer(s).
+* B. Archive (tar.gz) of the local `/opt/atsd/hadoop/logs/` directory or from the HBase RegionServer(s).
    
-   C. Archive (tar.gz) of the local `/opt/atsd/hadoop/logs/` directory or from the HDFS Data Nodes(s).
+* C. Archive (tar.gz) of the local `/opt/atsd/hadoop/logs/` directory or from the HDFS Data Nodes(s).
    
-4. Heap Dump File
+## 4. Heap Dump File
 
-   A. Archive (tar.gz) of the most recent `java_pid*.hprof` file in the `/opt/atsd/atsd/logs` directory.
+* A. Archive (tar.gz) of the most recent `java_pid*.hprof` file in the `/opt/atsd/atsd/logs` directory.
    
-5. Monitoring Statistics
+## 5. Monitoring Statistics
 
-   A. Screenshot of the **Portals: ATSD** portal for the time period covering the issue.
+* A. Screenshot of the **Portals: ATSD** portal for the time period covering the issue.
    
-   B. Screenshot of the **Portals: ATSD Log Viewer** portal for the time period covering the issue.
+* B. Screenshot of the **Portals: ATSD Log Viewer** portal for the time period covering the issue.
    
-   C. Screenshots from the **Portals: ATSD Metric Viewer** portal for a subset of relevant metrics.
+* C. Screenshots from the **Portals: ATSD Metric Viewer** portal for a subset of relevant metrics.
    
-   D. CSV Export of the following query in the SQL console. Replace datetime to match the hour when the issue occurred.
+* D. CSV Export of the following query in the SQL console. Replace datetime to match the hour when the issue occurred.
    
 ```sql
 SELECT t1.datetime, t1.value AS api_cm, t2.value AS dis_mtr, t3.value AS exp_mtr, t4.value AS flt_mtr, t5.value AS fwd_mtr, 
