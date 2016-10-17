@@ -25,7 +25,7 @@ WHERE t1.datetime > now - 1*MINUTE AND t2.datetime > now - 1*MINUTE
 | 2016-08-15T07:52:59.000Z | nurswgvml007 | 1.0      | 2.0      | 3.0       | 
 ```
 
-## Query with Join and Functions
+## Query with `JOIN` and Functions
 
 ```sql
 SELECT datetime, entity, max(t1.value), max(t2.value), max(t1.value) + max(t2.value), max(t1.value + t2.value) AS max_total_cpu

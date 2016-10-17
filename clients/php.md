@@ -176,10 +176,10 @@ date.timezone in your `php.ini` is set.
  Fatal error: Uncaught exception 'Exception' with message 'DateTime::__co 
  nstruct():                                                               
  It is not safe to rely on the system's timezone settings. You are requir 
- ed to use the date.timezone setting or the date_default_timezone_set() f 
+ ed to use the `date.timezone` setting or the `date_default_timezone_set()`` f 
  unction.                                                                 
  In case you used any of those methods and you are still getting this war 
  ning, you most likely misspelled the timezone identifier.                
- We selected the timezone 'UTC' for now, but please set date.timezone to  
+ We selected the timezone 'UTC' for now, but please set `date.timezone` to  
  select your timezone.'
 ```

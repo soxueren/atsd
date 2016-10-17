@@ -245,7 +245,7 @@ Write the table schema to a file:
 /opt/atsd/hbase_util/configure_replication.sh schema atsd_new > atsd_new_schema.txt
 ```
 
-Copy table schema file to slave machine:
+Copy table schema file to the slave machine:
 
 ```sh
 scp atsd_new_schema.txt atsd_slave:/tmp

@@ -147,7 +147,7 @@ With counter mode OFF, the rate returns delta between consecutive samples regard
 
 ## Example - Counter On
 
-With counter mode ON, the rate function ignores negative changes between consecutive samples.
+With counter mode ON, the `rate` function ignores negative changes between consecutive samples.
 
 In the example below, the sample at 2016-02-16T12:35:12.000Z was ignored.
 

@@ -22,7 +22,7 @@ scan 'atsd_properties', {'LIMIT' => 3, RAW => true, FILTER => "PrefixFilter('\"p
 
 The same behavior applies to properties deleted when the entire entity is removed, except in this case the `DELETE` marker is timestamped with the `Long.MAX_VALUE-1` time of `9223372036854775806`.
 
-To remove these markers, run `major compaction` on `atsd_properties` table ahead of schedule.
+To remove these markers, run `major compaction` on the `atsd_properties` table ahead of schedule.
 
 ```bash
 /opt/atsd/hbase/bin/hbase shell

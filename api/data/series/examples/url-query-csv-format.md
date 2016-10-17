@@ -2,7 +2,7 @@
 
 ## Description
 
-CSV file is exported
+CSV file is exported.
 
 ## Request 
 

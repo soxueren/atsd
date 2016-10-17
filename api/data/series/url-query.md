@@ -47,7 +47,7 @@ Retrieve series values for the specified entity, metric, and optional series tag
 
 #### json
 
-See response fields in [Series: Query](query.md#response-fields)
+See response fields in [Series: Query](query.md#response-fields).
 
 #### csv
 
