@@ -95,6 +95,8 @@ WHERE metric = 'mpstat.cpu_busy'
   AND datetime > current_hour
 ```
 
+Metric names in the `FROM` clause that are equal to reserved keywords, identifiers or contain special characters such as `-`,`*`,`,` should be enclosed in quotes or double quotes, for example, `FROM 'disk-io'` or `FROM "select"`.
+
 ### WHERE Clause
 
 The `WHERE` clause is a condition which rows must satisfy in order to match the query.
@@ -195,7 +197,7 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`entity.tags`    |string   | All entity tags, concatenated to `name1=value;name2=value` format.|
 |`entity.groups`  |string   | List of entity groups, to which the entity belongs, separated by semi-colon `;`.|
 
-For tag columns such as `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}`, where the `{name}` contains reserved characters such as `-`,`*`,`,`, the `{name}` part should be enclosed in quotes or double quotes, for example, `entity.tags."file-system"`.
+For tag columns such as `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}`, where the `{name}` is equal to a reserved keyword, an identifier or contains special characters such as `-`,`*`,`,`, the `{name}` part should be enclosed in quotes or double quotes, for example, `tags.'value'`, `entity.tags."file-system"`.
 
 Quotes and double quotes in column names can be escaped by doubling the quote symbol. For example, if the tag name is `hello"world`, the column name can be referred to as follows: `tags."hello""world"`.
 
