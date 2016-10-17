@@ -276,10 +276,10 @@ public class AtsdTcpClient {
     private String valueToString(String name, Object value) {
         StringBuilder command = new StringBuilder();
         if (value == null || value.equals("null") || value instanceof Number) {
-            value = value == null || value.equals("null")
+            String val = value == null || value.equals("null")
                     || value.equals(Double.NEGATIVE_INFINITY) || value.equals(Double.POSITIVE_INFINITY)
                     ? "NaN" : String.valueOf(value);
-            command.append(" m:").append(escape(name)).append("=").append(value);
+            command.append(" m:").append(escape(name)).append("=").append(val);
         } else if (value instanceof String) {
             command.append(" x:").append(escape(name)).append("=").append(value);
         } else {
