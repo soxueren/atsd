@@ -10,6 +10,7 @@ public class AtsdTcpClient {
     private Socket socket;
     private PrintWriter writer;
     private int commandCounter;
+    private BufferedReader reader;
 
     public AtsdTcpClient(String _host, int _port) {
         host = _host;
@@ -20,6 +21,7 @@ public class AtsdTcpClient {
         log("Connecting to {0}:{1,number,#}", host, port);
         socket = new Socket(host, port);
         writer = new PrintWriter(socket.getOutputStream(), true);
+        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         log("Connection established to {0}:{1,number,#}", host, port);
         String version = getServerVersion();
         log("Server version: {0}", version);
@@ -37,10 +39,7 @@ public class AtsdTcpClient {
 
     private String getServerVersion() throws IOException {
         writeCommand("version");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        String line = reader.readLine();
-        reader.close();
-        return line;
+        return reader.readLine();
     }
 
     public void shutdown() {
@@ -48,6 +47,7 @@ public class AtsdTcpClient {
         try {
             writer.flush();
             writer.close();
+            reader.close();
         } catch (Exception ioe) {
         }
         try {
@@ -211,6 +211,9 @@ public class AtsdTcpClient {
     }
 
     public void sendValue(Date date, String entity, String name, Object value, Map<String, String> tags) throws IOException {
+        if (name.contains(" ")) {
+            throw new IllegalArgumentException("Metric name can include only printable characters");
+        }
         if (entity.contains(" ")) {
             throw new IllegalArgumentException("Entity name can include only printable characters");
         }
@@ -218,14 +221,7 @@ public class AtsdTcpClient {
         String command = "series";
         command += " ms:" + date.getTime();
         command += " e:" + escape(entity);
-        if (value == null || value instanceof String) {
-            command += " x:" + escape(name) + "=" + String.valueOf(value);
-        } else {
-            if (name.contains(" ")) {
-                throw new IllegalArgumentException("Metric name can include only printable characters");
-            }
-            command += " m:" + escape(name) + "=" + String.valueOf(value);
-        }
+        command += valueToString(name, value);
         command += sTags;
         writeCommand(command);
     }
@@ -233,6 +229,9 @@ public class AtsdTcpClient {
     public void sendPiComp2(String tag, Date date, int index, Object value, int status, boolean questionable,
                             boolean substituted, boolean annotated, String annotations, String entity,
                             Map<String, String> tags) throws IOException {
+        if (tag.contains(" ")) {
+            throw new IllegalArgumentException("Metric name can include only printable characters");
+        }
         if (entity.contains(" ")) {
             throw new IllegalArgumentException("Entity name can include only printable characters");
         }
@@ -241,14 +240,7 @@ public class AtsdTcpClient {
         String command = "series";
         command += " ms:" + getMilliseconds(date, index);
         command += " e:" + escape(entity);
-        if (value == null || value instanceof String) {
-            command += " x:" + escape(tag) + "=" + String.valueOf(value);
-        } else {
-            if (tag.contains(" ")) {
-                throw new IllegalArgumentException("Metric name can include only printable characters");
-            }
-            command += " m:" + escape(tag) + "=" + String.valueOf(value);
-        }
+        command += valueToString(tag, value);
         command += sTags;
         writeCommand(command);
     }
@@ -279,6 +271,21 @@ public class AtsdTcpClient {
             tags.put("annotations", annotations);
         }
         return tags;
+    }
+
+    private String valueToString(String name, Object value) {
+        StringBuilder command = new StringBuilder();
+        if (value == null || value.equals("null") || value instanceof Number) {
+            value = value == null || value.equals("null")
+                    || value.equals(Double.NEGATIVE_INFINITY) || value.equals(Double.POSITIVE_INFINITY)
+                    ? "NaN" : String.valueOf(value);
+            command.append(" m:").append(escape(name)).append("=").append(value);
+        } else if (value instanceof String) {
+            command.append(" x:").append(escape(name)).append("=").append(value);
+        } else {
+            throw new IllegalArgumentException("Value type can be only String, Number or null");
+        }
+        return command.toString();
     }
 
     private String tagsToString(Map<String, String> tags) {
