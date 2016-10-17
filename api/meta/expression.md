@@ -69,9 +69,9 @@ tags.ip LIKE '10.*22'
 
 | **Function**   | **Description**                                                                         |
 |:------------|:-------------------------------------------------------------------------------------|
-| `list`       | Splits a string by delimiter. Default delimiter is comma                            |
-| `likeAll`    | returns true, if every element in the collection of patterns matches message        |
-| `likeAny`    | returns true, if at least one element in the collection of patterns matches message |
-| `upper`      | converts the argument to upper case                                                 |
-| `lower`      | converts the argument to lower case                                                 |
-| `collection` | returns ATSD named collection                                                       |
+| list       | Splits a string by delimiter. Default delimiter is comma                            |
+| likeAll    | returns true, if every element in the collection of patterns matches message        |
+| likeAny    | returns true, if at least one element in the collection of patterns matches message |
+| upper      | converts the argument to upper case                                                 |
+| lower      | converts the argument to lower case                                                 |
+| collection | returns ATSD named collection                                                       |
