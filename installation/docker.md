@@ -22,7 +22,7 @@
 
 ## Start Container
 
-### Option 1: Configure collector Account Automatically
+### Option 1: Configure Collector Account Automatically
 
 Replace `collector-user` and `collector-password` to automatically create a built-in [collector account](../administration/collector-account.md). 
 
@@ -44,7 +44,7 @@ docker run \
 
 ### Option 2: Configure User Accounts Manually
 
-If `ATSD_USER_{NAME, PASSWORD}` credentials are not specified as part of `docker run` command, no collector account will be created.
+If `ATSD_USER_{NAME, PASSWORD}` credentials are not specified as part of a `docker run` command, no collector account will be created.
 
 In this case, you can configure both administrator and [collector](../administration/collector-account.md) accounts on initial login.
 
@@ -80,7 +80,7 @@ It may take up to 5 minutes to initialize the database.
 docker logs -f atsd
 ```
 
-You should see _ATSD start completed_ message at the end of the `start.log` file.
+You should see an _ATSD start completed_ message at the end of the `start.log` file.
 
 ATSD web interface is accessible on port 8088/http and 8443/https.
 
