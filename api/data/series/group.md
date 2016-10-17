@@ -41,8 +41,8 @@ If the `period` is not specified, values are grouped at all unique timestamps in
 
 Values added by `extend` setting are determined as follows:
 
-* If `VALUE {n}` interpolation function is specified, the `extend` option sets empty leading/trailing period values to equal `{n}`.
-* Without `VALUE {n}` function, the `extend` option adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.
+* If the `VALUE {n}` interpolation function is specified, the `extend` option sets empty leading/trailing period values to equal `{n}`.
+* Without the `VALUE {n}` function, the `extend` option adds missing periods at the beginning and end of the selection interval using the `NEXT` and `PREVIOUS` interpolation functions.
 
 ### Interpolation Functions
 
@@ -92,11 +92,11 @@ Values added by `extend` setting are determined as follows:
 
 ### No Aggregation
 
-When aggregation is disabled, the grouping function is applied to values for all unique timestamps in the merged series.
+When aggregation is disabled, the `group` function is applied to values for all unique timestamps in the merged series.
 
-In the example below, `SUM` function returns 12 (1+11) at 2016-06-25T08:00:00Z as a total of e-1 and e-2 series values, both of which have samples this timestamp.
+In the example below, the `SUM` function returns 12 (1+11) at 2016-06-25T08:00:00Z as a total of e-1 and e-2 series values, both of which have samples this timestamp.
 
-On the other hand, `SUM` returns 3 (3 + null->0) at 2016-06-25T08:00:05Z because only e-1 series has a value at that timestamp.
+On the other hand, the `SUM` returns 3 (3 + null->0) at 2016-06-25T08:00:05Z because only e-1 series has a value at that timestamp.
 
 ```json
 [
@@ -202,7 +202,7 @@ Sample for series e-2 at 2016-06-25T08:00:59.000Z is discarded because there is 
 
 ### Extend
 
-An opposite operation to truncation, extend adds missing values at the beginning and end of the interval so that all merged series have values when the grouping function is applied.
+An opposite operation to truncation, extend adds missing values at the beginning and end of the interval so that all merged series have values when the `group` function is applied.
 
 ```ls
 | datetime                 | e1.value | e2.value | SUM | 
@@ -244,7 +244,7 @@ An opposite operation to truncation, extend adds missing values at the beginning
 ]}]
 ```
 
-Extend is similar to interpolation where missing values at the beginning of in interval are interpolated with NEXT type, and missing values at the end of the interval are interpolated with PREVIOUS type.
+Extend is similar to interpolation where missing values at the beginning of in interval are interpolated with `NEXT` type, and missing values at the end of the interval are interpolated with `PREVIOUS` type.
 
 ```ls
 | datetime                 | e1.value | e2.value | SUM | 
@@ -261,7 +261,7 @@ Since `extend` is performed prior to truncation, `truncate` setting has no effec
 
 ### Interpolation
 
-Interpolation can fill the gaps in merged series. The interpolation function is applied to two consecutive samples to calculate an interim value for a known timestamp.
+Interpolation can fill the gaps in merged series. The `interpolate` function is applied to two consecutive samples to calculate an interim value for a known timestamp.
 
 ```json
 [
@@ -307,7 +307,7 @@ Interpolation can fill the gaps in merged series. The interpolation function is 
 
 ### Group Aggregation
 
-By default, grouping function is applied at all unique sample times from the merged series.
+By default, the `group` function is applied at all unique sample times from the merged series.
 To split values into periods, specify period.
 
 ```json
@@ -442,9 +442,9 @@ At the first stage, grouping produces the following `SUM` series:
 | 2016-06-25T08:00:59.000Z | -        | 19       | 19  |
 ```
 
-The grouped SUM series is then aggregated into periods.
+The grouped `SUM` series is then aggregated into periods.
 
-> Note that if period is not specified, the grouping function automatically applies aggregation for the same period as aggregate function.<br>To avoid this, specify `"period": {"count": 1, "unit": "MILLISECOND"}` in `group`.
+> Note that if period is not specified, the `group` function automatically applies aggregation for the same period as the `aggregate` function.<br>To avoid this, specify `"period": {"count": 1, "unit": "MILLISECOND"}` in `group`.
 
 ```json
 [
@@ -489,9 +489,3 @@ The grouped SUM series is then aggregated into periods.
 	{"d":"2016-06-25T08:00:50.000Z","v":1.0}
 ]}]
 ```
-
-
-
-
-
-

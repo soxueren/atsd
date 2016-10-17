@@ -36,7 +36,7 @@ Stop the HBase process:
  sudo service mapr-warden stop                                            
 ```
 
-Copy the atsd.jar file containing coprocessors to the hbase/lib directory:
+Copy the `atsd.jar` file containing coprocessors to the `hbase/lib` directory:
 
 ```sh
  cp /opt/atsd/hbase/lib/atsd.jar /opt/mapr/hbase/hbase-0.94.24/lib/       

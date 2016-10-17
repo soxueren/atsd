@@ -20,8 +20,8 @@ Aggregation process:
 | period  | object     | [**Required**] [Period](#period). |
 | interpolate  | object  | Generates aggregation periods in case of missing detailed samples using an [interpolation function](#interpolation), for example, `PREVIOUS` or `LINEAR`   |
 | threshold    | object  | Object containing minimum and and maximum range for a `THRESHOLD_*` aggregator.  |
-| calendar     | object  | calendar settings for a `THRESHOLD_*` aggregator. |
-| workingMinutes | object | working minutes settings for a `THRESHOLD_*` aggregator.  |
+| calendar     | object  | Calendar settings for a `THRESHOLD_*` aggregator. |
+| workingMinutes | object | Working minutes settings for a `THRESHOLD_*` aggregator.  |
 | order         | number           | Change the order in which `aggregate` and `group` are executed, the higher the value of `order` the later in the sequence will it be executed.             |
 
 ### period
@@ -103,10 +103,10 @@ The interpolation function will add a missing period and calculate its value bas
 | value | number | [**Required by `VALUE` function**] Constant number used to set value for the missing periods. |
 | extend  | boolean | Add missing periods at the beginning and the end of the selection interval. Default: `false`. |
 
-Values added by `extend` setting are determined as follows:
+Values added by the `extend` setting are determined as follows:
 
-* If `VALUE {n}` interpolation function is specified, the `extend` option sets empty leading/trailing period values to equal `{n}`.
-* Without `VALUE {n}` function, the `extend` option adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.
+* If the `VALUE {n}` interpolation function is specified, the `extend` option sets empty leading/trailing period values to equal `{n}`.
+* Without the `VALUE {n}` function, the `extend` option adds missing periods at the beginning and end of the selection interval using `NEXT` and `PREVIOUS` interpolation functions.
 
 #### Interpolation Functions
 
@@ -163,6 +163,3 @@ Values added by `extend` setting are determined as follows:
 [Chartlab Examples](https://apps.axibase.com/chartlab/d8c03f11/3/)
 
 ![Interpolation Example](aggregate_interpolate.png)
-
-
-

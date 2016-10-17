@@ -34,7 +34,7 @@ here.](https://www.virtualbox.org/wiki/Downloads)
 
 ![](images/open-vbox.png "open vbox")
 
-​2. Navigate to File –\> Import Appliance.
+​2. Navigate to ##File –\> Import Appliance##.
 
 ![](images/navigate-to.png "navigate to")
 
@@ -52,13 +52,13 @@ License Agreement in the pop-up window. Select Agree to continue.
 
 ![](images/importing-ova.png "importing ova")
 
-​6. Navigate to Settings –\> System to allocate at least 1 GB of RAM to
+​6. Navigate to ##Settings –\> System## to allocate at least 1 GB of RAM to
 the virtual machine. Under the Processor tab allocate at least 1 CPU to
 the virtual machine.
 
 ![](images/ram.png "ram")
 
-​7. Navigate to Settings –\> Network. Set Attached to: Bridged Adapter.
+​7. Navigate to ##Settings –\> Network##. Set Attached to: Bridged Adapter.
 If the virtual machine does not start with this setting, then change
 this setting to Host-only Adapter. Click on Generate new MAC Address to
 generate a new MAC address for the virtual machine.

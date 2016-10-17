@@ -1,6 +1,6 @@
 # Monitoring
 
-ATSD performance metrics can be retrieved via JMX, file, or http/JSON
+ATSD performance metrics can be retrieved via JMX, file, or a http/JSON
 request.
 
 These metrics are updated every 15 seconds and can be used to monitor

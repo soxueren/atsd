@@ -11,7 +11,7 @@ Series Database revision 11938 and earlier.
 sudo apt-get install -y openjdk-7-jdk      
 ```
 
-Switch to axibase user
+Switch to axibase user:
 
 ```
 su axibase
@@ -41,7 +41,7 @@ Change the `JAVA_HOME` variable from the old path `/usr/lib/jvm/java-1.6.0-openj
 
 ### Scripted Option
 
-Change the `JAVA_HOME` variable in the following files with `sed`
+Change the `JAVA_HOME` variable in the following files with `sed`:
 
 ```sh
 $: printf "/home/axibase/.bashrc\n/opt/atsd/hadoop/conf/hadoop-env.sh\n\

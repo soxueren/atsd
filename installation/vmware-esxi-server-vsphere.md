@@ -31,11 +31,11 @@ resources available:
 
 ## Installing ATSD in VMware ESXi Server/vSphere
 
-​1. Connect to a vCenter Server with the vSphere Web Client. Navigate to File –\> Deploy OVF Template.
+​1. Connect to a vCenter Server with the vSphere Web Client. Navigate to ##File –\> Deploy OVF Template##.
 
 ![](images/Screenshot_1.png "Screenshot_1")
 
-​2. Click on Browse, and then select the `atsd\_ce\_8760.ova file`.
+​2. Click on Browse, and then select the `atsd\_ce\_8760.ova` file.
 
 ![](images/Screenshot_3.png "Screenshot_3")
 

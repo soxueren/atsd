@@ -1269,8 +1269,8 @@ The following functions aggregate values in a column by producing a single value
 ```
 
 The functions accept `value` as the column name or a numeric expression as a parameter, for example  `avg(value)` or `avg(t1.value + t2.value)`.
-The PERCENTILE function accepts `percentile` parameter (0 to 100) and `value` column name, for example `percentile(75, value)`.
-The COUNT function counts the number of rows in the result set and accepts `*` as an argument, for example `COUNT (*)`. 
+The `PERCENTILE` function accepts `percentile` parameter (0 to 100) and `value` column name, for example `percentile(75, value)`.
+The `COUNT` function counts the number of rows in the result set and accepts `*` as an argument, for example `COUNT (*)`. 
 
 ## Time Formatting Functions
 

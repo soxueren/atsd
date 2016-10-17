@@ -21,7 +21,7 @@ Recommended Steps:
  # safe mode is OFF
 ```
 
-* Check that the /hbase/ directory in HDFS indeed contains corrupted files
+* Check that the `/hbase/` directory in HDFS indeed contains corrupted files
 
 ```
  /opt/atsd/hadoop/bin/hadoop fs -rmr -skipTrash /hbase/.logs/*
