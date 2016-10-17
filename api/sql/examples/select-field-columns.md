@@ -1,8 +1,6 @@
 # Select Field Columns
 
-The list of predefined columns available in the `SELECT` expression includes columns are are mapped to entity and metric model fields. 
-
-Such columns include:
+The list of columns available in the `SELECT` expression includes columns that are mapped to the following entity and metric fields:
 
 * `metric.label`
 * `metric.timezone`
