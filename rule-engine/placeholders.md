@@ -1,6 +1,6 @@
 # Placeholders
 
-Placeholders are specified using the ${name} format. Placeholders can reference a predefined parameter or a function value.
+Placeholders are specified using the `{name}` format. Placeholders can reference a predefined parameter or a function value.
 
 ## Placeholder List
 
