@@ -1,6 +1,6 @@
 # Placeholders
 
-Placeholders are specified using ${name} format. Placeholder can reference a predefined parameter or a function value.
+Placeholders are specified using the ${name} format. Placeholders can reference a predefined parameter or a function value.
 
 ## Placeholder List
 
@@ -58,7 +58,7 @@ Placeholders are specified using ${name} format. Placeholder can reference a pre
 
 ## Custom Columns
 
-Columns defined on Overview tab can be referenced as placeholder by name.
+Columns defined in the Overview tab can be referenced by name as a placeholder.
 
 ```sh
 property_compare_except(['name', '*starttime']) as propDiff
@@ -105,14 +105,3 @@ ${entity.tags.location}
 ```sh
 ${tags}
 ```
-
-
-
-
-
-
-
-
-
-
-

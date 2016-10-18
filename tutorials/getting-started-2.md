@@ -1,10 +1,10 @@
 ##### Step 7:
 
-Create a sample portal containing Time Chart and Gauge widgets in the Portal Editor located under the Admin tab: [http://atsd_server:8088/portals/edit](http://atsd_server:8088/portals/edit)
+Create a sample portal containing the Time Chart and Gauge widgets in the Portal Editor located under the Admin tab: [http://atsd_server:8088/portals/edit](http://atsd_server:8088/portals/edit)
 
-View the created portal from top menu drop-down called Portals, you will see the created Hello World portal there.
+View the created portal from the top menu drop-down called Portals. You will see the created Hello World portal there.
 
-Copy the following configuration into Portal Settings Editor page, press SAVE:
+Copy the following configuration into the Portal Settings Editor page. Press SAVE:
 
 ```
 [configuration]
@@ -43,4 +43,3 @@ Resulting Portal:
 [Use our Visualization guide to add more widgets to the portal.](https://axibase.com/products/axibase-time-series-database/visualization/)
 
 [Continue to Next Page](getting-started-3.md)
-
