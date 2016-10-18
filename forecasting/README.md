@@ -31,7 +31,7 @@
 |  <p>Enabled</p>  |  <p>The forecast is enabled. New forecasts will be calculated automatically every 24 hours.</p>  | 
 |  <p>Metric</p>  |  <p>The metric to be forecast, for example `cpu_busy`.</p>  | 
 |  <p>Entity</p>  |  <p>The entity that will be used. Exclusive with Entity Group.</p>  | 
-|  <p>Entity Group</p>  |  <p>The Entity Group selected from a drop down. Forecast will be calculated for all entities contained within the Entity Group. Exclusive within the Entity Group.</p>  | 
+|  <p>Entity Group</p>  |  <p>The Entity Group selected from a drop down. Forecast will be calculated for all entities contained within the Entity Group.</p>  | 
 |  <p>Selection Interval</p>  |  <p>Amount of historical data analyzed when calculating the forecast.</p>  | 
 |  <p>Full Scan</p>  |  <p>Full Scan of historical data for when there is no fresh data for the past 24 hours from the current entity and metric.</p>  <p>If Full Scan is not set, then ATSD will automatically look for metric keys from the past 24 hours.</p>  <p>Set to true when forecasting historical data is no longer collected or when generating a forecast using “End Time”.</p>  | 
 |  <p>Averaging Interval</p>  |  <p>Interval over which the data is normalized. When selecting the ARIMA algorithm, the averaging interval cannot be set to less than 1 hour.</p>  | 
