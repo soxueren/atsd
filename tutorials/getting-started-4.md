@@ -1,8 +1,8 @@
 ##### Step 10:
 
-Open the [Rule Engine](../rule-engine/rule-engine.md) page located on the main menu bar (labled as Rules) to create an alert rule for my-entity/my-metric: [http://atsd_server:8088/rules](http://atsd_server:8088/rules)
+Open the [Rule Engine](../rule-engine/rule-engine.md) page located on the main menu bar (labled as Rules) to create an alert rule for my-entity and my-metric: [http://atsd_server:8088/rules](http://atsd_server:8088/rules)
 
-The following expression and settings will raise an alert if the average of the last 3 values will be above 50:
+The following expression and settings will raise an alert if the average of the last 3 values is above 50:
 
 ```
 avg() > 50
@@ -29,4 +29,3 @@ Enter at least 3 values above 50 on the Data Entry page and observe an alert rai
 [Visualization](https://axibase.com/products/axibase-time-series-database/visualization/)
 
 [Rule Engine](../rule-engine/rule-engine.md)
-
