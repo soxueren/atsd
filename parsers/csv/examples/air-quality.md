@@ -43,7 +43,7 @@
 
 | Field | Setting | Reason | 
 | --- | --- | --- | 
-|  <p>Enabled</p>  |  <p>Set to true</p>  |  <p>Enables parsing of CSV files.</p>  <p>Use of this parser configuration in allowed in Axibase Collector.</p>  | 
+|  <p>Enabled</p>  |  <p>Set to true</p>  |  <p>Enables parsing of CSV files.</p>  <p>Use of this parser configuration is allowed in Axibase Collector.</p>  | 
 |  <p>Name</p>  |  <p>Unique name – airnow-fresno</p>  |  <p>Unique name to distinguish a particular parser from others.</p>  <p>Useful when working with Axibase Collector, as parser configurations are referred to by their unique name.</p>  | 
 |  <p>Put Type</p>  |  <p>Metric</p>  |  <p>The CSV file in question contains time series (metrics) environmental data.</p>  | 
 |  <p>Delimiter</p>  |  <p>Comma</p>  |  <p>A comma is used to separate columns.</p>  | 
