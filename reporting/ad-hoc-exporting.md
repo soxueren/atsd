@@ -30,4 +30,4 @@ Ad hoc exporting provides an interactive interface for exporting historical data
 |  <p>Time Format</p>  |  <p>Format for displaying series sample timestamps: Local Time (server timezone) or ISO (UTC time).</p>  <p>Local = `yyyy-MM-dd HH:mm:ss`</p>  <p>ISO = `yyyy-MM-dd'T'HH:mm:ss'Z'`</p>  | 
 
 
-![](resources/adhoc_export_versioning.png)
+![](images/export_job_test_button.png)
