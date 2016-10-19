@@ -23,15 +23,15 @@ tag('model',cell(row, 3)).
 timestamp(cell(row, 1));
 ```
 
-The above schema executes the following steps:
+Adhere to the following points to convert the CSV file into a tabular model:
 - For each row starting with the 2nd row until the last row;
-- For each column in the current row; starting with the 4th column (Temperature) until the last column (Pressure);
+- For each column in the current row starting with the 4th column (Temperature) until the last column (Pressure);
 - For each cell:
-  - Set the metric name to value of the cell located in the first row in the current column: Temperature, Humidity, Pressure;
-  - Set the entity name to value of the cell located in the current row, 2nd column (Sensor Name);
-  - Set the tag ‘model’ to value of cell located in the current row, 3rd column (Sensor Model);
-  - Set the timestamp to value of the cell located in the current row, 1st column (Measurement Time). The text value will be parsed using ‘Timestamp Pattern’;
-  - Set the series value to the value of current cell.
+  - Set the metric name to the value of the cell located in the first row in the current column: Temperature, Humidity, Pressure;
+  - Set the entity name to the value of the cell located in the current row, 2nd column (Sensor Name);
+  - Set the tag ‘model’ to the value of cell located in the current row, 3rd column (Sensor Model);
+  - Set the timestamp to the value of the cell located in the current row, 1st column (Measurement Time). The text value will be parsed using the ‘Timestamp Pattern’;
+  - Set the series value to the value of the current cell.
 
 
 #### Commands

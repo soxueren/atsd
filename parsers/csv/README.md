@@ -72,7 +72,7 @@ Columns contained in the CSV file that are not specified in any field in the par
 |  <p>Grouping Separator</p>  |  <p>Symbol used to group thousands within the number.</p>  <p>Default value: none.</p>  <p>Possible values: none, period, comma, space.</p>  | 
 |  <p>Fields Lengths</p>  |  <p>Width of columns in symbols. Padding symbols added to the end of the field to obey the fields lengths.</p>  <p>For files in `.dat` format.</p>  | 
 |  <p>Discard NaN</p>  |  <p>NaN (Not a Number) values will be discarded</p>  | 
-|  <p>Ignore Line Errors</p>  |  <p>If enabled, any errors while parsing the given line are ignored, including date parse errors, number parse errors, split errors, mismatch of row, and header column counts.</p>  | 
+|  <p>Ignore Line Errors</p>  |  <p>If enabled, any errors while parsing the given line are ignored, including date parse errors, number parse errors, split errors, mismatch of rows, and header column counts.</p>  | 
 
 
 ![](resources/csv_parser_example.png)
