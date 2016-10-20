@@ -13,8 +13,8 @@ The configurations are set under `ATSD_CONF`.
 There are two versions of the ATSD Storage Finder:
 
 
-- ATSD Storage Finder Default – allows you to view metrics as they are stored in ATSD
-- ATSD Storage Finder Virtual – allows you to create custom paths to entities, metrics and tags
+- ATSD Storage Finder Default – allows you to view metrics as they are stored in ATSD.
+- ATSD Storage Finder Virtual – allows you to create custom paths to entities, metrics, and tags.
 
 
 ATSD Storage Finder settings in `local_settings.py`:
@@ -39,23 +39,23 @@ STORAGE_FINDERS = (
 
 `local_settings.py` settings:
 
-| Setting | Description | Default Value | 
+| Setting | Description | Default Value |
 | --- | --- | --- | 
 |  <p>url</p>  |  <p>ATSD hostname or IP</p>  |  <p>localhost:8088</p>  | 
 |  <p>username</p>  |  <p>ATSD user username</p>  |  <p>–</p>  | 
 |  <p>password</p>  |  <p>ATSD user password</p>  |  <p>–</p>  | 
-|  <p>entity_folders</p>  |  <p>list of folders for grouping entities by name.</p>  <p>Grouping is done according to the beginning of each entity name,</p>  <p>if it is matched to a folder name, then it will be visible in that folder.</p>  <p>For example if an entity name begins with</p>  <p>`com` (like `com_axibase`),</p>  <p>then it will be placed into the folder called `'com'`.</p>  <p>If entity name does not satisfy any of the listed folder names,</p>  <p>then it will be placed into the `"_"` folder by default.</p>  |  <p>`'entity_folders' : 'abcdefghijklmnopqrstuvwxyz_'`</p>  <p>Will result in folders from a to z, iterates through the string.</p>  | 
-|  <p>metric_folders</p>  |  <p>list of folders for grouping metrics by name.</p>  <p>Grouping is done according to the beginning of each metric name,</p>  <p>if it is matched to a folder name, then it will be visible in that folder.</p>  <p>For example if a metric name begins with</p>  <p>`statsd` (`statsd_cpuload_avg5`),</p>  <p>then it will be placed into the folder called `'statsd'`.</p>  <p>If metric name does not satisfy any of the listed folder names,</p>  <p>then it will be placed into the `"_"` folder by default.</p>  |  <p>`'entity_folders' : 'abcdefghijklmnopqrstuvwxyz_'`</p>  <p>Will result in folders from a to z, iterates through the string.</p>  | 
-|  <p>aggregators</p>  |  <p>list of aggregators.</p>  |  <p>`'aggregators' : {</p>  <p>                'avg'               : 'Average',</p>  <p>                'min'               : 'Minimum',</p>  <p>                'max'               : 'Maximum',</p>  <p>                'sum'               : 'Sum',</p>  <p>                'count'             : 'Count',</p>  <p>                'first'             : 'First value',</p>  <p>                'last'              : 'Last value',</p>  <p>                'percentile_999'    : 'Percentile 99.9%',</p>  <p>                'percentile_99'     : 'Percentile 99%',</p>  <p>                'percentile_995'    : 'Percentile 99.5%',</p>  <p>                'percentile_95'     : 'Percentile 95%',</p>  <p>                'percentile_90'     : 'Percentile 90%',</p>  <p>                'percentile_75'     : 'Percentile 75%',</p>  <p>                'median'            : 'Median',</p>  <p>                'standard_deviation': 'Standard deviation',</p>  <p>                'delta'             : 'Delta',</p>  <p>                'wavg'              : 'Weighted average',</p>  <p>                'wtavg'             : 'Weighted time average'</p>  <p>}`</p>  | 
+|  <p>entity_folders</p>  |  <p>List of folders for grouping entities by name.</p>  <p>Grouping is done according to the beginning of each entity name.</p>  <p>If it is matched to a folder name, then it will be visible in that folder.</p>  <p>For example if an entity name begins with</p>  <p>`com` (like `com_axibase`)</p>  <p>then it will be placed into the folder called `'com'`.</p>  <p>If the entity name does not satisfy any of the listed folder names, then it will be placed into the `"_"` folder by default.</p>  |  <p>`'entity_folders' : 'abcdefghijklmnopqrstuvwxyz_'`</p>  <p>Will result in folders from a to z (iterates through the string).</p>  | 
+|  <p>metric_folders</p>  |  <p>List of folders for grouping metrics by name.</p>  <p>Grouping is done according to the beginning of each metric name.</p>  <p>If it is matched to a folder name, then it will be visible in that folder.</p>  <p>For example if a metric name begins with</p>  <p>`statsd` (`statsd_cpuload_avg5`)</p>  <p>then it will be placed into the folder called `'statsd'`.</p>  <p>If metric name does not satisfy any of the listed folder names, then it will be placed into the `"_"` folder by default.</p>  |  <p>`'metric_folders' : 'abcdefghijklmnopqrstuvwxyz_'`</p>  <p>Will result in folders from a to z, iterates through the string.</p>  | 
+|  <p>aggregators</p>  |  <p>List of aggregators.</p>  |  <p>`'aggregators' : {</p>  <p>                'avg'               : 'Average',</p>  <p>                'min'               : 'Minimum',</p>  <p>                'max'               : 'Maximum',</p>  <p>                'sum'               : 'Sum',</p>  <p>                'count'             : 'Count',</p>  <p>                'first'             : 'First value',</p>  <p>                'last'              : 'Last value',</p>  <p>                'percentile_999'    : 'Percentile 99.9%',</p>  <p>                'percentile_99'     : 'Percentile 99%',</p>  <p>                'percentile_995'    : 'Percentile 99.5%',</p>  <p>                'percentile_95'     : 'Percentile 95%',</p>  <p>                'percentile_90'     : 'Percentile 90%',</p>  <p>                'percentile_75'     : 'Percentile 75%',</p>  <p>                'median'            : 'Median',</p>  <p>                'standard_deviation': 'Standard deviation',</p>  <p>                'delta'             : 'Delta',</p>  <p>                'wavg'              : 'Weighted average',</p>  <p>                'wtavg'             : 'Weighted time average'</p>  <p>}`</p>  | 
 
 
-If you use an underscore at the beginning of a setting value (entity_folders or metric_folders) then all folders that do not satisfy any other setting will be placed there.
+If you use an underscore at the beginning of a setting value (`entity_folders` or `metric_folders`), then all folders that do not satisfy any other setting will be placed there.
 
 For example:
 
 `'_other'`
 
-ATSD Storage Finder `local_settings.py` example:
+##ATSD Storage Finder `local_settings.py` example:##
 
 ```
 ATSD_CONF = {
@@ -91,24 +91,24 @@ STORAGE_FINDERS = (
 )
 ```
 
-ATSD Storage Finder Virtual only has one extra setting, “`views`“.
+ATSD Storage Finder Virtual only has one extra setting: “`views`“.
 
-Under `views` use `type` to control which folders and in what order you would like for them to appear in the graphite-web interface.
+Under `views`, use `type` to control which folders and the order you would like for them to appear in the graphite-web interface.
 
 | Type | Description | 
 | --- | --- | 
-|  <p>`'type': 'entity folder'`</p>  |  <p>Node representing entity filters</p>  | 
-|  <p>`'type': 'entity'`</p>  |  <p>Node representing entities</p>  | 
-|  <p>`'type': 'tag'`</p>  |  <p>Node representing tag values</p>  | 
-|  <p>`'type': 'metric folder'`</p>  |  <p>Node representing metric filters</p>  | 
-|  <p>`'type': 'metric'`</p>  |  <p>Node representing metrics</p>  | 
-|  <p>`'type': 'interval'`</p>  |  <p>Node representing selection intervals</p>  | 
-|  <p>`'type': 'collection'`</p>  |  <p>Node representing different types of nodes</p>  | 
-|  <p>`'type': 'aggregator'`</p>  |  <p>Node representing statistics</p>  | 
-|  <p>`'type': 'period'`</p>  |  <p>Node representing statistics periods</p>  | 
+|  <p>`'type': 'entity folder'`</p>  |  <p>Node representing entity filters.</p>  | 
+|  <p>`'type': 'entity'`</p>  |  <p>Node representing entities.</p>  | 
+|  <p>`'type': 'tag'`</p>  |  <p>Node representing tag values.</p>  | 
+|  <p>`'type': 'metric folder'`</p>  |  <p>Node representing metric filters.</p>  | 
+|  <p>`'type': 'metric'`</p>  |  <p>Node representing metrics.</p>  | 
+|  <p>`'type': 'interval'`</p>  |  <p>Node representing selection intervals.</p>  | 
+|  <p>`'type': 'collection'`</p>  |  <p>Node representing different types of nodes.</p>  | 
+|  <p>`'type': 'aggregator'`</p>  |  <p>Node representing statistics.</p>  | 
+|  <p>`'type': 'period'`</p>  |  <p>Node representing statistics periods.</p>  | 
 
 
-`local_settings.py` example with “views”:
+##`local_settings.py` example with “views”:##
 
 ```
 ATSD_CONF = {
@@ -189,7 +189,7 @@ ATSD_CONF = {
            {'com.axibase.*': 'com.axibase.*'}]}
 ```
 
-Two entity folders, one filters out only entity com.axibase, and the other one filters out entities that start with ‘com.axibase.’.
+Below two entity folders are shown. One filters out only the entity `com.axibase`. The other one filters out entities that start with `com.axibase`.
 
 ![](resources/02.png)
 
@@ -198,7 +198,7 @@ Two entity folders, one filters out only entity com.axibase, and the other one 
  'value': ['*']}
 ```
 
-List of entities, filtered by the folder they’re in.
+List of entities filtered by the folder they’re in.
 
 ![](resources/03.png)
 
@@ -209,7 +209,7 @@ List of entities, filtered by the folder they’re in.
              'value': ['distgeomon.connect-dns']}]}
 ```
 
-Values of the tag path. To retrieve tags we need a metric, and it hasn’t been established yet. So we can make a global token inside this one to make the metric be distgeomon.connect-dns until stated otherwise.
+Values of the tag path. To retrieve tags we need a metric; however, it hasn’t been established yet. We can make a global token inside this one to make the metric become `distgeomon.connect-dns` until stated otherwise.
 
 ![](resources/04.png)
 
@@ -218,7 +218,7 @@ Values of the tag path. To retrieve tags we need a metric, and it hasn’t been 
  'value': ['geo-target', 'geo-source']}
 ```
 
-Values of tags geo-target and geo-source separated by a comma.
+Values of tags `geo-target` and `geo-source` separated by a comma.
 
 ![](resources/05.png)
 
@@ -268,7 +268,7 @@ List of aggregation intervals.
             'value': ['Aggregate']}]}
 ```
 
-If we want to make two different types of tokens at the same level, e.g. a leaf and a branch, like we do here, we can make a collection. In this collection there is a detail aggregator, which is a leaf, so we can click on it and see the plot, and a constant folder Aggregate, which will lead us further into the tree.
+If we want to make two different types of tokens at the same level, i.e. a leaf and a branch (as shown below), we can make a collection. In this collection, there is a detail aggregator, which is a leaf. We can click on it and see the plot and a constant folder Aggregate, which will lead us further into the tree.
 
 ![](resources/09.png)
 
@@ -284,7 +284,7 @@ If we want to make two different types of tokens at the same level, e.g. a leaf 
            {'delta'        : 'Delta'}]}
 ```
 
-A list of aggregators. First we define an ATSD aggregator we want to use and then assign any name we want to it.
+Here is a list of aggregators. First we define an ATSD aggregator we want to use, and then can assign any name we would like to it.
 
 ![](resources/10.png)
 
@@ -309,4 +309,3 @@ When the storage finder is enabled, metrics from ATSD become available for visua
 ATSD metrics visualization in Graphite-web application:
 
 ![](resources/graphite.png)
-
