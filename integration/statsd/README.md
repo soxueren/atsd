@@ -4,7 +4,7 @@
 
 [Setup the Axibase Time-Series Database StatsD Backend.](statsd-backend.md)
 
-ATSD is able to ingest StatsD format.
+ATSD is able to ingest informaton from the StatsD format.
 
 Basic Format:
 
@@ -44,7 +44,7 @@ sudo service statsd stop
 sudo nano /etc/statsd/localConfig.js
 ```
 
-Edit the following fields, `graphitePort` is ATSD port for network commands and `graphiteHost` is hostname or ip address of ATSD:
+Edit the following fields: `graphitePort` is the ATSD port for network commands and `graphiteHost` is the hostname or ip address of ATSD:
 
 ```json
 {
@@ -71,7 +71,7 @@ Go to the Plugins menu on your WordPress administration page:
 
 ![](resources/plugins_menu.png)
 
-Click ‘Add New’, find and install the ‘[StatsD WordPress Client](https://wordpress.org/plugins/statsd/)‘ plugin:
+Click ‘Add New’. Find and install the ‘[StatsD WordPress Client](https://wordpress.org/plugins/statsd/)‘ plugin:
 
 ![](resources/statsd_plugin1.png)
 
@@ -79,15 +79,15 @@ Activate the plugin:
 
 ![](resources/activate_plugin.png)
 
-If StatsD is not on localhost or port , you have to define the local daemon IP in wp-config.php:
+If StatsD is not on the localhost or port, you have to define the local daemon IP in `wp-config.php`.
 
-Usually wp-config.php located in `/var/www/html/wp-config.php`
+Usually `wp-config.php` is located in `/var/www/html/wp-config.php`:
 
 ```php
 define('STATSD_IP', 'x.x.x.x' );
 ```
 
-If needed you can override the default UDP port of 8125 in wp-config.php:
+If needed, you can override the default UDP port of 8125 in `wp-config.php`:
 
 ```php
 define('STATSD_PORT', xxxx);
@@ -115,4 +115,3 @@ etc: instant tracking of any application metric using API
 ```
 
 Once collected, these metrics can be found in ATSD under the Entity and Metrics tabs.
-

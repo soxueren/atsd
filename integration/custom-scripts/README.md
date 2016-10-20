@@ -10,7 +10,7 @@ This page contains the installation guide for a custom Axibase Collector Script.
 
 ##### ‘nc’ network utility
 
-Important: only BSD version is supported. For example, the GNU version is not supported by collector scripts.
+Important: only the BSD version is supported. The GNU version is not supported by collector scripts.
 
 Check if ‘nc’ is installed:
 
@@ -18,7 +18,7 @@ Check if ‘nc’ is installed:
 nc
 ```
 
-nc (BSD) output will be as follows:
+The nc (BSD) output will be as follows:
 
 ```sh
 usage: nc [-46DdhklnrStUuvzC] [-i interval] [-p source_port]
@@ -42,7 +42,7 @@ yum install nc
 
 ##### ‘sysstat’ utility
 
-mpstat and iostat are included in the sysstat package. If this package is not installed in your system by default, install it.
+mpstat and iostat are included in the 'sysstat' package. If this package is not installed in your system by default, install it.
 
 Ubuntu:
 
@@ -66,7 +66,7 @@ Download the [atsd_collectors.tar.gz](http://axibase.com/ftp/lz/atsd_collectors
 tar xzf atsd_collectors.tar.gz
 ```
 
-##### Check that scripts have executable flag:
+##### Check that scripts have an executable flag:
 
 ```sh
 cd collectors
@@ -75,14 +75,14 @@ chmod a+x *
 
 ##### Set ATSD server options:
 
-Edit script immortal_nc.sh. Set parameters:
+Edit the script `immortal_nc.sh`. Set the following parameters:
 
-HOSTNAME – ATSD server ip or hostname
-PORT – ATSD telnet port
+`HOSTNAME` – ATSD server ip or hostname.
+`PORT` – ATSD telnet port.
 
 #### Usage
 
-Run the collectors by executing script start-all-collectors.sh:
+Run the collectors by executing the script `start-all-collectors.sh`:
 
 ```sh
 /opt/atsd/collectors/start-all-collectors.sh
@@ -97,4 +97,3 @@ After starting the collectors, verify in the ATSD web interface that metrics are
 Each collector script collects metrics with the appropriate prefix.
 
 ![](resources/collector-script-check.png)
-

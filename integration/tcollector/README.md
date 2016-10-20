@@ -1,10 +1,10 @@
 # tcollector
 
-[tcollector](https://github.com/OpenTSDB/tcollector) is a data collection framework for Linux operating system. tcollector can be configured to stream data into Axibase Time Series Database for storage, analysis, forecasting and visualization.
+[tcollector](https://github.com/OpenTSDB/tcollector) is a data collection framework for Linux operating system. tcollector can be configured to stream data into the Axibase Time Series Database for storage, analysis, forecasting, and visualization.
 
 To setup tcollector using Puppet, please use our guide and distribution on [GitHub](https://github.com/axibase/axibase-puppet-modules/tree/master/tcollector).
 
-#### Setting up tcollector to stream data into ATSD
+#### Setting up tcollector to Stream Data into ATSD
 
 ```sh
 sudo apt-get update
@@ -13,7 +13,7 @@ git clone git://github.com/OpenTSDB/tcollector.git
 cd tcollector
 ```
 
-Modify startstop wrapper script by specifying ATSD hostname and TCP port
+Modify startstop wrapper script by specifying the ATSD hostname and TCP port.
 
 ```sh
 nano startstop
@@ -26,19 +26,19 @@ TSD_PORT=8081
 ARGS="-c $TCOLLECTOR_PATH/collectors -H $TSD_HOST -p $TSD_PORT -t host=$HOSTNAME -P $PIDFILE --logfile $LOG"
 ```
 
-Start tcollector
+Start tcollector:
 
 ```sh
 sudo ./startstop start
 ```
 
-tcollector documentation: [http://opentsdb.net/docs/build/html/user_guide/utilities/tcollector.html](http://opentsdb.net/docs/build/html/user_guide/utilities/tcollector.html)
+tcollector documentation can be found here: [http://opentsdb.net/docs/build/html/user_guide/utilities/tcollector.html](http://opentsdb.net/docs/build/html/user_guide/utilities/tcollector.html)
 
-To enable launching and auto-starting of tcollector both as regular and super user read our [tcollector Startup guide](https://axibase.com/products/axibase-time-series-database/writing-data/tcollector/tcollector-startup/).
+To enable launching and auto-starting of tcollector both as a regular and a super user, read our [tcollector Startup guide](https://axibase.com/products/axibase-time-series-database/writing-data/tcollector/tcollector-startup/).
 
-#### Default entity group and portal for tcollector in ATSD
+#### Default Entity Group and Portal for tcollector in ATSD
 
-Entities collecting tcollector data are automatically grouped into `tcollector - linux` entity group.
+Entities collecting tcollector data are automatically grouped into the `tcollector - linux` entity group.
 
 Entity Group Expression:
 
@@ -193,4 +193,3 @@ proc.vmstat.pgpgout
 proc.vmstat.pswpin	
 proc.vmstat.pswpout
 ```
-

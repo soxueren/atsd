@@ -1,14 +1,14 @@
 # scollector
 
-scollector is a data collection framework for Linux, Windows and MacOS operating systems.
+scollector is a data collection framework for Linux, Windows, and MacOS operating systems.
 
-scollector can be configured to stream data into Axibase Time Series Database for storage, analysis, forecasting and visualization.
+scollector can be configured to stream data into the Axibase Time Series Database for storage, analysis, forecasting, and visualization.
 
 [To install and run scollector read the installation and configuration guide here.](scollector-startup.md)
 
 By default, ATSD ignores two series tags collected by scollector: environment and role.
 
-You can change this setting by editing the server.properties file:
+You can change this setting by editing the `server.properties` file:
 
 ```
 /opt/atsd/atsd/conf/server.properties
@@ -22,7 +22,7 @@ scollector.ignore.tags = environment role
 
 Restart ATSD for the changes to take effect.
 
-#### Default entity groups and portals for scollector in ATSD
+#### Default Entity Groups and Portals for scollector in ATSD
 
 Entities collecting scollector data are automatically grouped in ATSD:
 
@@ -53,7 +53,7 @@ Portals:
 ##### scollector-Linux Portal:
 
 
-Launch live scollector-Linux portal in Axibase Chart Lab.
+Launch a live scollector-Linux portal in Axibase Chart Lab.
 
 [Launch](https://apps.axibase.com/chartlab/f595d570)
 
@@ -754,4 +754,3 @@ scollector.collect.queued
 scollector.collect.sent
 scollector.version
 ```
-
