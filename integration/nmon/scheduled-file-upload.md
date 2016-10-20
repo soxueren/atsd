@@ -17,7 +17,7 @@ Perform the following steps to start uploading files to ATSD every hour with Wge
 
 ### Step 1.
 
-Create a file `/opt/nmon/nmon_script.sh` and add the following row to the cron schedule:
+Create a file script `/opt/nmon/nmon_script.sh` and add the following row to the cron schedule:
 
 ```
 0 * * * * /opt/nmon/nmon_script.sh
@@ -25,7 +25,7 @@ Create a file `/opt/nmon/nmon_script.sh` and add the following row to the cron 
 
 ### Step 2.
 
-After that, add the following content to the file `/opt/nmon/nmon_script.sh` replacing `atsd_user`, `atsd_password`, and `atsd_server` with actual credentials.
+After that, add the following content to the file scipt `/opt/nmon/nmon_script.sh` replacing `atsd_user`, `atsd_password`, and `atsd_server` with actual credentials.
 
 ## Upload Files to ATSD with UNIX Socket
 
@@ -33,7 +33,7 @@ To start uploading files to ATSD every hour with UNIX socket perform the follow
 
 ### Step 1.
 
-Create a file `/opt/nmon/nmon_script.sh` and add the following row to the cron schedule:
+Create a file script `/opt/nmon/nmon_script.sh` and add the following row to the cron schedule:
 
 ```
 0 * * * * /opt/nmon/nmon_script.sh
@@ -41,7 +41,7 @@ Create a file `/opt/nmon/nmon_script.sh` and add the following row to the cron 
 
 ### Step 2.
 
-Add the following contents to `/opt/nmon/nmon_script.sh` replacing `atsd_server` with the ATSD hostname or IP address.
+Add the following contents to script `/opt/nmon/nmon_script.sh` replacing `atsd_server` with the ATSD hostname or IP address.
 
 ## Upload Files to ATSD with Netcat
 
@@ -49,7 +49,7 @@ To start uploading files to ATSD every hour with Netcat, perform the following s
 
 ### Step 1.
 
-Create a file `/opt/nmon/nmon_script.sh` and add the following row to the cron schedule:
+Create a file script `/opt/nmon/nmon_script.sh` and add the following row to the cron schedule:
 
 ```
 0 * * * * /opt/nmon/nmon_script.sh

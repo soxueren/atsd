@@ -10,7 +10,7 @@ This document describes the process of configuring ActiveMQ for availability and
 
 ## Step 1: Enable JMX and Log Aggregator
 
-* Login into ActiveMQ server via SSH.
+* Login into the ActiveMQ server via SSH.
 * Change to the ActiveMQ installation directory.
 
 ```sh
