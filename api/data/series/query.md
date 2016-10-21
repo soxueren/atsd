@@ -131,22 +131,30 @@ POST https://atsd_host:8443/api/v1/series/query
 ### Response
 
 ```json
-[
-  {
-    "entity": "nurswgvml007",
-    "metric": "mpstat.cpu_busy",
-    "tags": {},
-    "type": "HISTORY",
-    "aggregate": {
-      "type": "DETAIL"
-    },
-    "data": [
+[{
+	"entity": "nurswgvml007",
+	"metric": "mpstat.cpu_busy",
+	"tags": {},
+	"type": "HISTORY",
+	"aggregate": {
+	  "type": "DETAIL"
+	},
+	"data": [
 		{"d":"2016-10-14T17:00:03.000Z","v":24.24},
 		{"d":"2016-10-14T17:00:19.000Z","v":39.8},
 		{"d":"2016-10-14T17:00:35.000Z","v":39.18}
 	]
-  }
-]
+}]
+```
+
+## `curl` Example
+
+```
+curl http://localhost:8088/api/v1/series/query \
+  -v -u {username}:{password} \
+  -H "Content-Type: application/json" \
+  -X POST \
+  -d '[{"metric":"mpstat.cpu_busy", "entity":"nurswgvml007", "startDate":"previous_day", "endDate": "now"}]' > response.json
 ```
 
 ## Java Example
