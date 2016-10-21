@@ -1,6 +1,6 @@
 # Installing Graphite-Web with ATSD Storage Finder
 
-Using this guide you can install Graphite-Web including the, Carbon daemons, Whisper database and ATSD Storage Finders.
+Using this guide you can install Graphite-Web to include Carbon daemons, Whisper databases, and ATSD Storage Finders.
 
 Install dependencies:
 
@@ -52,7 +52,7 @@ Install ATSD Storage Finder:
 sudo pip install https://github.com/axibase/atsd-graphite-finder/archive/master.zip
 ```
 
-Install Graphite-Web with atsd_finder:
+Install Graphite-Web with `atsd_finder`:
 
 ```sh
 sudo pip install https://github.com/axibase/graphite-web/archive/atsd_storage.zip
@@ -60,7 +60,7 @@ sudo pip install https://github.com/axibase/graphite-web/archive/atsd_storage.zi
 
 Configure Graphite:
 
-You can find example files in `/opt/graphite/conf` directory.
+You can find example files in the `/opt/graphite/conf` directory.
 
 ```sh
 cd /opt/graphite/conf
@@ -80,7 +80,7 @@ In `local_settings.py` change the `SECRET_KEY` setting to a random number.
 
 Configure your finders:
 
-In the `local_settings.py` file specify the storage finders, ATSD hostname/IP, ATSD port, ATSD username and ATSD password ([as described here](https://axibase.com/products/axibase-time-series-database/writing-data/graphite-format/storage-finder/)):
+In the `local_settings.py` file specify the storage finders, ATSD hostname/IP, ATSD port, ATSD username, and ATSD password ([as described here](https://axibase.com/products/axibase-time-series-database/writing-data/graphite-format/storage-finder/)):
 
 ```python
 STORAGE_FINDERS = (
@@ -135,7 +135,7 @@ Restart Apache2:
 sudo /etc/init.d/apache2 reload
 ```
 
-Web interface should now be available on local port 80, ATSD metrics should also be visible.
+Web interface should now be available on local port 80. ATSD metrics should also be visible.
 
 Run carbon-cache:
 
@@ -145,4 +145,3 @@ sudo python carbon-cache.py start
 ```
 
 Within a few minutes you should see carbon metrics in the web interface.
-

@@ -84,7 +84,5 @@ DISKBSIZE,T0009,30.8,8.0,8.9,8.0,8.2,8.0,8.0,8.0,8.5,7.9,7.9,7.8,7.2,24.8,8.0,11
 |  <p>memory.real_used(mb)</p>  |  <p>memory.real_total(mb) – memory.real_free(mb)</p>  | 
 |  <p>memory.virtual_used(mb)</p>  |  <p>memory.virtual_total(mb) – memory.virtual_free(mb)</p>  | 
 |  <p>memory_new.used%</p>  |  <p>100 – memory_new.free%</p>  | 
-|  <p>disk_read_kb/s</p>  <p>nmon.disk_write_kb/s</p>  <p>nmon.disk_%busy</p>  <p>nmon.disk_transfers_per_second</p>  |  <p>Sum of values for all disks for each snapshot</p>  | 
-|  <p>nmon.network_packets.write/s</p>  <p>nmon.network_packets.read/s</p>  |  <p>Sum of values for all interfaces for each snapshot except local</p>  | 
-
-
+|  <p>disk_read_kb/s</p>  <p>nmon.disk_write_kb/s</p>  <p>nmon.disk_%busy</p>  <p>nmon.disk_transfers_per_second</p>  |  <p>Sum of values for all disks for each snapshot.</p>  | 
+|  <p>nmon.network_packets.write/s</p>  <p>nmon.network_packets.read/s</p>  |  <p>Sum of values for all interfaces for each snapshot except local.</p>  | 

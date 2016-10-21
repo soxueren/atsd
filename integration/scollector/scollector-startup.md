@@ -2,25 +2,25 @@
 
 To setup scollector using Puppet, please use our guide and distribution on [GitHub](https://github.com/axibase/axibase-puppet-modules/tree/master/scollector).
 
-#### Setting up scollector to stream data into ATSD
+#### Setting up scollector to Stream Data into ATSD
 
 ##### Windows:
 
-1. Download scollector Windows executable from [http://bosun.org/scollector/ ](http://bosun.org/scollector/)
+1. Download scollector Windows executable from [http://bosun.org/scollector/](http://bosun.org/scollector/).
 
-2. Navigate to the directory with exe file and create `scollector.toml` file in notepad.
+2. Navigate to the directory with the `exe` file and create a `scollector.toml` file in notepad.
 
-NOTE: Make sure the name of the file is `scollector.toml` and not `scollector.toml.txt`
+  **NOTE**: Make sure the name of the file is `scollector.toml` and not `scollector.toml.txt`
 
-3. Add Host setting to scollector.toml:
+3. Add the Host setting to `scollector.toml`:
 
-`Host = "http://atsd_username:atsd_password@atsd_server:8088/"`
+  `Host = "http://atsd_username:atsd_password@atsd_server:8088/"`
 
-NOTE: If you installed a root-signed SSL certificate into ATSD, you can change the above url to the secure https endpoint.
+  **NOTE**: If you installed a root-signed SSL certificate into ATSD, you can change the above url to the secure https endpoint.
 
-> At this time scollector does not support communication with ATSD if it’s SSL certificate is self-signed.
+  > At this time scollector does not support communication with ATSD if its SSL certificate is self-signed.
 
-4. Open prompt as Administrator and create scollector service with automated startup by executing the following command:
+4. Open the prompt as Administrator and create a scollector service with automated startup by executing the following command:
 
 `scollector-windows-amd64.exe -winsvc=install`
 
@@ -28,36 +28,36 @@ NOTE: If you installed a root-signed SSL certificate into ATSD, you can change t
 
 `scollector-windows-amd64.exe -winsvc=start`
 
-> NOTE: If the service exits a few seconds after startup, it either cannot locate `scollector.toml` file, this file is not valid/empty or the Host parameter is specified without double quotes.
+> NOTE: If the service exits a few seconds after startup, it either cannot locate the `scollector.toml` file, this file is not valid/empty, or the Host parameter is specified without double quotes.
 Open Windows event log and review service startup error.
 
-> If the service is running but there are no scollector metrics in ATSD, verify the protocol, url and user credentials specified in `scollector.toml` file.
+> If the service is running but there are no scollector metrics in ATSD, verify the protocol, url, and user credentials specified in the `scollector.toml` file.
 
 ##### Linux:
 
-Download the binary file from: [http://bosun.org/scollector/](http://bosun.org/scollector/)
+Download the binary file from: [http://bosun.org/scollector/](http://bosun.org/scollector/).
 
-You can find the official configuration guides here: [http://godoc.org/bosun.org/cmd/scollector](http://godoc.org/bosun.org/cmd/scollector)
+You can find the official configuration guides here: [http://godoc.org/bosun.org/cmd/scollector](http://godoc.org/bosun.org/cmd/scollector).
 
-Alternatively you can use “scollector Cookbook” to install scollector on your machines: [https://supermarket.chef.io/cookbooks/scollector](https://supermarket.chef.io/cookbooks/scollector)
+Alternatively, you can use the “scollector Cookbook” to install scollector on your machines: [https://supermarket.chef.io/cookbooks/scollector](https://supermarket.chef.io/cookbooks/scollector).
 
-###### Create scollector.toml configuration file:
+###### Create the `scollector.toml` Configuration File:
 
-Navigate to the directory with binary files and create `scollector.toml` file.
+Navigate to the directory with binary files and create the `scollector.toml` file.
 
-NOTE: Make sure the name of the file is `scollector.toml`
+**NOTE**: Make sure the name of the file is `scollector.toml`.
 
-Add Host setting to scollector.toml:
+Add Host setting to `scollector.toml`:
 
 `Host = "http://atsd_username:atsd_password@atsd_server:8088/"`
 
-NOTE: If you installed a root-signed SSL certificate into ATSD, you can change the above url to the secure https endpoint.
+**NOTE**: If you installed a root-signed SSL certificate into ATSD, you can change the above url to the secure https endpoint.
 
 > At this time scollector does not support communication with ATSD if it’s SSL certificate is self-signed.
 
 ###### Launching scollector as a sudo user
 
-Create an init script called `scollector` in `/etc/init.d/` directory with the following contents:
+Create an init script called `scollector` in the `/etc/init.d/` directory with the following contents:
 
 ```
 #chkconfig: 2345 90 10
@@ -78,7 +78,7 @@ SCOLLECTOR_CONF=/home/axibase/scollector.toml
 "$SCOLLECTOR_BIN" -conf="$SCOLLECTOR_CONF"
 ```
 
-Be sure to change `SCOLLECTOR_BIN` and `SCOLLECTOR_CONF` to actual scollector directory path.
+Be sure to change `SCOLLECTOR_BIN` and `SCOLLECTOR_CONF` to the actual scollector directory path.
 
 Set execute flag:
 
@@ -103,7 +103,7 @@ sudo touch /var/lock/subsys/scollector
 
 ###### Launching scollector as a non sudo user
 
-Modify `/etc/init.d/tcollector` content:
+Modify the `/etc/init.d/tcollector` content:
 
 ```
 #chkconfig: 2345 90 10
@@ -129,36 +129,36 @@ else
 fi
 ```
 
-Be sure to change `SCOLLECTOR_BIN` and `SCOLLECTOR_CONF` to actual scollector directory path.
+Be sure to change `SCOLLECTOR_BIN` and `SCOLLECTOR_CONF` to the actual scollector directory path.
 
 Set `SCOLLECTOR_USER` to the user that will run scollector.
 
 ##### MacOS:
 
-Download the binary file from: [http://bosun.org/scollector/](http://bosun.org/scollector/)
+Download the binary file from: [http://bosun.org/scollector/](http://bosun.org/scollector/).
 
-You can find the official configuration guides here: [http://godoc.org/bosun.org/cmd/scollector](http://godoc.org/bosun.org/cmd/scollector)
+You can find the official configuration guides here: [http://godoc.org/bosun.org/cmd/scollector](http://godoc.org/bosun.org/cmd/scollector).
 
-###### Create scollector.toml configuration file:
+###### Create `scollector.toml` configuration file:
 
-Navigate to the directory with binary files and create `scollector.toml` file.
+Navigate to the directory with the binary files and create the `scollector.toml` file.
 
-NOTE: Make sure the name of the file is `scollector.toml`
+**NOTE**: Make sure the name of the file is `scollector.toml`
 
-Add Host setting to scollector.toml:
+Add Host setting to `scollector.toml`:
 
 `Host = "http://atsd_username:atsd_password@atsd_server:8088/"`
 
-NOTE: If you installed a root-signed SSL certificate into ATSD, you can change the above url to the secure https endpoint.
+**NOTE**: If you installed a root-signed SSL certificate into ATSD, you can change the above url to the secure https endpoint.
 
-> At this time scollector does not support communication with ATSD if it’s SSL certificate is self-signed.
+> At this time scollector does not support communication with ATSD if its SSL certificate is self-signed.
 
-###### Add scollector to startup
+###### Add scollector to Startup
 
-To start scollector on system boot add `com.axibase.scollector.plist xml` file to `/Library/LaunchDaemons` folder and replace `$SCOLLECTOR_BIN` and `$SCOLLECTOR_CONF` placeholders with the correct directories.
+To start scollector on a system boot, add the `com.axibase.scollector.plist xml` file to the `/Library/LaunchDaemons` folder and replace the `$SCOLLECTOR_BIN` and `$SCOLLECTOR_CONF` placeholders with the correct directories.
 
-`$SCOLLECTOR_BIN` – path to scollector binary file
-`$SCOLLECTOR_CONF` – path to scollector.toml configuration file
+`$SCOLLECTOR_BIN` – path to the scollector binary file
+`$SCOLLECTOR_CONF` – path to the `scollector.toml` configuration file
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -180,8 +180,7 @@ view raw
 ```
 ###### Controlling scollector
 
-`sudo launchctl load -w /Library/LaunchDaemons/com.axibase.scollector.plist` – load scollector launchd configuration file
-`sudo launchctl unload -w /Library/LaunchDaemons/com.axibase.scollector.plist` – unload scollector launchd configuration file
+`sudo launchctl load -w /Library/LaunchDaemons/com.axibase.scollector.plist` – load scollector launch configuration file
+`sudo launchctl unload -w /Library/LaunchDaemons/com.axibase.scollector.plist` – unload scollector launch configuration file
 
 `sudo launchctl stop scollector` – stop scollector daemon
-
