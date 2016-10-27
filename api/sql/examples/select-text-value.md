@@ -247,16 +247,20 @@ In situations where the `text` column is used to annotate a missing or an invali
 
 The datatype of the `ISNULL` function is determined based on the datatypes of its arguments as follows:
 
-* ISNULL(string, string): `string`
-* ISNULL(number, number): `number`
-* ISNULL(string, number): `java_object`
-* ISNULL(number, string): `java_object`
+* `ISNULL(string, string)`: `string`
+* `ISNULL(number, number)`: `number`
+* `ISNULL(string, number)`: `java_object`
+* `ISNULL(number, string)`: `java_object`
+
+#### Query
 
 ```sql
 SELECT entity, datetime, value, text, ISNULL(value, text), ISNULL(text, value)
   FROM atsd_series
 WHERE metric = 'temperature' AND datetime >= '2016-10-13T08:00:00Z'
 ```
+
+#### Results
 
 ```ls
 | entity   | datetime                 | value | text                           | ISNULL(value,text)             | ISNULL(text,value)             |
