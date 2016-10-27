@@ -34,24 +34,24 @@ Configuration file example:
 ```
 Possible variables:
 
-| Variable | Description | Default Value | 
-| --- | --- | --- | 
-|  <p>debug</p>  |  <p>Enable debug logging : `true` or `false`</p>  |  <p>`false`</p>  | 
-|  <p>keyNameSanitize</p>  |  <p>Sanitizing metric names (removing forbidden characters): `true` or `false`</p>  |  <p>`true`</p>  | 
-|  <p>flush_counts</p>  |  <p>Processing flush counts: `true` or `false`</p>  |  <p>true</p>  | 
-|  <p>atsd</p>  |  <p>Container for all backend-specific options</p>  |  <p>–</p>  | 
-|  <p>atsd.host</p>  |  <p>ATSD hostname</p>  |  <p>–</p>  | 
-|  <p>atsd.port</p>  |  <p>ATSD port</p>  |  <p>8081</p>  | 
-|  <p>atsd.user</p>  |  <p>Username</p>  |  <p>“”</p>  | 
-|  <p>atsd.password</p>  |  <p>Password to log into ATSD</p>  |  <p>“”</p>  | 
-|  <p>atsd.protocol</p>  |  <p>Protocol: `"tcp"` or `"udp"`</p>  |  <p>“tcp”</p>  | 
-|  <p>atsd.entity</p>  |  <p>Default entity</p>  |  <p>local hostname</p>  | 
-|  <p>atsd.prefix</p>  |  <p>Global prefix for each metric</p>  |  <p>“”</p>  | 
-|  <p>atsd.prefixCounter</p>  |  <p>Prefix for counter metrics</p>  |  <p>“counters”</p>  | 
-|  <p>atsd.prefixTimer</p>  |  <p>Prefix for timer metrics</p>  |  <p>“timers”</p>  | 
-|  <p>atsd.prefixGauge</p>  |  <p>Prefix for gauge metrics</p>  |  <p>“gauges”</p>  | 
-|  <p>atsd.prefixSet</p>  |  <p>Prefix for set metrics</p>  |  <p>“sets”</p>  | 
-|  <p>atsd.patterns</p>  |  <p>Patterns to parse statsd metric names</p>  |  <p>–</p>  | 
+| Variable | Description | Default Value |
+| --- | --- | --- |
+|  <p>debug</p>  |  <p>Enable debug logging : `true` or `false`</p>  |  <p>`false`</p>  |
+|  <p>keyNameSanitize</p>  |  <p>Sanitizing metric names (removing forbidden characters): `true` or `false`</p>  |  <p>`true`</p>  |
+|  <p>flush_counts</p>  |  <p>Processing flush counts: `true` or `false`</p>  |  <p>true</p>  |
+|  <p>atsd</p>  |  <p>Container for all backend-specific options</p>  |  <p>–</p>  |
+|  <p>atsd.host</p>  |  <p>ATSD hostname</p>  |  <p>–</p>  |
+|  <p>atsd.port</p>  |  <p>ATSD port</p>  |  <p>8081</p>  |
+|  <p>atsd.user</p>  |  <p>Username</p>  |  <p></p>  |
+|  <p>atsd.password</p>  |  <p>Password to log into ATSD</p>  |  <p></p>  |
+|  <p>atsd.protocol</p>  |  <p>Protocol: `tcp` or `udp`</p>  |  <p>`tcp`</p>  |
+|  <p>atsd.entity</p>  |  <p>Default entity</p>  |  <p>local hostname</p>  |
+|  <p>atsd.prefix</p>  |  <p>Global prefix for each metric</p>  |  <p></p>  | 
+|  <p>atsd.prefixCounter</p>  |  <p>Prefix for counter metrics</p>  |  <p>`counters`</p>  |
+|  <p>atsd.prefixTimer</p>  |  <p>Prefix for timer metrics</p>  |  <p>`timers`</p>  |
+|  <p>atsd.prefixGauge</p>  |  <p>Prefix for gauge metrics</p>  |  <p>`gauges`</p>  |
+|  <p>atsd.prefixSet</p>  |  <p>Prefix for set metrics</p>  |  <p>`sets`</p>  |
+|  <p>atsd.patterns</p>  |  <p>Patterns to parse statsd metric names</p>  |  <p>–</p>  |
 
 
 [Other variables used by StatsD can be specified.](http://github.com/etsy/statsd/blob/master/exampleConfig.js')

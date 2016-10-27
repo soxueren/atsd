@@ -120,7 +120,7 @@ Engine.
 ### Time Based Windows – 3 Second Window Example
 
 Time based windows analyze statistics that occurred in the last N
-seconds. The time windows doesn’t limit how many samples can be held in
+seconds. The time windows doesn't limit how many samples can be held in
 the list; however it automatically removes data samples that move
 outside of the time interval as time passes.
 
@@ -151,7 +151,7 @@ The log of expired or future commands can be enabled on the **Admin:Input Settin
 
 Severity of alerts raised by the rule engine is specified on the Alerts tab in Rule Editor.
 
-If an alert is raised by an expression defined in the Threshold table, its severity overrides 
+If an alert is raised by an expression defined in the Threshold table, its severity overrides
 the default severity configured in the Alert tab.
 
 In order to inherit alert severity from the `message` severity, set Severity on the Alerts tab to 'unknown'.
@@ -162,7 +162,7 @@ In order to inherit alert severity from the `message` severity, set Severity on 
 | Setting | Description |
 | --- | --- |
 | Enabled | Is the rule active or not. |
-| Name | Rule name must be unique. Multiple rules can be created for the same metric. Rule names cannot be modified once a rule is created so it’s advisable to establish a naming convention. For example `{metric}.{condition}.{application/service}` and `cpu_busy.high.ERP-production`. |
+| Name | Rule name must be unique. Multiple rules can be created for the same metric. Rule names cannot be modified once a rule is created so it's advisable to establish a naming convention. For example `{metric}.{condition}.{application/service}` and `cpu_busy.high.ERP-production`. |
 | Last Update | Date and time when the rule was last modified. |
 | Author | Optional user identifier to facilitate controlled changes in multi-user environments. |
 | Description | Description of the rule. |
@@ -173,7 +173,7 @@ In order to inherit alert severity from the `message` severity, set Severity on 
 | Tags | Comma separated list of tags for grouping windows by each tag in addition to entities. Required for metrics that collect tagged data, for example the `df.disk_used` metric that collects data for multiple `file_systems` each identified with `file_system` and `disk_name tags`. |
 | Window | Two types of windows are supported: count (length) and time (duration). The count-based window contains up to N (length) samples. When the count-based window becomes full, the oldest sample is replaced with a newly arrived sample. The time-based window contains all samples (regardless of how many) inserted within the specified period of time (duration). As time goes on, the time-based window automatically removes samples that become outside of the time interval. Aggregate functions applied to windows are equivalent to moving averages. For example, the `avg()` function for the `count(10)` window return an average value for the 10 most recent samples. |
 | Minimum Interval | Interval between the first and last samples in the window. If a Minimum Interval is set, the expression evaluates to false until there is enough data in the window. This condition is useful for time-based windows to prevent alerts for a database restart or whenever there is a restart of the data flow process. |
-| Expression | Expression is a condition which is evaluated each time a data sample is received by the window. For example, the expression ‘`value > 50`‘ checks if a received value is greater than 50. If the expression evaluates to ‘true’, it raises an alert, followed by an execution of triggers such as system command or email notification. Once the expression returns ‘false’, the alert is closed and another set of triggers is invoked. The expression consists of one or multiple checks combined with `OR` and `AND` operators. Exceptions specified in the Thresholds table take precedence over expression. [Learn more about Expression here.](expression.md "Expression") |
+| Expression | Expression is a condition which is evaluated each time a data sample is received by the window. For example, the expression `value > 50` checks if a received value is greater than 50. If the expression evaluates to `true`, it raises an alert, followed by an execution of triggers such as system command or email notification. Once the expression returns 'false', the alert is closed and another set of triggers is invoked. The expression consists of one or multiple checks combined with `OR` and `AND` operators. Exceptions specified in the Thresholds table take precedence over expression. [Learn more about Expression here.](expression.md "Expression") |
 | Columns | List of custom fields with optional aliases. These fields can be written to alert log and accessed with placeholders in alert messages. For example: `Math.round(avg(value)) as avgValue`. |
 
 ## Rule Configuration Example
@@ -211,14 +211,14 @@ in email notifications.
 | range | none | `value > 50 AND value <= 75` | Raise an alert if value is outside of specified range. |
 | statistical-count | count(10) | `avg(value) > 75` | Raise an alert if average value of the last 10 samples exceeds threshold. |
 | statistical-time | time('15min') | `avg(value) > 75` | Raise an alert if average value for the last 15 minutes exceeds threshold. |
-| statistical-deviation | time('15min') | `avg(value) / avg(value(time: ‘1 hour’)) > 1.25` | Raise an alert if 15-minute average exceeds 1-hour average by more than 25%. |
+| statistical-deviation | time('15min') | `avg(value) / avg(value(time: '1 hour')) > 1.25` | Raise an alert if 15-minute average exceeds 1-hour average by more than 25%. |
 | statistical-ungrouped | time('15min') | `avg(value) > 75` | Raise an alert if 15-minute average values for all entities in the group exceeds threshold. |
-| metric correlation | time('15min') | `avg(value) > 75 AND avg(value(metric: ‘loadavg.1m’)) > 0.5` | Raise an alert if average values for two separate metrics for the last 15 minutes exceed predefined thresholds. |
-| entity correlation | time('15min') | `avg(value) > 75 AND avg(value(entity: ‘host2′)) > 75` | Raise an alert if average values for two entities for the last 15 minutes exceed thresholds.|
-| threshold override | time('15min') | `avg(value) >= entity.groupTag(‘cpu _avg’).min()` | Raise an alert if 15-minute average value exceeds minimum threshold specified for groups to which the entity belongs. |
-| log match | count(1) | `message LIKE ‘%Invalid user%from%’` | Raise an alert if invalid user message is written into authentication log. |
-| log frequency | time('15min') | `count(message) > 10 message LIKE ‘%Invalid user%from%’` | Raise an alert if more than 10 occurrences of invalid user message are written into authentication log over 15 minutes. |
-| log correlation | time('15min') | `avg(value) > 75 message NOT LIKE ‘%compaction started%’` | Raise an alert if 15-minute average exceeds threshold except when database compaction has been started. |
+| metric correlation | time('15min') | `avg(value) > 75 AND avg(value(metric: 'loadavg.1m')) > 0.5` | Raise an alert if average values for two separate metrics for the last 15 minutes exceed predefined thresholds. |
+| entity correlation | time('15min') | `avg(value) > 75 AND avg(value(entity: 'host2')) > 75` | Raise an alert if average values for two entities for the last 15 minutes exceed thresholds.|
+| threshold override | time('15min') | `avg(value) >= entity.groupTag('cpu _avg').min()` | Raise an alert if 15-minute average value exceeds minimum threshold specified for groups to which the entity belongs. |
+| log match | count(1) | `message LIKE '%Invalid user%from%'` | Raise an alert if invalid user message is written into authentication log. |
+| log frequency | time('15min') | `count(message) > 10 message LIKE '%Invalid user%from%'` | Raise an alert if more than 10 occurrences of invalid user message are written into authentication log over 15 minutes. |
+| log correlation | time('15min') | `avg(value) > 75 message NOT LIKE '%compaction started%'` | Raise an alert if 15-minute average exceeds threshold except when database compaction has been started. |
 
 ### Analytical Functions
 
@@ -230,24 +230,24 @@ in email notifications.
 | STDEV | `stdev(value) > 2.5` |
 | PERCENTILE (rank) | `percentile(value, 95) > 80` |
 | COUNT | `count(value) > 100` |
-| FORECAST (time) | `forecast(value, ’30 min’) < 25` |
+| FORECAST (time) | `forecast(value, '30 min') < 25` |
 
 ### Calendar Functions
 
 | Name | Example |
 | --- | --- |
 | cron | `* 8-18 * * MON-FRI` |
-| cron AND | `‘* 8-10 * * MON-FRI’ AND ‘* 16-18 * * MON-FRI’` |
-| cron OR | `‘* 0-7,19-23 * * MON-FRI’ OR ‘* * * * SUN, SAT’` |
+| cron AND | `'* 8-10 * * MON-FRI' AND '* 16-18 * * MON-FRI'` |
+| cron OR | `'* 0-7,19-23 * * MON-FRI' OR '* * * * SUN, SAT'` |
 
 ### Tag Functions
 
 | Name | Example | Description |
 | --- | --- | --- |
-| tags(name) | `tags(‘file_system’) = ‘/’` | Tags (custom key-value pairs) can be added to any data sample and used in filters and groupings. |
-| entity.tag(name) | `entity.tag(‘environment’) = ‘prod’` | Tags defined for entities can be used in filters, groupings, and alerts. |
-| metric.tag(name) | `metric.tag(‘type’) = ‘availability’` | Tags defined for metrics can be used in filters, groupings, and alerts. |
-| entity.groupTag(name) | `entity. groupTag(‘email’, ‘;’)` | Tags defined for entity groups can be used in filters, groupings, and alerts. |
+| tags(name) | `tags('file_system') = '/'` | Tags (custom key-value pairs) can be added to any data sample and used in filters and groupings. |
+| entity.tag(name) | `entity.tag('environment') = 'prod'` | Tags defined for entities can be used in filters, groupings, and alerts. |
+| metric.tag(name) | `metric.tag('type') = 'availability'` | Tags defined for metrics can be used in filters, groupings, and alerts. |
+| entity.groupTag(name) | `entity. groupTag('email', ';')` | Tags defined for entity groups can be used in filters, groupings, and alerts. |
 
 ### Data Windows
 

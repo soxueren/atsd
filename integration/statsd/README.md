@@ -26,14 +26,14 @@ Download and install StatsD:
 sudo apt-get install git nodejs devscripts debhelper
 mkdir ~/build && cd ~/build
 git clone https://github.com/etsy/statsd.git
-cd statsd 
+cd statsd
 dpkg-buildpackage
 ```
 
 Install the resulting package:
 
 ```sh
-cd .. 
+cd ..
 sudo dpkg -i statsd_0.6.0-1_all.deb
 ```
 
@@ -71,7 +71,7 @@ Go to the Plugins menu on your WordPress administration page:
 
 ![](resources/plugins_menu.png)
 
-Click ‘Add New’. Find and install the ‘[StatsD WordPress Client](https://wordpress.org/plugins/statsd/)‘ plugin:
+Click [Add New]. Find and install the [StatsD WordPress Client](https://wordpress.org/plugins/statsd/) plugin:
 
 ![](resources/statsd_plugin1.png)
 

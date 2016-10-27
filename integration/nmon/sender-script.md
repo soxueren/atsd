@@ -51,13 +51,13 @@ You can find the right `$nmonsenderPID` in output of command:
 ps -ef | grep nmon_sender_ssh.sh
 ```
 
-| Argument | Description | 
-| --- | --- | 
-|  <p>-h</p>  |  <p>Show help message.</p>  | 
-|  <p>-s [second]</p>  |  <p>Set period of making snapshot of nmon (60 by default).</p>  | 
-|  <p>-c [count]</p>  |  <p>Set count of snapshot (1440 by default).</p>  | 
-|  <p>-m [dir]</p>  |  <p>Set nmon output directory or filename (“./” by default).</p>  | 
-|  <p>-u [user]</p>  |  <p>Set user for ssh-connect (“atsdreadonly” by default).</p>  | 
-|  <p>-i [keypath]</p>  |  <p>Set path to private key (~/.ssh/id_rsa_atsdreadonly by default).</p>  | 
-|  <p>-p [port]</p>  |  <p>Set port to connect by ssh (22 by default).</p>  | 
-|  <p>-r [parser_id]</p>  |  <p>Set parser id (“default” by default).</p>  | 
+| Argument | Description |
+| --- | --- |
+|  <p>-h</p>  |  <p>Show help message.</p>  |
+|  <p>-s [second]</p>  |  <p>Set period of making snapshot of nmon (60 by default).</p>  |
+|  <p>-c [count]</p>  |  <p>Set count of snapshot (1440 by default).</p>  |
+|  <p>-m [dir]</p>  |  <p>Set nmon output directory or filename (`./` by default).</p>  |
+|  <p>-u [user]</p>  |  <p>Set user for ssh-connect (`atsdreadonly` by default).</p>  |
+|  <p>-i [keypath]</p>  |  <p>Set path to private key (`~/.ssh/id_rsa_atsdreadonly` by default).</p>  |
+|  <p>-p [port]</p>  |  <p>Set port to connect by ssh (22 by default).</p>  |
+|  <p>-r [parser_id]</p>  |  <p>Set parser id (`default` by default).</p>  |

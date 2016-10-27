@@ -40,13 +40,13 @@ STORAGE_FINDERS = (
 `local_settings.py` settings:
 
 | Setting | Description | Default Value |
-| --- | --- | --- | 
-|  <p>url</p>  |  <p>ATSD hostname or IP</p>  |  <p>localhost:8088</p>  | 
-|  <p>username</p>  |  <p>ATSD user username</p>  |  <p>–</p>  | 
-|  <p>password</p>  |  <p>ATSD user password</p>  |  <p>–</p>  | 
-|  <p>entity_folders</p>  |  <p>List of folders for grouping entities by name.</p>  <p>Grouping is done according to the beginning of each entity name.</p>  <p>If it is matched to a folder name, then it will be visible in that folder.</p>  <p>For example if an entity name begins with</p>  <p>`com` (like `com_axibase`)</p>  <p>then it will be placed into the folder called `'com'`.</p>  <p>If the entity name does not satisfy any of the listed folder names, then it will be placed into the `"_"` folder by default.</p>  |  <p>`'entity_folders' : 'abcdefghijklmnopqrstuvwxyz_'`</p>  <p>Will result in folders from a to z (iterates through the string).</p>  | 
-|  <p>metric_folders</p>  |  <p>List of folders for grouping metrics by name.</p>  <p>Grouping is done according to the beginning of each metric name.</p>  <p>If it is matched to a folder name, then it will be visible in that folder.</p>  <p>For example if a metric name begins with</p>  <p>`statsd` (`statsd_cpuload_avg5`)</p>  <p>then it will be placed into the folder called `'statsd'`.</p>  <p>If metric name does not satisfy any of the listed folder names, then it will be placed into the `"_"` folder by default.</p>  |  <p>`'metric_folders' : 'abcdefghijklmnopqrstuvwxyz_'`</p>  <p>Will result in folders from a to z, iterates through the string.</p>  | 
-|  <p>aggregators</p>  |  <p>List of aggregators.</p>  |  <p>`'aggregators' : {</p>  <p>                'avg'               : 'Average',</p>  <p>                'min'               : 'Minimum',</p>  <p>                'max'               : 'Maximum',</p>  <p>                'sum'               : 'Sum',</p>  <p>                'count'             : 'Count',</p>  <p>                'first'             : 'First value',</p>  <p>                'last'              : 'Last value',</p>  <p>                'percentile_999'    : 'Percentile 99.9%',</p>  <p>                'percentile_99'     : 'Percentile 99%',</p>  <p>                'percentile_995'    : 'Percentile 99.5%',</p>  <p>                'percentile_95'     : 'Percentile 95%',</p>  <p>                'percentile_90'     : 'Percentile 90%',</p>  <p>                'percentile_75'     : 'Percentile 75%',</p>  <p>                'median'            : 'Median',</p>  <p>                'standard_deviation': 'Standard deviation',</p>  <p>                'delta'             : 'Delta',</p>  <p>                'wavg'              : 'Weighted average',</p>  <p>                'wtavg'             : 'Weighted time average'</p>  <p>}`</p>  | 
+| --- | --- | --- |
+|  <p>url</p>  |  <p>ATSD hostname or IP</p>  |  <p>localhost:8088</p>  |
+|  <p>username</p>  |  <p>ATSD user username</p>  |  <p>–</p>  |
+|  <p>password</p>  |  <p>ATSD user password</p>  |  <p>–</p>  |
+|  <p>entity_folders</p>  |  <p>List of folders for grouping entities by name.</p>  <p>Grouping is done according to the beginning of each entity name.</p>  <p>If it is matched to a folder name, then it will be visible in that folder.</p>  <p>For example if an entity name begins with</p>  <p>`com` (like `com_axibase`)</p>  <p>then it will be placed into the folder called `'com'`.</p>  <p>If the entity name does not satisfy any of the listed folder names, then it will be placed into the `"_"` folder by default.</p>  |  <p>`'entity_folders' : 'abcdefghijklmnopqrstuvwxyz_'`</p>  <p>Will result in folders from a to z (iterates through the string).</p>  |
+|  <p>metric_folders</p>  |  <p>List of folders for grouping metrics by name.</p>  <p>Grouping is done according to the beginning of each metric name.</p>  <p>If it is matched to a folder name, then it will be visible in that folder.</p>  <p>For example if a metric name begins with</p>  <p>`statsd` (`statsd_cpuload_avg5`)</p>  <p>then it will be placed into the folder called `'statsd'`.</p>  <p>If metric name does not satisfy any of the listed folder names, then it will be placed into the `"_"` folder by default.</p>  |  <p>`'metric_folders' : 'abcdefghijklmnopqrstuvwxyz_'`</p>  <p>Will result in folders from a to z, iterates through the string.</p>  |
+|  <p>aggregators</p>  |  <p>List of aggregators.</p>  |  <p>`'aggregators' : {</p>  <p>                'avg'               : 'Average',</p>  <p>                'min'               : 'Minimum',</p>  <p>                'max'               : 'Maximum',</p>  <p>                'sum'               : 'Sum',</p>  <p>                'count'             : 'Count',</p>  <p>                'first'             : 'First value',</p>  <p>                'last'              : 'Last value',</p>  <p>                'percentile_999'    : 'Percentile 99.9%',</p>  <p>                'percentile_99'     : 'Percentile 99%',</p>  <p>                'percentile_995'    : 'Percentile 99.5%',</p>  <p>                'percentile_95'     : 'Percentile 95%',</p>  <p>                'percentile_90'     : 'Percentile 90%',</p>  <p>                'percentile_75'     : 'Percentile 75%',</p>  <p>                'median'            : 'Median',</p>  <p>                'standard_deviation': 'Standard deviation',</p>  <p>                'delta'             : 'Delta',</p>  <p>                'wavg'              : 'Weighted average',</p>  <p>                'wtavg'             : 'Weighted time average'</p>  <p>}`</p>  |
 
 
 If you use an underscore at the beginning of a setting value (`entity_folders` or `metric_folders`), then all folders that do not satisfy any other setting will be placed there.
@@ -91,21 +91,21 @@ STORAGE_FINDERS = (
 )
 ```
 
-ATSD Storage Finder Virtual only has one extra setting: “`views`“.
+ATSD Storage Finder Virtual only has one extra setting: `views`.
 
 Under `views`, use `type` to control which folders and the order you would like for them to appear in the graphite-web interface.
 
-| Type | Description | 
-| --- | --- | 
-|  <p>`'type': 'entity folder'`</p>  |  <p>Node representing entity filters.</p>  | 
-|  <p>`'type': 'entity'`</p>  |  <p>Node representing entities.</p>  | 
-|  <p>`'type': 'tag'`</p>  |  <p>Node representing tag values.</p>  | 
-|  <p>`'type': 'metric folder'`</p>  |  <p>Node representing metric filters.</p>  | 
-|  <p>`'type': 'metric'`</p>  |  <p>Node representing metrics.</p>  | 
-|  <p>`'type': 'interval'`</p>  |  <p>Node representing selection intervals.</p>  | 
-|  <p>`'type': 'collection'`</p>  |  <p>Node representing different types of nodes.</p>  | 
-|  <p>`'type': 'aggregator'`</p>  |  <p>Node representing statistics.</p>  | 
-|  <p>`'type': 'period'`</p>  |  <p>Node representing statistics periods.</p>  | 
+| Type | Description |
+| --- | --- |
+|  <p>`'type': 'entity folder'`</p>  |  <p>Node representing entity filters.</p>  |
+|  <p>`'type': 'entity'`</p>  |  <p>Node representing entities.</p>  |
+|  <p>`'type': 'tag'`</p>  |  <p>Node representing tag values.</p>  |
+|  <p>`'type': 'metric folder'`</p>  |  <p>Node representing metric filters.</p>  |
+|  <p>`'type': 'metric'`</p>  |  <p>Node representing metrics.</p>  |
+|  <p>`'type': 'interval'`</p>  |  <p>Node representing selection intervals.</p>  |
+|  <p>`'type': 'collection'`</p>  |  <p>Node representing different types of nodes.</p>  |
+|  <p>`'type': 'aggregator'`</p>  |  <p>Node representing statistics.</p>  |
+|  <p>`'type': 'period'`</p>  |  <p>Node representing statistics periods.</p>  |
 
 
 ##`local_settings.py` example with “views”:##
