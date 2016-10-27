@@ -42,7 +42,7 @@ As an alternative, the query can be submitted with Content-Type `text/plain` as 
 | - | - | - |
 
 ```java
-    statement.setMaxRows(5);
+  statement.setMaxRows(5);
 	statement.executeQuery("SELECT datetime, value FROM mpstat.cpu_busy LIMIT 3");
 	//results will be limited to 3 records
 ```
@@ -51,7 +51,20 @@ As an alternative, the query can be submitted with Content-Type `text/plain` as 
 
 The client may cancel an active query by submitting a request to `/api/sql/cancel?queryId=myid` endpoint.
 
-The `queryId` identifies the query to be cancelled. 
+The `queryId` identifies the query to be cancelled.
+
+## Response
+
+The response in CSV format is subject to the following formatting rules:
+
+* String values are enclosed in double-quotes, even if special characters are not present.
+* `NULL` is printed as an empty string.
+* Numeric values, including `NaN` (Not a Number), are not enclosed in quotes.
+
+```ls
+string,empty_string,null,number,number(NaN)
+"hello","",,10.3,NaN
+```
 
 ### Metadata
 

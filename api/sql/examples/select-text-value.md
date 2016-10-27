@@ -252,6 +252,8 @@ The datatype of the `ISNULL` function is determined based on the datatypes of it
 * `ISNULL(string, number)`: `java_object`
 * `ISNULL(number, string)`: `java_object`
 
+If both arguments are numeric and their datatypes are different, the returned datatype is based on the argument with the higher numeric precedence.
+
 #### Query
 
 ```sql
