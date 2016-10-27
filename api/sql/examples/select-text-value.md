@@ -6,7 +6,7 @@ Series tags are part of each series composite primary key, whereas the text valu
 
 Since the total number of unique tag value identifiers is [limited](README.md#schema) to `16,777,215`, series tag values are not well suited for values with high cardinality such as random values or continuously incrementing values (time, counters).
 
-The text value, on the other hand, is stored `as is`, without converting it to an identifier. It can be used as an annotation, or order to describe a numeric observation without changing it's primary key. 
+The text value, on the other hand, is stored `as is`, without converting it to an identifier. It can be used as an annotation, or order to describe a numeric observation without changing it's primary key.
 
 ```ls
 series d:2016-10-13T08:00:00Z e:sensor-1 m:temperature=20.3
@@ -24,17 +24,17 @@ series d:2016-10-13T10:30:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-543
 Unlike [message](message.md) commands, series text values are available for SQL querying using the `text` column.
 
 ```sql
-SELECT entity, datetime, value, text 
-  FROM atsd_series 
+SELECT entity, datetime, value, text
+  FROM atsd_series
 WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 ```
 
 ```ls
-| entity   | datetime             | value | text                           | 
-|----------|----------------------|-------|--------------------------------| 
-| sensor-1 | 2016-10-13T08:00:00Z | 20.3  | null                           | 
-| sensor-1 | 2016-10-13T08:15:00Z | 24.4  | Provisional                    | 
-| sensor-1 | 2016-10-13T10:30:00Z | NaN   | Shutdown by adm-user, RFC-5434 | 
+| entity   | datetime             | value | text                           |
+|----------|----------------------|-------|--------------------------------|
+| sensor-1 | 2016-10-13T08:00:00Z | 20.3  | null                           |
+| sensor-1 | 2016-10-13T08:15:00Z | 24.4  | Provisional                    |
+| sensor-1 | 2016-10-13T10:30:00Z | NaN   | Shutdown by adm-user, RFC-5434 |
 ```
 
 ## Multiple Metrics with Different Values (Numeric/Text)
@@ -42,8 +42,8 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 ### Data
 
 ```ls
-series e:default d:2016-09-20T12:57:49Z m:Memory_Avail_MBytes=NaN t:status_text="Pt Created" t:status=-253 
-series e:default d:2016-10-11T15:38:00Z m:Memory_Avail_MBytes=6139.0 
+series e:default d:2016-09-20T12:57:49Z m:Memory_Avail_MBytes=NaN t:status_text="Pt Created" t:status=-253
+series e:default d:2016-10-11T15:38:00Z m:Memory_Avail_MBytes=6139.0
 series e:default d:2016-10-11T15:38:00Z m:Memory_Avail_MBytes=6139.1 t:_index=2
 series e:default d:2016-10-11T15:38:00Z m:Memory_Avail_MBytes=6139.2 t:_index=3
 series e:default d:2016-10-11T15:38:01Z m:Memory_Avail_MBytes=6141.0
@@ -62,35 +62,35 @@ series e:default d:2016-08-24T22:28:30Z m:CDEP158=43
 ### Query
 
 ```sql
-SELECT entity, metric AS pitag, datetime, value, ISNULL(text, '') AS svalue, 
+SELECT entity, metric AS pitag, datetime, value, ISNULL(text, '') AS svalue,
   ISNULL(tags._index, '1') AS '_index', ISNULL(tags.status, '0') AS status, ISNULL(tags.status_text, 'Good') AS status_text,
-  ISNULL(tags.questionable, 'false') AS questionable, ISNULL(tags.substituted, 'false') AS substituted, ISNULL(tags.annotated, 'false') AS annotated, 
+  ISNULL(tags.questionable, 'false') AS questionable, ISNULL(tags.substituted, 'false') AS substituted, ISNULL(tags.annotated, 'false') AS annotated,
   ISNULL(tags.annotations, '') AS annotations
-FROM atsd_series 
-  WHERE metric IN ('Memory_Avail_MBytes', 'BA:ACTIVE.1', 'CDEP158') 
+FROM atsd_series
+  WHERE metric IN ('Memory_Avail_MBytes', 'BA:ACTIVE.1', 'CDEP158')
 AND entity = 'default'
 ```
 
 ### Results
 
 ```ls
-| entity  | pitag               | datetime             | value  | svalue   | _index | status | status_text | questionable | substituted | annotated | annotations | 
-|---------|---------------------|----------------------|--------|----------|--------|--------|-------------|--------------|-------------|-----------|-------------| 
-| default | memory_avail_mbytes | 2016-09-20T12:57:49Z | NaN    |          | 1      | -253   | Pt Created  | false        | false       | false     |             | 
-| default | memory_avail_mbytes | 2016-10-11T15:38:00Z | 6139.0 |          | 1      | 0      | Good        | false        | false       | false     |             | 
-| default | memory_avail_mbytes | 2016-10-11T15:38:00Z | 6139.1 |          | 2      | 0      | Good        | false        | false       | false     |             | 
-| default | memory_avail_mbytes | 2016-10-11T15:38:00Z | 6139.2 |          | 3      | 0      | Good        | false        | false       | false     |             | 
-| default | memory_avail_mbytes | 2016-10-11T15:38:01Z | 6141.0 |          | 1      | 0      | Good        | false        | false       | false     |             | 
-| default | ba:active.1         | 2016-08-24T15:02:55Z | NaN    |          | 1      | -253   | Pt Created  | false        | false       | false     |             | 
-| default | ba:active.1         | 2016-08-24T15:03:17Z | NaN    | Inactive | 1      | 0      | Good        | false        | false       | false     |             | 
-| default | ba:active.1         | 2016-08-24T15:04:17Z | NaN    | Active   | 1      | 0      | Good        | false        | false       | false     |             | 
-| default | ba:active.1         | 2016-08-24T16:15:17Z | NaN    | Inactive | 1      | 0      | Good        | false        | false       | false     |             | 
-| default | cdep158             | 2016-08-24T15:01:09Z | NaN    |          | 1      | -254   | Shutdown    | false        | false       | false     |             | 
-| default | cdep158             | 2016-08-24T15:03:17Z | 0.0    |          | 1      | 0      | Good        | false        | false       | false     |             | 
-| default | cdep158             | 2016-08-24T15:43:17Z | 12.0   |          | 1      | 0      | Good        | false        | false       | false     |             | 
-| default | cdep158             | 2016-08-24T16:21:20Z | NaN    |          | 1      | -254   | Shutdown    | false        | false       | false     |             | 
-| default | cdep158             | 2016-08-24T16:23:30Z | 1.0    |          | 1      | 0      | Good        | false        | false       | false     |             | 
-| default | cdep158             | 2016-08-24T22:28:30Z | 43.0   |          | 1      | 0      | Good        | false        | false       | false     |             | 
+| entity  | pitag               | datetime             | value  | svalue   | _index | status | status_text | questionable | substituted | annotated | annotations |
+|---------|---------------------|----------------------|--------|----------|--------|--------|-------------|--------------|-------------|-----------|-------------|
+| default | memory_avail_mbytes | 2016-09-20T12:57:49Z | NaN    |          | 1      | -253   | Pt Created  | false        | false       | false     |             |
+| default | memory_avail_mbytes | 2016-10-11T15:38:00Z | 6139.0 |          | 1      | 0      | Good        | false        | false       | false     |             |
+| default | memory_avail_mbytes | 2016-10-11T15:38:00Z | 6139.1 |          | 2      | 0      | Good        | false        | false       | false     |             |
+| default | memory_avail_mbytes | 2016-10-11T15:38:00Z | 6139.2 |          | 3      | 0      | Good        | false        | false       | false     |             |
+| default | memory_avail_mbytes | 2016-10-11T15:38:01Z | 6141.0 |          | 1      | 0      | Good        | false        | false       | false     |             |
+| default | ba:active.1         | 2016-08-24T15:02:55Z | NaN    |          | 1      | -253   | Pt Created  | false        | false       | false     |             |
+| default | ba:active.1         | 2016-08-24T15:03:17Z | NaN    | Inactive | 1      | 0      | Good        | false        | false       | false     |             |
+| default | ba:active.1         | 2016-08-24T15:04:17Z | NaN    | Active   | 1      | 0      | Good        | false        | false       | false     |             |
+| default | ba:active.1         | 2016-08-24T16:15:17Z | NaN    | Inactive | 1      | 0      | Good        | false        | false       | false     |             |
+| default | cdep158             | 2016-08-24T15:01:09Z | NaN    |          | 1      | -254   | Shutdown    | false        | false       | false     |             |
+| default | cdep158             | 2016-08-24T15:03:17Z | 0.0    |          | 1      | 0      | Good        | false        | false       | false     |             |
+| default | cdep158             | 2016-08-24T15:43:17Z | 12.0   |          | 1      | 0      | Good        | false        | false       | false     |             |
+| default | cdep158             | 2016-08-24T16:21:20Z | NaN    |          | 1      | -254   | Shutdown    | false        | false       | false     |             |
+| default | cdep158             | 2016-08-24T16:23:30Z | 1.0    |          | 1      | 0      | Good        | false        | false       | false     |             |
+| default | cdep158             | 2016-08-24T22:28:30Z | 43.0   |          | 1      | 0      | Good        | false        | false       | false     |             |
 ```
 
 ## Text Value and Interpolation
@@ -112,17 +112,17 @@ WITH INTERPOLATE(15 MINUTE, LINEAR, OUTER, EXTEND)
 ### Results
 
 ```ls
-| datetime             | text     | 
-|----------------------|----------| 
-| 2016-08-24T14:45:00Z | null     | 
-| 2016-08-24T15:00:00Z | null     | 
-| 2016-08-24T15:15:00Z | Active   | 
-| 2016-08-24T15:30:00Z | Active   | 
-| 2016-08-24T15:45:00Z | Active   | 
-| 2016-08-24T16:00:00Z | Active   | 
-| 2016-08-24T16:15:00Z | Active   | 
-| 2016-08-24T16:30:00Z | Inactive | 
-| 2016-08-24T16:45:00Z | Inactive | 
+| datetime             | text     |
+|----------------------|----------|
+| 2016-08-24T14:45:00Z | null     |
+| 2016-08-24T15:00:00Z | null     |
+| 2016-08-24T15:15:00Z | Active   |
+| 2016-08-24T15:30:00Z | Active   |
+| 2016-08-24T15:45:00Z | Active   |
+| 2016-08-24T16:00:00Z | Active   |
+| 2016-08-24T16:15:00Z | Active   |
+| 2016-08-24T16:30:00Z | Inactive |
+| 2016-08-24T16:45:00Z | Inactive |
 ```
 
 ## Joining Multiple Metrics with Text and Numeric Values
@@ -178,7 +178,7 @@ series d:2016-10-04T02:09:09Z e:br-1470 x:SV6.Unit_Procedure="1415-Proc1"
 ```
 
 ### Query
- 
+
 ```sql
 SELECT t1.datetime, t1.entity, t1.value, t2.value, t3.value, t4.value, t5.value, t5.text, t6.text
   FROM 'SV6.PACK:R01' t1
@@ -191,29 +191,29 @@ WHERE t1.datetime >= '2016-10-04T02:00:00Z' AND t2.datetime <= '2016-10-04T02:10
   AND entity = 'br-1470'
 WITH INTERPOLATE(60 SECOND, AUTO, OUTER, EXTEND, START_TIME)
 ```
- 
+
 ### Results
- 
+
 ```ls
-| t1.datetime          | t1.entity | t1.value | t2.value | t3.value | t4.value | t5.value | t5.text  | t6.text    | 
-|----------------------|-----------|----------|----------|----------|----------|----------|----------|------------| 
-| 2016-10-04T02:00:00Z | br-1470   | 97.4     | 47.7     | 26.0     | 475.0    | NaN      | 1413     | 1413-Proc3 | 
-| 2016-10-04T02:01:00Z | br-1470   | 78.7     | 37.5     | 22.9     | 26.0     | NaN      | Inactive | Inactive   | 
-| 2016-10-04T02:02:00Z | br-1470   | 82.4     | 42.7     | 17.9     | 35.0     | NaN      | 1414     | 1414-Proc1 | 
-| 2016-10-04T02:03:00Z | br-1470   | 78.5     | 41.2     | 24.4     | 95.0     | NaN      | 1414     | 1414-Proc1 | 
-| 2016-10-04T02:04:00Z | br-1470   | 67.9     | 37.0     | 24.8     | 155.0    | NaN      | 1414     | 1414-Proc1 | 
-| 2016-10-04T02:05:00Z | br-1470   | 56.0     | 38.6     | 22.0     | 215.0    | NaN      | 1414     | 1414-Proc2 | 
-| 2016-10-04T02:06:00Z | br-1470   | 52.6     | 40.9     | 20.9     | 275.0    | NaN      | 1414     | 1414-Proc2 | 
-| 2016-10-04T02:07:00Z | br-1470   | 57.0     | 41.8     | 21.5     | 335.0    | NaN      | 1414     | 1414-Proc2 | 
-| 2016-10-04T02:08:00Z | br-1470   | 68.0     | 44.5     | 23.4     | 395.0    | NaN      | 1414     | 1414-Proc3 | 
-| 2016-10-04T02:09:00Z | br-1470   | 84.8     | 35.7     | 21.9     | 455.0    | NaN      | 1414     | 1414-Proc3 | 
-| 2016-10-04T02:10:00Z | br-1470   | 92.0     | 44.3     | 18.2     | 51.0     | NaN      | 1415     | 1415-Proc1 | 
+| t1.datetime          | t1.entity | t1.value | t2.value | t3.value | t4.value | t5.value | t5.text  | t6.text    |
+|----------------------|-----------|----------|----------|----------|----------|----------|----------|------------|
+| 2016-10-04T02:00:00Z | br-1470   | 97.4     | 47.7     | 26.0     | 475.0    | NaN      | 1413     | 1413-Proc3 |
+| 2016-10-04T02:01:00Z | br-1470   | 78.7     | 37.5     | 22.9     | 26.0     | NaN      | Inactive | Inactive   |
+| 2016-10-04T02:02:00Z | br-1470   | 82.4     | 42.7     | 17.9     | 35.0     | NaN      | 1414     | 1414-Proc1 |
+| 2016-10-04T02:03:00Z | br-1470   | 78.5     | 41.2     | 24.4     | 95.0     | NaN      | 1414     | 1414-Proc1 |
+| 2016-10-04T02:04:00Z | br-1470   | 67.9     | 37.0     | 24.8     | 155.0    | NaN      | 1414     | 1414-Proc1 |
+| 2016-10-04T02:05:00Z | br-1470   | 56.0     | 38.6     | 22.0     | 215.0    | NaN      | 1414     | 1414-Proc2 |
+| 2016-10-04T02:06:00Z | br-1470   | 52.6     | 40.9     | 20.9     | 275.0    | NaN      | 1414     | 1414-Proc2 |
+| 2016-10-04T02:07:00Z | br-1470   | 57.0     | 41.8     | 21.5     | 335.0    | NaN      | 1414     | 1414-Proc2 |
+| 2016-10-04T02:08:00Z | br-1470   | 68.0     | 44.5     | 23.4     | 395.0    | NaN      | 1414     | 1414-Proc3 |
+| 2016-10-04T02:09:00Z | br-1470   | 84.8     | 35.7     | 21.9     | 455.0    | NaN      | 1414     | 1414-Proc3 |
+| 2016-10-04T02:10:00Z | br-1470   | 92.0     | 44.3     | 18.2     | 51.0     | NaN      | 1415     | 1415-Proc1 |
 ```
- 
+
 ### Filtered Query
- 
-The query may refer to the `text` column in the `WHERE` clause in order to filter rows by value.
- 
+
+The query may refer to the `text` column in the `WHERE` clause in order to filter rows by `text` column value.
+
 ```sql
 SELECT t1.datetime, t1.entity, t1.value, t2.value, t3.value, t4.value, t5.value, t5.text, t6.text
   FROM 'SV6.PACK:R01' t1
@@ -227,17 +227,41 @@ WHERE t1.datetime >= '2016-10-04T02:00:00Z' AND t2.datetime <= '2016-10-04T02:10
   AND t5.text = '1414'
 WITH INTERPOLATE(60 SECOND, AUTO, OUTER, EXTEND, START_TIME)
  ```
- 
+
 ```ls
-| t1.datetime          | t1.entity | t1.value | t2.value | t3.value | t4.value | t5.value | t5.text | t6.text    | 
-|----------------------|-----------|----------|----------|----------|----------|----------|---------|------------| 
-| 2016-10-04T02:02:00Z | br-1470   | 82.4     | 42.7     | 17.9     | 35.0     | NaN      | 1414    | 1414-Proc1 | 
-| 2016-10-04T02:03:00Z | br-1470   | 78.5     | 41.2     | 24.4     | 95.0     | NaN      | 1414    | 1414-Proc1 | 
-| 2016-10-04T02:04:00Z | br-1470   | 67.9     | 37.0     | 24.8     | 155.0    | NaN      | 1414    | 1414-Proc1 | 
-| 2016-10-04T02:05:00Z | br-1470   | 56.0     | 38.6     | 22.0     | 215.0    | NaN      | 1414    | 1414-Proc2 | 
-| 2016-10-04T02:06:00Z | br-1470   | 52.6     | 40.9     | 20.9     | 275.0    | NaN      | 1414    | 1414-Proc2 | 
-| 2016-10-04T02:07:00Z | br-1470   | 57.0     | 41.8     | 21.5     | 335.0    | NaN      | 1414    | 1414-Proc2 | 
-| 2016-10-04T02:08:00Z | br-1470   | 68.0     | 44.5     | 23.4     | 395.0    | NaN      | 1414    | 1414-Proc3 | 
-| 2016-10-04T02:09:00Z | br-1470   | 84.8     | 35.7     | 21.9     | 455.0    | NaN      | 1414    | 1414-Proc3 | 
+| t1.datetime          | t1.entity | t1.value | t2.value | t3.value | t4.value | t5.value | t5.text | t6.text    |
+|----------------------|-----------|----------|----------|----------|----------|----------|---------|------------|
+| 2016-10-04T02:02:00Z | br-1470   | 82.4     | 42.7     | 17.9     | 35.0     | NaN      | 1414    | 1414-Proc1 |
+| 2016-10-04T02:03:00Z | br-1470   | 78.5     | 41.2     | 24.4     | 95.0     | NaN      | 1414    | 1414-Proc1 |
+| 2016-10-04T02:04:00Z | br-1470   | 67.9     | 37.0     | 24.8     | 155.0    | NaN      | 1414    | 1414-Proc1 |
+| 2016-10-04T02:05:00Z | br-1470   | 56.0     | 38.6     | 22.0     | 215.0    | NaN      | 1414    | 1414-Proc2 |
+| 2016-10-04T02:06:00Z | br-1470   | 52.6     | 40.9     | 20.9     | 275.0    | NaN      | 1414    | 1414-Proc2 |
+| 2016-10-04T02:07:00Z | br-1470   | 57.0     | 41.8     | 21.5     | 335.0    | NaN      | 1414    | 1414-Proc2 |
+| 2016-10-04T02:08:00Z | br-1470   | 68.0     | 44.5     | 23.4     | 395.0    | NaN      | 1414    | 1414-Proc3 |
+| 2016-10-04T02:09:00Z | br-1470   | 84.8     | 35.7     | 21.9     | 455.0    | NaN      | 1414    | 1414-Proc3 |
 ```
 
+### Single Value Column
+
+In situations where the `text` column is used to annotate a missing or an invalid numeric value, use the `ISNULL` function to return the consolidated value in one column.
+
+The datatype of the `ISNULL` function is determined based on the datatypes of its arguments as follows:
+
+* ISNULL(string, string): `string`
+* ISNULL(number, number): `number`
+* ISNULL(string, number): `java_object`
+* ISNULL(number, string): `java_object`
+
+```sql
+SELECT entity, datetime, value, text, ISNULL(value, text), ISNULL(text, value)
+  FROM atsd_series
+WHERE metric = 'temperature' AND datetime >= '2016-10-13T08:00:00Z'
+```
+
+```ls
+| entity   | datetime                 | value | text                           | ISNULL(value,text)             | ISNULL(text,value)             |
+|----------|--------------------------|-------|--------------------------------|--------------------------------|--------------------------------|
+| sensor-1 | 2016-10-13T08:00:00.000Z | 20.3  | null                           | 20.3                           | 20.3                           |
+| sensor-1 | 2016-10-13T08:15:00.000Z | 24.4  | Provisional                    | 24.4                           | Provisional                    |
+| sensor-1 | 2016-10-13T10:30:00.000Z | NaN   | Shutdown by adm-user, RFC-5434 | Shutdown by adm-user, RFC-5434 | Shutdown by adm-user, RFC-5434 |
+```

@@ -271,17 +271,17 @@ series d:2016-10-13T10:30:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-543
 ```
 
 ```sql
-SELECT entity, metric, datetime, value, text 
-  FROM atsd_series 
+SELECT entity, metric, datetime, value, text
+  FROM atsd_series
 WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 ```
 
 ```ls
-| entity   | metric      | datetime                 | value | text                           | 
-|----------|-------------|--------------------------|-------|--------------------------------| 
-| sensor-1 | temperature | 2016-10-13T08:00:00.000Z | 20.3  | null                           | 
-| sensor-1 | temperature | 2016-10-13T08:15:00.000Z | 24.4  | Provisional                    | 
-| sensor-1 | status      | 2016-10-13T10:30:00.000Z | NaN   | Shutdown by adm-user, RFC-5434 | 
+| entity   | metric      | datetime                 | value | text                           |
+|----------|-------------|--------------------------|-------|--------------------------------|
+| sensor-1 | temperature | 2016-10-13T08:00:00.000Z | 20.3  | null                           |
+| sensor-1 | temperature | 2016-10-13T08:15:00.000Z | 24.4  | Provisional                    |
+| sensor-1 | status      | 2016-10-13T10:30:00.000Z | NaN   | Shutdown by adm-user, RFC-5434 |
 ```
 
 ### Series Tag Columns
@@ -1308,7 +1308,7 @@ The following functions aggregate values in a column by producing a single value
 
 The functions accept `value` as the column name or a numeric expression as a parameter, for example  `avg(value)` or `avg(t1.value + t2.value)`.
 The `PERCENTILE` function accepts `percentile` parameter (0 to 100) and `value` column name, for example `percentile(75, value)`.
-The `COUNT` function counts the number of rows in the result set and accepts `*` as an argument, for example `COUNT (*)`. 
+The `COUNT` function counts the number of rows in the result set and accepts `*` as an argument, for example `COUNT (*)`.
 
 ## Time Formatting Functions
 
@@ -1350,9 +1350,9 @@ FROM mpstat.cpu_busy
 ```
 
 ```ls
-| entity       | datetime             | Metric TZ | Entity TZ | default                  | ISO 8601                  | Local Server        | GMT Offset          | PDT                 | PDT t/z                   | AUTO: CST                 | 
-|--------------|----------------------|-----------|-----------|--------------------------|---------------------------|---------------------|---------------------|---------------------|---------------------------|---------------------------| 
-| nurswgvml006 | 2016-10-16T16:53:03Z | EST       | CST       | 2016-10-16T16:53:03.000Z | 2016-10-16T16:53:03+00:00 | 2016-10-16 16:53:03 | 2016-10-16 08:53:03 | 2016-10-16 09:53:03 | 2016-10-16 09:53:03-07:00 | 2016-10-16 11:53:03-05:00 | 
+| entity       | datetime             | Metric TZ | Entity TZ | default                  | ISO 8601                  | Local Server        | GMT Offset          | PDT                 | PDT t/z                   | AUTO: CST                 |
+|--------------|----------------------|-----------|-----------|--------------------------|---------------------------|---------------------|---------------------|---------------------|---------------------------|---------------------------|
+| nurswgvml006 | 2016-10-16T16:53:03Z | EST       | CST       | 2016-10-16T16:53:03.000Z | 2016-10-16T16:53:03+00:00 | 2016-10-16 16:53:03 | 2016-10-16 08:53:03 | 2016-10-16 09:53:03 | 2016-10-16 09:53:03-07:00 | 2016-10-16 11:53:03-05:00 |
 ```
 
 ```ls
@@ -1426,7 +1426,6 @@ WHERE datetime >= now - 1 * minute
 | `REPLACE(s-1, s-2, s-3)` | Replaces all occurrences of `s-2` with `s-3` in a specified string `s-1`.<br>If `s-2` is not found, the function returns the original string `s-1`.|
 | `LENGTH(s)` | Number of characters in a specified string. |
 | `CONCAT (s-1, s-2 [, s-N] )` | Concatenates multiple strings into one string. <br>`NULL` values are concatenated as empty strings.|
-| `ISNULL(s-1, s-2)`  | Returns `s-2` if `s-1` is `NULL`. |
 | `LOCATE(s-1, s-2 [, start])` | Position at which `s-1` is found in `s-2`, after optional `start` position. <br>The first character has a position of 1. The function returns 0 if string `s-1` is not found. |
 | `SUBSTR(str, start[, length])` | Substring of `str` starting at `start` position with maximum length of `length`. <br>The first character has a position of 1. <br>`start` position of 0 is processed similarly to position 1.|
 
@@ -1445,6 +1444,12 @@ AND LOWER(tags.file_system) LIKE '*root'
 | 2016-09-30T07:57:28.000Z | VML006 | 8298304.0 | vg_nurswgvml006-lv_root |
 | 2016-09-30T07:57:29.000Z | VML007 | 8052512.0 | vg_nurswgvml007-lv_root |
 ```
+
+## Other Functions
+
+| **Function** | **Description** |
+|:---|:---|
+| `ISNULL(a-1, a-2)`  | Returns `a-2` if `a-1` is `NULL` or Non-A-Number for numeric datatypes.<br>Accepts arguments with different datatypes, for example number and string `ISNULL(value, text)`.|
 
 ## Case Sensitivity
 
