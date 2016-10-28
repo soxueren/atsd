@@ -38,7 +38,7 @@ Retrieve a list of metrics matching the specified filter conditions.
 |persistent | boolean | Persistence status. Non-persistent metrics are not stored in the database and are only processed by the rule engine.|
 |filter | string | Persistence filter [expression](../expression.md). Discards series that do not match this filter.|
 |lastInsertDate| string | Last time a value was received for this metric by any series. ISO date.|
-|retentionInterval| integer | Number of days to retain values for this metric in the database.|
+|retentionDays| integer | Number of days to retain values for this metric in the database.|
 |versioned| boolean | If set to true, enables versioning for the specified metric. <br>When metrics are versioned, the database retains the history of series value changes for the same timestamp along with `version_source` and `version_status`.|
 |minValue| double | Minimum value for [Invalid Action](#invalid-actions) trigger.|
 |maxValue| double | Maximum value for [Invalid Action](#invalid-actions) trigger.|
@@ -68,6 +68,20 @@ Default data type for new metrics, when auto-created, is **float**.
 |TRANSFORM|Set value to `min_value` or `max_value`, if value is outside of range.|
 |RAISE_ERROR|Log ERROR event in the database log.|
 
+### Interpolate
+
+|**Type**|
+|:---|
+|LINEAR|
+|PREVIOUS|
+
+### Time Precision
+
+|**Precision**|
+|:---|
+|MILLISECONDS|
+|SECONDS|
+
 ### Errors
 
 |  Status Code  |  Description  |
@@ -75,7 +89,7 @@ Default data type for new metrics, when auto-created, is **float**.
 | 500 |TypeMismatchException: <br>Failed to convert value of type 'java.lang.String' to required type 'com.axibase.tsd.model.TimeFormat';|
 | 500 |TypeMismatchException: <br>Failed to convert value of type 'java.lang.String' to required type 'int'|
 
-## Example 
+## Example 1 
 
 ### Request
 
@@ -107,7 +121,7 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
     "dataType": "FLOAT",
     "persistent": true,
     "timePrecision": "MILLISECONDS",
-    "retentionInterval": 0,
+    "retentionDays": 0,
     "invalidAction": "NONE",
     "lastInsertDate": "2016-05-19T00:15:02.000Z",
     "versioned": true,
@@ -119,12 +133,60 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
     "dataType": "FLOAT",
     "persistent": true,
     "timePrecision": "MILLISECONDS",
-    "retentionInterval": 0,
+    "retentionDays": 0,
     "invalidAction": "NONE",
     "lastInsertDate": "2016-05-18T00:35:12.000Z",
     "versioned": false,
 	"interpolate":"LINEAR",
 	"timeZone":"America/New_York"
+  }
+]
+```
+
+## Example 2 
+
+Expression value:
+
+```text
+name!="" or tags.keyName!="" or label!="" or description!="" or enabled or persistent or persistenceFilter!="" or retentionDays=0 or dataType="FLOAT" or timePrecision="MILLISECONDS" or versioning and invalidAction="NONE" or timeZone="" or interpolate="LINEAR" or counter
+```
+
+### Request
+
+#### URI
+
+```elm
+https://atsd_host:8443/api/v1/metrics?tags=*&expression=versioning%20and%20retentionDays%3E0%20and%20dataType=%22FLOAT%22
+```
+
+#### Payload
+
+None.
+
+#### curl
+
+```elm
+curl https://atsd_host:8443/api/v1/metrics?expression=versioning%20and%20retentionDays%3E0%20and%20dataType=%22FLOAT%22 \
+  --insecure --verbose --user {username}:{password} \
+  --request GET
+```
+
+### Response
+
+```json
+[
+  {
+    "name": "metric",
+    "enabled": true,
+    "dataType": "FLOAT",
+    "counter": false,
+    "persistent": true,
+    "timePrecision": "MILLISECONDS",
+    "retentionDays": 3,
+    "invalidAction": "NONE",
+    "lastInsertDate": "2016-10-28T08:18:17.218Z",
+    "versioned": true,
+    "interpolate": "LINEAR"
   }
 ]
 ```
