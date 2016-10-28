@@ -91,7 +91,7 @@ curl https://atsd_host:8443/api/v1/entities?timeFormat=iso&limit=2&expression=na
 Expression value:
 
 ```text
-name!="" or tags.keyName!="" or label!=null or enabled or interpolate="LINEAR" or timeZone!="" 
+name!="" or tags.keyName!="" or label!=null or enabled=true or interpolate="LINEAR" or timeZone!="" 
 ```
 
 ### Request
@@ -99,7 +99,7 @@ name!="" or tags.keyName!="" or label!=null or enabled or interpolate="LINEAR" o
 #### URI
 
 ```elm
-GET https://atsd_host:8443/api/v1/entities?expression=label!=%22%22%20and%20enabled%20and%20interpolate!=%22%22%20and%20timeZone!=%22%22
+GET https://atsd_host:8443/api/v1/entities?expression=label!=%22%22%20and%20enabled=true%20and%20interpolate!=%22%22%20and%20timeZone!=%22%22
 ```
 
 #### Payload
@@ -109,7 +109,7 @@ None.
 #### curl
 
 ```elm
-curl https://atsd_host:8443/api/v1/entities?expression=label!=%22%22%20and%20enabled%20and%20interpolate!=%22%22%20and%20timeZone!=%22%22 \
+curl https://atsd_host:8443/api/v1/entities?expression=label!=%22%22%20and%20enabled=true%20and%20interpolate!=%22%22%20and%20timeZone!=%22%22 \
   --insecure --verbose --user {username}:{password} \
   --request GET
 ```

@@ -148,7 +148,7 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
 Expression value:
 
 ```text
-name!="" or tags.keyName!="" or label!="" or description!="" or enabled or persistent or persistenceFilter!="" or retentionDays=0 or dataType="FLOAT" or timePrecision="MILLISECONDS" or versioning and invalidAction="NONE" or timeZone="" or interpolate="LINEAR" or counter
+name!="" or tags.keyName!="" or label!="" or description!="" or enabled=true or persistent=true or persistenceFilter!="" or retentionDays=0 or dataType="FLOAT" or timePrecision="MILLISECONDS" or versioning=true and invalidAction="NONE" or timeZone="" or interpolate="LINEAR" or counter=true
 ```
 
 ### Request
@@ -156,7 +156,7 @@ name!="" or tags.keyName!="" or label!="" or description!="" or enabled or persi
 #### URI
 
 ```elm
-https://atsd_host:8443/api/v1/metrics?tags=*&expression=versioning%20and%20retentionDays%3E0%20and%20dataType=%22FLOAT%22
+https://atsd_host:8443/api/v1/metrics?tags=*&expression=versioning=true%20and%20retentionDays%3E0%20and%20dataType=%22FLOAT%22
 ```
 
 #### Payload
@@ -166,7 +166,7 @@ None.
 #### curl
 
 ```elm
-curl https://atsd_host:8443/api/v1/metrics?expression=versioning%20and%20retentionDays%3E0%20and%20dataType=%22FLOAT%22 \
+curl https://atsd_host:8443/api/v1/metrics?expression=versioning=true%20and%20retentionDays%3E0%20and%20dataType=%22FLOAT%22 \
   --insecure --verbose --user {username}:{password} \
   --request GET
 ```
