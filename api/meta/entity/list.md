@@ -34,7 +34,21 @@ Retrieve a list of entities matching the specified filter conditions.
 | lastInsertDate | string |Last time, in ISO format, when a value was received by the database for this entity. |
 | tags | object | Entity tags, as requested with the `tags` parameter. |
 
-## Example
+### Interpolate
+
+|**Type**|
+|:---|
+|LINEAR|
+|PREVIOUS|
+
+### Time Precision
+
+|**Precision**|
+|:---|
+|MILLISECONDS|
+|SECONDS|
+
+## Example 1
 
 ### Request
 
@@ -70,6 +84,48 @@ curl https://atsd_host:8443/api/v1/entities?timeFormat=iso&limit=2&expression=na
 		"label": "NURSWGDKR002.corp.axibase.com",
         "enabled": false
     }
+]
+```
+## Example 2
+
+Expression value:
+
+```text
+name!="" or tags.keyName!="" or label!=null or enabled=true or interpolate="LINEAR" or timeZone!="" 
+```
+
+### Request
+
+#### URI
+
+```elm
+GET https://atsd_host:8443/api/v1/entities?expression=label!=%22%22%20and%20enabled=true%20and%20interpolate!=%22%22%20and%20timeZone!=%22%22
+```
+
+#### Payload
+
+None.
+
+#### curl
+
+```elm
+curl https://atsd_host:8443/api/v1/entities?expression=label!=%22%22%20and%20enabled=true%20and%20interpolate!=%22%22%20and%20timeZone!=%22%22 \
+  --insecure --verbose --user {username}:{password} \
+  --request GET
+```
+
+### Response
+
+```json
+[
+  {
+    "name": "nurswgdkl001",
+    "enabled": true,
+    "timeZone": "PST",
+    "lastInsertDate": "2016-10-28T08:37:05.000Z",
+    "interpolate": "LINEAR",
+    "label": "NURswgdkl001"
+  }
 ]
 ```
 
