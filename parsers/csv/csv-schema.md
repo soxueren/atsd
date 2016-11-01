@@ -76,54 +76,54 @@ If Schema parsing is enabled, only the following fields from the parser configu
 
 | Name | Required | Description | 
 | --- | --- | --- | 
-|  <p>`select(expression)`</p>  |  <p>Yes</p>  |  <p>Selects rows, columns, or cell range to process using RFC 7111 selection syntax.</p>  | 
-|  <p>`filter(condition)`</p>  |  <p>No</p>  |  <p>Optionally filter rows, columns and cells depending on rowText and cellText values, e.g. `rowText.indexOf('test')>=0`.</p>  | 
+|  `select(expression)`  |  Yes  |  Selects rows, columns, or cell range to process using RFC 7111 selection syntax.  | 
+|  `filter(condition)`  |  No  |  Optionally filter rows, columns and cells depending on rowText and cellText values, e.g. `rowText.indexOf('test')>=0`.  | 
 
 
 #### Initialize Command Functions
 
 | Name | Required | Description | 
 | --- | --- | --- | 
-|  <p>`addSeries()`</p>  |  <p>No</p>  |  <p>Create Series command.</p>  | 
-|  <p>`addProperty()`</p>  |  <p>No</p>  |  <p>Create Property command.</p>  | 
-|  <p>`addMessage()`</p>  |  <p>No</p>  |  <p>Create Message command.</p>  | 
+|  `addSeries()`  |  No  |  Create Series command.  | 
+|  `addProperty()`  |  No  |  Create Property command.  | 
+|  `addMessage()`  |  No  |  Create Message command.  | 
 
 
 #### Set Command Field Functions
 
 | Name | Required (addSeries) | Required (addProperty) | Required (addMessage) | Description | 
 | --- | --- | --- | --- | --- | 
-|  <p>`entity(entityName)`</p>  |  <p>Yes</p>  |  <p>Yes</p>  |  <p>Yes</p>  |  <p>Set entity name.</p>  | 
-|  <p>`timestamp(timestampValue)`</p>  |  <p>Yes</p>  |  <p>Yes</p>  |  <p>Yes</p>  |  <p>Set timestamp.</p>  | 
-|  <p>`metric(metricName)`</p>  |  <p>Yes</p>  |  <p>Unsupported</p>  |  <p>Unsupported</p>  |  <p>Set metric name.</p>  | 
-|  <p>`tag(tagName, tagValue)`</p>  |  <p>No</p>  |  <p>No</p>  |  <p>No</p>  |  <p>Add tag with defined name and value.</p>  | 
-|  <p>`key(keyName, keyValue)`</p>  |  <p>Unsupported</p>  |  <p>No</p>  |  <p>Unsupported</p>  |  <p>Add key with defined name and value.</p>  | 
-|  <p>`type(typeName)`</p>  |  <p>Unsupported</p>  |  <p>Yes</p>  |  <p>Unsupported</p>  |  <p>Set property type.</p>  | 
-|  <p>`value(value)`</p>  |  <p>No</p>  |  <p>Unsupported</p>  |  <p>Unsupported</p>  |  <p>Overrides series value (default value is current cell content).</p>  | 
-|  <p>`messageText(text)`</p>  |  <p>Unsupported</p>  |  <p>Unsupported</p>  |  <p>No</p>  |  <p>Set message text.</p>  | 
-|  <p>`appendText(text, delimiter)`</p>  |  <p>Unsupported</p>  |  <p>Unsupported</p>  |  <p>No</p>  |  <p>Append text to current message text.</p>  | 
-|  <p>`forEach(expression)`</p>  |  <p>No</p>  |  <p>No</p>  |  <p>No</p>  |  <p>Accepts RFC 7111 #col= selector, iterates over matched cells in the current row and applies chained-after functions to each cell, e.g. `forEach('#col=5!2').tag(cell(row,col), cell(row,col+1));`</p>  | 
+|  `entity(entityName)`  |  Yes  |  Yes  |  Yes  |  Set entity name.  | 
+|  `timestamp(timestampValue)`  |  Yes  |  Yes  |  Yes  |  Set timestamp.  | 
+|  `metric(metricName)`  |  Yes  |  Unsupported  |  Unsupported  |  Set metric name.  | 
+|  `tag(tagName, tagValue)`  |  No  |  No  |  No  |  Add tag with defined name and value.  | 
+|  `key(keyName, keyValue)`  |  Unsupported  |  No  |  Unsupported  |  Add key with defined name and value.  | 
+|  `type(typeName)`  |  Unsupported  |  Yes  |  Unsupported  |  Set property type.  | 
+|  `value(value)`  |  No  |  Unsupported  |  Unsupported  |  Overrides series value (default value is current cell content).  | 
+|  `messageText(text)`  |  Unsupported  |  Unsupported  |  No  |  Set message text.  | 
+|  `appendText(text, delimiter)`  |  Unsupported  |  Unsupported  |  No  |  Append text to current message text.  | 
+|  `forEach(expression)`  |  No  |  No  |  No  |  Accepts RFC 7111 #col= selector, iterates over matched cells in the current row and applies chained-after functions to each cell, e.g. `forEach('#col=5!2').tag(cell(row,col), cell(row,col+1));`  | 
 
 
 #### Pre-defined Variables
 
 | Name | Type | Description | 
 | --- | --- | --- | 
-|  <p>`col`</p>  |  <p>Integer</p>  |  <p>Column index of the active cell.</p>  | 
-|  <p>`row`</p>  |  <p>Integer</p>  |  <p>Row index of the active cell.</p>  | 
-|  <p>`value, cellText`</p>  |  <p>String</p>  |  <p>Text content of the active cell.</p>  | 
-|  <p>`rowText`</p>  |  <p>String</p>  |  <p>Current row full text.</p>  | 
-|  <p>`columnCount`</p>  |  <p>Integer</p>  |  <p>Column count for current row.</p>  | 
-|  <p>`fileName`</p>  |  <p>String</p>  |  <p>CSV file name being parsed, if available.</p>  | 
+|  `col`  |  Integer  |  Column index of the active cell.  | 
+|  `row`  |  Integer  |  Row index of the active cell.  | 
+|  `value, cellText`  |  String  |  Text content of the active cell.  | 
+|  `rowText`  |  String  |  Current row full text.  | 
+|  `columnCount`  |  Integer  |  Column count for current row.  | 
+|  `fileName`  |  String  |  CSV file name being parsed, if available.  | 
 
 
 #### Lookup Functions
 
 | Name | Type | Description | 
 | --- | --- | --- | 
-|  <p>`cell(rowIndex, colIndex)`</p>  |  <p>String</p>  |  <p>Return content from the specified cell.</p>  | 
-|  <p>`notEmptyLeft(rowIndex, colIndex)`</p>  |  <p>String</p>  |  <p>Finds a non-empty cell located to the left from the specified cell.</p>  | 
-|  <p>`notEmptyUp(rowIndex, colIndex)`</p>  |  <p>String</p>  |  <p>Finds a non-empty cell located in the current or prior row in the specified column.</p>  | 
+|  `cell(rowIndex, colIndex)`  |  String  |  Return content from the specified cell.  | 
+|  `notEmptyLeft(rowIndex, colIndex)`  |  String  |  Finds a non-empty cell located to the left from the specified cell.  | 
+|  `notEmptyUp(rowIndex, colIndex)`  |  String  |  Finds a non-empty cell located in the current or prior row in the specified column.  | 
 
 
 #### Notes:

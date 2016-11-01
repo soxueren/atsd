@@ -70,13 +70,13 @@
 
 | Field | Setting | Reason | 
 | --- | --- | --- | 
-|  <p>Enabled</p>  |  <p>Set to true</p>  |  <p>Enable parsing of CSV files using this.</p>  <p>Also allows use of this parser configuration in Axibase Collector.</p>  | 
-|  <p>Name</p>  |  <p>Unique name – Halifax Weather.</p>  |  <p>Unique name to distinguish this parser from others.</p>  <p>Useful when working with Axibase Collector, as parser configurations are referred to by their unique name.</p>  | 
-|  <p>Put Type</p>  |  <p>Metric</p>  |  <p>The CSV file in question contains time series (metrics) weather data.</p>  | 
-|  <p>Delimiter</p>  |  <p>Comma</p>  |  <p>A comma is used to separate columns.</p>  | 
-|  <p>Default Entity</p>  |  <p>Unique entity name – Halifax</p>  |  <p>All data will be written to this unique entity, making it easy to distinguish from others.</p>  | 
-|  <p>Metric Prefix</p>  |  <p>Unique entity prefix- halifax</p>  |  <p>Prefix added at the start of metric name, used to distinguish between metrics with similar or identical names.</p>  | 
-|  <p>Timestamp Columns</p>  |  <p>Date</p>  |  <p>The `Date` column contains the timestamp.</p>  | 
-|  <p>Timestamp Pattern</p>  |  <p>`yyyy-MM-dd`</p>  |  <p>Timestamp Pattern must correspond to the original timestamp in the CSV file: `2015-01-01`.</p>  | 
-|  <p>Filter</p>  |  <p>`timestamp > 0`</p>  |  <p>Only import data that has a timestamp greater than 0 in epoch milliseconds.</p>  <p>Timestamps earlier than `1970-01-01T00:00:00Z` will not be imported.</p>  | 
-|  <p>Ignored Columns</p>  |  <p>`Year`</p>  <p>`Month`</p>  <p>`Day`</p>  <p>`Data Quality`</p>  <p>`Max Temp Flag`</p>  <p>`Min Temp Flag`</p>  <p>`Mean Temp Flag`</p>  <p>`Heat Deg Days Flag`</p>  <p>`Cool Deg Days Flag`</p>  <p>`Total Rain Flag`</p>  <p>`Total Snow Flag`</p>  <p>`Total Precip Flag`</p>  <p>`Snow on Grnd Flag`</p>  <p>`Dir of Max Gust (10s deg)`</p>  <p>`Dir of Max Gust Flag`</p>  <p>`Spd of Max Gust (kmh)`</p>  <p>`Spd of Max Gust Flag`</p>  |  <p>Columns that will not be imported.</p>  <p>Year, Month, Day are irrelevant because Date column is imported as the timestamp.</p>  <p>Other listed columns do not contain valuable data or often contain empty values, so its best to discard them.</p>  | 
+|  Enabled  |  Set to true  |  Enable parsing of CSV files using this.<br>Also allows use of this parser configuration in Axibase Collector.  | 
+|  Name  |  Unique name – Halifax Weather.  |  Unique name to distinguish this parser from others.<br>Useful when working with Axibase Collector, as parser configurations are referred to by their unique name.  | 
+|  Put Type  |  Metric  |  The CSV file in question contains time series (metrics) weather data.  | 
+|  Delimiter  |  Comma  |  A comma is used to separate columns.  | 
+|  Default Entity  |  Unique entity name – Halifax  |  All data will be written to this unique entity, making it easy to distinguish from others.  | 
+|  Metric Prefix  |  Unique entity prefix- halifax  |  Prefix added at the start of metric name, used to distinguish between metrics with similar or identical names.  | 
+|  Timestamp Columns  |  Date  |  The `Date` column contains the timestamp.  | 
+|  Timestamp Pattern  |  `yyyy-MM-dd`  |  Timestamp Pattern must correspond to the original timestamp in the CSV file: `2015-01-01`.  | 
+|  Filter  |  `timestamp > 0`  |  Only import data that has a timestamp greater than 0 in epoch milliseconds.<br>Timestamps earlier than `1970-01-01T00:00:00Z` will not be imported.  | 
+|  Ignored Columns  |  `Year`<br>`Month`<br>`Day`<br>`Data Quality`<br>`Max Temp Flag`<br>`Min Temp Flag`<br>`Mean Temp Flag`<br>`Heat Deg Days Flag`<br>`Cool Deg Days Flag`<br>`Total Rain Flag`<br>`Total Snow Flag`<br>`Total Precip Flag`<br>`Snow on Grnd Flag`<br>`Dir of Max Gust (10s deg)`<br>`Dir of Max Gust Flag`<br>`Spd of Max Gust (kmh)`<br>`Spd of Max Gust Flag`  |  Columns that will not be imported.<br>Year, Month, Day are irrelevant because Date column is imported as the timestamp.<br>Other listed columns do not contain valuable data or often contain empty values, so its best to discard them.  | 

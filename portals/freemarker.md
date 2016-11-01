@@ -434,48 +434,48 @@ Advanced functions and aggregations can be added to the freemarker portals to en
 
 | Name | Returns | Description | 
 | --- | --- | --- | 
-|  <p>`atsd_last('entity', 'metric', 'tag1=v1,tag2=v2')`</p>  |  <p>Double</p>  |  <p>Last value for time series or null.</p>  | 
-|  <p>`groupTag('entity', 'tagKey')`</p>  |  <p>string collection</p>  |  <p>Collection of tag values for tagKey of all entity groups an entity belongs to.</p>  | 
-|  <p>`tag('entity', 'tagKey')`</p>  |  <p>string</p>  |  <p>Entity tag value.</p>  | 
-|  <p>`memberOf('entity', 'group1', ..., 'groupN')`</p>  |  <p>boolean</p>  |  <p>Returns true if an entity belongs to any of specified entity groups.</p>  | 
-|  <p>`memberOfAll('entity', 'group1', ..., 'groupN')`</p>  |  <p>boolean</p>  |  <p>Returns true if an entity belongs to all of the entity groups.</p>  | 
-|  <p>`list('value' [, delimiter])`</p>  |  <p>string collection</p>  |  <p>Splits a string by a delimeter. Default delimiter is comma character.</p>  | 
-|  <p>`getTags('metric', 'entity', 'tagKey'[, hours])`</p>  |  <p>string collection</p>  |  <p>Tag values for metric, entity, and tagKey.</p>  <p>[, hours] is an optional parameter, which specifies the time interval (in hours) for searching unique tag values.</p>  <p>Default interval is 24 hours.</p>  | 
-|  <p>`getEntitiesForTags(expression)`</p>  |  <p>string collection</p>  |  <p>Finds entities by expression.</p>  | 
-|  <p>`getEntitiesForGroup("group")`</p>  |  <p>string collection</p>  |  <p>Finds all entities in a particular entity group. This is useful when building portals that compare entities from the same entity group.</p>  | 
-|  <p>`getEntitiesForGroup(groupName, hours)`</p>  |  <p>string collection</p>  |  <p>Finds all entities in a particular entity group. This is useful when building portals that compare entities from the same entity group.</p>  <p>The method returns group members that have inserted data over the last N hours.</p>  <p>If hours are not specified or non-positive, all group members are returned.</p>  | 
-|  <p>`getMetrics('entity')`</p>  |  <p>string collection</p>  |  <p>Retrieve all collected metrics for a particular entity.</p>  | 
-|  <p>`isMetric('metric')`</p>  |  <p>boolean</p>  |  <p>Returns true if a metric exists.</p>  | 
-|  <p>`isMetricCollected('metric', 'entity')`</p>  |  <p>boolean</p>  |  <p>Returns true if there is some data for metric and entity inserted in last 24 hours.</p>  | 
-|  <p>`hasMetric('entity', 'metric' [,hours])`</p>  |  <p>boolean</p>  |  <p>Executes query for Last Insert Cache table. Returns true if the entity collects specified the metric, regardless of tags.</p>  <p>If the optional hours argument is specified, only rows inserted for the last N hours are evaluated.</p>  | 
-|  <p>`getTagMaps('metric', 'entity'[, hours])`</p>  |  <p>collection of maps(string, string)</p>  |  <p>Collection of unique tag maps for metric and entity.</p>  <p>`[, hours]` is an optional parameter, which specifies the time interval (in hours) for searching unique tag values.</p>  <p>The default interval is 24 hours.</p>  | 
-|  <p>`getProperty('entity', 'property_type', 'tagKey')`</p>  |  <p>string collection</p>  |  <p>Retrieves a collection of property objects for specified entity, property type, and tag.</p>  | 
-|  <p>`getSeriesProperties("{entity}", "{property_type}")`</p>  |  <p>property objects for specified entity and property type</p>  |  <p>Retrieves a collection of property objects for a specified entity and property type.</p>  <p>If no entity is specified, then a collection of property objects for all entities with the specified property type is retrieved.</p>  | 
-|  <p>`atsd_values(entity, metric, tags, type, interval, shift, duration)`</p>  |  <p>Aggregator object</p>  |  <p>See tables below.</p>  | 
-|  <p>`lastInsertTime('entity'[, ‘metric’])`</p>  |  <p>Double</p>  |  <p>Returns last insert time for the entity or entity/metric combination in milliseconds. Metric is an optional parameter.</p>  | 
-|  <p>`lastInsertDate('entity'[, ‘metric’])`</p>  |  <p>Double</p>  |  <p>Returns last insert date for the entity or entity/metric combination in ISO format. Metric is an optional parameter.</p>  | 
+|  `atsd_last('entity', 'metric', 'tag1=v1,tag2=v2')`  |  Double  |  Last value for time series or null.  | 
+|  `groupTag('entity', 'tagKey')`  |  string collection  |  Collection of tag values for tagKey of all entity groups an entity belongs to.  | 
+|  `tag('entity', 'tagKey')`  |  string  |  Entity tag value.  | 
+|  `memberOf('entity', 'group1', ..., 'groupN')`  |  boolean  |  Returns true if an entity belongs to any of specified entity groups.  | 
+|  `memberOfAll('entity', 'group1', ..., 'groupN')`  |  boolean  |  Returns true if an entity belongs to all of the entity groups.  | 
+|  `list('value' [, delimiter])`  |  string collection  |  Splits a string by a delimeter. Default delimiter is comma character.  | 
+|  `getTags('metric', 'entity', 'tagKey'[, hours])`  |  string collection  |  Tag values for metric, entity, and tagKey.<br>[, hours] is an optional parameter, which specifies the time interval (in hours) for searching unique tag values.<br>Default interval is 24 hours.  | 
+|  `getEntitiesForTags(expression)`  |  string collection  |  Finds entities by expression.  | 
+|  `getEntitiesForGroup("group")`  |  string collection  |  Finds all entities in a particular entity group. This is useful when building portals that compare entities from the same entity group.  | 
+|  `getEntitiesForGroup(groupName, hours)`  |  string collection  |  Finds all entities in a particular entity group. This is useful when building portals that compare entities from the same entity group.<br>The method returns group members that have inserted data over the last N hours.<br>If hours are not specified or non-positive, all group members are returned.  | 
+|  `getMetrics('entity')`  |  string collection  |  Retrieve all collected metrics for a particular entity.  | 
+|  `isMetric('metric')`  |  boolean  |  Returns true if a metric exists.  | 
+|  `isMetricCollected('metric', 'entity')`  |  boolean  |  Returns true if there is some data for metric and entity inserted in last 24 hours.  | 
+|  `hasMetric('entity', 'metric' [,hours])`  |  boolean  |  Executes query for Last Insert Cache table. Returns true if the entity collects specified the metric, regardless of tags.<br>If the optional hours argument is specified, only rows inserted for the last N hours are evaluated.  | 
+|  `getTagMaps('metric', 'entity'[, hours])`  |  collection of maps(string, string)  |  Collection of unique tag maps for metric and entity.<br>`[, hours]` is an optional parameter, which specifies the time interval (in hours) for searching unique tag values.<br>The default interval is 24 hours.  | 
+|  `getProperty('entity', 'property_type', 'tagKey')`  |  string collection  |  Retrieves a collection of property objects for specified entity, property type, and tag.  | 
+|  `getSeriesProperties("{entity}", "{property_type}")`  |  property objects for specified entity and property type  |  Retrieves a collection of property objects for a specified entity and property type.<br>If no entity is specified, then a collection of property objects for all entities with the specified property type is retrieved.  | 
+|  `atsd_values(entity, metric, tags, type, interval, shift, duration)`  |  Aggregator object  |  See tables below.  | 
+|  `lastInsertTime('entity'[, ‘metric’])`  |  Double  |  Returns last insert time for the entity or entity/metric combination in milliseconds. Metric is an optional parameter.  | 
+|  `lastInsertDate('entity'[, ‘metric’])`  |  Double  |  Returns last insert date for the entity or entity/metric combination in ISO format. Metric is an optional parameter.  | 
 
 
 #### atsd_values parameters
 
 | Name | Description | 
 | --- | --- | 
-|  <p>entity</p>  |  <p>Entity</p>  | 
-|  <p>metric</p>  |  <p>Metric</p>  | 
-|  <p>tags</p>  |  <p>Tags</p>  | 
-|  <p>type</p>  |  <p>Aggregation Type</p>  | 
-|  <p>interval</p>  |  <p>Aggregation Interval</p>  | 
-|  <p>shift</p>  |  <p>Interval: endTime = now – shift</p>  | 
-|  <p>duration</p>  |  <p>Selection interval: startTime = endTime – duration</p>  | 
+|  entity  |  Entity  | 
+|  metric  |  Metric  | 
+|  tags  |  Tags  | 
+|  type  |  Aggregation Type  | 
+|  interval  |  Aggregation Interval  | 
+|  shift  |  Interval: endTime = now – shift  | 
+|  duration  |  Selection interval: startTime = endTime – duration  | 
 
 
 #### atsd_values parameters
 
 | Name | Returns | 
 | --- | --- | 
-|  <p>min()</p>  |  <p>Double</p>  | 
-|  <p>max()</p>  |  <p>Double</p>  | 
-|  <p>sumOf()</p>  |  <p>Double</p>  | 
-|  <p>average()</p>  |  <p>Double</p>  | 
-|  <p>countOf()</p>  |  <p>Integer</p>  | 
-|  <p>asList()</p>  |  <p>Double collection</p>  | 
+|  min()  |  Double  | 
+|  max()  |  Double  | 
+|  sumOf()  |  Double  | 
+|  average()  |  Double  | 
+|  countOf()  |  Integer  | 
+|  asList()  |  Double collection  | 

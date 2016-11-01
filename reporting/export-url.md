@@ -22,18 +22,18 @@ http://server:port/export?settings={"m":"cpu_used","e":"nurswgvml001","si":"1-WE
 
 | Field | Description | Example | 
 | --- | --- | --- | 
-|  <p>m</p>  |  <p>Metric name</p>  |  <p>“m”:”metric”</p>  | 
-|  <p>e</p>  |  <p>Entity name</p>  |  <p>“e”:”entity”</p>  | 
-|  <p>g</p>  |  <p>Entity group</p>  |  <p>“g”:”group”</p>  | 
-|  <p>tags</p>  |  <p>Tags array</p>  |  <p>“tags”:[{“k”:”key1″,”v”:”value11″},{“k”:”key2″,”v”:”value2″}]</p>  | 
-|  <p>si</p>  |  <p>Selection Interval</p>  |  <p>“si”:”1-WEEK”</p>  | 
-|  <p>et</p>  |  <p>End time</p>  |  <p>“et”:”today”</p>  | 
-|  <p>l</p>  |  <p>Limit</p>  |  <p>“l”:1000</p>  | 
-|  <p>f</p>  |  <p>Export Format (CSV, HTML)</p>  |  <p>“f”:”CSV”</p>  | 
-|  <p>t</p>  |  <p>Export Type (DATA, FORECAST)</p>  |  <p>“t”:”DATA”</p>  | 
-|  <p>ai</p>  |  <p>Aggregation Interval</p>  |  <p>“ai”:”1-HOUR”</p>  | 
-|  <p>a</p>  |  <p>Aggregation Functions</p>  |  <p>“a”:[“AVG”, “MIN”]</p>  | 
-|  <p>i</p>  |  <p>Interpolation (LINEAR, STEP)</p>  |  <p>“i” : “LINEAR”</p>  | 
+|  m  |  Metric name  |  “m”:”metric”  | 
+|  e  |  Entity name  |  “e”:”entity”  | 
+|  g  |  Entity group  |  “g”:”group”  | 
+|  tags  |  Tags array  |  “tags”:[{“k”:”key1″,”v”:”value11″},{“k”:”key2″,”v”:”value2″}]  | 
+|  si  |  Selection Interval  |  “si”:”1-WEEK”  | 
+|  et  |  End time  |  “et”:”today”  | 
+|  l  |  Limit  |  “l”:1000  | 
+|  f  |  Export Format (CSV, HTML)  |  “f”:”CSV”  | 
+|  t  |  Export Type (DATA, FORECAST)  |  “t”:”DATA”  | 
+|  ai  |  Aggregation Interval  |  “ai”:”1-HOUR”  | 
+|  a  |  Aggregation Functions  |  “a”:[“AVG”, “MIN”]  | 
+|  i  |  Interpolation (LINEAR, STEP)  |  “i” : “LINEAR”  | 
 
 
 #### Aggregation Functions:
@@ -75,9 +75,9 @@ Interpolation functions can insert missing intervals in returned aggregated dat
 
 | Function Name | Description | 
 | --- | --- | 
-|  <p>STEP</p>  |  <p>Missing value equals previous (last) value.</p>  | 
-|  <p>LINEAR</p>  |  <p>Missing value is computed using linear interpolation between previous (last) and next available value.</p>  | 
-|  <p>NONE</p>  |  <p>Missing values are not inserted.</p>  | 
+|  STEP  |  Missing value equals previous (last) value.  | 
+|  LINEAR  |  Missing value is computed using linear interpolation between previous (last) and next available value.  | 
+|  NONE  |  Missing values are not inserted.  | 
 
 
 If the interpolation function is not specified in the request, missing intervals are not created.

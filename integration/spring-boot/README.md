@@ -8,13 +8,13 @@ Axibase Time Series Database has a storage driver for Spring Boot.
 
 | Name | Required | Default Value | Description | 
 | --- | --- | --- | --- | 
-|  <p>`metrics.export.url`</p>  |  <p>No</p>  |  <p>`http://localhost:8088/api/v1/command`</p>  |  <p>ATSD API URL</p>  | 
-|  <p>`metrics.export.username`</p>  |  <p>Yes</p>  |  <p>–</p>  |  <p>ATSD Username.</p>  | 
-|  <p>`metrics.export.password`</p>  |  <p>Yes</p>  |  <p>–</p>  |  <p>ATSD Password.</p>  | 
-|  <p>`metrics.export.bufferSize`</p>  |  <p>No</p>  |  <p>`64`</p>  |  <p>Size of metrics buffer. Metrics writer flushes the buffer if it is full or by schedule (configured by `spring.metrics.export.*` properties.)</p>  | 
-|  <p>`metrics.names.entity`</p>  |  <p>No</p>  |  <p>`atsd-default`</p>  |  <p>Entity name.</p>  | 
-|  <p>`metrics.names.metricPrefix`</p>  |  <p>No</p>  |  <p>–</p>  |  <p>A prefix to be added to the original metric name.</p>  | 
-|  <p>`metrics.names.tags.*`</p>  |  <p>No</p>  |  <p>–</p>  |  <p>Optional set of key-value pairs in the ATSD time series identifier.</p>  | 
+|  `metrics.export.url`  |  No  |  `http://localhost:8088/api/v1/command`  |  ATSD API URL  | 
+|  `metrics.export.username`  |  Yes  |  –  |  ATSD Username.  | 
+|  `metrics.export.password`  |  Yes  |  –  |  ATSD Password.  | 
+|  `metrics.export.bufferSize`  |  No  |  `64`  |  Size of metrics buffer. Metrics writer flushes the buffer if it is full or by schedule (configured by `spring.metrics.export.*` properties.)  | 
+|  `metrics.names.entity`  |  No  |  `atsd-default`  |  Entity name.  | 
+|  `metrics.names.metricPrefix`  |  No  |  –  |  A prefix to be added to the original metric name.  | 
+|  `metrics.names.tags.*`  |  No  |  –  |  Optional set of key-value pairs in the ATSD time series identifier.  | 
 
 
 #### Configuration

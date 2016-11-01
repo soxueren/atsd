@@ -38,13 +38,13 @@ final AtsdUDPSender sender = new AtsdUDPSender("atsd.example.com", 8082);
 
 | Name | Required | Default | Description | 
 | --- | --- | --- | --- | 
-|  <p>`public Builder setEntity(String entity)`</p>  |  <p>No</p>  |  <p>`hostname` or `"defaultEntity"`</p>  |  <p>Application name or hostname.</p>  | 
-|  <p>`public Builder withClock(Clock clock)`</p>  |  <p>No</p>  |  <p>`Clock.defaultClock()`</p>  |  <p>Clock instance.</p>  | 
-|  <p>`public Builder setMetricPrefix(String prefix)`</p>  |  <p>No</p>  |  <p>`null`</p>  |  <p>Prefix metric names with the specified string.</p>  | 
-|  <p>`public Builder convertRatesTo(TimeUnit rateUnit)`</p>  |  <p>No</p>  |  <p>`TimeUnit.SECONDS`</p>  |  <p>Convert rates to the specified period.</p>  | 
-|  <p>`public Builder convertDurationsTo(TimeUnit durationUnit)`</p>  |  <p>No</p>  |  <p>`TimeUnit.MILLISECONDS`</p>  |  <p>Convert durations to the specified period.</p>  | 
-|  <p>`public Builder filter(MetricFilter filter)`</p>  |  <p>No</p>  |  <p>`MetricFilter.ALL`</p>  |  <p>Only report metrics matching the specified filter.</p>  | 
-|  <p>`public AtsdReporter build(AtsdSender sender)`</p>  |  <p>Yes</p>  |  <p>–</p>  |  <p>Sending metrics using the specified AtsdSender.</p>  | 
+|  `public Builder setEntity(String entity)`  |  No  |  `hostname` or `"defaultEntity"`  |  Application name or hostname.  | 
+|  `public Builder withClock(Clock clock)`  |  No  |  `Clock.defaultClock()`  |  Clock instance.  | 
+|  `public Builder setMetricPrefix(String prefix)`  |  No  |  `null`  |  Prefix metric names with the specified string.  | 
+|  `public Builder convertRatesTo(TimeUnit rateUnit)`  |  No  |  `TimeUnit.SECONDS`  |  Convert rates to the specified period.  | 
+|  `public Builder convertDurationsTo(TimeUnit durationUnit)`  |  No  |  `TimeUnit.MILLISECONDS`  |  Convert durations to the specified period.  | 
+|  `public Builder filter(MetricFilter filter)`  |  No  |  `MetricFilter.ALL`  |  Only report metrics matching the specified filter.  | 
+|  `public AtsdReporter build(AtsdSender sender)`  |  Yes  |  –  |  Sending metrics using the specified AtsdSender.  | 
 
 
 #### Add Metric
