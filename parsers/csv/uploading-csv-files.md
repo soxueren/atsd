@@ -16,15 +16,15 @@ Parsing of CSV files occurs asynchronously in the background. The status of each
 
 | Name | Default | Description | Example | 
 | --- | --- | --- | --- | 
-|  <p>config*</p>  |  |  <p>CSV parser configuration name from the Admin:CSV Parsers page.</p>  |  <p>?config=KLZCPU</p>  | 
-|  <p>encoding</p>  |  <p>UTF8</p>  |  <p>File encoding.</p>  |  <p>?encoding=UTF8</p>  | 
-|  <p>rules</p>  |  <p>true</p>  |  <p>Send metrics into the rule engine.</p>  |  <p>?rules=false</p>  | 
-|  <p>wait</p>  |  <p>true</p>  |  <p>Enable synchronous processing. Wait until file is parsed to process errors, if any.</p>  |  <p>?wait=false</p>  | 
-|  <p>test</p>  |  <p>false</p>  |  <p>Parse and validate data without inserting metrics or processing them in the rule engine. `test=true` triggers `wait=true` and `rules=false`.</p>  |  <p>?test=true</p>  | 
-|  <p>time**</p>  |  |  <p>Timestamp applied to records contained in the file.</p>  <p>Parameter value must be URL-encoded.</p>  <p>If the `time=` parameter is specified in the url but is empty, the time is assumed to be current time.</p>  |  <p>?time=2015-01-16T19%3A20%3A30.45%2B01%3A00</p>  | 
-|  <p>metric-prefix</p>  |  |  <p>Overwrites metric prefix in parser configuration.</p>  |  <p>?metric-prefix=nmon.</p>  | 
-|  <p>default-entity</p>  |  |  <p>Overwrites default entity in parser configuration.</p>  |  <p>?entity-prefix=oracle.</p>  | 
-|  <p>timezone</p>  |  |  <p>Overwrites default Timezone in parser configuration.</p>  |  <p>?timezone=UTC</p>  | 
+|  config*  |  |  CSV parser configuration name from the Admin:CSV Parsers page.  |  ?config=KLZCPU  | 
+|  encoding  |  UTF8  |  File encoding.  |  ?encoding=UTF8  | 
+|  rules  |  true  |  Send metrics into the rule engine.  |  ?rules=false  | 
+|  wait  |  true  |  Enable synchronous processing. Wait until file is parsed to process errors, if any.  |  ?wait=false  | 
+|  test  |  false  |  Parse and validate data without inserting metrics or processing them in the rule engine. `test=true` triggers `wait=true` and `rules=false`.  |  ?test=true  | 
+|  time**  |  |  Timestamp applied to records contained in the file.<br>Parameter value must be URL-encoded.<br>If the `time=` parameter is specified in the url but is empty, the time is assumed to be current time.  |  ?time=2015-01-16T19%3A20%3A30.45%2B01%3A00  | 
+|  metric-prefix  |  |  Overwrites metric prefix in parser configuration.  |  ?metric-prefix=nmon.  | 
+|  default-entity  |  |  Overwrites default entity in parser configuration.  |  ?entity-prefix=oracle.  | 
+|  timezone  |  |  Overwrites default Timezone in parser configuration.  |  ?timezone=UTC  | 
 
 
 > *required

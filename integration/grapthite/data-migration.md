@@ -22,12 +22,12 @@ migrate.py [-h] [--whisper-base BASE] [-R] path atsd_server atsd_tcp_port
 
 | Setting | Required | Description | 
 | --- | --- | --- | 
-|  <p>`-h` OR `--help`</p>  |  <p>no</p>  |  <p>Show help message and exit.</p>  | 
-|  <p>`path`</p>  |  <p>yes</p>  |  <p>Path to folder with `.wsp` files or `.wsp` file that will be exported to ATSD.</p>  <p>Path must be specified either:</p>  <p>– directly to the `.wsp` file (without `-R` setting)</p>  <p>OR</p>  <p>– to the folder containing `.wsp` files (with `-R` setting).</p>  <p>Note that the `~` symbol cannot be used when specifying path.</p>  | 
-|  <p>`-R`</p>  |  <p>no</p>  |  <p>Export recursively all files in the specified folder; searches are sub folders and directories for `.wsp` files.</p>  <p>If `-R` is not specified then you must specify the direct `path` to the `.wsp` file.</p>  | 
-|  <p>`--whisper-base BASE`</p>  |  <p>no</p>  |  <p>Base path to which all metric names will be resolved.</p>  <p>Recommended to set Whisper base directory.</p>  <p>Default value: `.` (current directory).</p>  | 
-|  <p>`atsd_server`</p>  |  <p>yes</p>  |  <p>ATSD hostname or IP.</p>  | 
-|  <p>`atsd_tcp_port`</p>  |  <p>yes</p>  |  <p>ATSD TCP listening port. Default ATSD TCP port is 8081.</p>  | 
+|  `-h` OR `--help`  |  no  |  Show help message and exit.  | 
+|  `path`  |  yes  |  Path to folder with `.wsp` files or `.wsp` file that will be exported to ATSD.<br>Path must be specified either:<br>– directly to the `.wsp` file (without `-R` setting)<br>OR<br>– to the folder containing `.wsp` files (with `-R` setting).<br>Note that the `~` symbol cannot be used when specifying path.  | 
+|  `-R`  |  no  |  Export recursively all files in the specified folder; searches are sub folders and directories for `.wsp` files.<br>If `-R` is not specified then you must specify the direct `path` to the `.wsp` file.  | 
+|  `--whisper-base BASE`  |  no  |  Base path to which all metric names will be resolved.<br>Recommended to set Whisper base directory.<br>Default value: `.` (current directory).  | 
+|  `atsd_server`  |  yes  |  ATSD hostname or IP.  | 
+|  `atsd_tcp_port`  |  yes  |  ATSD TCP listening port. Default ATSD TCP port is 8081.  | 
 
 
 #### Examples:

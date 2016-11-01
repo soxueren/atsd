@@ -4,9 +4,9 @@ Versioning enables tracking of time-series value changes for the purpose of enab
 
 | Field Name | Description | 
 | --- | --- | 
-|  <p>Version Time</p>  |  <p>Timestamp when the insert command was received. Set automatically by ATSD server with millisecond precision.</p>  | 
-|  <p>Version Source</p>  |  <p>User-defined field to track sources (origins) of change events such as username, device id, or IP address.</p>  <p>Set to `user:{username}` by default for changes made through ATSD web interface.</p>  | 
-|  <p>Version Status</p>  |  <p>User-defined field to classify change events.</p>  <p>Set to `Invalid` code if inserted value triggers an Invalid Value Action. Set to `SET_VERSION_STATUS` in metric editor.</p>  | 
+|  Version Time  |  Timestamp when the insert command was received. Set automatically by ATSD server with millisecond precision.  | 
+|  Version Source  |  User-defined field to track sources (origins) of change events such as username, device id, or IP address.<br>Set to `user:{username}` by default for changes made through ATSD web interface.  | 
+|  Version Status  |  User-defined field to classify change events.<br>Set to `Invalid` code if inserted value triggers an Invalid Value Action. Set to `SET_VERSION_STATUS` in metric editor.  | 
 
 
 #### Enabling Versioning
