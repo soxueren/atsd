@@ -1427,7 +1427,7 @@ WHERE datetime >= now - 1 * minute
 | `LENGTH(s)` | Number of characters in a specified string. |
 | `CONCAT (s-1, s-2 [, s-N] )` | Concatenates multiple strings into one string. <br>`NULL` values are concatenated as empty strings.|
 | `LOCATE(s-1, s-2 [, start])` | Position at which `s-1` is found in `s-2`, after optional `start` position. <br>The first character has a position of 1. The function returns 0 if string `s-1` is not found. |
-| `SUBSTR(str, start[, length])` | Substring of `str` starting at `start` position with maximum length of `length`. <br>The first character has a position of 1. <br>`start` position of 0 is processed similarly to position 1.|
+| `SUBSTR(str, start[, length])` | Substring of `str` starting at `start` position with maximum length of `length`. <br>The first character has a position of 1. <br>`start` position of 0 is processed similarly to position 1.<br>If `length` is not specified or is 0, the function returns the substring beginning with `start` position.|
 
 ```sql
 SELECT datetime, UPPER(REPLACE(entity, 'nurswg', '')) as 'entity', value,
