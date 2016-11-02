@@ -95,7 +95,7 @@ WHERE metric = 'mpstat.cpu_busy'
   AND datetime > current_hour
 ```
 
-Metric names in the `FROM` clause that are equal to reserved keywords, identifiers or contain special characters such as `-`,`*`,`,` should be enclosed in quotes or double quotes, for example, `FROM 'disk-io'` or `FROM "select"`.
+Metric names in the `FROM` clause that contain reserved keywords, identifiers or special characters such as `-`,`*`,`,` should be enclosed in quotes or double quotes, for example, `FROM 'disk-io'`, `FROM "select"`, `FROM 'cpu.avg.percent'`.
 
 ### WHERE Clause
 
