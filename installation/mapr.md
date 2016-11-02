@@ -8,8 +8,8 @@ to install MapR Community Edition.
 
 Recommendations for installing MapR M3:
 
--   When MapR installer asks “Is this cluster going to run Apache
-    HBase”, be sure to answer “y”
+-   When MapR installer asks "Is this cluster going to run Apache
+    HBase", be sure to answer "y"
 -   Be sure to allocate at least the minimum recommended RAM amount and
     Hard Drive space for MapR
 -   We recommend installing MapR on a separate Hard Drive in order to

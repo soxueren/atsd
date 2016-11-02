@@ -14,8 +14,8 @@ Ad hoc exporting provides an interactive interface for exporting historical data
 |  Tags  |  An optional set of series tag pairs. For example, `file_system = /` for the `disk_used_percent` metric. Note that series tags are inserted along with value, and are therefore different from entity and metric tags. Wildcard symbols `*` and `?` are supported in tag values.  | 
 |  Value Filter  |  Expression to fetch only detailed samples that satisfy a condition. For example, `value != 0`. Value Filter is applied before aggregation and therefore impacts aggregated statistics values. To filter deleted values, use the Double.isNaN(`value`) syntax.  | 
 |  Selection Interval  |  Time frame of exported data. End of the Selection Interval can be optionally specified in the End Time field. Otherwise it is set to current time. The Selection Interval setting is ignored if both the Start Time and End Time fields are set.  | 
-|  Start Time  |  Start time of the selection interval. This field supports [End Time](../end-time-syntax.md) syntax. For example ‘previous_day’. If Start Time is not defined, it is set to End Time minus the Selection Interval.  | 
-|  End Time  |  End time of the selection interval. This field supports [End Time](../end-time-syntax.md) syntax. For example ‘next_day’. If End Time is not defined, it is set to Start Time plus the Selection Interval. If Start Time is not defined, the End Time is set to current time.  | 
+|  Start Time  |  Start time of the selection interval. This field supports [End Time](../end-time-syntax.md) syntax. For example 'previous_day'. If Start Time is not defined, it is set to End Time minus the Selection Interval.  | 
+|  End Time  |  End time of the selection interval. This field supports [End Time](../end-time-syntax.md) syntax. For example 'next_day'. If End Time is not defined, it is set to Start Time plus the Selection Interval. If Start Time is not defined, the End Time is set to current time.  | 
 |  Aggregate  |  Enable period aggregations based on the selected detailed samples, after the optional Value Filter is applied.  | 
 |  Aggregation Period  |  Period of time over which the detailed samples are aggregated.  | 
 |  Interpolation  |  Insert missing periods in aggregated results. The period is considered missing if it contains no detailed samples. Supported options: `STEP` – value of missing period equals value of the previous period; `LINEAR` – value is linearly interpolated between previous and next available value; `NONE` – missing periods are not inserted.   | 
@@ -26,7 +26,7 @@ Ad hoc exporting provides an interactive interface for exporting historical data
 |  Export Format  |  Export format – CSV or HTML. If HTML is selected, number of rows can be limited with Row Limit.  | 
 |  Row Limit  |  Maximum Number of Rows displayed in HTML format. Tables with greater than 10000 rows are not recommended for viewing in HTML format.  | 
 |  Entity Tags  |  List of entity tags included as columns in the exported file/table.  | 
-|  Decimal Precision  |  Number of fractional digits displayed. If a negative value such as -1 is specified, stored numbers are displayed ‘as is’ without any formatting.  | 
+|  Decimal Precision  |  Number of fractional digits displayed. If a negative value such as -1 is specified, stored numbers are displayed 'as is' without any formatting.  | 
 |  Time Format  |  Format for displaying series sample timestamps: Local Time (server timezone) or ISO (UTC time).<br>Local = `yyyy-MM-dd HH:mm:ss`<br>ISO = `yyyy-MM-dd'T'HH:mm:ss'Z'`  | 
 
 

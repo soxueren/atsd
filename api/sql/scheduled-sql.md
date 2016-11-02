@@ -128,7 +128,7 @@ Since results produced by the task must be included in one file, it is not possi
 Instead, when enabled, metadata is included in the output file as part of the header with the hash symbol (`#`) used as a comment symbol.
 
 ```
-#publisher,Axibase Time-Series Database,https://nur.axibase.com
+#publisher,Axibase Time Series Database,https://nur.axibase.com
 #created,2016-06-12T15:56:39.106Z
 #title,SQL Query
 #comment,"SELECT entity, avg(value) AS 'Average', median(value), max(value), count(*)
@@ -171,7 +171,7 @@ Table schema object provides the following information about the columns in the 
 			"@type": "xsd:date"
 		},
 		"dc:publisher": {
-			"schema:name": "Axibase Time-Series Database",
+			"schema:name": "Axibase Time Series Database",
 			"schema:url": {
 				"@id": "https://nur.axibase.com"
 			}

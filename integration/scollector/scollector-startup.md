@@ -39,7 +39,7 @@ Download the binary file from: [http://bosun.org/scollector/](http://bosun.org/
 
 You can find the official configuration guides here: [http://godoc.org/bosun.org/cmd/scollector](http://godoc.org/bosun.org/cmd/scollector).
 
-Alternatively, you can use the “scollector Cookbook” to install scollector on your machines: [https://supermarket.chef.io/cookbooks/scollector](https://supermarket.chef.io/cookbooks/scollector).
+Alternatively, you can use the "scollector Cookbook" to install scollector on your machines: [https://supermarket.chef.io/cookbooks/scollector](https://supermarket.chef.io/cookbooks/scollector).
 
 ###### Create the `scollector.toml` Configuration File:
 
