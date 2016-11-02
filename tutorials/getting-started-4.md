@@ -16,7 +16,7 @@ Enter at least 3 values above 50 on the Data Entry page and observe an alert rai
 
 ![](resources/alert_hello_world.png)
 
-##### Congratulations! You have reached the end of the Hello World introduction to Axibase Time-Series Database. You can continue learning about ATSD on the following pages:
+##### Congratulations! You have reached the end of the Hello World introduction to Axibase Time Series Database. You can continue learning about ATSD on the following pages:
 
 [API](../api/)
 

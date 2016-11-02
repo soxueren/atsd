@@ -68,8 +68,8 @@ common tags: `type=application`, `source=atsd_export`, `hostname={HOST}`
 |  Entity Expression  |  An expression to filter selected data by entity name and entity tags. For example: `name like 'nur*' AND tags.environment = 'prod'`  | 
 |  Value Filter  |  Expression to fetch only detailed samples that satisfy a condition. For example, `value != 0`. Value Filter is applied before aggregation and therefore impacts aggregated statistics values. To filter deleted values, use the Double.isNaN(value) syntax.  | 
 |  Selection Interval  |  Time frame of exported data. End of the Selection Interval can be optionally specified in End Time field, otherwise it is set to current time. Selection Interval setting is ignored if both Start Time and End Time fields are set.  | 
-|  Start Time  |  Start time of the selection interval. This field supports [End Time](../end-time-syntax.md) syntax, for example ‘previous_day’. If Start Time is not defined, it is set to End Time minus Selection Interval.  | 
-|  End Time  |  End time of the selection interval. This field supports [End Time](../end-time-syntax.md) syntax, for example ‘next_day’. If End Time is not defined, it is set to Start Time plus Selection Interval. If Start Time is not defined, End Time is set to current time.  | 
+|  Start Time  |  Start time of the selection interval. This field supports [End Time](../end-time-syntax.md) syntax, for example 'previous_day'. If Start Time is not defined, it is set to End Time minus Selection Interval.  | 
+|  End Time  |  End time of the selection interval. This field supports [End Time](../end-time-syntax.md) syntax, for example 'next_day'. If End Time is not defined, it is set to Start Time plus Selection Interval. If Start Time is not defined, End Time is set to current time.  | 
 |  Versioning  |  Display value history for metric that is enabled for Versioning. Versioning is displayed only for detailed, non-aggregated, samples.  | 
 |  Revisions Only  |  Filters displayed versions only for samples with values changes. Excludes samples without versions.  | 
 |  Version Filter  |  Expression to filter value history (versions) by version status, source, or time. For example: `version_status = 'Deleted' or version_source LIKE '*user*'`. To filter by version time, use the `date()` function. For example, `version_time > date('2015-08-11T16:00:00Z') or version_time > date('current_day')`. The `date()` function accepts [End Time](../end-time-syntax.md) syntax.  | 
@@ -90,7 +90,7 @@ common tags: `type=application`, `source=atsd_export`, `hostname={HOST}`
 |  Annotation  |  Custom annotation that will be added above the exported time series.<br>Can include any text, characters, and numbers.<br>If the field is left empty, no custom annotation will be added.<br>To include entity name, entity tags, metric names, or metric tags use the following placeholders as part of the annotation text:<br>`${ENTITY}`<br>`${ENTITY.tag1}`<br>`${METRIC}`<br>`${METRIC.tag2}`  | 
 |  Entity Tags  |  List of entity tags that will be included as columns in the exported file.  | 
 |  Metric Tags  |  List of metric tags that will be included as columns in the exported file.  | 
-|  Decimal Precision  |  Number of fractional digits displayed. If a negative value such as -1 is specified, stored numbers are displayed ‘as is’ without any formatting.  | 
+|  Decimal Precision  |  Number of fractional digits displayed. If a negative value such as -1 is specified, stored numbers are displayed 'as is' without any formatting.  | 
 |  Time Format  |  Format for displaying series sample timestamps: Local Time (server timezone) or ISO (UTC time).<br>Local = `yyyy-MM-dd HH:mm:ss`<br>ISO = `yyyy-MM-dd'T'HH:mm:ss'Z'`  | 
 
 
@@ -102,6 +102,6 @@ common tags: `type=application`, `source=atsd_export`, `hostname={HOST}`
 |  Email Subject  |  Subject of email.<br>Supports placeholders: `${ENTITY}, ${ENTITY.tagName}, ${METRIC}, ${METRIC.tagName}, ${yyyy-MM-dd}`.  | 
 
 
-Clicking on the TEST button will export the first file, display the file name, and provide a link to download the file.
+Clicking on the [TEST] button will export the first file, display the file name, and provide a link to download the file.
 
 ![](images/export_job_test_button.png)

@@ -83,6 +83,6 @@ The default Subject text is
 
 ![](images/alert_message_email.png "alert_message_email")
 
-> An alert exception can be created using the ‘Exception’ link received in email notifications:
+> An alert exception can be created using the 'Exception' link received in email notifications:
 
 ![](images/alert_exception.png "alert_exception")

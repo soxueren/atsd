@@ -87,7 +87,7 @@ Sample metadata:
 			"@type": "xsd:date"
 		},
 		"dc:publisher": {
-			"schema:name": "Axibase Time-Series Database",
+			"schema:name": "Axibase Time Series Database",
 			"schema:url": {
 				"@id": "https://10.102.0.6:8443"
 			}

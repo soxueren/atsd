@@ -108,7 +108,7 @@ Under `views`, use `type` to control which folders and the order you would like 
 |  `'type': 'period'`  |  Node representing statistics periods.  |
 
 
-##`local_settings.py` example with “views”:##
+##`local_settings.py` example with "views":##
 
 ```
 ATSD_CONF = {
@@ -179,7 +179,7 @@ ATSD_CONF = {
 
 ![](resources/00.png)
 
-##### “views” example breakdown:
+##### "views" example breakdown:
 
 ![](resources/01.png)
 

@@ -10,7 +10,7 @@ Enterprise Edition.
 > Note: it is recommended that this test be performed on a test ATSD
 instance, not a production instance.
 
-Open the Metrics page found on the main menu. Click the CREATE button on the
+Open the Metrics page found on the main menu. Click the [CREATE] button on the
 bottom of the page to create new `metrics` that you are planning to load
 into ATSD with the correct data type (short, integer, long, float, double or decimal, 
 depending on the type of data you would like to store).
@@ -105,7 +105,7 @@ Perform `major_compaction` and record the size:
  /opt/atsd/hadoop/bin/hadoop fs -dus /hbase/atsd_d  >> atsd_d_size.out    
 ```
 
-Now the size of ‘atsd\_d’ table in bytes is recorded in the
+Now the size of 'atsd\_d' table in bytes is recorded in the
 `atsd_d_size.out` file.
 
 For example:
