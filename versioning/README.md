@@ -15,11 +15,11 @@ Versioning is disabled by default. It can be enabled for particular metrics by s
 
 ![](resources/metric-versioning.png)
 
-In addition, the Invalid Value Action can be set to `SET_VERSION_STATUS` to initialize the Version Status field to an ‘invalid’ value if the inserted sample is outside of the specified minimum and maximum bounds.
+In addition, the Invalid Value Action can be set to `SET_VERSION_STATUS` to initialize the Version Status field to an 'invalid' value if the inserted sample is outside of the specified minimum and maximum bounds.
 
 #### Inserting Version Fields: Network Commands
 
-To insert versioning fields, use the reserved series tags `version_source` and `version_status`. These tags will be removed by the server to populate corresponding versioning fields. If the sample value is outside of minimum and maximum bounds specified in metric editor, `version_status` will be set to ‘Invalid’.
+To insert versioning fields, use the reserved series tags `version_source` and `version_status`. These tags will be removed by the server to populate corresponding versioning fields. If the sample value is outside of minimum and maximum bounds specified in metric editor, `version_status` will be set to 'Invalid'.
 
 Note that if metric is unversioned, the `version_source` and `version_status` tags will be processed as regular tags.
 
@@ -57,7 +57,7 @@ Click on the Versioning checkbox to view version history on the Ad-hoc Export pa
 #### Viewing Versions with Filters
 
 
-- Click on the ‘Revisions Only’ checkbox to display only values with version history. Values that haven’t been modified will be hidden.
+- Click on the 'Revisions Only' checkbox to display only values with version history. Values that haven’t been modified will be hidden.
 - To display deleted values, enter `Double.isNaN(value)` into the Value Filter field.
 - To filter version history, enter an expression into the Version Filter containing the `version_source`, `version_status`, and `version_time` fields. Note that the `version_time` field supports endtime syntax with the `date()`` function.
 ` version_source LIKE 'api*'`
@@ -81,7 +81,7 @@ Set version Status and Source, change the value, and click Update.
 
 Create a report in HTML format on Ad-hoc Export page, with Versioning mode enabled.
 
-Click on Timestamp for the selected record, optionally modify Status and Source, and click the Delete button to delete the value.
+Click on Timestamp for the selected record, optionally modify Status and Source, and click the [Delete] button to delete the value.
 
 ![](resources/img_55ccad5d81bc2.png)
 

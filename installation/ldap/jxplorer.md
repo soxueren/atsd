@@ -14,7 +14,7 @@ Refer to [Sun Java System Identity Synchronization for Windows 6.0 Installation 
 
 * Enter https, ldap hostname and SSL port in the browser address bar, for example `https://nur.axibase.com:636/`
 
-* Press `Advanced` button and then `Add exception` to retrieve the certificate.
+* Press the [Advanced] button and then `Add exception` to retrieve the certificate.
 
 ![](resources/add_exception.png)
 

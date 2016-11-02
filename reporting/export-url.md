@@ -22,18 +22,18 @@ http://server:port/export?settings={"m":"cpu_used","e":"nurswgvml001","si":"1-WE
 
 | Field | Description | Example | 
 | --- | --- | --- | 
-|  m  |  Metric name  |  “m”:”metric”  | 
-|  e  |  Entity name  |  “e”:”entity”  | 
-|  g  |  Entity group  |  “g”:”group”  | 
-|  tags  |  Tags array  |  “tags”:[{“k”:”key1″,”v”:”value11″},{“k”:”key2″,”v”:”value2″}]  | 
-|  si  |  Selection Interval  |  “si”:”1-WEEK”  | 
-|  et  |  End time  |  “et”:”today”  | 
-|  l  |  Limit  |  “l”:1000  | 
-|  f  |  Export Format (CSV, HTML)  |  “f”:”CSV”  | 
-|  t  |  Export Type (DATA, FORECAST)  |  “t”:”DATA”  | 
-|  ai  |  Aggregation Interval  |  “ai”:”1-HOUR”  | 
-|  a  |  Aggregation Functions  |  “a”:[“AVG”, “MIN”]  | 
-|  i  |  Interpolation (LINEAR, STEP)  |  “i” : “LINEAR”  | 
+|  m  |  Metric name  |  "m":"metric"  | 
+|  e  |  Entity name  |  "e":"entity"  | 
+|  g  |  Entity group  |  "g":"group"  | 
+|  tags  |  Tags array  |  "tags":[{"k":"key1","v":"value11"},{"k":"key2","v":"value2"}]  | 
+|  si  |  Selection Interval  |  "si":"1-WEEK"  | 
+|  et  |  End time  |  "et":"today"  | 
+|  l  |  Limit  |  "l":1000  | 
+|  f  |  Export Format (CSV, HTML)  |  "f":"CSV"  | 
+|  t  |  Export Type (DATA, FORECAST)  |  "t":"DATA"  | 
+|  ai  |  Aggregation Interval  |  "ai":"1-HOUR"  | 
+|  a  |  Aggregation Functions  |  "a":["AVG", "MIN"]  | 
+|  i  |  Interpolation (LINEAR, STEP)  |  "i" : "LINEAR"  | 
 
 
 #### Aggregation Functions:

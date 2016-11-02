@@ -82,7 +82,7 @@ kill 31326
 
 ![](resources/ssh-tunnel-1.png)
 
-##### Click on Save private key button and save the file in `*.ppk` format to the local disk.
+##### Click on the [Save private key] button and save the file in `*.ppk` format to the local disk.
 
 ##### Open the putty client and connect it to the ATSD server under atsdreadonly with the ppk file.
 

@@ -2,7 +2,7 @@
 
 [StatsD](https://github.com/etsy/statsd) is a network daemon that runs on the Node.js platform and listens for statistics, like counters and timers, sent over UDP or TCP and sends aggregates to one or more pluggable backend services.
 
-[Setup the Axibase Time-Series Database StatsD Backend.](statsd-backend.md)
+[Setup the Axibase Time Series Database StatsD Backend.](statsd-backend.md)
 
 ATSD is able to ingest informaton from the StatsD format.
 

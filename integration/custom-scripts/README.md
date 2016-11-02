@@ -8,11 +8,11 @@ This page contains the installation guide for a custom Axibase Collector Script.
 
 #### Prerequisites
 
-##### ‘nc’ network utility
+##### 'nc' network utility
 
 Important: only the BSD version is supported. The GNU version is not supported by collector scripts.
 
-Check if ‘nc’ is installed:
+Check if 'nc' is installed:
 
 ```sh
 nc
@@ -40,7 +40,7 @@ RedHat Enterprise Linux (RHEL):
 yum install nc
 ```
 
-##### ‘sysstat’ utility
+##### 'sysstat' utility
 
 mpstat and iostat are included in the 'sysstat' package. If this package is not installed in your system by default, install it.
 
