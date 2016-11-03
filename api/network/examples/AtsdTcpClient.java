@@ -226,7 +226,7 @@ public class AtsdTcpClient {
         writeCommand(command);
     }
 
-    public void sendPiComp2(String tag, Date date, int index, Object value, int status, boolean questionable,
+    public void sendPiComp2(String tag, Date date, int _index, Object value, int status, boolean questionable,
                             boolean substituted, boolean annotated, String annotations, String entity,
                             Map<String, String> tags) throws IOException {
         if (tag.contains(" ")) {
@@ -235,25 +235,23 @@ public class AtsdTcpClient {
         if (entity.contains(" ")) {
             throw new IllegalArgumentException("Entity name can include only printable characters");
         }
-        tags = addNonIgnoredTags(status, questionable, substituted, annotated, annotations, tags);
+        tags = addNonIgnoredTags(_index, status, questionable, substituted, annotated, annotations, tags);
         String sTags = tagsToString(tags);
         String command = "series";
-        command += " ms:" + getMilliseconds(date, index);
+        command += " ms:" + date.getTime();
         command += " e:" + escape(entity);
         command += valueToString(tag, value);
         command += sTags;
         writeCommand(command);
     }
 
-    private long getMilliseconds(Date date, int index) {
-        // round date to seconds, add milliseconds based on index
-        return (1000 * (date.getTime() / 1000) + (index > 1 ? index - 1 : 0));
-    }
-
-    private Map<String, String> addNonIgnoredTags(int status, boolean questionable, boolean substituted,
+    private Map<String, String> addNonIgnoredTags(int _index, int status, boolean questionable, boolean substituted,
                                                   boolean annotated, String annotations, Map<String, String> tags) {
         if (tags == null) {
             tags = new HashMap<>();
+        }
+        if (_index > 1) {
+            tags.put("_index", String.valueOf(_index));
         }
         if (status != 0) {
             tags.put("status", String.valueOf(status));
