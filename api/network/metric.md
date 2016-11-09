@@ -2,21 +2,21 @@
 
 ## Description
 
-Creates or updates fields and tags of the specified metric. 
+Creates or updates fields and tags of the specified metric.
 
 If the metric doesn't exist, it will be created automatically.
 
 ## Syntax
 
 ```css
-metric m:{metric} p:{data-type} l:{label} i:{interpolate} d:{description} f:{filter} v:{versioning} z:{timezone} t:{tag-1}={text} t:{tag-2}={text}
+metric m:{metric} b:{enabled} p:{data-type} l:{label} i:{interpolate} d:{description} f:{filter} v:{versioning} z:{timezone} t:{tag-1}={text} t:{tag-2}={text}
 ```
 
-* Metric name and tag names are case-insensitive and are converted to lower case when stored. 
+* Metric name and tag names are case-insensitive and are converted to lower case when stored.
 * Label, description, filter, and tag values are case-sensitive and are stored as submitted.
 * Other fields are case-insensitive.
 * Tag values cannot be empty.
-* Metric tags and fields that are not specified are left unchanged. 
+* Metric tags and fields that are not specified are left unchanged.
 * To remove/reset a metric tag/label/description/filter/timezone, set it's value to a double-quoted empty string.
 
 ### Fields
@@ -24,6 +24,7 @@ metric m:{metric} p:{data-type} l:{label} i:{interpolate} d:{description} f:{fil
 | **Field** | **Type** | **Description** |
 |:---|:---|:---|
 | m         | string           | **[Required]** Metric name. |
+| b         | boolean          | Enabled status. If the metric is disabled, new data received for this metric is discarded. |
 | l         | string           | Label. |
 | d         | string           | Description. |
 | p         | string           | Data type: short, integer, long, float, double, decimal. Default: float. |
@@ -38,8 +39,9 @@ metric m:{metric} p:{data-type} l:{label} i:{interpolate} d:{description} f:{fil
 Rules inherited from [Base ABNF](base-abnf.md).
 
 ```properties
-command = "metric" MSP metric [MSP label] [MSP description] [MSP data-type] [MSP interpolate] [MSP filter] [MSP timezone] [MSP versioning] *(MSP tag)
+command = "metric" MSP metric [MSP enabled] [MSP label] [MSP description] [MSP data-type] [MSP interpolate] [MSP filter] [MSP timezone] [MSP versioning] *(MSP tag)
 metric = "m:" NAME
+enabled = "b:" ("true" / "false")
 data-type = "p:" ("short" / "integer" / "long" / "float" / "double" / "decimal")
 interpolate = "i:" ("linear" / "previous")
 label = "l:" VALUE
@@ -57,5 +59,5 @@ metric m:temperature p:long v:false t:unit=Celsius
 ```
 
 ```ls
-metric m:temperature p:long v:false l:"Temperature in Celsius" z:PST t:unit=Celsius
+metric m:temperature b:false p:long v:false l:"Temperature in Celsius" z:PST t:unit=Celsius
 ```
