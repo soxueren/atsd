@@ -97,5 +97,5 @@
     * [Setting up the Email Client](administration/setting-up-email-client.md)
     * [Uninstalling](administration/uninstalling.md)
     * [Updating](administration/update.md)
-    * [User Authentication](administration/user-authentiication.md)
+    * [User Authentication](administration/user-authentication.md)
     * [User Authorization](administration/user-authorization.md)
