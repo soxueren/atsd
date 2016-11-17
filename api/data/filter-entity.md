@@ -2,7 +2,7 @@
 
 * One of the entity fields is **required**.
 * Entity name pattern may include `?` and `*` wildcards.
-* Field precedence, from high to low: `entity`, `entities`, `entityGroup`. Although multiple fields can be specified in the query object, only the field with higher precedence will be applied. 
+* Field precedence, from high to low: `entity`, `entities`, `entityGroup`. Although multiple fields can be specified in the query object, only the field with higher precedence will be applied.
 * `entityExpression` is applied as an additional filter to the `entity`, `entities`, and `entityGroup` fields.<br>For example, if both the `entityGroup` and `entityExpression` fields are specified, `entityExpression` is applied to members of the specified entity group.
 
 | **Name**  | **Type** | **Description**  |
@@ -26,28 +26,70 @@ Supported functions:
 
 * [functions](/rule-engine/functions.md)
 
-## `entityExpression` Examples
+## Entity Expression Examples
 
-```css
-tags.environment = 'production'
-```
+### Name Match
 
-```css
-tags.location LIKE 'SVL*'
-```
+* Match entities with name starting with `nurswgvml`, for example `nurswgvml001`, `nurswgvml772`.
 
 ```css
 id LIKE 'nurswgvml*'
 ```
 
-```css
-tags.container_label.com.axibase.code == 'collector'
-```
+### Entity Tag Match
+
+* Match entities with entity tag `environment` equal to `production`.
 
 ```css
-id LIKE 'nurswgvml*' && property_values('docker.info::version').contains('1.9.1')
+tags.environment = 'production'
 ```
 
+* Match entities with entity tag `location` starting with `SVL`, for example `SVL`, `SVL02`.
+
 ```css
-matches('*ubuntu*', property_values('docker.info::version'))
+tags.location LIKE 'SVL*'
+```
+
+* Match entities with entity tag `container_label.com.axibase.code` equal to `collector`.
+
+```css
+tags.container_label.com.axibase.code = 'collector'
+```
+
+### Property Match
+
+> Function `property_values(<path>)` returns a collection of tag values for the specified path, whereas such `<path>` consists of property type, key (optional), and tag name. Since the results represent a collection, it can be evaluated with such methods as `size()`, `isEmpty()`, `contains()`. The function returns an empty collection if no property records are found.
+
+> Function `property(<path>)` return the first value in the collection of strings returned by the `property_values(<path>)` function. The function returns an empty string if no property records are found.
+
+> Function `matches(<pattern>, <path>)` returns `true` if one the values in the returned collection matches the specified patern.
+
+* Match entities with a `java_home` stored in `docker.container.config.env` equal to '/usr/lib/jvm/java-8-openjdk-amd64/jre'.
+
+```css
+property('docker.container.config.env::java_home') = '/usr/lib/jvm/java-8-openjdk-amd64/jre'
+```
+
+* Match entities which have a `/opt` file_system stored in `nmon.jfs` property type.
+
+```css
+property_values('nmon.jfs::file_system').contains('/opt')
+```
+
+* Match entities with a `file_system` which name includes `ora`, stored in `nmon.jfs` property type.
+
+```css
+matches('*ora*', property_values('nmon.jfs::file_system'))
+```
+
+* Match entities with non-empty `java_home` in `docker.container.config.env` property type.
+
+```css
+!property_values('docker.container.config.env::java_home').isEmpty()
+```
+
+* Match entities without `java_home` in `docker.container.config.env` property type.
+
+```css
+property_values('docker.container.config.env::java_home').size() == 0
 ```
