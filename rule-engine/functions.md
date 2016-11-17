@@ -55,7 +55,7 @@ _Example_
 entity_tags(tags.hardware_node).location = 'NUR'
 ```
 
-### property_values(string `propertySearch`) 
+### property_values(string `propertySearch`)
 
 Returns a list of property tag values for the current entity given the [property search string](../property-search-syntax.md).
 
@@ -73,7 +73,7 @@ _Example_
 property_values('linux.disk:fstype=ext4:mount_point').contains('/')
 ```
 
-### property_values(string `entity`, string `propertySearch`) 
+### property_values(string `entity`, string `propertySearch`)
 
 Same as `property_values`(String propertySearch) but for an explicitly specified entity.
 
@@ -87,6 +87,16 @@ _Example_
 
 ```java
 property_values(entity_tags.image, 'docker.image.config::name').contains('atsd/latest')
+```
+
+### property(String `pattern`)
+
+Returns the first value in the collection of strings returned by the `property_values()` function. The function returns an empty string if no property records are found.
+
+_Example_
+
+```java
+property(docker.container::image')
 ```
 
 ### matches(String `pattern`, collection\<string> `values`)
@@ -103,7 +113,7 @@ matches('*atsd*', property_values('docker.container::image'))
 
 ### property_compare_except(collection\<string> `keys`)
 
-Compares previous and current property tags and returns a difference map containing a list of changed tag values. 
+Compares previous and current property tags and returns a difference map containing a list of changed tag values.
 
 Sample difference map:
 
