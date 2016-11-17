@@ -31,7 +31,7 @@ Supported functions:
 
 > Match entities with name starting with `nurswgvml`, for example `nurswgvml001`, `nurswgvml772`.
 
-```css
+```javascript
 id LIKE 'nurswgvml*'
 ```
 
@@ -39,19 +39,19 @@ id LIKE 'nurswgvml*'
 
 > Match entities with entity tag `environment` equal to `production`.
 
-```css
+```javascript
 tags.environment = 'production'
 ```
 
 > Match entities with entity tag `location` starting with `SVL`, for example `SVL`, `SVL02`.
 
-```css
+```javascript
 tags.location LIKE 'SVL*'
 ```
 
 > Match entities with entity tag `container_label.com.axibase.code` equal to `collector`.
 
-```css
+```javascript
 tags.container_label.com.axibase.code = 'collector'
 ```
 
@@ -73,30 +73,30 @@ The function returns `true` if one the values in the returned collection matches
 
 > Match entities with a `java_home` stored in `docker.container.config.env` equal to '/usr/lib/jvm/java-8-openjdk-amd64/jre'.
 
-```css
+```javascript
 property('docker.container.config.env::java_home') = '/usr/lib/jvm/java-8-openjdk-amd64/jre'
 ```
 
 > Match entities which have a `/opt` file_system stored in `nmon.jfs` property type.
 
-```css
+```javascript
 property_values('nmon.jfs::file_system').contains('/opt')
 ```
 
 > Match entities with a `file_system` which name includes `ora`, stored in `nmon.jfs` property type.
 
-```css
+```javascript
 matches('*ora*', property_values('nmon.jfs::file_system'))
 ```
 
 > Match entities with non-empty `java_home` in `docker.container.config.env` property type.
 
-```css
+```javascript
 !property_values('docker.container.config.env::java_home').isEmpty()
 ```
 
 > Match entities without `java_home` in `docker.container.config.env` property type.
 
-```css
+```javascript
 property_values('docker.container.config.env::java_home').size() == 0
 ```
