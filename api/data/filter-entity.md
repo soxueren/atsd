@@ -26,69 +26,76 @@ Supported functions:
 
 * [functions](/rule-engine/functions.md)
 
-## Entity Expression Examples
 
-### Name Match
+## Entity Name Match Examples
 
-* Match entities with name starting with `nurswgvml`, for example `nurswgvml001`, `nurswgvml772`.
+> Match entities with name starting with `nurswgvml`, for example `nurswgvml001`, `nurswgvml772`.
 
 ```css
 id LIKE 'nurswgvml*'
 ```
 
-### Entity Tag Match
+## Entity Tag Match Examples
 
-* Match entities with entity tag `environment` equal to `production`.
+> Match entities with entity tag `environment` equal to `production`.
 
 ```css
 tags.environment = 'production'
 ```
 
-* Match entities with entity tag `location` starting with `SVL`, for example `SVL`, `SVL02`.
+> Match entities with entity tag `location` starting with `SVL`, for example `SVL`, `SVL02`.
 
 ```css
 tags.location LIKE 'SVL*'
 ```
 
-* Match entities with entity tag `container_label.com.axibase.code` equal to `collector`.
+> Match entities with entity tag `container_label.com.axibase.code` equal to `collector`.
 
 ```css
 tags.container_label.com.axibase.code = 'collector'
 ```
 
-### Property Match
+## Property Match Functions
 
-> Function `property_values(<path>)` returns a collection of tag values for the specified path, whereas such `<path>` consists of property type, key (optional), and tag name. Since the results represent a collection, it can be evaluated with such methods as `size()`, `isEmpty()`, `contains()`. The function returns an empty collection if no property records are found.
+#### Function `property_values(<path>)`
 
-> Function `property(<path>)` return the first value in the collection of strings returned by the `property_values(<path>)` function. The function returns an empty string if no property records are found.
+The function returns a collection of tag values for the specified path, whereas such `<path>` consists of property type, key (optional), and tag name. Since the results represent a collection, it can be evaluated with such methods as `size()`, `isEmpty()`, `contains()`. The function returns an empty collection if no property records are found.
 
-> Function `matches(<pattern>, <path>)` returns `true` if one the values in the returned collection matches the specified patern.
+#### Function `property(<path>)`
 
-* Match entities with a `java_home` stored in `docker.container.config.env` equal to '/usr/lib/jvm/java-8-openjdk-amd64/jre'.
+The function return the first value in the collection of strings returned by the `property_values(<path>)` function. The function returns an empty string if no property records are found.
+
+#### Function `matches(<pattern>, <path>)`
+
+The function returns `true` if one the values in the returned collection matches the specified pattern.
+
+## Property Match Examples
+
+> Match entities with a `java_home` stored in `docker.container.config.env` equal to '/usr/lib/jvm/java-8-openjdk-amd64/jre'.
 
 ```css
 property('docker.container.config.env::java_home') = '/usr/lib/jvm/java-8-openjdk-amd64/jre'
 ```
 
-* Match entities which have a `/opt` file_system stored in `nmon.jfs` property type.
+> Match entities which have a `/opt` file_system stored in `nmon.jfs` property type.
 
 ```css
 property_values('nmon.jfs::file_system').contains('/opt')
 ```
 
-* Match entities with a `file_system` which name includes `ora`, stored in `nmon.jfs` property type.
+> Match entities with a `file_system` which name includes `ora`, stored in `nmon.jfs` property type.
 
 ```css
 matches('*ora*', property_values('nmon.jfs::file_system'))
 ```
 
-* Match entities with non-empty `java_home` in `docker.container.config.env` property type.
+> Match entities with non-empty `java_home` in `docker.container.config.env` property type.
 
 ```css
 !property_values('docker.container.config.env::java_home').isEmpty()
 ```
 
-* Match entities without `java_home` in `docker.container.config.env` property type.
+> Match entities without `java_home` in `docker.container.config.env` property type.
 
 ```css
 property_values('docker.container.config.env::java_home').size() == 0
