@@ -17,7 +17,7 @@ metric m:{metric} b:{enabled} p:{data-type} l:{label} d:{description} i:{interpo
 * Other fields are case-insensitive.
 * Tag values cannot be empty.
 * Metric tags and fields that are not specified are left unchanged.
-* To remove/reset a metric tag/label/description/filter/timezone, set it's value to a double-quoted empty string.
+* To reset a field to the default value or to delete a tag, use double-quoted empty string, for example `z:""`.
 
 ### Fields
 
@@ -57,8 +57,8 @@ filter = "f:" VALUE
 timezone = "z:" (TIMEZONE / DQUOTE DQUOTE)
 versioning = "v:" ("true" / "false")
 invalidAction = "a:" ("none" / "transform" / "discard" / "raise_error", "set_version_status")
-minValue = "min:" NUMBER
-maxValue = "max:" NUMBER
+minValue = "min:" (NUMBER / DQUOTE DQUOTE)
+maxValue = "max:" (NUMBER / DQUOTE DQUOTE)
 tag = "t:" NAME "=" VALUE
 ```
 
