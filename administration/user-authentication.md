@@ -1,6 +1,6 @@
 # User Authentication
 
-Authentication mechanisms implemented in Axibase Time Series Database specify how users can verify their identity when accessing protected resources such as web pages and API endpoints.
+Authentication mechanisms implemented in the Axibase Time Series Database specify how users can verify their identity when accessing protected resources such as web pages and API endpoints.
 
 ## Authentication Mechanisms
 
@@ -14,7 +14,7 @@ The **[Remember Me]** option on the login form, when activated, stores the submi
 
 ### HTTP Basic Authentication
 
-HTTP request to an API URL `/api/*` is required to include an `Authorization` header with type `Basic`. See [examples](#http-basic-authorization-examples) below.
+A HTTP request to an API URL `/api/*` is required to include an `Authorization` header with type `Basic`. See [examples](#http-basic-authorization-examples) below.
 
 If the `Authorization` header is missing, the client is prompted to provide user name and password.
 
@@ -68,13 +68,13 @@ The following password rules apply to **Local** accounts:
 
 ## Changing the Password
 
--   Users with Local accounts can modify their password by clicking on user icon in the top menu.
+-   Users with Local accounts can modify their password by clicking on the user icon in the top menu.
 
--   Users are not allowed to change their own type, roles, group membership or entity permissions.
+-   Users are not allowed to change their own type, roles, group membership, or entity permissions.
 
 ## Resetting Password
 
-* User passwords for Local accounts are stored as hashcodes therefore recovering a lost password is not supported.
+* User passwords for Local accounts are stored as hashcodes. As a result, recovering a lost password is not supported.
 
 * To reset the password for a user account:
 
