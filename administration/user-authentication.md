@@ -20,7 +20,7 @@ If the `Authorization` header is missing, the client is prompted to provide user
 
 Once the credentials are verified, subsequent API requests within the same session can be executed without repetitive authentication.
 
-## User Account Types 
+## User Account Types
 
 Access to protected resources is provided to user accounts stored in the Axibase Time Series Database.
 
