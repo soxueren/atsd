@@ -32,8 +32,8 @@ entity, entity group, tags, and schedule), it is added to matching sliding
 windows partitioned (grouped) by metric, entity, and tags. The windows
 are continuously updated as new elements are added and old elements are
 removed to maintain window size at constant interval length or element
-count. The window does not store a copy of received data in memory
-unless it is specified by certain functions in the expression. For
+count. The window does not keep a copy of received data in memory
+unless it is referenced by a function specified in the expression. For
 example, except for the `percentile()` function, summary statistics for each
 window can be re-computed without maintaining input data in memory.
 
