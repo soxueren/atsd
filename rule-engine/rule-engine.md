@@ -19,7 +19,6 @@ multiple automation procedures are triggered. For instance:
     IF avg(value) > 75 THEN send_email
 
 
-
 ## In-Memory Processing
 
 The data is processed by the Rule Engine in-memory, which operates
