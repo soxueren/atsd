@@ -1,7 +1,7 @@
-# Rule engine
+# Rule Engine
 
 
-Rule Engine implemented in Axibase Time Series Database enables
+Rule Engine implemented in the Axibase Time Series Database enables
 automation of repetitive tasks based on the analysis of incoming data. Such
 tasks may include raising a support ticket if power usage is abnormal or
 [sending an
@@ -18,19 +18,23 @@ multiple automation procedures are triggered. For instance:
 
     IF avg(value) > 75 THEN send_email
 
-![](images/atsd_rule_engine.png "atsd_rule_engine")
 
 ## In-Memory Processing
 
 The data is processed by the Rule Engine in-memory, which operates
-independently of storage, messaging, and replication channels. If the
-received data passes through the filters, it is added to matching sliding
+independently of storage, messaging, and replication channels. Below is an
+image of the data flow of ATSD. 
+
+![](images/atsd_rule_engine.png "atsd_rule_engine")
+
+If the received data passes through the specified filters (such as shown in the figure for metric, 
+entity, entity group, tags, and schedule), it is added to matching sliding
 windows partitioned (grouped) by metric, entity, and tags. The windows
 are continuously updated as new elements are added and old elements are
 removed to maintain window size at constant interval length or element
-count. The window does not maintain a copy of received data in memory
-unless it is required by functions specified in the expression. For
-example, except for `percentile()` function, summary statistics for each
+count. The window does not keep a copy of received data in memory
+unless it is referenced by a function specified in the expression. For
+example, except for the `percentile()` function, summary statistics for each
 window can be re-computed without maintaining input data in memory.
 
 ## Window Types
@@ -38,8 +42,8 @@ window can be re-computed without maintaining input data in memory.
 Windows can be count-based or time-based. A count-based window maintains
 an ordered array of elements. Once the array reaches the specified
 length, new elements replace the oldest elements. A time-based window
-includes all elements that are timestamped within the time interval that
-end with the current time and start with current time minus the specified
+includes all elements that are timestamped within the time interval which
+ends with the current time and start with current time minus a specified
 window interval. For example, a 5-minute time-based window includes all
 elements that arrived over the last 5 minutes. As the current time
 increases, the start time is incremented accordingly as if the window is
@@ -49,9 +53,9 @@ sliding along the timeline.
 
 Windows are stateful. Once the expression for the given window evaluates
 to `TRUE`, it is maintained in memory with status `OPEN`. On subsequent `TRUE`
-evaluations, the status is changed to `REPEAT`. When the expression
+evaluations for the same window, the status is changed to `REPEAT`. When the expression
 finally changes to `FALSE`, the status is set to `CANCEL`. Window state is
-not stored in the database and windows are recreated with new data if
+not stored in the database and windows are recreated with new data only if
 ATSD is restarted. Maintaining the status in memory while the condition
 is `TRUE` enables deduplication and supports flexible action programming.
 For example, some actions can be configured to execute only on `OPEN`
@@ -106,7 +110,8 @@ specific for each time series:
 Manually specified thresholds can be made more specific for an entity or
 an entity group by adding an exception to the Thresholds table. The
 exception can be also added by clicking on the Exception link in the alert
-console or email alert.
+console or email alert. In the image below, an alert will be issued when
+the `avg` of the `nur-entities-name` entity name is greater than 90.
 
 ![](images/threshold.png "threshold")
 
