@@ -53,7 +53,8 @@ An array of objects containing fields for filtering records for deletion.
 | key | object | Object with `name=value` fields, for example `{"file_system": "/"}`.<br>Deletes records with _exact_ or _partial_ key fields based on the `exactMatch` parameter below.|
 | exactMatch | boolean | `key` match operator. _Exact_ match if true, _partial_ match if false. Default: **true**.<br>_Exact_ match deletes a record with exactly the same `key` as requested.<br>_Partial_ match deletes records with key that contains requested fields but may also include other fields.|
 
-* Key and tag values are case-insensitive.
+* Key and tag names are case-insensitive.
+* Key and tag values are case-sensitive.
 
 ## Response
 
