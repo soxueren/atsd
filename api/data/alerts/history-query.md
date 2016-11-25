@@ -23,6 +23,7 @@ An array of query objects containing the following filtering fields:
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
 | rule       | string | Rule name.        |
+| rules       | array | An array of rule names. |
 | metric     | string | Metric name. |
 
 #### Entity Filter Fields
