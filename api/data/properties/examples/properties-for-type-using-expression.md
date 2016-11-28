@@ -15,7 +15,9 @@ POST https://atsd_host:8443/api/v1/properties/query
     {
         "type": "manager2",
         "entity": "host2",
-        "keyTagExpression": "key3 like 'nur*'"
+        "keyTagExpression": "key3 like 'nur*'",
+        "startDate": "now - 1 * DAY",
+        "endDate": "now",        
     }
 ]
 ```

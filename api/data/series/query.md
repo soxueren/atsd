@@ -1,6 +1,6 @@
 # Series: Query
 
-## Description 
+## Description
 
 Retrieve series objects containing time:value arrays for specified filters.
 
@@ -54,13 +54,14 @@ An array of query objects containing the following filtering fields:
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
-| limit   | integer | Maximum number of time:value samples returned for each series. Default: 0 (no limit).<br>Note that limit is applied from the end (default direction=`DESC`), for example limit=1 means last value.<br>Limit is not applied if the parameter value <= 0. | 
+| limit   | integer | Maximum number of time:value samples returned for each series. Default: 0 (no limit).<br>Note that limit is applied from the end (default direction=`DESC`), for example limit=1 means last value.<br>Limit is not applied if the parameter value <= 0. |
 | seriesLimit   | integer | Maximum number of series returned. Default: 0 (no limit).<br>The database will raise a processing error if series count exceeds **10000** for queries that fetch data for an unversioned metric without `limit`.|
 | direction| string | Scan order for applying the `limit`: `DESC` - descending, `ASC` - ascending. Default: `DESC`. <br>The returned data values will still be sorted in ascending order.<br>`ASC` direction is NOT supported at the moment.|
 | last | boolean | Retrieves only 1 most recent value for each series. Default: false.<br>Start time and end time are ignored when `last=true`. <br>`last` can return the most recent value faster than scan. <br>When `last` is specified and there is no aggregator or the aggregator is `DETAIL`, ATSD executes a `GET` request for the last hour. <br>If the first `GET` returns no data, a second `GET` is executed for the previous hour.|
 | cache | boolean | If true, execute the query against Last Insert table, which results in faster response time for last value queries. Default: `false`<br>Values in Last Insert table may be delayed up to 1 minute (cache to disk interval). |
-| requestId | string | Optional identifier used to associate `query` object in request with `series` objects in response. |
+| requestId | string | Optional identifier used to associate `query` object in request with one or multiple `series` objects in response. |
 | timeFormat |string| Time format for a data array. `iso` or `milliseconds`. Default: `iso`. |
+| addMeta | boolean | Include metric and entity metadata (field, tags) under the `meta` object in response. Default: false.|
 
 #### Transformation Fields
 
@@ -78,11 +79,11 @@ The default processor sequence is as follows:
 2. rate
 3. aggregate
 
-The sequence can be modified by specifying an `order` field in each processor, in which case processor steps are executed in ascending order as specified in the `order` field. 
+The sequence can be modified by specifying an `order` field in each processor, in which case processor steps are executed in ascending order as specified in the `order` field.
 
 ## Response
 
-The response contains an array of series objects, each containing series identifiers and request fields and an array of timestamped value objects. 
+The response contains an array of series objects, each containing series identifiers and request fields and an array of timestamped value objects.
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
@@ -105,7 +106,6 @@ The response contains an array of series objects, each containing series identif
 | v | number | Numeric sample value at time `t`/`d`. |
 | x | string | Text sample value at time `t`/`d`. |
 | version | object | Object containing version source and status fields for versioned metrics. |
-
 
 ## Example
 
@@ -161,7 +161,7 @@ curl http://localhost:8088/api/v1/series/query \
 
 * [Series Query](examples/DataApiSeriesQueryExample.java)
 
-## Additional Examples 
+## Additional Examples
 
 ### Time Range
 
@@ -211,6 +211,7 @@ curl http://localhost:8088/api/v1/series/query \
 * [Limit](examples/query-limit.md)
 * [Limit with Direction](examples/query-limit-direction.md)
 * [Series Limit](examples/query-series-limit.md)
+* [Entity and Metric Metadata](examples/query-metadata.md)
 
 ### Regularize / Downsample
 

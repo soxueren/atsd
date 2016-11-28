@@ -1,6 +1,6 @@
 # Properties: Query
 
-## Description 
+## Description
 
 Retrieve property records matching specified filters.
 
@@ -27,7 +27,8 @@ An array of query objects containing the following filtering fields:
 | exactMatch | boolean | `key` match operator. _Exact_ match if true, _partial_ match if false. Default: **false**.<br>_Exact_ match selects a record with exactly the same `key` as requested.<br>_Partial_ match selects records with `key` that contains requested fields but may also include other fields.|
 | keyTagExpression| string | Expression for matching properties with specified keys or tags.<br>Example: `keys.file_system LIKE '/u*'` or `tags.fs_type == 'ext4'`.<br>Use `lower()` function to ignore case, for example `lower(keys.file_system) LIKE '/u*'`|
 
-* Key and tag values are case-insensitive.
+* Key values and tag values are case-sensitive.
+* Key names and tags names are care-sensitive.
 
 #### Entity Filter Fields
 
@@ -39,15 +40,16 @@ An array of query objects containing the following filtering fields:
 * [**Required**]
 * Refer to [date filter](../filter-date.md).
 
-#### Result Filter Fields
+#### Control Fields
 
 | **Name**  | **Type** | **Description**  |
 |:---|:---|:---|
-| limit   | integer | Maximum number of records to be returned. Default: 0.<br>Limit is not applied if the parameter value <= 0. | 
+| limit   | integer | Maximum number of records to be returned. Default: 0.<br>Limit is not applied if the parameter value <= 0. |
 | last | boolean | Returns only records with the update time equal to the maximum update time of matched records. Default: false. |
 | offset | integer | Exclude records based on difference, in milliseconds, between maximum update time of matched records and update time of the current record. Default: -1 (not applied).<br>If `offset >=0` and the difference exceeds `offset`, the record is excluded from results. <br>`offset=0` is equivalent to `last=true`.|   
+| addMeta | boolean | Include metric and entity metadata (field, tags) under the `meta` object in response. Default: false.|
 
-## Response 
+## Response
 
 An array of matching property objects containing the following fields:
 
@@ -66,27 +68,27 @@ An array of matching property objects containing the following fields:
 Assuming property records A,B,C, and D exist:
 
 ```ls
-| record | type   | entity | key-1 | key-2 | 
-|--------|--------|--------|-------|-------| 
-| A      | type-1 | e-1    | val-1 | val-2 | 
-| B      | type-1 | e-2    | val-1 |       | 
-| C      | type-1 | e-3    |       | VAL-3 | 
-| D      | type-1 | e-4    |       |       | 
+| record | type   | entity | key-1 | key-2 |
+|--------|--------|--------|-------|-------|
+| A      | type-1 | e-1    | val-1 | val-2 |
+| B      | type-1 | e-2    | val-1 |       |
+| C      | type-1 | e-3    |       | VAL-3 |
+| D      | type-1 | e-4    |       |       |
 ```
 
 Queries would return the following records:
 
 ```ls
-| exactMatch | key                     | match   | 
-|------------|-------------------------|---------| 
-| true       |                         | D       | 
-| false      |                         | A;B;C;D | 
-| true       | key-1=val-1             | B       | 
-| false      | key-1=val-1             | A;B     | 
-| true       | key-1=val-1;key-2=val-2 | A       | 
-| false      | key-1=val-1;key-2=val-2 | A       | 
-| false      | key-2=val-3             |         | 
-| false      | key-2=VAL-3             | C       | 
+| exactMatch | key                     | match   |
+|------------|-------------------------|---------|
+| true       |                         | D       |
+| false      |                         | A;B;C;D |
+| true       | key-1=val-1             | B       |
+| false      | key-1=val-1             | A;B     |
+| true       | key-1=val-1;key-2=val-2 | A       |
+| false      | key-1=val-1;key-2=val-2 | A       |
+| false      | key-2=val-3             |         |
+| false      | key-2=VAL-3             | C       |
 ```
 
 ## Offset Example
@@ -94,12 +96,12 @@ Queries would return the following records:
 Assuming property records A,B,C, and D exist and time represents their update time in milliseconds:
 
 ```ls
-| record | type   | entity | key-1 | time | 
-|--------|--------|--------|-------|------| 
-| A      | type-1 | e-1    | val-1 |  100 | 
-| B      | type-1 | e-2    | val-2 |  200 | 
-| C      | type-1 | e-3    | val-1 |  200 | 
-| D      | type-1 | e-4    | val-2 |  150 | 
+| record | type   | entity | key-1 | time |
+|--------|--------|--------|-------|------|
+| A      | type-1 | e-1    | val-1 |  100 |
+| B      | type-1 | e-2    | val-2 |  200 |
+| C      | type-1 | e-3    | val-1 |  200 |
+| D      | type-1 | e-4    | val-2 |  150 |
 ```
 
 max(time) = 200
@@ -108,7 +110,7 @@ Queries would return the following records:
 
 ```ls
 
-| offset | match   | 
+| offset | match   |
 |     -1 | A;B;C;D | Offset filter is not applied.
 |      0 | B;C     | Only records with update time = max(time) are included.
 |      1 | B;C     |
@@ -172,4 +174,17 @@ curl  https://atsd_host:8443/api/v1/properties/query \
 
 * [Properties Query](examples/DataApiPropertiesQueryExample.java)
 
-### Additional Examples
+## Additional Examples
+
+### Filters
+
+* [Get Records for Type](examples/properties-for-type-disk.md)
+* [Get Records for Type and Key](examples/properties-for-type-disk-with-key.md)
+* [Get Records for Type and Multiple Keys](examples/properties-for-type-process-with-multiple-keys.md)
+* [Get Records for Type and Key Expression](examples/properties-for-type-using-expression.md)
+* [Get Entity Tags](examples/query-retrieve-entity-tags.md)
+* [Get Entity Tags for Entity Group](examples/entity-tags-for-entitygroup.md)
+
+### Control Fields
+
+* [Entity and Metric Metadata](examples/query-metadata.md)

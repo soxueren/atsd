@@ -14,7 +14,9 @@ POST https://atsd_host:8443/api/v1/properties/query
   {
     "type": "process",
     "entity": "nurswgvml007",
-    "key": {"command": "java", "pid": "27297"} 
+    "key": {"command": "java", "pid": "27297"},
+    "startDate": "now - 1 * DAY",
+    "endDate": "now",    
   }
 ]
 ```
