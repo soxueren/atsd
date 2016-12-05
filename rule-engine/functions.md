@@ -2,7 +2,9 @@
 
 ### tags.(string `name`)
 
-Returns tag value for the current series, property, or message. tag `name` can be specified after `.` or inside square brackets.
+Returns tag value for the current series, property, or message. 
+
+tag `name` can be specified after `.` or inside the square brackets.
 
 Examples:
 
@@ -34,7 +36,7 @@ entity_tags.location = 'NUR'
 
 ### entity.tags.(string `name`)
 
-Returns entity tag value for current entity.
+Returns entity tag value for the current entity.
 
 ```sh
 entity.tags.location = 'docker'
@@ -91,7 +93,7 @@ property_values(entity_tags.image, 'docker.image.config::name').contains('atsd/l
 
 ### property(String `pattern`)
 
-Returns the first value in the collection of strings returned by the `property_values()` function. The function returns an empty string if no property records are found.
+Returns the first value in a collection of strings returned by the `property_values()` function. The function returns an empty string if no property records are found.
 
 _Example_
 
@@ -101,7 +103,7 @@ property(docker.container::image')
 
 ### matches(String `pattern`, collection\<string> `values`)
 
-Returns true if one of collection items matches the specified pattern.
+Returns true if one of the collection items matches the specified pattern.
 
 _Example_
 
@@ -122,7 +124,7 @@ Sample difference map:
 ```
 
 The map includes tags that are not present in new property tags and tags that were deleted.
-If the difference map is empty, no changes were identified.
+If the difference map is empty, this means that no changes were identified.
 This comparison is case-insensitive.
 
 _Example_
@@ -148,3 +150,30 @@ Returns true if property tags have changed, except for the `name` tag, any tags 
 ``` java
 {inputarguments_19='-Xloggc:/home/axibase/axibase-collector/logs/gc_29286.log'-> '-Xloggc:/home/axibase/axibase-collector/logs/gc_13091.log'}
 ```
+
+### coalesce(collection\<string> `names`)
+
+Returns the first element of the provided collection, specified as an array of string, that is not null or an empty string.
+The function returns an empty string if all elements of the collection are null or empty.
+
+_Example_
+
+```java
+coalesce(['', null, 'string-3'])
+```
+Returns 'string-3'.
+
+_Example_
+
+```java
+coalesce([tags.location, 'SVL'])
+```
+Returns `tags.location` if it's not empty and not null, 'SVL' otherwise.
+
+_Example_
+
+```java
+coalesce([entity.label, entity.tags.name])
+```
+Returns the value of the `entity.label` placeholder if it's not an empty string, otherwise returns value of the `entity.tags.name` placeholder.
+If both placeholders are empty, then an empty string is returned.
