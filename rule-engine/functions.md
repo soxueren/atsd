@@ -148,3 +148,14 @@ Returns true if property tags have changed, except for the `name` tag, any tags 
 ``` java
 {inputarguments_19='-Xloggc:/home/axibase/axibase-collector/logs/gc_29286.log'-> '-Xloggc:/home/axibase/axibase-collector/logs/gc_13091.log'}
 ```
+
+### coalesce(collection\<string> `names`)
+
+This convenience function returns the first element of provided collection that is not null or an empty string.
+The function returns an empty string if all elements of the collection are null or empty.
+
+_Example_
+
+```java
+coalesce([entity.label, entity.tags.name, "default entity"])
+```
