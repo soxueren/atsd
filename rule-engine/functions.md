@@ -103,7 +103,7 @@ property(docker.container::image')
 
 ### matches(String `pattern`, collection\<string> `values`)
 
-Returns true if one of collection items matches the specified pattern.
+Returns true if one of the collection items matches the specified pattern.
 
 _Example_
 
@@ -176,4 +176,4 @@ _Example_
 coalesce([entity.label, entity.tags.name])
 ```
 Returns the value of the `entity.label` placeholder if it's not an empty string, otherwise returns value of the `entity.tags.name` placeholder.
-If both placeholders are empty, then return an empty string.
+If both placeholders are empty, then an empty string is returned.
