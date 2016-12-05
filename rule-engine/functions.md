@@ -151,19 +151,27 @@ Returns true if property tags have changed, except for the `name` tag, any tags 
 
 ### coalesce(collection\<string> `names`)
 
-This convenience function returns the first element of provided collection that is not null or an empty string.
+Returns the first element of the provided collection, specified as an array of string, that is not null or an empty string.
 The function returns an empty string if all elements of the collection are null or empty.
 
 _Example_
 
 ```java
-coalesce(['', null, 'default string'])
+coalesce(['', null, 'string-3'])
 ```
-Return the string 'default string'.
+Returns 'string-3'.
+
+_Example_
 
 ```java
-coalesce(["", entity.label, null, entity.tags.name, "default entity label"])
+coalesce([tags.location, 'SVL'])
 ```
-Returns `entity.label`, in the case this placeholder refers to not empty string.
-Otherwise returns value of the `entity.tags.name`, when it is not empty.
-If both placeholders refer to empty string, then return the "default entity label" string.
+Returns `tags.location` if it's not empty and not null, 'SVL' otherwise.
+
+_Example_
+
+```java
+coalesce([entity.label, entity.tags.name])
+```
+Returns the value of the `entity.label` placeholder if it's not an empty string, otherwise returns value of the `entity.tags.name` placeholder.
+If both placeholders are empty, then return null.
