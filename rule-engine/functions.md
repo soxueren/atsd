@@ -2,7 +2,9 @@
 
 ### tags.(string `name`)
 
-Returns tag value for the current series, property, or message. tag `name` can be specified after `.` or inside square brackets.
+Returns tag value for the current series, property, or message. 
+
+tag `name` can be specified after `.` or inside the square brackets.
 
 Examples:
 
@@ -34,7 +36,7 @@ entity_tags.location = 'NUR'
 
 ### entity.tags.(string `name`)
 
-Returns entity tag value for current entity.
+Returns entity tag value for the current entity.
 
 ```sh
 entity.tags.location = 'docker'
@@ -91,7 +93,7 @@ property_values(entity_tags.image, 'docker.image.config::name').contains('atsd/l
 
 ### property(String `pattern`)
 
-Returns the first value in the collection of strings returned by the `property_values()` function. The function returns an empty string if no property records are found.
+Returns the first value in a collection of strings returned by the `property_values()` function. The function returns an empty string if no property records are found.
 
 _Example_
 
@@ -122,7 +124,7 @@ Sample difference map:
 ```
 
 The map includes tags that are not present in new property tags and tags that were deleted.
-If the difference map is empty, no changes were identified.
+If the difference map is empty, this means that no changes were identified.
 This comparison is case-insensitive.
 
 _Example_
