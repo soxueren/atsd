@@ -174,4 +174,4 @@ _Example_
 coalesce([entity.label, entity.tags.name])
 ```
 Returns the value of the `entity.label` placeholder if it's not an empty string, otherwise returns value of the `entity.tags.name` placeholder.
-If both placeholders are empty, then return null.
+If both placeholders are empty, then return an empty string.
