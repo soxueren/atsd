@@ -157,5 +157,13 @@ The function returns an empty string if all elements of the collection are null 
 _Example_
 
 ```java
-coalesce([entity.label, entity.tags.name, "default entity"])
+coalesce(['', null, 'default string'])
 ```
+Return the string 'default string'.
+
+```java
+coalesce(["", entity.label, null, entity.tags.name, "default entity label"])
+```
+Returns `entity.label`, in the case this placeholder refers to not empty string.
+Otherwise returns value of the `entity.tags.name`, when it is not empty.
+If both placeholders refer to empty string, then return the "default entity label" string.

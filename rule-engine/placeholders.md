@@ -34,6 +34,7 @@ Placeholders are specified using the `{name}` format. Placeholders can reference
 * threshold
 * tags
 * tags.tag_name
+* entity.label
 * entity_tags
 * entity.tags
 * entity_tags.tag_name
