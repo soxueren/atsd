@@ -54,20 +54,19 @@ The following data types are supported for the value column.
 The order of [columns](#columns) in the uploaded content corresponds to the result set produced by the following query.
 
 ```sql
-SELECT TOP 10 pointtypex,
-        picomp2.tag,
+SELECT TOP 10 TAGTYPE(tag) as pointtypex,
+        tag,
         time,
         _index,
-        CASE pointtypex 
+        CASE TAGTYPE(tag) 
 		  WHEN 'digital' THEN CAST(DIGSTRING(CAST(value as Int32)) as VARIANT) 
 		  ELSE value 
 		END AS value,
 		status,
         DIGSTRING(status) AS status_text,
         questionable, substituted, annotated, annotations
-FROM piarchive..picomp2 picomp2 
-  JOIN pipoint..pipoint pipoint on picomp2.tag = pipoint.tag
-WHERE picomp2.tag = 'sinusoid'
+FROM piarchive..picomp2
+WHERE tag = 'sinusoid'
   ORDER BY time
 ```
 
