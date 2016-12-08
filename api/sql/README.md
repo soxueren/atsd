@@ -1129,9 +1129,9 @@ Because join queries combine rows from multiple virtual tables with the same col
 
 ### JOIN
 
-The `JOIN` clause allows merging records for multiple metrics into one result set, even if data collected for the underlying series is not synchronized on time.
+The `JOIN` clause allows merging records for multiple metrics collected by the same entity into one result set, even if underlying series are not synchronized on time.
 
-The default `JOIN` condition contains time, entity, and series tags. The condition can be modified with the `USING entity` clause in which case series tags are ignored, and records are joined on time and entity instead.
+The default `JOIN` condition includes entity, time, and series tags. The condition can be modified with the `USING entity` clause in which case series tags are ignored, and records are joined on entity and time instead.
 
 ```sql
 SELECT t1.datetime, t1.entity, t1.value, t2.value, t3.value
@@ -1283,11 +1283,11 @@ GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 | AND         | AS          | ASC         | BETWEEN     |
 | BY          | DESC        | FROM        | GROUP       |
 | HAVING      | IN          | INNER       | INTERPOLATE |
-| JOIN        | LAST_TIME   | LIKE        | LIMIT       |
-| NOT         | OFFSET      | OPTION      | OR          |
-| ORDER       | OUTER       | PERIOD      | REGEX       |
-| ROW_NUMBER  | SELECT      | USING       | VALUE       |
-| WHERE       | WITH        |             |             |
+| ISNULL      | JOIN        | LAST_TIME   | LIKE        |
+| LIMIT       | LOOKUP      | NOT         | OFFSET      |
+| OPTION      | OR          | ORDER       | OUTER       |
+| PERIOD      | REGEX       | ROW_NUMBER  | SELECT      |
+| USING       | VALUE       | WHERE       | WITH        |
 |-------------|-------------|-------------|-------------|
  ```
 
@@ -1447,9 +1447,39 @@ AND LOWER(tags.file_system) LIKE '*root'
 
 ## Other Functions
 
-| **Function** | **Description** |
-|:---|:---|
-| `ISNULL(a-1, a-2)`  | Returns `a-2` if `a-1` is `NULL` or Non-A-Number for numeric datatypes.<br>Accepts arguments with different datatypes, for example number and string `ISNULL(value, text)`.|
+### ISNULL
+
+The `ISNULL` function returns `altValue` if `inputValue` is `NULL` or `NaN` (Non-A-Number) in case of numeric datatypes.
+
+```sql
+ISNULL(inputValue, altValue)
+```
+
+The function accepts arguments with different datatypes, for example number and string `ISNULL(value, text)`.
+
+### LOOKUP
+
+The `LOOKUP` function translates the key into a corresponding value using the specified replacement table. The function returns a string if the replacement table exists and the key is found, and returns `NULL` otherwise. The key comparison is case-sensitive.
+
+```sql
+LOOKUP(replacementTable, key)
+```
+
+```sql
+SELECT datetime, entity, ISNULL(LOOKUP('tcp-status-codes', value), value)
+  FROM 'docker.tcp-connect-status'
+WHERE datetime > now - 5 * MINUTE
+  AND LOOKUP('tcp-status-codes', value) NOT LIKE '*success*'
+```
+
+If the looked up key is a number provided by the `value` column or an arithmetic expression, it is formatted into a string with `#.##` pattern.
+
+```
+1.0     -> 1
+1.20    -> 1.2
+1.23    -> 1.23
+1.2345  -> 1.23
+```
 
 ## Case Sensitivity
 
@@ -1751,6 +1781,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [Computed Columns](examples/select-computed-columns.md)
 - [Mathematical Functions](examples/select-math.md)
 - [String Functions](examples/string-functions.md)
+- [LOOKUP Function](examples/lookup.md)
 - [Column Alias](examples/alias-column.md)
 - [Table Alias](examples/alias-table.md)
 - [Escape Quotes](examples/select-escape-quote.md)
