@@ -28,6 +28,8 @@ Fields in a cron expression have the following order:
 * day-of-week
 * year **(optional)**
 
+Take into account the fact that this time is a **server** time.
+
 For example, `0 0 8 * * ? *` means that the query will be executed at 08:00:00 every day.
 
 ![Cron Expressions](http://axibase.com/wp-content/uploads/2016/03/cron_expressions.png)
