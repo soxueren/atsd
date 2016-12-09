@@ -24,10 +24,10 @@ Replacement tables contain a collection of `key=value` mappings, specified one p
 ### Query
 
 ```sql
-SELECT datetime, entity, ISNULL(LOOKUP('tcp-status-codes', value), value)
+SELECT value AS 'code', ISNULL(LOOKUP('tcp-status-codes', value), value) AS 'name', COUNT(value)
   FROM 'docker.tcp-connect-status'
-WHERE datetime > now - 5 * MINUTE
-  AND LOOKUP('tcp-status-codes', value) NOT LIKE '*success*'
+WHERE datetime > now - 15 * MINUTE
+  GROUP BY value
 ```
 
 ## Results
@@ -70,7 +70,7 @@ The query translates numeric values into string codes for PI Tag digital tags.
 ```sql
 SELECT datetime, metric.label, metric.tags.point_data_type AS 'pi tag type',
   value, LOOKUP('pi-pids', value)
-FROM 'ba:phase.1' 
+FROM 'ba:phase.1'
   LIMIT 10
 ```
 

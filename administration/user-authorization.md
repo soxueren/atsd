@@ -61,4 +61,4 @@ Users without the `All Entities: Read` permission are allowed to query Data API 
 
 ## Implementation Notes
 
--   The Users role, group membership, and entity permissions are cached while the session is active or until it times out. In order to apply changes, the user must re-login into the application.
+-   The User's role, group membership, and entity permissions are cached while the user's session is active or until the session times out. The session is invalidated in case the user's authorization is changed by an administrator, in which case the user has to re-login.
