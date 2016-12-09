@@ -18,6 +18,8 @@ The SQL queries are executed with administrative permissions and no records are 
 
 The scheduling frequency is controlled with the `Schedule` field containing a `cron` expression that determines when the task should be executed.
 
+> The `cron` expression is evaluated based on the timezone of the server where the database is running. The timezone is displayed on the **Admin: System Information** page. 
+
 Fields in a cron expression have the following order:
 
 * seconds
