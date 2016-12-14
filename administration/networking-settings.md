@@ -1,8 +1,9 @@
 # Network Settings
 
-If you’re anticipating a high data insertion rate with bursts of 100,000
-packets per second or more, increase the maximum receiving buffer on Linux
-OS as follows and restart ATSD:
+Change networking settings if you’re anticipating a high data insertion rate via UDP protocol with bursts of 100,000
+packets per second or more.
+
+## Increase the maximum receiving buffer on the operating system
 
 ```sh
  sudo sysctl -w net.core.rmem_max=8388608                                 
@@ -14,3 +15,14 @@ higher than the ATSD throughput rate.
 
 The increased buffer would also reduce or even eliminate the number of
 UDP datagrams dropped due to buffer overflow.
+
+## Increase the UDP buffer in ATSD
+
+Add the following property to `server.properties` file:
+
+```
+# default value is 8192
+udp.receive.buffer.size.kb = 20000
+```
+
+## Restart ATSD
