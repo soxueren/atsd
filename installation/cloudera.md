@@ -72,16 +72,10 @@ The Zookeeper client port is specified in:
 curl -O https://www.axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
 ```
 
-### CDH (Cloudera Distribution Hadoop) 5.6.x+
-
-```
-curl -O https://www.axibase.com/public/atsd_ee_hbase_1.2.2.tar.gz
-```
-
 ## Extract Files
 
 ```
-sudo tar -xzvf atsd_ee_hbase_1.2.2.tar.gz -C /opt
+sudo tar -xzvf atsd_ee_hbase_1.0.3.tar.gz -C /opt
 sudo chown -R axibase:axibase /opt/atsd
 ```
 
@@ -459,31 +453,56 @@ su - axibase -c /opt/atsd/atsd/bin/start-atsd.sh
 
 ### Option 1. Co-processor Update is NOT Required.
 
-Login as an `axibase` user.
+- Login as an `axibase` user into the server where ATSD is installed.
+
+- Download the latest ATSD release, or a specific version based on the link provided by Axibase support.
 
 ```bash
 cd ~
 curl -O https://axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
-tar -xvf atsd_ee_hbase_1.0.3.tar.gz
-/opt/atsd/atsd/bin/stop-atsd.sh
-cp atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/
-/opt/atsd/atsd/bin/start-atsd.sh
 ```
 
-### Option 2. Co-processor Update is Required.
-
-Login as an `axibase` user.
+- Extract the files.
 
 ```bash
-cd ~
-curl -O https://axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
 tar -xvf atsd_ee_hbase_1.0.3.tar.gz
 ```
 
-Copy the `atsd/hbase/lib/atsd.jar` file to the `/usr/lib/hbase/lib` directory on each HBase region server.
+- Stop the ATSD process.
 
 ```bash
 /opt/atsd/atsd/bin/stop-atsd.sh
-cp atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/
+```
+
+- Update start/script files. Required for ATSD installations older than revision 15060.
+
+```bash
+sed -i 's~^atsd_executable="$atsd_home/bin/atsd.*~atsd_executable=`ls $atsd_home/bin/atsd*.jar`~g' /opt/atsd/atsd/bin/stop-atsd.sh
+sed -i 's~^atsd_executable="$atsd_home/bin/atsd.*~atsd_executable=`ls $atsd_home/bin/atsd*.jar`~g' /opt/atsd/atsd/bin/start-atsd.sh
+```
+
+- Delete previous ATSD jar files on the ATSD server.
+
+```bash
+rm /opt/atsd/atsd/bin/atsd*.jar
+```
+
+- Copy new ATSD jar files on the ATSD server.
+
+```bash
+cp atsd/atsd/bin/atsd*.jar /opt/atsd/atsd/bin/
+```
+
+- Compare atsd-hbase jar revision with the revision installed on HBase region servers
+
+```bash
+ls atsd/hbase/lib/atsd-hbase.*.jar
+```
+
+Compare the displayed revision with atsd-hbase file revision in `/usr/lib/hbase/lib` directory located on the HBase region servers. If the revision is the same, skip HBase region server upgrades. Otherwise, if the new file's revision is greater than what's installed on HBase region servers, shutdown each region server and replace old versions of the jar file with the current copy.
+
+- Start ATSD process.
+
+```bash
 /opt/atsd/atsd/bin/start-atsd.sh
 ```
