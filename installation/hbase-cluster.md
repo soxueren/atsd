@@ -72,16 +72,10 @@ The Zookeeper client port is specified in:
 curl -O https://www.axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
 ```
 
-### HBase 1.1.+
-
-```
-curl -O https://www.axibase.com/public/atsd_ee_hbase_1.2.2.tar.gz
-```
-
 ## Extract Files
 
 ```
-sudo tar -xzvf atsd_ee_hbase_1.2.2.tar.gz -C /opt
+sudo tar -xzvf atsd_ee_hbase_1.0.3.tar.gz -C /opt
 sudo chown -R axibase:axibase /opt/atsd
 ```
 
