@@ -460,7 +460,10 @@ cd ~
 curl -O https://axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
 tar -xvf atsd_ee_hbase_1.0.3.tar.gz
 /opt/atsd/atsd/bin/stop-atsd.sh
-cp atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/
+sed -i 's~^atsd_executable="$atsd_home/bin/atsd.*~atsd_executable=`ls $atsd_home/bin/atsd*.jar`~g' /opt/atsd/atsd/bin/stop-atsd.sh
+sed -i 's~^atsd_executable="$atsd_home/bin/atsd.*~atsd_executable=`ls $atsd_home/bin/atsd*.jar`~g' /opt/atsd/atsd/bin/start-atsd.sh
+rm /opt/atsd/atsd/bin/atsd*.jar
+cp atsd/atsd/bin/atsd*.jar /opt/atsd/atsd/bin/
 /opt/atsd/atsd/bin/start-atsd.sh
 ```
 
@@ -474,10 +477,14 @@ curl -O https://axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
 tar -xvf atsd_ee_hbase_1.0.3.tar.gz
 ```
 
-Copy the `atsd/hbase/lib/atsd.jar` file to the `/usr/lib/hbase/lib` directory on each HBase region server.
+Remove the `atsd/hbase/lib/atsd-hbase.*.jar` file from the `/usr/lib/hbase/lib` directory on each HBase region server.
+Copy the `atsd/hbase/lib/atsd-hbase.*.jar` file to the `/usr/lib/hbase/lib` directory on each HBase region server.
 
 ```bash
 /opt/atsd/atsd/bin/stop-atsd.sh
-cp atsd/atsd/bin/atsd-executable.jar /opt/atsd/atsd/bin/
+sed -i 's~^atsd_executable="$atsd_home/bin/atsd.*~atsd_executable=`ls $atsd_home/bin/atsd*.jar`~g' /opt/atsd/atsd/bin/stop-atsd.sh
+sed -i 's~^atsd_executable="$atsd_home/bin/atsd.*~atsd_executable=`ls $atsd_home/bin/atsd*.jar`~g' /opt/atsd/atsd/bin/start-atsd.sh
+rm /opt/atsd/atsd/bin/atsd*.jar
+cp atsd/atsd/bin/atsd*.jar /opt/atsd/atsd/bin/
 /opt/atsd/atsd/bin/start-atsd.sh
 ```
