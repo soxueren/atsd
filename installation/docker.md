@@ -41,8 +41,8 @@ docker run \
   --publish 8443:8443 \
   --publish 8081:8081 \
   --publish 8082:8082/udp \
-  --env ATSD_USER_NAME=clr-user \
-  --env ATSD_USER_PASSWORD=clr-password \
+  --env COLLECTOR_USER_NAME=clr-user \
+  --env COLLECTOR_USER_PASSWORD=clr-password \
   axibase/atsd:latest
 ```
 
@@ -75,8 +75,8 @@ axibase@nurswghbs002 ~]# docker run \
 >   --publish 8443:8443 \
 >   --publish 8081:8081 \
 >   --publish 8082:8082/udp \
->   --env ATSD_USER_NAME=data-agent \
->   --env ATSD_USER_PASSWORD=Pwd78_ \
+>   --env COLLECTOR_USER_NAME=data-agent \
+>   --env COLLECTOR_USER_PASSWORD=Pwd78_ \
 >   axibase/atsd:latest
 Unable to find image 'axibase/atsd:latest' locally
 latest: Pulling from axibase/atsd
@@ -131,8 +131,9 @@ ATSD web interface is accessible on port 8088/http and 8443/https.
 |`--name` | No | Assign a unique name to the container. |
 |`--restart` | No | Auto-restart policy. _Not supported in all Docker Engine versions._ |
 |`--publish` | No | Publish a container's port to the host. |
-|`--env ATSD_USER_NAME` | No | User name for a data collector account. |
-|`--env ATSD_USER_PASSWORD` | No | Password for a data collector account, subject to [requirements](../administration/user-authentication.md#password-requirements).|
+|`--env COLLECTOR_USER_NAME` | No | User name for a data collector account. |
+|`--env COLLECTOR_USER_PASSWORD` | No | Password for a data collector account, subject to [requirements](../administration/user-authentication.md#password-requirements).|
+|`--env COLLECTOR_USER_TYPE` | No | User group for a data collector account, default value is `writer`.|
 
 ## Exposed Ports
 
