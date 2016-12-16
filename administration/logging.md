@@ -50,42 +50,7 @@ The command log contains a record of all commands received by the database and i
 
 The command log is configured to store up to 10 files of up to 10 megabytes each.  The settings can be adjusted to store more commands on instances with a high write throughput.
 
-1. Create a `command.log.xml` in the `/opt/atsd/atsd/conf` directory.
-
-    ```
-    nano /opt/atsd/atsd/conf/command.log.xml
-    ```
-    
-    ```xml
-    <included>
-        <appender name="commandsLogRoller" class="ch.qos.logback.core.rolling.RollingFileAppender">
-            <file>../logs/command.log</file>
-    
-            <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-                <fileNamePattern>../logs/command.%i.log.zip</fileNamePattern>
-                <minIndex>1</minIndex>
-                <maxIndex>20</maxIndex>
-            </rollingPolicy>
-    
-            <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-                <maxFileSize>100MB</maxFileSize>
-            </triggeringPolicy>
-    
-            <encoder>
-                <pattern>%date{ISO8601};%logger;%message%n</pattern>
-            </encoder>
-        </appender>
-    
-        <logger name="atsd" level="DEBUG" additivity="false">
-			<appender-ref ref="commandsLogRoller"/>
-		</logger>
-        <logger name="atsd.internal.command" level="DEBUG" additivity="false">
-			<appender-ref ref="commandsLogRoller"/>
-		</logger>
-    </included>
-    ```
-
-2. Include the `command.log.xml` reference into `/opt/atsd/atsd/conf/logback.xml` under the top `<configuration>` node.
+1. Uncomment the `command.log.xml` reference into `/opt/atsd/atsd/conf/logback.xml` under the top `<configuration>` node to apply new limitations: store up to 20 files of up to 100 megabytes each.
 
     ```
     nano /opt/atsd/atsd/conf/logback.xml
@@ -102,4 +67,4 @@ The command log is configured to store up to 10 files of up to 10 megabytes each
     </configuration>
     ```
 	
-3. New logging settings will be applied within 60 seconds. No database restart is required.
+2. New logging settings will be applied within 60 seconds. No database restart is required.
