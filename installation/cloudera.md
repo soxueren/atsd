@@ -477,7 +477,7 @@ curl -O https://axibase.com/public/atsd_ee_hbase_1.0.3.tar.gz
 tar -xvf atsd_ee_hbase_1.0.3.tar.gz
 ```
 
-Remove the `atsd/hbase/lib/atsd-hbase.*.jar` file from the `/usr/lib/hbase/lib` directory on each HBase region server.
+Remove the `atsd*.jar` file from the `/usr/lib/hbase/lib` directory on each HBase region server.
 Copy the `atsd/hbase/lib/atsd-hbase.*.jar` file to the `/usr/lib/hbase/lib` directory on each HBase region server.
 
 ```bash
