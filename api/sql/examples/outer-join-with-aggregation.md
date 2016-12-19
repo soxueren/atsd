@@ -4,7 +4,7 @@
 ## Query
 
 ```sql
-SELECT t1.entity, t1.datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value)
+SELECT t1.entity, t1.datetime, AVG(t1.value), AVG(t2.value)
  FROM mpstat.cpu_busy t1
 OUTER JOIN df.disk_used t2
  WHERE t1.datetime > current_hour
