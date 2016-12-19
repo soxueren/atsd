@@ -1283,13 +1283,14 @@ GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 ```
 |-------------|-------------|-------------|-------------|
 | AND         | AS          | ASC         | BETWEEN     |
-| BY          | DESC        | FROM        | GROUP       |
-| HAVING      | IN          | INNER       | INTERPOLATE |
-| ISNULL      | JOIN        | LAST_TIME   | LIKE        |
-| LIMIT       | LOOKUP      | NOT         | OFFSET      |
-| OPTION      | OR          | ORDER       | OUTER       |
-| PERIOD      | REGEX       | ROW_NUMBER  | SELECT      |
-| USING       | VALUE       | WHERE       | WITH        |
+| BY          | CAST        | DESC        | FROM        |
+| GROUP       | HAVING      | IN          | INNER       |
+| INTERPOLATE | ISNULL      | JOIN        | LAST_TIME   |
+| LIKE        | LIMIT       | LOOKUP      | NOT         |
+| OFFSET      | OPTION      | OR          | ORDER       |
+| OUTER       | PERIOD      | REGEX       | ROW_NUMBER  |
+| SELECT      | USING       | VALUE       | WHERE       |
+| WITH        |             |             |             |
 |-------------|-------------|-------------|-------------|
  ```
 
@@ -1459,6 +1460,21 @@ ISNULL(inputValue, altValue)
 
 The function accepts arguments with different datatypes, for example number and string `ISNULL(value, text)`.
 
+### CAST
+
+The `CAST` function transforms a string into a number. The number can then be used in arithmetic expressions.
+
+```sql
+CAST(columnName AS Number)
+```
+
+```sql
+SELECT datetime, value, entity, tags,
+  value/CAST(LOOKUP('disk-size', concat(entity, ',', tags.file_system, ',', tags.mount_point)) AS Number) AS 'pct_used'
+FROM disk.stats.used
+  WHERE datetime > current_hour
+```
+
 ### LOOKUP
 
 The `LOOKUP` function translates the key into a corresponding value using the specified replacement table. The function returns a string if the replacement table exists and the key is found, and returns `NULL` otherwise. The key comparison is case-sensitive.
@@ -1466,6 +1482,10 @@ The `LOOKUP` function translates the key into a corresponding value using the sp
 ```sql
 LOOKUP(replacementTable, key)
 ```
+
+* Dictionary
+
+The primary purpose of a replacement table is to act as a dictionary for decoding series tags/values.
 
 ```sql
 SELECT datetime, entity, ISNULL(LOOKUP('tcp-status-codes', value), value)
@@ -1481,6 +1501,53 @@ If the looked up key is a number provided by the `value` column or an arithmetic
 1.20    -> 1.2
 1.23    -> 1.23
 1.2345  -> 1.23
+```
+
+For `DIGSTRING(int code)`
+
+```sql
+SELECT datetime, entity, value, LOOKUP('pi-system', value)
+  FROM atsd_series
+WHERE metric = 'digtag-test' AND datetime > previous_hour
+```
+
+* Fact Table
+
+In addition, replacement tables can be used as *fact* tables, storing numeric data without a time dimension.
+
+Replacement table 'us-region':
+
+```ls
+1=New-England
+2=Middle-Atlantic
+3=East-North-Central
+...
+```
+
+Replacement table 'city-size':
+
+```ls
+Akron,OH=197542
+Albany,NY=98469
+Albuquerque,NM=559121
+...
+```
+
+```sql
+SELECT date_format(time, 'yyyy-MM-dd') as 'date', value, tags.city, tags.state,
+  LOOKUP('us-region', tags.region) AS 'region',
+  LOOKUP('city-size', concat(tags.city, ',', tags.state)) AS 'population',
+  value/CAST(LOOKUP('city-size', concat(tags.city, ',', tags.state)) AS Number)*1000 AS 'cases_per_pop'
+FROM cdc.pneumonia_cases
+  WHERE tags.city = 'Boston'
+ORDER BY datetime DESC
+  LIMIT 1
+```
+
+```ls
+| date       | value | tags.city | tags.state | region      | population | cases_per_pop |
+|------------|-------|-----------|------------|-------------|------------|---------------|
+| 2016-10-01 | 131.0 | Boston    | MA         | New-England | 667137     | 0.2           |
 ```
 
 ## Case Sensitivity
