@@ -31,8 +31,8 @@ WHERE entity = 'nurswgvml006'
 SELECT t1.entity, t1.datetime, t1.value, t2.value, t2.tags, t1.metric.tags, t2.metric.tags
   FROM df.disk_used t1
   JOIN USING entity mpstat.cpu_busy t2
-WHERE entity = 'nurswgvml006' 
-  AND datetime > now - 5 * minute
+WHERE t1.entity = 'nurswgvml006' 
+  AND t1.datetime > now - 5 * minute
 ```
 
 ```ls
