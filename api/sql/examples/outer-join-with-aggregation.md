@@ -4,11 +4,11 @@
 ## Query
 
 ```sql
-SELECT entity, datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value)
- FROM mpstat.cpu_busy
-OUTER JOIN df.disk_used
- WHERE datetime > current_hour
-GROUP BY entity, period(15 minute)
+SELECT t1.entity, t1.datetime, AVG(t1.value), AVG(t2.value)
+ FROM mpstat.cpu_busy t1
+OUTER JOIN df.disk_used t2
+ WHERE t1.datetime > current_hour
+GROUP BY t1.entity, t1.period(15 minute)
 ```
 
 ## Results
