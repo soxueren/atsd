@@ -9,10 +9,10 @@ An unquoted `alias` should start with a letter [a-zA-Z], followed a by letter, d
 ## Query
 
 ```sql
-SELECT datetime, t1.entity, t1.value AS cpu_sys, t2.value AS cpu_usr
+SELECT t1.datetime, t1.entity, t1.value AS cpu_sys, t2.value AS cpu_usr
   FROM "mpstat.cpu_system" t1
   JOIN "mpstat.cpu_user" t2
-WHERE datetime > now - 1*MINUTE
+WHERE t1.datetime > now - 1*MINUTE
   ORDER BY datetime
 ```
 
@@ -35,7 +35,7 @@ If multiple tables are joined in the query, the `SELECT` expression can include 
 SELECT t1.*, t2.value AS cpu_usr
   FROM "mpstat.cpu_system" t1
   JOIN "mpstat.cpu_user" t2
-WHERE datetime > now - 1*MINUTE
+WHERE t1.datetime > now - 1*MINUTE
   ORDER BY datetime
 ```
 
