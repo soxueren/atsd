@@ -12,6 +12,16 @@ This means that the same query executed by users with different entity permissio
 
 Scheduled queries are executed under full permissions.
 
+## Connection Query
+
+To test a connection, execute the following query:
+
+```sql
+SELECT 1
+```
+
+This query can be utilized as a validation query in database connection pool implementations such as [Apache Commons DBCP](https://commons.apache.org/proper/commons-dbcp/configuration.html).
+
 ## Request
 
 | **Method** | **Path** | **Content-Type Header**|
