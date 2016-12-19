@@ -223,7 +223,7 @@ Missing periods that cannot be interpolated are returned with the `NaN` (Not a N
 SELECT datetime, value FROM metric1
   WHERE entity = 'e1'
 AND datetime >= '2016-09-17T08:00:00Z' AND datetime < '2016-09-17T08:01:30Z'
-  WITH INTERPOLATE(30 SECOND, LINEAR, INNER, NONE)
+  WITH INTERPOLATE(30 SECOND, LINEAR, INNER, NAN)
 ```
 
 The value at 08:00:00 is `NaN` because the prior value in the `INNER` mode was not available for linear interpolation.
