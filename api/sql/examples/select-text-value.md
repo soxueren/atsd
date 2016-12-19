@@ -162,6 +162,18 @@ series d:2016-10-04T02:08:18Z e:br-1470 m:SV6.PACK:R04=26.3
 series d:2016-10-04T02:09:46Z e:br-1470 m:SV6.PACK:R04=17.1
 series d:2016-10-04T02:10:21Z e:br-1470 m:SV6.PACK:R04=19.9
 
+series d:2016-10-04T02:00:00Z e:br-1470 x:SV6.Elapsed_Time=475.0
+series d:2016-10-04T02:01:00Z e:br-1470 x:SV6.Elapsed_Time=26.0
+series d:2016-10-04T02:02:00Z e:br-1470 x:SV6.Elapsed_Time=35.0
+series d:2016-10-04T02:03:00Z e:br-1470 x:SV6.Elapsed_Time=95.0
+series d:2016-10-04T02:04:00Z e:br-1470 x:SV6.Elapsed_Time=155.0
+series d:2016-10-04T02:05:00Z e:br-1470 x:SV6.Elapsed_Time=215.0
+series d:2016-10-04T02:06:00Z e:br-1470 x:SV6.Elapsed_Time=275.0
+series d:2016-10-04T02:07:00Z e:br-1470 x:SV6.Elapsed_Time=335.0
+series d:2016-10-04T02:08:00Z e:br-1470 x:SV6.Elapsed_Time=395.0
+series d:2016-10-04T02:09:00Z e:br-1470 x:SV6.Elapsed_Time=455.0
+series d:2016-10-04T02:10:00Z e:br-1470 x:SV6.Elapsed_Time=51.0
+
 series d:2016-10-04T01:52:05Z e:br-1470 x:SV6.Unit_BatchID="1413"
 series d:2016-10-04T02:00:34Z e:br-1470 x:SV6.Unit_BatchID="Inactive"
 series d:2016-10-04T02:01:25Z e:br-1470 x:SV6.Unit_BatchID="1414"
