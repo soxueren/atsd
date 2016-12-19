@@ -7,14 +7,14 @@ If the samples have the same timestamps (made with the same collector), inner `J
 ## Query
 
 ```sql
-SELECT entity, datetime, 
+SELECT tot.entity, tot.datetime, 
   tot.value/1024 "total", 
   fre.value/1024 "free", 
   (tot.value - fre.value)/1024 "used",
   (1-fre.value/tot.value)*100 "used_%"
 FROM "meminfo.memtotal" AS tot
   JOIN "meminfo.memfree" AS fre
-WHERE datetime > now - 1 * MINUTE
+WHERE tot.datetime > now - 1 * MINUTE
   AND entity = 'nurswgvml007'
 ```
 
