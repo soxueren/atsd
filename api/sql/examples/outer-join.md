@@ -6,9 +6,9 @@ Outer Join missing column values filled with `NULL`.
 
 ```sql
 SELECT *
-  FROM mpstat.cpu_busy
-OUTER JOIN df.disk_used
-  WHERE datetime > current_hour
+  FROM mpstat.cpu_busy t1
+OUTER JOIN df.disk_used t2
+  WHERE t1.datetime > current_hour
   AND entity = 'nurswgvml007'
 ```
 
