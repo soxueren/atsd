@@ -549,7 +549,7 @@ The `time` column accepts Unix milliseconds, whereas `datetime` column accepts l
 ```sql
 SELECT datetime, entity, value
   FROM "mpstat.cpu_busy"
-WHERE time >= 1465685363345 AND datetime < '2016-06-10T14:00:15.020Z'
+WHERE datetime BETWEEN '2016-12-10T14:00:15.020Z' AND '2016-12-10T15:30:00.077Z'
 ```
 
 Both columns support [End Time](/end-time-syntax.md) syntax.
@@ -560,7 +560,7 @@ SELECT datetime, entity, value
 WHERE time >= previous_minute AND datetime < current_minute
 ```
 
-> Operators `!=` and `<>` are **not** supported with time columns: `time` and `datetime`.
+> Not_equal operators `!=` and `<>` are **not** supported with time columns `time` and `datetime`.
 
 ## Period
 
