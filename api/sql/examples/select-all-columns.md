@@ -55,7 +55,7 @@ In case of `JOIN`, column names are fully qualified and include both table name 
 SELECT *
   FROM df.disk_used
   JOIN USING entity mpstat.cpu_busy
-WHERE entity = 'nurswgvml006'
+WHERE mpstat.cpu_busy.entity = 'nurswgvml006'
   AND df.disk_used.datetime > now - 5 * minute
 ```
 
