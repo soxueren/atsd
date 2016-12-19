@@ -28,11 +28,11 @@ WHERE t1.datetime > now - 1*MINUTE AND t2.datetime > now - 1*MINUTE
 ## Query with `JOIN` and Functions
 
 ```sql
-SELECT datetime, entity, max(t1.value), max(t2.value), max(t1.value) + max(t2.value), max(t1.value + t2.value) AS max_total_cpu
+SELECT t1.datetime, t1.entity, max(t1.value), max(t2.value), max(t1.value) + max(t2.value), max(t1.value + t2.value) AS max_total_cpu
   FROM "mpstat.cpu_system" t1
   JOIN "mpstat.cpu_user" t2
-WHERE datetime > now - 1*MINUTE
-GROUP BY entity, datetime
+WHERE t1.datetime > now - 1*MINUTE
+GROUP BY t1.entity, t1.datetime
 ```
 
 ### Results
