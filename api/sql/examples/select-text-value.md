@@ -99,7 +99,7 @@ When interpolated with the `WITH INTERPOLATE` clause, the text value is interpol
 
 ### Query
 
-```
+```sql
 SELECT datetime, text
 FROM 'BA:ACTIVE.1'
 WHERE entity = 'default'
