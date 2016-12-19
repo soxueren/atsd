@@ -5,13 +5,13 @@
 ## Join without `USING entity`
 
 ```sql
-SELECT entity, datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value), tags.*
-  FROM mpstat.cpu_busy
-JOIN df.disk_used
-  WHERE datetime > current_hour
-  AND entity = 'nurswgvml007'
-GROUP BY entity, tags, period(15 minute)
-  ORDER BY datetime
+SELECT t1.entity, t1.datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value), t2.tags.*
+  FROM mpstat.cpu_busy t1
+JOIN df.disk_used t2
+  WHERE t1.datetime > current_hour
+  AND t1.entity = 'nurswgvml007'
+GROUP BY t1.entity, t2.tags, t1.period(15 minute)
+  ORDER BY t1.datetime
 ```
 
 ## Results
@@ -21,13 +21,13 @@ No records.
 ## Join with `USING entity`
 
 ```sql
-SELECT entity, datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value), tags.*
-  FROM mpstat.cpu_busy
-JOIN USING entity df.disk_used
-  WHERE datetime > current_hour
-  AND entity = 'nurswgvml007'
-GROUP BY entity, tags, period(15 minute)
-  ORDER BY datetime
+SELECT t1.entity, t1.datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value), t2.tags.*
+  FROM mpstat.cpu_busy t1
+JOIN USING entity df.disk_used t2
+  WHERE t1.datetime > current_hour
+  AND t1.entity = 'nurswgvml007'
+GROUP BY t1.entity, t2.tags, t1.period(15 minute)
+  ORDER BY t1.datetime
 ```
 
 ## Results
@@ -42,13 +42,13 @@ GROUP BY entity, tags, period(15 minute)
 ## Outer Join Query without `USING entity`
 
 ```sql
-SELECT entity, datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value), tags.*
-  FROM mpstat.cpu_busy
-OUTER JOIN df.disk_used
-  WHERE datetime > current_hour
-  AND entity = 'nurswgvml007'
-GROUP BY entity, tags, period(15 minute)
-  ORDER BY datetime
+SELECT t1.entity, t1.datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value), t2.tags.*
+  FROM mpstat.cpu_busy t1
+OUTER JOIN df.disk_used t2
+  WHERE t1.datetime > current_hour
+  AND t1.entity = 'nurswgvml007'
+GROUP BY t1.entity, t2.tags, t1.period(15 minute)
+  ORDER BY t1.datetime
 ```
 
 ## Results
@@ -64,13 +64,13 @@ GROUP BY entity, tags, period(15 minute)
 ## OUTER JOIN with `USING entity`
 
 ```sql
-SELECT entity, datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value), tags.*
-  FROM mpstat.cpu_busy
-OUTER JOIN USING entity df.disk_used
-  WHERE datetime > previous_hour
-  AND entity = 'nurswgvml007'
-GROUP BY entity, tags, period(15 minute)
-  ORDER BY datetime
+SELECT t1.entity, t1.datetime, AVG(mpstat.cpu_busy.value), AVG(df.disk_used.value), t2.tags.*
+  FROM mpstat.cpu_busy t1
+OUTER JOIN USING entity df.disk_used t2
+  WHERE t1.datetime > previous_hour
+  AND t1.entity = 'nurswgvml007'
+GROUP BY t1.entity, t2.tags, t1.period(15 minute)
+  ORDER BY t1.datetime
 ```
 
 ## Results
