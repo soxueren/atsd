@@ -2,7 +2,6 @@ Weekly Change Log: December 12-18, 2016
 =======================================
 
 ### ATSD
---------
 
 | Issue    | Category        | Type            | Subject                                                   | Date Released       |                    
 |----------|-----------------|-----------------|-----------------------------------------------------------|---------------------|
@@ -13,7 +12,6 @@ Weekly Change Log: December 12-18, 2016
 | 3325     | sql             | Bug             | SQL: count(column) error                                  | 12/16/2016 10:34 AM | 
 
 ### Collector
--------------
 
 | Issue    | Category        | Type            | Subject                                                   | Date Released       |       
 |----------|-----------------|-----------------|-----------------------------------------------------------|---------------------| 
@@ -26,8 +24,8 @@ Weekly Change Log: December 12-18, 2016
 | 3684     | UI              | Bug             | UI: Enable/Disable/Run buttons                            | 12/14/2016 03:39 PM | 
 
 
-### Discussion Issue 3685
--------------------------
+### Issue 3685
+--------------
 
 Recently added to the `docker` job in Collector is the ability to set a time limit for the retention of deleted container records (days), as shown in the image below. 
 
@@ -39,8 +37,8 @@ All deletions are logged to file.
 Containers with a `deleted` status will initially be retained in ATSD for the specified time interval (for example 50 days in the above image). The status of these containers is marked as
 `deleted`. After the interval has passed, the containers will be permanently removed from ATSD.  
 
-### Discussion Issue 3701
--------------------------
+### Issue 3701
+--------------
 
 In this issue, we took a look at optimizing partitioning queries. Let's take the below query as an example.
 
@@ -60,8 +58,8 @@ means we only need the last value for each combination of tags. We can therefore
 
 Check out our article on [SQl queries for U.S. death statistics](https://github.com/axibase/atsd-use-cases/blob/master/USMortality/README.md). 
 
-### Discussion Issue 3717
--------------------------
+### Issue 3717
+--------------
 
 Both of these fields have randomly generated values by a higher-level framework such as mesos.
 
