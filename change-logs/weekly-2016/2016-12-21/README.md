@@ -27,7 +27,7 @@ Weekly Change Log: December 12-18, 2016
 ### Issue 3685
 --------------
 
-Recently added to the `docker` job in Collector is the ability to set a time limit for the retention of deleted container records (days), as shown in the image below. 
+Recently added to the `docker` job in Collector is the ability to set a time limit for the retention of deleted container records (days), as shown in the image below.  
 
 ![Figure 1](Figure1.png)
 
