@@ -57,10 +57,3 @@ the `WHERE` clause, we fetched all rows for `cdc.all_deaths` and  `mr8w-325u` be
 means we only need the last value for each combination of tags. We can therefore skip values with a timestamp less than the minimum last insert time.
 
 Check out our article on [SQl queries for U.S. death statistics](https://github.com/axibase/atsd-use-cases/blob/master/USMortality/README.md). 
-
-### Issue 3717
---------------
-
-Both of these fields have randomly generated values by a higher-level framework such as mesos.
-
-One option is to set container label to == env.CONTAINER_NAME if Name is pseudo-random.
