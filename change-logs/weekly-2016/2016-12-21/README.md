@@ -56,4 +56,4 @@ This minimum last insert time is 1972-05-27T00:00:00Z and was used as a scan sta
 the `WHERE` clause, we fetched all rows for `cdc.all_deaths` and  `mr8w-325u` before this optimization. A condition like `ROW_NUMBER(tags ORDER BY datetime desc) <= 1`
 means we only need the last value for each combination of tags. We can therefore skip values with a timestamp less than the minimum last insert time.
 
-Check out our article on [SQl queries for U.S. death statistics](https://github.com/axibase/atsd-use-cases/blob/master/USMortality/README.md). 
+Check out our article on [SQL queries for U.S. death statistics](https://github.com/axibase/atsd-use-cases/blob/master/USMortality/README.md). 
