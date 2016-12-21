@@ -37,7 +37,7 @@ A number input is required (0 - any), with the default being 0. To keep these re
 All deletions are logged to file.  
 
 Containers with a `deleted` status will initially be retained in ATSD for the specified time interval (for example 50 days in the above image). The status of these containers is marked as
-`deleted`. After the interval has passed, the containers will be permanently removed from ATSD. 
+`deleted`. After the interval has passed, the containers will be permanently removed from ATSD.  
 
 ### Discussion Issue 3701
 -------------------------
