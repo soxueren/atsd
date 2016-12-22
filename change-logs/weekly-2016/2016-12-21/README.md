@@ -8,7 +8,7 @@ Weekly Change Log: December 12-18, 2016
 | 3710     | install         | Feature         | Added support for an embedded collector account with All Entities: read/write permission.                                      | 
 | 3704     | sql             | Bug             | Fixed 50% percentile division error where percentile was specified in denominator.                              | 
 | 3702     | sql             | Bug             | Modified syntax error message in case an ungrouped column is included in a `SELECT` expression.                          | 
-| 3701     | sql             | Feature         | Optimized processing of partitioning queries using a Last Insert table.                        | 
+| 3701     | sql             | Feature         | Optimized processing of partitioning queries using Last Insert table.                        | 
 | 3325     | sql             | Bug             | Allowed for columns other than `value` and `*` in the `COUNT` function.                                  | 
 
 ### Collector
