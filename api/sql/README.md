@@ -1283,13 +1283,14 @@ GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 ```
 |-------------|-------------|-------------|-------------|
 | AND         | AS          | ASC         | BETWEEN     |
-| BY          | CAST        | DESC        | FROM        |
-| GROUP       | HAVING      | IN          | INNER       |
-| INTERPOLATE | ISNULL      | JOIN        | LAST_TIME   |
-| LIKE        | LIMIT       | LOOKUP      | NOT         |
-| OFFSET      | OPTION      | OR          | ORDER       |
-| OUTER       | PERIOD      | REGEX       | ROW_NUMBER  |
-| SELECT      | USING       | VALUE       | WHERE       |
+| BY          | CASE        | CAST        | DESC        |
+| ELSE        | FROM        | GROUP       | HAVING      |
+| IN          | INNER       | INTERPOLATE | ISNULL      |
+| JOIN        | LAST_TIME   | LIKE        | LIMIT       |
+| LOOKUP      | NOT         | OFFSET      | OPTION      |
+| OR          | ORDER       | OUTER       | PERIOD      |
+| REGEX       | ROW_NUMBER  | SELECT      | THEN        |
+| USING       | VALUE       | WHEN        | WHERE       |
 | WITH        |             |             |             |
 |-------------|-------------|-------------|-------------|
  ```
@@ -1460,12 +1461,79 @@ ISNULL(inputValue, altValue)
 
 The function accepts arguments with different datatypes, for example number and string `ISNULL(value, text)`.
 
+### CASE
+
+The `CASE` expression evaluates a sequence of boolean expressions and returns a matching result expression.
+
+```sql
+CASE  
+     WHEN search_expression THEN result_expression
+     [ WHEN search_expression THEN result_expression ]
+     [ ELSE result_expression ]
+END  
+```
+
+Each `search_expression` should evaluate to a boolean (true/false) value.
+
+The `result_expression` can be a number, a string, or an expression. Result expressions must return values of the same data type. If the datatypes are different (such as number and string), the database will raise an error.
+
+If no `search_expression` is matched and the `ELSE` condition is not specified, the `CASE` expression returns `NULL`.
+
+```sql
+SELECT entity, tags.*, value,
+  CASE
+    WHEN LOCATE('//', tags.file_system) = 1 THEN 'nfs'
+    ELSE 'local'
+  END AS 'FS_Type'
+  FROM df.disk_used
+WHERE datetime > current_hour
+  WITH ROW_NUMBER(entity, tags ORDER BY time DESC) <= 1
+```
+
+```ls
+| entity       | tags.file_system                    | tags.mount_point | value      | FS_Type |
+|--------------|-------------------------------------|------------------|------------|---------|
+| nurswgvml006 | //u113411.store01/backup            | /mnt/u113411     | 1791024684 | nfs     |
+| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | /                | 6045216    | local   |
+| nurswgvml006 | /dev/sdc1                           | /media/datadrive | 56934368   | local   |
+| nurswgvml007 | //u113563.store02/backup            | /mnt/u113563     | 1791024684 | nfs     |
+| nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | /                | 9064008    | local   |
+```
+
+```sql
+SELECT entity, avg(value),
+    CASE
+      WHEN avg(value) < 20 THEN 'under-utilized'
+      WHEN avg(value) > 80 THEN 'over-utilized'
+      ELSE 'right-sized'
+    END AS 'Utilization'
+  FROM cpu_busy
+WHERE datetime > current_hour
+  GROUP BY entity
+```
+
+The `CASE` expression can also be used to handle `NULL` and `NaN` values:
+
+```sql
+SELECT entity, datetime, value, text,
+  CASE
+    WHEN value IS NULL THEN -1
+    ELSE value
+  END,
+  CASE
+    WHEN text IS NULL THEN 'CASE: text is null'
+    ELSE text
+  END
+  FROM atsd_series
+WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
+```
+
 ### CAST
 
 The `CAST` function transforms a string into a number. The number can then be used in arithmetic expressions.
 
 ```sql
-CAST(columnName AS Number)
+CAST(inputString AS Number)
 ```
 
 ```sql
