@@ -5,49 +5,52 @@ Weekly Change Log: December 12-18, 2016
 
 | Issue    | Category        | Type            | Subject                                                   |
 |----------|-----------------|-----------------|-----------------------------------------------------------|
-| 3710     | install        | Feature         | Add support for an embedded collector account with All Entities: read/write permission.                                      | 
-| 3704     | sql             | Bug             | Fix 50% percentile division error where percentile was specified in denominator.                              | 
-| 3702     | sql             | Bug             | Modify syntax error message in case an ungrouped column is included in SELECT expression.                          | 
-| 3701     | sql             | Feature         | Optimize processing of partitioning queries using Last Insert table.                        | 
-| 3325     | sql             | Bug             | Allow columns other than `value` and `*` in the COUNT function.                                  | 
+| 3710     | install         | Feature         | Added support for an embedded collector account with All Entities: read/write permission.                                      | 
+| 3704     | sql             | Bug             | Fixed 50% percentile division error where percentile was specified in denominator.                              | 
+| 3702     | sql             | Bug             | Modified syntax error message in case an ungrouped column is included in a `SELECT` expression.                          | 
+| 3701     | sql             | Feature         | Optimized processing of partitioning queries using Last Insert table.                        | 
+| 3325     | sql             | Bug             | Allowed for columns other than `value` and `*` in the `COUNT` function.                                  | 
 
 ### Collector
 
 | Issue    | Category        | Type            | Subject                                                   |       
 |----------|-----------------|-----------------|-----------------------------------------------------------| 
 | 3717     | docker          | Feature         | Set container label from environment variable `CONTAINER_NAME` for Mesos compatibility. | 
-| 3716     | docker          | Bug             | Fix malformed label for images without a parent image. | 
-| 3700     | docker          | Bug             | Replace textarea with an Item List containing name expressions of processes to be excluded from the `top` process collection and count. | 
-| 3699     | docker          | Bug             | Eliminate duplicate container names when setting volume labels      | 
-| 3692     | UI              | Bug             | Raise an error when the job is executed manually and the storage driver is not 'successful' at the time. | 
-| 3685     | docker          | Feature         | Add a setting to remove deleted records from ATSD after a period of time. Containers can be removed after a certain number of days, images/volumes/networks can removed instantly. | 
-| 3684     | UI              | Bug             | Add Enable/Disable/Run buttons on the job list page to change status or run multiple jobs at a time using check boxes.                             | 
+| 3716     | docker          | Bug             | Fixed malformed label for images without a parent image. | 
+| 3700     | docker          | Bug             | Replaced textarea with an Item List containing name expressions of processes to be excluded from the `top` process collection and count. | 
+| 3699     | docker          | Bug             | Eliminated duplicate container names when setting volume labels.      | 
+| 3692     | UI              | Bug             | Raised an error when the job is executed manually and the storage driver is not 'successful' at that time. | 
+| 3685     | docker          | Feature         | Added a setting to remove deleted records from ATSD after a period of time. Containers can be removed after a certain number of days, images/volumes/networks can removed instantly. | 
+| 3684     | UI              | Bug             | Added Enable/Disable/Run buttons on the job list page to change status or run multiple jobs at a time using check boxes.                             | 
 
 
 ### Issue 3685
 --------------
 
-Recently added to the `docker` job in Collector is the ability to set remove deleted records in ATSD for objects that no longer exist in Docker itself.  
+Recently added to the `docker` job in Collector is the ability to remove deleted records in ATSD for objects that no longer exist in Docker itself. Read more about the `docker` job
+[here](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/docker.md#docker-job).
 
 ![Figure 1](Figure1.png)
 
-This capability is useful to prune ATSD from containers that no longer exist in Docker, for instance containers that existed for only a few minuted during image build stage, or containers that executed short-term tasks and were removed with `docker rm` command. Containers with a `deleted` status will initially be retained in ATSD for the specified time interval (for example 50 days in the above image). The status of these containers is marked as
-`deleted`.
+This capability is useful to purge ATSD of containers that no longer exist in Docker, for instance containers that existed only for a few minutes during image build stage, or containers
+that executed short-term tasks and were removed with the `docker rm` command. Containers with a `deleted` status will initially be retained in ATSD for the specified time interval (for 
+example 50 days in the above image). The status of these containers is marked as `deleted`.
 
-By default such records with status 'deleted' are not actually deleted from ATSD potentially leaving too many dangling records in ATSD. To delete containers after a certain number of days, set the setting to a positive integer. 
+By default such records with the status `deleted` are not actually removed from ATSD, potentially leaving unnecessary records in ATSD. To delete containers after a certain number of days, enter in a positive integer. 
 
-* `Retain deleted container records, days` : Containers with status = 'deleted' will initially be retained in ATSD for the specified time interval. The status of these containers is marked as ‘deleted’. After the interval has passed, the containers will be permanently removed from ATSD.
+* `Retain deleted container records, days` : containers with a `deleted` status will initially be retained in ATSD for the specified time interval. The status of these containers is marked as `deleted`. After the interval has passed, the containers will be permanently removed from ATSD.
 
 To remove deleted image/volume/network records, enable the `Retain deleted image/volume/network records` checkbox. 
 
-* `Remove deleted image/volume/network records` : Remove images/volumes/networks with status = 'deleted' from ATSD.
+* `Remove deleted image/volume/network records` : removes images/volumes/networks with a `deleted` status from ATSD.
 
-The deletion occurs at the same interval at property check interval. All deletions are logged to collector file.
+The deletion occurs at the same time as the property check interval. All deletions are logged to collector file.
 
 ### Issue 3701
 --------------
 
-In this issue, we took a look at optimizing partitioning queries leveraing the fact that we can narrow the start and end date for a scan based on the last times in the Last Insert Table. Let's take the below query as an example.
+In this issue, we took a look at optimizing [partitioning queries](https://github.com/axibase/atsd-docs/tree/master/api/sql#partitioning), leveraging the fact that we can narrow the start and end date for a scan based on the last times in the Last 
+Insert Table. Let's take the below query as an example.
 
 ```sql
 SELECT tags.city, tags.state, value 
@@ -59,15 +62,18 @@ WITH ROW_NUMBER(tags ORDER BY datetime desc) <= 1
 ```
 
 Since the timespan is not defined in the `WHERE` clause, previously we would not apply any date filter to scanned records. 
-To optimise the query we now perform a lookup of the minimum insert time for the metric `cdc.all_deaths`, the entity `mr8w-325u`, and specified tags (`tags.city` in the above case). Since minimum insert time is `1972-05-27T00:00:00Z` we can now use it to apply time filter within the scan. A condition like `ROW_NUMBER(tags ORDER BY datetime desc) <= 1`
-means we only need the last value for each combination of tags. We can therefore skip values with a timestamp less than the minimum last insert time.
+To optimise the query we now can perform a lookup of the minimum insert time for the metric `cdc.all_deaths`, the entity `mr8w-325u`, and specified tags (`tags.city` in the above case). 
+Since the minimum insert time is `1972-05-27T00:00:00Z`, we can now use it to apply time filter within the scan. A condition like `ROW_NUMBER(tags ORDER BY datetime desc) <= 1` means we 
+only need the last value for each combination of tags. We can therefore skip values with a timestamp less than the minimum last insert time.
 
 Check out our article on [SQL queries for U.S. death statistics](https://github.com/axibase/atsd-use-cases/blob/master/USMortality/README.md). 
 
 ### Issue 3717
 --------------
 
-While Axibase Collector gathers container properties and statistics using full Docker identifiers, it sends container names as entity labels into ATSD. This makes it possible to refer to human-readable container names in graphs and alerts. There are however several orchestration frameworks which use container names to store their own (external) identifiers, for instance Mesos:
+While Axibase Collector gathers container properties and statistics using full Docker identifiers, it sends container names as entity labels into ATSD. This makes it possible to refer 
+to human-readable container names in graphs and alerts. There are however several orchestration frameworks which use container names to store their own (external) identifiers, for 
+instance [Mesos](http://mesos.apache.org/):
 
 * Container ID:
 
@@ -81,7 +87,8 @@ While Axibase Collector gathers container properties and statistics using full D
 "Name": "/mesos-cd2d0996-558b-4a49-88a0-79c41aeb098a-S2.0a36b7d9-5dfc-4963-b8ac-0e7656103782"
 ```
 
-Neither container id nor container name are user-friendly or human-readable in this case. To handle these scenarios, we added a small bit of heuristics to inherit container label from Mesos `CONTAINER_NAME` environment variables.
+In this case neither container ID nor container name are user-friendly or human-readable. To handle these kinds of scenarios, we added a small bit of heuristics to inherit the container 
+label from the Mesos `CONTAINER_NAME` environment variables. 
 
 As a result, the below container will have a label `ref-api-front` instead of `mesos-cd2d0996-558b-4a49-88a0-79c41aeb098a-S2.0a36b7d9-5dfc-4963-b8ac-0e7656103782`.
 
