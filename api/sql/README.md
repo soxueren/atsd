@@ -1461,6 +1461,8 @@ ISNULL(inputValue, altValue)
 
 The function accepts arguments with different datatypes, for example number and string `ISNULL(value, text)`.
 
+>If the datatypes are different, the database will classify the column as `JAVA_OBJECT` to the [JDBC](https://github.com/axibase/atsd-jdbc) driver.
+
 ### CASE
 
 The `CASE` expression evaluates a sequence of boolean expressions and returns a matching result expression.
@@ -1475,7 +1477,9 @@ END
 
 Each `search_expression` should evaluate to a boolean (true/false) value.
 
-The `result_expression` can be a number, a string, or an expression. Result expressions must return values of the same data type. If the datatypes are different (such as number and string), the database will raise an error.
+The `result_expression` can be a number, a string, or an expression. Result expressions may return values of different data types.
+
+>If the datatypes are different (such as number and string), the database will classify the column with `JAVA_OBJECT` to the [JDBC](https://github.com/axibase/atsd-jdbc) driver.
 
 If no `search_expression` is matched and the `ELSE` condition is not specified, the `CASE` expression returns `NULL`.
 
@@ -1929,6 +1933,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [Mathematical Functions](examples/select-math.md)
 - [String Functions](examples/string-functions.md)
 - [LOOKUP Function](examples/lookup.md)
+- [CASE Expression](examples/case.md)
 - [Column Alias](examples/alias-column.md)
 - [Table Alias](examples/alias-table.md)
 - [Escape Quotes](examples/select-escape-quote.md)
