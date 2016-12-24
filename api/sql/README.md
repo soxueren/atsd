@@ -1391,6 +1391,30 @@ GROUP BY PERIOD(1 HOUR)
 | 2016-08-25T02:00:00.000Z | 2016-08-25T03:00:00.000Z | 6.7        |
 ```
 
+In addition to formatting, the `date_format` function can be used in the `WHERE`, `GROUP BY`, and `HAVING` clauses to filter and group dates by month name, day name, or hour number.
+
+```sql
+SELECT date_format(time, 'EEE'), avg(value)
+FROM mpstat.cpu_busy
+  WHERE datetime >= current_month
+GROUP BY date_format(time, 'EEE')
+  ORDER BY 2 DESC
+```
+
+```ls
+| date_format(time,'EEE') | avg(value) |
+|-------------------------|------------|
+| Mon                     | 31.9       |
+| Wed                     | 31.8       |
+| Sun                     | 31.4       |
+| Tue                     | 31.2       |
+| Thu                     | 29.6       |
+| Sat                     | 29.6       |
+| Fri                     | 29.3       |
+```
+
+Refer to [diurnal](examples/diurnal.md) query examples.
+
 ## Mathematical Functions
 
 | **Function** | **Description** |
