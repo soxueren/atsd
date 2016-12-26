@@ -5,7 +5,7 @@
 | --- | --- | --- |
 | Nodes | 1 | > 5 |
 | Processor | 10+ GHz | 10+ GHz |
-| RAM | 4 GB (min 1 GB) | 16 GB |
+| RAM | 4 GB (min 2 GB) | 16 GB |
 | Disk Type | Magnetic | SSD |
 
 > Total Processor capacity computed as the number of cores multiplied by clock speed, e.g. 4 x 2.5GHz = 10 GHz
