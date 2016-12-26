@@ -134,3 +134,28 @@ GROUP BY date_format(time, 'EEE HH')
 | Wednesday, 11:00 | 7.4        |
 | Monday, 10:00    | 7.3        |
 ```
+
+## Example: Numeric Comparison
+
+The above example relies on the lexicographical comparison of 2-digit hours strings.
+The following alternative utilizes the `CAST` function to convert the `date_format` output to numbers in order to filter parts of the day.
+
+```sql
+SELECT date_format(time, 'EEE HH') AS 'hour_in_day',
+  percentile(75, value)
+FROM mpstat.cpu_busy
+  WHERE datetime >= previous_week
+  AND CAST(date_format(time, 'H') AS number) >= 9 AND CAST(date_format(time, 'H') AS number) < 18
+GROUP BY date_format(time, 'EEE HH')
+  ORDER BY 2 DESC
+```
+
+```
+| hour_in_day | percentile(75,value) |
+|-------------|----------------------|
+| Tue 09      | 41.8                 |
+| Tue 10      | 41.2                 |
+| Mon 12      | 40.7                 |
+| Mon 16      | 40.5                 |
+| Mon 13      | 40.4                 |
+```
