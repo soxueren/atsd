@@ -5,28 +5,28 @@ Weekly Change Log: December 5-11, 2016
 
 | Issue| Category    | Type    | Subject                         |
 |------|-------------|---------|---------------------------------|
-| 3698 | admin       | Bug     | Increased default XmX value size to 1G. | 
-| 3690 | security    | Feature | Updated role/membership/permissions settings in ATSD. When changes are made to a user's account, active sessions are automatically invalidated. |
-| 3688 | sql         | Bug     | In the `GROUP BY` clause updated status occurrences over the last 15 minutes to output integers from 0 to 5. | 
-| 3679 | email       | Bug     | Updated the email notification template to hide metric statistics if the count of the collected metric is equal to 0. | 
-| 3678 | UI          | Bug     | Placed the Name and Label fields on separate lines in the metric form to account for long metric names. | 
-| 3675 | sql         | Bug     | Added the capability to replace numeric null or `NAN` with a specified `ISNULL` integer.|  
-| 3662 | csv         | Bug     | Fixed schema-based parser from HBS. |
-| 3650 | UI          | Feature | Consolidated administrative into one interface menu. |
-| 3646 | UI          | Bug     | Updated error number displayed from 500 to 400 on the `/sql/queries/info` page. | 
-| 3642 | api-rest    | Bug     | Enabled entities to be accessed from the Metrics tab. | 
-| 3631 | sql         | Bug     | Implemented string interpolation capability in the PI server between a number and NaN values. | 
-| 3552 | rule engine | Feature | Added documentation to the coalesce function. | 
-| 3516 | sql         | Bug     | Allowed for the `IS NULL` operator to be used as a metric.label. | 
-| 3515 | sql         | Bug     | Allowed for the `IS NULL` operator to be applied to any metric tag. | 
-| 3463 | sql         | Bug     | Updated the `WITH INTERPOLATE` clause in regards to text regularization in multi join queries. |
+| 3698 | admin       | Support     | Increased the default maximum Java heap value from 512Bm to 1G. This change is required to accomodate increased requirements for in-memory processing by the SQL engine. | 
+| 3690 | security    | Feature | Modified how role/membership/permission changes are applied. When changes are made to a user's account, current active sessions are now automatically invalidated. The user cannot continue using sessions with previously cached ACLs. |
+| 3688 | sql         | Feature     | Added support for `GROUP BY value` to calculate unique occurrences of the `value` over the specified timespan. This could be useful for metrics that measure discrete characteristics, such as status codes, error codes, digital states etc. | 
+| 3679 | email       | Feature     | Cleaned up the email notification template to hide irrelevant statistics if the sample in the window is less than 1. | 
+| 3678 | UI          | Bug     | Placed the Name and Label fields on separate lines in the metric and entity forms to account for long names. | 
+| 3675 | sql         | Feature     | Added the capability to replace numeric `NAN` with another integer with the `ISNULL` function.|  
+| 3662 | csv         | Support     | Identified an issue with schema-based CSV parser. Schema-based CSV parser will not work if ATSD is launched under Java 8+.|
+| 3650 | UI          | Feature | Consolidated multiple pages under Admin menu into one page. |
+| 3646 | UI          | Bug     | Return 4xx error number instead of 500 on the `/sql/queries/info` page if the query is no longer found by id, which occurs when the server is restarted, or query plan is evicted from cache. | 
+| 3642 | api-rest    | Bug     | Not all entities for the metric are visible on Enities page. | 
+| 3631 | sql         | Bug     | `NaN` numbers and `null` strings interpolated consistently (using PREVIOUS function), similar to the PI server. | 
+| 3552 | rule engine | Feature | Implemented `coalesce` function in the rule engine to substitute missing tags, for example `coalesce([entity.label, entity.tags.name])`. | 
+| 3516 | sql         | Bug     | `IS NULL` operator supports `metric.label`. | 
+| 3515 | sql         | Bug     | `IS NULL` operator supports metric tags. | 
+| 3463 | sql         | Bug     | `WITH INTERPOLATE` correctly interpolates the `text` column in JOIN queries. |
 
 ### Collector
 
 | Issue| Category    | Type    | Subject                         |
 |------|-------------|---------|---------------------------------|
-| 3664 | docker      | Feature | Added Docker container metrics. |  
-| 3559 | jdbc        | Support | Implemented `METRIC` and `ENTITY` commands and added several user interface features in the JDBC job. | 
+| 3664 | docker      | Feature | Added new Docker container metrics for process count monitoring: `docker.process.all` and `docker.process.filtered`. |  
+| 3559 | jdbc        | Feature | Extended JDBC job so that PI server PIPoint metadata can be offloaded into ATSD. | 
 
 ### Issue 3650
 --------------
