@@ -1477,13 +1477,13 @@ AND LOWER(tags.file_system) LIKE '*root'
 
 ### ISNULL
 
-The `ISNULL` function returns `altValue` if `inputValue` is `NULL` or `NaN` (Non-A-Number) in case of numeric datatypes.
+The `ISNULL` function returns `altValue` if the `inputValue` is `NULL` or `NaN` (Non-A-Number) in case of numeric data types.
 
 ```sql
 ISNULL(inputValue, altValue)
 ```
 
-The function accepts arguments with different datatypes, for example number and string `ISNULL(value, text)`.
+The function accepts arguments with different data types, for example numbers and strings `ISNULL(value, text)`.
 
 >If the datatypes are different, the database will classify the column as `JAVA_OBJECT` to the [JDBC](https://github.com/axibase/atsd-jdbc) driver.
 
@@ -1503,7 +1503,7 @@ Each `search_expression` should evaluate to a boolean (true/false) value.
 
 The `result_expression` can be a number, a string, or an expression. Result expressions may return values of different data types.
 
->If the datatypes are different (such as number and string), the database will classify the column with `JAVA_OBJECT` to the [JDBC](https://github.com/axibase/atsd-jdbc) driver.
+>If the data types are different (such as a number and a string), the database will classify the column with `JAVA_OBJECT` to the [JDBC](https://github.com/axibase/atsd-jdbc) driver.
 
 If no `search_expression` is matched and the `ELSE` condition is not specified, the `CASE` expression returns `NULL`.
 
@@ -1558,7 +1558,7 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 
 ### CAST
 
-The `CAST` function transforms a string into a number. The number can then be used in arithmetic expressions.
+The `CAST` function transforms a string into a number. This number can then be used in arithmetic expressions.
 
 ```sql
 CAST(inputString AS Number)
@@ -1590,7 +1590,7 @@ WHERE datetime > now - 5 * MINUTE
   AND LOOKUP('tcp-status-codes', value) NOT LIKE '*success*'
 ```
 
-If the looked up key is a number provided by the `value` column or an arithmetic expression, it is formatted into a string with `#.##` pattern.
+If the looked up key is a number provided by the `value` column or an arithmetic expression, it is formatted into a string with a `#.##` pattern.
 
 ```
 1.0     -> 1
