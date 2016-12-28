@@ -15,11 +15,11 @@ Weekly Change Log: December 5-11, 2016
 | [3650](#issue-3650) | UI          | Feature | Consolidated multiple pages under the Admin menu into one page. |
 | 3646 | UI          | Bug     | Return 4xx error number instead of 500 on the `/sql/queries/info` page if the query is no longer found by id, which occurs when the server is restarted, or the query plan is evicted from cache. | 
 | 3642 | api-rest    | Bug     | Not all entities for the metric are visible on the Entities page. | 
-| 3631 | sql         | Bug     | `NaN` numbers and `null` strings interpolated consistently (using the `PREVIOUS` function), similar to the PI server. | 
+| [3631](#issue-3631) | sql         | Bug     | `NaN` numbers and `null` strings interpolated consistently (using the `PREVIOUS` function), similar to the PI server. | 
 | 3552 | rule engine | Feature | Implemented the `coalesce` function in the rule engine to substitute missing tags, for example `coalesce([entity.label, entity.tags.name])`. | 
 | [3516](#issue-3516) | sql         | Feature     | `IS NULL` operator supports `metric.label`. | 
 | [3515](#issue-3515) | sql         | Feature     | `IS NULL` operator supports metric tags. | 
-| 3463 | sql         | Bug     | `WITH INTERPOLATE` correctly interpolates the `text` column in JOIN queries. |
+| [3463](#issue-3463) | sql         | Bug     | `WITH INTERPOLATE` correctly interpolates the `text` column in JOIN queries. |
 
 ### Collector
 
