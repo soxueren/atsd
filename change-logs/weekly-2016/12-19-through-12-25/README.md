@@ -15,11 +15,11 @@ Weekly Change Log: December 19-25, 2016
 | 3718 | UI          | Bug     | Changed metric form to prevent users from saving metric names without metric name validation. |
 | 3715 | UI          | Feature | Updated styles on the account create page displayed post-installation. |
 | 3714 | UI          | Bug     | Fixed errors with the Decimal Precision input in the SQL console. |
-| [3713](#issue-3713) | sql         | Bug     | Fixed number format error raised in queries with `WHERE` clause. |
+| [3713](#issue-3713) | sql         | Bug     | Fixed number format error raised in queries with the `WHERE` clause. |
 | [3703](#issue-3703) | sql         | Feature | Added capability to display first/last sample time in windowing queries. |
 | [3697](#issue-3697) | sql         | Feature | Modified processing sequence so that the `HAVING` filter is applied after period interpolation. |
 | [3696](#issue-3696) | sql         | Bug     | Fixed issue with `ORDER BY [column-index]`. |
-| [3694](#issue-3694) | sql         | Bug     | Optimized execution of JOIN queries by applying tag filters to all tables. |
+| [3694](#issue-3694) | sql         | Bug     | Optimized execution of `JOIN` queries by applying tag filters to all tables. |
 | 3693 | UI          | Bug     | Fixed navigation issue between Query console and Query Plan. |
 | [3689](#issue-3689) | sql         | Feature | Added support for the `SELECT 1` validation query. |
 | 3687 | UI          | Bug     | Corrected User Group link on the Admin menu. |
@@ -119,7 +119,7 @@ The SQL optimizer will add a condition `AND datetime >= '2016-20-05T00:00:00Z'`,
 --------------
 
 The sequence of period interpolation and period filtering with the [HAVING](https://github.com/axibase/atsd-docs/tree/master/api/sql#having-filter) clause was modified.
-Now the `HAVING` filter is applied after [PERIOD interpolation](https://github.com/axibase/atsd-docs/tree/master/api/sql#interpolation) whereas before it was the opposite.
+Now, the `HAVING` filter is applied after [PERIOD interpolation](https://github.com/axibase/atsd-docs/tree/master/api/sql#interpolation) whereas before it was the opposite.
 
 ```sql
 SELECT date_format(period(1 MONTH)), count(value)
