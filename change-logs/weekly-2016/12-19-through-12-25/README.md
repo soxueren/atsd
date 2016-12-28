@@ -174,7 +174,7 @@ SQL Query Plan is used for diagnosing slow query response times. The plan was ex
 1) Display start and end dates for each HBase scan.</br>
 2) Display scans to the atsd_li (last insert) table, which are used to add additional filters and to determine optimal query plan.</br>
 
-![Figure 1](Images/Figure1.png) 
+![Figure 3](Images/Figure3.png) 
 
 ### Issue 3555
 --------------
