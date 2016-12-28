@@ -158,7 +158,7 @@ The query optimizer was modified to apply tag filter specified in `JOIN` queries
 [JOINs](https://github.com/axibase/atsd-docs/tree/master/api/sql#joins) in ATSD perform merging of rows on time, entity, and series tags anyway. Prior to this change, the tag filter 
 was applied only to those tables where the filter was set explicitly.
 
-![Figure 2](Figure2.png)
+![Figure 2](Images/Figure2.png)
 
 ### Issue 3689
 --------------
@@ -174,7 +174,7 @@ SQL Query Plan is used for diagnosing slow query response times. The plan was ex
 1) Display start and end dates for each HBase scan.
 2) Display scans to the atsd_li (last insert) table, which are used to add additional filters and to determine optimal query plan
 
-![Figure 1](Figure1.png)
+![Figure 1](Images/Figure1.png)
 
 ### Issue 3555
 --------------
