@@ -6,6 +6,7 @@ The date_format function can be used in the `WHERE`, `GROUP BY`, and `HAVING` cl
 * MMMMM - full month name, for example January
 * EEE - short, 3-letter, weekday name, for example Sat
 * EEEEE - full weekday name, for example Saturday
+* u - weekday number, starting with 1 for Monday
 * HH - hour of the day, 2 digit, 00 to 23.
 
 For additional patterns, refer to Java [SimpleDateFormat](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html).
@@ -42,27 +43,28 @@ GROUP BY tags.region, period(1 MONTH)
 
 ## Example: Daily Averages
 
-To calculate averages or totals for each day in the week, use date_format(time, 'EEE') function which returns short day name for each sample: Mon, Tue, Wed, Thu, Fri, Sat, Sun.
+To calculate averages or totals for each day in the week, use `date_format(time, 'EEE')` or `date_format(time, 'u')` functions.
+The `EEE` pattern returns short day name for each sample: Mon, Tue, Wed, Thu, Fri, Sat, Sun, whereas `u` pattern returns day number starting with 1 for Monday.
 
 ```sql
 SELECT date_format(time, 'EEE'),
   avg(value)
 FROM mpstat.cpu_busy
-  WHERE datetime >= current_month
-GROUP BY date_format(time, 'EEE')
-  ORDER BY 2 DESC
+  WHERE datetime >= previous_week
+GROUP BY date_format(time, 'u')
+  ORDER BY date_format(time, 'u')
 ```
 
 ```ls
 | date_format(time,'EEE') | avg(value) |
 |-------------------------|------------|
-| Mon                     | 31.9       |
-| Wed                     | 31.8       |
-| Sun                     | 31.4       |
-| Tue                     | 31.2       |
-| Thu                     | 29.6       |
-| Sat                     | 29.6       |
-| Fri                     | 29.3       |
+| Mon                     | 31.2       |
+| Tue                     | 31.1       |
+| Wed                     | 30.6       |
+| Thu                     | 29.0       |
+| Fri                     | 26.9       |
+| Sat                     | 26.6       |
+| Sun                     | 26.7       | 
 ```
 
 ## Example: Diurnal Seasonality
