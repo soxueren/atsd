@@ -1055,7 +1055,7 @@ WITH last_time_expression comparision_operator time
 ```
 
 * `time` is the pre-defined time column which represents the timestamp of the sample.
-* `comparision_operator` can be one of the following operators: `>`, `>=`, `<`, `<=`, `=`.
+* `comparision_operator` is one of the following operators: `>`, `>=`, `<`, `<=`, `=`.
 * `last_time_expression` consists of the `last_time` keyword and an optional `endtime` expression.
 
 ```sql
