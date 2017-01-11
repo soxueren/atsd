@@ -950,11 +950,11 @@ HAVING AVG(value) > 10 OR MAX(value) > 90
 
 ## Partitioning
 
-Partitioning is implemented with the `ROW_NUMBER` function, which returns the sequential number of a row within a partition, starting at 1 for the first row in each partition.
+Partitioning is implemented with the `ROW_NUMBER` function, which returns the sequential number of a row within a partition, starting with 1 for the first row in each partition.
 
-Partition is a subset of all rows in the result set grouped by entity and/or tags as specified in the `ROW_NUMBER` function. Each row in the result set may belong to only one partition.
+A partition is a subset of all rows in the result set grouped by an entity and/or tags as specified in the `ROW_NUMBER` function. Each row in the result set may belong to only one partition.
 
-For example, a result set partitioned by entity and ordered by time would have the following row numbers:
+For example, a result set partitioned by an entity and ordered by time would have the following row numbers:
 
 ```ls
 |--------------|--------------------------|------:| ROW_NUMBER
@@ -975,7 +975,7 @@ ROW_NUMBER({partitioning columns} ORDER BY {ordering columns [direction]})
 ```
 
 * {partitioning columns} can be `entity`, `tags`, or `entity, tags`
-* {ordering columns [direction]} can be any columns of the `FROM` clause with optional `ASC/DESC` direction.
+* {ordering columns [direction]} can be any columns of the `FROM` clause with an optional `ASC/DESC` direction.
 
 Examples:
 
@@ -1030,7 +1030,7 @@ GROUP BY entity
 | nurswgvml502 | 3.9        |
 ```
 
-The `ROW_NUMBER` function can be included after the `WHERE` clause as well as after the `GROUP BY` clause in which case it is be applied to grouped rows.
+The `ROW_NUMBER` function can be included after the `WHERE` clause, as well as after the `GROUP BY` clause, in which case it is be applied to grouped rows.
 
 ```sql
 SELECT entity, tags, MAX(value) -  MIN(value) AS 'Diff'
@@ -1054,15 +1054,15 @@ WITH time comparision_operator last_time_expression
 WITH last_time_expression comparision_operator time
 ```
 
-* `time` is the pre-defined time column which represents timestamp of the sample.
-* `comparision_operator` is one of the operators `>`, `>=`, `<`, `<=`, `=`.
+* `time` is the pre-defined time column which represents the timestamp of the sample.
+* `comparision_operator` is one of the following operators: `>`, `>=`, `<`, `<=`, `=`.
 * `last_time_expression` consists of the `last_time` keyword and an optional `endtime` expression.
 
 ```sql
 WITH time > last_time - 1 * MINUTE
 ```
 
-Calculate `average` for the most recent hour for each series that received data in the current_month:
+Calculate the `average` for the most recent hour for each series that received data in the current_month:
 
 ```sql
 SELECT entity, AVG(cpu_busy.value), date_format(MAX(time)) AS Last_Date
