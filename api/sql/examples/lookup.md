@@ -8,6 +8,15 @@ Replacement tables contain a collection of `key=value` mappings, specified one p
 
 ![Replacement Table](../images/replacement-table-tcp.png)
 
+## Numeric Keys
+
+If the key argument is numeric, such as in `LOOKUP('table-1', value)` case, the number is formatted with `#.##` pattern to remove fractional `.0` part from integer values.
+
+* 3.0 -> `3`
+* 3.10 -> `3.1`
+* 3.14 -> `3.14`
+* 3.1415 -> `3.14`
+
 ## Example: TCP status codes
 
 ### Replacement Table `tcp-status-codes`
@@ -77,16 +86,123 @@ FROM 'ba:phase.1'
 ### Results
 
 ```ls
-| datetime                 | metric.label | pi tag type | value     | LOOKUP('pi-pids',value) |
-|--------------------------|--------------|-------------|-----------|-------------------------|
-| 2016-11-02T17:28:36.000Z | BA:PHASE.1   | digital     | -131075.0 | Phase4                  |
-| 2016-11-02T17:39:06.000Z | BA:PHASE.1   | digital     | -131076.0 | Phase5                  |
-| 2016-11-02T17:50:06.000Z | BA:PHASE.1   | digital     | -131077.0 | Phase6                  |
-| 2016-11-02T17:55:06.000Z | BA:PHASE.1   | digital     | -131078.0 | Phase7                  |
-| 2016-11-02T18:00:06.000Z | BA:PHASE.1   | digital     | -131072.0 | Phase1                  |
-| 2016-11-02T18:20:06.000Z | BA:PHASE.1   | digital     | -131073.0 | Phase2                  |
-| 2016-11-02T18:27:36.000Z | BA:PHASE.1   | digital     | -131074.0 | Phase3                  |
-| 2016-11-02T18:49:36.000Z | BA:PHASE.1   | digital     | -131075.0 | Phase4                  |
-| 2016-11-02T18:59:06.000Z | BA:PHASE.1   | digital     | -131076.0 | Phase5                  |
-| 2016-11-02T19:09:06.000Z | BA:PHASE.1   | digital     | -131077.0 | Phase6                  |
+| datetime             | metric.label | pi tag type | value     | LOOKUP('pi-pids',value) |
+|----------------------|--------------|-------------|-----------|-------------------------|
+| 2016-11-02T17:28:36Z | BA:PHASE.1   | digital     | -131075.0 | Phase4                  |
+| 2016-11-02T17:39:06Z | BA:PHASE.1   | digital     | -131076.0 | Phase5                  |
+| 2016-11-02T17:50:06Z | BA:PHASE.1   | digital     | -131077.0 | Phase6                  |
+| 2016-11-02T17:55:06Z | BA:PHASE.1   | digital     | -131078.0 | Phase7                  |
+| 2016-11-02T18:00:06Z | BA:PHASE.1   | digital     | -131072.0 | Phase1                  |
+| 2016-11-02T18:20:06Z | BA:PHASE.1   | digital     | -131073.0 | Phase2                  |
+| 2016-11-02T18:27:36Z | BA:PHASE.1   | digital     | -131074.0 | Phase3                  |
+| 2016-11-02T18:49:36Z | BA:PHASE.1   | digital     | -131075.0 | Phase4                  |
+| 2016-11-02T18:59:06Z | BA:PHASE.1   | digital     | -131076.0 | Phase5                  |
+| 2016-11-02T19:09:06Z | BA:PHASE.1   | digital     | -131077.0 | Phase6                  |
+```
+
+## Example: Replacement Table from Metric Tag
+
+The query converts numeric values into string codes using a replacement table specified in the metric tag.
+
+### Query
+
+```sql
+SELECT datetime, metric, metric.tags.digital_set, value
+  ,LOOKUP('BatchAct', value) AS DIGSTR1
+  ,LOOKUP(metric.tags.digital_set, value) AS DIGSTR2
+FROM 'ba:active.1'
+  LIMIT 2
+```
+
+### Results
+
+```ls
+| datetime             | metric      | metric.tags.digital_set | value  | DIGSTR1  | DIGSTR2  |
+|----------------------|-------------|-------------------------|--------|----------|----------|
+| 2016-11-02T18:00:06Z | ba:active.1 | BatchAct                | -65536 | Inactive | Inactive |
+| 2016-11-02T18:10:06Z | ba:active.1 | BatchAct                | -65537 | Active   | Active   |
+```
+
+## Example: Multiple Replacement Tables from Metric Tags
+
+The query converts numeric values into string codes using different replacement tables specified in the metric tag, specific for each metric included in the query.
+
+### Query
+
+```sql
+SELECT datetime, metric, metric.tags.digital_set, value
+  ,LOOKUP(metric.tags.digital_set, value) AS DIGSTR
+FROM atsd_series
+  WHERE metric IN ('ba:active.1', 'ba:phase.1')
+AND datetime > '2016-11-02T18:00:00Z' AND datetime < '2016-11-02T18:30:00Z'
+```
+
+### Results
+
+```ls
+| datetime             | metric      | metric.tags.digital_set | value   | DIGSTR   |
+|----------------------|-------------|-------------------------|---------|----------|
+| 2016-11-02T18:00:06Z | ba:phase.1  | Phases                  | -131072 | Phase1   |
+| 2016-11-02T18:20:06Z | ba:phase.1  | Phases                  | -131073 | Phase2   |
+| 2016-11-02T18:27:36Z | ba:phase.1  | Phases                  | -131074 | Phase3   |
+| 2016-11-02T18:00:06Z | ba:active.1 | BatchAct                | -65536  | Inactive |
+| 2016-11-02T18:10:06Z | ba:active.1 | BatchAct                | -65537  | Active   |
+```
+
+## Example: Single Replacement Table for Multiple Metrics
+
+The query converts numeric values into string codes using the single replacement table whose keys are comprised of both the metric tag name (digital_set) name and the value.
+
+```ls
+...
+BatchAct:-65536=Inactive
+BatchAct:-65537=Active
+Modes:-196608=Manual
+Modes:-196609=Auto
+Modes:-196610=Cascade
+Modes:-196611=Program
+Modes:-196612=Prog-Auto
+Phases:-131072=Phase1
+Phases:-131073=Phase2
+Phases:-131074=Phase3
+Phases:-131075=Phase4
+Phases:-131076=Phase5
+Phases:-131077=Phase6
+Phases:-131078=Phase7
+Phases:-131079=Phase8
+pialarm33:-262144=.
+pialarm33:-262145=__ Lolo
+...
+```
+
+To extract all digital sets from PI server in the above format, use the following SQL query.
+
+* PI SQL query:
+
+```sql
+SELECT CONCAT(digitalset, ':', CAST(code as string), '=', name)
+  FROM pids..pids;
+```
+
+### Query
+
+```sql
+SELECT datetime, value, metric.tags.digital_set
+  , value
+  , LOOKUP('pi-all', concat(metric.tags.digital_set, ':', value)) AS DIGSTR
+FROM atsd_series
+  WHERE metric IN ('ba:active.1', 'ba:phase.1')
+AND datetime >= '2016-11-02T18:00:00Z' AND datetime < '2016-11-02T18:30:00Z'
+```
+
+### Results
+
+```ls
+| datetime             | value   | metric.tags.digital_set | value   | DIGSTR   |
+|----------------------|---------|-------------------------|---------|----------|
+| 2016-11-02T18:00:06Z | -131072 | Phases                  | -131072 | Phase1   |
+| 2016-11-02T18:20:06Z | -131073 | Phases                  | -131073 | Phase2   |
+| 2016-11-02T18:27:36Z | -131074 | Phases                  | -131074 | Phase3   |
+| 2016-11-02T18:00:06Z | -65536  | BatchAct                | -65536  | Inactive |
+| 2016-11-02T18:10:06Z | -65537  | BatchAct                | -65537  | Active   |
 ```

@@ -60,7 +60,7 @@ Example:
 ```sql
 SELECT datetime, entity, value     -- SELECT expression
   FROM "mpstat.cpu_busy"           -- query
-WHERE datetime > now - 1 * HOUR    -- WHERE clause
+WHERE datetime > NOW - 1 * HOUR    -- WHERE clause
   LIMIT 1                          -- other clauses
 ```
 
@@ -79,7 +79,7 @@ A virtual table represents a subset of records for the given metric stored by th
 ```sql
 SELECT datetime, entity, value
   FROM "mpstat.cpu_busy"
-WHERE datetime > now - 1*MINUTE
+WHERE datetime > NOW - 1*MINUTE
 ```
 
 In the example above, "mpstat.cpu_busy" table contains records for the `mpstat.cpu_busy` metric.
@@ -92,6 +92,7 @@ As an alternative to specifying metric names as table names, the `FROM` query ca
 SELECT entity, metric, datetime, value
   FROM atsd_series
 WHERE metric = 'mpstat.cpu_busy'
+-- WHERE metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user')
   AND datetime > current_hour
 ```
 
@@ -121,7 +122,7 @@ Arithmetic operators, such as `*`, `-`, `+`, `/`, and `%` (modulo), may be appli
 ```sql
 SELECT entity, datetime, value, tags.*
   FROM "df.disk_used"
-WHERE datetime > now - 15 * MINUTE
+WHERE datetime > NOW - 15 * MINUTE
   AND (entity IN ('nurswgvml007', 'nurswgvml010')
        OR tags.file_system LIKE '/dev/*'
        OR value/1024 > 100000)
@@ -207,10 +208,10 @@ New columns can be created by applying functions and arithmetic expressions to e
 SELECT t1.datetime, t1.entity, t1.value + t2.value AS cpu_sysusr
   FROM "mpstat.cpu_system" t1
   JOIN "mpstat.cpu_user" t2
-WHERE t1.datetime > now - 1*MINUTE
+WHERE t1.datetime > NOW - 1*MINUTE
 ```
 
-The list of available predefined columns may be requested with the `SELECT *` syntax, except for queries with the `GROUP BY` clause and when multiple metrics are specified from `atsd_series` table.
+The list of available predefined columns may be requested with the `SELECT *` syntax, except for queries with the `GROUP BY` clause and when multiple metrics are requested from the `atsd_series` table.
 
 ```sql
 SELECT * FROM "mpstat.cpu_busy" t1
@@ -284,6 +285,14 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 | sensor-1 | status      | 2016-10-13T10:30:00.000Z | NaN   | Shutdown by adm-user, RFC-5434 |
 ```
 
+#### Numeric Precedence
+
+If the `value` column in `atsd_series` query returns numbers for metrics with different [data types](/api/meta/metric/list.md#data-types), the prevailing data type is determined based on the following rules:
+
+1. If all data types are integer (`short`, `integer`, `long`), return the prevailing integer type.
+2. If all data types are decimal (`float`, `double`, `decimal`), return the prevailing decimal type.
+3. If data types are both integer and decimal, return `decimal` type.
+
 ### Series Tag Columns
 
 Tag values are referenced in the `SELECT` expression by specifying `tags.*`, `tags`, or `tags.{tag-name}` as the column name.
@@ -295,7 +304,7 @@ If the property is not present, the `tags.{tag-name}` expression returns `NULL`.
 ```sql
 SELECT datetime, entity, value, tags.*, tags, tags.mount_point, tags.file_system
   FROM "df.disk_used"
-WHERE entity = 'nurswgvml010' AND datetime > now - 1*MINUTE
+WHERE entity = 'nurswgvml010' AND datetime > NOW - 1*MINUTE
   ORDER BY datetime
 ```
 
@@ -312,7 +321,7 @@ To filter records with or without specified series tags, use the `IS NOT NULL` o
 ```sql
 SELECT entity, count(value), tags.*
  FROM "df.disk_used"
-WHERE datetime > now - 5 * MINUTE
+WHERE datetime > NOW - 5 * MINUTE
  AND entity = 'nurswgvml010'
  AND tags.mount_point = '/'
 GROUP BY entity, tags
@@ -471,7 +480,7 @@ The `AS` keyword is optional.
 ```sql
 SELECT tbl.value*100 AS "cpu_percent", tbl.datetime 'sample-date'
   FROM "mpstat.cpu_busy" tbl
-WHERE datetime > now - 1*MINUTE
+WHERE datetime > NOW - 1*MINUTE
 ```
 
 For aliased columns, the underlying column and table names, or expression text, are included in table schema section of the metadata.
@@ -498,12 +507,12 @@ For aliased columns, the underlying column and table names, or expression text, 
 
 ## Arithmetic Operators
 
-Arithmetic operators, including `+`, `-`, `*`, `/`, and `%` (modulo) can be applied to one or multiple numeric data type columns.
+Arithmetic operators, including `+`, `-`, `*`, `/`, and `%` (modulo) can be applied to one or multiple numeric columns.
 
 ```sql
 SELECT datetime, SUM(value), SUM(value + 100) / 2
   FROM gc_invocations_per_minute
-WHERE datetime > now - 10 * MINUTE
+WHERE datetime > NOW - 10 * MINUTE
   GROUP BY period(2 MINUTE)
 ```
 
@@ -511,7 +520,7 @@ WHERE datetime > now - 10 * MINUTE
 SELECT AVG(metric1.value*2), SUM(metric1.value + metric2.value)
   FROM metric1
   JOIN metric2
-WHERE metric1.datetime > now - 10 * MINUTE
+WHERE metric1.datetime > NOW - 10 * MINUTE
 ```
 
 The modulo operator `%` returns the remainder of one number divided by another, for instance `14 % 3` (= 2).
@@ -520,13 +529,13 @@ The modulo operator `%` returns the remainder of one number divided by another, 
 
 ### LIKE Expression
 
-`?` and `*` wildcards are supported in `LIKE` expressions with backslash available as an escape character.
+`?` and `*` wildcards are supported in `LIKE` expressions with backslash `\` available as an escape character.
 
 ```sql
 SELECT datetime, entity, value, tags.mount_point, tags.file_system
   FROM "df.disk_used_percent"
 WHERE tags.file_system LIKE '/dev/*'
-  AND datetime > now - 1*HOUR
+  AND datetime > NOW - 1*HOUR
 ```
 
 ### REGEX Expression
@@ -537,7 +546,7 @@ The `REGEX` expression matches column value against a [regex](https://docs.oracl
 SELECT datetime, entity, value, tags.mount_point, tags.file_system
   FROM "df.disk_used_percent"
   WHERE tags.file_system REGEX '.*map.*|.*mnt.*'
-  AND datetime > now - 1*HOUR
+  AND datetime > NOW - 1*HOUR
 ```
 
 `REGEX` can be used to match a complex condition or to conveniently collapse multiple `LIKE` expressions.
@@ -1212,7 +1221,7 @@ This is typically the case when multiple metrics are inserted with one command o
 However, when merging records for irregular metrics collected by independent sources, `JOIN` results may contain a small subset of rows with coincidentally identical times.
 
 ```sql
-SELECT t1.datetime, t1.entity, t1.value as cpu, t2.value as mem
+SELECT t1.datetime, t1.entity, t1.value AS cpu, t2.value AS mem
   FROM "mpstat.cpu_busy" t1
   JOIN "meminfo.memfree" t2
 WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:00Z'
@@ -1278,7 +1287,7 @@ GROUP BY t1.entity, t1.tags, t2.tags, t1.PERIOD(1 MINUTE)
 To combine all records from joined tables, use `OUTER JOIN`, which returns rows with equal time, entity, and tags as well as rows from one table for which no rows from the other satisfy the join condition.
 
 ```sql
-SELECT t1.datetime, t1.entity, t1.value as cpu, t2.value as mem
+SELECT t1.datetime, t1.entity, t1.value AS cpu, t2.value AS mem
   FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:00Z'
@@ -1300,7 +1309,7 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 To regularize the series, apply `GROUP BY` with period aggregation and apply one of statistical functions to return one value for the period for each series.
 
 ```sql
-SELECT t1.datetime, t1.entity, AVG(t1.value) as avg_cpu, AVG(t2.value) as avg_mem
+SELECT t1.datetime, t1.entity, AVG(t1.value) AS avg_cpu, AVG(t2.value) AS avg_mem
   FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime >= '2016-06-16T13:02:40Z' AND t1.datetime < '2016-06-16T13:10:00Z'
@@ -1321,7 +1330,7 @@ The choice of statistical function to use for value columns depends on the use c
 `AVG` and percentile functions would smooth the values, whereas the `LAST` or `FIRST` functions would select a subset of raw values in a downsampling effect.
 
 ```sql
-SELECT t1.datetime, t1.entity, LAST(t1.value) as cpu, LAST(t2.value) as mem
+SELECT t1.datetime, t1.entity, LAST(t1.value) AS cpu, LAST(t2.value) AS mem
   FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime >= '2016-06-16T13:02:40Z' AND t1.datetime < '2016-06-16T13:10:00Z'
@@ -1401,7 +1410,7 @@ SELECT entity, datetime, metric.timeZone AS 'Metric TZ', entity.timeZone AS 'Ent
   date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', 'PDT') AS ' PDT t/z',
   date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', AUTO) AS 'AUTO: CST' -- nurswgvml006 is in CST
 FROM mpstat.cpu_busy
-  WHERE datetime > now - 5 * MINUTE
+  WHERE datetime > NOW - 5 * MINUTE
   AND entity = 'nurswgvml006'
   LIMIT 1
 ```
@@ -1487,7 +1496,7 @@ Refer to [diurnal](examples/diurnal.md) query examples.
 SELECT value, ABS(value), CEIL(value), FLOOR(value), ROUND(value), MOD(value, 3),
   POWER(value, 2), EXP(value), LN(value), LOG(10, value), SQRT(value)
   FROM mpstat.cpu_busy
-WHERE datetime >= now - 1 * MINUTE
+WHERE datetime >= NOW - 1 * MINUTE
   AND entity = 'nurswgvml007'
 ```
 
@@ -1506,15 +1515,15 @@ WHERE datetime >= now - 1 * MINUTE
 | `LOWER(s)` | Converts characters in a specified string to lower case. |
 | `REPLACE(s-1, s-2, s-3)` | Replaces all occurrences of `s-2` with `s-3` in a specified string `s-1`.<br>If `s-2` is not found, the function returns the original string `s-1`.|
 | `LENGTH(s)` | Number of characters in a specified string. |
-| `CONCAT (s-1, s-2 [, s-N] )` | Concatenates multiple strings into one string. <br>`NULL` values are concatenated as empty strings.|
+| `CONCAT (s-1, s-2 [, s-N] )` | Concatenates multiple strings into one string. <br>`NULL` values are concatenated as empty strings.<br>The function also accepts numeric values which are converted to strings using `#.##` pattern. |
 | `LOCATE(s-1, s-2 [, start])` | Searches for **first** string `s-1` in the second string `s-2`.<br>Returns the position at which `s-1` is found in `s-2`, after optional `start` position. <br>The first character has a position of 1. The function returns 0 if string `s-1` is not found. |
 | `SUBSTR(str, start[, length])` | Substring of `str` starting at `start` position with maximum length of `length`. <br>The first character has a position of 1. <br>`start` position of 0 is processed similarly to position 1.<br>If `length` is not specified or is 0, the function returns the substring beginning with `start` position.|
 
 ```sql
-SELECT datetime, UPPER(REPLACE(entity, 'nurswg', '')) as 'entity', value,
-  SUBSTR(tags.file_system, LOCATE('vg', tags.file_system)) as fs
+SELECT datetime, UPPER(REPLACE(entity, 'nurswg', '')) AS 'entity', value,
+  SUBSTR(tags.file_system, LOCATE('vg', tags.file_system)) AS fs
 FROM disk_used
-  WHERE datetime > now - 1*MINUTE
+  WHERE datetime > NOW - 1*MINUTE
 AND LOWER(tags.file_system) LIKE '*root'
   ORDER BY datetime
 ```
@@ -1632,6 +1641,8 @@ The `LOOKUP` function translates the key into a corresponding value using the sp
 LOOKUP(replacementTable, key)
 ```
 
+If the key is numeric, such as in `LOOKUP('table-1', value)` case, the number is formatted with `#.##` pattern to remove fractional `.0` part from integer values stored as decimals.
+
 * Dictionary
 
 The primary purpose of a replacement table is to act as a dictionary for decoding series tags/values.
@@ -1639,7 +1650,7 @@ The primary purpose of a replacement table is to act as a dictionary for decodin
 ```sql
 SELECT datetime, entity, ISNULL(LOOKUP('tcp-status-codes', value), value)
   FROM 'docker.tcp-connect-status'
-WHERE datetime > now - 5 * MINUTE
+WHERE datetime > NOW - 5 * MINUTE
   AND LOOKUP('tcp-status-codes', value) NOT LIKE '*success*'
 ```
 
@@ -1683,10 +1694,10 @@ Albuquerque,NM=559121
 ```
 
 ```sql
-SELECT date_format(time, 'yyyy-MM-dd') as 'date', value, tags.city, tags.state,
+SELECT date_format(time, 'yyyy-MM-dd') AS 'date', value, tags.city, tags.state,
   LOOKUP('us-region', tags.region) AS 'region',
-  LOOKUP('city-size', concat(tags.city, ',', tags.state)) AS 'population',
-  value/CAST(LOOKUP('city-size', concat(tags.city, ',', tags.state)) AS Number)*1000 AS 'cases_per_pop'
+  LOOKUP('city-size', CONCAT(tags.city, ',', tags.state)) AS 'population',
+  value/CAST(LOOKUP('city-size', CONCAT(tags.city, ',', tags.state)) AS Number)*1000 AS 'cases_per_pop'
 FROM cdc.pneumonia_cases
   WHERE tags.city = 'Boston'
 ORDER BY datetime DESC
@@ -1710,7 +1721,7 @@ Tag column values are **case-sensitive**.
 ```sql
 SELECT metric, entity, datetime, value, tags.*
   FROM df.disk_used
-WHERE datetime > now - 5 * MINUTE
+WHERE datetime > NOW - 5 * MINUTE
   AND entity = 'NurSwgvml007' -- case-INsensitive
   AND tags.file_system = '/dev/mapper/vg_nurswgvml007-lv_root' -- case-sensitive
 ```
