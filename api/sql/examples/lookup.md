@@ -102,7 +102,7 @@ FROM 'ba:phase.1'
 
 ## Example: Replacement Table from Metric Tag
 
-This query converts numeric values into string codes using a replacement table specified in the metric tag.
+The query below converts numeric values into string codes using a replacement table specified in the metric tag.
 
 ### Query
 
