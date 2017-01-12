@@ -291,7 +291,7 @@ If the `value` column in an `atsd_series` query returns numbers for metrics with
 
 1. If all data types are integers (`short`, `integer`, `long`), the prevailing integer type is returned.
 2. If all data types are decimals (`float`, `double`, `decimal`), the prevailing decimal type is returned.
-3. If the data types contain both integers and decimals, the `decimal` type is returned.
+3. If the data types contains both integers and decimals, the `decimal` type is returned.
 
 ### Series Tag Columns
 
