@@ -189,7 +189,7 @@ WHERE datetime > previous_minute
 ### Issue 3721
 -------------
 
-The `LIKE` operator was optimized to filter out series using the last insert table. The following query now provides similar performance as `tags.city = 'Philadelphia'`.
+The `LIKE` operator was optimized to filter out series using the last insert table. The following query now provides similar performance such as for `tags.city = 'Philadelphia'`.
 
 ```sql
 SELECT count(*)
