@@ -260,7 +260,7 @@ FROM pipoint..pipoint2
 ### Issue 3754
 -------------
 
-Fixed an issue were columns were not being created for series with statistic and wildcard match: https://apps.axibase.com/chartlab/506da7c3
+Fixed an issue were columns were not being created for series with a statistic and wildcard match: https://apps.axibase.com/chartlab/506da7c3
 
 ### Issue 3654
 -------------
@@ -279,4 +279,4 @@ Updated charts to display series if requested for an entity group or with an ent
 ### Issue 3143
 -------------
 
-Fixed an issue where value and time columns of series with shorter period were not being displayed: https://apps.axibase.com/chartlab/adce7a9c
+Fixed an issue where the value and time columns of series with shorter period were not being displayed: https://apps.axibase.com/chartlab/adce7a9c
