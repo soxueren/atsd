@@ -1620,15 +1620,18 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 
 ### CAST
 
-The `CAST` function transforms a string into a number. This number can then be used in arithmetic expressions.
+The `CAST` function transforms a string into a number, or a number into a string. 
 
 ```sql
-CAST(inputString AS Number)
+CAST(inputString AS number)
+CAST(inputNumber AS string)
 ```
+
+The returned number can be used in arithmetic expressions, whereas the returned string can be passed as an argument into string functions.
 
 ```sql
 SELECT datetime, value, entity, tags,
-  value/CAST(LOOKUP('disk-size', concat(entity, ',', tags.file_system, ',', tags.mount_point)) AS Number) AS 'pct_used'
+  value/CAST(LOOKUP('disk-size', CONCAT(entity, ',', tags.file_system, ',', tags.mount_point)) AS number) AS 'pct_used'
 FROM disk.stats.used
   WHERE datetime >= CURRENT_HOUR
 ```
