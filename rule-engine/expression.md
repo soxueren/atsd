@@ -33,7 +33,7 @@ precedence over expression.
 `windowStartTime()` | Time when the first command was received by the window, in UNIX milliseconds.
 `milliseconds(string isodate)` | Converts ISO8601 date string into epoch time in milliseconds.
 `seconds(string isodate)` | Converts ISO8601 date string into epoch time in seconds.
-`date(string isodate)` | Converts ISO8601 date string into [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) date object. The object can return [numeric codes](https://docs.oracle.com/javase/7/docs/api/constant-values.html#java.util) or string names for calendar constants.
+`date(string isodate)` | Converts ISO8601 date string into [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) date object. The object can return [numeric codes](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTimeConstants.html) or string names for calendar constants.
 
 ```java
 /*
@@ -43,9 +43,9 @@ precedence over expression.
   timestamp - milliseconds(property('docker.container::startedAt')) >  5*60000
 
 /*
-  Return true if the specified date is not Sunday
+  Return true if the specified date is a working day
 */
-  property('config::deleted')).dayOfWeek().get() != 1
+  property('config::deleted')).dayOfWeek().get() < 6
 ```
 
 
