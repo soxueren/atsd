@@ -111,7 +111,7 @@ Support was added for the text field (named `x`) in Data API methods for series 
 
 New chart functions `getTags()` and `getSeries()` provide a way to load series tags from the server as an alternative to using Freemarker functions and to specifying tag names in configuration manually.
 
-```ls
+```javascript
 # Option 1: Specify tags manually
 list disks = sda, sda1, sda2, sda3, sda4, sda5
 
@@ -191,7 +191,7 @@ If the value column in an `atsd_series` query returns numbers for metrics with d
 2. If all data types are decimals (float, double, decimal), the prevailing decimal type is returned.
 3. If the data types contain both integers and decimals, the decimal type is returned.
 
-Sample `atsd_series` query where datatype of the `value` column will be set to **decimal** based on rule `#3` above. 
+Sample `atsd_series` query where datatype of the `value` column will be set to **decimal** based on rule `#3` above.
 
 ```sql
 SELECT datetime, entity, metric, value
