@@ -1,5 +1,5 @@
 # Administration
-- [Deployment](deploymentm.md#deployment)
+- [Deployment](deployment.md#deployment)
 - [Remote HBase Installation](../installation/remote-hbase-installation.md)
 - [Setup Email Client](setting-up-email-client.md#setting-up-the-email-client)
 - [User Authentication](user-authentication.md#user-authentication)
