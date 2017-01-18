@@ -82,14 +82,18 @@ FROM 'ba:active.1'
 
 Previously, the [`SELECT 1`](/api/sql#validation-query) validation query didn't return any rows except the header.
 
+```ls
 | 1 |
 |---|
+```
 
 The `SELECT 1` query has been updated to return both the header as well as one row containing all the corresponding columns included in the `SELECT` expression.
 
+```ls
 | 1 |
 |---|
 | 1 |
+```
 
 ### Issue 3480
 --------------
@@ -132,13 +136,13 @@ The requests are performed by the browser in synchronous mode. The `getSeries` f
 
 `getTags()` syntax:
 
-```ls
+```javascript
 getTags( metric, tagName [, entity, [ , minInsertDate [ , maxInsertDate [ , url ] ] ] ] )
 ```
 
 `getTags()` example: https://apps.axibase.com/chartlab/5010c220/2
 
-```ls
+```javascript
 getSeries( metric, [, entity, [ , minInsertDate [ , maxInsertDate [ , url ] ] ] ] )
 ```
 
@@ -191,7 +195,7 @@ If the value column in an `atsd_series` query returns numbers for metrics with d
 2. If all data types are decimals (float, double, decimal), the prevailing decimal type is returned.
 3. If the data types contain both integers and decimals, the decimal type is returned.
 
-Sample `atsd_series` query where datatype of the `value` column will be set to **decimal** based on rule `#3` above.
+The following sample `atsd_series` query will return  `value` column set to **decimal** data type based on rule `#3` above.
 
 ```sql
 SELECT datetime, entity, metric, value
