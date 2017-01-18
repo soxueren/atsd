@@ -23,29 +23,36 @@ Weekly Change Log: December 12-18, 2016
 | [3685](#issue-3685)     | docker          | Feature         | Added a setting to remove deleted records from ATSD after a period of time. Containers can be removed after a certain number of days, images/volumes/networks can removed instantly. |
 | 3684     | UI              | Bug             | Added Enable/Disable/Run buttons on the job list page to change status or run multiple jobs at a time using check boxes.                             |
 
+## ATSD
 
-### Issue 3685
+### Issue 3704
 --------------
 
-Recently added to the [`docker`](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/docker.md#docker-job) job in Collector is the ability to remove deleted records in ATSD for objects that no longer exist in Docker itself.
+```sql
+SELECT tavg.tags.type, 
+    median(tmed.value), 
+    last(tmed.value),
+    last(tmed.value)/median(tmed.value)
+FROM "jmeter.ok.avg" tavg
+    JOIN "jmeter.ok.pct50" tmed
+WHERE tavg.entity = "hbs.axibase.com"
+    AND tavg.datetime >= current_day - 10*day
+GROUP BY tavg.tags.type
+  ORDER BY last(tmed.value) DESC
+```
 
-![Figure 1](Figure1.png)
+### Issue 3702
+--------------
 
-This capability is useful to purge ATSD of containers that no longer exist in Docker, for instance containers that existed only for a few minutes during image build stage, or containers
-that executed short-term tasks and were removed with the `docker rm` command. Containers with a `deleted` status will initially be retained in ATSD for the specified time interval (for
-example 50 days in the above image). The status of these containers is marked as `deleted`, as shown in the image below.
-
-![Figure 2](Figure2.png)
-
-By default such records with the status `deleted` are not actually removed from ATSD, potentially leaving unnecessary records in ATSD. To delete containers after a certain number of days, enter in a positive integer.
-
-* `Retain deleted container records, days` : containers with a `deleted` status will initially be retained in ATSD for the specified time interval. The status of these containers is marked as `deleted`. After the interval has passed, the containers will be permanently removed from ATSD.
-
-To remove deleted image/volume/network records, enable the `Retain deleted image/volume/network records` checkbox.
-
-* `Remove deleted image/volume/network records` : removes images/volumes/networks with a `deleted` status from ATSD.
-
-The deletion occurs at the same time as the property check interval. All deletions are logged to collector file.
+```sql
+SELECT date_format(time, 'yyyy-MM-dd') as 'date', 
+  tags.city, tags.state, tags.region, sum(value)
+FROM cdc.all_deaths
+  WHERE entity = 'mr8w-325u' and tags.city IS NOT NULL
+GROUP BY entity, tags
+  WITH time >= last_time - 4*week
+ORDER BY sum(value) desc
+```
 
 ### Issue 3701
 --------------
@@ -68,6 +75,15 @@ Since the minimum insert time in the above example is `1972-05-27T00:00:00Z`, we
 only need the last value for each combination of tags. We can therefore skip values with a timestamp less than the minimum last insert time.
 
 Check out our article on [SQL queries for U.S. death statistics](https://github.com/axibase/atsd-use-cases/blob/master/USMortality/README.md).
+
+### Issue 3325
+--------------
+
+```sql
+SELECT count(*), count(value), count(entity) FROM cpu_busy WHERE datetime > previous_minute GROUP BY entity
+```
+
+## Collector
 
 ### Issue 3717
 --------------
@@ -135,38 +151,25 @@ Docker `inspect` snippet for a Mesos-managed container:
        ]
 ```
 
-### Issue 3704
+### Issue 3685
 --------------
 
-```sql
-SELECT tavg.tags.type, 
-    median(tmed.value), 
-    last(tmed.value),
-    last(tmed.value)/median(tmed.value)
-FROM "jmeter.ok.avg" tavg
-    JOIN "jmeter.ok.pct50" tmed
-WHERE tavg.entity = "hbs.axibase.com"
-    AND tavg.datetime >= current_day - 10*day
-GROUP BY tavg.tags.type
-  ORDER BY last(tmed.value) DESC
-```
+Recently added to the [`docker`](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/docker.md#docker-job) job in Collector is the ability to remove deleted records in ATSD for objects that no longer exist in Docker itself.
 
-### Issue 3702
---------------
+![Figure 1](Figure1.png)
 
-```sql
-SELECT date_format(time, 'yyyy-MM-dd') as 'date', 
-  tags.city, tags.state, tags.region, sum(value)
-FROM cdc.all_deaths
-  WHERE entity = 'mr8w-325u' and tags.city IS NOT NULL
-GROUP BY entity, tags
-  WITH time >= last_time - 4*week
-ORDER BY sum(value) desc
-```
+This capability is useful to purge ATSD of containers that no longer exist in Docker, for instance containers that existed only for a few minutes during image build stage, or containers
+that executed short-term tasks and were removed with the `docker rm` command. Containers with a `deleted` status will initially be retained in ATSD for the specified time interval (for
+example 50 days in the above image). The status of these containers is marked as `deleted`, as shown in the image below.
 
-### Issue 3325
---------------
+![Figure 2](Figure2.png)
 
-```sql
-SELECT count(*), count(value), count(entity) FROM cpu_busy WHERE datetime > previous_minute GROUP BY entity
-```
+By default such records with the status `deleted` are not actually removed from ATSD, potentially leaving unnecessary records in ATSD. To delete containers after a certain number of days, enter in a positive integer.
+
+* `Retain deleted container records, days` : containers with a `deleted` status will initially be retained in ATSD for the specified time interval. The status of these containers is marked as `deleted`. After the interval has passed, the containers will be permanently removed from ATSD.
+
+To remove deleted image/volume/network records, enable the `Retain deleted image/volume/network records` checkbox.
+
+* `Remove deleted image/volume/network records` : removes images/volumes/networks with a `deleted` status from ATSD.
+
+The deletion occurs at the same time as the property check interval. All deletions are logged to collector file.

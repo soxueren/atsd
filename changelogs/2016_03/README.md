@@ -19,7 +19,7 @@ Weekly Change Log: November 28-December 4, 2016
 | 3617      | UI              | Bug      | Corrected date parsing issue on Export Data page. |
 | [3615](#issue-3615)      | api-network     | Feature  | Added the new fields `minValue` and `maxValue` to the Metric class. |
 | [3601](#issue-3601)      | sql             | Bug      | Optimized execution time for queries with arithmetic expressions. |
-| [3600](#issue-3600)      | sql             | Bug      | Fixed different results of aggregation functions with and without the `LIMIT` clause. |
+| 3600      | sql             | Bug      | Fixed different results of aggregation functions with and without the `LIMIT` clause. |
 | [3592](#issue-3592)      | security        | Feature  | Added Trust SSL Certificate field to LDAP configuration form. |
 | [3583](#issue-3583)      | security        | Feature  | Added 'Create Accounts' integration feature to LDAP. |
 | 3582      | security        | Feature  | Enabled copying user account attributes from ATSD into LDAP. |
@@ -47,7 +47,7 @@ Weekly Change Log: November 28-December 4, 2016
 |-----------|-----------------|----------|----------------------------------------------------------------------------|
 | 3523      | property        | Bug      | Set format-number to false by default to let users enable it explicitly at the widget or column level. |
 
-
+## ATSD
 
 ### Issue 3677
 --------------
@@ -81,6 +81,15 @@ ORDER BY date_format(time, 'MM')
 
 Refer to [diurnal](/api/sql/examples/diurnal.md) query examples.
 
+### Issue 3674
+--------------
+
+```sql
+SELECT count(t1.value)
+  FROM cdc.all_deaths t1
+WHERE t1.entity = 'mr8w-325u'
+  AND t1.tags.city = 'Baton Rouge'
+```
 
 ### Issue 3673
 --------------
@@ -264,6 +273,8 @@ The Enterprise Edition now supports LDAP authentication to simplify and centrali
 
 [https://github.com/axibase/grafana-data-source](https://github.com/axibase/grafana-data-source)
 
+## Collector
+
 ### Issue 3644
 --------------
 
@@ -272,12 +283,3 @@ list of containers retrieved by the Docker job.
 
 ![Figure 3](Images/Figure3.png)
 
-### Issue 3674
---------------
-
-```sql
-SELECT count(t1.value)
-  FROM cdc.all_deaths t1
-WHERE t1.entity = 'mr8w-325u'
-  AND t1.tags.city = 'Baton Rouge'
-```

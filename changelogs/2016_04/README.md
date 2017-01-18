@@ -28,6 +28,36 @@ Weekly Change Log: December 5-11, 2016
 | [3664](#issue-3664) | docker      | Feature | Added new Docker container metrics for process count monitoring: `docker.process.all` and `docker.process.filtered`. |  
 | [3559](#issue-3559) | jdbc        | Feature | Extended JDBC job so that PI server PIPoint metadata can be offloaded into ATSD. | 
 
+## ATSD
+
+### Issue 3690
+--------------
+
+In previous versions of ATSD, the user's role, group membership, and entity permissions were cached while the user's session was active. If the user's authorization was changed by an 
+administrator, it would not apply until the user's active sessions would timeout or until the user re-logged into the application. We updated ATSD so that the user's 
+active sessions are invalided instantly if the authorization is changed by an administrator. As a result, the administrator doesn't have to manually request the user to logout in order to 
+apply any new settings. In addition, the administrator is now able to view which users are online.
+
+![Figure 5](Images/Figure5.png)
+
+### Issue 3688
+--------------
+
+```sql
+SELECT value AS 'code', ISNULL(LOOKUP('tcp-status-codes', value), value) AS 'name', COUNT(value)
+  FROM 'docker.tcp-connect-status'
+WHERE datetime > now - 15 * MINUTE
+  GROUP BY value
+```
+
+### Issue 3675
+--------------
+
+```sql
+SELECT ISNULL(value, -1)
+FROM test_is_null
+```
+
 ### Issue 3650
 --------------
 
@@ -60,72 +90,6 @@ The administrative interface in ATSD has been simplified by consolidating multip
    ![Figure 4](Images/Figure4.png)
 
    The section displays Current and Start times, as well as the applicable Time Zone.
-
-### Issue 3690
---------------
-
-In previous versions of ATSD, the user's role, group membership, and entity permissions were cached while the user's session was active. If the user's authorization was changed by an 
-administrator, it would not apply until the user's active sessions would timeout or until the user re-logged into the application. We updated ATSD so that the user's 
-active sessions are invalided instantly if the authorization is changed by an administrator. As a result, the administrator doesn't have to manually request the user to logout in order to 
-apply any new settings. In addition, the administrator is now able to view which users are online.
-
-![Figure 5](Images/Figure5.png)
-
-### Issue 3664
---------------
-
-In Collector, the following metrics were added for each active container. These metrics are collected only when the Docker command `TOP` is enabled. 
-
-![Figure 6](Images/Figure6.png)
-
-If the container was running in a prior iteration, and is not running in the next iteration, 0 will be sent for both all and filtered metrics.
-
-![Figure 7](Images/Figure7.png)
-
-![Figure 8](Images/Figure8.png)
-
-### Issue 3559
---------------
-
-`METRIC` and `ENTITY` commands have been implemented in the JDBC job to allow you to configure collected metrics and entities in ATSD. 
-
-![Figure 9](Images/Figure9.png)
-
-Additionally, some user interface improvements were recently made to the JDBC configuration page:
-
-* Tooltips were added to help describe form fields.
-* The number of iterated rows now does not exceed 1000 in a test run, even if the JDBC driver does not support setting the `maxRows` parameter.
-* Unified number formatting: unnecessary zeroes in the fractional part of floating-point numbers are not shown.
-* Metric names are generated in lower-case, just as they will be saved in ATSD.
-
-As a result, PI tags can be retrieved using the JDBC job, and a [tutorial](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/examples/pi/README.md) 
-is provided showing you how to configure the task.
-
-#### PI Server Tag Information
-
-![Figure 10](Images/Figure10.png)
-
-#### ATSD Metric Information
-
-![Figure 11](Images/Figure11.png)
-
-### Issue 3688
---------------
-
-```sql
-SELECT value AS 'code', ISNULL(LOOKUP('tcp-status-codes', value), value) AS 'name', COUNT(value)
-  FROM 'docker.tcp-connect-status'
-WHERE datetime > now - 15 * MINUTE
-  GROUP BY value
-```
-
-### Issue 3675
---------------
-
-```sql
-SELECT ISNULL(value, -1)
-FROM test_is_null
-```
 
 ### Issue 3631
 --------------
@@ -168,3 +132,43 @@ SELECT t1.datetime, t1.entity, t1.value, t2.value, t3.value, t4.value, t5.value,
 WHERE t1.datetime >= '2016-10-04T02:00:00Z' AND t2.datetime <= '2016-10-04T02:10:00Z'
 WITH INTERPOLATE(60 SECOND, AUTO, OUTER, EXTEND, START_TIME)
 ```
+
+## Collector
+
+### Issue 3664
+--------------
+
+In Collector, the following metrics were added for each active container. These metrics are collected only when the Docker command `TOP` is enabled. 
+
+![Figure 6](Images/Figure6.png)
+
+If the container was running in a prior iteration, and is not running in the next iteration, 0 will be sent for both all and filtered metrics.
+
+![Figure 7](Images/Figure7.png)
+
+![Figure 8](Images/Figure8.png)
+
+### Issue 3559
+--------------
+
+`METRIC` and `ENTITY` commands have been implemented in the JDBC job to allow you to configure collected metrics and entities in ATSD. 
+
+![Figure 9](Images/Figure9.png)
+
+Additionally, some user interface improvements were recently made to the JDBC configuration page:
+
+* Tooltips were added to help describe form fields.
+* The number of iterated rows now does not exceed 1000 in a test run, even if the JDBC driver does not support setting the `maxRows` parameter.
+* Unified number formatting: unnecessary zeroes in the fractional part of floating-point numbers are not shown.
+* Metric names are generated in lower-case, just as they will be saved in ATSD.
+
+As a result, PI tags can be retrieved using the JDBC job, and a [tutorial](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/examples/pi/README.md) 
+is provided showing you how to configure the task.
+
+#### PI Server Tag Information
+
+![Figure 10](Images/Figure10.png)
+
+#### ATSD Metric Information
+
+![Figure 11](Images/Figure11.png)

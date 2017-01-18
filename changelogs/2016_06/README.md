@@ -38,6 +38,31 @@ Weekly Change Log: December 19-25, 2016
 | 3686 | core        | Support | Added a list of pre-configured jobs and their xml files [here](https://github.com/axibase/axibase-collector-docs/blob/updating-collector-docs/docker-job-autostart.md#autostart-job-from-file). |
 | 3571 | admin       | Bug     | Modified Dockerfile to speed up Collector application startup at the expense of a slight larger image size. |
 
+## ATSD
+
+### Issue 3737
+--------------
+
+```sql
+SELECT entity, tags.*, value, datetime
+  FROM disk_used
+WHERE datetime > now - 1 * day
+  AND entity = 'nurswgvml501'
+  WITH ROW_NUMBER(entity, tags ORDER BY time DESC) <= 1
+```
+
+### Issue 3735
+--------------
+
+```sql
+SELECT entity, avg(value), ABS((last(value) / avg(value) - 1)*100)
+  FROM cpu_busy
+WHERE datetime > previous_minute
+  AND ABS(value) > 0
+GROUP BY entity
+  HAVING ABS((last(value) / avg(value) - 1)*100) > 0
+```
+
 ### Issue 3727
 -------------
 
@@ -67,30 +92,6 @@ SELECT *
 LIMIT 10
 ```
 
-### Issue 3703
---------------
-
-Now aggregate functions such as `MAX`, `MIN`, and `DELTA` can be applied to the `time` column, which returns the sampling time in Unix milliseconds.
-One of the use cases is to display the most recent time in windowing queries where the [last_time](https://github.com/axibase/atsd-docs/tree/master/api/sql#last_time-syntax) function can be utilized to select data for a sliding interval, such as the most recent 4 weeks for each series in the example below.
-
-```sql
-SELECT tags.city, tags.state, sum(value), date_format(max(time)) as Last_Date
-  FROM dmv.incidents
-GROUP BY entity, tags
-  WITH time > last_time - 2*week
-ORDER BY max(time)
-```
-
-```ls
-| tags.city    | tags.state | sum(value) | Last_Date                |
-|--------------|------------|------------|--------------------------|
-| Fort Worth   | TX         | 411        | 2009-01-31T00:00:00.000Z |
-| Philadelphia | PA         | 53882      | 2012-11-24T00:00:00.000Z |
-| Pittsburgh   | PA         | 38926      | 2015-06-27T00:00:00.000Z |
-| New Haven    | CT         | 13311      | 2016-07-16T00:00:00.000Z |
-| Washington   | DC         | 41937      | 2016-08-06T00:00:00.000Z |
-```
-
 ### Issue 3719
 --------------
 
@@ -114,6 +115,55 @@ For example, if we have 3 series with the following last insert dates:
 * C - 2016-12-20
 
 The SQL optimizer will add a condition `AND datetime >= '2016-20-05T00:00:00Z'`, even if it is not set in the query.
+
+### Issue 3713
+--------------
+
+```sql
+SELECT tot.datetime, tot.tags.city as 'city', tot.tags.state as 'state',
+ tot.value - t1.value - t24.value - t44.value - t64.value - t64o.value as 'other_deaths',
+ t1.value as 'infant_deaths',
+ t24.value as '1-24_deaths',
+ t44.value as '25-44_deaths',
+ t64.value as '45-64_deaths',
+ t64o.value as '64+_deaths',
+ tot.value as 'all_deaths'
+FROM cdc.all_deaths tot
+ JOIN cdc._1_year t1
+ JOIN cdc._1_24_years t24
+ JOIN cdc._25_44_years t44
+ JOIN cdc._54_64_years t64
+ JOIN cdc._65_years t64o
+WHERE tot.entity = 'mr8w-325u'
+ AND tot.tags.city = 'New York'
+ AND tot.datetime > '2016-08-27T00:00:00Z'
+ AND (tot.value - t1.value - t24.value - t44.value - t64.value - t64o.value) != 0
+OPTION (ROW_MEMORY_THRESHOLD 500000)
+```
+
+### Issue 3703
+--------------
+
+Now aggregate functions such as `MAX`, `MIN`, and `DELTA` can be applied to the `time` column, which returns the sampling time in Unix milliseconds.
+One of the use cases is to display the most recent time in windowing queries where the [last_time](https://github.com/axibase/atsd-docs/tree/master/api/sql#last_time-syntax) function can be utilized to select data for a sliding interval, such as the most recent 4 weeks for each series in the example below.
+
+```sql
+SELECT tags.city, tags.state, sum(value), date_format(max(time)) as Last_Date
+  FROM dmv.incidents
+GROUP BY entity, tags
+  WITH time > last_time - 2*week
+ORDER BY max(time)
+```
+
+```ls
+| tags.city    | tags.state | sum(value) | Last_Date                |
+|--------------|------------|------------|--------------------------|
+| Fort Worth   | TX         | 411        | 2009-01-31T00:00:00.000Z |
+| Philadelphia | PA         | 53882      | 2012-11-24T00:00:00.000Z |
+| Pittsburgh   | PA         | 38926      | 2015-06-27T00:00:00.000Z |
+| New Haven    | CT         | 13311      | 2016-07-16T00:00:00.000Z |
+| Washington   | DC         | 41937      | 2016-08-06T00:00:00.000Z |
+```
 
 ### Issue 3697
 --------------
@@ -148,6 +198,19 @@ Previous result:
 | 2016-09-01T00:00:00.000Z     | 537.0      | 4.0          |
 | 2016-10-01T00:00:00.000Z     | 0.0        | 0.0          | <- this period was added by interpolation set in period(1 MONTH, VALUE 0), after HAVING.
 | 2016-11-01T00:00:00.000Z     | 234.0      | 4.0          |
+```
+
+### Issue 3696
+--------------
+
+```sql
+SELECT date_format(period(1 MONTH)), sum(value), count(value)
+  FROM cdc.all_deaths tot
+WHERE tags.city = 'Boston'
+  AND datetime >= '2016-01-01T00:00:00Z'
+GROUP BY period(1 MONTH)
+  HAVING count(value) >= 4
+ORDER BY 1
 ```
 
 ### Issue 3694
@@ -234,65 +297,4 @@ WHERE datetime > current_hour
 | nurswgvml006 | 6.2        | under-utilized |
 | nurswgvml007 | 80.8       | over-utilized  |
 | nurswgvml010 | 3.8        | under-utilized |
-```
-
-### Issue 3737
---------------
-
-```sql
-SELECT entity, tags.*, value, datetime
-  FROM disk_used
-WHERE datetime > now - 1 * day
-  AND entity = 'nurswgvml501'
-  WITH ROW_NUMBER(entity, tags ORDER BY time DESC) <= 1
-```
-
-### Issue 3735
---------------
-
-```sql
-SELECT entity, avg(value), ABS((last(value) / avg(value) - 1)*100)
-  FROM cpu_busy
-WHERE datetime > previous_minute
-  AND ABS(value) > 0
-GROUP BY entity
-  HAVING ABS((last(value) / avg(value) - 1)*100) > 0
-```
-
-### Issue 3713
---------------
-
-```sql
-SELECT tot.datetime, tot.tags.city as 'city', tot.tags.state as 'state',
- tot.value - t1.value - t24.value - t44.value - t64.value - t64o.value as 'other_deaths',
- t1.value as 'infant_deaths',
- t24.value as '1-24_deaths',
- t44.value as '25-44_deaths',
- t64.value as '45-64_deaths',
- t64o.value as '64+_deaths',
- tot.value as 'all_deaths'
-FROM cdc.all_deaths tot
- JOIN cdc._1_year t1
- JOIN cdc._1_24_years t24
- JOIN cdc._25_44_years t44
- JOIN cdc._54_64_years t64
- JOIN cdc._65_years t64o
-WHERE tot.entity = 'mr8w-325u'
- AND tot.tags.city = 'New York'
- AND tot.datetime > '2016-08-27T00:00:00Z'
- AND (tot.value - t1.value - t24.value - t44.value - t64.value - t64o.value) != 0
-OPTION (ROW_MEMORY_THRESHOLD 500000)
-```
-
-### Issue 3696
---------------
-
-```sql
-SELECT date_format(period(1 MONTH)), sum(value), count(value)
-  FROM cdc.all_deaths tot
-WHERE tags.city = 'Boston'
-  AND datetime >= '2016-01-01T00:00:00Z'
-GROUP BY period(1 MONTH)
-  HAVING count(value) >= 4
-ORDER BY 1
 ```
