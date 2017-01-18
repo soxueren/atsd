@@ -3,7 +3,7 @@ Weekly Change Log: December 25, 2016 - January 08, 2017
 
 ### ATSD
 
-| Issue         | Category        | Tracker | Subject                                                                             |
+| Issue         | Category        | Type | Subject                                                                             |
 |---------------|-----------------|---------|-------------------------------------------------------------------------------------|
 | [3756](#issue-3756)          | sql             | Bug     | Tag filter for the 2nd table removes all rows in `JOIN` queries.                          |
 | [3751](#issue-3751)          | api-rest        | Bug     | `isEmpty()` function causes parse error in the series [query](https://github.com/axibase/atsd-docs/blob/master/api/data/series/query.md) method.                                               |
@@ -22,20 +22,21 @@ Weekly Change Log: December 25, 2016 - January 08, 2017
 
 ### Collector
 
-| Issue         | Category        | Tracker | Subject                                                                             |
+| Issue         | Category        | Type | Subject                                                                             |
 |---------------|-----------------|---------|-------------------------------------------------------------------------------------|
 | [3743](#issue-3743)          | pi              | Feature | Developed PI Server emulator for `picomp2` and `pipoint2` tables.                   |
 
 
 ### Charts
 
-| Issue         | Category        | Tracker | Subject                                                                             |
+| Issue         | Category        | Type | Subject                                                                             |
 |---------------|-----------------|---------|-------------------------------------------------------------------------------------|
 | [3754](#issue-3754)          | bar             | Bug     | Columns not created for series with statistic and wildcard matches.                          |
 | [3654](#issue-3654)          | widget-settings | Feature | Support for meta fields in label-format.                                           |
 | [3636](#issue-3636)          | data-loading    | Bug     | Series not displayed if requested for the entity group or with the entity expression.                                         |
 | [3143](#issue-3143)          | table           | Bug     | Value and time columns of series with shorter periods are not displayed.         |
 
+## ATSD
 
 ### Issue 3756
 -------------
@@ -94,7 +95,6 @@ FROM mpstat.cpu_busy
 GROUP BY date_format(time, 'EEE HH')
   ORDER BY 2 DESC
 ```
-
 
 ### Issue 3746
 -------------
@@ -229,7 +229,6 @@ JOIN dmv_registrations t1
 GROUP BY tot.period(1 year)
 ```
 
-
 ### Issue 3661
 -------------
 
@@ -246,6 +245,8 @@ FROM disk.stats.used
   WHERE datetime > current_hour
 ```
 
+## Collector
+
 ### Issue 3743
 -------------
 
@@ -256,6 +257,8 @@ The emulator operates via the ATSD JDBC driver (not the PI JDBC driver).
 SELECT *
 FROM pipoint..pipoint2
 ```
+
+## Charts
 
 ### Issue 3754
 -------------

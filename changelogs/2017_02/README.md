@@ -10,7 +10,7 @@ Weekly Change Log: January 09 - January 15, 2017
 | [3769](#issue-3769) | sql             | Feature     | Extended the [`LOOKUP`](/api/sql#lookup) function to accept series, entity, and metric tags as parameters. |
 | [3768](#issue-3768) | sql             | Feature | Extended the [`CONCAT`](/api/sql#string-functions) function to accept numeric arguments. |
 | [3767](#issue-3767) | sql             | Feature | Extended the [`CAST`](/api/sql#cast) function to convert numbers to strings. |
-| [3764](#issue-3764) | sql             | Bug     | Fixed NullPointException error when data was requested with [series query](/api/data/series/query.md) method for a newly created metric without any data. |
+| 3764 | sql             | Bug     | Fixed NullPointException error when data was requested with the [series query](/api/data/series/query.md) method for a newly created metric without any data. |
 | [3763](#issue-3763) | sql             | Bug     | Updated the [`SELECT 1`](/api/sql#validation-query) validation query implementation to return exactly one row. |
 | [3480](#issue-3480) | api-rest        | Feature | Added support for the [`text`](/api/data/series/query.md#value-object) field in the [series query](/api/data/series/query.md) method. The `text` field allows annotating numeric samples with text.|
 
@@ -31,6 +31,29 @@ Weekly Change Log: January 09 - January 15, 2017
 | [3078](#issue-3078) | widget-settings | Feature | Added support for new series settings [`exact-match`](https://axibase.com/products/axibase-time-series-database/visualization/widgets/configuring-the-widgets/) and [`interpolate-extend`](https://axibase.com/products/axibase-time-series-database/visualization/widgets/configuring-the-widgets/). |
 | [2928](#issue-2928) | widget-settings | Feature | Changed setting name from `interpolate` to [`fill-value`](https://axibase.com/products/axibase-time-series-database/visualization/widgets/time-chart/) to prevent collision.|
 
+## ATSD
+
+### Issue 3773
+--------------
+
+If the value column in an `atsd_series` query returns numbers for metrics with different data types, the prevailing data type is determined based on the following [rules](/api/sql#numeric-precedence):
+
+1. If all data types are integers (short, integer, long), the prevailing integer type is returned.
+2. If all data types are decimals (float, double, decimal), the prevailing decimal type is returned.
+3. If the data types contain both integers and decimals, the decimal type is returned.
+
+The following sample `atsd_series` query will return the `value` column set to the **decimal** data type based on rule `#3` above.
+
+```sql
+SELECT datetime, entity, metric, value
+ FROM atsd_series
+WHERE metric IN ('tst-metric-short',
+                'tst-metric-integer',
+                'tst-metric-long',
+                'tst-metric-float',
+                'tst-metric-double',
+                'tst-metric-decimal')
+```                
 
 ### Issue 3769
 --------------
@@ -55,7 +78,7 @@ FROM 'ba:active.1'
 ### Issue 3768
 --------------
 
-Extended the [`CONCAT`](/api/sql#string-functions) function to accept numeric arguments by implicitly converting them into string using a `#.##` pattern.  As a result, applying the [`CAST`](/api/sql#cast) function to numbers is no longer required.
+Extended the [`CONCAT`](/api/sql#string-functions) function to accept numeric arguments by implicitly converting them into strings using a `#.##` pattern.  As a result, applying the [`CAST`](/api/sql#cast) function to numbers is no longer required.
 
 ```sql
 SELECT datetime, value, metric
@@ -68,7 +91,7 @@ FROM 'ba:active.1'
 ### Issue 3767
 --------------
 
-The [`CAST`](/api/sql#cast) function can now convert both a string into a number, as well as a number into a string. `CAST`-ing numbers to strings is required to pass it as an argument into a string function. Applying `CAST` to string returns a string for a numeric value formatted with a `#.##` pattern.
+The [`CAST`](/api/sql#cast) function can now convert both a string into a number, as well as a number into a string. `CAST`-ing numbers to strings is required to pass it as an argument into a string function. Applying `CAST` to a string returns a string for a numeric value formatted with a `#.##` pattern.
 
 ```sql
 SELECT datetime, value, metric
@@ -98,7 +121,7 @@ The `SELECT 1` query has been updated to return both the header as well as one r
 ### Issue 3480
 --------------
 
-Support was added for the text field (named `x`) in Data API methods for series [query](/api/data/series/query.md#value-object) and [insert](/api/data/series/insert.md#value-object) methods. The text field can be used to store an annotation along the numeric sample, as well as annotation without numeric value itself.
+Support was added for the text field (named `x`) in Data API methods for series [query](/api/data/series/query.md#value-object) and [insert](/api/data/series/insert.md#value-object) methods. The text field can be used to store an annotation along the numeric sample, as well as annotation without the numeric value itself.
 
 ```json
 [{
@@ -110,10 +133,32 @@ Support was added for the text field (named `x`) in Data API methods for series 
 }]
 ```
 
+## Collector
+
+### Issue 3755
+--------------
+
+The following aggregate [metrics](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/docker/volume-size.md) for Docker container sizes were added:
+
+* `docker.fs.total.size.rw`: the total size of all the files for all containers, in bytes.
+* `docker.fs.total.size.rootfs` - the size of the files which have been created or changed for all containers.
+* `docker.fs.running.size.rw` - the total size of all the files for all running containers, in bytes.
+* `docker.fs.running.size.rootfs` - the size of the files which have been created or changed for running containers.
+
+The following metrics are collected at the docker-host level.
+
+https://apps.axibase.com/chartlab/81932cd6
+
+The metrics are collected at 'Container Size Interval' for running containers and at 'Property Refresh Interval' for all containers.
+
+![Figure 1](Images/Figure1.png)
+
+## Charts
+
 ### Issue 3481
 --------------
 
-New chart functions `getTags()` and `getSeries()` provide a way to load series tags from the server as an alternative to using Freemarker functions and to specifying tag names in configuration manually.
+New chart functions `getTags()` and `getSeries()` provide a way to load series tags from the server as an alternative to using Freemarker functions and to specifying tag names in the configuration manually.
 
 ```javascript
 # Option 1: Specify tags manually
@@ -167,43 +212,3 @@ If set to true, the missing samples are filled with interpolated values. When `f
 previous and preceding values.
 
 https://apps.axibase.com/chartlab/e377b59a/3/
-
-### Issue 3755
---------------
-
-The following aggregate [metrics](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/docker/volume-size.md) for Docker container sizes were added:
-
-* `docker.fs.total.size.rw`: the total size of all the files for all containers, in bytes.
-* `docker.fs.total.size.rootfs` - the size of the files which have been created or changed for all containers.
-* `docker.fs.running.size.rw` - the total size of all the files for all running containers, in bytes.
-* `docker.fs.running.size.rootfs` - the size of the files which have been created or changed for running containers.
-
-The following metrics are collected at the docker-host level.
-
-https://apps.axibase.com/chartlab/81932cd6
-
-The metrics are collected at 'Container Size Interval' for running containers and at 'Property Refresh Interval' for all containers.
-
-![Figure 1](Images/Figure1.png)
-
-### Issue 3773
---------------
-
-If the value column in an `atsd_series` query returns numbers for metrics with different data types, the prevailing data type is determined based on the following [rules](/api/sql#numeric-precedence):
-
-1. If all data types are integers (short, integer, long), the prevailing integer type is returned.
-2. If all data types are decimals (float, double, decimal), the prevailing decimal type is returned.
-3. If the data types contain both integers and decimals, the decimal type is returned.
-
-The following sample `atsd_series` query will return  `value` column set to **decimal** data type based on rule `#3` above.
-
-```sql
-SELECT datetime, entity, metric, value
- FROM atsd_series
-WHERE metric IN ('tst-metric-short',
-                'tst-metric-integer',
-                'tst-metric-long',
-                'tst-metric-float',
-                'tst-metric-double',
-                'tst-metric-decimal')
-```                
