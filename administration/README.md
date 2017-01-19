@@ -44,7 +44,7 @@
 - [Network Settings](networking-settings.md#network-settings)
   - [Increase the Maximum Receiving Buffer on the Operating System](networking-settings.md#increase-the-maximum-receiving-buffer-on-the-operating-system)
   - [Increase the UDP Buffer in ATSD](networking-settings.md#increase-the-udp-buffer-in-atsd)
-- [Enabling Swap Space](administration/enabling-swap-space.md#enabling-swap-space)
+- [Enabling Swap Space](enabling-swap-space.md#enabling-swap-space)
 - [Replication](replication.md#replication)
   - [Requirements](replication.md#requirements)
   - [Installation](replication.md#installation)
