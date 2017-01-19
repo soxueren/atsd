@@ -26,7 +26,7 @@
   - [Docker Container](restarting.md#docker-container)
   - [Processes](restarting.md#processes)
   - [Safe Restart](restarting.md#safe-restart)
-- [Updating](update.md)
+- [Updating](update.md#update)
   - [Check Revision](update.md#check-revision)
   - [Update Command](update.md#update-command)
   - [Validation](update.md#validation)
