@@ -1620,7 +1620,7 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 
 ### CAST
 
-The `CAST` function transforms a string into a number, or a number into a string. 
+The `CAST` function transforms a string into a number, or a number into a string.
 
 ```sql
 CAST(inputString AS number)
@@ -2019,6 +2019,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [Text Value Column](examples/select-text-value.md)
 - [Field Columns](examples/select-field-columns.md)
 - [Entity Tag Columns](examples/select-entity-tag-columns.md)
+- [Entity Metadata](examples/select-metadata.md)
 - [Metric Tag Columns](examples/select-metric-tag-columns.md)
 - [Computed Columns](examples/select-computed-columns.md)
 - [Mathematical Functions](examples/select-math.md)
