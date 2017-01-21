@@ -27,7 +27,7 @@ series d:{iso-date} e:{entity} t:{tag-1}={val-1} m:{metric-1}={number} m:{metric
 | ms        | integer         | Time in UNIX milliseconds. |
 | s         | integer         | Time in UNIX seconds. |
 | t         | string:string   | Tag name and text value. _Multiple._ |
-| a         | boolean         | Text append flag. If set to `true`, causes the text value to be appended to the current text value. |
+| a         | boolean         | Text append flag. If set to `true`, causes the text value to be appended to the previous text value with the same timestamp. |
 
 > At least one numeric metric `m:` or text metric `x:` is required.
 
@@ -68,38 +68,67 @@ Entity, metric and tag names are case-insensitive and will be converted to lower
 
 ## Examples
 
+* Insert numeric value '72' for metric 'cpu_used', entity 'server001' recorded on March 4, 2015 at 15:14:40 GMT (Unix epoch seconds = 1425482080).
+
+```ls
+series e:server001 m:cpu_used=72.0 s:1425482080
+```
+
+* Insert samples for two series: 
+  - Insert numeric value '72' for metric 'cpu_used', entity 'server001' recorded on March 4, 2015 at 15:14:40 GMT
+  - Insert numeric value '94.5' for metric 'memory_used' and the same entity and time.
+
 ```ls
 series e:server001 m:cpu_used=72.0 m:memory_used=94.5 s:1425482080
 ```
+
+* Same as the above, using Unix milliseconds.
 
 ```ls
 series e:server001 m:cpu_used=72.0 m:memory_used=94.5 ms:1425482080000
 ```
 
+* Same as the above, using ISO8601 date.
+
 ```ls
-series e:server001 m:cpu_used=72.0 m:memory_used=94.5 d:2016-09-04T12:40:00Z
+series e:server001 m:cpu_used=72.0 m:memory_used=94.5 d:2015-03-04T15:14:40Z
 ```
+
+* Insert numeric value '20.5' for metric 'disk_used_percent', entity 'server001', and two tags, mount_point and disk_name. The value will be inserted with the current server time since the date is not specified in the command.
+
+```ls
+series e:server001 m:disk_used_percent=20.5 t:mount_point=/ t:disk_name=/sda1
+```
+
+* Insert numeric values into two series (metrics 'disk_used_percent' and 'disk_size_md') for the same entity and tags as above.
 
 ```ls
 series e:server001 m:disk_used_percent=20.5 m:disk_size_mb=10240 t:mount_point=/ t:disk_name=/sda1
 ```
 
+* Insert numeric value '24.4' and text value 'Provisional' (annotation) for metric 'temperature', entity 'sensor-1'.
+
 ```ls
 series d:2016-10-13T08:15:00Z e:sensor-1 m:temperature=24.4 x:temperature="Provisional"
 ```
+
+* Insert text value 'Shutdown by adm-user, RFC-5434' for metric 'status', entity 'sensor-1'.
 
 ```ls
 series d:2016-10-13T10:30:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-5434"
 ```
 
+* Same as the above and append the specified text value to an existing value, if found.
+
 ```ls
 series d:2016-10-13T10:30:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-5434" a:true
 ```
 
+* Insert Not-a-Number for metric 'temperature', entity 'sensor-1'
+
 ```ls
 series d:2016-10-13T08:45:00Z e:sensor-1 m:temperature=NaN
 ```
-
 
 ## Number Representation
 
