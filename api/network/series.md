@@ -55,15 +55,15 @@ time-iso = "d:" ISO_DATE
 
 ## Data Types
 
-New metrics will be initialized with `float` data type by default.
+New metrics will be initialized with the `float` data type by default.
 
 To insert metric samples with another data type, create or update metric properties using [Meta API](/api/meta/metric/update.md) or the user interface.
 
 ## New Records
 
-If the command references non-existent entities, metrics or tags, such objects will be created and registered automatically.
+If the command references non-existent entities, metrics, or tags, such objects will be created as new records and registered automatically.
 
-Entity, metric and tag names are case-insensitive and will be converted to lower case when inserted whereas tag values are case-sensitive.
+Entity, metric, and tag names are case-insensitive and will be converted to lower case when inserted, whereas tag values are case-sensitive.
 
 
 ## Examples
@@ -94,7 +94,7 @@ series e:server001 m:cpu_used=72.0 m:memory_used=94.5 ms:1425482080000
 series e:server001 m:cpu_used=72.0 m:memory_used=94.5 d:2015-03-04T15:14:40Z
 ```
 
-* Insert numeric value '20.5' for metric 'disk_used_percent', entity 'server001', and two tags, mount_point and disk_name. The value will be inserted with the current server time since the date is not specified in the command.
+* Insert numeric value '20.5' for metric 'disk_used_percent', entity 'server001', and two tags, 'mount_point' and 'disk_name'. The value will be inserted with the current server time since the date is not specified in the command.
 
 ```ls
 series e:server001 m:disk_used_percent=20.5 t:mount_point=/ t:disk_name=/sda1
@@ -118,13 +118,13 @@ series d:2016-10-13T08:15:00Z e:sensor-1 m:temperature=24.4 x:temperature="Provi
 series d:2016-10-13T10:30:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-5434"
 ```
 
-* Same as the above and append the specified text value to an existing value, if found.
+* Same as the above. Append the specified text value to an existing value, if found.
 
 ```ls
 series d:2016-10-13T10:30:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-5434" a:true
 ```
 
-* Insert Not-a-Number for metric 'temperature', entity 'sensor-1'
+* Insert 'NaN' (Not-a-Number) for metric 'temperature', entity 'sensor-1'
 
 ```ls
 series d:2016-10-13T08:45:00Z e:sensor-1 m:temperature=NaN
@@ -132,12 +132,12 @@ series d:2016-10-13T08:45:00Z e:sensor-1 m:temperature=NaN
 
 ## Number Representation
 
-* The numeric value can be a real number or a `NaN` (Not a Number).
+* The numeric value can be a real number or `NaN` (Not a Number).
 * The string representation of an inserted number consists of an optional sign, '+' ('\u002B') or '-' ('\u002D'), followed by a sequence of zero or more decimal digits ("the integer"), optionally followed by a fraction, optionally followed by an exponent.
-* The exponent consists of the character 'e' ('\u0065') or 'E' ('\u0045') followed by an optional sign, '+' ('\u002B') or '-' ('\u002D'), followed by one or more decimal digits. The value of the exponent must lie between -2147483647 and 2147483647, inclusive.
+* The exponent consists of the character 'e' ('\u0065') or 'E' ('\u0045') followed by an optional sign, '+' ('\u002B') or '-' ('\u002D'), followed by one or more decimal digits. The value of the exponent must lie between -2147483647 and 2147483647, and is inclusive.
 * The fraction consists of a decimal point followed by zero or more decimal digits. The string must contain at least one digit in either the integer or the fraction.
 * The number formed by the sign, the integer, and the fraction is referred to as the [**significand**](https://en.wikipedia.org/wiki/Significand).
-* The **significand** value stripped from trailing zeros should be within Long.MAX_VALUE `9223372036854775807` and Long.MIN_VALUE  `-9223372036854775808` (19 digits). Otherwise the database will throw an **llegalArgumentException: BigDecimal significand overflows the long type** for decimal metrics or round the value for non-decimal metrics. For example, significand for `1.1212121212121212121212121212121212121212121` contains 44 digits and will be rounded to `1.121212121212121212` if inserted for a non-decimal metric.
+* The **significand** value stripped from trailing zeros should be within the Long.MAX_VALUE `9223372036854775807` the and Long.MIN_VALUE  `-9223372036854775808` (19 digits). Otherwise the database will throw an **llegalArgumentException: BigDecimal significand overflows the long type** for decimal metrics or round the value for non-decimal metrics. For example, significand for `1.1212121212121212121212121212121212121212121` contains 44 digits and will be rounded to `1.121212121212121212` if inserted for a non-decimal metric.
 
 ## Series Tags, Text Value, Messages
 
@@ -147,16 +147,16 @@ Series tags are part of each series composite primary key, whereas the text valu
 
 Since the total number of unique tag value identifiers is [limited](README.md#schema) to `16,777,215`, series tag values are not well suited for values with high cardinality such as random values or continuously incrementing values (time, counters).
 
-The text value, on the other hand, is stored `as is`, without converting it to an identifier. The text value can be used to annotate a numeric observation without changing the series' primary key.
+A text value, on the other hand, is stored `as is`, without converting it to an identifier. A text value can be used to annotate a numeric observation without changing the series' primary key.
 
 ```ls
 series d:2016-10-13T08:00:00Z e:sensor-1 m:temperature=20.3
 series d:2016-10-13T08:15:00Z e:sensor-1 m:temperature=24.4 x:temperature="Provisional"
 ```
 
-In this example, temperature reading at `2016-10-13T08:15:00Z` is characterized as `Provisional`.
+In this example, the temperature reading at `2016-10-13T08:15:00Z` is characterized as `Provisional`.
 
-The text value can also be used to record observations for series that contain only text values in which case their numeric values are set to `NaN` (not a number).
+A text value can also be used to record observations for series that contain only text values, in which case their numeric values are set to `NaN`.
 
 ```ls
 series d:2016-10-13T10:30:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-5434"
@@ -183,7 +183,7 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 
 The `append` flag applies to text values specified with the `x:` field.
 
-If append flag is set to `true`, the ATSD checks the previous text value for the same timestamp. If previous value is found, the new value is appended at the end using the `;\n` (semi-colon followed by line feed) as a separator.
+If the append flag is set to `true`, ATSD checks the previous text value for the same timestamp. If the previous value is found, the new value is appended at the end using `;\n` (semi-colon followed by line feed) as a separator.
 
 In order to prevent **duplicate** values, the database checks the existing value for duplicates by splitting the stored value into a string array and discarding the new value if it is equal to one of the elements in the array.
 
