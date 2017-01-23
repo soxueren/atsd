@@ -27,7 +27,7 @@ Weekly Change Log: January 16 - January 22, 2017
 | Issue| Category        | Type    | Subject                                                                             |
 |------|-----------------|---------|-------------------------------------------------------------------------------------|
 | [2528](#issue-2528) | property        | Feature | Added support for `column-label-format` setting for property and table widgets to trim unnecessary text. |
-| [1926](#issue-1926) | box             | Feature | Updated mouse-over features for box charts. |
+| [1926](#issue-1926) | box             | Feature | Updated mouse-over features for box charts. | 
 
 ## ATSD
 
