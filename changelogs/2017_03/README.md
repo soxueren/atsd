@@ -8,10 +8,10 @@ Weekly Change Log: January 16 - January 22, 2017
 | [3797](#issue-3797) | sql             | Feature | Added support for the `ROW_NUMBER` function                                                 | 
 | 3796 | api-network     | Feature | Network API: append text value                                                               | 
 | [3795](#issue-3795) | sql             | Bug     | SQL: group by entity tag                                                                     |
-*| 3786 | statistics      | Bug     | Series statistics: interval histogram range; limit; tooltip                                  |
-*| [3783](#issue-3783) | sql             | Bug     | SQL: extra comma if all columns contain null (empty string)                                  | 
-*| 3781 | jdbc            | Bug     | JDBC Driver: empty rows in result csv are skipped                                            | 
-*| 3753 | jdbc            | Bug     | JDBC Driver: Exception while parsing metadata                                                | 
+| 3786 | statistics      | Bug     | Series statistics: interval histogram range; limit; tooltip                                  |
+| [3783](#issue-3783) | sql             | Bug     | SQL: extra comma if all columns contain null (empty string)                                  | 
+| 3781 | jdbc            | Bug     | JDBC Driver: empty rows in result csv are skipped                                            | 
+| 3753 | jdbc            | Bug     | JDBC Driver: Exception while parsing metadata                                                | 
 | 3691 | rule engine     | Feature | Added date() function to convert string date to Date object that can be compared with date objects like "current_time" etc. | 
 | [3680](#issue-3680) | statistics      | Feature | Added a page to show series characteristics, such as value and interval statistics and histograms, for a provide time interval.                                                                        | 
 
