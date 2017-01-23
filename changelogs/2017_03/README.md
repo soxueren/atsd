@@ -6,7 +6,7 @@ Weekly Change Log: January 16 - January 22, 2017
 | Issue| Category        | Type    | Subject                                                                             |
 |------|-----------------|---------|-------------------------------------------------------------------------------------|
 | [3797](#issue-3797) | sql             | Feature | Added support for the `ROW_NUMBER` function                                                 | 
-| 3796 | api-network     | Feature | Network API: append text value                                                               | 
+| [3796](#issue-3696) | api-network     | Feature | Add support for the `append` true flag ao that text values for the same timestamp for a given series may be concatenated. | 
 | [3795](#issue-3795) | sql             | Bug     | SQL: group by entity tag                                                                     |
 | 3786 | statistics      | Bug     | Series statistics: interval histogram range; limit; tooltip                                  |
 | [3783](#issue-3783) | sql             | Bug     | SQL: extra comma if all columns contain null (empty string)                                  | 
@@ -45,6 +45,19 @@ function. There are still, however, some limitations: we can use order by period
 
 ### Issue 3796
 --------------
+
+The `append` flag applies to text values specified with the `x:` field.
+
+If the append flag is set to true, ATSD checks the previous text value for the same timestamp. If the previous value is found, the new value is appended at the end using `;\n` (semi-colon 
+followed by line feed) as a separator.
+
+In order to prevent duplicate values, the database checks the existing value for duplicates by splitting the stored value into a string array and discarding the new value if it is equal 
+to one of the elements in the array.
+
+```ls
+series d:2017-01-20T08:00:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-5434"
+series d:2017-01-20T08:00:00Z e:sensor-1 x:status="Restart" a:true
+```
 
 ### Issue 3795
 --------------
