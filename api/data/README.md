@@ -122,14 +122,6 @@ Processing errors are returned in JSON format:
 
 Cross-domain requests are allowed. 
 
-The server includes the following headers in each response:
-
-```yaml
-Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization
-Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE
-Access-Control-Allow-Origin: *
-```
-
 ## Compression
 
 * Clients may send compressed data by adding HTTP header **Content-Encoding: gzip** to the request.

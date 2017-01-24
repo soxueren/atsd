@@ -6,7 +6,7 @@
 
 ## Installation Guides
 
-| **Distribution** | **Format** | **Installation Guide** |
+| **Linux Distribution** | **Format** | **Installation Guide** |
 | :--- | --- | :---: |
 | Ubuntu/Debian | apt | [View](ubuntu-debian-apt.md)|
 | Ubuntu/Debian  | [deb](https://axibase.com/public/atsd_ce_deb_latest.htm) | [View](ubuntu-debian-deb.md) |
@@ -20,7 +20,7 @@
 
 ## Installation on Cluster
 
-| **Distribution** | **Installation Guide** |
+| **Hadoop Distribution** | **Installation Guide** |
 | :--- | :--- |
 | Cloudera Distribution Hadoop (CDH)  | [View](cloudera.md) |
 | Ambari  | [View](ambari.md) |

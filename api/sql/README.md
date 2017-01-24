@@ -961,7 +961,7 @@ HAVING AVG(value) > 10 OR MAX(value) > 90
 
 Partitioning is implemented with the `ROW_NUMBER` function, which returns the sequential number of a row within a partition, starting with 1 for the first row in each partition.
 
-A partition is a subset of all rows in the result set grouped by an entity and/or tags as specified in the `ROW_NUMBER` function. Each row in the result set may belong to only one partition.
+A partition is a subset of all rows within the result set, grouped by an entity and/or series tags. Each row in the result set may belong to only one partition.
 
 For example, a result set partitioned by an entity and ordered by time would have the following row numbers:
 
@@ -996,9 +996,9 @@ Examples:
 
 The `ROW_NUMBER(entity, tags ...)` grouping effectively creates a partition for each series.
 
-The assigned row numbers can be used to filter rows within each partition for the following common use cases:
+The assigned row numbers can be used to filter rows within each partition for the following use cases:
 
-* Return Top-N (`ORDER BY value DESC`) or Last-N (`ORDER BY time DESC`) records from each partition:
+* Return Top (`ORDER BY value DESC`) or Most Recent (`ORDER BY time DESC`) records from each partition:
 
 ```sql
 SELECT entity, datetime, value
@@ -1022,7 +1022,8 @@ ORDER BY entity, datetime
 * Apply an aggregate function to Last-N records:
 
 ```sql
-SELECT entity, AVG(value)
+SELECT entity,
+    AVG(value) --average is calculated for top-10 rows in each partition
   FROM mpstat.cpu_busy
 WHERE datetime >= CURRENT_HOUR
   WITH ROW_NUMBER(entity ORDER BY time DESC) <= 10
@@ -1052,6 +1053,29 @@ GROUP BY entity, tags
   -- fetch top 3 series for each entity
   WITH ROW_NUMBER(entity ORDER BY MAX(value) -  MIN(value) DESC) <= 3
 ORDER BY Diff DESC
+```
+
+If the `GROUP BY` clause contains a `PERIOD` column, the `ROW_NUMBER` function applied to grouped rows can refer to the same period as the grouping clause.
+
+```sql
+SELECT  entity, tags.*, datetime, avg(value), count(value), first(value), last(value)
+  FROM df.disk_used
+WHERE datetime >= '2017-01-09T00:00:00Z' AND datetime < '2017-01-09T02:00:00Z'
+  -- group by series (entity+tags) and 15-minute period
+  GROUP BY entity, tags, period(15 minute)
+  -- retain only 2 periods for each series (entity+tags)
+WITH ROW_NUMBER(entity, tags ORDER BY period(15 minute)) <= 2
+```
+
+```ls
+| entity       | tags.file_system                    | datetime                 | avg(value) | count(value) | first(value) | last......|
+|--------------|-------------------------------------|--------------------------|------------|--------------|--------------|-----------|
+| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | 2017-01-09T00:00:00.000Z | 6285986    | 60           | 6285696      | 6286312   |
+| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | 2017-01-09T00:15:00.000Z | 6286339    | 60           | 6286312      | 6286372   | 
+| nurswgvml006 | /dev/sdc1                           | 2017-01-09T00:00:00.000Z | 57558921   | 60           | 57521944     | 57579272  |
+| nurswgvml006 | /dev/sdc1                           | 2017-01-09T00:15:00.000Z | 57600482   | 60           | 57580072     | 57510460  |
+| nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | 2017-01-09T00:00:00.000Z | 9046720    | 60           | 9024392      | 9071064   |
+| nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | 2017-01-09T00:15:00.000Z | 9005158    | 60           | 9071668      | 9010264   |
 ```
 
 ### LAST_TIME Syntax
@@ -1620,7 +1644,7 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 
 ### CAST
 
-The `CAST` function transforms a string into a number, or a number into a string. 
+The `CAST` function transforms a string into a number, or a number into a string.
 
 ```sql
 CAST(inputString AS number)
@@ -2019,6 +2043,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [Text Value Column](examples/select-text-value.md)
 - [Field Columns](examples/select-field-columns.md)
 - [Entity Tag Columns](examples/select-entity-tag-columns.md)
+- [Entity Metadata](examples/select-metadata.md)
 - [Metric Tag Columns](examples/select-metric-tag-columns.md)
 - [Computed Columns](examples/select-computed-columns.md)
 - [Mathematical Functions](examples/select-math.md)
