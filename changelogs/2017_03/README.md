@@ -97,7 +97,7 @@ If the append flag is set to true, ATSD checks the previous text value for the s
 
 In order to prevent duplicate values, the database checks the existing value for duplicates by splitting the stored value into a string array and discarding the new value if it is equal to one of the elements in the array.
 
-```sql
+```ls
 series d:2017-01-20T08:00:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-5434"
 series d:2017-01-20T08:00:00Z e:sensor-1 x:status="Restart" a:true
 ```
@@ -136,11 +136,11 @@ GROUP BY entity.tags.app
 Implemented useful functions to convert an ISO8601 date string into epoch time or into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) date object: 
 milliseconds (String isodate), seconds (String isodate), or date (String isodate). These functions can be used in rule-engine expressions.
 
-```sql
+```javascript
 timestamp - milliseconds(property('docker.container::startedAt')) >  5*60000
 ```
 
-```sql
+```javascript
 property('config::deleted')).dayOfWeek().get() < 6
 ```
 
@@ -238,7 +238,7 @@ WHERE tag LIKE 'AB%'
 In order to reduce rename/transform multiple similar column headers with one setting, support was added to the `column-label-format` setting for property and table widgets. For example, in 
 order to remove a common prefix from a column label, add the following code snippet to your configuration:  
 
-```sql
+```javascript
 column-label-format = value.replace(/^systemproperties./, "")
 ```
 
