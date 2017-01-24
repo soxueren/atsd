@@ -11,7 +11,7 @@ Weekly Change Log: January 16 - January 22, 2017
 | 3786 | statistics      | Bug     | Updated tooltip and added the [`LIMIT 100`](https://github.com/axibase/atsd-docs/tree/f19099248c8efbbae5f2c37135c61c1c3c71e544/api/sql#limiting) clause for SQL link for the [newly-created](#issue-3680) series statistics page. |
 | 3783 | sql             | Bug     | Removed extra comma if all columns contain null (empty string). | 
 | 3781 | jdbc            | Bug     | Fixed empty row issue for the JDBC Driver. | 
-| 3753 | jdbc            | Bug     | Corrected error in handling metadata when creating a ResultSet. | 
+| 3753 | jdbc            | Bug     | Corrected error in handling metadata when creating a ResultSet. |  
 | [3691](#issue-3691) | rule engine     | Feature | Added functions to convert string date to a date object or to epoch time in seconds/milliseconds. | 
 | [3680](#issue-3680) | statistics      | Feature | Created a page to show series characteristics, such as value and interval statistics and histograms, for a provided time interval. | 
 
