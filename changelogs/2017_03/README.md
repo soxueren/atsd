@@ -5,21 +5,21 @@ Weekly Change Log: January 16 - January 22, 2017
 
 | Issue| Category        | Type    | Subject                                                                             |
 |------|-----------------|---------|-------------------------------------------------------------------------------------|
-| [3797](#issue-3797) | sql             | Feature | Added support for the `ROW_NUMBER` function                                                 | 
-| [3796](#issue-3696) | api-network     | Feature | Add support for the `append` true flag ao that text values for the same timestamp for a given series may be concatenated. | 
-| [3795](#issue-3795) | sql             | Bug     | SQL: group by entity tag                                                                     |
-| 3786 | statistics      | Bug     | Series statistics: interval histogram range; limit; tooltip                                  |
-| [3783](#issue-3783) | sql             | Bug     | SQL: extra comma if all columns contain null (empty string)                                  | 
-| 3781 | jdbc            | Bug     | JDBC Driver: empty rows in result csv are skipped                                            | 
-| 3753 | jdbc            | Bug     | JDBC Driver: Exception while parsing metadata                                                | 
-| 3691 | rule engine     | Feature | Added date() function to convert string date to Date object that can be compared with date objects like "current_time" etc. | 
-| [3680](#issue-3680) | statistics      | Feature | Added a page to show series characteristics, such as value and interval statistics and histograms, for a provide time interval.                                                                        | 
+| [3797](#issue-3797) | sql             | Feature | Implemented support for the `ROW_NUMBER` function. | 
+| [3796](#issue-3696) | api-network     | Feature | Added support for the `append` true flag ao that text values for the same timestamp for a given series may be concatenated. | 
+| [3795](#issue-3795) | sql             | Bug     | Implemented support for the `GROUP BY` clause for entity tags. |
+| 3786 | statistics      | Bug     | Updated tooltip to 'Current median is calculated for first 1 million samples' and added `LIMIT 100` clause for SQL expressions. |
+| 3783 | sql             | Bug     | Removed extra comma if all columns contain null (empty string). | 
+| 3781 | jdbc            | Bug     | Fixed empty row issue for the JDBC Driver. | 
+| 3753 | jdbc            | Bug     | Corrected error for long queries when creating a ResultSet. | 
+| [3691](#issue-3691) | rule engine     | Feature | Added date() function to convert string date to Date object that can be compared with date objects such as 'current_time'. | 
+| [3680](#issue-3680) | statistics      | Feature | Created a page to show series characteristics, such as value and interval statistics and histograms, for a provided time interval. | 
 
 ### Collector
 
 | Issue| Category        | Type    | Subject                                                                             |
 |------|-----------------|---------|-------------------------------------------------------------------------------------|
-| 3784 | jdbc            | Feature | Added the `${SPLIT_CONDITION}` placeholder support in the JDBC job to allow fetching large result sets in smaller chunks which satisfy the conditions in the `Split Condition` textarea. |
+| [3784](#issue-3784)| jdbc            | Feature | Added the `${SPLIT_CONDITION}` placeholder support in the JDBC job to allow fetching large result sets in smaller chunks which satisfy the conditions in the `Split Condition` textarea. |
 | 3656 | socrata         | Bug     | Refactored the Socrata job so that a 70Mb dataset can be processed without OoM using the current memory allocation of 1 gb. |
 
 ### Charts
@@ -41,7 +41,7 @@ conditions. If the `ROW_NUMBER` condition is placed before the `GROUP BY` clause
 clause, this condition is applied after grouping.
 
 Additionally, this new support allows for syntax such as `ROW_NUMBER(entity, tags ORDER BY period(15 minute))`. Previously, we could not use order by period(...) in the `ROW_NUMBER` 
-function. There are still, however, some limitations: we can use order by period only after the `GROUP BY` clause and the period must be the same as in `GROUP BY` clause.
+function. There are still, however, some limitations: we can use order by period only after the `GROUP BY` clause and the period must be the same as in the `GROUP BY` clause.
 
 ### Issue 3796
 --------------
@@ -62,6 +62,8 @@ series d:2017-01-20T08:00:00Z e:sensor-1 x:status="Restart" a:true
 ### Issue 3795
 --------------
 
+Previously, entity tags were not supported in the `GROUP BY` clause for SQL queries. Now we able to group by entity tag, and we can write `GROUP BY entity.tags.app` in SQL queries. 
+
 ```sql
 SELECT entity.tags.app, count(value) 
   FROM disk_used
@@ -73,6 +75,14 @@ GROUP BY entity.tags.app
 
 ### Issue 3691
 --------------
+
+Implemented useful functions which convert an ISO8601 date string into epoch time or into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) date object: 
+milliseconds (String isodate), seconds (String isodate), or date (String isodate). These functions can be used in rule-engine expressions.
+
+```ls
+timestamp - milliseconds("2017-01-12T07:52:30Z") >  0
+date(property('human::birthday')).dayOfWeek().get() < 6
+```
 
 ### Issue 3680
 --------------
@@ -96,7 +106,7 @@ Each of the following tabs are included in this new page.
   
   ![Figure 2](Images/Figure2.png)
 
-* Min/Max Values: provides the 20 maximum and minimum values of the series. Include are the value, count, and first and last occurrences of these values. 
+* Min/Max Values: provides the 20 maximum and minimum values of the series. Included are the value, count, and first and last occurrences of these values. 
 
   ![Figure 3](Images/Figure3.png)
 
