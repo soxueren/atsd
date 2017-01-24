@@ -56,8 +56,6 @@ WITH ROW_NUMBER(entity, tags ORDER BY period(15 minute)) <= 2
 ```ls
 | entity        | tags.file_system                 | tags.mount_point  | datetime                  | avg(value)         | count(value)  | first(value)  | last(value) | 
 |---------------|----------------------------------|-------------------|---------------------------|--------------------|---------------|---------------|-------------| 
-| nurswghbs001  | //u113452.your-backup.de/backup  | /mnt/u113452      | 2017-01-09T00:00:00.000Z  | 1795537024         | 120           | 1795537024    | 1795537024  | 
-| nurswghbs001  | //u113452.your-backup.de/backup  | /mnt/u113452      | 2017-01-09T00:15:00.000Z  | 1795537024         | 120           | 1795537024    | 1795537024  | 
 | nurswghbs001  | /dev/md1                         | /boot             | 2017-01-09T00:00:00.000Z  | 70592              | 120           | 70592         | 70592       | 
 | nurswghbs001  | /dev/md1                         | /boot             | 2017-01-09T00:15:00.000Z  | 70592              | 120           | 70592         | 70592       | 
 | nurswghbs001  | /dev/md2                         | /                 | 2017-01-09T00:00:00.000Z  | 745502299.2000003  | 120           | 745471936     | 745409920   | 
@@ -102,9 +100,9 @@ series d:2017-01-20T08:00:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-543
 series d:2017-01-20T08:00:00Z e:sensor-1 x:status="Restart" a:true
 ```
 
-```ls
 The new value will be equal to:
 
+```ls
 Shutdown by adm-user, RFC-5434;
 Restart
 ```
@@ -133,14 +131,20 @@ GROUP BY entity.tags.app
 ### Issue 3691
 --------------
 
-Implemented useful functions to convert an ISO8601 date string into epoch time or into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) date object: 
-milliseconds (String isodate), seconds (String isodate), or date (String isodate). These functions can be used in rule-engine expressions.
+Implemented useful [date functions](/rule-engine/expression.md#time-functions) in the rule engine to convert an ISO8601 date string into a numeric epoch time or into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) date object. These functions can be used in rule expressions.
 
 ```javascript
+/**
+  Return true if difference between event time and start time (ISO) retrieved 
+  from property record is greater than 5 minutes
+*/
 timestamp - milliseconds(property('docker.container::startedAt')) >  5*60000
 ```
 
 ```javascript
+/**
+  Return true if the specified date is a working day
+*/
 property('config::deleted')).dayOfWeek().get() < 6
 ```
 
@@ -227,6 +231,8 @@ END AS atsd_type
 FROM pipoint..pipoint2
 WHERE tag LIKE 'AB%'
 ```
+
+The last condition is typically constructred to select all remaining rows other than those fetched with previous conditions.
 
 ![Figure 8](Images/Figure8.png)
 
