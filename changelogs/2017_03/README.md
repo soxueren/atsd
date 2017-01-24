@@ -5,10 +5,10 @@ Weekly Change Log: January 16 - January 22, 2017
 
 | Issue| Category        | Type    | Subject                                                                             |
 |------|-----------------|---------|-------------------------------------------------------------------------------------|
-| [3797](#issue-3797) | sql             | Feature | Implemented support for the [`ROW_NUMBER`](https://github.com/axibase/atsd-docs/blob/570ee3baa225777ba54e6cecac08c4c6c4b5aedd/api/sql/examples/partition-row-number.md#partition---row-number) condition after the `GROUP BY` clause. | 
-| [3796](#issue-3696) | api-network     | Feature | Added support for the [`append`](https://github.com/axibase/atsd-docs/blob/master/api/network/series.md#text-append) flag to concatenate text values for the same timestamp. | 
-| [3795](#issue-3795) | sql             | Feature     | Implemented support for entity tags in the [`GROUP BY`](https://github.com/axibase/atsd-docs/tree/master/api/sql#grouping) clause. |
-| 3786 | statistics      | Bug     | Added the [`LIMIT 100`](https://github.com/axibase/atsd-docs/tree/f19099248c8efbbae5f2c37135c61c1c3c71e544/api/sql#limiting) clause for pre-defined SQL query on the [series statistics](#issue-3680) page. |
+| [3797](#issue-3797) | sql             | Feature | Implemented support for the [`ROW_NUMBER`](/api/sql/examples/partition-row-number.md#partition---row-number) condition after the `GROUP BY` clause. | 
+| [3796](#issue-3696) | api-network     | Feature | Added support for the [`append`](/api/network/series.md#text-append) flag to concatenate text values for the same timestamp. | 
+| [3795](#issue-3795) | sql             | Feature     | Implemented support for entity tags in the [`GROUP BY`](/api/sql#grouping) clause. |
+| 3786 | statistics      | Bug     | Added the [`LIMIT 100`](/api/sql#limiting) clause for pre-defined SQL query on the [series statistics](#issue-3680) page. |
 | 3783 | sql             | Bug     | Removed extra comma if all columns contain `null` (empty string). | 
 | 3781 | jdbc            | Bug     | Fixed empty row issue for the JDBC Driver. | 
 | 3753 | jdbc            | Bug     | Corrected error in handling metadata when creating a ResultSet. |  
@@ -20,7 +20,7 @@ Weekly Change Log: January 16 - January 22, 2017
 | Issue| Category        | Type    | Subject                                                                             |
 |------|-----------------|---------|-------------------------------------------------------------------------------------|
 | [3784](#issue-3784)| jdbc            | Feature | Added the [`${SPLIT_CONDITION}`](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/jdbc.md#job-configuration) placeholder support in the JDBC job to allow fetching large result sets in multiple iterations. |
-| 3656 | socrata         | Bug     | Refactored the Socrata job so that a dataset with more than 100,000 rows or more than 100Mb can be processed without OutOfMemory error. |
+| 3656 | socrata         | Bug     | Refactored the Socrata job so that a dataset with more than 100,000 rows or more than 100Mb can be processed without an OutOfMemory error. |
 
 ### Charts
 
@@ -34,26 +34,79 @@ Weekly Change Log: January 16 - January 22, 2017
 ### Issue 3797
 --------------
 
-Support was added to the [`ROW_NUMBER`](https://github.com/axibase/atsd-docs/blob/570ee3baa225777ba54e6cecac08c4c6c4b5aedd/api/sql/examples/partition-row-number.md#partition---row-number) function after the [`GROUP BY`](https://github.com/axibase/atsd-docs/tree/master/api/sql#grouping) clause for [`SELECT`](https://github.com/axibase/atsd-docs/tree/f19099248c8efbbae5f2c37135c61c1c3c71e544/api/sql#syntax) statements.
+Support was added to the [`ROW_NUMBER`](/api/sql/examples/partition-row-number.md#partition---row-number) function after the [`GROUP BY`](/api/sql#grouping) clause for [`SELECT`](/api/sql#syntax) statements.
 
 Now you can specify the `ROW_NUMBER` condition in two parts of a `SELECT` statement: before or after the `GROUP BY` clause. Generally, a `SELECT` statement may contain two `ROW_NUMBER` 
 conditions. If the `ROW_NUMBER` condition is placed before the `GROUP BY` clause, this condition is applied before grouping. If the `ROW_NUMBER` condition is placed after the `GROUP BY` 
 clause, this condition is applied after grouping.
 
-Additionally, this new support allows for syntax such as `ROW_NUMBER(entity, tags ORDER BY period(15 minute))`. Previously, we could not use `order by period(...)` in the `ROW_NUMBER` function. Ordering by period can only be used after the `GROUP BY` clause and the period must be the same as specified in the `GROUP BY` clause.
+Additionally, this new support allows for syntax such as `ROW_NUMBER(entity, tags ORDER BY period(15 minute))`. Previously, we could not use `order by period(...)` in the `ROW_NUMBER` 
+function. Ordering by period can only be used after the `GROUP BY` clause and the period must be the same as specified in the `GROUP BY` clause.
+
+```sql
+SELECT  entity, tags.*, datetime, avg(value), count(value), first(value), last(value)
+ FROM disk_used
+WHERE datetime >= '2017-01-09T00:00:00Z' AND datetime < '2017-01-09T02:00:00Z'
+ -- group by series (entity+tags) and 15-minute period
+ GROUP BY entity, tags, period(15 minute)
+ -- retain only 2 periods for each series (entity+tags)
+WITH ROW_NUMBER(entity, tags ORDER BY period(15 minute)) <= 2
+```
+
+```ls
+| entity        | tags.file_system                 | tags.mount_point  | datetime                  | avg(value)         | count(value)  | first(value)  | last(value) | 
+|---------------|----------------------------------|-------------------|---------------------------|--------------------|---------------|---------------|-------------| 
+| nurswghbs001  | //u113452.your-backup.de/backup  | /mnt/u113452      | 2017-01-09T00:00:00.000Z  | 1795537024         | 120           | 1795537024    | 1795537024  | 
+| nurswghbs001  | //u113452.your-backup.de/backup  | /mnt/u113452      | 2017-01-09T00:15:00.000Z  | 1795537024         | 120           | 1795537024    | 1795537024  | 
+| nurswghbs001  | /dev/md1                         | /boot             | 2017-01-09T00:00:00.000Z  | 70592              | 120           | 70592         | 70592       | 
+| nurswghbs001  | /dev/md1                         | /boot             | 2017-01-09T00:15:00.000Z  | 70592              | 120           | 70592         | 70592       | 
+| nurswghbs001  | /dev/md2                         | /                 | 2017-01-09T00:00:00.000Z  | 745502299.2000003  | 120           | 745471936     | 745409920   | 
+```
+
+```sql
+SELECT entity, tags, MAX(value) -  MIN(value) AS 'Diff'
+ FROM disk_used
+WHERE datetime >= current_day
+ -- fetch last 100 records for each series
+ WITH ROW_NUMBER(entity, tags ORDER BY time DESC) <= 100
+GROUP BY entity, tags
+ HAVING MAX(value) - MIN(value) > 0
+ -- fetch top 3 series for each entity
+ WITH ROW_NUMBER(entity ORDER BY MAX(value) -  MIN(value) DESC) <= 3
+ORDER BY Diff DESC
+```
+
+```ls
+| entity        | tags                                                           | Diff   | 
+|---------------|----------------------------------------------------------------|--------| 
+| nurswgvml006  | file_system=/dev/sdc1;mount_point=/media/datadrive             | 104408 | 
+| nurswgvml007  | file_system=/dev/mapper/vg_nurswgvml007-lv_root;mount_point=/  | 71924  | 
+| nurswgvml010  | file_system=/dev/sda1;mount_point=/                            | 280    | 
+| nurswgvml006  | file_system=/dev/mapper/vg_nurswgvml006-lv_root;mount_point=/  | 180    | 
+| nurswgvml502  | file_system=/dev/sda1;mount_point=/                            | 140    | 
+| nurswgvml301  | file_system=/dev/sda1;mount_point=/                            | 44     | 
+| nurswgvml010  | file_system=/dev/sdb1;mount_point=/app                         | 20     | 
+```
 
 ### Issue 3796
 --------------
 
-The [`append`](https://github.com/axibase/atsd-docs/blob/master/api/network/series.md#text-append) flag applies to text values specified with the `x:` field.
+The [`append`](/api/network/series.md#text-append) flag applies to text values specified with the `x:` field.
 
 If the append flag is set to true, ATSD checks the previous text value for the same timestamp. If the previous value is found, the new value is appended at the end using `;\n` (semi-colon followed by line feed) as a separator.
 
 In order to prevent duplicate values, the database checks the existing value for duplicates by splitting the stored value into a string array and discarding the new value if it is equal to one of the elements in the array.
 
-```ls
+```sql
 series d:2017-01-20T08:00:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-5434"
 series d:2017-01-20T08:00:00Z e:sensor-1 x:status="Restart" a:true
+```
+
+```ls
+The new value will be equal to:
+
+Shutdown by adm-user, RFC-5434;
+Restart
 ```
 
 ### Issue 3795
@@ -63,11 +116,18 @@ Previously, entity tags were not supported in the `GROUP BY` clause. Now it's po
 
 ```sql
 SELECT entity.tags.app, count(value) 
-  FROM df.disk_used
+  FROM disk_used
 WHERE entity IN ('nurswgvml007', 'nurswgvml006')
   AND tags.mount_point = '/'
-  AND datetime > now - 5 * MINUTE
+  AND datetime > now - 5*minute
 GROUP BY entity.tags.app
+```
+
+```ls
+| entity.tags.app  | count(value) | 
+|------------------|--------------| 
+| ATSD             | 20           | 
+| Hadoop/HBASE     | 20           | 
 ```
 
 ### Issue 3691
@@ -76,9 +136,12 @@ GROUP BY entity.tags.app
 Implemented useful functions to convert an ISO8601 date string into epoch time or into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) date object: 
 milliseconds (String isodate), seconds (String isodate), or date (String isodate). These functions can be used in rule-engine expressions.
 
-```ls
-timestamp - milliseconds("2017-01-12T07:52:30Z") >  300000
-date(property('human::birthday')).dayOfWeek().get() < 6
+```sql
+timestamp - milliseconds(property('docker.container::startedAt')) >  5*60000
+```
+
+```sql
+property('config::deleted')).dayOfWeek().get() < 6
 ```
 
 ### Issue 3680
@@ -145,7 +208,7 @@ WHERE ${SPLIT_CONDITION}
 
 Split Conditions:
 
-```ls
+```sql
 tag LIKE 'AB%'
 tag LIKE 'AC%'
 tag LIKE 'DA%'
@@ -175,9 +238,13 @@ WHERE tag LIKE 'AB%'
 In order to reduce rename/transform multiple similar column headers with one setting, support was added to the `column-label-format` setting for property and table widgets. For example, in 
 order to remove a common prefix from a column label, add the following code snippet to your configuration:  
 
-```ls
+```sql
 column-label-format = value.replace(/^systemproperties./, "")
 ```
+
+https://apps.axibase.com/chartlab/1ee27e2e/4/
+
+![Figure 10](Images/Figure10.png)
 
 ### Issue 1926
 --------------
@@ -185,5 +252,8 @@ column-label-format = value.replace(/^systemproperties./, "")
 Now upon a mouse over for box charts, metric names are displayed at the top of the box and the distribution of the series (minimum, maximum, count, and value percentiles) is displayed next to its respective series.
 
 https://apps.axibase.com/chartlab/46e8b4ec
+
+![Figure 9](Images/Figure9.png)
+
 
  
