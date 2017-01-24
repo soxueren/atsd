@@ -5,38 +5,38 @@ Weekly Change Log: January 16 - January 22, 2017
 
 | Issue| Category        | Type    | Subject                                                                             |
 |------|-----------------|---------|-------------------------------------------------------------------------------------|
-| [3797](#issue-3797) | sql             | Feature | Implemented support for the `ROW_NUMBER` function. | 
-| [3796](#issue-3696) | api-network     | Feature | Added support for the `append` true flag ao that text values for the same timestamp for a given series may be concatenated. | 
-| [3795](#issue-3795) | sql             | Bug     | Implemented support for the `GROUP BY` clause for entity tags. |
-| 3786 | statistics      | Bug     | Updated tooltip to 'Current median is calculated for first 1 million samples' and added `LIMIT 100` clause for SQL expressions. |
+| [3797](#issue-3797) | sql             | Feature | Implemented support for the [`ROW_NUMBER`](https://github.com/axibase/atsd-docs/blob/570ee3baa225777ba54e6cecac08c4c6c4b5aedd/api/sql/examples/partition-row-number.md#partition---row-number) condition before the `GROUP BY` clause. | 
+| [3796](#issue-3696) | api-network     | Feature | Added support for the [`append`](https://github.com/axibase/atsd-docs/blob/master/api/network/series.md#text-append) true flag ao that text values for the same timestamp for a given series may be concatenated. | 
+| [3795](#issue-3795) | sql             | Bug     | Implemented support for [grouping by](https://github.com/axibase/atsd-docs/tree/master/api/sql#grouping) entity tags. |
+| 3786 | statistics      | Bug     | Updated tooltip and added the [`LIMIT 100`](https://github.com/axibase/atsd-docs/tree/f19099248c8efbbae5f2c37135c61c1c3c71e544/api/sql#limiting) clause for SQL link for the [newly-created](#issue-3680) series statistics page. |
 | 3783 | sql             | Bug     | Removed extra comma if all columns contain null (empty string). | 
 | 3781 | jdbc            | Bug     | Fixed empty row issue for the JDBC Driver. | 
-| 3753 | jdbc            | Bug     | Corrected error for long queries when creating a ResultSet. | 
-| [3691](#issue-3691) | rule engine     | Feature | Added date() function to convert string date to Date object that can be compared with date objects such as 'current_time'. | 
+| 3753 | jdbc            | Bug     | Corrected error in handling metadata when creating a ResultSet. | 
+| [3691](#issue-3691) | rule engine     | Feature | Added functions to convert string date to a date object or to epoch time in seconds/milliseconds. | 
 | [3680](#issue-3680) | statistics      | Feature | Created a page to show series characteristics, such as value and interval statistics and histograms, for a provided time interval. | 
 
 ### Collector
 
 | Issue| Category        | Type    | Subject                                                                             |
 |------|-----------------|---------|-------------------------------------------------------------------------------------|
-| [3784](#issue-3784)| jdbc            | Feature | Added the `${SPLIT_CONDITION}` placeholder support in the JDBC job to allow fetching large result sets in smaller chunks which satisfy the conditions in the `Split Condition` textarea. |
-| 3656 | socrata         | Bug     | Refactored the Socrata job so that a 70Mb dataset can be processed without OoM using the current memory allocation of 1 gb. |
+| [3784](#issue-3784)| jdbc            | Feature | Added the `${SPLIT_CONDITION}` placeholder support in the JDBC job to allow fetching large result sets in smaller amounts to satisfy the conditions in the `Split Condition` textarea. |
+| 3656 | socrata         | Bug     | Refactored the Socrata job so that a dataset with more than 100,000 rows or more than 100Mb can be processed without OoM using the current memory allocation of 1 gb. |
 
 ### Charts
 
 | Issue| Category        | Type    | Subject                                                                             |
 |------|-----------------|---------|-------------------------------------------------------------------------------------|
-| [2528](#issue-2528) | property        | Feature | Added support for `column-label-format` setting for property and table widgets to trim unnecessary text. |
-| [1926](#issue-1926) | box             | Feature | Updated mouse-over features for box charts. | 
+| [2528](#issue-2528) | property        | Feature | Implemented support for the `column-label-format` setting for property and table widgets to transform unnecessary text. |
+| [1926](#issue-1926) | box             | Feature | Added mouse-over tooltips for box charts. | 
 
 ## ATSD
 
 ### Issue 3797
 --------------
 
-Support was added to the `ROW_NUMBER` function after the `GROUP BY` clause for `SELECT` statements.
+Support was added to the [`ROW_NUMBER`](https://github.com/axibase/atsd-docs/blob/570ee3baa225777ba54e6cecac08c4c6c4b5aedd/api/sql/examples/partition-row-number.md#partition---row-number) function after the [`GROUP BY`](https://github.com/axibase/atsd-docs/tree/master/api/sql#grouping) clause for [`SELECT`](https://github.com/axibase/atsd-docs/tree/f19099248c8efbbae5f2c37135c61c1c3c71e544/api/sql#syntax) statements.
 
-Now we can specify the `ROW_NUMBER` condition in two parts of a `SELECT` statement: before or after the `GROUP BY` clause. Generally, a `SELECT` statement may contain two `ROW_NUMBER` 
+Now you can specify the `ROW_NUMBER` condition in two parts of a `SELECT` statement: before or after the `GROUP BY` clause. Generally, a `SELECT` statement may contain two `ROW_NUMBER` 
 conditions. If the `ROW_NUMBER` condition is placed before the `GROUP BY` clause, this condition is applied before grouping. If the `ROW_NUMBER` condition is placed after the `GROUP BY` 
 clause, this condition is applied after grouping.
 
@@ -46,7 +46,7 @@ function. There are still, however, some limitations: we can use order by period
 ### Issue 3796
 --------------
 
-The `append` flag applies to text values specified with the `x:` field.
+The [`append`](https://github.com/axibase/atsd-docs/blob/master/api/network/series.md#text-append) flag applies to text values specified with the `x:` field.
 
 If the append flag is set to true, ATSD checks the previous text value for the same timestamp. If the previous value is found, the new value is appended at the end using `;\n` (semi-colon 
 followed by line feed) as a separator.
@@ -76,7 +76,7 @@ GROUP BY entity.tags.app
 ### Issue 3691
 --------------
 
-Implemented useful functions which convert an ISO8601 date string into epoch time or into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) date object: 
+Implemented useful functions to convert an ISO8601 date string into epoch time or into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) date object: 
 milliseconds (String isodate), seconds (String isodate), or date (String isodate). These functions can be used in rule-engine expressions.
 
 ```ls
@@ -143,8 +143,6 @@ CASE WHEN pointtypex = 'float64' THEN 'double'
 END AS atsd_type
 FROM pipoint..pipoint2
 WHERE ${SPLIT_CONDITION}
-
-![Figure 8](Images/Figure8.png)
 ```
 
 Split Condition:
