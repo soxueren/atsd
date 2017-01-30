@@ -7,9 +7,9 @@ Weekly Change Log: January 23 - January 29, 2017
 |------|-------------|---------|--------------------------------------------------------------------------------------| 
 | 3831 | api-rest    | Bug     | Updated [`GET`](/api/meta/entity/get.md#entity-get) series request to return up to 1000 series per search. Added message `Warning! Max row limit reached (1000)` when the threshold is reached. |
 | 3825 | sql         | Bug     | Removed unnecessary extra row when the [`VALUE INTERPOLATION`](/api/sql/examples/interpolate-extend.md#interpolate-with-extend) function was specified in a period expression. | 
-| 3816 | UI          | Bug     | Updated the Interval tab on the [Series Statistics]((/tree/collector-changes/changelogs/2017_03#issue-3680)) page for ordering interval times. We now exclude intervals between the median - std. deviation and the median + std. deviation. | 
+| 3816 | UI          | Bug     | Updated the Interval tab on the [Series Statistics](/tree/collector-changes/changelogs/2017_03#issue-3680) page for ordering interval times. We now exclude intervals between the median minus std. deviation and the median plus std. deviation. | 
 | 3813 | UI          | Bug     | Fixed issue when searched series were not found on the Series Statistics page. | 
-| 3808 | metric      | Bug     | Corrected bug where incorrect NaN counts were showing on Series Statistics page. | 
+| 3808 | metric      | Bug     | Corrected bug where incorrect `NaN` counts were showing on Series Statistics page. | 
 | [3742](#issue-3742) | UI          | Feature | Added a `Text Column` button to the UI Export form. | 
 
 ### Collector
@@ -23,14 +23,14 @@ Weekly Change Log: January 23 - January 29, 2017
 | [3818](#issue-3818) | socrata     | Feature | In `Test` mode, added a table displaying columns from the meta section. | 
 | 3812 | socrata     | Bug     | Hid `http` pool from the configuration tab. Now, only the metric path will be displayed. | 
 | 3811 | socrata     | Bug     | Fixed auto-complete field bug. | 
-| 3810 | socrata     | Bug     | Updated settings so that if a field is specified in Custom Tags but is not specified in Included Fields, it will not be sent as a metric.| 
+| 3810 | socrata     | Bug     | Updated settings so that if a field is specified in 'Custom Tags' but is not specified in 'Included Fields', it will not be sent as a metric.| 
 | 3804 | socrata     | Bug     | Excluded `null` values from custom tags or any other fields in commands for both JSON and Socrata jobs. | 
 | 3803 | socrata     | Bug     | Fixed issue where time fields were being stored as metrics. | 
 | 3802 | socrata     | Bug     | Corrected issues with counter commands sending misleading, inaccurate information. | 
 | 3801 | socrata     | Bug     | Fixed request error caused by trailing slashes by adding `rows.json` command instead of `/rows.json` if a url ends with a forward slash. | 
 | 3799 | socrata     | Bug     | Stabilized form jitter issue, which is when parts of a form are initially visible and then hidden after the form is loaded, for both JSON and Socrata jobs. | 
-| 3798 | socrata     | Bug     | Updated time parser for JSON and Socrata jobs to accept the yyyyw time format. | 
-| 3793 | socrata     | Bug     | Added the following heuristics to the Socrata job. Set the field with type equal to `calendar_date` as the `Time` field. If the field name ends with `_year_week`, contains only numeric values, and each value has 6 digits, then the Time field will be set with the yyyyw format. If the data type is numeric, and all values and their sums are integers, then the metric datatype is set as long. | 
+| 3798 | socrata     | Bug     | Updated time parser for JSON and Socrata jobs to accept the `yyyyw` time format. | 
+| 3793 | socrata     | Bug     | Added the following heuristics to the Socrata job. Set the field with type equal to `calendar_date` as the `Time` field. If the field name ends with `_year_week`, contains only numeric values, and each value has 6 digits, then the Time field will be set with the `yyyyw` format. If the data type is numeric, and all values and their sums are integers, then the metric datatype is set as long. | 
 | [3772](#issue-3772) | Socrata     | Feature | Created new Socrata job to query [Socrata](https://socrata.com/) data. |
 
 ## ATSD
