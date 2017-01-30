@@ -38,7 +38,7 @@ Weekly Change Log: January 23 - January 29, 2017
 ### Issue 3742
 --------------
 
-A `Text Column` button was added to the user interface export form. By enabling this button, a text column will be displayed for data exported in CSV and HTML formats.       
+A `Text Column` button was added to the user interface export form. By enabling this button, a text column will be displayed for data exported in CSV and HTML formats.        
 
 ![Figure 1](Images/Figure1.png)
 
