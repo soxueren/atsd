@@ -50,32 +50,108 @@ Now, a [text value](/api/network/series.md#series-tags-text-value-messages) can 
 ### Issue 3818
 --------------
 
-Columns which were added include (along with their sources):
+The [Test] result now includes a list of columns from the underlying dataset and information on how they're mapped into command fields. The table contains column attributes as well as the following fields:
 
-* Name: from `meta.name`
-* Field Name: from `meta.fieldNameData`
-* Data Type: from `meta.dataTypeName`
-* Render Type: from `meta.renderTypeName`
-* Schema Type: should classify how this column is processed in our commands, e.g. Metric, Series Tag, Time, Property Type, etc.
-* Included: should be `Yes` or `No` based on the Excluded/Included field rules.
-* Largest Value: from `meta.cachedContents.largest`
-* Smallest Value: from `meta.cachedContents.smallest`
-* First Value: from `meta.cachedContents.top[0]['item']`
-* Not Null Count: from `meta.cachedContents.not_null`
-* Null Count: from `meta.cachedContents.null`
-* Description: from `meta.description`
+* Schema Type: Classifies how the column is processed in ATSD commands, e.g. metric, series tag, time, property type, etc.
+* Included: Determines if the column is included in ATSD commands or is excluded (ignored).
+
+
+```json
+"columns" : [ {
+    "id" : 266155015,
+    "name" : "Proficient",
+    "dataTypeName" : "number",
+    "description" : "Number of students tested that were considered proficient - meeting standard score metric associated with the grade and content.  A null value identified by SCS (small cell size) indicates data was redacted to ensure privacy standards where met.",
+    "fieldName" : "proficient_1",
+    "position" : 7,
+    "renderTypeName" : "number",
+    "tableColumnId" : 23073592,
+    "width" : 149,
+    "cachedContents" : {
+      "largest" : "1552",
+      "non_null" : 57924,
+      "average" : "74.43671017194945",
+      "null" : 1666,
+      "top" : [ {
+        "item" : "0",
+        "count" : 20
+      }, {
+        "item" : "18",
+        "count" : 19
+      }, {
+        "item" : "54",
+        "count" : 18
+      }, {
+        "item" : "44",
+        "count" : 17
+      }, {
+        "item" : "12",
+        "count" : 16
+      }, {
+        "item" : "37",
+        "count" : 15
+      }, {
+        "item" : "39",
+        "count" : 14
+      }, {
+        "item" : "27",
+        "count" : 13
+      }, {
+        "item" : "32",
+        "count" : 12
+      }, {
+        "item" : "17",
+        "count" : 11
+      }, {
+        "item" : "9",
+        "count" : 10
+      }, {
+        "item" : "43",
+        "count" : 9
+      }, {
+        "item" : "47",
+        "count" : 8
+      }, {
+        "item" : "25",
+        "count" : 7
+      }, {
+        "item" : "24",
+        "count" : 6
+      }, {
+        "item" : "21",
+        "count" : 5
+      }, {
+        "item" : "15",
+        "count" : 4
+      }, {
+        "item" : "13",
+        "count" : 3
+      }, {
+        "item" : "90",
+        "count" : 2
+      }, {
+        "item" : "113",
+        "count" : 1
+      } ],
+      "smallest" : "0",
+      "sum" : "4311672"
+    },
+    "format" : {
+      "precisionStyle" : "standard",
+      "noCommas" : "false",
+      "align" : "right"
+    }
+  }
+]
+```
 
 ![Figure 3](Images/Figure3.png)
 
 ### Issue 3772
 --------------
 
-In order to more efficiently handle Socrata data, we created a new Socrata job. Previously, a Socrata format was provided in the JSON job. This format has been removed.
+In order to simplify processing of JSON documents created with [Open Data](https://project-open-data.cio.gov/v1.1/schema/) schema, we implemented a new [Socrata](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/socrata.md) job. Support for Socrata format has been removed from the JSON job as a result.
  
-The basic structure of the new Socrata job is similar to the Socrata format from the JSON job. Changes were made in general to the user interface in Collector, in the form of several tooltips.
-
-Additionally, when the `Name` field is empty on an unsaved `job-socrata-query` page and the user clicks the `Add` button, the `Name` will be set to the dataset name.
-
-After creating the new Socrata job, JSON jobs with the Socrata format are converted to Socrata jobs using SQL scripts.
+The configuration options implemented in the Socrata job provide a way to convert the dataset into series, property, and message fields in ATSD.
 
 ![Figure 2](Images/Figure2.png)
