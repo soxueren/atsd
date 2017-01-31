@@ -38,7 +38,10 @@ Weekly Change Log: January 23 - January 29, 2017
 ### Issue 3742
 --------------
 
-A `Text Column` button was added to the user interface export form. By enabling this button, a text column will be displayed for data exported in CSV and HTML formats.        
+A `Text Column` button was added to the user interface export form. By enabling this button, a text column will be displayed for data exported in CSV and HTML formats.   
+     
+Now, a [text value](/api/network/series.md#series-tags-text-value-messages) can be used to annotate a numeric observation without changing the series primary key. See 
+[Issue 3480](/tree/master/changelogs/2017_02#issue-3480) for more information.      
 
 ![Figure 1](Images/Figure1.png)
 
@@ -67,11 +70,11 @@ Columns which were added include (along with their sources):
 ### Issue 3772
 --------------
 
-In order to more efficiently handle Socrata data, we created a new Socrata job. Previously, a Socrata format was provided in the JSON job. This format has now been removed.
+In order to more efficiently handle Socrata data, we created a new Socrata job. Previously, a Socrata format was provided in the JSON job. This format has been removed.
  
-The basic structure of the new Socrata job is similar to the Socrata format from the JSON job. There were, however, some new features implemented. Changes were made in general to the 
-user interface in Collector, in the form of changing several tooltips and removing some fields. Additionally, when the Name field is empty on an unsaved `job-socrata-query` page, if 
-the user clicks the `Add` button, the Name will be set to the dataset name.
+The basic structure of the new Socrata job is similar to the Socrata format from the JSON job. Changes were made in general to the user interface in Collector, in the form of several tooltips.
+
+Additionally, when the `Name` field is empty on an unsaved `job-socrata-query` page and the user clicks the `Add` button, the `Name` will be set to the dataset name.
 
 After creating the new Socrata job, JSON jobs with the Socrata format are converted to Socrata jobs using SQL scripts.
 
