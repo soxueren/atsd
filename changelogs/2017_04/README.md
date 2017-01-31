@@ -43,7 +43,7 @@ A `Text Column` button was added to the user interface export form. By enabling 
 Now, a [text value](/api/network/series.md#series-tags-text-value-messages) can be used to annotate a numeric observation without changing the series primary key. See 
 [Issue 3480](/changelogs/2017_02#issue-3480) for more information.      
 
-![Figure 1](Images/Figure1.png)
+![Figure 1](Images/Figure1.png) 
 
 ## Collector
 
