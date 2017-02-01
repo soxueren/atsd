@@ -29,6 +29,7 @@ Placeholders are specified using the `{name}` format. Placeholders can reference
 * received_time
 * schedule
 * event_time
+* timestamp
 * min_interval_expired
 * window_first_time
 * threshold
