@@ -32,20 +32,63 @@ precedence over expression.
 `window_length_count()` | Length of the count-based window, as configured.
 `windowStartTime()` | Time when the first command was received by the window, in UNIX milliseconds.
 `milliseconds(string isodate)` | Converts ISO8601 date string into epoch time in milliseconds.
+`milliseconds(string datetime, string format)` | Converts provided datetime string  into epoch time in milliseconds according to specified format string. If timezone or offset from UTC are not specified in the format string then the server timezone will be used for the conversion. The format string syntax is described in the document [datetime format](http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html).
+`milliseconds(string datetime, string format, string timezone)` | Converts provided datetime string into epoch time in milliseconds according to specified format string and timezone (or offset from UTC). Available timezones and their standard offsets are listed in [time zones](http://joda-time.sourceforge.net/timezones.html). If timezone (or offset from UTC) is specified in the datetime string, and it differs from timezone (offset) provided as the third argument then function throws an exception.
 `seconds(string isodate)` | Converts ISO8601 date string into epoch time in seconds.
-`date(string isodate)` | Converts ISO8601 date string into [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) date object. The object can return [numeric codes](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTimeConstants.html) or string names for calendar constants.
+`seconds(string datetime, string format)` | Converts provided datetime string  into epoch time in seconds according to specified format string. If timezone or offset from UTC are not specified in the format string then the server timezone will be used for the conversion.
+`seconds(string datetime, string format, string timezone)` | Converts provided datetime string into epoch time in seconds according to specified format string and timezone (or offset from UTC). Available timezones and their standard offsets are listed in [time zones](http://joda-time.sourceforge.net/timezones.html). If timezone (or offset from UTC) is specified in the datetime string, and it differs from timezone (offset) provided as the third argument then function throws an exception.
+`date(string isodate)` | Converts ISO8601 date string into [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) DateTime object. The object can return [numeric codes](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTimeConstants.html) or string names for calendar constants.
+`date(string datetime, string format)` | Converts provided datetime string  into [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) DateTime object according to specified format string. If timezone or offset from UTC are not specified in the format string then the server timezone will be used for the conversion.
+`date(string datetime, string format, string timezone)` | Converts provided datetime string into [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) DateTime object according to specified format string and timezone (or offset from UTC). Available timezones and their standard offsets are listed in [time zones](http://joda-time.sourceforge.net/timezones.html). If timezone (or offset from UTC) is specified in the datetime string, and it differs from timezone (offset) provided as the third argument then function throws an exception.
 
 ```java
-/*
+  /* 
   Return true if difference between event time and start time (ISO) retrieved 
-  from property record is greater than 5 minutes
-*/
-  timestamp - milliseconds(property('docker.container::startedAt')) >  5*60000
+  from property record is greater than 5 minutes. 
+  */
+timestamp - milliseconds(property('docker.container::startedAt')) >  5*60000
 
-/*
-  Return true if the specified date is a working day
-*/
-  property('config::deleted')).dayOfWeek().get() < 6
+  /* 
+  Return true if the specified date is a working day. 
+  */
+date(property('config::deleted')).dayOfWeek().get() < 6
+  
+  /*
+  Use server time zone to construct DateTime object.
+  */
+date("31.01.2017 12:36:03:283", "dd.MM.yyyy HH:mm:ss:SSS");
+
+  /*
+  Use offset specified in datetime string to construct DateTime object.
+  */
+date("31.01.2017 12:36:03:283 -08:00", "dd.MM.yyyy HH:mm:ss:SSS ZZ");
+
+  /*
+  Use time zone specified in datetime string to construct DateTime object.
+  */
+date("31.01.2017 12:36:03:283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss:SSS ZZZ");
+
+  /*
+  Construct DateTime object with time zone provided as the third argument.
+  */
+date("31.01.2017 12:36:03:283", "dd.MM.yyyy HH:mm:ss:SSS", "Europe/Berlin");
+
+  /*
+  Construct DateTime object with UTC offset provided as the third argument.
+  */
+date("31.01.2017 12:36:03:283", "dd.MM.yyyy HH:mm:ss:SSS", "+01:00");
+
+  /*
+  If time zone (offset) is specified in the datetime string it should be exactly the same 
+  as provided by the third argument.
+  */
+date("31.01.2017 12:36:03:283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss:SSS ZZZ", "Europe/Berlin");
+
+  /*
+  These expressions lead to exceptions.
+  */
+date("31.01.2017 12:36:03:283 +01:00", "dd.MM.yyyy HH:mm:ss:SSS ZZ", "Europe/Berlin");
+date("31.01.2017 12:36:03:283 Europe/Brussels", "dd.MM.yyyy HH:mm:ss:SSS ZZZ", "Europe/Berlin");
 ```
 
 
