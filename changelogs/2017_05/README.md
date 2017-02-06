@@ -19,7 +19,6 @@ Weekly Change Log: January 30 - February 5, 2017
 | 3843 | sql         | Bug     | keywords are case-sensitive                                                                     | 
 | 3841 | sql         | Bug     | CAST in WHERE filter changes results                                                            | 
 | 3840 | sql         | Bug     | ORDER BY not applied when using column alias                                                    | 
-| 3528 | data-in     | Support | Amgen Data Inserted                                                                                  | 
 
 ### Collector
 
@@ -36,7 +35,6 @@ Weekly Change Log: January 30 - February 5, 2017
 
 | Issue| Category    | Type    | Subject                                                                              |
 |------|-------------|---------|--------------------------------------------------------------------------------------| 
-| 3871 | portal      | Support | Testomat portal                                                                                      | 
 | 3839 | time-chart  | Bug     | negative style no applied to marker                                                      | 
 | 3836 | bar         | Bug     | remove onload animation                                                         | 
 | 3794 | box         | Bug     | tooltip issues                                                                                  | 
