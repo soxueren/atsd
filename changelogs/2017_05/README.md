@@ -11,10 +11,10 @@ Weekly Change Log: January 30 - February 5, 2017
 | 3870 | rule engine | Bug     | expression evaluation error is propagated to clients instead of catching the exception  | 
 | 3869 | sql         | Bug     | unexpected IllegalArgumentException                                                             | 
 | 3862 | rule engine | Bug     | html escape for rule.value fields (fields used to define aliases)                       | 
-| 3861 | client      | Feature | python - support for SQL                                                                 | 
+| 3861 | client      | Feature | [python](https://github.com/axibase/atsd-api-python#sql-queries) - support for SQL                                                                 | 
 | 3858 | sql         | Bug     | Decimal precision sometimes ignored in scheduled SQL report                                     | 
 | 3854 | rule engine | Feature | extend date, seconds, and milliseconds functions to allow custom time format            | 
-| 3853 | sql         | Bug     | keyword [QUARTER](/f19099248c8efbbae5f2c37135c61c1c3c71e544/end-time-syntax.md#interval-units) does not exist                                                                  | 
+| 3853 | sql         | Bug     | keyword [QUARTER](/api/data/series/time-unit.md#time-unit) does not exist                                                                  | 
 | 3851 | data-in     | Bug     | udp                                                                                | 
 | 3843 | sql         | Bug     | keywords are case-sensitive                                                                     | 
 | 3841 | sql         | Bug     | [CAST](/api/sql#cast) in [WHERE](/api/sql#where-clause) filter changes results                                                            | 
