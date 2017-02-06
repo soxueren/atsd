@@ -143,15 +143,6 @@ free up space for a new sample.
 ![Axibase Time Series Database Rule Engine Count Based
 Window](images/count_based_window3.png "count_based_window")
 
-## Time Control
-
-The rule engine in ATSD is designed to analyze current, real-time data streams.
-
-It ignores commands that are 1 minute behind or 1 minute ahead of the current server time.
-When enabled, the ignored commands are logged to the `*_expired.log` and `*_forward.log` files, respectively.
-
-The log of expired or future commands can be enabled on the **Admin:Input Settings** page.
-
 ## Alert Severity
 
 Severity of alerts raised by the rule engine is specified on the Alerts tab in Rule Editor.
