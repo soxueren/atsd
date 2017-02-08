@@ -1071,7 +1071,7 @@ WITH ROW_NUMBER(entity, tags ORDER BY period(15 minute)) <= 2
 | entity       | tags.file_system                    | datetime                 | avg(value) | count(value) | first(value) | last......|
 |--------------|-------------------------------------|--------------------------|------------|--------------|--------------|-----------|
 | nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | 2017-01-09T00:00:00.000Z | 6285986    | 60           | 6285696      | 6286312   |
-| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | 2017-01-09T00:15:00.000Z | 6286339    | 60           | 6286312      | 6286372   | 
+| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | 2017-01-09T00:15:00.000Z | 6286339    | 60           | 6286312      | 6286372   |
 | nurswgvml006 | /dev/sdc1                           | 2017-01-09T00:00:00.000Z | 57558921   | 60           | 57521944     | 57579272  |
 | nurswgvml006 | /dev/sdc1                           | 2017-01-09T00:15:00.000Z | 57600482   | 60           | 57580072     | 57510460  |
 | nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | 2017-01-09T00:00:00.000Z | 9046720    | 60           | 9024392      | 9071064   |
@@ -1397,8 +1397,22 @@ The following functions aggregate values in a column by producing a single value
 ```
 
 The functions accept `value` as the column name or a numeric expression as a parameter, for example  `AVG(value)` or `AVG(t1.value + t2.value)`.
-The `PERCENTILE` function accepts `percentile` parameter (0 to 100) and `value` column name, for example `percentile(75, value)`.
-The `COUNT` function counts the number of rows in the result set and accepts `*` as an argument, for example `COUNT (*)`.
+
+* The `PERCENTILE` function accepts `percentile` parameter (0 to 100) and a numeric expression, for example `PERCENTILE(75, value)`.
+* The `COUNT` function counts the number of rows in the result set and accepts `*` as an argument, for example `COUNT(*)`.
+
+```sql
+SELECT entity, AVG(value), MAX(value), COUNT(*), PERCENTILE(80, value)
+  FROM mpstat.cpu_busy
+WHERE datetime > current_hour
+  GROUP BY entity
+```
+
+```ls
+| entity       | AVG(value) | MAX(value) | COUNT(*) | PERCENTILE(80,value) |
+|--------------|------------|------------|----------|----------------------|
+| nurswghbs001 | 20.3       | 48.0       | 49.0     | 22.8                 |
+```
 
 ## Time Formatting Functions
 
