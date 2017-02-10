@@ -18,7 +18,7 @@ time and timezone information.
 
 ## Increase Network Buffers
 
-> If you're anticipating insertion rate with bursts of 100K+ packets per second, 
+> If you're anticipating insertion rate with bursts of 100K+ packets per second,
 increase maximum receiving buffer.
 
 * See [note](../administration/networking-settings.md).
@@ -34,3 +34,7 @@ increase maximum receiving buffer.
 ## Review Log Files
 
 * See [note](../administration/logging.md).
+
+## Relocate ATSD
+
+* [Move ATSD](relocation.md) to a different file system, if the `/opt/atsd` directory doesn't provide sufficient free space.
