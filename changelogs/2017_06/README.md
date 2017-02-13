@@ -19,10 +19,8 @@ Weekly Change Log: February 6 - February 12, 2017
 | 3880 | sql            | Bug     | NPE in JOIN query when aggregating null values                                              |
 | 3879 | rule engine    | Feature | time filter                                                                         |
 | 3872 | sql            | Bug     | Incorrect merge with "JOIN USING entity"                                                    |
-| 3863 | rule engine    | Support | oebb message processor                                                              |
 | 3860 | api-rest       | Bug     | series query returns no text value with last=true                                      |
 | 3844 | sql            | Bug     | Error when ISNULL is a part of expression                                                   |
-| 3528 | data-in        | Support | Amgen Data Inserted                                                                              |
 | 3508 | log_aggregator | Feature | message size                                                                     |
 
 ### Collector
