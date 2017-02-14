@@ -75,10 +75,11 @@ The generated configuration:
 
 ### Issue 3901
 --------------
-[Example portal](https://apps.axibase.com/chartlab/bb65c060) with hidden rows without alerts
+[Example portal](https://apps.axibase.com/chartlab/bb65c060) where rows without alerts get hidden
+![](Images/Figure_07.png)
 
 ### Issue 3792
 --------------
-[Example of `Metro` class](https://apps.axibase.com/chartlab/bb65c060)
-
+[Example of `Metro` class](https://apps.axibase.com/chartlab/6d6ae13c/2/)
+![](Images/Figure_08.png)
 
