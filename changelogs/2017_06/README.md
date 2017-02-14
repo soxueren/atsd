@@ -7,7 +7,7 @@ Weekly Change Log: February 6 - February 12, 2017
 |------|----------------|---------|--------------------------------------------------------------------------------------| 
 | 3912 | sql            | Bug     | Fixed NullPointerException in queries with [`JOIN`](/api/sql#join) statements but without a `WHERE` condition.                                                                                                          |
 | 3910 | rule engine    | Bug     | Old rules without aliases are logged with rule name.                                    |
-| [3909](#issue-3909) | rule engine    | Feature | Created a `Discard Previous Values` filter option to control processing of commands with a timestamp earlier than the latest processed one.                                                                                                               |
+| [3909](#issue-3909) | rule engine    | Feature | Created a `Discard Previous Values` filter option to control processing of commands with a timestamp earlier than the most recent one.                                                                                                               |
 | 3902 | api-network    | Bug     | Fixed deleting text value by [series](/api/network/series.md#series-command) commands having the [append](/api/network/series.md#text-append) flag and inserted in batch.                                            |
 | 3894 | rule engine    | Bug     | Fixed validation for rules using variables addressed to declared fields with an array type. |
 | 3893 | sql            | Bug     | Fixed delta aggregator behavior with filtered dates.                                  |
