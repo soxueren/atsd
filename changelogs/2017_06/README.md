@@ -5,39 +5,39 @@ Weekly Change Log: February 6 - February 12, 2017
 
 | Issue| Category       | Type    | Subject                                                                              |
 |------|----------------|---------|--------------------------------------------------------------------------------------| 
-| 3912 | sql            | Bug     | Fixed NullPointerException in queries with [`JOIN`](/api/sql#join) statements but without a `WHERE` condition.                                                                                                          |
-| 3910 | rule engine    | Bug     | Old rules without aliases are logged with rule name.                                    |
-| [3909](#issue-3909) | rule engine    | Feature | Created a `Discard Previous Values` filter option to control processing of commands with a timestamp earlier than the most recent one.                                                                                                               |
-| 3902 | api-network    | Bug     | Fixed deleting text value by [series](/api/network/series.md#series-command) commands having the [append](/api/network/series.md#text-append) flag and inserted in batch.                                            |
-| 3894 | rule engine    | Bug     | Fixed validation for rules using variables addressed to declared fields with an array type. |
+| 3912 | sql            | Bug     | Fixed NullPointerException in [`JOIN`](/api/sql#join) queries without a `WHERE` condition.                                                                                                          |
+| 3910 | rule engine    | Bug     | Invalid rules are logged with rule name to simplify troubleshooting.                                    |
+| [3909](#issue-3909) | rule engine    | Feature | Added a `Discard Previous Values` filter option to control processing of commands with a timestamp earlier than the most recent one.                                                                                                               |
+| 3902 | api-network    | Bug     | Fixed deletion of annotations by batched [series](/api/network/series.md#series-command) commands with the [append](/api/network/series.md#text-append) flag.                                            |
+| 3894 | rule engine    | Bug     | Fixed validation of user-defined variables. |
 | 3893 | sql            | Bug     | Fixed delta aggregator behavior with filtered dates.                                  |
 | 3892 | sql            | Bug     | Fixed usage of the [CASE](/api/sql#case) statement in `SELECT` clauses with grouping by the `time` column.    |
 | 3890 | sql            | Bug     | Fixed tag encoding error in high-cardinality metrics.                                 |
 | 3887 | UI             | Bug     | Added HTML-escaping for columns on SQL Queries page.                                  | 
-| 3885 | api-network    | Bug     | Fixed appending annotations for [series](/api/network/series.md#series-command) commands having the [append](/api/network/series.md#text-append) flag and inserted in batch.                                             |
+| 3885 | api-network    | Bug     | Fixed annotation append behavior by batched [series](/api/network/series.md#series-command) commands with the [append](/api/network/series.md#text-append) flag.                                             |
 | 3883 | rule engine    | Bug     | Variables are now allowed to be referenced by other variables.                            |
-| 3880 | sql            | Bug     | Fixed NullPointerException in [`JOIN`](/api/sql#join) queries when aggregating null values.   |
-| [3879](#issue-3879) | rule engine    | Feature | Added time filter.                                                                    |
-| 3872 | sql            | Bug     | Fixed merge with [`JOIN USING entity`](/api/sql#join-with-using-entity).              |
-| 3860 | api-rest       | Bug     | [series](/api/network/series.md#series-command) queries now return text values with [last=true](/api/data/series/query.md#control-filter-fields).                                                             |
+| 3880 | sql            | Bug     | Fixed NullPointerException in [`JOIN`](/api/sql#join) queries when aggregating `null` values.   |
+| [3879](#issue-3879) | rule engine    | Feature | Added time filter to control how historical and future records are discarded.                                                                    |
+| 3872 | sql            | Bug     | Fixed a merge issue with [`JOIN USING entity`](/api/sql#join-with-using-entity) clause.              |
+| 3860 | api-rest       | Bug     | [series](/api/network/series.md#series-command) query now returns text values with [last=true](/api/data/series/query.md#control-filter-fields) field.                                                             |
 | 3844 | sql            | Bug     | The [`ISNULL`](/api/sql#join) function is now allowed to be a part of expression.               |
-| 3508 | log_aggregator | Feature | Added ability to control event message size.                                          |
+| 3508 | log_aggregator | Feature | Added ability to limit maximum event message size.                                          |
 
 ### Collector
 
 | Issue| Category       | Type    | Subject                                                                              |
 |------|----------------|---------|--------------------------------------------------------------------------------------| 
-| 3903 | socrata        | Bug     | Implemented filtering and trimming for tag values before saving.                                      |
+| 3903 | socrata        | Bug     | Implemented filtering and trimming of tag values before saving.                                      |
 | [3899](#issue-3899) | socrata        | Feature | Added capability to launch an automated job from dataset url.                                                |
-| 3877 | socrata        | Bug     | Annotations are applied with numeric metric name.                                         |
-| [3864](#issue-3864) | socrata        | Feature | A summary table is displayed in `Test` mode.                                            |
+| 3877 | socrata        | Bug     | Annotations are added under numeric metric names.                                         |
+| [3864](#issue-3864) | socrata        | Feature | Added a summary table displayed in `Test` mode.                                            |
 | [3859](#issue-3859) | socrata        | Feature | Added a URL wizard.                                                                   | 
 
 ### Charts
 
 | Issue| Category       | Type    | Subject                                                                              |
 |------|----------------|---------|--------------------------------------------------------------------------------------| 
-| 3908 | table          | Bug     | Fixed row sorting when 'display: none' is used.                                      |
+| 3908 | table          | Bug     | Fixed row sorting when conditional 'display: none' style is used.                                      |
 | [3901](#issue-3901) | portal    | Support | Added ability to hide rows if no alert is raised for all metrics in a row.          |
 | [3792](#issue-3792) | box       | Feature | Implemented class 'Metro'.                                                            |
 
