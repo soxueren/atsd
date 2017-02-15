@@ -30,7 +30,7 @@ nano /opt/atsd/hbase/conf/hbase-env.sh
 export HBASE_HEAPSIZE=4096
 ```
 
-##### Change Maximum HDFS Heap Memory
+## Change Maximum HDFS Heap Memory
 
 Open the HDFS environment file and uncomment the `export HADOOP_HEAPSIZE` line.
 Set new maximum memory size in megabytes:
@@ -43,14 +43,14 @@ nano /opt/atsd/hadoop/conf/hadoop-env.sh
 export HADOOP_HEAPSIZE=4096
 ```
 
-##### Restart All Components
+## Restart All Components
 
 ```sh
 /opt/atsd/bin/atsd-all.sh stop
 /opt/atsd/bin/atsd-all.sh start
 ```
 
-##### Verify that `-Xmx` Parameter is Set Accordingly:
+## Verify that `-Xmx` Parameter is Set Accordingly:
 
 
 ```
