@@ -129,7 +129,7 @@ If Zookeeper Znode parent is not `/hbase`, set `zookeeper.znode.parent` to the a
 hbase.zookeeper.quorum = zookeeper-host
 hbase.zookeeper.property.clientPort = 2181
 zookeeper.znode.parent = /hbase
-hbase.rpc.timeout = 120000 
+hbase.rpc.timeout = 120000
 hbase.client.scanner.timeout.period = 120000
 ```
 
@@ -152,7 +152,7 @@ eoj
 
 Copy the `axibase.keytab` file to the `/opt/atsd/atsd/conf` directory on the ATSD server.
 
-### Authorize `axibase` Principal 
+### Authorize `axibase` Principal
 
 Check the HBase Secure Authorization settings in the Cloudera HBase configuration.
 
@@ -161,7 +161,7 @@ Check the HBase Secure Authorization settings in the Cloudera HBase configuratio
 If the HBase Secure Authorization is disabled you can access HBase as is. Proceed to [Kerberos Settings](#kerberos-settings).
 
 Otherwise, you need to allow the newly created `axibase` principal to access HBase using one of the following options:
-    
+
 1. Add the `axibase` principal to the HBase superusers via HBase Configuration.
 
  ![](images/cloudera-manager-superuser.png)
@@ -260,7 +260,7 @@ Remove comments in the `/opt/atsd/atsd/conf/hbase-site.xml` file and replace the
   <property>
     <name>hbase.master.kerberos.principal</name>
     <value>hbase/_HOST@HADOOP.AXIBASE.COM</value>
-  </property> 
+  </property>
   <property>
     <name>hbase.regionserver.kerberos.principal</name>
     <value>hbase/_HOST@HADOOP.AXIBASE.COM</value>
@@ -294,12 +294,12 @@ DParams="$DParams -Dsun.security.krb5.debug=true"
 Kerberos client debug output will be redirected to the `${outLog}` file, which is set to `/opt/atsd/atsd/logs/out.log` by default.
 
 ```
-5921 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Setting up kerberos auth: login:axibase@HADOOP.AXIBASE.COM keytab:/opt/atsd/atsd/conf/axibase.keytab 
+5921 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Setting up kerberos auth: login:axibase@HADOOP.AXIBASE.COM keytab:/opt/atsd/atsd/conf/axibase.keytab
 Java config name: null
 Native config name: /etc/krb5.conf
 Loaded from native config
-6085 [main] WARN  o.a.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable 
-6213 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Login user from keytab starting... 
+6085 [main] WARN  o.a.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+6213 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Login user from keytab starting...
 Java config name: null
 Native config name: /etc/krb5.conf
 Loaded from native config
@@ -322,19 +322,19 @@ Ordering keys wrt default_tkt_enctypes list
 default etypes for default_tkt_enctypes: 23 18.
 >>> EType: sun.security.krb5.internal.crypto.ArcFourHmacEType
 >>> KrbAsRep cons in KrbAsReq.getReply axibase
-6246 [main] INFO  o.a.h.security.UserGroupInformation - Login successful for user axibase@HADOOP.AXIBASE.COM using keytab file /opt/atsd/atsd/conf/axibase.keytab 
-6247 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Login user from keytab successful 
+6246 [main] INFO  o.a.h.security.UserGroupInformation - Login successful for user axibase@HADOOP.AXIBASE.COM using keytab file /opt/atsd/atsd/conf/axibase.keytab
+6247 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Login user from keytab successful
 ```
 
 ## Configure HBase Region Servers
 
-### Deploy ATSD Coprocessors 
+### Deploy ATSD Coprocessors
 
 Copy `/opt/atsd/hbase/lib/atsd.jar` to the `/usr/lib/hbase/lib` directory on each HBase region server.
 
 ### Enable ATSD Coprocessors
 
-Open Cloudera Manager, select the target HBase cluster/service, open Configuration tab, search for the setting `hbase.coprocessor.region.classes` and enter the following names. 
+Open Cloudera Manager, select the target HBase cluster/service, open Configuration tab, search for the setting `hbase.coprocessor.region.classes` and enter the following names.
 
 * com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint
 * com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint
@@ -372,7 +372,7 @@ Since major compactions may overload the cluster, it is recommended to trigger t
 
 ![](images/cm_major_compaction.png)
 
-To disable build-in compaction of data tables, remove them from the `/opt/atsd/atsd/conf/server.properties` file as follows:
+To disable built-in compaction of data tables, adjust the following settings on the **Admin > Server Properties** page:
 
 ```
 #this will compact only 'entity' table once a week on Saturday
@@ -384,7 +384,7 @@ hbase.compaction.schedule = 0 0 12 * * SAT
 
 Configure Java Heap memory to ATSD java process as described [here](../administration/allocating-memory.md).
 
-Increase the number of worker threads and maximum queue size by adding the following properties to `/opt/atsd/atsd/conf/server.properties`:
+Increase the number of worker threads and maximum queue size the **Admin > Server Properties** page:
 
 ```ls
 #series queue limit, specified as number of batches, default: 32

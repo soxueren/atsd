@@ -46,7 +46,7 @@ To encrypt TCP traffic, setup an [SSH tunnel](http://axibase.com/products/axibas
 
 ## Authentication
 
-Authentication and authorization are not supported for plain text commands received over TCP and UDP protocols. 
+Authentication and authorization are not supported for plain text commands received over TCP and UDP protocols.
 
 Utilize the [HTTP command](../data/command.md) to send plain-text commands over http/https protocols with authentication and authorization enabled.
 
@@ -126,7 +126,7 @@ s.close();
 
 ### Persistent Connection
 
-A client application can establish a persistent connection in order to continuously write commands, one command per line, and close the connection. 
+A client application can establish a persistent connection in order to continuously write commands, one command per line, and close the connection.
 
 Trailing line feed is not required for the last command when the connection is closed.
 
@@ -158,7 +158,7 @@ unknown_command e:station_1 m:temperature=32.2
 Connection closed by foreign host.
 ```
 
-If the connection is terminated due to client error, all valid commands sent prior to the first invalid command will be stored. 
+If the connection is terminated due to client error, all valid commands sent prior to the first invalid command will be stored.
 
 Due to the fact that channel closing on client error may take some time, the database may also store a few valid commands received after the discarded command.
 
@@ -171,17 +171,13 @@ valid command   - possibly stored if present in buffer
 ...
 ```
 
-The above behavior can be modified by changing the `/opt/atsd/atsd/conf/server.properties` file and restarting the database.
+The above behavior can be modified by changing the `input.disconnect.on.error` setting to `No` on the **Admin > Server Properties** page.
 
-```ls
-input.disconnect.on.error = false
-```
-
-This will cause the database to maintain client connections even if one of the received commands was malformed or unknown.
+This will cause the database to maintain a client connection even if one of the received commands is malformed or unknown.
 
 ### UDP Datagrams
 
-The UDP protocol doesn't guarantee delivery but may have a higher throughput compared to TCP due to lower overhead. 
+The UDP protocol doesn't guarantee delivery but may have a higher throughput compared to TCP due to lower overhead.
 
 In addition, sending commands with UDP datagrams decouples the client application from the server to minimize the risk of blocking I/O time-outs.
 
@@ -201,7 +197,7 @@ echo -e "series e:station_33 m:temperature=32.2\nseries e:station_34 m:temperatu
 
 ### Duplicate Commands
 
-Multiple commands with the same timestamp and key fields may override each others value. 
+Multiple commands with the same timestamp and key fields may override each others value.
 
 If such commands are submitted at approximately the same time, there is no guarantee that they will be processed in the order they were received.
 
@@ -230,15 +226,15 @@ command-name field-prefix:field-name[=field-value]
 * The order of fields is not important.
 * Refer to ABNF rules for particular commands for exact rules.
 
-Field name: 
+Field name:
 
-* A field name can contain only printable characters. 
+* A field name can contain only printable characters.
 * If the field name contains a double-quote (") or equal (=) sign, it must be enclosed in double quotes. For example: `v:"os=name"=Ubuntu` or `v:"os""name"=Ubuntu`
 * Any double quote character in the value must be escaped with another double quote.
 
 Field value:
 
-* A field value can contain printable and non-printable characters including space, line breaks, tab. 
+* A field value can contain printable and non-printable characters including space, line breaks, tab.
 * If the field value contains a double-quote (") or equal (=) sign or a non-printable character, it must be enclosed in double quotes. For example: `v:os="Ubuntu 14.04"` or `v:os="Ubuntu=""14"""`
 * Any double quote character in the value must be escaped with another double quote.
 
@@ -266,7 +262,7 @@ The client must split a command that is too long into multiple commands.
 ### Schema
 
 * New entities, metrics, and tags are created automatically when inserting data.
-* The number of unique identifiers is subject to the following default limits: 
+* The number of unique identifiers is subject to the following default limits:
 
 |**Type**| **Maximum Identifier**|
 |:---|:---|
