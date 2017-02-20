@@ -73,6 +73,7 @@ Columns contained in the CSV file that are not specified in any field in the par
 |  Fields Lengths  |  Width of columns in symbols. Padding symbols added to the end of the field to obey the fields lengths.<br>For files in `.dat` format.  | 
 |  Discard NaN  |  NaN (Not a Number) values will be discarded  | 
 |  Ignore Line Errors  |  If enabled, any errors while parsing the given line are ignored, including date parse errors, number parse errors, split errors, mismatch of rows, and header column counts.  | 
+|  Ignore Header Lines  |  Ignore Top-N lines from the file header  | 
 
 
 ![](resources/csv_parser_example.png)
