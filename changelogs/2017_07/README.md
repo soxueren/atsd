@@ -5,7 +5,7 @@ Weekly Change Log: February 13 - February 19, 2017
 
 | Issue| Category        | Type    | Subject                                                                              |
 |------|-----------------|---------|--------------------------------------------------------------------------------------| 
-| 3925 | api-rest        | Bug     | Added column alias to metadata with [metadataFormat=`COMMENTS`](/api/sql/api.md#parameters) outputFormat=`csv`.                                                       |
+| 3925 | api-rest        | Bug     | Added column alias to metadata with [metadataFormat=`COMMENTS`](/api/sql/api.md#parameters) and outputFormat=`csv`.                                                       |
 | [3919](#issue-3919) | csv        | Feature | Added ability to ignore header lines in [CSV Parser](/parsers/csv/README.md).                                                                  |
 | 3898 | rule engine     | Bug     | Fixed incorrect errors highlighting in `Columns` values.                                                      |
 | [3889](#issue-3889) | rule engine     | Bug     | Fixed `entity.label` recognition in [`Expression`](/rule-engine/expression.md) field.                                                                 |
