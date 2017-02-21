@@ -44,7 +44,7 @@ Title: "ORO.csv"
 20130101,0200,828.13
 ```
 
-* Example 2. Skip 8 lines (emoty and prefixed with `:`) to start with line `.A ORO 20160312 PS DH0000 /LSH 2325491`.
+* Example 2. Skip 8 lines (empty and prefixed with `:`) to start with line `.A ORO 20160312 PS DH0000 /LSH 2325491`.
 
 ```
 
