@@ -73,12 +73,29 @@ The `entity.label` parameter is now supported in the rule filter.
 ### Issue 3921
 --------------
 
-Added an `escape()` method to `list` and `var` arrays, so now it may be used as `@{arrayName.escape()}`. This method escapes commas and backslashes in each element in an array, and then joins all elements in a string, dividing everything by comma.
+Added an `escape()` method to `list` and `var` arrays, so that this collections can now be serialized as follows  `@{arrayName.escape()}`. The `escape()` method escapes commas and backslashes in each element in an array.
+
+```
+  [dropdown]
+    options = @{countries.escape()}
+    change-field = series.tags.ctyname
+```
 
 https://apps.axibase.com/chartlab/ff94d98d/2/
 
 ### Issue 3897
 --------------
+
+New generic table settings:
+
+| Setting | Description |
+|---|---|
+| auto-height	| Calculate row height automatically based on amount of vertical space allocated to the widget and the number of rows.|
+| font-scale	| Ratio of font height to row height when auto-height is enabled. Minimum row height is 10px, maximum row height is 64px. |
+| table-header-style	| Custom CSS style applied to table header, including a style to hide the header altogether. |
+| header-style	| Custom CSS style applied to widget header, including a style to hide the widget header altogether. |
+
+https://apps.axibase.com/chartlab/e02b8303/3/
 
 https://apps.axibase.com/chartlab/e02b8303/4
 
@@ -89,22 +106,4 @@ https://apps.axibase.com/chartlab/e02b8303/6
 ![](Images/Figure1.png)
 
 ![](Images/Figure2.png)
-
-### Issue 3896
---------------
-
-The widget header can be hidden by the following command: `table-header-style = display: none`
-
-https://apps.axibase.com/chartlab/e02b8303/3/
-
-### Issue 3791
---------------
-
-The slider focus doesn't jump to the first column after updating anymore.
-
-https://apps.axibase.com/chartlab/0094035b
-
-
-
-
 
