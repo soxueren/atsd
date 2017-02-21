@@ -5,17 +5,17 @@ Weekly Change Log: February 13 - February 19, 2017
 
 | Issue| Category        | Type    | Subject                                                                              |
 |------|-----------------|---------|--------------------------------------------------------------------------------------| 
-| 3925 | api-rest        | Bug     | Added column alias to metadata with [metadataFormat=`COMMENTS`](/api/sql/api.md#parameters) and outputFormat=`csv`.                                                       |
-| [3919](#issue-3919) | csv        | Feature | Added ability to ignore header lines in [CSV Parser](/parsers/csv/README.md).                                                                  |
-| 3898 | rule engine     | Bug     | Fixed incorrect error highlighting for `Column` values.                                                      |
-| [3889](#issue-3889) | rule engine     | Bug     | Fixed `entity.label` recognition in the [`Expression`](/rule-engine/expression.md) field.                                                                 |
+| 3925 | api-rest        | Feature     | Added column alias to metadata with [metadataFormat=`COMMENTS`](/api/sql/api.md#parameters) and outputFormat=`csv`.                                                       |
+| [3919](#issue-3919) | csv        | Feature | Added an option to ignore top-N header lines in [CSV Parser](/parsers/csv/README.md).                                                                  |
+| 3898 | rule engine     | Bug     | Fixed incorrect error validation of user-defined `column` aliases.                                                      |
+| [3889](#issue-3889) | rule engine     | Bug     | Fixed `entity.label` field not accessible in filter [`expressions`](/rule-engine/expression.md).                                                                 |
 
 ### Collector
 
 | Issue| Category        | Type    | Subject                                                                              |
 |------|-----------------|---------|--------------------------------------------------------------------------------------| 
-| 3895 | socrata         | Bug     | Implemented several heuristics to ease configuring fields in Socrata jobs.                 |
-| 3891 | docker          | Bug     | Fixed missing `entity` command for a new container when a lifecycle event monitoring is disabled.   |
+| 3895 | socrata         | Bug     | Added heuristics to automatically classify and ignore fields in Socrata data sources. |
+| 3891 | docker          | Bug     | Fixed missing `entity` command for a new container when 'Lifecycle event monitoring' is disabled.   |
 
 ### Charts
 
@@ -25,23 +25,45 @@ Weekly Change Log: February 13 - February 19, 2017
 | 3917 | widget-settings | Bug     | Added the ability to escape commas and backslashes in settings which contain a list.                 |
 | [3897](#issue-3897) | table      | Feature | Added an `auto-height` setting.                                                                |
 | [3896](#issue-3896) | table      | Feature | Added a setting to hide table headers.                                                   |
-| [3791](#issue-3791) | table      | Bug     | Fixed slider focusing behavior after `update-interval`.                |
+| [3791](#issue-3791) | table      | Bug     | Fixed slider un-focus behavior after data update.                |
 
 ## ATSD
 
 ### Issue 3919
 --------------
 
-We added an option to ignore header lines on the ATSD CSV Parser. Now you may parse complicated CSV files without headers. 
-You can find [an example parser](https://github.com/axibase/atsd-use-cases/blob/master/OrovilleDam/resources/cdec.water.ca.gov-shef-parser.xml) 
-for a dataset from the California Department of Water Resources in our [article on the Oroville dam](https://github.com/axibase/atsd-use-cases/blob/master/OrovilleDam/README.md).
+The option allows ignoring top-N header lines in the imported CSV file. This enables skipping multi-line headers or metadata sections in CSV files.
+
+* Example: Skip 1 line `Title: "ORO.csv"` since it contains no separators.
+
+```
+Title: "ORO.csv"
+1148,PST,'RESERVOIR ELEVATION (feet)'
+20130101,0000,828.09
+20130101,0100,828.11
+20130101,0200,828.13
+```
+
+* Example 2. Skip 8 lines (emoty and prefixed with `:`) to start with line `.A ORO 20160312 PS DH0000 /LSH 2325491`.
+
+```
+
+:CDEC data from OROVILLE DAM
+:RESERVOIR STORAGE af
+:Station ID ORO, sensor number 15, duration H
+:Specified start date '03/12/2016 00:00' and ending date '03/14/2016 00:00'
+:Note:  All data is PST and is displayed in 4-digit year format to comply with Y2K requirements.
+:
+:  sta yyyymmdd PS DHhhmm /code value
+.A ORO 20160312 PS DH0000 /LSH 2325491 
+```
 
 ![](Images/Figure4.png)
 
 ### Issue 3889
 --------------
 
-The `entity.label` expression is now supported:
+The `entity.label` parameter is now supported in the rule filter.
 
 ![](Images/Figure3.png)
  
