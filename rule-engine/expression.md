@@ -51,29 +51,29 @@ timestamp - milliseconds(property('docker.container::startedAt')) >  5*60000
 date(property('config::deleted')).dayOfWeek().get() < 6
   
 /* Uses the server time zone to construct a DateTime object. */
-date("31.01.2017 12:36:03:283", "dd.MM.yyyy HH:mm:ss:SSS");
+date("31.01.2017 12:36:03:283", "dd.MM.yyyy HH:mm:ss:SSS")
 
 /* Uses the offset specified in the datetime string to construct a DateTime object. */
-date("31.01.2017 12:36:03:283 -08:00", "dd.MM.yyyy HH:mm:ss:SSS ZZ");
+date("31.01.2017 12:36:03:283 -08:00", "dd.MM.yyyy HH:mm:ss:SSS ZZ")
 
 /* Uses the time zone specified in the datetime string to construct a DateTime object. */
-date("31.01.2017 12:36:03:283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss:SSS ZZZ");
+date("31.01.2017 12:36:03:283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss:SSS ZZZ")
 
 /* Constructs a DateTime object from the time zone provided as the third argument. */
-date("31.01.2017 12:36:03:283", "dd.MM.yyyy HH:mm:ss:SSS", "Europe/Berlin");
+date("31.01.2017 12:36:03:283", "dd.MM.yyyy HH:mm:ss:SSS", "Europe/Berlin")
 
 /* Constructs a DateTime object from the UTC offset provided as the third argument. */
-date("31.01.2017 12:36:03:283", "dd.MM.yyyy HH:mm:ss:SSS", "+01:00");
+date("31.01.2017 12:36:03:283", "dd.MM.yyyy HH:mm:ss:SSS", "+01:00")
 
 /* If the time zone (offset) is specified in the datetime string, 
 it should be exactly the same as provided by the third argument. */
-date("31.01.2017 12:36:03:283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss:SSS ZZZ", "Europe/Berlin");
+date("31.01.2017 12:36:03:283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss:SSS ZZZ", "Europe/Berlin")
 
 /* These expressions lead to exceptions. */
-date("31.01.2017 12:36:03:283 +01:00", "dd.MM.yyyy HH:mm:ss:SSS ZZ", "Europe/Berlin");
-date("31.01.2017 12:36:03:283 Europe/Brussels", "dd.MM.yyyy HH:mm:ss:SSS ZZZ", "Europe/Berlin");
+date("31.01.2017 12:36:03:283 +01:00", "dd.MM.yyyy HH:mm:ss:SSS ZZ", "Europe/Berlin")
+date("31.01.2017 12:36:03:283 Europe/Brussels", "dd.MM.yyyy HH:mm:ss:SSS ZZZ", "Europe/Berlin")
 
-/* Return formatted time sring  "2017-02-22 11:18:00:000 Europe/Berlin"*/
+/* Return formatted time sring  "2017-02-22 11:18:00:000 Europe/Berlin" */
 date(1487758680000L, "yyyy-MM-dd HH:mm:ss:SSS ZZZ", "Europe/Berlin")
 
 ```
