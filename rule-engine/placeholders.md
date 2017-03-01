@@ -1,7 +1,7 @@
 # Placeholders
 
 Placeholders can be used to embed field and function values into email text or alert log.
-They are referenced using the `${name}` syntax.
+The placeholders are referenced using the `${name}` syntax.
 
 ![](images/placeholders.png "placeholders")
 
