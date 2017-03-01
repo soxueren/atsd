@@ -40,11 +40,13 @@
 * Drivers
     * [JDBC](https://github.com/axibase/atsd-jdbc)
 * Rule Engine
-    * [Overview](rule-engine/rule-engine.md)
+    * [Overview](rule-engine/README.md)
     * [Expression](rule-engine/expression.md)
+		* [Filters](rule-engine/filters.md)
     * [Functions](rule-engine/functions.md)
     * [Placeholders](rule-engine/placeholders.md)
-    * [Email Action](rule-engine/email-action.md) 
+		* [Editor](rule-engine/editor.md)
+    * [Email Action](rule-engine/email-action.md)
 * Installation
     * [Requirements](administration/requirements.md)
     * [Distributions](installation/#installation-guides)
@@ -60,7 +62,7 @@
 	* Cluster Distributions
       * [Cloudera Hadoop Distribution](installation/cloudera.md)  	
 	  * [Ambari](installation/ambari.md)	  
-      * [HBase Cluster](installation/hbase-cluster.md)	
+      * [HBase Cluster](installation/hbase-cluster.md)
 * Integration
     * [ActiveMQ](integration/activemq#monitoring-activemq-with-atsd)
     * [Axibase Enterprise Reporter](integration/aer#atsd-adapter)

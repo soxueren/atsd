@@ -50,7 +50,7 @@ sudo apt-get install nmon
     rm -r nmon                                        
     ```
     ```sh
-    wget -O nmon https://github.com/axibase/nmon/releases/download/15e/nmon_ 
+    wget -O nmon https://github.com/axibase/nmon/releases/download/15e/nmon_
     x86_ubuntu134                                     
     ```
 
@@ -94,11 +94,11 @@ wget https://github.com/axibase/nmon/blob/master/nmon_sender_telnet.sh
 
 nmon will run and the collected data will be streamed into ATSD. New entity and metrics will be available in the Entities and Metrics tabs. Metrics will have the `nmon.` prefix.
 
-#### Test nmon with Sender Script – Installed from Repositories 
+#### Test nmon with Sender Script – Installed from Repositories
 
 ```sh
 /usr/bin/nmon -F `hostname`.nmon -s 2 -c 30       
-./nmon_sender_telnet.sh {atsdhostname} -p 8081 -s 2 -c 30 -f `hostname`. 
+./nmon_sender_telnet.sh {atsdhostname} -p 8081 -s 2 -c 30 -f `hostname`.
 nmon                                              
 ```
 
@@ -106,7 +106,7 @@ nmon
 
 ```sh
 ./nmon -F `hostname`.nmon -s 2 -c 30              
-./nmon_sender_telnet.sh {atsdhostname} -p 8081 -s 2 -c 30 -f `hostname`. 
+./nmon_sender_telnet.sh {atsdhostname} -p 8081 -s 2 -c 30 -f `hostname`.
 nmon
 ```                                              
 
@@ -118,7 +118,7 @@ Setup crontab with the following commands so that nmon will collect the data con
 
 ```sh
 0 0 * * * /usr/bin/nmon -f -s 60 -c 1440 -T -m /opt/nmon/nmon_logs/      
-0 0 * * * /opt/nmon/nmon_sender_telnet.sh {atsdhostname} -p 8081 -s 60 - 
+0 0 * * * /opt/nmon/nmon_sender_telnet.sh {atsdhostname} -p 8081 -s 60 -
 c 1440 -m /opt/nmon/nmon_logs/ >> /opt/nmon/full.log 2>&1                
 ```
 
@@ -127,7 +127,7 @@ GitHub or Binaries:**
 
 ```sh
 0 0 * * * /opt/nmon/nmon -f -s 60 -c 1440 -T -m /opt/nmon/nmon_logs/     
-0 0 * * * /opt/nmon/nmon_sender_telnet.sh {atsdhostname} -p 8081 -s 60 - 
+0 0 * * * /opt/nmon/nmon_sender_telnet.sh {atsdhostname} -p 8081 -s 60 -
 c 1440 -m /opt/nmon/nmon_logs/ >> /opt/nmon/full.log 2>&1         `
 ```
 
@@ -150,5 +150,5 @@ Custom portals can be created using [HTML5 Widgets](http://axibase.com/products/
 
 ![](resources/nmon-linux-portal.png "nmon linux portal")
 
-Once nmon data is streamed into ATSD and predefined portals are working, you can use the [Rule Engine](../../rule-engine/rule-engine.md "Rule Engine") and
+Once nmon data is streamed into ATSD and predefined portals are working, you can use the [Rule Engine](../../rule-engine "Rule Engine") and
 [Forecasting](http://axibase.com/products/axibase-time-series-database/forecasts/ "Forecasts") tools for analyzing and planning capacity. Custom portals can be created using [HTML5 widgets](http://axibase.com/products/axibase-time-series-database/visualization/ "Visualization").

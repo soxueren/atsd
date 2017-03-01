@@ -1,5 +1,7 @@
 # Rule Engine
 
+## Overview
+
 Rule Engine enables automation of repetitive tasks based on the analysis of incoming data. Such tasks may include
 [sending an
 email](email-action.md "Email Action")
@@ -17,6 +19,14 @@ multiple automation procedures are triggered, for instance:
 ```javascript
     IF avg() > 75 THEN send_email
 ```
+
+## Reference
+
+* [Expressions](expression.md)
+* [Filters](filters.md)
+* [Functions](functions.md)
+* [Placeholders](placeholders.md)
+* [Editor](editor.md)
 
 ## In-Memory Processing
 
@@ -188,10 +198,3 @@ Alert exceptions can be created directly in the alerts table.
 ![](images/alert_exceptions.png "alert_exceptions")
 
 Alert exceptions can be also created using the 'Exception' link provided in email notifications.
-
-## Reference
-
-* [Expressions](expressions.md)
-* [Filters](filters.md)
-* [Functions](functions.md)
-* [Placeholders](placeholders.md)
