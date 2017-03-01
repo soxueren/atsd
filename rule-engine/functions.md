@@ -29,8 +29,8 @@
 | `diff(S)` | Difference between the last value and value at 'currentTime - interval'. <br>Interval specified as 'count unit', for example '5 minute'. |
 | `new_maximum()` | Returns true if last value is greater than any previous value. |
 | `new_minimum()` | Returns true if last value is smaller than any previous value. |
-| `threshold_time(D)` | Number of minutes until the sample value reaches specified threshold `D`.<br> based on extrapolation of difference between last and first value. |
-| `threshold_linear_time(D)` | Number of minutes until the sample value reaches specified threshold `D`.<br> based on linear extrapolation. |
+| `threshold_time(D)` | Number of minutes until the sample value reaches specified threshold `D` based on extrapolation of the difference between the last and first value. |
+| `threshold_linear_time(D)` | Number of minutes until the sample value reaches specified threshold `D` based on linear extrapolation. |
 | `rate_per_second()` | Difference between last and first value per second. <br>Same as `diff()/(last.time-first.time)`. Time measured in epoch seconds. |
 | `rate_per_minute()` | Difference between last and first value per minute. Same as `rate_per_second()/60`. |
 | `rate_per_hour()` | Difference between last and first value per hour. Same as `rate_per_second()/3600`. |
@@ -45,7 +45,7 @@
 | `forecast()` | Forecast value for the entity, metric, and tags in the current window. |
 | `forecast_stdev()` | Forecast standard deviation. |
 | `forecast(S)` | Named forecast value for the entity, metric, and tags in the current window, for example `forecast('ltm')` |
-| `forecast_deviation(D)` | Difference between a number (such as last value) and forecast, divided by forecast standard deviation.<br>Formula: `(number - forecast())/forecast_stdev()`. |
+| `forecast_deviation(D)` | Difference between a number (such as last value) and forecast, divided by forecast standard deviation.<br>Formula: `(number - forecast())/forecast_stdev()`.|
 
 ## Data Query Functions
 
@@ -90,25 +90,19 @@
 | `matches(S pattern, [S])` | Returns true if one of the collection elements matches the specified pattern. <br>`matches('*atsd*', property_values('docker.container::image'))`|
 
 
-## Time Functions
+## Time/Window Functions
 
 | **Name** | **Description** |
 | :--- | :--- |
 | `window_length_time()` | Length of the time-based window in seconds, as configured. |
 | `window_length_count()` | Length of the count-based window, as configured. |
 | `windowStartTime()` | Time when the first command was received by the window, in UNIX milliseconds. |
-| `milliseconds(S isodate)` | Converts ISO8601 date string into epoch time in milliseconds. |
-| `milliseconds(S datetime, S format)` | Converts provided datetime string  into epoch time in milliseconds according to the specified format string.  If the timezone or offset from UTC are not specified in the format string, then the server timezone will be used for the conversion. The format string syntax is described in the document [datetime format](http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html). |
-| `milliseconds(S datetime, S format, S timezone)` | Converts provided datetime string into epoch time in milliseconds according to the specified format string and timezone (or offset from UTC). Available timezones and their standard offsets are listed in [time zones](http://joda-time.sourceforge.net/timezones.html). If the timezone (or offset from UTC) is specified in the datetime string, and it differs from the timezone (offset) provided as the third argument, then the function will throw an exception. |
-| `seconds(S isodate)` | Converts ISO8601 date string into epoch time in seconds. |
-| `seconds(S datetime, S format)` | Converts provided datetime string into epoch time in seconds according to the specified format string. If the timezone or offset from UTC are not specified in the format string, then the server timezone will be used for the conversion. |
-| `seconds(S datetime, S format, S timezone)` | Converts provided datetime string into epoch time in seconds according to the specified format string and timezone (or offset from UTC). Available timezones and their standard offsets are listed in [time zones](http://joda-time.sourceforge.net/timezones.html). If the timezone (or offset from UTC) is specified in the datetime string, and it differs from the timezone (offset) provided as the third argument, then the function will throw an exception. |
-| `date(S isodate)` | Converts ISO8601 date string into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) DateTime object. The object can return [numeric codes](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTimeConstants.html) or string names for calendar constants. |
-| `date(S datetime, S format)` | Converts provided datetime string into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) DateTime object according to the specified format string. If the timezone or offset from UTC are not specified in the format string, then the server timezone will be used for the conversion. |
-| `date(S datetime, S format, S timezone)` | Converts provided datetime string into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) DateTime object according to the specified format string and timezone (or offset from UTC). Available timezones and their standard offsets are listed in [time zones](http://joda-time.sourceforge.net/timezones.html). If the timezone (or offset from UTC) is specified in the datetime string, and it differs from the timezone (offset) provided as the third argument, then the function will throw an exception. |
-| `formatted_date(L timestamp, S pattern, S timezone)` | Converts timestamp to formatted time string according to the format pattern and the timezone. Timestamp is an epoch timestamp in milliseconds. The format string syntax is described in the [datetime format](http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html). List of available timezones: [time zones](http://joda-time.sourceforge.net/timezones.html). |
+| `milliseconds(S datetime [,S format [,S timezone]])` | Convert the datetime string into Unix time in milliseconds according to the specified format string and timezone (or offset from UTC). Available timezones and their standard offsets are listed in [time zones](http://joda-time.sourceforge.net/timezones.html). If the timezone (or offset from UTC) is specified in the datetime string, and it differs from the timezone (offset) provided as the third argument, then the function will throw an exception. If the format is omitted, the datetime argument must be specified in ISO8601 format `yyyy-MM-ddTHH:mm:ss.SSSZ`. If timezone is omitted, the server timezone is used. |
+| `seconds(S datetime [,S format [,S timezone]])` | Same arguments as the `milliseconds` function except the result is returned in Unix time seconds. |
+| `date(S datetime [,S format [,S timezone]])` | Same arguments as the `milliseconds` function except the result is returned as [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) DateTime object. |
+| `formatted_date(L timestamp, S pattern, S timezone)` | Convert timestamp to formatted time string according to the format pattern and the timezone. Timestamp is an epoch timestamp in milliseconds. The format string syntax is described in the [datetime format](http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html). List of available [time zones](http://joda-time.sourceforge.net/timezones.html). |
 
-Refer to date function [examples](functions-date.md).
+Refer to the date function [examples](functions-date.md).
 
 ## Property Functions
 
