@@ -90,7 +90,7 @@
 | `matches(S pattern, [S])` | Returns true if one of the collection elements matches the specified pattern. <br>`matches('*atsd*', property_values('docker.container::image'))`|
 
 
-## Time/Window Functions
+## Time Functions
 
 | **Name** | **Description** |
 | :--- | :--- |
