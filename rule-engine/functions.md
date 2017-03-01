@@ -1,179 +1,118 @@
 # Functions
 
-### tags.(string `name`)
 
-Returns tag value for the current series, property, or message. 
-
-tag `name` can be specified after `.` or inside the square brackets.
-
-Examples:
-
-```sh
-tags.location = 'NUR'
-```
-
-```sh
-tags.image-name = 'collector'
-```
-
-```
-tags.io.docker.environment != 'test'
-```
-
-```sh
-tags['image-name'] like '*collector*'
-```
-
-### entity_tags / entity.tags
-
-Returns a map containing entity tags for the current entity.
-
-_Example_
-
-```sh
-entity_tags.location = 'NUR'
-```
-
-### entity.tags.(string `name`)
-
-Returns entity tag value for the current entity.
-
-```sh
-entity.tags.location = 'docker'
-```
-
-```sh
-entity.tags.io.docker.environment != 'test'
-```
-
-### entity_tags(string `entityName`)
-
-Returns a map containing entity tags for the specified entity.
-The map is empty if the entity is not found.
-
-_Example_
-
-```java
-entity_tags(tags.hardware_node).location = 'NUR'
-```
-
-### property_values(string `propertySearch`)
-
-Returns a list of property tag values for the current entity given the [property search string](../property-search-syntax.md).
-
-The list is empty if the property or tag is not found.
-
-_Example_
-
-```java
-property_values('docker.container::image').contains('atsd/latest')
-```
-
-_Example_
-
-```java
-property_values('linux.disk:fstype=ext4:mount_point').contains('/')
-```
-
-### property_values(string `entity`, string `propertySearch`)
-
-Same as `property_values`(String propertySearch) but for an explicitly specified entity.
-
-_Example_
-
-```java
-property_values('nurswgvml007', 'docker.container::image').contains('atsd/latest')
-```
-
-_Example_
-
-```java
-property_values(entity_tags.image, 'docker.image.config::name').contains('atsd/latest')
-```
-
-### property(String `pattern`)
-
-Returns the first value in a collection of strings returned by the `property_values()` function. The function returns an empty string if no property records are found.
-
-_Example_
-
-```java
-property(docker.container::image')
-```
-
-### matches(String `pattern`, collection\<string> `values`)
-
-Returns true if one of the collection items matches the specified pattern.
-
-_Example_
-
-```java
-matches('*atsd*', property_values('docker.container::image'))
-```
-
-
-
-### property_compare_except(collection\<string> `keys`)
-
-Compares previous and current property tags and returns a difference map containing a list of changed tag values.
-
-Sample difference map:
-
-```java
-{inputarguments_19='-Xloggc:/home/axibase/axibase-collector/logs/gc_29286.log' -> '-Xloggc:/home/axibase/axibase-collector/logs/gc_13091.log'}
-```
-
-The map includes tags that are not present in new property tags and tags that were deleted.
-If the difference map is empty, this means that no changes were identified.
-This comparison is case-insensitive.
-
-_Example_
-
-```java
-NOT property_compare_except (['name', '*time']).isEmpty()
-```
-
-Returns true if property tags have changed except for the `name` tag and any tags that end with `time`.
-
-### property_compare_except(collection\<string> `keys`, collection\<string> `previousValues`)
-
-Same as `property_compare_except(keys)` with a list of previous values that are excluded from difference map.
-
-_Example_
-
-```java
-NOT property_compare_except(['name', '*time'], ['*Xloggc*']).isEmpty()
-```
-
-Returns true if property tags have changed, except for the `name` tag, any tags that end with `time`, and any previous tags with value containing `Xloggc`. The pattern `*Xloggc*` would ignore changes such as:
-
-``` java
-{inputarguments_19='-Xloggc:/home/axibase/axibase-collector/logs/gc_29286.log'-> '-Xloggc:/home/axibase/axibase-collector/logs/gc_13091.log'}
-```
-
-### coalesce(collection\<string> `names`)
-
-Returns the first element of the provided collection, specified as an array of string, that is not null or an empty string.
-The function returns an empty string if all elements of the collection are null or empty.
-
-_Example_
-
-```java
-coalesce(['', null, 'string-3'])
-```
-Returns 'string-3'.
-
-_Example_
-
-```java
-coalesce([tags.location, 'SVL'])
-```
-Returns `tags.location` if it's not empty and not null, 'SVL' otherwise.
-
-_Example_
-
-```java
-coalesce([entity.label, entity.tags.name])
-```
-Returns the value of the `entity.label` placeholder if it's not an empty string, otherwise returns value of the `entity.tags.name` placeholder.
-If both placeholders are empty, then an empty string is returned.
+### Statistical Functions
+
+| **Name** | **Description** |
+| :--- | :--- |
+| `avg()` | Average value. |
+| `mean()` | Average value. Same as `avg()`. |
+| `sum()` | Sum of values. |
+| `min()` | Minimum value. |
+| `max()` | Maximum value. |
+| `wavg()` | Weighted average. Weight = sample index which starts from 0 for first sample. |
+| `wtavg()` | Weighted time average.<br>`Weight = (sample.time - first.time)/(last.time - first.time + 1)`. <br>Time measured in epoch seconds. |
+| `count()` | Count of values. |
+| `percentile(D)` | Dth percentile. D can be a fractional number. |
+| `median()` | 50% percentile. Same as `percentile(50)`. |
+| `variance()` | Standard deviation. |
+| `stdev()` | Standard deviation. Aliases: `variance`, `stdev`, `std_dev`. |
+| `slope()` | Linear regression slope. |
+| `intercept()` | Linear regression intercept. |
+| `first()` | First value. Same as `first(0)`. |
+| `first(integer N)` | Nth value from start. First value has index of 0. |
+| `last()` | Last value. Same as `last(0)`. |
+| `last(integer N)` | Nth value from end. Last value has index of 0. |
+| `diff()` | Difference between `last` and `first` values. Same as `last() - first()`. |
+| `diff(N)` | Difference between `last(N)` and `first(N)` values. Same as` last(N)-first(N)`. |
+| `diff(string interval)` | Difference between `last value` and `value` at `currentTime - interval`. <br>Interval specified as '`count unit`', i.e. '`5 minute`'. |
+| `new_maximum()` | Returns true if last value is greater than any previous value. |
+| `new_minimum()` | Returns true if last value is smaller than any previous value. |
+| `threshold_time(double D)` | Number of minutes until the sample value reaches specified threshold D<br> based on extrapolation of difference between last and first value. |
+| `threshold_linear_time(double D)` | Number of minutes until the sample value reaches specified threshold D<br> based on linear extrapolation. |
+| `rate_per_second()` | Difference between last and first value per second. <br>Same as `diff()/(last.time-first.time)`. Time measured in epoch seconds. |
+| `rate_per_minute()` | Difference between last and first value per minute. Same as `rate_per_second()/60`. |
+| `rate_per_hour()` | Difference between last and first value per hour. Same as `rate_per_second()/3600`. |
+| `slope_per_second()` | Same as` slope()`. |
+| `slope_per_minute()` | `slope_per_second()/60`. |
+| `slope_per_hour()` | `slope_per_second()/3600`. |
+
+### Statistical Forecast Functions
+
+| **Name** | **Description** |
+| :--- | :--- |
+| `forecast()` | Forecast value for the entity, metric, and tags in the current window. |
+| `forecast_stdev()` | Forecast standard deviation. |
+| `forecast(name)` | Named forecast value for the entity, metric, and tags in the current window. |
+| `forecast_deviation(number)` | Difference between a number (such as last value) and forecast, divided by forecast standard deviation.<br>`(number - forecast())/forecast_stdev()`. |
+
+## Data Query Functions
+
+| **Type** | **Example** | **Description** |
+| --- | --- | --- |
+| atsd_last | `atsd_last(metric: 'transq')` | Query historical database for last value. |
+| atsd_values | `avg(atsd_values(entity: 'e1', metric: 'm1', type: 'avg', interval: '5-minute', shift: '1-day', duration: '3-hour'))` | Query historical database for a range of values. Apply analytical functions to the result set. |
+
+### Math Functions
+
+* `abs(D)`
+* `ceil(D)`
+* `floor(В)`
+* `pow(D, D)`
+* `round(D)`
+* `round(D, N)`
+* `random()`
+* `max(double a, double b)`
+* `min(D, D)`
+* `sqrt(D)`
+* `exp(D)`
+* `log(D)`
+
+### String Functions
+
+| **Name** | **Description** |
+| :--- | :--- |
+| `upper(string s)` | Convert string to upper case. |
+| `lower(string s)` | Convert string to lower case. |
+| `t.contains(string s)` | Check if field 't' contains the specified string. |
+| `t.startsWidth(string s)` | Check if field 't' starts with the specified string. |
+| `t.endsWidth(string s)` | Check if field 't' ends with the specified string. |
+| `coalesce([string s])` | Return first non-empty string from the array of strings. See [examples](functions-coalesce.md).|
+
+### Collection Functions
+
+| **Name** | **Description** |
+| :--- | :--- |
+| `contains(string s)` | Returns true if collection contains the specified string. <br>`properties['command'].toString().contains('java')`|
+| `isEmpty()` | Returns true if collection has no elements. <br>`entity.tags.isEmpty()`|
+| `size()` | Returns number of elements in the collection. <br>`entity.tags.size() > 1`|
+| `matches(string pattern, [string s])` | Returns true if one of the collection elements matches the specified pattern. <br>`matches('*atsd*', property_values('docker.container::image'))`|
+
+
+### Time Functions
+
+| **Name** | **Description** |
+| :--- | :--- |
+| `window_length_time()` | Length of the time-based window in seconds, as configured. |
+| `window_length_count()` | Length of the count-based window, as configured. |
+| `windowStartTime()` | Time when the first command was received by the window, in UNIX milliseconds. |
+| `milliseconds(string isodate)` | Converts ISO8601 date string into epoch time in milliseconds. |
+| `milliseconds(string datetime, string format)` | Converts provided datetime string  into epoch time in milliseconds according to the specified format string.  If the timezone or offset from UTC are not specified in the format string, then the server timezone will be used for the conversion. The format string syntax is described in the document [datetime format](http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html). |
+| `milliseconds(string datetime, string format, string timezone)` | Converts provided datetime string into epoch time in milliseconds according to the specified format string and timezone (or offset from UTC). Available timezones and their standard offsets are listed in [time zones](http://joda-time.sourceforge.net/timezones.html). If the timezone (or offset from UTC) is specified in the datetime string, and it differs from the timezone (offset) provided as the third argument, then the function will throw an exception. |
+| `seconds(string isodate)` | Converts ISO8601 date string into epoch time in seconds. |
+| `seconds(string datetime, string format)` | Converts provided datetime string into epoch time in seconds according to the specified format string. If the timezone or offset from UTC are not specified in the format string, then the server timezone will be used for the conversion. |
+| `seconds(string datetime, string format, string timezone)` | Converts provided datetime string into epoch time in seconds according to the specified format string and timezone (or offset from UTC). Available timezones and their standard offsets are listed in [time zones](http://joda-time.sourceforge.net/timezones.html). If the timezone (or offset from UTC) is specified in the datetime string, and it differs from the timezone (offset) provided as the third argument, then the function will throw an exception. |
+| `date(string isodate)` | Converts ISO8601 date string into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) DateTime object. The object can return [numeric codes](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTimeConstants.html) or string names for calendar constants. |
+| `date(string datetime, string format)` | Converts provided datetime string  into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) DateTime object according to the specified format string. If the timezone or offset from UTC are not specified in the format string, then the server timezone will be used for the conversion. |
+| `date(string datetime, string format, string timezone)` | Converts provided datetime string into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) DateTime object according to the specified format string and timezone (or offset from UTC). Available timezones and their standard offsets are listed in [time zones](http://joda-time.sourceforge.net/timezones.html). If the timezone (or offset from UTC) is specified in the datetime string, and it differs from the timezone (offset) provided as the third argument, then the function will throw an exception. |
+| `formatted_date(long timestamp, string pattern, string timezone)` | Converts timestamp to formatted time string according to the format pattern and the timezone. Timestamp is an epoch timestamp in milliseconds. The format string syntax is described in the [datetime format](http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html). List of available timezones: [time zones](http://joda-time.sourceforge.net/timezones.html). |
+
+## Property Functions
+
+| **Name** | **Description** |
+| :--- | :--- |
+| `property_values(string search)` | Returns a list of property tag values for the current entity given the property [search string](../property-search-syntax.md). |
+| `property_values(string entity, string search)` |  Same as `property_values`(string search) but for an explicitly specified entity.  |
+| `property(string search)` |  Returns the first value in a collection of strings returned by the `property_values()` function. The function returns an empty string if no property records are found.  |
+| `property_compare_except([string key])` | Compares previous and current property tags and returns a difference map containing the list of changed tag values.   |
+| `property_compare_except([string key], [string prevValue])` |   Same as `property_compare_except([string key])` with the list of previous values that are excluded from the difference map. |

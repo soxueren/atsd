@@ -1,6 +1,9 @@
 # Placeholders
 
-Placeholders are specified using the `{name}` format. Placeholders can reference a predefined parameter or a function value.
+Placeholders can be used to embed field and function values into email text or alert log.
+They are referenced using the `${name}` syntax.
+
+![](images/placeholders.png "placeholders")
 
 ## Placeholder List
 
@@ -50,6 +53,7 @@ Placeholders are specified using the `{name}` format. Placeholders can reference
 
 * message
 * severity
+* tags
 
 ### Properties
 
@@ -57,47 +61,32 @@ Placeholders are specified using the `{name}` format. Placeholders can reference
 * properties.key_name
 * properties.tag_name
 * type
+* tags
 
-## Custom Columns
+### Custom Variables
 
-Columns defined in the Overview tab can be referenced by name as a placeholder.
-
-```sh
-property_compare_except(['name', '*starttime']) as propDiff
-
-${propDiff}
-```
-
-## Functions
-
-### [Aggregate Functions](expression.md#functions)
-
-### Lookup Functions
+Variables defined on the Overview tab can be referenced by name similar to built-in fields.
 
 ```sh
-${property_values('linux.disk:fstype=ext4:mount_point')}
+${idle}
 ```
 
-```java
-property_values('nurswgvml007', 'docker.container::image').contains('atsd/latest')
-```
-
-```java
-property_compare_except(['name', '*time'])
-```
+![](images/variables.png "variables")
 
 ## Examples
 
 ```sh
-[${status}] ActiveMQ on ${entity}: Unauthorized connection from ${properties.remoteaddress}.
+[${status}] ActiveMQ on ${entity}:
+Unauthorized connection from ${tags.remoteaddress}.
 ```
 
 ```sh
-[${status}] JVM on ${entity}: Average system CPU usage ${round(avg()*100,1)} exceeds threshold.
+[${status}] JVM on ${entity}:
+Average CPU usage ${round(avg()*100,1)} exceeds threshold.
 ```
 
 ```sh
-${tags.file-system}
+${tags.file_system}
 ```
 
 ```sh
