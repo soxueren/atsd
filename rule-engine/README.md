@@ -136,7 +136,7 @@ the `avg` of the `nur-entities-name` entity name is greater than 90.
 
 ## Sliding Windows
 
-The ATSD Rule Engine uses two types of windows when ingesting statistics:
+The Rule Engine uses two types of windows when ingesting statistics:
 count and time. These windows are used to calculate aggregations and
 only the statistics present in these windows are analyzed by the Rule
 Engine.
