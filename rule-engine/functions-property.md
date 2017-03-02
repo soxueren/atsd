@@ -2,7 +2,7 @@
 
 ## Overview
 
-Property functions provide a set of convenient methods to lookup, retrieve, and compare property command fields.
+Property functions provide a set of convenience methods to retrieve and compare property keys and tags.
 
 Refer to [property search](../property-search-syntax.md) syntax.
 
