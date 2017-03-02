@@ -1,16 +1,16 @@
 # Expressions
 
 Expression is a condition which is entered in the Rule [editor](editor.md) and is evaluated each time a command is
-received by the window, or removed from it. For example, the expression **`value > 50`** returns `TRUE` if the newly received value is greater than 50.
+received by or removed from the window. For example, the expression **`value > 50`** returns `TRUE` if the newly received value is greater than 50.
 
-If the expression evaluates to `TRUE`, the window changes status to `OPEN` and creates an alert, followed by
-execution of triggers such as system command and email notification. Once
+If the expression evaluates to `TRUE`, the window status changes to `OPEN` and creates an alert, followed by
+the execution of triggers such as a system command and email notification. Once
 the expression returns `FALSE`, the alert is closed and another set of
 triggers is invoked.
 
 The expression consists of one or multiple conditions combined with `OR` (`||`) and `AND` (`&&`) operators.
 
-The condition can reference fields, apply [functions](functions.md) to them and compare them with operators.
+The condition can reference fields, apply [functions](functions.md) to them, and compare them with operators.
 
 > Exceptions specified in the Thresholds table take precedence over the expression.
 
