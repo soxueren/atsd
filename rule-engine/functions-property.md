@@ -2,7 +2,7 @@
 
 ## Overview
 
-Property functions provide a set of convenience method to lookup, retrieve and compare property command fields.
+Property functions provide a set of convenience methods to retrieve and compare property keys and tags.
 
 Refer to [property search](../property-search-syntax.md) syntax.
 
@@ -24,7 +24,7 @@ The list is empty if the property or tag is not found.
 
 #### `property_values(string entity, string search)`
 
-Same as `property_values`(String search) but for an explicitly specified entity.
+Same as `property_values`(String search), except for an explicitly specified entity.
 
 ```java
   property_values('nurswgvml007', 'docker.container::image').contains('atsd/latest')
@@ -64,7 +64,7 @@ Returns true if property tags have changed except for the `name` tag and any tag
 
 #### `property_compare_except([string currentKey], [string excludeKeys])`
 
-Same as `property_compare_except(keys)` with a list of previous values that are excluded from difference map.
+Same as `property_compare_except(keys)` with a list of previous values that are excluded from the difference map.
 
 ```java
   NOT property_compare_except(['name', '*time'], ['*Xloggc*']).isEmpty()

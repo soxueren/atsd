@@ -1,6 +1,6 @@
 # Placeholders
 
-Placeholders can be used to embed field and function values into email text or alert log.
+Placeholders can be used to embed field and function values into an email text or alert log.
 The placeholders are referenced using the `${name}` syntax.
 
 ![](images/placeholders.png "placeholders")
@@ -65,7 +65,7 @@ The placeholders are referenced using the `${name}` syntax.
 
 ### Custom Variables
 
-Variables defined on the Overview tab can be referenced by name similar to built-in fields.
+Variables defined on the Overview tab can be referenced by name (similar to built-in fields).
 
 ```sh
 ${idle}
