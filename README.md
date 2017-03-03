@@ -74,6 +74,8 @@
     * [Cloudera Hadoop Distribution](installation/cloudera.md)  	
     * [Ambari](installation/ambari.md)	  
     * [HBase Cluster](installation/hbase-cluster.md)
+  * [Uninstalling](administration/uninstalling.md)
+  * [Updating](administration/update.md)   
 
 ## Integration
 
@@ -101,22 +103,20 @@
 ## Administration
 
   * [Overview](administration#administration)
+  * [Configuring Email Client](administration/setting-up-email-client.md)  
   * [Allocating Memory](administration/allocating-memory.md)
   * [Changing Data Directory](administration/changing-data-directory.md)
   * [Compaction Test](administration/compaction-test.md)
   * [Compaction](administration/compaction.md)
   * [Deployment](administration/deployment.md)
-  * [Editing Configuration Files](administration/editing-configuration-files.md)
+  * [Configuration Files](administration/editing-configuration-files.md)
+  * [Network Settings](administration/networking-settings.md)  
   * [Enabling Swap Space](administration/enabling-swap-space.md)
   * [Entity Lookup](administration/entity-lookup.md)
   * [Logging](administration/logging.md)
   * [Metric Persistence Filter](administration/metric-persistence-filter.md)
-  * [Migrate ATSD to Java 7](administration/migrate-to-java7.md)
+  * [Upgrading Java](administration/upgrade-java.md)
   * [Monitoring](administration/monitoring.md)
-  * [Network Settings](administration/networking-settings.md)
   * [Replication](administration/replication.md)
   * [Restarting](administration/restarting.md)
   * [Restoring Corrupted Zookeeper](administration/entity-lookup.md)
-  * [Setting up the Email Client](administration/setting-up-email-client.md)
-  * [Uninstalling](administration/uninstalling.md)
-  * [Updating](administration/update.md)

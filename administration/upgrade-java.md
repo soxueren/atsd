@@ -1,14 +1,16 @@
-# Migrate ATSD to JAVA 7
+# Upgrading Java Version used by ATSD
 
 ## Overview
 
-This migration procedure from Java 6 to Java 7 applies to Axibase Time
-Series Database revision 11938 and earlier.
+* The migration procedure from Java 6 to Java 7 applies to ATSD revision 11938 and earlier.
+* The migration procedure from Java 7 to Java 8 applies to ATSD revision [TBD] and later.
 
-## Install openjdk-7-jdk
+## Install OpenJDK JDK
+
+> Hereafter, replace `7` with `8` when upgrading from ATSD version [TBD]+.
 
 ```sh
-sudo apt-get install -y openjdk-7-jdk      
+sudo apt-get install -y openjdk-7-jdk
 ```
 
 Switch to axibase user:
@@ -27,7 +29,7 @@ su axibase
 
 ### Manual Option
 
-Change the `JAVA_HOME` variable from the old path `/usr/lib/jvm/java-1.6.0-openjdk-amd64` to the new path 
+Change the `JAVA_HOME` variable from the old path `/usr/lib/jvm/java-1.6.0-openjdk-amd64` to the new path
 `/usr/lib/jvm/java-1.7.0-openjdk-amd64` in the following files:
 
 ```sh
