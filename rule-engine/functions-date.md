@@ -15,7 +15,7 @@ date(string datetime[, string format[, string timezone]])
 ## Examples
 
 ```java
-/* Returns true if the difference between event time and start
+/* Returns true if the difference between the event time and start
 time (ISO) retrieved from the property record is greater than 5 minutes. */
 timestamp - milliseconds(property('docker.container::startedAt')) >  5*60000
 

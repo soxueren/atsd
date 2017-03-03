@@ -7,13 +7,13 @@ subscribers on window status changes based on incoming data.
 | Window Status | Description |
 | --- | --- |
 | OPEN | Expression value changes from `FALSE` to `TRUE`. |
-| REPEAT | Expression value confirmed at `TRUE` on new data received or old data removed from the window. |
+| REPEAT | Expression value confirmed at `TRUE` for new data received or old data removed from the window. |
 | CANCEL | Expression value changes from `FALSE` to `TRUE`. |
 
 ## Creating a Rule
 
-To enable email notifications for a metric of interest, create a new
-rule on the Rule Engine tab.
+To enable email notifications for a metric of interest, open the **Confguration > Rules** page and create a new
+rule.
 
 Specify rule name, metric name, and an expression to evaluate incoming
 series samples. To receive an email message if a value exceeds the
@@ -23,7 +23,7 @@ as the expression.
 ![email\_alert\_notags](images/email_alert_notags.png)
 
 Once the rule is active, you can verify its configuration by reviewing
-records on the Alerts tab. If the expected alerts are missing, verify that
+records listed on the **Alerts** tab in the top menu. If the expected alerts are missing, verify that
 the data has been received and check the expression formula.
 
 Note that windows are reset to `OPEN` status whenever the rule is saved

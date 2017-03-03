@@ -4,21 +4,21 @@
 
 | **Name** | **Description** |
 | --- | --- |
-| Calendar | Discards commands if current server time doesn't match specified cron calendar expression. |
+| Calendar | Discards commands if current server time doesn't match the specified cron calendar expression. |
 | Metric | Discards commands with metric name not equal to the metric name specified in the rule. |
-| Time | Discards commands with time that deviates by more than specified interval from the current server time. |
-| Previous Value | Discards commands timestamped earlier than the time of the last (most recent) event in the given window. |
-| Entity | Discards commands for entity not equal to one of entities specified in the rule. |
+| Time | Discards commands with time that deviates by more than the specified interval from the current server time. |
+| Previous Value | Discards commands timestamped earlier than the time of the last (most recent) event in a given window. |
+| Entity | Discards commands for an entity not equal to one of entities specified in the rule. |
 | Entity Group | Discards commands for entities that do not belong to one of entity groups specified in the rule. |
 | Command | Discards commands for which the filter expression specified in the rule evaluates to false. |
 
 ## Calendar Filter
 
-The calendar filter can include a simple or a composite cron expression to control when the rule is active.
+The calendar filter can include a simple or composite cron expression to control when the rule is active.
 
 * The rule is active by default if no cron expressions are defined.
 * The schedule is evaluated based on local server time.
-* Multiple cron expressions can be combined using AND and OR operators and each expression must be enclosed within single quotes.
+* Multiple cron expressions can be combined using `AND` and `OR` operators, and each expression must be enclosed within single quotes.
 * Cron fields are specified in the following order: `minute hour day-of-month month day-of-week`.
 
 | **Name** | **Example** | **Description** |
@@ -31,7 +31,7 @@ The calendar filter can include a simple or a composite cron expression to contr
 
 ## Metric Filter
 
-To match the rule, the incoming command must have the same metric name as the one specified in Rule Editor.
+To match the rule, the incoming command must have the same metric name as the one specified in the Rule Editor.
 
 * For `message` commands, the metric name is pre-defined as `message`.
 * for `property` commands, the metric name is pre-defined as `property`.
@@ -40,7 +40,7 @@ To match the rule, the incoming command must have the same metric name as the on
 
 ## Time Filter
 
-If set to positive value, the filter discards commands with timestamp that deviates by more than specified 'grace' interval from the current server time. The filter is commonly used to ignore historical data.
+If set to a positive value, the filter discards commands with a timestamp that deviates by more than specified 'grace' interval from the current server time. The filter is commonly used to ignore historical data.
 
 ![](images/filter-time.png)
 
@@ -64,6 +64,6 @@ The filter discards commands for entities that do not belong to one of entity gr
 
 ## Command Filter
 
-The filter evaluates the filter expression and discard values of the filter expression evaluates to `FALSE`.
+The filter evaluates the filter expression and discard values of the filter expression which evaluate to `FALSE`.
 
 ![](images/filter-expression.png)
