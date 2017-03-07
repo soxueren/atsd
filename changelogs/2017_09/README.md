@@ -61,13 +61,16 @@ commandsService.send_commands(commands_to_send)
 
 The tables with subjects that depend on the given configuration are introduced for Databases, HTTP Pools, Replacement Tables.
 For the database configuration, the jobs, and the item lists are shown.
-![](Images/Figure1.png | width=500)
+
+<img src="Images/Figure1.png" width="300px"/>
 
 For the HTTP pool, the referencing task configurations, item lists and ATSD configurations are shown.
-![](Images/Figure2.png | width=500)
+
+<img src="Images/Figure2.png" width="300px"/>
 
 For the Replacement table, the referencing task configurations are shown.
-![](Images/Figure3.png | width=500)
+
+<img src="Images/Figure3.png" width="300px"/>
 
 ### Issue 3976
 --------------
