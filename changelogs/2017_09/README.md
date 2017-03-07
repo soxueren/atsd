@@ -12,36 +12,36 @@ Weekly Change Log: February 27 - March 5, 2017
 
 | Issue| Category        | Type    | Subject                                                                              |
 |------|-----------------|---------|--------------------------------------------------------------------------------------|  
-| [3977](#issue-3977) | UI              | Feature | Introduced referencing configurations tables for HTTP Pools, [Database Configurations](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/jdbc-data-source.md), [Replacement Tables](https://github.com/axibase/axibase-collector-docs/blob/master/collections.md#replacement-tables) |
-| [3976](#issue-3976) | collection      | Feature | Allowed to write script right on the Item List configuration page.                        |
-| 3974 | http-pool       | Bug     | Fixed removing HTTP Pools.                                 |
-| 3969 | json            | Bug     | Fixed inability of including a field into the list of `Included Fields` if it is already specified in `Metric Name & Value` field.     |
-| 3967 | collection      | Bug     | Improved performance and stability of Item Lists by checking existence of scripts folder and caching items.           |
-| 3949 | json            | Bug     | Fixed including `Entity` field as metric.                                             |
-| 3933 | json            | Bug     | Fixed field specification inconsistency in `Custom Tags` field.                                                   |
-| [3932](#issue-3932) | json            | Feature | Allowed to use [JSON Path](https://github.com/jayway/JsonPath#operators) expressions in `Custom Tags` field.                          |
-| 3829 | scheduler       | Bug     | Disabled `Run` buttons for already running jobs.                                 |
-| [3817-a](#issue-3817-a) | socrata         | Feature | Added an ability to skip resending of already processed data.                         |
-| [3817-b](#issue-3817-b) | socrata         | Feature | Added the `Query Filter` field.                         |
+| [3977](#issue-3977) | UI              | Feature | Display linked job configurations for HTTP Pools, [Database Configurations](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/jdbc-data-source.md), [Replacement Tables](https://github.com/axibase/axibase-collector-docs/blob/master/collections.md#replacement-tables) |
+| [3976](#issue-3976) | collection      | Feature | Added an option to specify executable script text on the Item List configuration page.                        |
+| 3974 | http-pool       | Bug     | Fixed an error when deleting an HTTP Pool.                                 |
+| 3969 | json            | Bug     | Fixed a conflict between `Included Fields` and `Metric Name & Value` fields.     |
+| 3967 | collection      | Bug     | Speed up Item List (type SCRIPT) retrieval times by checking script presence and caching items.           |
+| 3949 | json            | Bug     | Fixed incorrect inclusion of `Entity` field as metric field.                                             |
+| 3933 | json            | Bug     | Fixed inconsistent specification for the `Custom Tags` field.                                                   |
+| [3932](#issue-3932) | json            | Feature | Allowed [JSON Path](https://github.com/jayway/JsonPath#operators) expressions in `Custom Tags` field.                          |
+| 3829 | scheduler       | Bug     | Disabled `Run` button if the job if running.                                 |
+| [3817-a](#issue-3817-a) | socrata         | Feature | Added an option to skip resending of already processed data.                         |
+| [3817-b](#issue-3817-b) | socrata         | Feature | Added the `Query Filter` field to filter the rows in the resultset.                         |
 
 ### Charts
 
 | Issue| Category        | Type    | Subject                                                                              |
 |------|-----------------|---------|--------------------------------------------------------------------------------------| 
-| 3970 | treemap         | Bug     | Fixed `display = false` behaviour.                                                         |
-| 3964 | table           | Bug     | Now a relevant alert value computed in `alert-expression` is available in `hide-columns` function.                                      |
-| [3961](#issue-3961) | treemap         | Feature | Added the `mode` setting.                                                                     |
-| 3960 | time-chart      | Bug     | Fixed legend visibility if multiple series are requested by entity or entity groups with wildcards.                                 | 
-| [3959](#issue-3959) | api             | Feature | Changed the behaviour of `last` setting to satisfy the ATSD API changes.                              |
+| 3970 | treemap         | Bug     | Fixed `display = false` behavior.                                                         |
+| 3964 | table           | Bug     | Made calculated alert values available in `hide-columns` function.                                      |
+| [3961](#issue-3961) | treemap         | Feature | Implemented new `mode` settings: row, column, auto.                                                                     |
+| 3960 | time-chart      | Bug     | Fixed legend visibility for wildcard series requested for multiple entities or entity group.                                 | 
+| [3959](#issue-3959) | api             | Feature | Removed support for `last` setting due to ATSD API changes.                              |
 | [3941](#issue-3941) | widget-settings | Feature | Implemented functions to retrieve entity and metric tags in `threshold` and other calculations. |
-| 3927 | core            | Bug     | Fixed order of widget content geometry calculation.                                |
+| 3927 | core            | Bug     | Fixed the order of widget content geometry calculation.                                |
 
 ## ATSD
 
 ### Issue 3940
 --------------
 
-An example of using the new `sendCommands` method:
+New `sendCommands` method:
 
 ```python
 import atsd_client
@@ -59,25 +59,24 @@ commandsService.send_commands(commands_to_send)
 ### Issue 3977
 --------------
 
-The tables with subjects that depend on the given configuration are introduced for Databases, HTTP Pools, Replacement Tables.
-For the database configuration, the jobs, and the item lists are shown.
+The configuration pages for Databases, HTTP Pools, and Replacement Tables now display linked jobs.
 
 <img src="Images/Figure1.png" width="300px"/>
 
-For the HTTP pool, the referencing task configurations, item lists and ATSD configurations are shown.
+For the HTTP pool, the linked task configurations, item lists and ATSD configurations are shown.
 
 <img src="Images/Figure2.png" width="300px"/>
 
-For the Replacement table, the referencing task configurations are shown.
+For the Replacement table, the linked task configurations are shown.
 
 <img src="Images/Figure3.png" width="300px"/>
 
 ### Issue 3976
 --------------
 The old `Command` field containing path to the executable script has been renamed to `Path to the script`. 
-The new `Command` field allows to type the commands returning the Item List elements, one per line. 
-The commands from the text area are executed as if they were an executable file located in the default scripts directory (`$AXIBASE_COLLECTOR_HOME/conf/scripts`).
-You must provide the setting `script.text.execute.allow=true` in `$AXIBASE_COLLECTOR_HOME/conf/server.properties` file in order to use this feature.
+The new `Command` field allows entering commands returning the Item List elements, one Item per line. 
+The commands from the text area are copied to a file in `$AXIBASE_COLLECTOR_HOME/conf/scripts` directory and executed as a script.
+You must set `script.text.execute.allow=true` in `$AXIBASE_COLLECTOR_HOME/conf/server.properties` file in order to enable this feature.
 
 ![](Images/Figure4.png)
 
@@ -89,7 +88,7 @@ You must provide the setting `script.text.execute.allow=true` in `$AXIBASE_COLLE
 ### Issue 3817-a
 --------------
 
-The new checkbox `Skip Old Data` has been introduced. If it is on, the last data row is stored in Collector. When the task is executed next time, only new rows are sent to ATSD as series.
+The new checkbox `Skip Old Data` has been introduced. If the setting is enabled, the last data row from the target dataset is stored by the Collector. When the task is executed next time, only new rows are sent into ATSD as series.
 
 ![](Images/Figure6.png)
 ![](Images/Figure7.png)
@@ -97,7 +96,7 @@ The new checkbox `Skip Old Data` has been introduced. If it is on, the last data
 ### Issue 3817-b
 --------------
 
-The new field `Query Filter` has been introduced to allow to pass a filter expression as part of the request.
+The new field `Query Filter` has been introduced to allow to applying a filter expression as part of the request.
 
 ![](Images/Figure8.png)
 ![](Images/Figure9.png)
@@ -111,7 +110,7 @@ The new settings introduced in Treemap configurations:
 
 | Setting | Description | Available options |
 |------|-------------|-------------------|
-| mode | Layout mode to control high rectangles are positioned. |– `default` <BR> – `row` (align rectangles as rows) <BR> – `column` (align rectangles as columns) <BR> – `auto` (switch between row and column modes depending on widget size)
+| mode | Layout mode to control how rectangles are positioned. |– `default` <BR> – `row` (align rectangles as rows) <BR> – `column` (align rectangles as columns) <BR> – `auto` (switch between row and column modes depending on widget size)
 
 
 https://apps.axibase.com/chartlab/fc68bae4/7/
@@ -121,36 +120,25 @@ https://apps.axibase.com/chartlab/fc68bae4/7/
 ### Issue 3959
 --------------
 
-Now the config setting `last = true` sets `"limit": 1` in request, as `last` query parameter is going to be deprecated.
+`last = true` is deprecated. Replace it with `limit: 1`.
 
 https://apps.axibase.com/chartlab/25551747
 
 ### Issue 3941
 --------------
 
-Functions `meta()`, `entityTag()`, and `metricTag()`, which compute some value, are now available in settings,  
+Functions `meta()`, `entityTag()`, and `metricTag()`, which return entity or metric tags retrieved from the server are now available in widget settings:  
 
 ```
-meta(`alias`) - return `meta`, loaded for series with such `alias`
-meta() - return `meta`, loaded for current series
-entityTag(`alias`, `field-name`) - return `meta.entity[field-name]`, loaded for series with such `alias`
-entityTag(`field-name`) - return `meta.entity[field-name]`, loaded for current series
-metricTag(`alias`, `field-name`) - return `meta.metric[field-name]`, loaded for series with such `alias`
-metricTag(`field-name`) - return `meta.metric[field-name]`, loaded for current series
+meta('alias') – returns ‘meta’ object for series with alias ‘alias’.
+meta() – returns ‘meta’ object for the current series.
+entityTag('alias', 'tag_name') – return entity tag value for series with the specified alias
+entityTag('tag_name') – return entity tag value for the current series
+metricTag('alias', 'tag_name') – return metric tag value for series with the specified alias
+metricTag('tag_name') – return metric tag value for the current series
 ```
 
-The settings which can use the new functions:
-- series-value (in [column])
-- value
-- display
-- enabled
-- alert-expression
-- size (Treemap)
-- color
-- node-value (Graph)
-- link-value (Graph)
-- link-alert-expression (Graph)
-- node-alert-expression (Graph)
+Refer to [metadata](https://axibase.com/products/axibase-time-series-database/visualization/widgets/metadata/) documentation for additional examples.
 
 https://apps.axibase.com/chartlab/2b15e6f9
 
