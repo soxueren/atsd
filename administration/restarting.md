@@ -141,3 +141,24 @@ Start HBase and ATSD in the reverse order
 ```sh
 ./atsd-tsd.sh start
 ```
+
+### Permissions
+
+The `/opt/atsd/bin/atsd-all.sh` script relies on the **[jps](http://docs.oracle.com/javase/7/docs/technotes/tools/share/jps.html)** command to ensure that Java processes are started in the correct order.
+
+The `jps` command requires write permissions to the `/tmp/hsperfdata_axibase` directory in order to store temporary files. If permissions to this directory are missing (i.e. it's owned by root), `jps` fails to identify other running Java processes under the current user and returns an imcomplete list, despite the fact that such processes are running and are visible with `ps aux | grep java`. 
+
+If `jps` output is incomplete, the `atsd-all.sh` script aborts the startup procedure with the following message:
+
+```
+nurswgvml007 atsdService: * [ATSD] DataNode is not running. 
+```
+
+Execute the following steps to fix this issue:
+
+* [Stop](#stop-services) ATSD services
+* Remove /tmp/hsperfdata_axibase directory
+* Start ATSD with `/opt/atsd/bin/atsd-all.sh`
+
+
+
