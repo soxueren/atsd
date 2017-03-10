@@ -1,15 +1,24 @@
-# Functions: date
+# Functions: time
 
 ## Overview
 
+### The `date` function
 Converts the provided datetime string into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) DateTime object according to the specified format string and timezone (or offset from UTC).
 
 Available timezones and their standard offsets are listed in [time zones](http://joda-time.sourceforge.net/timezones.html). If the timezone (or offset from UTC) is specified in the datetime string, and it differs from the timezone (offset) provided as the third argument, then the function will throw an exception.
+
+### The `milliseconds` function
+Converts the datetime string into UNIX time in milliseconds according to the specified format string and timezone (or offset from UTC).
+
+### The `date_format` function
+Converts timestamp to a formatted time string according to the format pattern and the timezone. 
 
 ## Syntax
 
 ```java
 date(string datetime[, string format[, string timezone]])
+milliseconds(string datetime[, string format[, string timezone]])
+date_format(long timestamp, string pattern, string timezone)
 ```
 
 ## Examples
@@ -46,6 +55,6 @@ date("31.01.2017 12:36:03:283 +01:00", "dd.MM.yyyy HH:mm:ss:SSS ZZ", "Europe/Ber
 date("31.01.2017 12:36:03:283 Europe/Brussels", "dd.MM.yyyy HH:mm:ss:SSS ZZZ", "Europe/Berlin")
 
 /* Return formatted time string  "2017-02-22 11:18:00:000 Europe/Berlin" */
-formatted_date(1487758680000L, "yyyy-MM-dd HH:mm:ss:SSS ZZZ", "Europe/Berlin")
+date_format(1487758680000L, "yyyy-MM-dd HH:mm:ss:SSS ZZZ", "Europe/Berlin")
 
 ```

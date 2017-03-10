@@ -100,9 +100,9 @@
 | `milliseconds(S datetime [,S format [,S timezone]])` | Convert the datetime string into UNIX time in milliseconds according to the specified format string and timezone (or offset from UTC). Available timezones and their standard offsets are listed in [time zones](http://joda-time.sourceforge.net/timezones.html). If the timezone (or offset from UTC) is specified in the datetime string, and it differs from the timezone (offset) provided as the third argument, then the function will throw an exception. If the format is omitted, the datetime argument must be specified in ISO8601 format `yyyy-MM-ddTHH:mm:ss.SSSZ`. If the timezone is omitted, the server timezone is used. |
 | `seconds(S datetime [,S format [,S timezone]])` | Same arguments as the `milliseconds` function except the result is returned in UNIX time seconds. |
 | `date(S datetime [,S format [,S timezone]])` | Same arguments as the `milliseconds` function except the result is returned as [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) DateTime object. |
-| `formatted_date(L timestamp, S pattern, S timezone)` | Convert timestamp to a formatted time string according to the format pattern and the timezone. Timestamp is an epoch timestamp in milliseconds. The format string syntax is described in the [datetime format](http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html). List of available [time zones](http://joda-time.sourceforge.net/timezones.html). |
+| `date_format(L timestamp, S pattern, S timezone)` | Convert timestamp to a formatted time string according to the format pattern and the timezone. Timestamp is an epoch timestamp in milliseconds. The format string syntax is described in the [datetime format](http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html). List of available [time zones](http://joda-time.sourceforge.net/timezones.html). |
 
-Refer to the date function [examples](functions-date.md).
+Refer to the time functions [examples](functions-time.md).
 
 ## Property Functions
 
