@@ -4,11 +4,17 @@
 
 Upload a CSV file or multiple CSV files for parsing into series, properties, or messages with the specified CSV parser.
 
-File(s) can be optionally compressed with gzip or zip. 
+The file(s) can be uploaded in plain text or compressed with the gzip or zip codecs.
 
 Multiple files can be archived with zip/tar and uploaded as one zip or tar.gz archive.
 
 This method supports processing of the uploaded attached file as data as well as a part in a multi-part payload.
+
+## Size Limit
+
+* Maximum file is **1 gigabyte**. 
+
+> If the input file is larger than 1GB, consider compressing it so that its size is within the threshold or splitting it into multiple smaller files, uploaded separately.
 
 ## Date Limits
 
