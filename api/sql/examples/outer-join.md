@@ -9,7 +9,7 @@ SELECT *
   FROM mpstat.cpu_busy t1
 OUTER JOIN df.disk_used t2
   WHERE t1.datetime > current_hour
-  AND entity = 'nurswgvml007'
+  AND df.disk_used.entity = 'nurswgvml007'
 ```
 
 ## Results
