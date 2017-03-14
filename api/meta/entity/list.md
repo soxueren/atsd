@@ -7,7 +7,7 @@ Retrieve a list of entities matching the specified filter conditions.
 ## Request
 
 | **Method** | **Path** | 
-|:---|:---|---:|
+|:---|:---|
 | GET | `/api/v1/entities` |
 
 ### Query Parameters
