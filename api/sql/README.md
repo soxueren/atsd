@@ -1664,7 +1664,6 @@ The `CAST` function transforms a string into a number, or a number into a string
 CAST(inputString AS number)
 CAST(inputNumber AS string)
 ```
-
 The returned number can be used in arithmetic expressions, whereas the returned string can be passed as an argument into string functions.
 
 ```sql
@@ -1673,6 +1672,10 @@ SELECT datetime, value, entity, tags,
 FROM disk.stats.used
   WHERE datetime >= CURRENT_HOUR
 ```
+
+The result of `CAST(number AS string)` is formatted with `#.##` pattern to remove fractional `.0` part from integer values stored as decimals. The value will be rounded to `0.01`.
+
+Casting `NaN` as string returns `'null'`
 
 ### LOOKUP
 
