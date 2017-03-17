@@ -1673,9 +1673,9 @@ FROM disk.stats.used
   WHERE datetime >= CURRENT_HOUR
 ```
 
-The result of `CAST(number AS string)` is formatted with `#.##` pattern to remove fractional `.0` part from integer values stored as decimals. The value will be rounded to `0.01`.
+The result of `CAST(inputNumber AS string)` is formatted with the `#.##` pattern to remove the fractional part from integer values stored as decimals. The numbers are rounded to the nearest `0.01`.
 
-Casting `NaN` as string returns `'null'`
+`CAST` of `NaN` to string returns `null`.
 
 ### LOOKUP
 
