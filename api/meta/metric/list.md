@@ -7,7 +7,7 @@ Retrieve a list of metrics matching the specified filter conditions.
 ## Request
 
 | **Method** | **Path** | 
-|:---|:---|---:|
+|:---|:---|
 | GET | `/api/v1/metrics` |
 
 ### Query Parameters 
