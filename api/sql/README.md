@@ -204,6 +204,7 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`metric.minValue`| double | Minimum value for [Invalid Action](../meta/metric/list.md#invalid-actions) trigger.|
 |`metric.maxValue`| double | Maximum value for [Invalid Action](../meta/metric/list.md#invalid-actions) trigger.|
 |`metric.invalidValueAction` | string | [Invalid Action](../meta/metric/list.md#invalid-actions) type.|
+|`metric.counter` | string | Defines the metric as an always incrementing measurement with possible resets to 0.|
 |`entity.label`   |string   | Entity label.|
 |`entity.timeZone`|string   | Entity time zone.|
 |`entity.interpolate` |string| Entity interpolation setting.|
