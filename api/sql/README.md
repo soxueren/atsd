@@ -529,7 +529,9 @@ The modulo operator `%` returns the remainder of one number divided by another, 
 
 ### LIKE Expression
 
-`?` and `*` wildcards are supported in `LIKE` expressions with backslash `\` available as an escape character.
+The `LIKE` expression supports `?` and `*` wildcards which can be escaped with backslash `\`, if necessary.
+
+The comparison is case-sensitive, even for entity and metric names.
 
 ```sql
 SELECT datetime, entity, value, tags.mount_point, tags.file_system
@@ -538,9 +540,12 @@ WHERE tags.file_system LIKE '/dev/*'
   AND datetime >= NOW - 1*HOUR
 ```
 
+
 ### REGEX Expression
 
 The `REGEX` expression matches column value against a [regex](https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html) pattern and returns `true` if the text is matched.
+
+The comparison is case-sensitive, even for entity and metric names.
 
 ```sql
 SELECT datetime, entity, value, tags.mount_point, tags.file_system
@@ -549,7 +554,7 @@ SELECT datetime, entity, value, tags.mount_point, tags.file_system
   AND datetime >= NOW - 1*HOUR
 ```
 
-`REGEX` can be used to match a complex condition or to conveniently collapse multiple `LIKE` expressions.
+`REGEX` can be used to match one of multiple conditions as an alternative to multiple `LIKE` expressions.
 
 ```sql
 WHERE entity = 'nurswgvml007'
@@ -561,6 +566,12 @@ WHERE entity = 'nurswgvml007'
 ```sql
 WHERE entity = 'nurswgvml007'
    AND tags.file_system REGEX '.*map.*|.*mnt.*|.*dev.*'
+```
+
+Special constructs such as `(?i)` can be applied to enable a [case-insensitive match](http://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html#CASE_INSENSITIVE) as an example.
+
+```sql
+  WHERE entity REGEX '(?i)Nurswgvml00.*'
 ```
 
 ## Time Condition
@@ -1758,7 +1769,7 @@ ORDER BY datetime DESC
 
 SQL keywords are case-insensitive.
 
-Entity column values, metric column values, and tag names are also case-insensitive.
+Entity column values, metric column values, and tag names are also case-insensitive, except in `LIKE` and `REGEX` operators.
 
 Tag column values are **case-sensitive**.
 
