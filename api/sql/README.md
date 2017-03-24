@@ -191,6 +191,20 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`metric.tags.{name}` |string| Metric tag value. Returns `NULL` if the specified tag doesn't exist for this metric.|
 |`metric.tags`    |string   | All metric tags, concatenated to `name1=value;name2=value` format.|
 |`metric.tags.*`  |string   | Expands to multiple columns, each column containing a separate metric tag.|
+|`metric.name`    |string   | Metric name.|
+|`metric.description` |string| Metric description.|
+|`metric.dataType`|string   | [Data Type](../meta/metric/list.md#data-types).|
+|`metric.timePrecision`|string| Time precision: SECONDS or MILLISECONDS.|
+|`metric.enabled` |boolean  | Enabled status. Incoming data is discarded for disabled metrics.|
+|`metric.persistent`  |boolean | Persistence status. Non-persistent metrics are not stored in the database and are only processed by the rule engine.|
+|`metric.filter`  |string   | Persistence filter [expression](../meta/expression.md). Discards series that do not match this filter.|
+|`metric.lastInsertTime`|string | Last time a value was received for this metric by any series. ISO date.|
+|`metric.retentionIntervalDays`|integer | Number of days to retain values for this metric in the database.|
+|`metric.versioning`|boolean | If set to true, enables versioning for the specified metric. <br>When metrics are versioned, the database retains the history of series value changes for the same timestamp along with `version_source` and `version_status`.|
+|`metric.minValue`| double | Minimum value for [Invalid Action](../meta/metric/list.md#invalid-actions) trigger.|
+|`metric.maxValue`| double | Maximum value for [Invalid Action](../meta/metric/list.md#invalid-actions) trigger.|
+|`metric.invalidValueAction` | string | [Invalid Action](../meta/metric/list.md#invalid-actions) type.|
+|`metric.counter` | boolean | Defines the metric as an always incrementing measurement with possible resets to 0.|
 |`entity.label`   |string   | Entity label.|
 |`entity.timeZone`|string   | Entity time zone.|
 |`entity.interpolate` |string| Entity interpolation setting.|
