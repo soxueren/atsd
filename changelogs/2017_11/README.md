@@ -6,7 +6,7 @@ Weekly Change Log: March 13 - March 19, 2017
 | Issue| Category    | Type    | Subject                                                                              |
 |------|-------------|---------|--------------------------------------------------------------------------------------|
 | 4021 | sql | Bug | [`CASE`](/api/sql#case) expression can be used without specifying the table. |
-| 3981 | sql | Feature | Add support [`CASE`](/api/sql#case) expression in aggregation functions. |
+| 3981 | sql | Feature | Add support for [`CASE`](/api/sql#case) expression in aggregation functions. |
 | 3837 | sql | Feature | Add support for constant strings and numbers in the [`SELECT`](/api/sql#select-expression) expression. |
 | 4007 | sql | Bug | Fix referencing error if series tag doesn't exist. |
 | [3658](#issue-3658) | sql | Feature | Add support for referencing all metric fields (label, units, etc.) |
