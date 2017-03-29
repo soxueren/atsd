@@ -66,6 +66,7 @@
 - [Metric Persistence Filter](metric-persistence-filter.md#metric-persistence-filter)
 - [Entity Lookup](entity-lookup.md#entity-lookup)
 - [Restoring a corrupted zookeeper](corrupted-zookeeper.md#restoring-a-corrupted-zookeeper)
+- [Restoring Corrupted Files](corrupted-file-recovery.md)
 - [Compaction](compaction.md#compaction)
 - [Compaction Test](compaction-test.md#compaction-test)
 - [Monitoring](monitoring.md#monitoring)

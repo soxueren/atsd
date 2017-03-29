@@ -119,4 +119,5 @@
   * [Monitoring](administration/monitoring.md)
   * [Replication](administration/replication.md)
   * [Restarting](administration/restarting.md)
-  * [Restoring Corrupted Zookeeper](administration/entity-lookup.md)
+  * [Restoring Corrupted Zookeeper](administration/corrupted-zookeeper.md)
+  * [Restoring Corrupted Files](administration/corrupted-file-recovery.md)
