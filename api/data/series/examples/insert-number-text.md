@@ -1,4 +1,4 @@
-# Series Insert Not A Number 
+# Series Insert Both Text and Numeric values
 
 ## Description
 
@@ -22,7 +22,7 @@ POST https://atsd_host:8443/api/v1/series/insert
             {
                 "d": "2016-10-14T08:15:00Z",
                 "v": 12.4,
-				"x": "Provisional"
+                "x": "Provisional"
             }
         ]
     }
