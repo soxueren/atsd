@@ -1811,6 +1811,21 @@ FROM 'mpstat.cpu_busy'
   WHERE datetime >= PREVIOUS_MINUTE
 ```
 
+The `CASE` expressions can be nested by using `CASE` within the `result_expression`:
+
+```sql
+CASE date_format(time, 'yyyy')           
+    WHEN '2016' THEN
+      CASE
+        WHEN CAST(date_format(time, 'D') AS NUMBER) > 5 THEN '17'
+        ELSE '16'
+      END
+    WHEN '2017' THEN '18'
+    WHEN '2018' THEN '17'      
+    ELSE '15'
+END AS 'Tax Day'
+```
+
 ### CAST
 
 The `CAST` function transforms a string into a number, or a number into a string.
