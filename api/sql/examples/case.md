@@ -190,3 +190,32 @@ WHERE datetime BETWEEN '2010-01-01T00:00:00Z' AND '2019-01-01T00:00:00Z'
 | 2015 | 15      | 132268000 |
 | 2016 | 18      | 136528000 |
 ```
+
+### Expression Nesting
+
+```sql
+SELECT entity, avg(value),
+  CASE avg(value) > 50
+    WHEN true THEN
+      CASE
+        WHEN avg(value) > 75 THEN 'Very High'
+        ELSE 'High'
+      END
+    ELSE 'Low'
+  END AS 'Utilization'
+FROM cpu_busy
+  WHERE datetime >= previous_minute
+GROUP BY entity
+```
+
+####
+
+```ls
+| entity       | avg(value) | Utilization |
+|--------------|------------|-------------|
+| nurswgvml007 | 60.5       | High        | 
+| nurswgvml006 | 82.6       | Very High   |
+| nurswgvml010 | 1.0        | Low         |
+| nurswgvml502 | 0.7        | Low         |
+| nurswgvml301 | 0.5        | Low         |
+```
