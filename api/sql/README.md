@@ -171,20 +171,27 @@ Comments are not allowed after the statement termination character `;`.
 
 ### Predefined Columns
 
-Since the underlying data is physically stored in the same shared partitioned table, all virtual tables have the same set of pre-defined columns:
+Virtual tables have the same pre-defined columns since all the the underlying data is physically stored in a single partitioned table.
+
+#### Series Columns
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-|`time`           |long     | Observation time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY` query with `PERIOD`, time column returns period start time, same as the `PERIOD()` column specified in the `GROUP BY` clause.|
-|`datetime`       |datetime | Observation time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY` query with `PERIOD`, datetime column returns period start time in ISO format, same as `date_format(PERIOD())` column specified in the `GROUP BY` clause.|
-|`period`         |long     | Period start time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.|
-|`value`          |number   | Series numeric value.|
-|`text`           |string   | Series text value.|
 |`metric`         |string   | Metric name, same as virtual table name.|
 |`entity`         |string   | Entity name.|
+|`value`          |number   | Series numeric value.|
+|`text`           |string   | Series text value.|
 |`tags.{name}`    |string   | Series tag value. Returns `NULL` if the specified tag doesn't exist for this series.|
 |`tags`           |string   | All series tags, concatenated to `name1=value;name2=value` format.|
 |`tags.*`         |string   | Expands to multiple columns, each column containing a separate series tag.|
+|`datetime`       |datetime | Observation time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY` query with `PERIOD`, datetime column returns period start time in ISO format, same as `date_format(PERIOD())` column specified in the `GROUP BY` clause.|
+|`time`           |long     | Observation time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY PERIOD` query, time column returns period start time, same as the `PERIOD()` column specified in the `GROUP BY` clause.|
+|`period`         |long     | Period start time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>This column is accessible in `GROUP BY PERIOD` query.|
+
+#### Metric Columns
+
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
 |`metric.label`   |string   | Metric label.|
 |`metric.timeZone`|string   | Metric time zone.|
 |`metric.interpolate` |string| Metric interpolation setting.|
@@ -205,6 +212,11 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`metric.maxValue`| double | Maximum value for [Invalid Action](../meta/metric/list.md#invalid-actions) trigger.|
 |`metric.invalidValueAction` | string | [Invalid Action](../meta/metric/list.md#invalid-actions) type.|
 |`metric.counter` | boolean | Defines the metric as an always incrementing measurement with possible resets to 0.|
+
+#### Entity Columns
+
+|**Name**|**Type**|**Description**|
+|:---|:---|:---|
 |`entity.label`   |string   | Entity label.|
 |`entity.timeZone`|string   | Entity time zone.|
 |`entity.interpolate` |string| Entity interpolation setting.|
@@ -212,7 +224,16 @@ Since the underlying data is physically stored in the same shared partitioned ta
 |`entity.tags`    |string   | All entity tags, concatenated to `name1=value;name2=value` format.|
 |`entity.groups`  |string   | List of entity groups, to which the entity belongs, separated by semi-colon `;`.|
 
-For tag columns such as `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}`, where the `{name}` is equal to a reserved keyword, an identifier or contains special characters such as `-`,`*`,`,`, the `{name}` part should be enclosed in quotes or double quotes, for example, `tags.'value'`, `entity.tags."file-system"`.
+The `{name}` part in tag columns `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}` must be enclosed in quotes or double quotes, if `{name}` equals a reserved column or [keyword](#keywords), an SQL identifier or contains special characters such as `-`,`*`,`,`.
+
+```java
+# enquote reserved column name
+tags.'value'
+# enquote SQL identifier
+tags.'select'
+# enquote tag name containing special character
+entity.tags.'file-system'
+```
 
 Quotes and double quotes in column names can be escaped by doubling the quote symbol. For example, if the tag name is `hello"world`, the column name can be referred to as follows: `tags."hello""world"`.
 
@@ -1421,7 +1442,7 @@ The following functions aggregate values in a column by producing a single value
 |----------------|----------------|----------------|----------------|
 ```
 
-The functions accept `value` column or a numeric expression as a argument, for example  `AVG(value)` or `AVG(t1.value + t2.value)`.
+The functions accept `value` column or a numeric expression as an argument, for example  `AVG(value)` or `AVG(t1.value + t2.value)`.
 
 * `null` and `NaN` values are ignored by aggregation functions.
 * If the function cannot find a single value other than `null` or `NaN`, it returns `NaN`.
@@ -1456,7 +1477,7 @@ The `PERCENTILE` function accepts `percentile` parameter (0 to 100) and a numeri
 
 The `CORREL` correlation function accepts two numeric expression as arguments (or two value columns in a `JOIN` query) and calculates the [Pearson correllation](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/stat/correlation/PearsonsCorrelation.html) coefficient between these two variable.
 
-> If one if the variables is constant (i.e. its standard deviation is 0), the function returns `NaN`.
+> If one if the variables is constant (its standard deviation is 0), the `CORREL` function returns `NaN`.
 
 ```sql
 SELECT tu.entity,
@@ -1466,8 +1487,8 @@ SELECT tu.entity,
   stddev(tu.value),
   stddev(ts.value),
   stddev(tw.value)
-FROM cpu_user tu JOIN cpu_system ts JOIN cpu_iowait tw
-  WHERE tu.datetime >= now - 5 * minute
+FROM mpstat.cpu_user tu JOIN mpstat.cpu_system ts JOIN mpstat.cpu_iowait tw
+  WHERE tu.datetime >= NOW - 5 * MINUTE
 GROUP BY tu.entity
 ```
 
@@ -1684,7 +1705,7 @@ AND LOWER(tags.file_system) LIKE '*root'
 
 ### ISNULL
 
-The `ISNULL` function returns `altValue` if the `inputValue` is `NULL` or `NaN` (Non-A-Number) in case of numeric data types.
+The `ISNULL` function returns `altValue` if the `inputValue` is `null` or `NaN` (Non-A-Number) in case of numeric data types.
 
 ```sql
 ISNULL(inputValue, altValue)
@@ -1696,7 +1717,11 @@ The function accepts arguments with different data types, for example numbers an
 
 ### CASE
 
-The `CASE` expression evaluates a sequence of boolean expressions and returns a matching result expression.
+The `CASE` expression provides a way to use `IF THEN` logic in various parts of the query. Both simple and searched syntax options are supported.
+
+#### Searched `CASE` Expression
+
+The searched `CASE` expression evaluates a sequence of boolean expressions and returns a matching result expression.
 
 ```sql
 CASE  
@@ -1747,7 +1772,7 @@ WHERE datetime >= CURRENT_HOUR
   GROUP BY entity
 ```
 
-The `CASE` expression can also be used to handle `NULL` and `NaN` values:
+The `CASE` expression can be used to handle `NULL` and `NaN` values:
 
 ```sql
 SELECT entity, datetime, value, text,
@@ -1761,6 +1786,29 @@ SELECT entity, datetime, value, text,
   END
   FROM atsd_series
 WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
+```
+
+#### Simple `CASE` Expression
+
+The simple `CASE` expression compares the `input_expression` with `compare_expression`s and returns the `result_expression` when the comparison is true.
+
+```sql
+CASE input_expression
+     WHEN compare_expression THEN result_expression
+     [ WHEN compare_expression THEN result_expression ]
+     [ ELSE result_expression ]
+END  
+```
+
+```sql
+SELECT entity, datetime, value,
+  CASE entity
+    WHEN 'nurswgvml006' THEN 'NUR-1'
+    WHEN 'nurswgvml301' OR 'nurswgvml302' THEN 'NUR-3'
+    ELSE 'Unknown'
+  END AS 'location'
+FROM 'mpstat.cpu_busy'
+  WHERE datetime >= PREVIOUS_MINUTE
 ```
 
 ### CAST

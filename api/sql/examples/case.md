@@ -1,6 +1,8 @@
 # CASE Expression
 
-## Categorize Series By Value Range
+## Searched CASE Syntax
+
+### Categorize Series By Value Range
 
 ```sql
 SELECT entity, avg(value),
@@ -14,7 +16,7 @@ WHERE datetime > current_day
   GROUP BY entity
 ```
 
-### Results
+#### Results
 
 ```ls
 | entity       | avg(value) | Utilization    |
@@ -26,7 +28,7 @@ WHERE datetime > current_day
 | nurswgvml502 | 3.5        | under-utilized |
 ```
 
-## Create Derived Columns - String
+### Create Derived Columns - String
 
 ```sql
 SELECT entity, tags.*, value,
@@ -39,7 +41,7 @@ WHERE datetime > current_hour
   WITH ROW_NUMBER(entity, tags ORDER BY time DESC) <= 1
 ```
 
-### Results
+#### Results
 
 ```ls
 | entity       | tags.file_system                    | tags.mount_point        | value        | fs_type |
@@ -59,7 +61,7 @@ WHERE datetime > current_hour
 | nurswgvml502 | /dev/sda1                           | /                       | 31847840.0   | local   |
 ```
 
-## Create Derived Columns - Numeric
+### Create Derived Columns - Numeric
 
 ```sql
 SELECT entity, tags.*, value,
@@ -72,7 +74,7 @@ WHERE datetime > current_hour
   WITH ROW_NUMBER(entity, tags ORDER BY time DESC) <= 1
 ```
 
-### Results
+#### Results
 
 ```ls
 | entity       | tags.file_system                    | tags.mount_point        | value        | fs_type |
@@ -89,10 +91,10 @@ WHERE datetime > current_hour
 | nurswgvml301 | //u1134.store02/backup              | /mnt/u1134              | 1791263474.0 | 1.0     |
 | nurswgvml301 | /dev/sda1                           | /                       | 1428796.0    | 0.0     |
 | nurswgvml502 | //u1134.store02/backup              | /mnt/u1134              | 1791263474.0 | 1.0     |
-| nurswgvml502 | /dev/sda1                           | /                       | 31847924.0   | 0.0     | 
+| nurswgvml502 | /dev/sda1                           | /                       | 31847924.0   | 0.0     |
 ```
 
-## Handle NaN and NULL Values
+### Handle NaN and NULL Values
 
 ```sql
 SELECT entity, datetime, value, text, ISNULL(text, 'IN: text is null'), ISNULL(value, 'IN: value is null'),
@@ -105,7 +107,7 @@ SELECT entity, datetime, value, text, ISNULL(text, 'IN: text is null'), ISNULL(v
 WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 ```
 
-### Results
+#### Results
 
 ```ls
 | entity   | datetime                 | value | text                           | ISNULL(text,'IN: text is null') | ISNULL(value,'IN: value is null') | null_check        |
@@ -115,7 +117,7 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 | sensor-1 | 2016-10-13T08:15:00.000Z | 24.4  | Provisional                    | Provisional                     | 24.4                              | ok                |
 ```
 
-## ISNULL Alternative
+### ISNULL Alternative
 
 ```sql
 SELECT entity, datetime, value, text,
@@ -131,7 +133,7 @@ SELECT entity, datetime, value, text,
 WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 ```
 
-### Results
+#### Results
 
 ```ls
 | entity   | datetime                 | value | text                           | case_check_1 | case_check_2                   |
@@ -139,4 +141,52 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 | sensor-1 | 2016-10-13T10:30:00.000Z | NaN   | Shutdown by adm-user, RFC-5434 | -1.0         | Shutdown by adm-user, RFC-5434 |
 | sensor-1 | 2016-10-13T08:00:00.000Z | 20.3  | null                           | 20.3         | CASE: text column is null      |
 | sensor-1 | 2016-10-13T08:15:00.000Z | 24.4  | Provisional                    | 24.4         | Provisional                    |
+```
+
+## Simple CASE Syntax
+
+### Move condition to input expression:
+
+```sql
+SELECT entity, avg(value),
+    CASE avg(value) > 50
+      WHEN true THEN 'High'
+      ELSE 'Low'
+    END AS 'Utilization'
+FROM cpu_busy
+  WHERE datetime >= previous_minute
+GROUP BY entity
+```
+
+#### Results
+
+```ls
+| entity       | avg(value) | Utilization |
+|--------------|------------|-------------|
+| nurswgvml007 | 50.7       | High        |
+| nurswgvml006 | 76.0       | High        |
+| nurswgvml010 | 4.3        | Low         |
+| nurswgvml502 | 1.0        | Low         |
+| nurswgvml301 | 2.0        | Low         |
+```
+
+### Switch-case construct
+
+```sql
+SELECT date_format(time, 'yyyy'),
+  CASE date_format(time, 'yyyy')                 
+      WHEN '2012' OR '2018' THEN 17
+      WHEN '2016' OR '2017' THEN 18
+      ELSE 15
+    END AS 'Tax Day', value   
+  FROM 'income-returns-received'
+WHERE datetime BETWEEN '2010-01-01T00:00:00Z' AND '2019-01-01T00:00:00Z'
+```
+
+```ls
+| year | Tax Day | value     |
+|------|---------|-----------|
+| 2014 | 15      | 131170000 |
+| 2015 | 15      | 132268000 |
+| 2016 | 18      | 136528000 |
 ```
