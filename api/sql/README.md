@@ -9,7 +9,7 @@ The SQL statements can be executed interactively via the SQL console as well as 
   * [Aliases](#aliases)
   * [Time Condition](#time-condition)
   * [Aggregation Functions](#aggregation-functions)
-  * [Time Formatting Functions](#time-formatting-functions)
+  * [Date Functions](#date-functions)
   * [Mathematical Functions](#mathematical-functions)
   * [String Functions](#string-functions)
   * [Arithmetic Operators](#arithmetic-operators)
@@ -1481,12 +1481,14 @@ GROUP BY tu.entity
 | nurswgvml301 | -0.17         | -0.11            | -0.17           | 0.32             | 0.42             | 0.64             |
 ```
 
-## Time Formatting Functions
+## Date Functions
 
-The `date_format` function formats Unix millisecond time to a string in user-defined date format and optional time zone.
+### Date Formatting Functions
+
+The `date_format` function formats Unix millisecond time to a string in user-defined date format and optional time zone. See supported time pattern letters [here](time-pattern.md).
 
 ```java
-date_format(long milliseconds[, time_format[, time_zone]])
+date_format(long milliseconds[, string time_format[, string time_zone]])
 ```
 
 If the `time_format` argument is not provided, ISO 8601 format is applied.
@@ -1581,6 +1583,44 @@ GROUP BY date_format(time, 'EEE')
 ```
 
 Refer to [diurnal](examples/diurnal.md) query examples.
+
+### Date Parsing Functions
+
+The `date_parse` function parses the datetime string into Unix milliseconds.
+
+```java
+date_parse(string datetime[, string time_format[, string time_zone]])
+```
+
+* The default `time_format` is ISO 8601: `yyyy-MM-dd'T'HH:mm:ss.SSSZZ`. See supported pattern letters [here](time-pattern.md).
+* The default `time_zone` is the server time zone.
+
+```java
+/* Parse date using the default ISO 8601 format.*/
+date_parse("2017-03-31T12:36:03.283Z")
+
+/* Parse date using the ISO 8601 format, without milliseconds */
+date_parse("2017-03-31T12:36:03Z", "yyyy-MM-dd'T'HH:mm:ssZZ")
+
+/* Parse date using the server time zone. */
+date_parse("31.03.2017 12:36:03.283", "dd.MM.yyyy HH:mm:ss.SSS")
+
+/* Parse date using the offset specified in the datetime string. */
+date_parse("31.03.2017 12:36:03.283 -08:00", "dd.MM.yyyy HH:mm:ss.SSS ZZ")
+
+/* Parse date using the time zone specified in the datetime string. */
+date_parse("31.03.2017 12:36:03.283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss.SSS ZZZ")
+
+/* Parse date using the time zone provided as the third argument. */
+date_parse("31.01.2017 12:36:03.283", "dd.MM.yyyy HH:mm:ss.SSS", "Europe/Berlin")
+
+/* Parse date using the UTC offset provided as the third argument. */
+date_parse("31.01.2017 12:36:03.283", "dd.MM.yyyy HH:mm:ss.SSS", "+01:00")
+
+/* If the time zone (offset) is specified in the datetime string,
+it should be exactly the same as provided by the third argument. */
+date_parse("31.01.2017 12:36:03.283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss.SSS ZZZ", "Europe/Berlin")
+```
 
 ## Mathematical Functions
 
