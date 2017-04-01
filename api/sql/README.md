@@ -1374,9 +1374,9 @@ GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 | 2016-06-16T13:04:00.000Z | nurswgvml006 | 15.1    | 71461.0  |
 ```
 
-The choice of statistical function to use for value columns depends on the use case.
+The choice of an aggregation function applied to numeric columns depends on the use case.
 
-`AVG` and percentile functions would smooth the values, whereas the `LAST` or `FIRST` functions would select a subset of raw values in a downsampling effect.
+While `AVG` and `PERCENTILE` functions smooth the values, the `LAST` or `FIRST` functions produce a subset of raw values in a downsampling effect.
 
 ```sql
 SELECT t1.datetime, t1.entity, LAST(t1.value) AS cpu, LAST(t2.value) AS mem
@@ -1398,9 +1398,9 @@ GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 | ELSE        | FROM        | GROUP       | HAVING      |
 | IN          | INNER       | INTERPOLATE | ISNULL      |
 | JOIN        | LAST_TIME   | LIKE        | LIMIT       |
-| LOOKUP      | NOT         | OFFSET      | OPTION      |
-| OR          | ORDER       | OUTER       | PERIOD      |
-| REGEX       | ROW_NUMBER  | SELECT      | THEN        |
+| LOOKUP      | NOT         | OFFSET      |  OPTION     |
+| OR          | ORDER       | OUTER       |  PERIOD     |
+| REGEX       | ROW_NUMBER  | SELECT      |  THEN       |
 | USING       | VALUE       | WHEN        | WHERE       |
 | WITH        |             |             |             |
 |-------------|-------------|-------------|-------------|
@@ -1414,17 +1414,18 @@ The following functions aggregate values in a column by producing a single value
 
 ```
 |----------------|----------------|----------------|----------------|
-| SUM            | AVG            | MIN            | MAX            |
-| COUNT          | COUNTER        | DELTA          | FIRST          |
-| LAST           | MAX_VALUE_TIME | MIN_VALUE_TIME | PERCENTILE     |
-| STDDEV         | WAVG           | WTAVG          |                |
+| AVG            | CORREL         | COUNT          | COUNTER        |
+| DELTA          | FIRST          | LAST           | MAX            |
+| MAX_VALUE_TIME | MIN            | MIN_VALUE_TIME | PERCENTILE     |
+| SUM            | STDDEV         | WAVG           | WTAVG          |
 |----------------|----------------|----------------|----------------|
 ```
 
-The functions accept `value` as the column name or a numeric expression as a parameter, for example  `AVG(value)` or `AVG(t1.value + t2.value)`.
+The functions accept `value` column or a numeric expression as a argument, for example  `AVG(value)` or `AVG(t1.value + t2.value)`.
 
-* The `PERCENTILE` function accepts `percentile` parameter (0 to 100) and a numeric expression, for example `PERCENTILE(75, value)`.
-* The `COUNT` function counts the number of rows in the result set and accepts `*` as an argument, for example `COUNT(*)`.
+* `null` and `NaN` values are ignored by aggregation functions.
+* If the function cannot find a single value other than `null` or `NaN`, it returns `NaN`.
+* Nesting aggregation functions such as `AVG(MAX(value))` is not supported.
 
 ```sql
 SELECT entity, AVG(value), MAX(value), COUNT(*), PERCENTILE(80, value)
@@ -1437,6 +1438,47 @@ WHERE datetime > current_hour
 | entity       | AVG(value) | MAX(value) | COUNT(*) | PERCENTILE(80,value) |
 |--------------|------------|------------|----------|----------------------|
 | nurswghbs001 | 20.3       | 48.0       | 49.0     | 22.8                 |
+```
+
+### COUNT
+
+The `COUNT` function returns the number of rows in the result set and accepts `*` as an argument, for example `COUNT(*)`.
+
+If `COUNT(expr)` is invoked, the function returns the number of rows where the expression `expr` was not `null` and not `NaN`.
+
+### PERCENTILE
+
+The `PERCENTILE` function accepts `percentile` parameter (0 to 100) and a numeric expression, for example `PERCENTILE(75, value)`.
+
+`PERCENTILE(value, 0)` is equal to `MIN(value)` whereas `PERCENTILE(value, 100)` is equal to `MAX(value)`.
+
+### CORREL
+
+The `CORREL` correlation function accepts two numeric expression as arguments (or two value columns in a `JOIN` query) and calculates the [Pearson correllation](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/stat/correlation/PearsonsCorrelation.html) coefficient between these two variable.
+
+> If one if the variables is constant (i.e. its standard deviation is 0), the function returns `NaN`.
+
+```sql
+SELECT tu.entity,
+  CORREL(tu.value, ts.value) AS 'CORR-user-sys',
+  CORREL(tu.value, tw.value) AS 'CORR-user-iowait',
+  CORREL(ts.value, tw.value) AS 'CORR-sys-iowait',
+  stddev(tu.value),
+  stddev(ts.value),
+  stddev(tw.value)
+FROM cpu_user tu JOIN cpu_system ts JOIN cpu_iowait tw
+  WHERE tu.datetime >= now - 5 * minute
+GROUP BY tu.entity
+```
+
+```ls
+| tu.entity    | CORR-user-sys | CORR-user-iowait | CORR-sys-iowait | stddev(tu.value) | stddev(ts.value) | stddev(tw.value) |
+|--------------|---------------|------------------|-----------------|------------------|------------------|------------------|
+| nurswgvml007 | 0.92          | NaN              | NaN             | 7.64             | 2.50             | 0.00             |
+| nurswgvml006 | -0.13         | 0.10             | 0.27            | 7.26             | 0.60             | 2.57             |
+| nurswgvml010 | 0.76          | -0.09            | 0.03            | 7.42             | 0.44             | 1.10             |
+| nurswgvml502 | 0.59          | -0.14            | -0.08           | 0.53             | 0.53             | 0.59             |
+| nurswgvml301 | -0.17         | -0.11            | -0.17           | 0.32             | 0.42             | 0.64             |
 ```
 
 ## Time Formatting Functions
