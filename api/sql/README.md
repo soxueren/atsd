@@ -1418,12 +1418,12 @@ GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 | BY          | CASE        | CAST        | DESC        |
 | ELSE        | FROM        | GROUP       | HAVING      |
 | IN          | INNER       | INTERPOLATE | ISNULL      |
-| JOIN        | LAST_TIME   | LIKE        | LIMIT       |
-| LOOKUP      | NOT         | OFFSET      |  OPTION     |
-| OR          | ORDER       | OUTER       |  PERIOD     |
-| REGEX       | ROW_NUMBER  | SELECT      |  THEN       |
-| USING       | VALUE       | WHEN        | WHERE       |
-| WITH        |             |             |             |
+| JOIN        | LAG         | LAST_TIME   | LEAD        |
+| LIKE        | LIMIT       | LOOKUP      | NOT         |
+| OFFSET      | OPTION      | OR          | ORDER       |
+| OUTER       | PERIOD      | REGEX       | ROW_NUMBER  |
+| SELECT      | THEN        | USING       | VALUE       |
+| WHEN        | WHERE       | WITH        |             |
 |-------------|-------------|-------------|-------------|
  ```
 
@@ -1444,8 +1444,8 @@ The following functions aggregate values in a column by producing a single value
 
 The functions accept `value` column or a numeric expression as an argument, for example  `AVG(value)` or `AVG(t1.value + t2.value)`.
 
-* `null` and `NaN` values are ignored by aggregation functions.
-* If the function cannot find a single value other than `null` or `NaN`, it returns `NaN`.
+* `NULL` and `NaN` values are ignored by aggregation functions.
+* If the function cannot find a single value other than `NULL` or `NaN`, it returns `NaN`.
 * Nesting aggregation functions such as `AVG(MAX(value))` is not supported.
 
 ```sql
@@ -1465,7 +1465,7 @@ WHERE datetime > current_hour
 
 The `COUNT` function returns the number of rows in the result set and accepts `*` as an argument, for example `COUNT(*)`.
 
-If `COUNT(expr)` is invoked, the function returns the number of rows where the expression `expr` was not `null` and not `NaN`.
+If `COUNT(expr)` is invoked, the function returns the number of rows where the expression `expr` was not `NULL` and not `NaN`.
 
 ### PERCENTILE
 
@@ -1703,9 +1703,103 @@ AND LOWER(tags.file_system) LIKE '*root'
 
 ## Other Functions
 
+### LAG
+
+The `LAG` function lets you access the previous row within the same result set. If the previous row doesn't exist, the function returns `NULL`.
+
+```sql
+LAG(columnName)
+```
+
+```sql
+SELECT date_format(datetime, 'yyyy') AS 'Date',
+  SUM(value) AS 'Current Period',
+  LAG(SUM(value)) AS 'Previous Period',
+  SUM(value)-LAG(SUM(value)) AS 'Change',
+  round(100*(SUM(value)/LAG(SUM(value))-1),1) AS 'Change, %'
+FROM 'cc.cases-by-primary-type'
+  WHERE tags.etype = 'OUTAGE'
+GROUP BY entity, tags.etype, period(1 year)
+```
+
+```ls
+| Date | Current Year | Previous Year | Change | Change, % |
+|------|--------------|---------------|--------|-----------|
+| 2001 | 654          | null          | null   | null      |
+| 2002 | 650          | 654           | -4     | -0.6      |
+| 2003 | 590          | 650           | -60    | -9.2      |
+```
+
+The function can be referenced in the `WHERE` clause to filter rows based on previous row values:
+
+```sql
+SELECT datetime, text, LAG(text)
+  FROM 'Unit_BatchID'
+WHERE entity = 'qz-1211'
+ AND text = '800' OR LAG(text) = '800'
+```
+
+```ls
+| datetime             | text     | lag(text) |
+|----------------------|----------|-----------|
+| 2016-10-04T01:52:05Z | 700      | null      | -- excluded: text is '900' and LAG is null
+| 2016-10-04T02:00:34Z | Inactive | 700       | -- excluded: text is 'Inactive' and LAG = '700'  
+| 2016-10-04T02:01:20Z | 800      | Inactive  |
+| 2016-10-04T02:03:05Z | Inactive | 800       |
+| 2016-10-04T02:03:10Z | 800      | Inactive  |
+| 2016-10-04T02:07:05Z | Inactive | 800       |
+| 2016-10-04T02:09:09Z | 900      | Inactive  | -- excluded: text is '900' and LAG = 'Inactive'
+| 2016-10-04T02:12:30Z | Inactive | 900       | -- excluded: text is 'Inactive' and LAG = '900'
+```
+
+The `LAG` function in the `SELECT` expression is applied to the filtered result set, after some rows have been excluded by the `LAG` function as part of the `WHERE` clause. Therefore, `LAG()` in `SELECT` and `LAG()` in `WHERE` clauses may return different values.
+
+```sql
+SELECT datetime, LAG(value), value, LEAD(value)
+  FROM cpu_busy
+WHERE entity = 'nurswgvml007'
+  AND datetime BETWEEN '2017-04-02T14:19:15Z' AND '2017-04-02T14:21:15Z'
+  --AND value > LAG(value) AND value < LEAD(value)
+```
+
+* Rows before filtering
+
+```ls
+| datetime             | lag(value) | value | lead(value) |
+|----------------------|------------|-------|-------------|
+| 2017-04-02T14:19:17Z | null       | 25.5  | 6.1         |
+| 2017-04-02T14:19:33Z | 25.5       | 6.1   | 13.3        |
+| 2017-04-02T14:19:49Z | 6.1        | 13.3  | 55.0        | +
+| 2017-04-02T14:20:05Z | 13.3       | 55.0  | 6.1         |
+| 2017-04-02T14:20:21Z | 55.0       | 6.1   | 7.0         |
+| 2017-04-02T14:20:37Z | 6.1        | 7.0   | 8.0         | +
+| 2017-04-02T14:20:53Z | 7.0        | 8.0   | 20.2        | +
+| 2017-04-02T14:21:09Z | 8.0        | 20.2  | null        |
+```
+
+* Rows after filtering
+
+```ls
+| datetime             | lag(value) | value | lead(value) |
+|----------------------|------------|-------|-------------|
+| 2017-04-02T14:19:49Z | null       | 13.3  | 7.0         | LAG and LEAD in SELECT show different values
+| 2017-04-02T14:20:37Z | 13.3       | 7.0   | 8.0         |
+| 2017-04-02T14:20:53Z | 7.0        | 8.0   | null        |
+```
+
+### LEAD
+
+The `LEAD` function lets you access the next row within the same result set. If the next row doesn't exist, the function returns `NULL`.
+
+```sql
+LEAD(columnName)
+```
+
+The `LEAD` function operates similarly to the `LAG` function.
+
 ### ISNULL
 
-The `ISNULL` function returns `altValue` if the `inputValue` is `null` or `NaN` (Non-A-Number) in case of numeric data types.
+The `ISNULL` function returns `altValue` if the `inputValue` is `NULL` or `NaN` (Non-A-Number) in case of numeric data types.
 
 ```sql
 ISNULL(inputValue, altValue)
@@ -1714,117 +1808,6 @@ ISNULL(inputValue, altValue)
 The function accepts arguments with different data types, for example numbers and strings `ISNULL(value, text)`.
 
 >If the datatypes are different, the database will classify the column as `JAVA_OBJECT` to the [JDBC](https://github.com/axibase/atsd-jdbc) driver.
-
-### CASE
-
-The `CASE` expression provides a way to use `IF THEN` logic in various parts of the query. Both simple and searched syntax options are supported.
-
-#### Searched `CASE` Expression
-
-The searched `CASE` expression evaluates a sequence of boolean expressions and returns a matching result expression.
-
-```sql
-CASE  
-     WHEN search_expression THEN result_expression
-     [ WHEN search_expression THEN result_expression ]
-     [ ELSE result_expression ]
-END  
-```
-
-Each `search_expression` should evaluate to a boolean (true/false) value.
-
-The `result_expression` can be a number, a string, or an expression. Result expressions may return values of different data types.
-
->If the data types are different (such as a number and a string), the database will classify the column with `JAVA_OBJECT` to the [JDBC](https://github.com/axibase/atsd-jdbc) driver.
-
-If no `search_expression` is matched and the `ELSE` condition is not specified, the `CASE` expression returns `NULL`.
-
-```sql
-SELECT entity, tags.*, value,
-  CASE
-    WHEN LOCATE('//', tags.file_system) = 1 THEN 'nfs'
-    ELSE 'local'
-  END AS 'FS_Type'
-  FROM df.disk_used
-WHERE datetime >= CURRENT_HOUR
-  WITH ROW_NUMBER(entity, tags ORDER BY time DESC) <= 1
-```
-
-```ls
-| entity       | tags.file_system                    | tags.mount_point | value      | FS_Type |
-|--------------|-------------------------------------|------------------|------------|---------|
-| nurswgvml006 | //u113411.store01/backup            | /mnt/u113411     | 1791024684 | nfs     |
-| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | /                | 6045216    | local   |
-| nurswgvml006 | /dev/sdc1                           | /media/datadrive | 56934368   | local   |
-| nurswgvml007 | //u113563.store02/backup            | /mnt/u113563     | 1791024684 | nfs     |
-| nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | /                | 9064008    | local   |
-```
-
-```sql
-SELECT entity, AVG(value),
-    CASE
-      WHEN AVG(value) < 20 THEN 'under-utilized'
-      WHEN AVG(value) > 80 THEN 'over-utilized'
-      ELSE 'right-sized'
-    END AS 'Utilization'
-  FROM cpu_busy
-WHERE datetime >= CURRENT_HOUR
-  GROUP BY entity
-```
-
-The `CASE` expression can be used to handle `NULL` and `NaN` values:
-
-```sql
-SELECT entity, datetime, value, text,
-  CASE
-    WHEN value IS NULL THEN -1
-    ELSE value
-  END,
-  CASE
-    WHEN text IS NULL THEN 'CASE: text is null'
-    ELSE text
-  END
-  FROM atsd_series
-WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
-```
-
-#### Simple `CASE` Expression
-
-The simple `CASE` expression compares the `input_expression` with `compare_expression`s and returns the `result_expression` when the comparison is true.
-
-```sql
-CASE input_expression
-     WHEN compare_expression THEN result_expression
-     [ WHEN compare_expression THEN result_expression ]
-     [ ELSE result_expression ]
-END  
-```
-
-```sql
-SELECT entity, datetime, value,
-  CASE entity
-    WHEN 'nurswgvml006' THEN 'NUR-1'
-    WHEN 'nurswgvml301' OR 'nurswgvml302' THEN 'NUR-3'
-    ELSE 'Unknown'
-  END AS 'location'
-FROM 'mpstat.cpu_busy'
-  WHERE datetime >= PREVIOUS_MINUTE
-```
-
-The `CASE` expressions can be nested by using `CASE` within the `result_expression`:
-
-```sql
-CASE date_format(time, 'yyyy')           
-    WHEN '2016' THEN
-      CASE
-        WHEN CAST(date_format(time, 'D') AS NUMBER) > 5 THEN '17'
-        ELSE '16'
-      END
-    WHEN '2017' THEN '18'
-    WHEN '2018' THEN '17'      
-    ELSE '15'
-END AS 'Tax Day'
-```
 
 ### CAST
 
@@ -1845,7 +1828,7 @@ FROM disk.stats.used
 
 The result of `CAST(inputNumber AS string)` is formatted with the `#.##` pattern to remove the fractional part from integer values stored as decimals. The numbers are rounded to the nearest `0.01`.
 
-`CAST` of `NaN` to string returns `null`.
+`CAST` of `NaN` to string returns `NULL`.
 
 ### LOOKUP
 
@@ -1924,20 +1907,130 @@ ORDER BY datetime DESC
 | 2016-10-01 | 131.0 | Boston    | MA         | New-England | 667137     | 0.2           |
 ```
 
+## CASE Expression
+
+The `CASE` expression provides a way to use `IF THEN` logic in various parts of the query. Both simple and searched syntax options are supported.
+
+### Searched `CASE` Expression
+
+The searched `CASE` expression evaluates a sequence of boolean expressions and returns a matching result expression.
+
+```sql
+CASE  
+     WHEN search_expression THEN result_expression
+     [ WHEN search_expression THEN result_expression ]
+     [ ELSE result_expression ]
+END  
+```
+
+Each `search_expression` should evaluate to a boolean (true/false) value.
+
+The `result_expression` can be a number, a string, or an expression. Result expressions may return values of different data types.
+
+>If the data types are different (such as a number and a string), the database will classify the column with `JAVA_OBJECT` to the [JDBC](https://github.com/axibase/atsd-jdbc) driver.
+
+If no `search_expression` is matched and the `ELSE` condition is not specified, the `CASE` expression returns `NULL`.
+
+```sql
+SELECT entity, tags.*, value,
+  CASE
+    WHEN LOCATE('//', tags.file_system) = 1 THEN 'nfs'
+    ELSE 'local'
+  END AS 'FS_Type'
+  FROM df.disk_used
+WHERE datetime >= CURRENT_HOUR
+  WITH ROW_NUMBER(entity, tags ORDER BY time DESC) <= 1
+```
+
+```ls
+| entity       | tags.file_system                    | tags.mount_point | value      | FS_Type |
+|--------------|-------------------------------------|------------------|------------|---------|
+| nurswgvml006 | //u113411.store01/backup            | /mnt/u113411     | 1791024684 | nfs     |
+| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | /                | 6045216    | local   |
+| nurswgvml006 | /dev/sdc1                           | /media/datadrive | 56934368   | local   |
+| nurswgvml007 | //u113563.store02/backup            | /mnt/u113563     | 1791024684 | nfs     |
+| nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | /                | 9064008    | local   |
+```
+
+```sql
+SELECT entity, AVG(value),
+    CASE
+      WHEN AVG(value) < 20 THEN 'under-utilized'
+      WHEN AVG(value) > 80 THEN 'over-utilized'
+      ELSE 'right-sized'
+    END AS 'Utilization'
+  FROM cpu_busy
+WHERE datetime >= CURRENT_HOUR
+  GROUP BY entity
+```
+
+The `CASE` expression can be used to handle `NULL` and `NaN` values:
+
+```sql
+SELECT entity, datetime, value, text,
+  CASE
+    WHEN value IS NULL THEN -1
+    ELSE value
+  END,
+  CASE
+    WHEN text IS NULL THEN 'CASE: text is NULL'
+    ELSE text
+  END
+  FROM atsd_series
+WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
+```
+
+### Simple `CASE` Expression
+
+The simple `CASE` expression compares the `input_expression` with `compare_expression`s and returns the `result_expression` when the comparison is true.
+
+```sql
+CASE input_expression
+     WHEN compare_expression THEN result_expression
+     [ WHEN compare_expression THEN result_expression ]
+     [ ELSE result_expression ]
+END  
+```
+
+```sql
+SELECT entity, datetime, value,
+  CASE entity
+    WHEN 'nurswgvml006' THEN 'NUR-1'
+    WHEN 'nurswgvml301' OR 'nurswgvml302' THEN 'NUR-3'
+    ELSE 'Unknown'
+  END AS 'location'
+FROM 'mpstat.cpu_busy'
+  WHERE datetime >= PREVIOUS_MINUTE
+```
+
+The `CASE` expressions can be nested by using `CASE` within the `result_expression`:
+
+```sql
+CASE date_format(time, 'yyyy')           
+    WHEN '2016' THEN
+      CASE
+        WHEN CAST(date_format(time, 'D') AS NUMBER) > 5 THEN '17'
+        ELSE '16'
+      END
+    WHEN '2017' THEN '18'
+    WHEN '2018' THEN '17'      
+    ELSE '15'
+END AS 'Tax Day'
+```
+
 ## Case Sensitivity
 
-SQL keywords are case-insensitive.
-
-Entity column values, metric column values, and tag names are also case-insensitive, except in `LIKE` and `REGEX` operators.
-
-Tag column values are **case-sensitive**.
+* SQL keywords are case-insensitive.
+* Entity column values, metric column values, and tag names are case-insensitive, except in `LIKE` and `REGEX` operators.
+* Text column values are **case-sensitive**.
+* Tag column values are **case-sensitive**.
 
 ```sql
 SELECT metric, entity, datetime, value, tags.*
   FROM df.disk_used
 WHERE datetime >= NOW - 5*MINUTE
-  AND entity = 'NurSwgvml007' -- case-INsensitive
-  AND tags.file_system = '/dev/mapper/vg_nurswgvml007-lv_root' -- case-sensitive
+  AND entity = 'NurSwgvml007' -- case-INSENSITIVE entity value
+  AND tags.file_system = '/dev/mapper/vg_nurswgvml007-lv_root' -- case-sensitive tag value
 ```
 
 ```ls
@@ -1946,7 +2039,7 @@ WHERE datetime >= NOW - 5*MINUTE
 | df.disk_used | nurswgvml007 | 2016-06-19T06:12:26.000Z | 8715136.0 | /                | /dev/mapper/vg_nurswgvml007-lv_root |
 ```
 
-Changing the case of tag value condition `tags.file_system = '/DEV/mapper/vg_nurswgvml007-lv_root'` would cause the error **TAG_VALUE not found**.
+Changing the case of a tag value condition `tags.file_system = '/DEV/mapper/vg_nurswgvml007-lv_root'` would cause the error **TAG_VALUE not found**.
 
 ## NULL
 
