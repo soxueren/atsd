@@ -1756,7 +1756,7 @@ The `LAG` function in the `SELECT` expression is applied to the filtered result 
 
 ```sql
 SELECT datetime, LAG(value), value, LEAD(value)
-  FROM cpu_busy
+  FROM mpstat.cpu_busy
 WHERE entity = 'nurswgvml007'
   AND datetime BETWEEN '2017-04-02T14:19:15Z' AND '2017-04-02T14:21:15Z'
   --AND value > LAG(value) AND value < LEAD(value)
@@ -1959,7 +1959,7 @@ SELECT entity, AVG(value),
       WHEN AVG(value) > 80 THEN 'over-utilized'
       ELSE 'right-sized'
     END AS 'Utilization'
-  FROM cpu_busy
+  FROM mpstat.cpu_busy
 WHERE datetime >= CURRENT_HOUR
   GROUP BY entity
 ```
@@ -2043,7 +2043,7 @@ Changing the case of a tag value condition `tags.file_system = '/DEV/mapper/vg_n
 
 ## NULL
 
-Scalar expressions with arithmetic operators such as _number+NULL_ yield `NULL` if any operand is `NULL`.
+Scalar expressions with arithmetic operators such as `number + NULL` produce `NULL` if any operand is `NULL`.
 
 Likewise, numeric and string operators, except `IS NULL` and `IS NOT NULL`, return `NULL` if any operand is `NULL`.
 
@@ -2064,17 +2064,17 @@ Assuming tags.status is `NULL`:
 | `false` | `tags.status IS NOT NULL` |
 | `NULL` | `tags.status IS NULL AND tags.status = NULL` |
 
-Since the `WHERE` clause includes only rows that evaluate to `true`, conditions such as `tags.status = 'a' OR tags.status != 'a'` will not include rows with undefined tags.status column.
+Since the `WHERE` clause selects only rows that evaluate to `true`, conditions such as `tags.{name} = 'a' OR tags.{name} != 'a'` will not include rows with undefined `{name}` tag because both expressions will evaluate to `NULL` and (`NULL` OR `NULL`) still returns `NULL`.
 
-`NULL`s are ignored by aggregate functions.
+`NULL` and `NaN` values are ignored by aggregate functions.
 
 ## Not a Number (NaN)
 
 Unlike relational databases where division by zero or square root of a negative number is likely to cause an unrecoverable error, ATSD attempts to return special values in cases when computation result cannot be represented with real numbers.
 
-The returned values follow [IEEE 754-2008](https://standards.ieee.org/findstds/standard/754-2008.html).
+The returned values follow [IEEE 754-2008](https://standards.ieee.org/findstds/standard/754-2008.html) standard.
 
-* NaN for indeterminate results (0/0)
+* NaN for indeterminate results such as `0/0` (zero divided by zero).
 * NaN for illegal values
 * Signed Infinity for x/0 where x != 0
 
