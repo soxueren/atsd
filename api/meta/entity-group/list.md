@@ -9,7 +9,7 @@ Membership in entity groups with non-empty expression is managed by the server. 
 ## Request
 
 | **Method** | **Path** | 
-|:---|:---|---:|
+|:---|:---|
 | GET | `/api/v1/entity-groups` |
 
 ### Query Parameters 

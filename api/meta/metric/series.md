@@ -9,7 +9,7 @@ Each series is identified by metric name, entity name, and optional series tags.
 ## Request
 
 | **Method** | **Path** | 
-|:---|:---|---:|
+|:---|:---|
 | GET | `/api/v1/metrics/{metric}/series` |
 
 ### Path Parameters

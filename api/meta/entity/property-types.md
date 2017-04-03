@@ -9,7 +9,7 @@ Retrieve a list property types for the entity.
 ## Request
 
 | **Method** | **Path** | 
-|:---|:---|---:|
+|:---|:---|
 | GET | `/api/v1/entities/{entity}/property-types` |
 
 ### Path Parameters 

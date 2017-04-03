@@ -7,7 +7,7 @@ Retrieve information about the specified entity including its tags.
 ## Request
 
 | **Method** | **Path** | 
-|:---|:---|---:|
+|:---|:---|
 | GET | `/api/v1/entities/{entity}` |
 
 ### Path Parameters
