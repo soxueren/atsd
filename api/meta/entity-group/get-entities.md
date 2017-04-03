@@ -7,7 +7,7 @@ Retrieve a list of entities that are members of the specified entity group and a
 ## Request
 
 | **Method** | **Path** | 
-|:---|:---|---:|
+|:---|:---|
 | GET | `/api/v1/entity-groups/{group}/entities` |
 
 ### Path Parameters
