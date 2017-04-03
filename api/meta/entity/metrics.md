@@ -7,7 +7,7 @@ Retrieve a list of metrics collected by the entity.
 ## Request
 
 | **Method** | **Path** | 
-|:---|:---|---:|
+|:---|:---|
 | GET | `/api/v1/entities/{entity}/metrics` |
 
 ### Path Parameters 
