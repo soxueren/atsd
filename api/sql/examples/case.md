@@ -145,7 +145,7 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 
 ## Simple CASE Syntax
 
-### Move condition to input expression:
+### Move condition to the input expression:
 
 ```sql
 SELECT entity, avg(value),
@@ -170,7 +170,9 @@ GROUP BY entity
 | nurswgvml301 | 2.0        | Low         |
 ```
 
-### Switch-case construct
+### Switch-case Construct
+
+> This example also demonstrates the usage of multiple comparison expressions (`'2012' OR '2018'`).
 
 ```sql
 SELECT date_format(time, 'yyyy'),
@@ -213,7 +215,7 @@ GROUP BY entity
 ```ls
 | entity       | avg(value) | Utilization |
 |--------------|------------|-------------|
-| nurswgvml007 | 60.5       | High        | 
+| nurswgvml007 | 60.5       | High        |
 | nurswgvml006 | 82.6       | Very High   |
 | nurswgvml010 | 1.0        | Low         |
 | nurswgvml502 | 0.7        | Low         |

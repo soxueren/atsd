@@ -1,4 +1,4 @@
-# Transforming Unevenly Space Series to Regular Series
+# Transforming Unevenly Spaced Series to Regular Series
 
 The **WITH INTERPOLATE** clause provides a way to transform unevenly spaced time series into regularly spaced series.
 
@@ -9,6 +9,8 @@ Unlike the `GROUP BY PERIOD` clause with the `LINEAR` option, which interpolates
 The regularized series can be used in `JOIN` queries, `WHERE` conditions, `ORDER BY` and `GROUP BY` clauses, just as with the original series.
 
 The regular times can be aligned to the server calendar or to begin with the start of the selection interval.
+
+If the `WHERE` condition includes multiple selection intervals, the interpolation is performed for each interval separately.
 
 ## Calculation
 
@@ -538,6 +540,37 @@ The above queries return the same result:
 | 2016-09-18T14:04:00.000Z | 4.6   |
 | 2016-09-18T14:04:15.000Z | 36.2  |
 ```
+
+## Multiple Intervals
+
+If the `WHERE` condition includes multiple selection intervals, the interpolation is performed for each interval separately.
+The values between those intervals are **NOT** interpolated.
+
+```sql
+SELECT datetime, value
+  FROM mpstat.cpu_busy
+WHERE entity = 'nurswgvml006'
+  AND (datetime BETWEEN '2016-09-18T14:00:00Z' AND '2016-09-18T14:01:00Z'
+    OR datetime BETWEEN '2016-09-18T14:04:00Z' AND '2016-09-18T14:05:00Z')
+  WITH INTERPOLATE(15 SECOND)
+```
+
+```ls
+| datetime             | value |
+|----------------------|-------|
+| 2016-09-18T14:00:00Z | 40.0  | [14:00-14:01] interval START
+| 2016-09-18T14:00:15Z | 93.5  |
+| 2016-09-18T14:00:30Z | 63.4  |
+| 2016-09-18T14:00:45Z | 14.8  |
+| 2016-09-18T14:01:00Z | 12.0  | [14:00-14:01] interval END
+... no values interpolated between the two intervals ...
+| 2016-09-18T14:04:00Z | 4.6   | [14:04-14:05] interval START
+| 2016-09-18T14:04:15Z | 36.2  |
+| 2016-09-18T14:04:30Z | 100.0 |
+| 2016-09-18T14:04:45Z | 82.4  |
+| 2016-09-18T14:05:00Z | 5.8   | [14:04-14:05] interval END
+```
+
 
 ### Input Commands
 

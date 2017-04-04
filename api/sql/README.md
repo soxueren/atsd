@@ -875,7 +875,9 @@ WITH INTERPOLATE(30 SECOND)
 WITH INTERPOLATE (period [, inter_func[, boundary[, fill [, alignment]]]])
 ```
 
-The `WITH INTERPOLATE` clause is included prior to the `ORDER BY` and `LIMIT` clauses and applies to all series retrieved by the query.
+The `WITH INTERPOLATE` clause is included prior to the `ORDER BY` and `LIMIT` clauses and applies to all series retrieved by the query separately.
+
+If the `WHERE` condition includes multiple date ranges, the interpolation is performed for each date range and series separately.
 
 **Example**:
 
