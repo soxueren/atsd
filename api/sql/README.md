@@ -7,7 +7,7 @@ The SQL statements can be executed interactively via the SQL console as well as 
 * [Syntax](#syntax)
   * [Columns](#columns)
   * [Aliases](#aliases)
-  * [Time Condition](#time-condition)
+  * [Interval Condition](#interval-condition)
   * [Aggregation Functions](#aggregation-functions)
   * [Date Functions](#date-functions)
   * [Mathematical Functions](#mathematical-functions)
@@ -104,7 +104,7 @@ The `WHERE` clause is a condition which rows must satisfy in order to match the 
 
 Columns referenced in the `WHERE` clause are replaced by their value for their given row. The clause is then evaluated for each row, and if true, the row is included in the result set.
 
-Typically, the `WHERE` clause includes a [time condition](#time-condition) for which the data must be analyzed, although this is not required.
+Typically, the `WHERE` clause includes a [interval condition](#interval-condition) for which the data must be analyzed, although this is not required.
 
 The clause can be built from multiple conditions, with each comparing values using comparison operators:
 
@@ -609,16 +609,16 @@ Special constructs such as `(?i)` can be applied to enable a [case-insensitive m
   WHERE entity REGEX '(?i)Nurswgvml00.*'
 ```
 
-## Time Condition
+## Interval Condition
 
-A time condition may be specified in the `WHERE` clause using `time` or `datetime` columns.
+An interval condition may be specified in the `WHERE` clause using `time` or `datetime` columns.
 
-The `time` column accepts Unix milliseconds, whereas `datetime` column accepts literal dates in ISO 8601 format with optional millisecond precision.
+The `time` column accepts Unix milliseconds, whereas the `datetime` column accepts literal dates in ISO 8601 format with optional millisecond precision.
 
 ```sql
 SELECT datetime, entity, value
   FROM "mpstat.cpu_busy"
-WHERE datetime BETWEEN '2016-12-10T14:00:15.020Z' AND '2016-12-10T15:30:00.077Z'
+WHERE datetime BETWEEN '2016-12-10T14:00:15Z' AND '2016-12-10T15:30:00.077Z'
 ```
 
 Both columns support [End Time](/end-time-syntax.md) syntax.
@@ -630,6 +630,32 @@ WHERE time >= PREVIOUS_MINUTE AND datetime < CURRENT_MINUTE
 ```
 
 > Not_equal operators `!=` and `<>` are **not** supported with time columns `time` and `datetime`.
+
+The query may select multiple intervals using the `OR` operator.
+
+```sql
+SELECT datetime, value
+  FROM mpstat.cpu_busy
+WHERE entity = 'nurswgvml007'
+  AND (datetime BETWEEN '2017-04-02T14:00:00Z' AND '2017-04-02T14:01:00Z'
+    OR datetime BETWEEN '2017-04-04T16:00:00Z' AND '2017-04-04T16:01:00Z')
+```
+
+```ls
+| datetime             | value |
+|----------------------|-------|
+| 2017-04-02T14:00:04Z | 80.8  | start
+| 2017-04-02T14:00:20Z | 64.7  |
+| 2017-04-02T14:00:36Z | 5.0   |
+| 2017-04-02T14:00:52Z | 100.0 | end
+| 2017-04-04T16:00:06Z | 54.6  | start
+| 2017-04-04T16:00:22Z | 6.0   |
+| 2017-04-04T16:00:38Z | 81.0  |
+| 2017-04-04T16:00:54Z | 38.8  | end
+```
+
+Multiple intervals are treated separately for the purpose of interpolating and regularizing values.
+In particular, the values between such intervals are not interpolated.
 
 ## Period
 
@@ -1446,8 +1472,11 @@ The following functions aggregate values in a column by producing a single value
 
 The functions accept `value` column or a numeric expression as an argument, for example  `AVG(value)` or `AVG(t1.value + t2.value)`.
 
+* All functions, except `MIN_VALUE_TIME` and `MAX_VALUE_TIME`, return DOUBLE datatype.
+* Functions `MIN_VALUE_TIME` and `MAX_VALUE_TIME` return LONG datatype.
 * `NULL` and `NaN` values are ignored by aggregation functions.
-* If the function cannot find a single value other than `NULL` or `NaN`, it returns `NaN`.
+* If the aggregation function of DOUBLE datatype cannot find a single value other than `NULL` or `NaN`, it returns `NaN`.
+* If the aggregation function of LONG datatype cannot find a single value other than `NULL` or `NaN`, it returns `NULL`.
 * Nesting aggregation functions such as `AVG(MAX(value))` is not supported.
 
 ```sql
@@ -1465,15 +1494,21 @@ WHERE datetime > current_hour
 
 ### COUNT
 
-The `COUNT` function returns the number of rows in the result set and accepts `*` as an argument, for example `COUNT(*)`.
-
-If `COUNT(expr)` is invoked, the function returns the number of rows where the expression `expr` was not `NULL` and not `NaN`.
+The `COUNT(*)` function returns the number of rows in the result set, whereas the `COUNT(expr)` returns the number of rows where the expression `expr` was not `NULL` or `NaN`.
 
 ### PERCENTILE
 
 The `PERCENTILE` function accepts `percentile` parameter (0 to 100) and a numeric expression, for example `PERCENTILE(75, value)`.
 
 `PERCENTILE(value, 0)` is equal to `MIN(value)` whereas `PERCENTILE(value, 100)` is equal to `MAX(value)`.
+
+### MIN_VALUE_TIME
+
+The `MIN_VALUE_TIME` function returns the Unix time in milliseconds (LONG datatype) of the first occurrence of the **minimum** value.
+
+### MAX_VALUE_TIME
+
+The `MAX_VALUE_TIME` function returns the Unix time in milliseconds (LONG datatype) of the first occurrence of the **maximum** value.
 
 ### CORREL
 
@@ -2277,7 +2312,7 @@ Consider the following recommendations when developing queries:
 
 - Pre-test queries on a smaller dataset in ATSD-development instance.
 - Avoid `SELECT * FROM metric` queries without any conditions.
-- Add the `WHERE` clause. Include as many conditions to the `WHERE` clause as possible, in particular add entity and time conditions.
+- Add the `WHERE` clause. Include as many conditions to the `WHERE` clause as possible, in particular add entity and [interval conditions](#interval-condition).
 - Make `WHERE` conditions narrow and specific, for example, specify a smaller time interval.
 - Avoid the `ORDER BY` clause since it may cause a full scan and a copy of data to a temporary table.
 - Add the `LIMIT 1` clause to reduce the number of rows returned. Note that `LIMIT` will not prevent expensive queries with `ORDER BY` and `GROUP BY` clauses because `LIMIT` is applied to final results and not to the number of rows read from the database.
