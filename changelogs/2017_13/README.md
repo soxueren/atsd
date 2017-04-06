@@ -36,7 +36,7 @@ Weekly Change Log: March 26 - April 2, 2017
 
 | Issue| Category    | Type    | Subject                                                                              |
 |------|-------------|---------|--------------------------------------------------------------------------------------|
-| [3850](#issue-3850) | widget-settings | Bug | Fixed `end-time` to not increment month if it has less days then current. |
+| [3850](#issue-3850) | widget-settings | Bug | Fixed `end-time` to not increment month if it has less days than current. |
 
 
 ## ATSD
