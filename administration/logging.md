@@ -4,7 +4,7 @@ The database logs are located in the `/opt/atsd/atsd/logs` directory.
 
 The logs can be also downloaded from the **Admin:Server Logs** page.
 
-Logs are rolled over and archived according to the `/opt/atsd/atsd/conf/logging.properties` settings.
+Logs are rolled over and archived according to the `/opt/atsd/atsd/conf/logback.xml` settings.
 
 |**Log Name**|**Description**|
 |---|:---|
@@ -37,17 +37,18 @@ Changes in logging properties can be made without restarting the database. They 
 
 The command log contains a record of all commands received by the database and is disabled by default. To turn it on, change the settings on the **Admin>Input Settings** page. Database restart is not required.
 
-By the default, the command log is configured to store a maximum of 10 files of up to 10 megabytes each.  The maximum file count and size can be adjusted to store more commands on instances with a high write throughput.
+By the default, the command log is configured to store a maximum of 20 files of up to 100 megabytes each.  The maximum file count and size can be adjusted to store more commands on instances with a high write throughput.
 	
-1. Edit `/opt/atsd/atsd/conf/command.log.xml` file.
+1. Edit `/opt/atsd/atsd/conf/logback.xml` file.
 
     ```
-    nano /opt/atsd/atsd/conf/command.log.xml
+    nano /opt/atsd/atsd/conf/logback.xml
     ```
     
     Increase the maximums accordingly.
     
     ```xml
+        <!-- command.log -->
         <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <fileNamePattern>../logs/command.%i.log.zip</fileNamePattern>
             <minIndex>1</minIndex>
@@ -58,22 +59,5 @@ By the default, the command log is configured to store a maximum of 10 files of 
             <maxFileSize>250MB</maxFileSize>
         </triggeringPolicy>
     ```
-
-2. Edit `/opt/atsd/atsd/conf/logback.xml` file. Uncomment the reference to `command.log.xml`.
-
-    ```
-    nano /opt/atsd/atsd/conf/logback.xml
-    ```
     
-    ```xml
-    <?xml version="1.0" encoding="UTF-8"?>
-    <configuration scan="true">
-	
-	<!-- override default command logging properties in command.log.xml -->
-        <include resource="command.log.xml"/>
-		
-	<!-- remaining settings -->
-    </configuration>
-    ```
-
 New logging settings will be applied within 60 seconds. No database restart is required.
