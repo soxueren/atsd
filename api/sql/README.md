@@ -1762,7 +1762,7 @@ GROUP BY entity, tags.etype, period(1 year)
 ```
 
 ```ls
-| Date | Current Year | Previous Year | Change | Change, % |
+| Date | Current Period | Previous Period | Change | Change, % |
 |------|--------------|---------------|--------|-----------|
 | 2001 | 654          | null          | null   | null      |
 | 2002 | 650          | 654           | -4     | -0.6      |
