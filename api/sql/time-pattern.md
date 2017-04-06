@@ -48,3 +48,11 @@
 ```
 
  > See Java [documentation](https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html) for supported fields (pattern letters).
+
+### Custom Formatting
+
+If the default pattern letters are not sufficient, use String and Math functions to apply custom formatting.
+
+```sql
+CEIL(CAST(date_format(time, 'M') AS NUMBER)/3) AS 'Quarter'
+```

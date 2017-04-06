@@ -1564,6 +1564,7 @@ Examples:
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00')`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss ZZ', 'PDT')`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss', AUTO)`
+* `CEIL(CAST(date_format(time, 'M') AS NUMBER)/3) AS 'Quarter'`
 
 ```sql
 SELECT entity, datetime, metric.timeZone AS 'Metric TZ', entity.timeZone AS 'Entity TZ',
@@ -1573,7 +1574,8 @@ SELECT entity, datetime, metric.timeZone AS 'Metric TZ', entity.timeZone AS 'Ent
   date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00') AS 'GMT Offset',  
   date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PDT') AS 'PDT',
   date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', 'PDT') AS ' PDT t/z',
-  date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', AUTO) AS 'AUTO: CST' -- nurswgvml006 is in CST
+  date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', AUTO) AS 'AUTO: CST', -- nurswgvml006 is in CST
+  CEIL(CAST(date_format(time, 'M') AS NUMBER)/3) AS 'Quarter'
 FROM mpstat.cpu_busy
   WHERE datetime >= NOW - 5*MINUTE
   AND entity = 'nurswgvml006'
@@ -1581,9 +1583,9 @@ FROM mpstat.cpu_busy
 ```
 
 ```ls
-| entity       | datetime             | Metric TZ | Entity TZ | default                  | ISO 8601                  | Local Server        | GMT Offset          | PDT                 | PDT t/z                   | AUTO: CST                 |
-|--------------|----------------------|-----------|-----------|--------------------------|---------------------------|---------------------|---------------------|---------------------|---------------------------|---------------------------|
-| nurswgvml006 | 2016-10-16T16:53:03Z | EST       | CST       | 2016-10-16T16:53:03.000Z | 2016-10-16T16:53:03+00:00 | 2016-10-16 16:53:03 | 2016-10-16 08:53:03 | 2016-10-16 09:53:03 | 2016-10-16 09:53:03-07:00 | 2016-10-16 11:53:03-05:00 |
+| entity       | datetime                 | Metric TZ  | Entity TZ   | default                  | ISO 8601             | Local Server        | GMT Offset          | PDT                 | PDT t/z                   | AUTO: CST                 | Quarter |
+|--------------|--------------------------|------------|-------------|--------------------------|----------------------|---------------------|---------------------|---------------------|---------------------------|---------------------------|---------|
+| nurswgvml006 | 2017-04-06T11:03:19.000Z | US/Eastern | US/Mountain | 2017-04-06T11:03:19.000Z | 2017-04-06T11:03:19Z | 2017-04-06 11:03:19 | 2017-04-06 03:03:19 | 2017-04-06 04:03:19 | 2017-04-06 04:03:19-07:00 | 2017-04-06 05:03:19-06:00 | 2       | 
 ```
 
 ```ls
@@ -1596,8 +1598,8 @@ FROM mpstat.cpu_busy
 | date_format(time,'yyyy-MM-dd HH:mm:ss')                | 2016-07-13 12:07:55        |
 | date_format(time,'yyyy-MM-dd HH:mm:ss','PST')          | 2016-07-13 05:07:55        |
 | date_format(time,'yyyy-MM-dd HH:mm:ss','GMT-08:00')    | 2016-07-13 04:07:55        |
-| date_format(time,'yyyy-MM-dd HH:mm:ssZ','PST')        | 2016-07-13 05:07:55-0700    |
-| date_format(time,'yyyy-MM-dd HH:mm:ssZZ','PST')       | 2016-07-13 05:07:55-07:00   |
+| date_format(time,'yyyy-MM-dd HH:mm:ssZ','PST')         | 2016-07-13 05:07:55-0700    |
+| date_format(time,'yyyy-MM-dd HH:mm:ssZZ','PST')        | 2016-07-13 05:07:55-07:00   |
 ```
 
 The `date_format` function can also be used to print out period start and end times:
@@ -1718,7 +1720,7 @@ WHERE datetime >= NOW - 1*MINUTE
 | `LOWER(s)` | Converts characters in a specified string to lower case. |
 | `REPLACE(s-1, s-2, s-3)` | Replaces all occurrences of `s-2` with `s-3` in a specified string `s-1`.<br>If `s-2` is not found, the function returns the original string `s-1`.|
 | `LENGTH(s)` | Number of characters in a specified string. |
-| `CONCAT (s-1, s-2 [, s-N] )` | Concatenates multiple strings into one string. <br>`NULL` values are concatenated as empty strings.<br>The function also accepts numeric values which are converted to strings using `#.##` pattern. |
+| `CONCAT(s-1, s-2 [, s-N] )` | Concatenates multiple strings into one string. <br>`NULL` and `NaN` values are concatenated as empty strings.<br>The function also accepts numeric values which are converted to strings using `#.##` pattern. |
 | `LOCATE(s-1, s-2 [, start])` | Searches for **first** string `s-1` in the second string `s-2`.<br>Returns the position at which `s-1` is found in `s-2`, after optional `start` position. <br>The first character has a position of 1. The function returns 0 if string `s-1` is not found. |
 | `SUBSTR(str, start[, length])` | Substring of `str` starting at `start` position with maximum length of `length`. <br>The first character has a position of 1. <br>`start` position of 0 is processed similarly to position 1.<br>If `length` is not specified or is 0, the function returns the substring beginning with `start` position.|
 
