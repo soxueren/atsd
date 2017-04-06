@@ -72,6 +72,8 @@ The SELECT expression consists of one or multiple columns and expressions applie
 
 ### Query
 
+#### Virtual Table
+
 The `FROM` query can reference virtual tables that correspond to metric names.
 
 A virtual table represents a subset of records for the given metric stored by the database in the shared physical table.
@@ -84,9 +86,13 @@ WHERE datetime >= NOW - 1*MINUTE
 
 In the example above, "mpstat.cpu_busy" table contains records for the `mpstat.cpu_busy` metric.
 
-Virtual tables are currently supported only for series. Access to properties, messages, and alerts is currently not available.
+Metric names in the `FROM` clause that contain reserved keywords, identifiers or special characters such as `-`,`*`,`,` should be enclosed in quotes or double quotes, for example, `FROM 'disk-io'`, `FROM "select"`, `FROM 'cpu.avg.percent'`.
 
-As an alternative to specifying metric names as table names, the `FROM` query can refer to the pre-defined [`atsd_series` table](examples/select-atsd_series.md) and include `metric` name in the `WHERE` clause instead.
+> Virtual tables are currently supported only for series. Access to properties, messages, and alerts is currently not available.
+
+#### `atsd_series` Table
+
+As an alternative to specifying metric names as table names, the `FROM` query can refer to the pre-defined [`atsd_series` table](examples/select-atsd_series.md) and include `metric` names in the `WHERE` clause instead.
 
 ```sql
 SELECT entity, metric, datetime, value
@@ -95,8 +101,6 @@ WHERE metric = 'mpstat.cpu_busy'
 -- WHERE metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user')
   AND datetime >= CURRENT_HOUR
 ```
-
-Metric names in the `FROM` clause that contain reserved keywords, identifiers or special characters such as `-`,`*`,`,` should be enclosed in quotes or double quotes, for example, `FROM 'disk-io'`, `FROM "select"`, `FROM 'cpu.avg.percent'`.
 
 ### WHERE Clause
 
@@ -1585,7 +1589,7 @@ FROM mpstat.cpu_busy
 ```ls
 | entity       | datetime                 | Metric TZ  | Entity TZ   | default                  | ISO 8601             | Local Server        | GMT Offset          | PDT                 | PDT t/z                   | AUTO: CST                 | Quarter |
 |--------------|--------------------------|------------|-------------|--------------------------|----------------------|---------------------|---------------------|---------------------|---------------------------|---------------------------|---------|
-| nurswgvml006 | 2017-04-06T11:03:19.000Z | US/Eastern | US/Mountain | 2017-04-06T11:03:19.000Z | 2017-04-06T11:03:19Z | 2017-04-06 11:03:19 | 2017-04-06 03:03:19 | 2017-04-06 04:03:19 | 2017-04-06 04:03:19-07:00 | 2017-04-06 05:03:19-06:00 | 2       | 
+| nurswgvml006 | 2017-04-06T11:03:19.000Z | US/Eastern | US/Mountain | 2017-04-06T11:03:19.000Z | 2017-04-06T11:03:19Z | 2017-04-06 11:03:19 | 2017-04-06 03:03:19 | 2017-04-06 04:03:19 | 2017-04-06 04:03:19-07:00 | 2017-04-06 05:03:19-06:00 | 2       |
 ```
 
 ```ls
@@ -1868,6 +1872,43 @@ FROM disk.stats.used
 The result of `CAST(inputNumber AS string)` is formatted with the `#.##` pattern to remove the fractional part from integer values stored as decimals. The numbers are rounded to the nearest `0.01`.
 
 `CAST` of `NaN` to string returns `NULL`.
+
+### metrics()
+
+```sql
+metrics(string entityName)
+```
+
+The `metrics()` function is supported in `atsd_series` queries and retrieves all metrics collected by the specified entity.
+
+The list of metrics can be then optional filtered with additional conditions as part of the `WHERE` clause.
+
+```sql
+SELECT metric, datetime, value
+  FROM atsd_series
+WHERE metric IN metrics('nurswgvml007')
+  AND metric LIKE 'mpstat.cpu*'
+  -- AND metric NOT LIKE 'df.*'
+  AND datetime >= CURRENT_HOUR
+ORDER BY datetime
+  LIMIT 10
+```
+
+```ls
+| metric            | datetime             | value |
+|-------------------|----------------------|-------|
+| mpstat.cpu_system | 2017-04-06T16:00:02Z | 8.3   |
+| mpstat.cpu_nice   | 2017-04-06T16:00:02Z | 0.0   |
+| mpstat.cpu_steal  | 2017-04-06T16:00:02Z | 0.0   |
+| mpstat.cpu_idle   | 2017-04-06T16:00:02Z | 70.7  |
+| mpstat.cpu_user   | 2017-04-06T16:00:02Z | 17.9  |
+| mpstat.cpu_iowait | 2017-04-06T16:00:02Z | 2.0   |
+| mpstat.cpu_busy   | 2017-04-06T16:00:02Z | 29.3  |
+| mpstat.cpu_system | 2017-04-06T16:00:18Z | 4.6   |
+| mpstat.cpu_nice   | 2017-04-06T16:00:18Z | 0.1   |
+| mpstat.cpu_steal  | 2017-04-06T16:00:18Z | 0.0   |
+```
+
 
 ### LOOKUP
 
@@ -2347,10 +2388,10 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 * Wildcard symbol is `*`/`?` instead of `%`/`_`.
 * Subqueries are not supported.
 * Self-joins are not supported.
-* In case of computational errors such as division by zero, the database returns special values according to IEEE 754-2008 standard.
+* In case of computational errors such as division by zero, the database returns special values such as `NaN` according to the IEEE 754-2008 standard.
 * `UNION`, `EXCEPT` and `INTERSECT` operators are not supported. Refer to [atsd_series table](examples/select-atsd_series.md) queries for a `UNION ALL` alternative.
 * The `WITH` operator is supported only in the following clauses: `WITH ROW_NUMBER`, `WITH ITERPOLATE`.
-* The `DISTINCT` operator is not supported, although it can be emulated in particular cases with the `GROUP BY` clause.
+* The `DISTINCT` operator is not supported and can be emulated in some cases with the `GROUP BY` clause.
 
 ## Examples
 
