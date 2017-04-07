@@ -98,9 +98,13 @@ As an alternative to specifying metric names as table names, the `FROM` query ca
 SELECT entity, metric, datetime, value
   FROM atsd_series
 WHERE metric = 'mpstat.cpu_busy'
--- WHERE metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user')
+  -- WHERE metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user')
+  -- WHERE metric LIKE 'mpstat.cpu*'
+  AND entity = 'nurswgvml007'
   AND datetime >= CURRENT_HOUR
 ```
+
+> The number of metrics retrieved with `metric LIKE (expr)` condition is limited to 50.
 
 ### WHERE Clause
 
@@ -250,7 +254,7 @@ SELECT t1.datetime, t1.entity, t1.value + t2.value AS cpu_sysusr
 WHERE t1.datetime >= NOW - 1*MINUTE
 ```
 
-The list of available predefined columns may be requested with the `SELECT *` syntax, except for queries with the `GROUP BY` clause and when multiple metrics are requested from the `atsd_series` table.
+The list of all predefined columns may be requested with the `SELECT *` syntax, except for queries with the `GROUP BY` clause and multiple-metric queries using the `atsd_series` table.
 
 ```sql
 SELECT * FROM "mpstat.cpu_busy" t1
@@ -1442,6 +1446,31 @@ GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 
 >  Note that records returned by a `JOIN USING entity` condition include series with last insert date greater than start date specified in the query.
 
+### JOIN with `atsd_series` table
+
+When metrics selected from `atsd_series` table are joined with metrics referenced in the query, each `atsd_series` metric is joined with a referenced metric separately.
+
+```sql
+SELECT base.entity, base.metric, base.datetime, base.value, t1.value AS 'cpu_sys'
+  FROM atsd_series base
+  JOIN mpstat.cpu_system t1
+WHERE base.metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user')
+  AND base.entity = 'nurswgvml007'
+  AND base.datetime > PREVIOUS_MINUTE
+ORDER BY base.datetime
+```
+
+```ls
+| base.entity  | base.metric | base.datetime        | base.value | cpu_sys |
+|--------------|-------------|----------------------|------------|---------|
+| nurswgvml007 | cpu_busy    | 2017-04-07T15:04:08Z | 5.0        | 2.0     | cpu_busy JOIN cpu_system
+| nurswgvml007 | cpu_busy    | 2017-04-07T15:04:24Z | 5.1        | 2.0     | cpu_busy JOIN cpu_system
+...
+| nurswgvml007 | cpu_user    | 2017-04-07T15:04:08Z | 2.0        | 2.0     | cpu_user JOIN cpu_system
+| nurswgvml007 | cpu_user    | 2017-04-07T15:04:24Z | 3.1        | 2.0     | cpu_user JOIN cpu_system
+...
+```
+
 ## Keywords
 
 ```
@@ -1945,7 +1974,8 @@ For `DIGSTRING(int code)`
 ```sql
 SELECT datetime, entity, value, LOOKUP('pi-system', value)
   FROM atsd_series
-WHERE metric = 'digtag-test' AND datetime >= PREVIOUS_HOUR
+WHERE metric = 'digtag-test'
+  AND datetime >= PREVIOUS_HOUR
 ```
 
 * Fact Table
@@ -2057,7 +2087,8 @@ SELECT entity, datetime, value, text,
     ELSE text
   END
   FROM atsd_series
-WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
+WHERE metric IN ('temperature', 'status')
+  AND datetime >= '2016-10-13T08:00:00Z'
 ```
 
 ### Simple `CASE` Expression

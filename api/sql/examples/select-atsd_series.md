@@ -77,7 +77,9 @@ ORDER BY datetime
 
 ## Metric Condition
 
-Metrics can be selected in the `WHERE` clause using the `=` operator. Both `AND` and `OR` boolean operators are supported when processing conditions in multiple-metric queries.
+Metrics can be selected in the `WHERE` clause using the `=` and `LIKE` operators.
+
+Both `AND` and `OR` boolean operators are supported when processing conditions in multiple-metric queries.
 
 ```sql
 SELECT entity, metric, datetime, value, tags
@@ -99,6 +101,36 @@ ORDER BY datetime
 | nurswgvml007 | disk_used_percent | 2017-04-06T16:31:36Z | 88.158     | file_system=//nurstr/backup;mount_point=/mnt/u113452          |
 | nurswgvml007 | disk_used         | 2017-04-06T16:31:51Z | 9011816    | file_system=/dev/mapper/vg_nurswgvml007-lv_root;mount_point=/ |
 | nurswgvml007 | disk_used         | 2017-04-06T16:31:51Z | 1848808233 | file_system=//nurstr;mount_point=/mnt/u113452                 |
+```
+
+## Metric LIKE Condition
+
+The maximum number of metrics matched with the `LIKE` operator is limited to 50. Otherwise, the SQL processor will raise an exception.
+
+```sql
+SELECT entity, metric, datetime, value, tags
+  FROM atsd_series
+WHERE metric LIKE 'cpu_s*' -- up to 50 metrics
+  AND datetime >= CURRENT_HOUR
+WITH ROW_NUMBER (entity, metric, tags ORDER BY time DESC) <= 1
+  ORDER BY entity, metric, tags, time
+```
+
+### Results
+
+```ls
+| entity       | metric     | datetime             | value | tags |
+|--------------|------------|----------------------|-------|------|
+| nurswgvml006 | cpu_steal  | 2017-04-07T13:15:01Z | 0.0   | null |
+| nurswgvml006 | cpu_system | 2017-04-07T13:15:01Z | 2.0   | null |
+| nurswgvml007 | cpu_steal  | 2017-04-07T13:15:00Z | 0.0   | null |
+| nurswgvml007 | cpu_system | 2017-04-07T13:15:00Z | 0.0   | null |
+| nurswgvml010 | cpu_steal  | 2017-04-07T13:14:51Z | 0.0   | null |
+| nurswgvml010 | cpu_system | 2017-04-07T13:14:51Z | 0.0   | null |
+| nurswgvml301 | cpu_steal  | 2017-04-07T13:14:58Z | 0.0   | null |
+| nurswgvml301 | cpu_system | 2017-04-07T13:14:58Z | 0.0   | null |
+| nurswgvml502 | cpu_steal  | 2017-04-07T13:14:49Z | 0.0   | null |
+| nurswgvml502 | cpu_system | 2017-04-07T13:14:49Z | 0.0   | null |
 ```
 
 ## `metrics()` Function
@@ -133,7 +165,38 @@ ORDER BY datetime
 | mpstat.cpu_steal  | 2017-04-06T16:00:18Z | 0.0   |
 ```
 
-## `JOIN` in `atsd_series`
+## `JOIN` in `atsd_series`. Example 1
+
+When metrics selected from `atsd_series` table are joined with metrics referenced in the query, each `atsd_series` metric is joined with a referenced metric separately.
+
+```sql
+SELECT base.entity, base.metric, base.datetime, base.value, t1.value AS 'cpu_sys'
+  FROM atsd_series base
+  JOIN mpstat.cpu_system t1
+WHERE base.metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user')
+  AND base.entity = 'nurswgvml007'
+  AND base.datetime > PREVIOUS_MINUTE
+ORDER BY base.datetime
+```
+
+```ls
+| base.entity  | base.metric | base.datetime        | base.value | cpu_sys |
+|--------------|-------------|----------------------|------------|---------|
+| nurswgvml007 | cpu_busy    | 2017-04-07T15:04:08Z | 5.0        | 2.0     | cpu_busy JOIN cpu_system
+| nurswgvml007 | cpu_busy    | 2017-04-07T15:04:24Z | 5.1        | 2.0     | cpu_busy JOIN cpu_system
+| nurswgvml007 | cpu_busy    | 2017-04-07T15:04:40Z | 4.0        | 1.0     | cpu_busy JOIN cpu_system
+| nurswgvml007 | cpu_busy    | 2017-04-07T15:04:56Z | 3.0        | 1.0     | cpu_busy JOIN cpu_system
+| nurswgvml007 | cpu_busy    | 2017-04-07T15:05:12Z | 5.2        | 1.0     | cpu_busy JOIN cpu_system
+| nurswgvml007 | cpu_busy    | 2017-04-07T15:05:28Z | 2.0        | 1.0     | cpu_busy JOIN cpu_system
+| nurswgvml007 | cpu_user    | 2017-04-07T15:04:08Z | 2.0        | 2.0     | cpu_user JOIN cpu_system
+| nurswgvml007 | cpu_user    | 2017-04-07T15:04:24Z | 3.1        | 2.0     | cpu_user JOIN cpu_system
+| nurswgvml007 | cpu_user    | 2017-04-07T15:04:40Z | 3.0        | 1.0     | cpu_user JOIN cpu_system
+| nurswgvml007 | cpu_user    | 2017-04-07T15:04:56Z | 2.0        | 1.0     | cpu_user JOIN cpu_system
+| nurswgvml007 | cpu_user    | 2017-04-07T15:05:12Z | 4.1        | 1.0     | cpu_user JOIN cpu_system
+| nurswgvml007 | cpu_user    | 2017-04-07T15:05:28Z | 1.0        | 1.0     | cpu_user JOIN cpu_system
+```
+
+## `JOIN` in `atsd_series`. Example 2
 
 ```sql
 SELECT t1.entity, t1.metric, t1.datetime,
@@ -166,14 +229,14 @@ WITH INTERPOLATE(180 second, AUTO, OUTER, EXTEND, START_TIME)
 | br-1470   | sv6.pack:r04 | 2016-10-04T02:00:00Z | 26.0     | 475.0        | 1413          | 1413-Proc3     |
 | br-1470   | sv6.pack:r04 | 2016-10-04T02:03:00Z | 24.4     | 95.0         | 1414          | 1414-Proc1     |
 | br-1470   | sv6.pack:r04 | 2016-10-04T02:06:00Z | 20.9     | 275.0        | 1414          | 1414-Proc2     |
-| br-1470   | sv6.pack:r04 | 2016-10-04T02:09:00Z | 21.9     | 455.0        | 1414          | 1414-Proc3     | 
+| br-1470   | sv6.pack:r04 | 2016-10-04T02:09:00Z | 21.9     | 455.0        | 1414          | 1414-Proc3     |
 ```
 
 ## Limitations
 
-Queries with the `atsd_series` table do not support the following capabilities:
-
-* When multiple metrics are specified, all columns in the `SELECT` expression must be specified explicitly. Namely, `SELECT *`, `SELECT tags.*`, `SELECT metric.tags.*` are not allowed if the `WHERE` clause includes multiple metrics.
+* The metric condition supports only `=`, `IN` and `LIKE` operators, as well as the `metrics(entity)` function.
+* When multiple metrics are specified, all columns in the `SELECT` expression must be specified explicitly. Namely, `SELECT *`, `SELECT tags.*`, `SELECT metric.tags.*` are not allowed.
+* The number of metrics retrieved with `metric LIKE '*expr*'` condition must not exceed 50.
 
 ## Numeric Precedence
 
