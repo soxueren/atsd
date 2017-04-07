@@ -20,8 +20,6 @@ Logs are rolled over and archived according to the `/opt/atsd/atsd/conf/logback.
 |`stdout.log`| Standard out. |
 |`err.log`| Standard error. |
 
-Command logging is configured on the **Admin:Input Settings** page.
-
 ## Logging Properties
 
 ### File Count
