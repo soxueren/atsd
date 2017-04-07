@@ -4,76 +4,67 @@ The database logs are located in the `/opt/atsd/atsd/logs` directory.
 
 The logs can be also downloaded from the **Admin:Server Logs** page.
 
-Logs are rolled over and archived according to the `/opt/atsd/atsd/conf/logging.properties` settings.
+Logs are rolled over and archived according to the `/opt/atsd/atsd/conf/logback.xml` settings.
+
+## Log Files
 
 |**Log Name**|**Description**|
 |---|:---|
-|`atsd.log`|Application log.|
-|`command.log`|Received command log.|
-|`command_malformed.log`|Malformed commands with invalid syntax etc.| 
-|`command_discarded.log`|Discarded commands for disabled entities/metrics.|
-|`command_ignored.log`|Commands ignored by parsers, e.g. nmon. |
-|`command_rule_engine_expired.log`|Commands with old timestamp, ignored by the rule engine.|
-|`command_rule_engine_forward.log`|Commands with future timestamp, ignored by the rule engine.|
-|`gc.log`|Garbage collection log.|
-|`metrics.txt`|Current database metrics. Refreshed every 15 seconds.|
-|`stopstart.log`|Start/stop log.|
-|`stdout.log`|Standard out.|
-|`err.log`|Standard error.|
-
-* Rule Engine ignores commands that are 1 minute behind or 1 minute ahead of the current server time.<br>When enabled, the ignored commands are logged to `*_expired.log` and `*_forward.log` files, respectively.
-
-![server logs](images/server_logs_atsd.png "server_logs_atsd")
+|`atsd.log`| Main database log.|
+|`command.log`| Received commands log.|
+|`command_malformed.log`| Malformed commands log. Includes commands with invalid syntax.|
+|`command_discarded.log`| Discarded commands log. Includes commands received for disabled entities/metrics.|
+|`gc.log`| Garbage collection log. |
+|`metrics.txt`| Snapshot of current database metrics. Refreshed every 15 seconds. |
+|`stopstart.log`| Start/Stop log.|
+|`stdout.log`| Standard out. |
+|`err.log`| Standard error. |
 
 Command logging is configured on the **Admin:Input Settings** page.
 
-![](server-logs-command-files.png)
+## Logging Properties
 
-## Reloading Log Settings
+### File Count
 
-Changes in logging properties can be made without restarting the database. They are automatically refreshed and applied every 60 seconds.
+To increase the number of files stored by a given logger, increase `maxIndex` attribute.
 
-## Modifying `command.log`
+```xml
+   <maxIndex>20</maxIndex>
+```
 
-The command log contains a record of all commands received by the database and is disabled by default. To turn it on, change the settings on the **Admin>Input Settings** page. Database restart is not required.
+### File Size
 
-By the default, the command log is configured to store a maximum of 10 files of up to 10 megabytes each.  The maximum file count and size can be adjusted to store more commands on instances with a high write throughput.
-	
-1. Edit `/opt/atsd/atsd/conf/command.log.xml` file.
+To increase the size of files rolled over by a given logger, increase `maxFileSize` attribute. This will determine the size of the file before it is rolled over and compressed. The size of the compressed file is typically 10-20 smaller than the original file.
 
-    ```
-    nano /opt/atsd/atsd/conf/command.log.xml
-    ```
-    
-    Increase the maximums accordingly.
-    
-    ```xml
-        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-            <fileNamePattern>../logs/command.%i.log.zip</fileNamePattern>
-            <minIndex>1</minIndex>
-            <maxIndex>20</maxIndex>
-        </rollingPolicy>
+```xml
+   <maxFileSize>100Mb</maxFileSize>
+```
 
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <maxFileSize>250MB</maxFileSize>
-        </triggeringPolicy>
-    ```
+### File Name
 
-2. Edit `/opt/atsd/atsd/conf/logback.xml` file. Uncomment the reference to `command.log.xml`.
+To change the name of the current and archived files, change the `file` and `fileNamePattern` attributes.
 
-    ```
-    nano /opt/atsd/atsd/conf/logback.xml
-    ```
-    
-    ```xml
-    <?xml version="1.0" encoding="UTF-8"?>
-    <configuration scan="true">
-	
-	<!-- override default command logging properties in command.log.xml -->
-        <include resource="command.log.xml"/>
-		
-	<!-- remaining settings -->
-    </configuration>
-    ```
+```xml
+  <file>../logs/command.log</file>
+  <fileNamePattern>../logs/command.%i.log.zip</fileNamePattern>
+```
 
-New logging settings will be applied within 60 seconds. No database restart is required.
+### Logging Level
+
+To adjust tracing level, add a logging declaration containing the full class name and the level such as 'DEBUG', 'INFO', 'WARN', 'ERROR'.
+
+```xml
+  <logger name="com.axibase.tsd.service.MetricServiceImpl" level="DEBUG"/>
+```
+
+## Applying Changes
+
+Changes in logging properties can be made by modifying the `logback.xml` file on the file system or using the **Admin: Configuration Files** editor.
+
+Database restart is **not** required, the changes are automatically refreshed and applied every 60 seconds.
+
+## Enabling Command Logging
+
+For performance purposes, logging to `command*.log` files is controlled both by loggers configured in the `logback.xml` file as well as with controls on **Admin: Input Settings** page.
+
+![Input Settings](images/logging-input.png)
