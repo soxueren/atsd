@@ -104,6 +104,55 @@ The above condition is equivalent to:
 | 2016-06-18T20:00:43.000Z | 6.1   |
 ```
 
+## Query using `BETWEEN` Subquery
+
+The `BETWEEN` operator allows specifying a subquery that must return rows containing multiple rows with 1 column.
+
+* If the subquery returns no values, the condition is considered FALSE, and no data is returned.
+* If the subquery returns only one value, it is considered as the lower boundary of the time interval and the upper boundary is not defined.
+* If there are greater than 2 values, an error is raised.
+* If there are 2 values, the second value must be greater or equal the first value.
+
+```ls
+series d:2017-04-03T01:00:00Z e:nurswgvml007 x:maintenance-rfc=RFC12-start
+series d:2017-04-03T01:15:00Z e:nurswgvml007 x:maintenance-rfc=RFC12-stop
+```
+
+```sql
+SELECT datetime, value
+  FROM cpu_busy
+WHERE entity = 'nurswgvml007'
+  AND datetime BETWEEN (SELECT datetime FROM 'maintenance-rfc'
+  WHERE entity = 'nurswgvml007'
+ORDER BY datetime)
+```
+
+```ls
+| datetime                 | value |
+|--------------------------|-------|
+| 2017-04-03T01:00:09.000Z | 24.0  |
+| 2017-04-03T01:00:25.000Z | 55.0  |
+...
+| 2017-04-03T01:14:17.000Z | 4.0   |
+| 2017-04-03T01:14:33.000Z | 4.1   |
+| 2017-04-03T01:14:49.000Z | 63.0  |
+```
+
+```sql
+SELECT datetime, value
+  FROM cpu_busy
+WHERE entity = 'nurswgvml007'
+  AND datetime BETWEEN (SELECT datetime FROM 'maintenance-rfc'
+  WHERE entity = 'nurswgvml007'
+ORDER BY datetime)
+```
+
+```ls
+| avg(value) | first(value) | last(value) | count(value) |
+|------------|--------------|-------------|--------------|
+| 14.1       | 24.0         | 63.0        | 56.0         |
+```
+
 ## Query Multiple Intervals with `OR`
 
 The query may select multiple intervals using the `OR` operator.

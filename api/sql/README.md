@@ -637,7 +637,7 @@ SELECT datetime, entity, value
 WHERE time >= PREVIOUS_MINUTE AND datetime < CURRENT_MINUTE
 ```
 
-> Not_equal operators `!=` and `<>` are **not** supported with time columns `time` and `datetime`.
+> Not_equal operators `!=` and `<>` are **not** supported with `time` and `datetime` columns.
 
 The query may select multiple intervals using the `OR` operator.
 
@@ -664,6 +664,28 @@ WHERE entity = 'nurswgvml007'
 
 Multiple intervals are treated separately for the purpose of interpolating and regularizing values.
 In particular, the values between such intervals are not interpolated.
+
+As an alternative to specifying lower and upper boundary manually, the `BETWEEN` operator allows retrieving the time range with a [subquery](examples/filter-by-date.md#query-using-between-subquery).
+
+```sql
+SELECT datetime, value
+  FROM cpu_busy
+WHERE entity = 'nurswgvml007'
+  AND datetime BETWEEN (SELECT datetime FROM 'maintenance-rfc'
+  WHERE entity = 'nurswgvml007'
+ORDER BY datetime)
+```
+
+```ls
+| datetime                 | value |
+|--------------------------|-------|
+| 2017-04-03T01:00:09.000Z | 24.0  |
+| 2017-04-03T01:00:25.000Z | 55.0  |
+...
+| 2017-04-03T01:14:17.000Z | 4.0   |
+| 2017-04-03T01:14:33.000Z | 4.1   |
+| 2017-04-03T01:14:49.000Z | 63.0  |
+```
 
 ## Period
 
@@ -1545,7 +1567,7 @@ The `MAX_VALUE_TIME` function returns the Unix time in milliseconds (LONG dataty
 
 ### CORREL
 
-The `CORREL` correlation function accepts two numeric expression as arguments (or two value columns in a `JOIN` query) and calculates the [Pearson correllation](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/stat/correlation/PearsonsCorrelation.html) coefficient between these two variable.
+The `CORREL` correlation function accepts two numeric expression as arguments (or two value columns in a `JOIN` query) and calculates the [Pearson correllation](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/stat/correlation/PearsonsCorrelation.html) coefficient between these two variables.
 
 > If one if the variables is constant (its standard deviation is 0), the `CORREL` function returns `NaN`.
 
@@ -2417,12 +2439,12 @@ SELECT * FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' ORDER BY datetime DE
 While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabilities.md#database-capabilities) between SQL dialect implemented in ATSD and SQL specification standards are numerous, the following exceptions to widely used constructs are worth mentioning:
 
 * Wildcard symbol is `*`/`?` instead of `%`/`_`.
-* Subqueries are not supported.
 * Self-joins are not supported.
-* In case of computational errors such as division by zero, the database returns special values such as `NaN` according to the IEEE 754-2008 standard.
+* Subqueries are not supported with the exception of `BETWEEN` subquery.
 * `UNION`, `EXCEPT` and `INTERSECT` operators are not supported. Refer to [atsd_series table](examples/select-atsd_series.md) queries for a `UNION ALL` alternative.
-* The `WITH` operator is supported only in the following clauses: `WITH ROW_NUMBER`, `WITH ITERPOLATE`.
-* The `DISTINCT` operator is not supported and can be emulated in some cases with the `GROUP BY` clause.
+* In case of computational errors such as division by zero, the database returns special values such as `NaN` according to the IEEE 754-2008 standard.
+* The `WITH` operator is supported only in the following clauses: `WITH ROW_NUMBER`, `WITH INTERPOLATE`.
+* The `DISTINCT` operator is not supported and can be emulated with the `GROUP BY` clause in some cases.
 
 ## Examples
 
