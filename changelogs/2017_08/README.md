@@ -4,7 +4,7 @@ Weekly Change Log: February 20 - February 26, 2017
 ### ATSD
 
 | Issue| Category    | Type    | Subject                                                                              |
-|------|-------------|---------|--------------------------------------------------------------------------------------| 
+|------|-------------|---------|--------------------------------------------------------------------------------------|
 | 3951 | sql         | Feature | Granted permissions to USER role to cancel the user's own query.                             |
 | 3942 | core        | Bug     | Fixed PermGen Error by setting MaxPermGen in start script.                                   |
 | [3938](#issue-3938) | admin       | Bug     | Added PermGen memory usage metrics.                                     |
@@ -14,7 +14,7 @@ Weekly Change Log: February 20 - February 26, 2017
 ### Collector
 
 | Issue| Category    | Type    | Subject                                                                              |
-|------|-------------|---------|--------------------------------------------------------------------------------------| 
+|------|-------------|---------|--------------------------------------------------------------------------------------|
 | [3936](#issue-3936) | json        | Feature | Added a text area for custom user commands.                                    |
 | 3928 | data-source | Feature | Added the separate Protocol field to data source configuration page. |
 | [3926](#issue-3926) | json        | Feature | Provided an ability to extract Time, Metric Name & Value fields by index from an array. |
@@ -23,7 +23,7 @@ Weekly Change Log: February 20 - February 26, 2017
 ### Charts
 
 | Issue| Category    | Type    | Subject                                                                              |
-|------|-------------|---------|--------------------------------------------------------------------------------------| 
+|------|-------------|---------|--------------------------------------------------------------------------------------|
 | [3958](#issue-3958) | core   | Bug | Improved performance of legend rendering.                                    |
 
 
@@ -48,7 +48,7 @@ Custom network commands specified in `Raw Commands` textarea can be executed.
 
 ![](Images/Figure_01.png)
 
-The following [placeholders](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/json.md#placeholders) together with [string functions](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/placeholders.md#string-functions) are supported:
+The following [placeholders](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/json.md#placeholders) together with [string functions](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/placeholders.md#string-functions) are supported:
 * ITEM
 * PATH
 * FILE
@@ -77,7 +77,3 @@ Rendering time of a [chart with about 300 legend units](https://apps.axibase.com
 | Before | After |
 |--------|-------|
 |![](Images/Figure_06.png) | ![](Images/Figure_07.png) |
-
-
-
-

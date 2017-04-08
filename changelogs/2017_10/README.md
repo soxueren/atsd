@@ -5,7 +5,7 @@ Weekly Change Log: March 6 - March 12, 2017
 
 | Issue| Category    | Type    | Subject                                                                              |
 |------|-------------|---------|--------------------------------------------------------------------------------------|
-| 3978 | portal | Bug | Display disabled portals on Entity Group portal assignment page. | 
+| 3978 | portal | Bug | Display disabled portals on Entity Group portal assignment page. |
 
 ### Collector
 
@@ -14,7 +14,7 @@ Weekly Change Log: March 6 - March 12, 2017
 | 3972 | json | Bug | Replace non-printable characters to underscores in generated entity names. |
 | 3931 | json | Bug | Add support for referencing field names containing dots by quoting the field name. |
 | 3828 | admin | Bug | Expose atsd-api-java request logging via logback configuration. |
-| [3827](#issue-3827) | file | Feature | Add support for [placeholders](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/placeholders.md#overview) in `First Line Contains` field. |
+| [3827](#issue-3827) | file | Feature | Add support for [placeholders](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/placeholders.md#overview) in `First Line Contains` field. |
 | 3990 | collection | Bug | Ignore stderr when reading SCRIPT Item List. |
 
 ### Charts

@@ -12,7 +12,7 @@ Weekly Change Log: February 27 - March 5, 2017
 
 | Issue| Category        | Type    | Subject                                                                              |
 |------|-----------------|---------|--------------------------------------------------------------------------------------|  
-| [3977](#issue-3977) | UI              | Feature | Display linked job configurations for HTTP Pools, [Database Configurations](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/jdbc-data-source.md), and [Replacement Tables](https://github.com/axibase/axibase-collector-docs/blob/master/collections.md#replacement-tables). |
+| [3977](#issue-3977) | UI              | Feature | Display linked job configurations for HTTP Pools, [Database Configurations](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/jdbc-data-source.md), and [Replacement Tables](https://github.com/axibase/axibase-collector/blob/master/docs/collections.md#replacement-tables). |
 | [3976](#issue-3976) | collection      | Feature | Added an option to specify executable script text on the Item List configuration page.                        |
 | 3974 | http-pool       | Bug     | Fixed an error when deleting an HTTP Pool.                                 |
 | 3969 | json            | Bug     | Fixed a conflict between `Included Fields` and `Metric Name & Value` fields.     |
@@ -27,11 +27,11 @@ Weekly Change Log: February 27 - March 5, 2017
 ### Charts
 
 | Issue| Category        | Type    | Subject                                                                              |
-|------|-----------------|---------|--------------------------------------------------------------------------------------| 
+|------|-----------------|---------|--------------------------------------------------------------------------------------|
 | 3970 | treemap         | Bug     | Fixed `display = false` behavior.                                                         |
 | 3964 | table           | Bug     | Made calculated alert values available in the `hide-columns` function.                                      |
 | [3961](#issue-3961) | treemap         | Feature | Implemented new `mode` settings: row, column, auto.                                                                     |
-| 3960 | time-chart      | Bug     | Fixed legend visibility for wildcard series requested for multiple entities or an entity group.                                 | 
+| 3960 | time-chart      | Bug     | Fixed legend visibility for wildcard series requested for multiple entities or an entity group.                                 |
 | [3959](#issue-3959) | api             | Feature | Removed support for `last` setting due to ATSD API changes.                              |
 | [3941](#issue-3941) | widget-settings | Feature | Implemented functions to retrieve entity and metric tags in `threshold` and other calculations. |
 | 3927 | core            | Bug     | Fixed the order of widget content geometry calculation.                                |
@@ -73,8 +73,8 @@ For the Replacement table, the linked task configurations are shown.
 
 ### Issue 3976
 --------------
-The old `Command` field containing the path to the executable script has been renamed to `Path to the script`. 
-The new `Command` field allows entering commands returning the Item List elements, one Item per line. 
+The old `Command` field containing the path to the executable script has been renamed to `Path to the script`.
+The new `Command` field allows entering commands returning the Item List elements, one Item per line.
 The commands from the text area are copied to a file in the `$AXIBASE_COLLECTOR_HOME/conf/scripts` directory and executed as a script.
 You must set `script.text.execute.allow=true` in the `$AXIBASE_COLLECTOR_HOME/conf/server.properties` file in order to enable this feature.
 

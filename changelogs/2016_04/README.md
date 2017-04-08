@@ -5,20 +5,20 @@ Weekly Change Log: December 5-11, 2016
 
 | Issue| Category    | Type    | Subject                         |
 |------|-------------|---------|---------------------------------|
-| 3698 | admin       | Support     | Increased the default maximum Java heap value from 512Mb to 1G. This change is required to accommodate increased requirements for in-memory processing by the SQL engine. | 
+| 3698 | admin       | Support     | Increased the default maximum Java heap value from 512Mb to 1G. This change is required to accommodate increased requirements for in-memory processing by the SQL engine. |
 | [3690](#issue-3690) | security    | Feature | Modified how role/membership/permission changes are applied. When changes are made to a user's account, current active sessions are now automatically invalidated. The user cannot continue using sessions with previously cached ACLs. |
-| [3688](#issue-3688) | sql         | Feature     | Added support for `GROUP BY value` to calculate unique occurrences of the `value` over the specified timespan. This could be useful for metrics that measure discrete characteristics, such as status codes, error codes, digital states etc. | 
-| 3679 | email       | Feature     | Cleaned up the email notification template to hide irrelevant statistics if the sample in the window is less than 1. | 
-| 3678 | UI          | Bug     | Placed the Name and Label fields on separate lines in the metric and entity forms to account for long names. | 
+| [3688](#issue-3688) | sql         | Feature     | Added support for `GROUP BY value` to calculate unique occurrences of the `value` over the specified timespan. This could be useful for metrics that measure discrete characteristics, such as status codes, error codes, digital states etc. |
+| 3679 | email       | Feature     | Cleaned up the email notification template to hide irrelevant statistics if the sample in the window is less than 1. |
+| 3678 | UI          | Bug     | Placed the Name and Label fields on separate lines in the metric and entity forms to account for long names. |
 | [3675](#issue-3675) | sql         | Feature     | Added the capability to replace numeric `NAN` with another integer with the `ISNULL` function.|  
 | 3662 | csv         | Support     | Identified an issue with schema-based CSV parsers. A schema-based CSV parser will not work if ATSD is launched under Java 8+.|
 | [3650](#issue-3650) | UI          | Feature | Consolidated multiple pages under the Admin menu into one page. |
-| 3646 | UI          | Bug     | Return 4xx error number instead of 500 on the `/sql/queries/info` page if the query is no longer found by id, which occurs when the server is restarted, or the query plan is evicted from cache. | 
-| 3642 | api-rest    | Bug     | Not all entities for the metric are visible on the Entities page. | 
-| [3631](#issue-3631) | sql         | Bug     | `NaN` numbers and `null` strings interpolated consistently (using the `PREVIOUS` function), similar to the PI server. | 
-| 3552 | rule engine | Feature | Implemented the `coalesce` function in the rule engine to substitute missing tags, for example `coalesce([entity.label, entity.tags.name])`. | 
-| [3516](#issue-3516) | sql         | Feature     | `IS NULL` operator supports `metric.label`. | 
-| [3515](#issue-3515) | sql         | Feature     | `IS NULL` operator supports metric tags. | 
+| 3646 | UI          | Bug     | Return 4xx error number instead of 500 on the `/sql/queries/info` page if the query is no longer found by id, which occurs when the server is restarted, or the query plan is evicted from cache. |
+| 3642 | api-rest    | Bug     | Not all entities for the metric are visible on the Entities page. |
+| [3631](#issue-3631) | sql         | Bug     | `NaN` numbers and `null` strings interpolated consistently (using the `PREVIOUS` function), similar to the PI server. |
+| 3552 | rule engine | Feature | Implemented the `coalesce` function in the rule engine to substitute missing tags, for example `coalesce([entity.label, entity.tags.name])`. |
+| [3516](#issue-3516) | sql         | Feature     | `IS NULL` operator supports `metric.label`. |
+| [3515](#issue-3515) | sql         | Feature     | `IS NULL` operator supports metric tags. |
 | [3463](#issue-3463) | sql         | Bug     | `WITH INTERPOLATE` correctly interpolates the `text` column in JOIN queries. |
 
 ### Collector
@@ -26,16 +26,16 @@ Weekly Change Log: December 5-11, 2016
 | Issue| Category    | Type    | Subject                         |
 |------|-------------|---------|---------------------------------|
 | [3664](#issue-3664) | docker      | Feature | Added new Docker container metrics for process count monitoring: `docker.process.all` and `docker.process.filtered`. |  
-| [3559](#issue-3559) | jdbc        | Feature | Extended JDBC job so that PI server PIPoint metadata can be offloaded into ATSD. | 
+| [3559](#issue-3559) | jdbc        | Feature | Extended JDBC job so that PI server PIPoint metadata can be offloaded into ATSD. |
 
 ## ATSD
 
 ### Issue 3690
 --------------
 
-In previous versions of ATSD, the user's role, group membership, and entity permissions were cached while the user's session was active. If the user's authorization was changed by an 
-administrator, it would not apply until the user's active sessions would timeout or until the user re-logged into the application. We updated ATSD so that the user's 
-active sessions are invalided instantly if the authorization is changed by an administrator. As a result, the administrator doesn't have to manually request the user to logout in order to 
+In previous versions of ATSD, the user's role, group membership, and entity permissions were cached while the user's session was active. If the user's authorization was changed by an
+administrator, it would not apply until the user's active sessions would timeout or until the user re-logged into the application. We updated ATSD so that the user's
+active sessions are invalided instantly if the authorization is changed by an administrator. As a result, the administrator doesn't have to manually request the user to logout in order to
 apply any new settings. In addition, the administrator is now able to view which users are online.
 
 ![Figure 5](Images/Figure5.png)
@@ -67,10 +67,10 @@ The administrative interface in ATSD has been simplified by consolidating multip
 
    ![Figure 1](Images/Figure1.png)
 
-   The section provides information about the installed ATSD version (Revision Number), as well as the HBase compatibility version. The ATSD revision number is an always 
-   incrementing counter, meaning it doesn't adhere to semantic versioning. Each change to the ATSD code will increment the revision number. Note that the revision number of the ATSD 
-   HBase jar file deployed on the HBase region server in the `/hbase/lib` directory is incremented separately from the ATSD revision number. When upgrading a distributed version of ATSD, 
-   follow [these steps](https://github.com/axibase/atsd-docs/blob/master/installation/cloudera.md#updating-atsd). If you're installing an ATSD version with a higher revision number and
+   The section provides information about the installed ATSD version (Revision Number), as well as the HBase compatibility version. The ATSD revision number is an always
+   incrementing counter, meaning it doesn't adhere to semantic versioning. Each change to the ATSD code will increment the revision number. Note that the revision number of the ATSD
+   HBase jar file deployed on the HBase region server in the `/hbase/lib` directory is incremented separately from the ATSD revision number. When upgrading a distributed version of ATSD,
+   follow [these steps](/installation/cloudera.md#updating-atsd). If you're installing an ATSD version with a higher revision number and
    if the atsd-hbase.*.jar version is the same, skip the region server deployment stage altogether and upgrade just ATSD itself, without restarting your region servers.
 
 2. **JVM System Properties**
@@ -96,11 +96,11 @@ The administrative interface in ATSD has been simplified by consolidating multip
 
 ```sql
 SELECT datetime, value FROM 'interpTest'
-WHERE datetime BETWEEN '2016-11-22T17:50:00Z' AND '2016-11-22T17:55:00Z' 
+WHERE datetime BETWEEN '2016-11-22T17:50:00Z' AND '2016-11-22T17:55:00Z'
 WITH INTERPOLATE(15 SECOND, LINEAR, OUTER, EXTEND)
 ```
 
-### Issue 3516 
+### Issue 3516
 --------------
 
 ```sql
@@ -115,7 +115,7 @@ LIMIT 3
 
 ```sql
 SELECT tags FROM disk_used
-WHERE tags IS NOT NULL and datetime > now -1*minute 
+WHERE tags IS NOT NULL and datetime > now -1*minute
 ```
 
 ### Issue 3463
@@ -138,7 +138,7 @@ WITH INTERPOLATE(60 SECOND, AUTO, OUTER, EXTEND, START_TIME)
 ### Issue 3664
 --------------
 
-In Collector, the following metrics were added for each active container. These metrics are collected only when the Docker command `TOP` is enabled. 
+In Collector, the following metrics were added for each active container. These metrics are collected only when the Docker command `TOP` is enabled.
 
 ![Figure 6](Images/Figure6.png)
 
@@ -151,7 +151,7 @@ If the container was running in a prior iteration, and is not running in the nex
 ### Issue 3559
 --------------
 
-`METRIC` and `ENTITY` commands have been implemented in the JDBC job to allow you to configure collected metrics and entities in ATSD. 
+`METRIC` and `ENTITY` commands have been implemented in the JDBC job to allow you to configure collected metrics and entities in ATSD.
 
 ![Figure 9](Images/Figure9.png)
 
@@ -162,7 +162,7 @@ Additionally, some user interface improvements were recently made to the JDBC co
 * Unified number formatting: unnecessary zeroes in the fractional part of floating-point numbers are not shown.
 * Metric names are generated in lower-case, just as they will be saved in ATSD.
 
-As a result, PI tags can be retrieved using the JDBC job, and a [tutorial](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/examples/pi/README.md) 
+As a result, PI tags can be retrieved using the JDBC job, and a [tutorial](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/pi/README.md) 
 is provided showing you how to configure the task.
 
 #### PI Server Tag Information

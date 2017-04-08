@@ -1,15 +1,15 @@
 # nmon
 
-- [Visualizing nmon Files in ad-hoc Mode](https://github.com/axibase/atsd-docs/blob/master/integration/nmon/ad-hoc.md)
-- [Deploy nmon](https://github.com/axibase/atsd-docs/blob/master/integration/nmon/deploy.md)
-- [nmon File Streaming over Telnet](https://github.com/axibase/atsd-docs/blob/master/integration/nmon/file-streaming.md)
-- [File Upload](https://github.com/axibase/atsd-docs/blob/master/integration/nmon/file-upload.md)
-- [Format](https://github.com/axibase/atsd-docs/blob/master/integration/nmon/format.md)
-- [Headers](https://github.com/axibase/atsd-docs/blob/master/integration/nmon/headers.md)
-- [Parser](https://github.com/axibase/atsd-docs/blob/master/integration/nmon/parser.md)
-- [Scheduled File Upload to ATSD](https://github.com/axibase/atsd-docs/blob/master/integration/nmon/scheduled-file-upload.md)
-- [Sender Script](https://github.com/axibase/atsd-docs/blob/master/integration/nmon/sender-script.md)
-- [SSH Tunnel Setup](https://github.com/axibase/atsd-docs/blob/master/integration/nmon/ssh-tunneling.md)
+- [Visualizing nmon Files in ad-hoc Mode](/integration/nmon/ad-hoc.md)
+- [Deploy nmon](/integration/nmon/deploy.md)
+- [nmon File Streaming over Telnet](/integration/nmon/file-streaming.md)
+- [File Upload](/integration/nmon/file-upload.md)
+- [Format](/integration/nmon/format.md)
+- [Headers](/integration/nmon/headers.md)
+- [Parser](/integration/nmon/parser.md)
+- [Scheduled File Upload to ATSD](/integration/nmon/scheduled-file-upload.md)
+- [Sender Script](/integration/nmon/sender-script.md)
+- [SSH Tunnel Setup](/integration/nmon/ssh-tunneling.md)
 
 ## Overview
 

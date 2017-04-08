@@ -29,8 +29,8 @@ Weekly Change Log: December 12-18, 2016
 --------------
 
 ```sql
-SELECT tavg.tags.type, 
-    median(tmed.value), 
+SELECT tavg.tags.type,
+    median(tmed.value),
     last(tmed.value),
     last(tmed.value)/median(tmed.value)
 FROM "jmeter.ok.avg" tavg
@@ -45,7 +45,7 @@ GROUP BY tavg.tags.type
 --------------
 
 ```sql
-SELECT date_format(time, 'yyyy-MM-dd') as 'date', 
+SELECT date_format(time, 'yyyy-MM-dd') as 'date',
   tags.city, tags.state, tags.region, sum(value)
 FROM cdc.all_deaths
   WHERE entity = 'mr8w-325u' and tags.city IS NOT NULL
@@ -57,7 +57,7 @@ ORDER BY sum(value) desc
 ### Issue 3701
 --------------
 
-In this issue, we took a look at optimizing [partitioning queries](https://github.com/axibase/atsd-docs/tree/master/api/sql#partitioning), leveraging the fact that we can narrow the start and end date for a scan based on the last times in the Last
+In this issue, we took a look at optimizing [partitioning queries](/api/sql#partitioning), leveraging the fact that we can narrow the start and end date for a scan based on the last times in the Last
 Insert Table. Let's take the below query as an example.
 
 ```sql
@@ -154,7 +154,7 @@ Docker `inspect` snippet for a Mesos-managed container:
 ### Issue 3685
 --------------
 
-Recently added to the [`docker`](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/docker.md#docker-job) job in Collector is the ability to remove deleted records in ATSD for objects that no longer exist in Docker itself.
+Recently added to the [`docker`](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/docker.md#docker-job) job in Collector is the ability to remove deleted records in ATSD for objects that no longer exist in Docker itself.
 
 ![Figure 1](Figure1.png)
 

@@ -18,7 +18,7 @@ Weekly Change Log: January 09 - January 15, 2017
 
 | Issue         | Category        | Type | Subject                                                                             |
 |---------------|-----------------|---------|--------------------------------------------------|
-| [3755](#issue-3755) | docker          | Feature | Added [container size metrics](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/docker/volume-size.md#container-size-metrics) for Docker containers. |
+| [3755](#issue-3755) | docker          | Feature | Added [container size metrics](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/docker/volume-size.md#container-size-metrics) for Docker containers. |
 | 3752 | docker          | Bug     | Fixed issues with mis-matched volume labels by removing old records from the embedded database. |
 | 3734 | docker          | Bug     | Fixed issue with stopped container status not being instantly sent into ATSD. |
 | 3733 | docker          | Bug     | Eliminated table locks in the embedded database, which resulted in the collection of all statistics being stopped. |
@@ -138,7 +138,7 @@ Support was added for the text field (named `x`) in Data API methods for series 
 ### Issue 3755
 --------------
 
-The following aggregate [metrics](https://github.com/axibase/axibase-collector-docs/blob/master/jobs/docker/volume-size.md) for Docker container sizes were added:
+The following aggregate [metrics](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/docker/volume-size.md) for Docker container sizes were added:
 
 * `docker.fs.total.size.rw`: the total size of all the files for all containers, in bytes.
 * `docker.fs.total.size.rootfs` - the size of the files which have been created or changed for all containers.
@@ -177,7 +177,7 @@ var connectors = getSeries('jmx.tomcat.errorcount', 'nurswgvml010')
 endvar
 ```
 
-The requests are performed by the browser in synchronous mode. The `getSeries` function retrieves series objects as specified in the [`/api/v1/metrics/{metric}/series`](https://github.com/axibase/atsd-docs/blob/master/api/meta/metric/series.md) method.
+The requests are performed by the browser in synchronous mode. The `getSeries` function retrieves series objects as specified in the [`/api/v1/metrics/{metric}/series`](/api/meta/metric/series.md) method.
 
 `getTags()` syntax:
 

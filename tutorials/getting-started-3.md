@@ -6,7 +6,7 @@ Open the [Export Page](https://axibase.com/products/axibase-time-series-database
 
 ##### Step 9:
 
-Test [ATSD API](https://github.com/axibase/atsd-docs/blob/master/api/README.md) by installing a RestClient and executing a sample [series query](../api/data/series/query.md) request for my-entity and my-metric.
+Test [ATSD API](/api/README.md) by installing a RestClient and executing a sample [series query](../api/data/series/query.md) request for my-entity and my-metric.
 
 [RestClient for Google Chrome.](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en)
 

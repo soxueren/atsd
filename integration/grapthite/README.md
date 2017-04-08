@@ -1,11 +1,11 @@
 # Graphite
 
-- [Graphite Format](https://github.com/axibase/atsd-docs/blob/master/integration/grapthite/graphite-format.md)
-- [Storage Finder](https://github.com/axibase/atsd-docs/blob/master/integration/grapthite/storage-finder.md)
-- [Graphite Integration](https://github.com/axibase/atsd-docs/blob/master/integration/grapthite/graphite-integration.md)
-- [Pickle Protocol](https://github.com/axibase/atsd-docs/blob/master/integration/grapthite/pickle-protocol.md)
-- [Data Migration from Graphite to ATSD](https://github.com/axibase/atsd-docs/blob/master/integration/grapthite/data-migration.md)
-- [Installing Graphite-Web with ATSD Storage Finder](https://github.com/axibase/atsd-docs/blob/master/integration/grapthite/installation.md)
+- [Graphite Format](/integration/grapthite/graphite-format.md)
+- [Storage Finder](/integration/grapthite/storage-finder.md)
+- [Graphite Integration](/integration/grapthite/graphite-integration.md)
+- [Pickle Protocol](/integration/grapthite/pickle-protocol.md)
+- [Data Migration from Graphite to ATSD](/integration/grapthite/data-migration.md)
+- [Installing Graphite-Web with ATSD Storage Finder](/integration/grapthite/installation.md)
 
 ## Overview
 
