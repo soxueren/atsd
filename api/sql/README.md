@@ -264,12 +264,12 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 ```
 
 ```ls
-| t1.entity       | t1.datetime              | t1.value       | t2.entity      | t2.datetime              | t2.value      |
-|-----------------|--------------------------|----------------|----------------|--------------------------|---------------|
-| nurswgvml006    | 2016-06-16T13:00:01.000Z | 37.1           | nurswgvml006   | 2016-06-16T13:00:01.000Z | null          |
-| nurswgvml006    | 2016-06-16T13:00:12.000Z | null           | nurswgvml006   | 2016-06-16T13:00:12.000Z | 67932.0       |
-| nurswgvml006    | 2016-06-16T13:00:17.000Z | 16.0           | nurswgvml006   | 2016-06-16T13:00:17.000Z | null          |
-| nurswgvml006    | 2016-06-16T13:00:27.000Z | null           | nurswgvml006   | 2016-06-16T13:00:27.000Z | 73620.0       |
+| t1.entity       | t1.datetime          | t1.value       | t2.entity      | t2.datetime          | t2.value      |
+|-----------------|----------------------|----------------|----------------|----------------------|---------------|
+| nurswgvml006    | 2016-06-16T13:00:01Z | 37.1           | nurswgvml006   | 2016-06-16T13:00:01Z | null          |
+| nurswgvml006    | 2016-06-16T13:00:12Z | null           | nurswgvml006   | 2016-06-16T13:00:12Z | 67932.0       |
+| nurswgvml006    | 2016-06-16T13:00:17Z | 16.0           | nurswgvml006   | 2016-06-16T13:00:17Z | null          |
+| nurswgvml006    | 2016-06-16T13:00:27Z | null           | nurswgvml006   | 2016-06-16T13:00:27Z | 73620.0       |
 ```
 
 In the case of a `JOIN` query, the `SELECT *` syntax can be applied to each table separately.
@@ -282,12 +282,12 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 ```
 
 ```ls
-| t1.entity       | t1.datetime              | t1.value       | t2.value |
-|-----------------|--------------------------|----------------|----------|
-| nurswgvml006    | 2016-06-16T13:00:01.000Z | 37.1           | null     |
-| nurswgvml006    | 2016-06-16T13:00:12.000Z | null           | 67932.0  |
-| nurswgvml006    | 2016-06-16T13:00:17.000Z | 16.0           | null     |
-| nurswgvml006    | 2016-06-16T13:00:27.000Z | null           | 73620.0  |
+| t1.entity       | t1.datetime          | t1.value       | t2.value |
+|-----------------|----------------------|----------------|----------|
+| nurswgvml006    | 2016-06-16T13:00:01Z | 37.1           | null     |
+| nurswgvml006    | 2016-06-16T13:00:12Z | null           | 67932.0  |
+| nurswgvml006    | 2016-06-16T13:00:17Z | 16.0           | null     |
+| nurswgvml006    | 2016-06-16T13:00:27Z | null           | 73620.0  |
 ```
 
 The `time` and `datetime` columns are interchangeable and can be used as equivalents, for instance in the `GROUP BY` clause and the `SELECT` expression.
@@ -321,11 +321,11 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 ```
 
 ```ls
-| entity   | metric      | datetime                 | value | text                           |
-|----------|-------------|--------------------------|-------|--------------------------------|
-| sensor-1 | temperature | 2016-10-13T08:00:00.000Z | 20.3  | null                           |
-| sensor-1 | temperature | 2016-10-13T08:15:00.000Z | 24.4  | Provisional                    |
-| sensor-1 | status      | 2016-10-13T10:30:00.000Z | NaN   | Shutdown by adm-user, RFC-5434 |
+| entity   | metric      | datetime             | value | text                           |
+|----------|-------------|----------------------|-------|--------------------------------|
+| sensor-1 | temperature | 2016-10-13T08:00:00Z | 20.3  | null                           |
+| sensor-1 | temperature | 2016-10-13T08:15:00Z | 24.4  | Provisional                    |
+| sensor-1 | status      | 2016-10-13T10:30:00Z | NaN   | Shutdown by adm-user, RFC-5434 |
 ```
 
 #### Numeric Precedence
@@ -352,9 +352,9 @@ WHERE entity = 'nurswgvml010' AND datetime >= NOW - 1*MINUTE
 ```
 
 ```ls
-| datetime                 | entity       | value      | tags.mount_point | tags.file_system | tags                                   | tags.mount_point | tags.file_system |
-| 2016-06-18T11:22:35.000Z | nurswgvml010 | 6478200.0  | /                | /dev/sda1        | file_system=/dev/sda1;mount_point=/    | /                | /dev/sda1        |
-| 2016-06-18T11:22:35.000Z | nurswgvml010 | 30440664.0 | /app             | /dev/sdb1        | file_system=/dev/sdb1;mount_point=/app | /app             | /dev/sdb1        |
+| datetime             | entity       | value      | tags.mount_point | tags.file_system | tags                                   | tags.mount_point | tags.file_system |
+| 2016-06-18T11:22:35Z | nurswgvml010 | 6478200.0  | /                | /dev/sda1        | file_system=/dev/sda1;mount_point=/    | /                | /dev/sda1        |
+| 2016-06-18T11:22:35Z | nurswgvml010 | 30440664.0 | /app             | /dev/sdb1        | file_system=/dev/sdb1;mount_point=/app | /app             | /dev/sdb1        |
 ```
 
 To filter records with or without specified series tags, use the `IS NOT NULL` or `IS NULL` operators.
@@ -460,11 +460,11 @@ ORDER BY datetime
 ```
 
 ```ls
-| datetime                 | entity       | value | entity.groups                            |
-|--------------------------|--------------|-------|------------------------------------------|
-| 2016-07-14T15:00:06.000Z | nurswgvml009 | 3.0   | nur-collectors;nmon-linux                |
-| 2016-07-14T15:00:07.000Z | nurswgvml007 | 44.7  | java-loggers;nur-collectors;nmon-linux   |
-| 2016-07-14T15:00:16.000Z | nurswgvml006 | 4.0   | nur-collectors;nmon-linux;nmon-sub-group |
+| datetime             | entity       | value | entity.groups                            |
+|----------------------|--------------|-------|------------------------------------------|
+| 2016-07-14T15:00:06Z | nurswgvml009 | 3.0   | nur-collectors;nmon-linux                |
+| 2016-07-14T15:00:07Z | nurswgvml007 | 44.7  | java-loggers;nur-collectors;nmon-linux   |
+| 2016-07-14T15:00:16Z | nurswgvml006 | 4.0   | nur-collectors;nmon-linux;nmon-sub-group |
 ```
 
 The `entity.group` column can be referenced in the `WHERE` clause to filter results based on group membership.
@@ -489,10 +489,10 @@ ORDER BY datetime
 ```
 
 ```ls
-| datetime                 | entity       | value | entity.groups                            |
-|--------------------------|--------------|-------|------------------------------------------|
-| 2016-07-14T15:00:07.000Z | nurswgvml007 | 44.7  | java-loggers;nur-collectors;nmon-linux   |
-| 2016-07-14T15:00:21.000Z | nurswgvml102 | 4.0   | java-loggers;network-rtr                 |
+| datetime             | entity       | value | entity.groups                            |
+|----------------------|--------------|-------|------------------------------------------|
+| 2016-07-14T15:00:07Z | nurswgvml007 | 44.7  | java-loggers;nur-collectors;nmon-linux   |
+| 2016-07-14T15:00:21Z | nurswgvml102 | 4.0   | java-loggers;network-rtr                 |
 ```
 
 ### Group By Columns
@@ -677,14 +677,14 @@ ORDER BY datetime)
 ```
 
 ```ls
-| datetime                 | value |
-|--------------------------|-------|
-| 2017-04-03T01:00:09.000Z | 24.0  |
-| 2017-04-03T01:00:25.000Z | 55.0  |
+| datetime             | value |
+|----------------------|-------|
+| 2017-04-03T01:00:09Z | 24.0  |
+| 2017-04-03T01:00:25Z | 55.0  |
 ...
-| 2017-04-03T01:14:17.000Z | 4.0   |
-| 2017-04-03T01:14:33.000Z | 4.1   |
-| 2017-04-03T01:14:49.000Z | 63.0  |
+| 2017-04-03T01:14:17Z | 4.0   |
+| 2017-04-03T01:14:33Z | 4.1   |
+| 2017-04-03T01:14:49Z | 63.0  |
 ```
 
 ## Period
@@ -1026,11 +1026,11 @@ GROUP BY period(5 MINUTE)
 ```
 
 ```ls
-| datetime                 | Cpu_Avg |
-|--------------------------|---------|
-| 2016-06-18T22:00:00.000Z | 43.2    |
-| 2016-06-18T22:05:00.000Z | 35.3    |
-| 2016-06-18T22:10:00.000Z | 5.0     |
+| datetime             | Cpu_Avg |
+|----------------------|---------|
+| 2016-06-18T22:00:00Z | 43.2    |
+| 2016-06-18T22:05:00Z | 35.3    |
+| 2016-06-18T22:10:00Z | 5.0     |
 ```
 
 ### HAVING filter
@@ -1070,15 +1070,15 @@ A partition is a subset of all rows within the result set, grouped by an entity 
 For example, a result set partitioned by an entity and ordered by time would have the following row numbers:
 
 ```ls
-|--------------|--------------------------|------:| ROW_NUMBER
-| nurswgvml006 | 2016-06-18T12:00:05.000Z | 66.0  |     1
-| nurswgvml006 | 2016-06-18T12:00:21.000Z | 8.1   |     2
-| nurswgvml007 | 2016-06-18T12:00:03.000Z | 18.2  |     1
-| nurswgvml007 | 2016-06-18T12:00:19.000Z | 67.7  |     2
-| nurswgvml010 | 2016-06-18T12:00:14.000Z | 0.5   |     1
-| nurswgvml011 | 2016-06-18T12:00:10.000Z | 100.0 |     1
-| nurswgvml011 | 2016-06-18T12:00:26.000Z | 4.0   |     2
-| nurswgvml011 | 2016-06-18T12:00:29.000Z | 0.0   |     3
+|--------------|----------------------|-------| ROW_NUMBER
+| nurswgvml006 | 2016-06-18T12:00:05Z | 66.0  |     1
+| nurswgvml006 | 2016-06-18T12:00:21Z | 8.1   |     2
+| nurswgvml007 | 2016-06-18T12:00:03Z | 18.2  |     1
+| nurswgvml007 | 2016-06-18T12:00:19Z | 67.7  |     2
+| nurswgvml010 | 2016-06-18T12:00:14Z | 0.5   |     1
+| nurswgvml011 | 2016-06-18T12:00:10Z | 100.0 |     1
+| nurswgvml011 | 2016-06-18T12:00:26Z | 4.0   |     2
+| nurswgvml011 | 2016-06-18T12:00:29Z | 0.0   |     3
 ```
 
 ### ROW_NUMBER Syntax
@@ -1113,14 +1113,14 @@ ORDER BY entity, datetime
 ```
 
 ```ls
-| entity       | datetime                 | value |
-|--------------|--------------------------|------:|
-| nurswgvml006 | 2016-06-18T12:00:05.000Z | 66.0  |
-| nurswgvml007 | 2016-06-18T12:00:03.000Z | 18.2  |
-| nurswgvml010 | 2016-06-18T12:00:14.000Z | 0.5   |
-| nurswgvml011 | 2016-06-18T12:00:10.000Z | 100.0 |
-| nurswgvml102 | 2016-06-18T12:00:02.000Z | 0.0   |
-| nurswgvml502 | 2016-06-18T12:00:01.000Z | 13.7  |
+| entity       | datetime             | value |
+|--------------|----------------------|-------|
+| nurswgvml006 | 2016-06-18T12:00:05Z | 66.0  |
+| nurswgvml007 | 2016-06-18T12:00:03Z | 18.2  |
+| nurswgvml010 | 2016-06-18T12:00:14Z | 0.5   |
+| nurswgvml011 | 2016-06-18T12:00:10Z | 100.0 |
+| nurswgvml102 | 2016-06-18T12:00:02Z | 0.0   |
+| nurswgvml502 | 2016-06-18T12:00:01Z | 13.7  |
 ```
 
 * Apply an aggregate function to Last-N records:
@@ -1172,14 +1172,14 @@ WITH ROW_NUMBER(entity, tags ORDER BY period(15 minute)) <= 2
 ```
 
 ```ls
-| entity       | tags.file_system                    | datetime                 | avg(value) | count(value) | first(value) | last......|
-|--------------|-------------------------------------|--------------------------|------------|--------------|--------------|-----------|
-| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | 2017-01-09T00:00:00.000Z | 6285986    | 60           | 6285696      | 6286312   |
-| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | 2017-01-09T00:15:00.000Z | 6286339    | 60           | 6286312      | 6286372   |
-| nurswgvml006 | /dev/sdc1                           | 2017-01-09T00:00:00.000Z | 57558921   | 60           | 57521944     | 57579272  |
-| nurswgvml006 | /dev/sdc1                           | 2017-01-09T00:15:00.000Z | 57600482   | 60           | 57580072     | 57510460  |
-| nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | 2017-01-09T00:00:00.000Z | 9046720    | 60           | 9024392      | 9071064   |
-| nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | 2017-01-09T00:15:00.000Z | 9005158    | 60           | 9071668      | 9010264   |
+| entity       | tags.file_system                    | datetime             | avg(value) | count(value) | first(value) | last......|
+|--------------|-------------------------------------|----------------------|------------|--------------|--------------|-----------|
+| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | 2017-01-09T00:00:00Z | 6285986    | 60           | 6285696      | 6286312   |
+| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | 2017-01-09T00:15:00Z | 6286339    | 60           | 6286312      | 6286372   |
+| nurswgvml006 | /dev/sdc1                           | 2017-01-09T00:00:00Z | 57558921   | 60           | 57521944     | 57579272  |
+| nurswgvml006 | /dev/sdc1                           | 2017-01-09T00:15:00Z | 57600482   | 60           | 57580072     | 57510460  |
+| nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | 2017-01-09T00:00:00Z | 9046720    | 60           | 9024392      | 9071064   |
+| nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | 2017-01-09T00:15:00Z | 9005158    | 60           | 9071668      | 9010264   |
 ```
 
 ### LAST_TIME Syntax
@@ -1337,11 +1337,11 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 In this particular case, since timestamps for each of these metrics are identical and being collected by the same script, `JOIN` produces merged rows for all the detailed records.
 
 ```ls
-| datetime                 | entity       | t1.value | t2.value | t3.value |
-|--------------------------|--------------|---------:|---------:|---------:|
-| 2016-06-16T13:00:01.000Z | nurswgvml006 | 13.3     | 21.0     | 2.9      |
-| 2016-06-16T13:00:17.000Z | nurswgvml006 | 1.0      | 2.0      | 13.0     |
-| 2016-06-16T13:00:33.000Z | nurswgvml006 | 0.0      | 1.0      | 0.0      |
+| datetime             | entity       | t1.value | t2.value | t3.value |
+|----------------------|--------------|---------:|---------:|---------:|
+| 2016-06-16T13:00:01Z | nurswgvml006 | 13.3     | 21.0     | 2.9      |
+| 2016-06-16T13:00:17Z | nurswgvml006 | 1.0      | 2.0      | 13.0     |
+| 2016-06-16T13:00:33Z | nurswgvml006 | 0.0      | 1.0      | 0.0      |
 ```
 
 This is typically the case when multiple metrics are inserted with one command or when time is controlled externally. As in the example above, the metrics 'cpu_system', 'cpu_user', 'cpu_iowait' are all timestamped by the same collector script with the same time during each `mpstat` command invocation.
@@ -1359,13 +1359,35 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 The result contains only 2 records out of 75 total. This is because for `JOIN` to merge detailed records from multiple metrics into one row, the records should have the same time.
 
 ```ls
-| datetime                 | entity       | cpu  | mem     |
-|--------------------------|--------------|-----:|--------:|
-| 2016-06-16T13:02:57.000Z | nurswgvml006 | 16.0 | 74588.0 |
-| 2016-06-16T13:07:17.000Z | nurswgvml006 | 16.0 | 73232.0 |
+| datetime             | entity       | cpu  | mem     |
+|----------------------|--------------|-----:|--------:|
+| 2016-06-16T13:02:57Z | nurswgvml006 | 16.0 | 74588.0 |
+| 2016-06-16T13:07:17Z | nurswgvml006 | 16.0 | 73232.0 |
 ```
 
-Similarly, multiple tables can be merged for a series with tags, without the need to enumerate all possible tags in the join condition.
+To join irregular series use `GROUP BY PERIOD` or `WITH INTERPOLATE` clauses to align the timestamps.
+
+```sql
+SELECT t1.entity, t1.datetime, t1.value,
+       t2.entity, t2.datetime, t2.value
+FROM mpstat.cpu_busy t1
+  JOIN meminfo.memfree t2
+WHERE t1.datetime BETWEEN '2017-04-08T07:01:00Z' AND '2017-04-08T07:02:00Z'
+  AND t1.entity = 'nurswgvml006'
+  WITH INTERPOLATE(15 SECOND, PREVIOUS, OUTER)
+```
+
+```ls
+| t1.entity    | t1.datetime          | t1.value | t2.entity    | t2.datetime          | t2.value |
+|--------------|----------------------|----------|--------------|----------------------|----------|
+| nurswgvml006 | 2017-04-08T07:01:00Z | 5.0      | nurswgvml006 | 2017-04-08T07:01:00Z | 74804.0  |
+| nurswgvml006 | 2017-04-08T07:01:15Z | 6.1      | nurswgvml006 | 2017-04-08T07:01:15Z | 71276.0  |
+| nurswgvml006 | 2017-04-08T07:01:30Z | 3.0      | nurswgvml006 | 2017-04-08T07:01:30Z | 70820.0  |
+| nurswgvml006 | 2017-04-08T07:01:45Z | 2.0      | nurswgvml006 | 2017-04-08T07:01:45Z | 69944.0  |
+| nurswgvml006 | 2017-04-08T07:02:00Z | 10.9     | nurswgvml006 | 2017-04-08T07:02:00Z | 75928.0  |
+```
+
+Series with tags can be joined without the need to enumerate all possible tag names in the `JOIN` condition.
 
 ```sql
 SELECT t1.datetime, t1.entity, t1.value, t2.value, t1.tags.*
@@ -1376,12 +1398,12 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 ```
 
 ```ls
-| datetime                 | entity       | t1.value     | t2.value | t1.tags.file_system             | t1.tags.mount_point |
-|--------------------------|--------------|--------------|----------|---------------------------------|---------------------|
-| 2016-06-16T13:00:14.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        |
-| 2016-06-16T13:00:29.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        |
-| 2016-06-16T13:00:44.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        |
-| 2016-06-16T13:00:59.000Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        |
+| datetime             | entity       | t1.value     | t2.value | t1.tags.file_system             | t1.tags.mount_point |
+|----------------------|--------------|--------------|----------|---------------------------------|---------------------|
+| 2016-06-16T13:00:14Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        |
+| 2016-06-16T13:00:29Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        |
+| 2016-06-16T13:00:44Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        |
+| 2016-06-16T13:00:59Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        |
 ```
 
 ### JOIN with USING entity
@@ -1404,10 +1426,10 @@ GROUP BY t1.entity, t1.tags, t2.tags, t1.PERIOD(1 MINUTE)
 ```
 
 ```ls
-| entity       | datetime                 | AVG(t1.value) | AVG(t2.value) | disk_used.tags.mount_point | disk_used.tags.file_system          |
-|--------------|--------------------------|--------------:|--------------:|----------------------------|-------------------------------------|
-| nurswgvml007 | 2016-06-18T10:03:00.000Z | 100.0         | 1744011571.0  | /mnt/u113452               | //u113452.nurstr003/backup          |
-| nurswgvml007 | 2016-06-18T10:03:00.000Z | 100.0         | 8686400.0     | /                          | /dev/mapper/vg_nurswgvml007-lv_root |
+| entity       | datetime             | AVG(t1.value) | AVG(t2.value) | disk_used.tags.mount_point | disk_used.tags.file_system          |
+|--------------|----------------------|--------------:|--------------:|----------------------------|-------------------------------------|
+| nurswgvml007 | 2016-06-18T10:03:00Z | 100.0         | 1744011571.0  | /mnt/u113452               | //u113452.nurstr003/backup          |
+| nurswgvml007 | 2016-06-18T10:03:00Z | 100.0         | 8686400.0     | /                          | /dev/mapper/vg_nurswgvml007-lv_root |
 ```
 
 ### OUTER JOIN
@@ -1425,13 +1447,13 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 `OUTER JOIN` for detailed records, without period aggregation, produces rows that have NULLs in value columns because the underlying metric didn't record any value at the specified time.
 
 ```ls
-| datetime                 | entity       | cpu  | mem     |
-|--------------------------|--------------|-----:|--------:|
-| 2016-06-16T13:00:01.000Z | nurswgvml006 | 37.1 | null    |
-| 2016-06-16T13:00:12.000Z | nurswgvml006 | null | 67932.0 |
-| 2016-06-16T13:00:17.000Z | nurswgvml006 | 16.0 | null    |
-| 2016-06-16T13:00:27.000Z | nurswgvml006 | null | 73620.0 |
-| 2016-06-16T13:00:33.000Z | nurswgvml006 | 1.0  | null    |
+| datetime             | entity       | cpu  | mem     |
+|----------------------|--------------|-----:|--------:|
+| 2016-06-16T13:00:01Z | nurswgvml006 | 37.1 | null    |
+| 2016-06-16T13:00:12Z | nurswgvml006 | null | 67932.0 |
+| 2016-06-16T13:00:17Z | nurswgvml006 | 16.0 | null    |
+| 2016-06-16T13:00:27Z | nurswgvml006 | null | 73620.0 |
+| 2016-06-16T13:00:33Z | nurswgvml006 | 1.0  | null    |
 ```
 
 To regularize the series, apply `GROUP BY` with period aggregation and apply one of statistical functions to return one value for the period for each series.
@@ -1446,11 +1468,11 @@ GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 ```
 
 ```ls
-| datetime                 | entity       | avg_cpu | avg_mem  |
-|--------------------------|--------------|---------|----------|
-| 2016-06-16T13:02:00.000Z | nurswgvml006 | 9.5     | 72620.0  |
-| 2016-06-16T13:03:00.000Z | nurswgvml006 | 6.1     | 70799.0  |
-| 2016-06-16T13:04:00.000Z | nurswgvml006 | 15.1    | 71461.0  |
+| datetime             | entity       | avg_cpu | avg_mem  |
+|----------------------|--------------|---------|----------|
+| 2016-06-16T13:02:00Z | nurswgvml006 | 9.5     | 72620.0  |
+| 2016-06-16T13:03:00Z | nurswgvml006 | 6.1     | 70799.0  |
+| 2016-06-16T13:04:00Z | nurswgvml006 | 15.1    | 71461.0  |
 ```
 
 The choice of an aggregation function applied to numeric columns depends on the use case.
@@ -1789,10 +1811,10 @@ AND LOWER(tags.file_system) LIKE '*root'
 ```
 
 ```ls
-| datetime                 | entity | value     | fs                      |
-|--------------------------|--------|-----------|-------------------------|
-| 2016-09-30T07:57:28.000Z | VML006 | 8298304.0 | vg_nurswgvml006-lv_root |
-| 2016-09-30T07:57:29.000Z | VML007 | 8052512.0 | vg_nurswgvml007-lv_root |
+| datetime             | entity | value     | fs                      |
+|----------------------|--------|-----------|-------------------------|
+| 2016-09-30T07:57:28Z | VML006 | 8298304.0 | vg_nurswgvml006-lv_root |
+| 2016-09-30T07:57:29Z | VML007 | 8052512.0 | vg_nurswgvml007-lv_root |
 ```
 
 ## Other Functions
@@ -2167,9 +2189,9 @@ WHERE datetime >= NOW - 5*MINUTE
 ```
 
 ```ls
-| metric       | entity       | datetime                 | value     | tags.mount_point | tags.file_system                    |
-|--------------|--------------|--------------------------|-----------|------------------|-------------------------------------|
-| df.disk_used | nurswgvml007 | 2016-06-19T06:12:26.000Z | 8715136.0 | /                | /dev/mapper/vg_nurswgvml007-lv_root |
+| metric       | entity       | datetime             | value     | tags.mount_point | tags.file_system                    |
+|--------------|--------------|----------------------|-----------|------------------|-------------------------------------|
+| df.disk_used | nurswgvml007 | 2016-06-19T06:12:26Z | 8715136.0 | /                | /dev/mapper/vg_nurswgvml007-lv_root |
 ```
 
 Changing the case of a tag value condition `tags.file_system = '/DEV/mapper/vg_nurswgvml007-lv_root'` would cause the error **TAG_VALUE not found**.
