@@ -21,8 +21,8 @@ Retrieve a list of entities that are members of the specified entity group and a
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
 | expression |string|Expression to include entities by name or by entity tags. Use the `name` variable for entity name. The wildcard `*` is supported.|
-| minInsertDate |string|Include entities with last insert date at or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
-| maxInsertDate |string|Include entities with last insert date less than specified time.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| minInsertDate |string|Include entities with last insert date at or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](/docs/end-time-syntax.md) syntax.|
+| maxInsertDate |string|Include entities with last insert date less than specified time.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/docs/end-time-syntax.md) syntax.|
 | limit |integer|Maximum number of entities to retrieve, ordered by name.|
 | tags |string|Comma-separated list of entity tags to be included in the response.<br>For example, `tags=table,unit`<br>Specify `tags=*` to include all entity tags.|
 

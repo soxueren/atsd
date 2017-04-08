@@ -150,5 +150,5 @@ Custom portals can be created using [HTML5 Widgets](http://axibase.com/products/
 
 ![](resources/nmon-linux-portal.png "nmon linux portal")
 
-Once nmon data is streamed into ATSD and predefined portals are working, you can use the [Rule Engine](../../rule-engine "Rule Engine") and
+Once nmon data is streamed into ATSD and predefined portals are working, you can use the [Rule Engine](/docs/rule-engine "Rule Engine") and
 [Forecasting](http://axibase.com/products/axibase-time-series-database/forecasts/ "Forecasts") tools for analyzing and planning capacity. Custom portals can be created using [HTML5 widgets](http://axibase.com/products/axibase-time-series-database/visualization/ "Visualization").

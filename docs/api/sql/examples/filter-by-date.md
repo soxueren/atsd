@@ -58,7 +58,7 @@ WHERE entity = 'nurswgvml007'
 
 ## Query with Endtime Syntax
 
-Both `time` and `datetime` columns support [endtime](/end-time-syntax.md) syntax.
+Both `time` and `datetime` columns support [endtime](/docs/end-time-syntax.md) syntax.
 
 ```sql
 SELECT datetime, value

@@ -6,7 +6,7 @@ Retrieve a list of entities matching the specified filter conditions.
 
 ## Request
 
-| **Method** | **Path** | 
+| **Method** | **Path** |
 |:---|:---|
 | GET | `/api/v1/entities` |
 
@@ -14,9 +14,9 @@ Retrieve a list of entities matching the specified filter conditions.
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-| expression |string|Include entities that match an [expression](../expression.md) filter. Use the `name` variable for entity name. The wildcard `*` is supported.|
-| minInsertDate |string|Include entities with `lastInsertDate` equal or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
-| maxInsertDate |string|Include entities with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| expression |string|Include entities that match an [expression](/docs/api/meta/expression.md) filter. Use the `name` variable for entity name. The wildcard `*` is supported.|
+| minInsertDate |string|Include entities with `lastInsertDate` equal or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](/docs/end-time-syntax.md) syntax.|
+| maxInsertDate |string|Include entities with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/docs/end-time-syntax.md) syntax.|
 | limit |integer|Maximum number of entities to retrieve, ordered by name.|
 | tags |string|Comma-separated list of entity tag names to be displayed in the response.<br>For example, `tags=OS,location`<br>Specify `tags=*` to print all entity tags.|
 
@@ -30,7 +30,7 @@ Retrieve a list of entities matching the specified filter conditions.
 | label | string | Entity label. |
 | enabled | boolean | Enabled status. Incoming data is discarded for disabled entities. |
 | interpolate | string | Interpolation mode: `LINEAR` or `PREVIOUS`. <br>Used in SQL `WITH INTERPOLATE` clause when interpolation mode is set to `AUTO`, for example, `WITH INTERPOLATE(1 MINUTE, AUTO)`.|
-| timeZone | string | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to the [Java Time Zone](../../network/timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in entity-specific timezone.|
+| timeZone | string | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to the [Java Time Zone](/docs/api/network/timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in entity-specific timezone.|
 | lastInsertDate | string |Last time, in ISO format, when a value was received by the database for this entity. |
 | tags | object | Entity tags, as requested with the `tags` parameter. |
 
@@ -91,7 +91,7 @@ curl https://atsd_host:8443/api/v1/entities?timeFormat=iso&limit=2&expression=na
 Expression value:
 
 ```text
-name!="" or tags.keyName!="" or label!=null or enabled=true or interpolate="LINEAR" or timeZone!="" 
+name!="" or tags.keyName!="" or label!=null or enabled=true or interpolate="LINEAR" or timeZone!=""
 ```
 
 ### Request

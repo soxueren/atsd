@@ -629,7 +629,7 @@ SELECT datetime, entity, value
 WHERE datetime BETWEEN '2016-12-10T14:00:15Z' AND '2016-12-10T15:30:00.077Z'
 ```
 
-Both columns support [End Time](/end-time-syntax.md) syntax.
+Both columns support [End Time](/docs/end-time-syntax.md) syntax.
 
 ```sql
 SELECT datetime, entity, value
@@ -1532,7 +1532,7 @@ ORDER BY base.datetime
 |-------------|-------------|-------------|-------------|
  ```
 
-In addition, [endtime](/end-time-syntax.md#keywords) keywords such as `NOW`, `PREVIOUS_HOUR` and [interval units](/end-time-syntax.md#interval-units) such as `MINUTE`, `HOUR` are reserved.
+In addition, [endtime](/docs/end-time-syntax.md#keywords) keywords such as `NOW`, `PREVIOUS_HOUR` and [interval units](/docs/end-time-syntax.md#interval-units) such as `MINUTE`, `HOUR` are reserved.
 
 ## Aggregation Functions
 

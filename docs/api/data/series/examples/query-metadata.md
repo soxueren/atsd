@@ -6,7 +6,7 @@ The `addMeta` parameter instructs the server to include entity and metric metada
 
 This provides a convenient method for retrieving both series data and descriptive information about the metric and the entities, without executing a separate request to Meta API `get` methods.
 
-The list of returned fields corresponds to entity [get](../../../meta/entity/get.md) and metric [get](../../../meta/metric/get.md) methods.
+The list of returned fields corresponds to entity [get](/docs/api/meta/entity/get.md) and metric [get](/docs/api/meta/metric/get.md) methods.
 
 Meta API user role is not required to access this metadata.
 
