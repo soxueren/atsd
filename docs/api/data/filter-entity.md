@@ -10,7 +10,7 @@
 | entity   | string | Entity name or entity name pattern. |
 | entities | array | Array of entity names or entity name patterns. |
 | entityGroup | string | Entity group name. Return records for member entities of the specified group.<br>The result will be empty if the group doesn't exist or contains no entities. |
-| entityExpression | string | Filter entities by name, entity tag, and properties using [syntax](/rule-engine/functions.md). <br>Example: `tags.location = 'SVL'`  |
+| entityExpression | string | Filter entities by name, entity tag, and properties using [syntax](/docs/rule-engine/functions.md). <br>Example: `tags.location = 'SVL'`  |
 
 ## `entityExpression` Syntax
 
@@ -24,7 +24,7 @@ Supported fields:
 
 Supported functions:
 
-* [functions](/rule-engine/functions.md)
+* [functions](/docs/rule-engine/functions.md)
 
 
 ## Entity Name Match Examples

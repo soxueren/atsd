@@ -1,6 +1,6 @@
 ##### Step 10:
 
-Open **Configuration -> Rules** page to create an alert rule for my-entity and my-metric using the build in [Rule Engine](/rule-engine).
+Open **Configuration -> Rules** page to create an alert rule for my-entity and my-metric using the build in [Rule Engine](/docs/rule-engine).
 
 The following expression and settings will raise an alert if the average of the last 3 values is above 50:
 
@@ -30,4 +30,4 @@ You can continue learning about ATSD on the following pages:
 
 [Visualization](https://axibase.com/products/axibase-time-series-database/visualization/)
 
-[Rule Engine](/rule-engine)
+[Rule Engine](/docs/rule-engine)
