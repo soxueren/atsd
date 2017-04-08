@@ -79,7 +79,7 @@ ORDER BY date_format(time, 'MM')
 | Dec                     | 3063       |
 ```
 
-Refer to [diurnal](/api/sql/examples/diurnal.md) query examples.
+Refer to [diurnal](/docs/api/sql/examples/diurnal.md) query examples.
 
 ### Issue 3674
 --------------
@@ -94,7 +94,7 @@ WHERE t1.entity = 'mr8w-325u'
 ### Issue 3673
 --------------
 
-We fixed the [PERIOD](/api/sql#period) function by adding the `WEEK` interval type.
+We fixed the [PERIOD](/docs/api/sql#period) function by adding the `WEEK` interval type.
 The list of interval types supported by `PERIOD` now includes:
 
 * YEAR
@@ -208,7 +208,7 @@ If the 'Default User Group' is specified, the new self-registered users are auto
 ### Issue 3470
 --------------
 
-A new [`text` column](/api/sql/examples/select-text-value.md) was made available in the `SELECT` expression and the `WHERE` clause, so
+A new [`text` column](/docs/api/sql/examples/select-text-value.md) was made available in the `SELECT` expression and the `WHERE` clause, so
 that string annotations can be displayed in the result set along with numeric values. The `text` column can be selected in a simple query or in a `JOIN` query.
 
 ```sql
@@ -228,7 +228,7 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 ### Issue 3465
 --------------
 
-The new parameter `addMeta` was added to [series](/api/data/series/query.md) and property methods
+The new parameter `addMeta` was added to [series](/docs/api/data/series/query.md) and property methods
 so that clients can retrieve entity and metric fields and tags in one request, saving an extra round-trip. Another advantage is that the `addMeta` parameter doesn't require the user to
 have a Meta API READ role.
 

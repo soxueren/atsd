@@ -4,7 +4,7 @@
 
 Compute the rate of change (first derivative) by dividing the change in value by the change in time (milliseconds). 
 
-If a [period](/api/data/series/period.md) is specified, the `rate` function returns change per period duration. The rate is computed for each sample, except 1st.
+If a [period](/docs/api/data/series/period.md) is specified, the `rate` function returns change per period duration. The rate is computed for each sample, except 1st.
 
 ### Data
 

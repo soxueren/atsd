@@ -20,11 +20,11 @@ Enter at least 3 values above 50 on the Data Entry page and observe an alert rai
 
 You can continue learning about ATSD on the following pages:
 
-[API](/api#axibase-time-series-database-api)
+[API](/docs/api#axibase-time-series-database-api)
 
 [Writing Data](https://axibase.com/products/axibase-time-series-database/writing-data/)
 
-[Reading Data](/api#api-clients)
+[Reading Data](/docs/api#api-clients)
 
 [Exporting Data](https://axibase.com/products/axibase-time-series-database/exporting-data/)
 

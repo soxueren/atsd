@@ -139,8 +139,8 @@ ATSD web interface is accessible on port 8088/http and 8443/https.
 
 * 8088 – http
 * 8443 – https
-* 8081 – [TCP network commands](/api/network#network-api)
-* 8082 – [UDP network commands](/api/network#udp-datagrams)
+* 8081 – [TCP network commands](/docs/api/network#network-api)
+* 8082 – [UDP network commands](/docs/api/network#udp-datagrams)
 
 ## Port Mappings
 

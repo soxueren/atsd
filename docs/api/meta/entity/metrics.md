@@ -31,7 +31,7 @@ Retrieve a list of metrics collected by the entity.
 
 ### Fields
 
-Refer to Fields specified in [Metrics List](/api/meta/metric/list.md#fields) method.
+Refer to Fields specified in [Metrics List](/docs/api/meta/metric/list.md#fields) method.
 
 ## Example
 

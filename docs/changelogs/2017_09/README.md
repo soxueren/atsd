@@ -6,7 +6,7 @@ Weekly Change Log: February 27 - March 5, 2017
 | Issue| Category        | Type    | Subject                                                                              |
 |------|-----------------|---------|--------------------------------------------------------------------------------------|
 | [3940](#issue-3940) | client          | Feature | Added the `sendCommands` method to the [Python API client](https://github.com/axibase/atsd-api-python).                                                                |
-| 3918 | api-rest        | Bug     | Removed the `last` parameter in [series](/api/data/series/query.md) queries. Use [`limit=1`](/api/data/series/query.md#control-filter-fields) instead.                                            |
+| 3918 | api-rest        | Bug     | Removed the `last` parameter in [series](/docs/api/data/series/query.md) queries. Use [`limit=1`](/docs/api/data/series/query.md#control-filter-fields) instead.                                            |
 
 ### Collector
 

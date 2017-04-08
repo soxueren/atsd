@@ -30,7 +30,7 @@ Refer to message [query](query.md#message-filter-fields) fields.
 |:---|:---|:---|
 |metric|string | [**Required**] Must be set to `message-count`. |
 |groupKeys|array | Array of message tags used for grouping: `type`, `source`, `entity`, etc, for example `"groupKeys": ["entity", "type"]` |
-|aggregate|object | Period [aggregator](/api/data/series/aggregate.md). Only `COUNT` type is supported. <br>`"aggregate":{"type":"COUNT", "period":{"count":1,"unit":"HOUR"}}` |
+|aggregate|object | Period [aggregator](/docs/api/data/series/aggregate.md). Only `COUNT` type is supported. <br>`"aggregate":{"type":"COUNT", "period":{"count":1,"unit":"HOUR"}}` |
 
 #### Entity Filter Fields
 
@@ -57,7 +57,7 @@ Tags used for grouping are returned in the `tags` object.
 
 ### Fields
 
-Refer to [series fields](/api/data/series/insert.md#fields).
+Refer to [series fields](/docs/api/data/series/insert.md#fields).
 
 ### Errors
 

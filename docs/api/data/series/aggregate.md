@@ -9,14 +9,14 @@ Aggregation process:
 1. Load detailed data within the specified `startDate` and `endDate` into each series separately. <br>`startDate` is inclusive and `endDate` is exclusive.
 2. Split each series' time:value array into periods based on [alignment](period.md#alignment) parameter.
 3. Discard periods if its start time is earlier than `startDate`.
-4. Apply [statistical function](/api/data/aggregation.md) to values in each period and return a modified time:value array for each series where time is the period start time and value is the result of the statistical function.
+4. Apply [statistical function](/docs/api/data/aggregation.md) to values in each period and return a modified time:value array for each series where time is the period start time and value is the result of the statistical function.
 
 ## Fields
 
 | **Name** | **Type**  | **Description**   |
 |:---|:---|:---|
-| type  | string        | [**Required**] [Statistical function](/api/data/aggregation.md) applied to detailed values in the period, such as `AVG`, `SUM`, or `COUNT`. |
-| types | array          | Array of [statistical functions](/api/data/aggregation.md). Either `type` or `types` fields are required in each query. |
+| type  | string        | [**Required**] [Statistical function](/docs/api/data/aggregation.md) applied to detailed values in the period, such as `AVG`, `SUM`, or `COUNT`. |
+| types | array          | Array of [statistical functions](/docs/api/data/aggregation.md). Either `type` or `types` fields are required in each query. |
 | period  | object     | [**Required**] [Period](#period). |
 | interpolate  | object  | Generates aggregation periods in case of missing detailed samples using an [interpolation function](#interpolation), for example, `PREVIOUS` or `LINEAR`   |
 | threshold    | object  | Object containing minimum and and maximum range for a `THRESHOLD_*` aggregator.  |

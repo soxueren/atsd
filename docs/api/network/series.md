@@ -57,7 +57,7 @@ time-iso = "d:" ISO_DATE
 
 New metrics will be initialized with the `float` data type by default.
 
-To insert metric samples with another data type, create or update metric properties using [Meta API](/api/meta/metric/update.md) or the user interface.
+To insert metric samples with another data type, create or update metric properties using [Meta API](../meta/metric/update.md) or the user interface.
 
 ## New Records
 
@@ -74,7 +74,7 @@ Entity, metric, and tag names are case-insensitive and will be converted to lowe
 series e:server001 m:cpu_used=72.0 s:1425482080
 ```
 
-* Insert samples for two series: 
+* Insert samples for two series:
   - Insert numeric value '72' for metric 'cpu_used', entity 'server001' recorded on March 4, 2015 at 15:14:40 GMT
   - Insert numeric value '94.5' for metric 'memory_used' and the same entity and time.
 

@@ -6,18 +6,18 @@ Weekly Change Log: December 25, 2016 - January 08, 2017
 | Issue         | Category        | Type | Subject                                                                             |
 |---------------|-----------------|---------|-------------------------------------------------------------------------------------|
 | [3756](#issue-3756)          | sql             | Bug     | Tag filter for the 2nd table removes all rows in `JOIN` queries.                          |
-| [3751](#issue-3751)          | api-rest        | Bug     | `isEmpty()` function causes parse error in the series [query](/api/data/series/query.md) method.                                               |
+| [3751](#issue-3751)          | api-rest        | Bug     | `isEmpty()` function causes parse error in the series [query](/docs/api/data/series/query.md) method.                                               |
 | [3749](#issue-3749)          | sql             | Bug     | `LOCATE` function raises NPE in the `WHERE` clause.                                     |
 | 3748          | test            | Support | CE web tests failing.                                                           |
 | [3747](#issue-3747)          | sql             | Feature | `CAST` doesn't allow `date_format`.                                                 |
 | [3746](#issue-3746)          | sql             | Feature | `u` pattern in the `date_format` function.                                            |
 | [3741](#issue-3741)          | sql             | Bug     | `JOIN USING entity` fails to correctly merge rows with tags.                                                              |
-| [3740](#issue-3740)          | api-rest        | Bug     | Series [query](/api/data/series/query.md) for versioned metrics doesn't provide a history of text values. |
+| [3740](#issue-3740)          | api-rest        | Bug     | Series [query](/docs/api/data/series/query.md) for versioned metrics doesn't provide a history of text values. |
 | [3738](#issue-3738)          | sql             | Bug     | Math function `ABS()` does not accept 2nd aggregate expressions. |
 | [3721](#issue-3721)          | sql             | Feature | `LIKE` comparator optimized.                                                                |
 | [3711](#issue-3711)          | sql             | Bug     | Slow parsing of queries with 30+ arguments in arithmetic expressions in the `SELECT` clause. |
 | [3695](#issue-3695)          | sql             | Bug     | `GROUP BY` with join fails to return records.                                     |
-| [3661](#issue-3661)          | sql             | Feature | [`CAST`](/api/sql#cast) function implemented. |
+| [3661](#issue-3661)          | sql             | Feature | [`CAST`](/docs/api/sql#cast) function implemented. |
 | 3527          | jdbc            | Bug     | DbVisualizer hangs after repetitive query cancellations with the ATSD JDBC driver.  |
 
 ### Collector
@@ -56,7 +56,7 @@ GROUP BY t1.tags, t1.period(1 year)
 ### Issue 3751
 -------------
 
-An error for `entityExpression` was addressed in [series](/api/data/series/query.md) query method when `isEmpty()` was specified with brackets.
+An error for `entityExpression` was addressed in [series](/docs/api/data/series/query.md) query method when `isEmpty()` was specified with brackets.
 
 ```json
 [{
@@ -71,7 +71,7 @@ An error for `entityExpression` was addressed in [series](/api/data/series/query
 ### Issue 3749
 -------------
 
-The SQL parser was fixed to allow for the [`LOCATE`](/api/sql#string-functions) function to be used in the `WHERE` clause.
+The SQL parser was fixed to allow for the [`LOCATE`](/docs/api/sql#string-functions) function to be used in the `WHERE` clause.
 
 ```sql
 SELECT sum(value)
@@ -83,7 +83,7 @@ WHERE datetime > now - 1 * minute
 ### Issue 3747
 -------------
 
-The [`CAST`](/api/sql#cast) function now accepts output of the [`date_format`](/api/sql#time-formatting-functions) function as the argument, for example:
+The [`CAST`](/docs/api/sql#cast) function now accepts output of the [`date_format`](/docs/api/sql#time-formatting-functions) function as the argument, for example:
 
 
 ```sql
@@ -113,7 +113,7 @@ GROUP BY date_format(time, 'u')
 ### Issue 3741
 -------------
 
-[`JOIN USING ENTITY`](/api/sql#join-with-using-entity) didn't merge rows as expected if tag names had the same names but different values. For example, the same tag `tag1` with different values `a` and `b`.
+[`JOIN USING ENTITY`](/docs/api/sql#join-with-using-entity) didn't merge rows as expected if tag names had the same names but different values. For example, the same tag `tag1` with different values `a` and `b`.
 
 ```ls
 series d:2016-12-23T00:00:00.000Z e:e1 m:m3=1 t:tag1=a
