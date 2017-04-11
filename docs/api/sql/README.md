@@ -1542,8 +1542,9 @@ The following functions aggregate values in a column by producing a single value
 |----------------|----------------|----------------|----------------|
 | AVG            | CORREL         | COUNT          | COUNTER        |
 | DELTA          | FIRST          | LAST           | MAX            |
-| MAX_VALUE_TIME | MIN            | MIN_VALUE_TIME | PERCENTILE     |
-| SUM            | STDDEV         | WAVG           | WTAVG          |
+| MAX_VALUE_TIME | MEDIAN         | MIN            | MIN_VALUE_TIME |
+| PERCENTILE     | SUM            | STDDEV         | WAVG           |
+| WTAVG          |                |                |                |
 |----------------|----------------|----------------|----------------|
 ```
 
