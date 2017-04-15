@@ -5,29 +5,28 @@ Weekly Change Log: April 3 - April 9, 2017
 
 | Issue| Category    | Type    | Subject                                                             |
 |------|-------------|---------|---------------------------------------------------------------------|
-| 4000 | sql | Bug | Fix behavior of [`min_value_time`](/docs/api/sql#aggregation-functions) and [`max_value_time`](/docs/api/sql#aggregation-functions) functions applied to NaN or NULL values |
-| [4057](#issue-4057) | sql | Feature | Support multiple conditions in `CASE` expressions |
-| [4083](#issue-4083) | sql | Feature | Allow `metric LIKE` condition in queries to [`atsd_series`](/docs/api/sql#atsd_series-table) table |
-| 4082 | sql | Bug | Improve query cancellation responsiveness |
-| 4081 | api-network | Bug | Fix processing of commands with multiline text values with `time` token |
-| 4075 | sql | Bug | Optimize queries with [`metrics()`](/docs/api/sql#metrics) function and name condition |
-| 4079 | sql | Bug | Metric/entity timeZone field should return timezone text value |
-| 4067 | sql | Bug | [`SELECT 1`](/docs/api/sql#validation-query) query should return both column metadata and a row with `1` value |
-| 4074 | sql | Bug | Fix the NullPointerException when ordering by null tag with [`ROW_MEMORY_THRESHOLD 0`](/docs/api/sql#row_memory_threshold-option) option |
-| 4066 | log_aggregator | Bug | Reduce number of filter instances in  |
-| 4070 | sql | Bug | Optimize processing of `OR datetime` conditions |
-| [4060](#issue-4060) | sql | Feature | Support using [`LAG`](/docs/api/sql#lag)/[`LEAD`](/docs/api/sql#lead) functions with `BETWEEN` operator |
-| 4058 | sql | Bug | Fix the NullPointerException in queries with external sorting and [`OUTER JOIN`](/docs/api/sql#outer-join) with partitioning |
-| 4047 | sql | Bug | Fix the NullPointerException thrown when using `IN` operator in `WHERE` condition |
-| 4062 | api-rest | Bug | Fix table formatting in API documentation |
+| 4000 | sql | Bug | Standardize NaN and NULL processing in aggregation functions: [`min_value_time`](/docs/api/sql#aggregation-functions) and [`max_value_time`](/docs/api/sql#aggregation-functions). |
+| [4057](#issue-4057) | sql | Feature | Add support for conditions containings multiple expressions in `CASE`. |
+| [4083](#issue-4083) | sql | Feature | Allow `metric LIKE` condition in [`atsd_series`](/docs/api/sql#atsd_series-table) queries. |
+| 4082 | sql | Bug | Fix issued with failin query cancellation requests. |
+| 4081 | api-network | Bug | Fix processing of commands with multiline text containing lines starting with `time` keyword. |
+| 4075 | sql | Bug | Optimize queries with [`metrics()`](/docs/api/sql#metrics) function by pushing down predicates into the subquery. |
+| 4079 | sql | Bug | Metric/entity timeZone field should return timezone name instead of toString output. |
+| 4067 | sql | Bug | [`SELECT 1`](/docs/api/sql#validation-query) query fails to return both header row and one data row. |
+| 4074 | sql | Bug | Fix NullPointerException when ordering by NULL tag with [`ROW_MEMORY_THRESHOLD 0`](/docs/api/sql#row_memory_threshold-option) option |
+| 4066 | log_aggregator | Bug | Eliminate duplicate log aggregator instances when logback configuration is reloaded.  |
+| 4070 | sql | Bug | Optimize processing of `OR datetime` condition. |
+| [4060](#issue-4060) | sql | Feature | Add support for [`LAG`](/docs/api/sql#lag) and [`LEAD`](/docs/api/sql#lead) functions in the `BETWEEN` operator. |
+| 4058 | sql | Bug | Fix NullPointerException in partitioned [`OUTER JOIN`](/docs/api/sql#outer-join) queries with externally sorted results. |
+| 4047 | sql | Bug | Fix error raised when using `IN` operator in `WHERE` condition containing [`LAG`](/docs/api/sql#lag) and [`LEAD`](/docs/api/sql#lead) functions. |
 
 ### Collector
 
 | Issue| Category    | Type    | Subject                                                                              |
 |------|-------------|---------|--------------------------------------------------------------------------------------|
-| 4090 | jdbc | Bug | Don't log error if InterpolateType value is NULL |
-| 4078 | core | Bug | Fix parsing series commands with '=' symbol in text field  |
-| 4061 | file | Bug | Save error message if FTP connection fails |
+| 4090 | jdbc | Bug | Don't log error if InterpolateType value is NULL. |
+| 4078 | core | Bug | Fix parsing series commands with '=' symbol in the text field.  |
+| 4061 | file | Bug | Save error messages if FTP connection fails. |
 
 ## ATSD
 
