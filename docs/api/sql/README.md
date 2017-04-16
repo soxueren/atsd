@@ -5,6 +5,9 @@ Axibase Time Series Database supports SQL query language for retrieving time ser
 The SQL statements can be executed interactively via the SQL console as well as on [schedule](#scheduler).
 
 * [Syntax](#syntax)
+  * [SELECT Expression](#select-expression)
+  * [WHERE Clause](#where-clause)
+  * [Other Clauses](#other-clauses)
   * [Columns](#columns)
   * [Aliases](#aliases)
   * [Interval Condition](#interval-condition)
@@ -12,12 +15,15 @@ The SQL statements can be executed interactively via the SQL console as well as 
   * [Date Functions](#date-functions)
   * [Mathematical Functions](#mathematical-functions)
   * [String Functions](#string-functions)
+  * [Other Functions](#other-functions)
+  * [CASE Expression](#case-expression)
   * [Arithmetic Operators](#arithmetic-operators)
   * [Match Expressions](#match-expressions)
   * [NULL](#null)
   * [Not a Number](#not-a-number-nan)
   * [Processing Sequence](#processing-sequence)
   * [Keywords](#keywords)
+* [Processing Sequence](#processing-sequence)
 * [Period](#period)
 * [Interpolation](#interpolation)
 * [Regularization](#regularization)
@@ -48,8 +54,9 @@ SELECT { * | { expr [ .* | [ AS ] alias ] } }
   [ WITH ROW_NUMBER expr ]
 [ GROUP BY expr [, ...] ]
   [ HAVING expr(boolean) ]
-  [ WITH LAST_TIME expr ]
-  [ WITH INTERPOLATE expr ]
+  [ WITH ROW_NUMBER expr ] 
+[ WITH LAST_TIME expr ]
+[ WITH INTERPOLATE expr ]  
 [ ORDER BY expr [{ ASC | DESC }] [, ...] ]
 [ LIMIT count [ OFFSET skip ]]
   [ OPTION(expr) [...]]
@@ -146,19 +153,48 @@ WHERE datetime >= NOW - 15*MINUTE
 
 ### Functions
 
-* **ROW_NUMBER** returns row index within each partition.
-* **LAST_TIME** returns last insert time in millisecond for each series.
+* **ROW_NUMBER** returns row index within each [partition](#partitioning).
+* **INTERPOLATE** fills the gaps in [irregular](#regularization) series.
+* **INTERVAL_NUMBER** returns interval index when multiple intervals are selected with [Interval Condition](#interval-condition).
+* **LAST_TIME** returns [last insert](#last_time-syntax) time in millisecond for each series.
+
+### Data Types
+
+The database can return `STRING`, `BOOLEAN`, and `NUMBER` data types. 
+
+The `NUMBER` type is one of the following:
+
+* SHORT
+* INTEGER
+* LONG
+* FLOAT
+* DOUBLE
+* DECIMAL
+
+The `BOOLEAN` type can be produced by including boolean comparisons as part of the `SELECT` expression.
+
+```sql
+SELECT datetime, value, value > 0 AS POSITIVE
+ FROM mpstat.cpu_busy
+LIMIT 1
+```
+
+```ls
+| datetime             | value | POSITIVE | 
+|----------------------|-------|----------| 
+| 2016-06-17T07:29:04Z | 0     | false    | 
+```
 
 ### Comments
 
 Comments can be inserted into SQL statements with `--` (two hyphens) and `/* */` (multi-line) to provide descriptive information about the query and its expected results.
 
 ```sql
--- comment until line break
+-- comment single-line text
 
 /*
-comment text on
-multiple line
+  comment text on
+  multiple lines
 */
 ```
 
@@ -2192,6 +2228,26 @@ CASE date_format(time, 'yyyy')
 END AS 'Tax Day'
 ```
 
+## Interval Number
+
+The `INTERVAL_NUMBER()` function can be referenced in the `SELECT` expression. It returns an index, starting with 1, of the current time interval in queries selecting [multiple intervals](#interval-condition) using datetime `OR` condition or datetime subquery.
+
+```sql
+SELECT datetime, count(*), INTERVAL_NUMBER()
+  FROM mpstat.cpu_busy 
+WHERE entity = 'nurswgvml007'
+  AND (datetime BETWEEN current_day AND next_day 
+    OR datetime BETWEEN current_day-1*WEEK AND next_day-1*WEEK)
+GROUP BY PERIOD(1 DAY)
+```
+
+```ls
+| datetime             | count(*) | interval_number() | 
+|----------------------|----------|-------------------| 
+| 2017-04-09T00:00:00Z | 5393     | 1                 | 
+| 2017-04-16T00:00:00Z | 5191     | 2                 | 
+```
+
 ## Case Sensitivity
 
 * SQL keywords are case-insensitive.
@@ -2504,6 +2560,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [String Functions](examples/string-functions.md)
 - [LOOKUP Function](examples/lookup.md)
 - [CASE Expression](examples/case.md)
+- [Interval Number](examples/select-interval-number.md)
 - [Column Alias](examples/alias-column.md)
 - [Table Alias](examples/alias-table.md)
 - [Escape Quotes](examples/select-escape-quote.md)
