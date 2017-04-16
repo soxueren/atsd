@@ -192,8 +192,8 @@ Virtual tables have the same pre-defined columns since all the the underlying da
 |`tags.{name}`    |string   | Series tag value. Returns `NULL` if the specified tag doesn't exist for this series.|
 |`tags`           |string   | All series tags, concatenated to `name1=value;name2=value` format.|
 |`tags.*`         |string   | Expands to multiple columns, each column containing a separate series tag.|
-|`datetime`       |datetime | Observation time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY` query with `PERIOD`, datetime column returns period start time in ISO format, same as `date_format(PERIOD())` column specified in the `GROUP BY` clause.|
-|`time`           |long     | Observation time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY PERIOD` query, time column returns period start time, same as the `PERIOD()` column specified in the `GROUP BY` clause.|
+|`datetime`       |datetime | Sample time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY PERIOD` queries, the datetime column returns period start time in ISO format, same as `date_format(PERIOD(...))`.|
+|`time`           |long     | Sample time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY PERIOD` queries, the time column returns period start time.|
 |`period`         |long     | Period start time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>This column is accessible in `GROUP BY PERIOD` query.|
 
 #### Metric Columns
@@ -689,7 +689,7 @@ ORDER BY datetime)
 
 ## Period
 
-A period is a repeating time interval used to group detailed values occurring in the period into buckets in order to apply aggregation functions.
+Period is a repeating time interval used to group values occurred within each interval into buckets in order to apply aggregation functions.
 
 Period syntax:
 
@@ -697,19 +697,21 @@ Period syntax:
 PERIOD({count} {unit} [, option])
 ```
 
-`option` = interpolate | align | extend
+`option` = interpolate | align | extend | timezone
 
 * `interpolate` = PREVIOUS | NEXT | LINEAR | VALUE {number}
 * `extend` = EXTEND
 * `align` = START_TIME, END_TIME, FIRST_VALUE_TIME, CALENDAR
+* `timezone` = [Time Zone ID](/docs/api/network/timezone-list.md), enclosed in double quotes.
 
-Period options are separated by comma and can be specified in any order.
+The options are separated by comma and can be specified in any order.
 
 ```sql
 PERIOD(5 MINUTE)
 PERIOD(5 MINUTE, END_TIME)
 PERIOD(5 MINUTE, CALENDAR, VALUE 0)
-PERIOD(5 MINUTE, LINEAR, EXTEND)
+PERIOD(1 HOUR, LINEAR, EXTEND)
+PERIOD(1 DAY, "US/Eastern")
 ```
 
 | **Name** | **Description** |
@@ -719,6 +721,7 @@ PERIOD(5 MINUTE, LINEAR, EXTEND)
 | interpolate | Apply [interpolation function](#interpolation), such as `LINEAR` or `VALUE 0`, to add missing periods.|
 | extend | Add missing periods at the beginning and end of the selection interval using `VALUE {n}` or `NEXT` and `PREVIOUS` interpolation functions.|
 | align | Align the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
+| timezone | Time zone for aligning periods in `CALENDAR` mode, such as `"US/Eastern"` or `"UTC"`.<br>Default value: current server timezone.|
 
 
 ```sql
@@ -748,17 +751,13 @@ WHERE datetime >= CURRENT_HOUR AND datetime < NEXT_HOUR
 
 ### Period Alignment
 
-By default, periods are aligned to a calendar grid according to the time unit specified in the period.
+The default `CALENDAR` setting creates calendar-aligned periods using the **duration** specified in the `PERIOD` function.
 
-For example, `period(1 HOUR)` starts at 0 minutes of each hour within the timespan.
-
-For DAY, WEEK, MONTH, QUARTER, and YEAR units the start of the day is determined according to server timezone.
-
-The default `CALENDAR` alignment can be changed to `START_TIME`, `END_TIME`, or `FIRST_VALUE_TIME`.
+For example, `period(1 HOUR)` initializes 1-hour long periods starting at `0` minutes of each hour within the selection interval.
 
 | **Alignment** | **Description**|
 |:---|:---|
-| CALENDAR | Period start is rounded down to the nearest time unit. |
+| CALENDAR | Period starts are aligned to the calendar. |
 | START_TIME | First period begins at start time specified in the query. |
 | FIRST_VALUE_TIME | First period begins at the time of first retrieved value. |
 | END_TIME | Last period ends on end time specified in the query. |
@@ -775,35 +774,52 @@ GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 
 #### `CALENDAR` Alignment
 
-Calendar alignment rounds the time to the next unit and increments period until the period start is equal or greater than startDate.
+The `CALENDAR` alignment calculates the first period according to the rules below and creates subsequent periods by incrementing the duration specified in the `PERIOD` function.
 
-The next time unit for `DAY` is `MONTH`.
+* Start time of the selection interval is rounded down to calculate the base time.
+* The base time is incremented by period duration until the period's start is equal or greater than the interval start date. This period becomes the first period.
 
-The next time unit for `WEEK` is the first Monday of the given `MONTH`.
+**Rounding Rules**
 
-For instance, if the period unit is `MINUTE`, the time is rounded to start of the hour (next unit) containing `startDate`.
+| **Time Unit**   | **Rounding** |
+|-------------|-----------|
+| MILLISECOND | 0 milliseconds in a given second. |
+| SECOND | 0 seconds in a given minute. |
+| MINUTE | 0 minutes in a given hour. |
+| HOUR | 0:00 on a given day. |
+| DAY | 0:00 on the 1st day in a given month. |
+| WEEK | 0:00 on the 1st Monday in a given month. |
+| MONTH | 0:00 on the 1st day in a given year. |
+| QUARTER | 0:00 on the 1st day in a given year. |
+| YEAR | 0:00 on the 1st day in a given century. |
 
-Example: `45 MINUTE` with `startDate` of `2016-06-20T15:05:00Z`.
-Time is rounded to `15:00` and then incremented by 45 minutes until period start is >= `2016-06-20T15:05:00Z`.
-Such a period would be `[2016-06-20T15:45:00Z - 2016-06-20T16:30:00Z)`.
+Example:
+  - Selection interval is [`2016-06-20 15:05` - `2016-06-24 00:00`).
+  - Period is set to `45 MINUTE`.
+  - Start time `15:05` is rounded to `15:00` as base time.
+  - Base time is incremented by 45 minutes until a period start is >= `15:05`.
+  - The first period is therefore set to `15:45` or `[2016-06-20 15:45 - 2016-06-20 16:30)`.
+  - The next period is incremented by duration of 45 minutes from the start of the previous period to `[2016-06-20 16:30 - 2016-06-20 17:15)`.
 
 ```ls
-| Period     | Start Date            | End Date              | 1st Period            | 2nd Period            | Last Period          |
-|------------|-----------------------|-----------------------|-----------------------|-----------------------|----------------------|
-| 45 MINUTE  | 2016-06-20T15:05:00Z  | 2016-06-24T00:00:00Z  | 2016-06-20T15:45:00Z  | 2016-06-20T16:30:00Z  | 2016-06-23T23:15:00Z |
-| 45 MINUTE  | 2016-06-20T15:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-20T15:00:00Z  | 2016-06-20T15:45:00Z  | 2016-06-23T23:15:00Z |
-| 1 HOUR     | 2016-06-20T16:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-20T16:00:00Z  | 2016-06-20T17:00:00Z  | 2016-06-23T23:00:00Z |
-| 1 HOUR     | 2016-06-20T16:05:00Z  | 2016-06-23T23:55:00Z  | 2016-06-20T17:00:00Z  | 2016-06-20T18:00:00Z  | 2016-06-23T23:00:00Z |
-| 1 HOUR     | 2016-06-20T16:30:00Z  | 2016-06-24T00:00:00Z  | 2016-06-20T17:00:00Z  | 2016-06-20T18:00:00Z  | 2016-06-23T23:00:00Z |
-| 7 HOUR     | 2016-06-20T16:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-20T21:00:00Z  | 2016-06-21T04:00:00Z  | 2016-06-23T19:00:00Z |
-| 10 HOUR    | 2016-06-20T16:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-20T20:00:00Z  | 2016-06-21T06:00:00Z  | 2016-06-23T18:00:00Z |
-| 1 DAY      | 2016-06-01T16:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-02T00:00:00Z  | 2016-06-03T00:00:00Z  | 2016-06-23T00:00:00Z |
-| 2 DAY      | 2016-06-01T16:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-03T00:00:00Z  | 2016-06-05T00:00:00Z  | 2016-06-23T00:00:00Z |
-| 5 DAY      | 2016-06-01T16:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-06T00:00:00Z  | 2016-06-11T00:00:00Z  | 2016-06-21T00:00:00Z |
-| 1 WEEK     | 2016-06-01T16:00:00Z  | 2016-06-24T00:00:00Z  | 2016-06-06T00:00:00Z  | 2016-06-13T00:00:00Z  | 2016-06-20T00:00:00Z |
-| 1 WEEK     | 2016-05-01T16:00:00Z  | 2016-05-24T00:00:00Z  | 2016-05-02T00:00:00Z  | 2016-05-09T00:00:00Z  | 2016-05-23T00:00:00Z |
-| 1 WEEK     | 2016-06-01T00:00:00Z  | 2016-06-02T00:00:00Z  | - 1st Monday Jun-06.  | -                     | -                    |
+| Period     | Start Date        | End Date          | 1st Period        | 2nd Period        | Last Period      |
+|------------|-------------------|-------------------|-------------------|-------------------|------------------|
+| 45 MINUTE  | 2016-06-20 15:05  | 2016-06-24 00:00  | 2016-06-20 15:45  | 2016-06-20 16:30  | 2016-06-23 23:15 |
+| 45 MINUTE  | 2016-06-20 15:00  | 2016-06-24 00:00  | 2016-06-20 15:00  | 2016-06-20 15:45  | 2016-06-23 23:15 |
+| 1 HOUR     | 2016-06-20 16:00  | 2016-06-24 00:00  | 2016-06-20 16:00  | 2016-06-20 17:00  | 2016-06-23 23:00 |
+| 1 HOUR     | 2016-06-20 16:05  | 2016-06-23 23:55  | 2016-06-20 17:00  | 2016-06-20 18:00  | 2016-06-23 23:00 |
+| 1 HOUR     | 2016-06-20 16:30  | 2016-06-24 00:00  | 2016-06-20 17:00  | 2016-06-20 18:00  | 2016-06-23 23:00 |
+| 7 HOUR     | 2016-06-20 16:00  | 2016-06-24 00:00  | 2016-06-20 21:00  | 2016-06-21 04:00  | 2016-06-23 19:00 |
+| 10 HOUR    | 2016-06-20 16:00  | 2016-06-24 00:00  | 2016-06-20 20:00  | 2016-06-21 06:00  | 2016-06-23 18:00 |
+| 1 DAY      | 2016-06-01 16:00  | 2016-06-24 00:00  | 2016-06-02 00:00  | 2016-06-03 00:00  | 2016-06-23 00:00 |
+| 2 DAY      | 2016-06-01 16:00  | 2016-06-24 00:00  | 2016-06-03 00:00  | 2016-06-05 00:00  | 2016-06-23 00:00 |
+| 5 DAY      | 2016-06-01 16:00  | 2016-06-24 00:00  | 2016-06-06 00:00  | 2016-06-11 00:00  | 2016-06-21 00:00 |
+| 1 WEEK     | 2016-06-01 16:00  | 2016-06-24 00:00  | 2016-06-06 00:00  | 2016-06-13 00:00  | 2016-06-20 00:00 |
+| 1 WEEK     | 2016-05-01 16:00  | 2016-05-24 00:00  | 2016-05-02 00:00  | 2016-05-09 00:00  | 2016-05-23 00:00 |
+| 1 WEEK     | 2016-06-01 00:00  | 2016-06-02 00:00  | 1st Monday Jun-06 | -                 | -                |
 ```
+
+For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units the start of the day is determined according to the **server timezone**, unless a user-defined timezone is specified as an option, for example `GROUP BY entity, PERIOD(1 MONTH, "UTC")`.
 
 #### `END_TIME` Alignment
 

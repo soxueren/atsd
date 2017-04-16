@@ -75,6 +75,37 @@ WHERE entity = 'nurswgvml007'
 | 2016-06-18T20:00:43.000Z | 6.1   |
 ```
 
+## Query with Endtime Syntax (TimeZone)
+
+[Endtime](/docs/end-time-syntax.md) keywords are calculated based on the current server time and the server's [time zone](/docs/api/network/timezone-list.md).
+
+If the server's time zone is `Europe/Berlin`, for example, the `current_day` keyword in the below query is evaluated to `2017-04-15T00:00:00+02:00` local time or `2017-04-14T22:00:00Z` UTC time.
+
+```sql
+SELECT datetime, date_format(time, "yyyy-MM-dd'T'HH:mm:ssZZ") AS local_datetime, value
+  FROM m1
+WHERE datetime >= current_day
+```
+
+```ls
+| datetime             | local_datetime            | value |
+|----------------------|---------------------------|-------|
+| 2017-04-14T22:00:00Z | 2017-04-15T00:00:00+02:00 | 22    | <- midnight in local server timezone: UTC+02:00
+| 2017-04-14T23:00:00Z | 2017-04-15T01:00:00+02:00 | 23    |
+| 2017-04-15T00:00:00Z | 2017-04-15T02:00:00+02:00 | 0     |
+| 2017-04-15T01:00:00Z | 2017-04-15T03:00:00+02:00 | 1     |
+| 2017-04-15T02:00:00Z | 2017-04-15T04:00:00+02:00 | 2     |
+```
+
+```ls
+series e:e1 d:2017-04-14T21:00:00Z m:m1=21
+series e:e1 d:2017-04-14T22:00:00Z m:m1=22
+series e:e1 d:2017-04-14T23:00:00Z m:m1=23
+series e:e1 d:2017-04-15T00:00:00Z m:m1=0
+series e:e1 d:2017-04-15T01:00:00Z m:m1=1
+series e:e1 d:2017-04-15T02:00:00Z m:m1=2
+```
+
 ## Query using `BETWEEN`
 
 The `BETWEEN` operator is inclusive and includes samples recorded at both the start and the end of the interval.
