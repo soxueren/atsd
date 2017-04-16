@@ -776,30 +776,30 @@ GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 
 The `CALENDAR` alignment calculates the first period according to the rules below and creates subsequent periods by incrementing the duration specified in the `PERIOD` function.
 
-* Start time of the selection interval is rounded down to calculate the base time.
+* Start time of the selection interval is rounded down to calculate the base time. If start time is not specified, it is set to January 1st, 1970.
 * The base time is incremented by period duration until the period's start is equal or greater than the interval start date. This period becomes the first period.
 
 **Rounding Rules**
 
-| **Time Unit**   | **Rounding** |
+| **Time Unit**   | **Rounded (Base) Time** |
 |-------------|-----------|
-| MILLISECOND | 0 milliseconds in a given second. |
-| SECOND | 0 seconds in a given minute. |
-| MINUTE | 0 minutes in a given hour. |
-| HOUR | 0:00 on a given day. |
-| DAY | 0:00 on the 1st day in a given month. |
-| WEEK | 0:00 on the 1st Monday in a given month. |
-| MONTH | 0:00 on the 1st day in a given year. |
-| QUARTER | 0:00 on the 1st day in a given year. |
-| YEAR | 0:00 on the 1st day in a given century. |
+| MILLISECOND | 00:00 in a given hour. |
+| SECOND | 00:00 in a given hour. |
+| MINUTE | 00:00 in a given hour. |
+| HOUR | 00:00 on a given day. |
+| DAY | 00:00 on the 1st day in a given month. |
+| WEEK | 00:00 on the 1st Monday in a given month. |
+| MONTH | 00:00 on January 1st in a given year. |
+| QUARTER | 00:00 on January 1st in a given year. |
+| YEAR | 00:00 on January 1st in a given year. |
 
 Example:
   - Selection interval is [`2016-06-20 15:05` - `2016-06-24 00:00`).
   - Period is set to `45 MINUTE`.
-  - Start time `15:05` is rounded to `15:00` as base time.
-  - Base time is incremented by 45 minutes until a period start is >= `15:05`.
-  - The first period is therefore set to `15:45` or `[2016-06-20 15:45 - 2016-06-20 16:30)`.
-  - The next period is incremented by duration of 45 minutes from the start of the previous period to `[2016-06-20 16:30 - 2016-06-20 17:15)`.
+  - Start time `15:05` is rounded to `2016-06-20 00:00` as the **base** time.
+  - Base time is incremented by 45 minutes until a period start is >= `15:05`: 00:00, 00:45, 01:30, etc.
+  - The first period to reach the start of the selection interval is `15:45` or `[2016-06-20 15:45 - 2016-06-20 16:30)`.
+  - The next period is incremented by 45 minutes from the start of the previous period to `[2016-06-20 16:30 - 2016-06-20 17:15)`.
 
 ```ls
 | Period     | Start Date        | End Date          | 1st Period        | 2nd Period        | Last Period      |
@@ -818,6 +818,8 @@ Example:
 | 1 WEEK     | 2016-05-01 16:00  | 2016-05-24 00:00  | 2016-05-02 00:00  | 2016-05-09 00:00  | 2016-05-23 00:00 |
 | 1 WEEK     | 2016-06-01 00:00  | 2016-06-02 00:00  | 1st Monday Jun-06 | -                 | -                |
 ```
+
+> If the last period's end time exceeds the end time of the selection interval, the last period may contain partial data.
 
 For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units the start of the day is determined according to the **server timezone**, unless a user-defined timezone is specified as an option, for example `GROUP BY entity, PERIOD(1 MONTH, "UTC")`.
 
