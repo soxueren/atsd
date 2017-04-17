@@ -160,29 +160,35 @@ WHERE datetime >= NOW - 15*MINUTE
 
 ### Data Types
 
-The database can return `STRING`, `BOOLEAN`, and `NUMBER` data types. 
+| **Type Name** | **Type Alias** |
+|---------|--------|
+| BOOLEAN | - |
+| DECIMAL | - |
+| DOUBLE | - |
+| FLOAT | - |
+| INTEGER | - |
+| BIGINT | LONG |
+| SMALLINT | SHORT |
+| VARCHAR | STRING |
+| TIMESTAMP | - |
+| JAVA_OBJECT | - |
 
-The `NUMBER` type is one of the following:
+The data type returned by the database for a given `value` column depends on the data type of the [metric](/docs/api/meta/metric/list.md#data-types).
 
-* SHORT
-* INTEGER
-* LONG
-* FLOAT
-* DOUBLE
-* DECIMAL
+The `NUMBER` (parent type for all numeric data types) and `STRING` type can be used to convert data types with the [`CAST`](#cast) function.
 
-The `BOOLEAN` type can be produced by including boolean comparisons as part of the `SELECT` expression.
+The `BOOLEAN` type is produced by including boolean comparisons in the `SELECT` expression.
 
 ```sql
-SELECT datetime, value, value > 0 AS POSITIVE
+SELECT datetime, value, value > 0 AS Is_Positive
  FROM mpstat.cpu_busy
 LIMIT 1
 ```
 
 ```ls
-| datetime             | value | POSITIVE | 
-|----------------------|-------|----------| 
-| 2016-06-17T07:29:04Z | 0     | false    | 
+| datetime             | value | Is_Positive | 
+|----------------------|-------|-------------| 
+| 2017-04-17T07:29:04Z | 0     | false       | 
 ```
 
 ### Comments
@@ -757,7 +763,7 @@ PERIOD(1 DAY, "US/Eastern")
 | interpolate | Apply [interpolation function](#interpolation), such as `LINEAR` or `VALUE 0`, to add missing periods.|
 | extend | Add missing periods at the beginning and end of the selection interval using `VALUE {n}` or `NEXT` and `PREVIOUS` interpolation functions.|
 | align | Align the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
-| timezone | Time zone for aligning periods in `CALENDAR` mode, such as `"US/Eastern"` or `"UTC"`.<br>Default value: current server timezone.|
+| timezone | Time zone for aligning periods in `CALENDAR` mode, such as `"US/Eastern"` or `"UTC"`.<br>Default value: current database timezone.|
 
 
 ```sql
@@ -857,7 +863,7 @@ Example:
 
 > If the last period's end time exceeds the end time of the selection interval, the last period may contain partial data.
 
-For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units the start of the day is determined according to the **server timezone**, unless a user-defined timezone is specified as an option, for example `GROUP BY entity, PERIOD(1 MONTH, "UTC")`.
+For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units the start of the day is determined according to the **database timezone**, unless a user-defined timezone is specified as an option, for example `GROUP BY entity, PERIOD(1 MONTH, "UTC")`.
 
 #### `END_TIME` Alignment
 
@@ -1041,7 +1047,7 @@ WITH INTERPOLATE (1 MINUTE, LINEAR, OUTER, NAN, START_TIME)
 
 | **Name** | **Description**|
 |:---|:---|
-| `CALENDAR` | [**Default**] Aligns regular timestamps according to the server calendar. |
+| `CALENDAR` | [**Default**] Aligns regular timestamps according to the database calendar. |
 | `START_TIME` | Starts regular timestamps at the start time of the selection interval.<br>This option requires that both start and end time are specified in the query. |
 
 ### Regularization Examples
@@ -1683,9 +1689,9 @@ date_format(long milliseconds[, string time_format[, string time_zone]])
 
 If the `time_format` argument is not provided, ISO 8601 format is applied.
 
-The `time_zone` parameter accepts GTM offset in the format of `GMT-hh:mm` or a [time zone name](/docs/api/network/timezone-abnf.md) and allows formatting dates in a time zone, different from the server's time zone.
+The `time_zone` parameter accepts GTM offset in the format of `GMT-hh:mm` or a [time zone name](/docs/api/network/timezone-abnf.md) and allows formatting dates in a time zone, different from the database time zone.
 
-In addition, the `time_zone` parameter can be specified as `AUTO` in which case the date is formatted with entity-specific time zone. If the entity-specific time zone is not defined, metric-specific time zone is used instead. If neither entity- nor metric-specific time zone is specified, local server time is applied.
+In addition, the `time_zone` parameter can be specified as `AUTO` in which case the date is formatted with entity-specific time zone. If the entity-specific time zone is not defined, metric-specific time zone is used instead. If neither entity- nor metric-specific time zone is specified, the database timezone is applied.
 
 Examples:
 
@@ -1702,7 +1708,7 @@ Examples:
 SELECT entity, datetime, metric.timeZone AS 'Metric TZ', entity.timeZone AS 'Entity TZ',
   date_format(time) AS 'default',
   date_format(time, "yyyy-MM-dd'T'HH:mm:ssZZ") AS 'ISO 8601',
-  date_format(time, 'yyyy-MM-dd HH:mm:ss') AS 'Local Server',
+  date_format(time, 'yyyy-MM-dd HH:mm:ss') AS 'Local Database',
   date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00') AS 'GMT Offset',  
   date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PDT') AS 'PDT',
   date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', 'PDT') AS ' PDT t/z',
@@ -1715,9 +1721,9 @@ FROM mpstat.cpu_busy
 ```
 
 ```ls
-| entity       | datetime                 | Metric TZ  | Entity TZ   | default                  | ISO 8601             | Local Server        | GMT Offset          | PDT                 | PDT t/z                   | AUTO: CST                 | Quarter |
-|--------------|--------------------------|------------|-------------|--------------------------|----------------------|---------------------|---------------------|---------------------|---------------------------|---------------------------|---------|
-| nurswgvml006 | 2017-04-06T11:03:19.000Z | US/Eastern | US/Mountain | 2017-04-06T11:03:19.000Z | 2017-04-06T11:03:19Z | 2017-04-06 11:03:19 | 2017-04-06 03:03:19 | 2017-04-06 04:03:19 | 2017-04-06 04:03:19-07:00 | 2017-04-06 05:03:19-06:00 | 2       |
+| entity       | datetime                 | Metric TZ  | Entity TZ   | default                  | ISO 8601             | Local Database        | GMT Offset          | PDT                 | PDT t/z                   | AUTO: CST                 | Quarter |
+|--------------|--------------------------|------------|-------------|--------------------------|----------------------|-----------------------|---------------------|---------------------|---------------------------|---------------------------|---------|
+| nurswgvml006 | 2017-04-06T11:03:19.000Z | US/Eastern | US/Mountain | 2017-04-06T11:03:19.000Z | 2017-04-06T11:03:19Z | 2017-04-06 11:03:19   | 2017-04-06 03:03:19 | 2017-04-06 04:03:19 | 2017-04-06 04:03:19-07:00 | 2017-04-06 05:03:19-06:00 | 2       |
 ```
 
 ```ls
@@ -1785,7 +1791,7 @@ date_parse(string datetime[, string time_format[, string time_zone]])
 ```
 
 * The default `time_format` is ISO 8601: `yyyy-MM-dd'T'HH:mm:ss.SSSZZ`. See supported pattern letters [here](time-pattern.md).
-* The default `time_zone` is the server time zone.
+* The default `time_zone` is the database time zone.
 
 ```java
 /* Parse date using the default ISO 8601 format.*/
@@ -1794,7 +1800,7 @@ date_parse("2017-03-31T12:36:03.283Z")
 /* Parse date using the ISO 8601 format, without milliseconds */
 date_parse("2017-03-31T12:36:03Z", "yyyy-MM-dd'T'HH:mm:ssZZ")
 
-/* Parse date using the server time zone. */
+/* Parse date using the database time zone. */
 date_parse("31.03.2017 12:36:03.283", "dd.MM.yyyy HH:mm:ss.SSS")
 
 /* Parse date using the offset specified in the datetime string. */
@@ -2340,14 +2346,15 @@ The query may contain multiple `OPTION` clauses specified at the end of the stat
 
 ### `ROW_MEMORY_THRESHOLD` Option
 
-The database may choose to process rows in a temporary table if the query includes one of the following clauses:
+The database may choose to process rows using the local filesystem as opposed to memory if the query includes one of the following clauses:
 
 * `JOIN`
 * `ORDER BY`
 * `GROUP BY`
+* `WITH INTERPOLATE`
 * `WITH ROW_NUMBER`
 
-The `OPTION (ROW_MEMORY_THRESHOLD {n})` instructs the database to perform processing in memory as opposed to a temporary table if the number of rows is within the specified threshold `{n}`.
+The `OPTION (ROW_MEMORY_THRESHOLD {n})` forces the database to perform processing in memory if the number of rows is within the specified threshold `{n}`.
 
 Example:
 
@@ -2360,11 +2367,11 @@ ORDER BY entity, tags.file_system, datetime
   OPTION (ROW_MEMORY_THRESHOLD 10000)
 ```
 
-If `{n}` is zero or negative, the results are processed using the temporary table.
+If `{n}` is zero or negative, the results are processed using the local file system.
 
 This clause overrides the conditional allocation of shared memory established with the **Admin:Server Properties**:`sql.tmp.storage.max_rows_in_memory` setting which is set to `50*1024` rows by default.
 
-The `sql.tmp.storage.max_rows_in_memory` limit is shared by concurrently executing queries. If a query selects more rows than remaining in the shared memory, it will be processed using a temporary table which may result in increased response times during heavy read activity.
+The `sql.tmp.storage.max_rows_in_memory` limit is shared by concurrently executing queries. If a query selects more rows than remaining in the shared memory, it will be processed using the local file system which may result in increased response times during heavy read activity.
 
 > The row count threshold is applied to the number of rows selected from the underlying table, and not the number rows returned to the client.
 

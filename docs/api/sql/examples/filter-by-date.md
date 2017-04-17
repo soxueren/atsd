@@ -137,12 +137,14 @@ The above condition is equivalent to:
 
 ## Query using `BETWEEN` Subquery
 
-The `BETWEEN` operator allows specifying a subquery that must return rows containing multiple rows with 1 column.
+The `BETWEEN` operator allows specifying a subquery that must return a result set containing multiple rows with 1 column.
 
-* If the subquery returns no values, the condition is considered FALSE, and no data is returned.
+* If the subquery returns no values, the condition evaluates to `FALSE`, and no rows are returned.
 * If the subquery returns only one value, it is considered as the lower boundary of the time interval and the upper boundary is not defined.
-* If there are greater than 2 values, an error is raised.
 * If there are 2 values, the second value must be greater or equal the first value.
+* If there are more than 2 values, then each pair of values is processed as a separate time interval.
+
+> The intervals in the result set can be identified with the [`INTERVAL_NUMBER()`](../README.MD#interval-number) function.
 
 ```ls
 series d:2017-04-03T01:00:00Z e:nurswgvml007 x:maintenance-rfc=RFC12-start
@@ -182,6 +184,29 @@ ORDER BY datetime)
 | avg(value) | first(value) | last(value) | count(value) |
 |------------|--------------|-------------|--------------|
 | 14.1       | 24.0         | 63.0        | 56.0         |
+```
+
+### Multiple Intervals in the Subquery
+
+```sql
+-- outer query
+WHERE t1.datetime BETWEEN (SELECT datetime FROM 'TV6.Unit_BatchID' WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800'))
+```
+
+```ls
+| datetime             |
+|----------------------|
+| 2016-10-04T02:01:20Z | 1st interval start
+| 2016-10-04T02:03:05Z | 1st interval end
+| 2016-10-04T02:03:10Z | 2nd interval start
+| 2016-10-04T02:07:05Z | 2nd interval end
+```
+
+The above subquert result is equivalent to:
+
+```sql
+WHERE t1.datetime BETWEEN `2016-10-04T02:01:20Z` AND `2016-10-04T02:03:05Z`
+   OR t1.datetime BETWEEN `2016-10-04T02:03:10Z` AND `2016-10-04T02:07:05Z`
 ```
 
 ## Query Multiple Intervals with `OR`
