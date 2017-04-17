@@ -833,7 +833,7 @@ The `CALENDAR` alignment calculates the first period according to the rules belo
 | WEEK | 00:00 on the 1st Monday in a given month. |
 | MONTH | 00:00 on January 1st in a given year. |
 | QUARTER | 00:00 on January 1st in a given year. |
-| YEAR | 00:00 on January 1st in a given year. |
+| YEAR | 00:00 on January 1st, 1970. |
 
 Example:
   - Selection interval is [`2016-06-20 15:05` - `2016-06-24 00:00`).
@@ -1047,7 +1047,7 @@ WITH INTERPOLATE (1 MINUTE, LINEAR, OUTER, NAN, START_TIME)
 
 | **Name** | **Description**|
 |:---|:---|
-| `CALENDAR` | [**Default**] Aligns regular timestamps according to the database calendar. |
+| `CALENDAR` | [**Default**] Aligns regular timestamps according to the database time zone. |
 | `START_TIME` | Starts regular timestamps at the start time of the selection interval.<br>This option requires that both start and end time are specified in the query. |
 
 ### Regularization Examples

@@ -39,13 +39,13 @@ separately from the other downstream tasks such as persistence and messaging.
 
 ### Filtering
 
-The incoming data sample are processed by a chain of filters prior to reaching the grouping stage. Such filters include:
+The incoming data samples are processed by a chain of filters prior to reaching the grouping stage. Such filters include:
 
-* Input Filter. All data is discarded if the **Admin > Input Settings > Rule Engine** option is disabled.
+* **Input Filter**. All samples are discarded if the **Admin:Input Settings > Rule Engine** option is disabled.
 
-* Metadata Filter. Data samples received for a disabled metric or a disabled entity are discarded.
+* **Status Filter**. Samples are discarded for metrics and entities that are disabled.
 
-* [Rule Filters](filters.md) that are specific to each rule.
+* [Rule Filters](filters.md) ignore samples that do not match a specific metric, entity and filter expression.
 
 ### Grouping
 
@@ -59,15 +59,13 @@ windows grouped by metric, entity, and optional tags. Each window maintains its 
 Windows are continuously updated as new samples are added and old samples are
 removed to maintain the size of the given window at constant interval length or sample count.
 
-When a window is updated, the rule engine evaluates the expression that returns a boolean value: `TRUE` or `FALSE`.
+When a window is updated, the rule engine evaluates the expression that returns a boolean value:
 
 ```javascript
     percentile(95) > 80 && stdev() < 10
 ```
 
-The window will change its status once the expression returns a value different from the previous evaluation.
-
-It is recommended to place conditions that do not require sample values into filters.
+The window will change its status once the expression returns a boolean value different from the previous iteration.
 
 ## Window Status
 
@@ -75,11 +73,14 @@ Windows are stateful. Once the expression for a given window evaluates
 to `TRUE`, it is maintained in memory with status `OPEN`. On subsequent `TRUE`
 evaluations for the same window, the status is changed to `REPEAT`. When the expression
 finally changes to `FALSE`, the status is set to `CANCEL`. The window state is
-not stored in the database and windows are recreated with new data only if
+not stored in the database and windows are recreated with new data if
 ATSD is restarted. Maintaining the status in memory while the condition
-is `TRUE` enables deduplication and supports flexible action programming.
-For example, some actions can be configured to execute only on `OPEN`
-status, while others can run on every n-th `REPEAT` occurrence.
+is `TRUE` enables de-duplication and improves throughput.
+
+## Actions
+
+Actions can be programmed to execute on window status changes, for example on `OPEN`
+status or on every n-th `REPEAT` status occurrence.
 
 ## Window Types
 

@@ -55,7 +55,7 @@ The `CALENDAR` alignment calculates the first period according to the rules belo
 | WEEK | 00:00 on the 1st Monday in a given month. |
 | MONTH | 00:00 on January 1st in a given year. |
 | QUARTER | 00:00 on January 1st in a given year. |
-| YEAR | 00:00 on January 1st in a given year. |
+| YEAR | 00:00 on January 1st, 1970. |
 
 For example, if period is `2 HOUR`, start date of `2016-06-20 15:08` will be rounded to `2016-06-20 00:00` as the **base** time, and the first period will start at `2016-06-20 16:00`.
 
