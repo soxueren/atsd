@@ -1,12 +1,12 @@
 # Collector Account
 
-We recommend creating a separate `collector` user account with permissions limited to data collection tasks. 
+We recommend creating a dedicated `collector` user account with permissions limited to data collection tasks.
 
-These credentials can be used in all HTTP clients when sending data into ATSD over the http/https protocol.
+This account can be used in all clients sending data into ATSD using Data and Meta API.
 
 ![Collector Account](images/collector-account.png)
 
-## Create `collectors` User Group 
+## Create `collectors` User Group
 
 * Login into ATSD as administrator
 * Open the **Admin > Users > User Groups > Create** page
@@ -14,7 +14,7 @@ These credentials can be used in all HTTP clients when sending data into ATSD ov
 
 ![collectors group](images/all-entities-write.png)
 
-## Create `collector` User 
+## Create `collector` User
 
 * Open the **Admin > Users > Create** page
 * Create a `collector` user with **API_DATA_WRITE** and **API_META_WRITE** roles
