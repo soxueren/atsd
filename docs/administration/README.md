@@ -1,6 +1,7 @@
 # Administration
 - [Deployment](deployment.md#deployment)
 - [Setup Email Client](setting-up-email-client.md#setting-up-the-email-client)
+- [Configure Time Zone](timezone.md)
 - [User Authentication](user-authentication.md#user-authentication)
   - [Authentication Mechanisms](user-authentication.md#authentication-mechanisms)
   - [User Account Types](user-authentication.md#user-account-types)

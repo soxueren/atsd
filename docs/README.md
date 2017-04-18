@@ -77,24 +77,6 @@
   * [Uninstalling](administration/uninstalling.md)
   * [Updating](administration/update.md)   
 
-## Integration
-
-  * [ActiveMQ](integration/activemq#monitoring-activemq-with-atsd)
-  * [Axibase Enterprise Reporter](integration/aer#atsd-adapter)
-  * [Derby](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/derby#overview)
-  * [HP Openview](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/hp-openview#overview)
-  * [IBM Tivoli Monitoring](integration/itm#ibm-tivoli-monitoring)
-  * [JVM](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/jvm#overview)
-  * [Jetty](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/jetty#overview)
-  * [Microsoft System Center Operations Manager](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/scom#overview)
-  * [MySQL Server](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/mysql#overview)
-  * [NGINX](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/nginx#overview)
-  * [Oracle Enterprise Manager](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/oracle-enterprise-manager#overview)
-  * [PostgreSQL](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/postgres#overview)
-  * [SolarWinds](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/solarwinds#overview)
-  * [Tomcat Servlet Container](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/tomcat#overview)
-  * [VMware](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/vmware#overview)
-
 ## Security
 
 * [User Authentication](administration/user-authentication.md)
@@ -103,7 +85,8 @@
 ## Administration
 
   * [Overview](administration#administration)
-  * [Configuring Email Client](administration/setting-up-email-client.md)  
+  * [Configuring Email Client](administration/setting-up-email-client.md)
+  * [Configuring Time Zone](administration/timezone.md)
   * [Allocating Memory](administration/allocating-memory.md)
   * [Changing Data Directory](administration/changing-data-directory.md)
   * [Compaction Test](administration/compaction-test.md)
@@ -121,3 +104,21 @@
   * [Restarting](administration/restarting.md)
   * [Restoring Corrupted Zookeeper](administration/corrupted-zookeeper.md)
   * [Restoring Corrupted Files](administration/corrupted-file-recovery.md)
+
+## Data Collection Examples
+
+  * [ActiveMQ](integration/activemq#monitoring-activemq-with-atsd)
+  * [Axibase Enterprise Reporter](integration/aer#atsd-adapter)
+  * [Derby](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/derby#overview)
+  * [HP Openview](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/hp-openview#overview)
+  * [IBM Tivoli Monitoring](integration/itm#ibm-tivoli-monitoring)
+  * [JVM](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/jvm#overview)
+  * [Jetty](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/jetty#overview)
+  * [Microsoft System Center Operations Manager](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/scom#overview)
+  * [MySQL Server](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/mysql#overview)
+  * [NGINX](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/nginx#overview)
+  * [Oracle Enterprise Manager](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/oracle-enterprise-manager#overview)
+  * [PostgreSQL](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/postgres#overview)
+  * [SolarWinds](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/solarwinds#overview)
+  * [Tomcat Servlet Container](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/tomcat#overview)
+  * [VMware](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/vmware#overview)
