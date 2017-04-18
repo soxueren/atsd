@@ -6,7 +6,7 @@ By the default, the timezone is inherited from the timezone of the operating sys
 
 ## Viewing the Time Zone
 
-The current timezone is displayed on **Admin: System Information** page.
+The current timezone is displayed on the **Admin: System Information** page.
 
 ![](images/timezone.png)
 
@@ -16,27 +16,27 @@ The current timezone is displayed on **Admin: System Information** page.
 
 * Open `/opt/atsd/atsd/bin/start-atsd.sh` file and scroll down to the section with uncommented $java_command for "GC logs disabled".
 
-```
-echo " * [ATSD] ATSD `$java_command -version 2>&1 | head -n 1`"
-#GC logs disabled
-if grep -qi "arm" /proc/cpuinfo; then
-    "$java_command" -server -Xmx4096M -XX:MaxPermSize=128m ...
-else
-    "$java_command" -server -Xmx4096M -XX:MaxPermSize=128m ...
-fi
-```
+  ```
+  echo " * [ATSD] ATSD `$java_command -version 2>&1 | head -n 1`"
+  #GC logs disabled
+  if grep -qi "arm" /proc/cpuinfo; then
+      "$java_command" -server -Xmx4096M -XX:MaxPermSize=128m ...
+  else
+      "$java_command" -server -Xmx4096M -XX:MaxPermSize=128m ...
+  fi
+  ```
 
 * Add property `-Duser.timezone` to the second command (not "arm").
 
-```
-echo " * [ATSD] ATSD `$java_command -version 2>&1 | head -n 1`"
-#GC logs disabled
-if grep -qi "arm" /proc/cpuinfo; then
-    "$java_command" -server -Xmx4096M -XX:MaxPermSize=128m ...
-else
-    "$java_command" -server -Duser.timezone=US/Pacific -Xmx4096M -XX:MaxPermSize=128m ...
-fi
-```
+  ```
+  echo " * [ATSD] ATSD `$java_command -version 2>&1 | head -n 1`"
+  #GC logs disabled
+  if grep -qi "arm" /proc/cpuinfo; then
+      "$java_command" -server -Xmx4096M -XX:MaxPermSize=128m ...
+  else
+      "$java_command" -server -Duser.timezone=US/Pacific -Xmx4096M -XX:MaxPermSize=128m ...
+  fi
+  ```
 
 * Restart ATSD.
 
@@ -44,3 +44,5 @@ fi
 /opt/atsd/atsd/bin/stop-atsd.sh
 /opt/atsd/atsd/bin/start-atsd.sh
 ```
+
+* Open the **Admin: System Information** page and verify that the new timezone setting is set.
