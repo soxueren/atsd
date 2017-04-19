@@ -7,26 +7,25 @@ Weekly Change Log: April 10 - April 16, 2017
 |------|-------------|---------|---------------------------------------------------------------------|
 | 4096 | UI | Bug | Fix HTML escaping on the `CSV Parsers` page. |
 | 4064 | core | Support | Deprecate the `logging.properties` configuration file. |
-| 3952 | test | Bug | Support ISO8601 datetime format without milliseconds in Network API tests. |
-| [3739](#issue-3739) | sql | Feature | Add options for sending empty or erroneous SQL query results. |
-| 2880 | UI | Bug | Perform HTML-escaping for all form data in UI. |
+| [3739](#issue-3739) | sql | Feature | Add options for sending empty or failed results for scheduled SQL reports. |
+| 2880 | UI | Bug | Add HTML-escaping for all forms in the web interface. |
 
 
 ### Collector
 
 | Issue| Category    | Type    | Subject                                                             |
 |------|-------------|---------|---------------------------------------------------------------------|
-| 4095 | socrata | Bug | Fix Collector freeze on processing corrupted JSON files.  |
-| 4092 | docker | Bug | Do not collect FS metrics for stopped containers. |
-| [4063](#issue-4063) | core | Feature | Implement a configuration editor with syntax highlighting. |
-| 4036 | jdbc | Bug | Fix column order in Test SQL result table to match the order in SQL query. |
+| 4095 | socrata | Bug | Fix Collector freeze while processing malformed JSON files.  |
+| 4092 | docker | Bug | Skip file system metric collection for stopped containers. |
+| [4063](#issue-4063) | core | Feature | Implement a configuration file editor with syntax highlighting. |
+| 4036 | jdbc | Bug | Fix column order in Test SQL result table. |
 
 
 ### Charts
 
 | Issue| Category    | Type    | Subject                                                             |
 |------|-------------|---------|---------------------------------------------------------------------|
-| [4043](#issue-4043) | widget-settings | Bug | Fix ignoring of colors array by wildcard series. |
+| [4043](#issue-4043) | widget-settings | Bug | Fix color assignment for wildcard series. |
 
 
 ## ATSD
