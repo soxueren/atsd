@@ -818,8 +818,10 @@ GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 
 The `CALENDAR` alignment calculates the first period according to the rules below and creates subsequent periods by incrementing the duration specified in the `PERIOD` function.
 
-* Start time of the selection interval is rounded down to calculate the base time. If start time is not specified, it is set to January 1st, 1970.
-* The base time is incremented by period duration until the period's start is equal or greater than the interval start date. This period becomes the first period.
+
+* Start time of the selection interval is rounded down to calculate the _base time_ using the rules below.
+* If the _base time_ is equal or greater than start time and less than end time, the _base time_ becomes the first period.
+* If the _base time_ is earlier than start time, increment it by period duration until it is equal or greater than start time and less than end time. This period becomes the first period.
 
 **Rounding Rules**
 

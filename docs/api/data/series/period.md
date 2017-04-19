@@ -39,8 +39,9 @@ For example, `1 HOUR` initializes 1-hour long periods starting at `0` minutes of
 
 The `CALENDAR` alignment calculates the first period according to the rules below and creates subsequent periods by incrementing the duration specified with `count` and `unit` fields.
 
-* `startDate` of the selection interval is rounded down to calculate the base time.
-* The base time is incremented by period duration until the period's start is equal or greater than `startDate`. This period becomes the first period.
+* `startDate` of the selection interval is rounded down to calculate the _base time_ using the rules below.
+* If the _base time_ is equal or greater than `startDate` and less than `endDate`, the _base time_ becomes the first period.
+* If the _base time_ is earlier than `startDate`, increment it by period duration until it is equal or greater than `startDate` and less than `endDate`. This period becomes the first period.
 
 **`startDate` Rounding Rules**
 
