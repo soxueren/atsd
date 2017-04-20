@@ -6,7 +6,7 @@ The `addMeta` parameter instructs the server to include entity metadata, namely 
 
 This provides a convenient method for retrieving both property records and descriptive information about the entities, without executing a separate request to Meta API.
 
-The list of returned fields corresponds to the entity [get](/api/meta/entity/get.md) methods
+The list of returned fields corresponds to the entity [get](../../../../../api/meta/entity/get.md) methods
 
 Meta API user role is not required to access this metadata.
 

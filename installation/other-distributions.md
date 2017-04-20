@@ -52,4 +52,4 @@ Web interface is accessible on port 8088 (http) and 8443 (https).
 ## Post-installation Steps
 
 * [Basic configuration](post-installation.md).
-* [Getting Started guide](/tutorials/getting-started.md).
+* [Getting Started guide](../tutorials/getting-started.md).

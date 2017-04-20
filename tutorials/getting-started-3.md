@@ -6,7 +6,7 @@ Open the [Export Page](https://axibase.com/products/axibase-time-series-database
 
 ##### Step 9:
 
-Test [ATSD API](/api/README.md) by installing a RestClient and executing a sample [series query](../api/data/series/query.md) request for my-entity and my-metric.
+Test [ATSD API](../api/README.md) by installing a RestClient and executing a sample [series query](../api/data/series/query.md) request for my-entity and my-metric.
 
 [RestClient for Google Chrome.](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en)
 
@@ -18,7 +18,7 @@ URL: `http://atsd_server.com:8088/api/v1/series`
 
 In the request be sure to specify:
 
-* endDate – end of the selection interval. Specified in ISO format or using [endtime](/end-time-syntax.md) syntax.
+* endDate – end of the selection interval. Specified in ISO format or using [endtime](../end-time-syntax.md) syntax.
 
 * interval – duration of the selection interval. Specified as unit and count.
 

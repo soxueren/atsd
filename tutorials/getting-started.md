@@ -4,7 +4,7 @@ The purpose of this article is to guide the user through the first steps of star
 
 ##### Step 1:
 
-[Download and Install Axibase Time Series Database.](/installation/README.md)
+[Download and Install Axibase Time Series Database.](../installation/README.md)
 
 ##### Step 2:
 

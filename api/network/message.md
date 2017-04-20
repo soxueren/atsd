@@ -25,7 +25,7 @@ message e:{entity} t:type={type} t:source={source} t:severity={severity} t:tag={
 | **Field** | **Type** | **Description** |
 |:---|:---|:---|
 | e         | string       | **[Required]** Entity name. |
-| t         | string       | Tags, including reserved tags: `type`, `source`, [`severity`](/api/data/severity.md). |
+| t         | string       | Tags, including reserved tags: `type`, `source`, [`severity`](../../api/data/severity.md). |
 | m         | string       | Message text. |
 | p         | boolean      | Persist message in the database. Default: true.<br>If disabled, the message is only processed by the rule-engine. |
 | s         | integer      | Time in UNIX seconds. | 

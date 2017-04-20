@@ -58,7 +58,7 @@ WHERE entity = 'nurswgvml007'
 
 ## Query with Endtime Syntax
 
-Both `time` and `datetime` columns support [endtime](/end-time-syntax.md) syntax.
+Both `time` and `datetime` columns support [endtime](../../../end-time-syntax.md) syntax.
 
 ```sql
 SELECT datetime, value
@@ -77,7 +77,7 @@ WHERE entity = 'nurswgvml007'
 
 ## Query with Endtime Syntax (TimeZone)
 
-[Endtime](/end-time-syntax.md) keywords are calculated based on the current server time and the server's [time zone](/api/network/timezone-list.md).
+[Endtime](../../../end-time-syntax.md) keywords are calculated based on the current server time and the server's [time zone](../../../api/network/timezone-list.md).
 
 If the server's time zone is `Europe/Berlin`, for example, the `current_day` keyword in the below query is evaluated to `2017-04-15T00:00:00+02:00` local time or `2017-04-14T22:00:00Z` UTC time.
 

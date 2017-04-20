@@ -139,8 +139,8 @@ ATSD web interface is accessible on port 8088/http and 8443/https.
 
 * 8088 – http
 * 8443 – https
-* 8081 – [TCP network commands](/api/network#network-api)
-* 8082 – [UDP network commands](/api/network#udp-datagrams)
+* 8081 – [TCP network commands](../api/network#network-api)
+* 8082 – [UDP network commands](../api/network#udp-datagrams)
 
 ## Port Mappings
 
@@ -187,4 +187,4 @@ See "Workarounds" in [#18180](https://github.com/docker/docker/issues/18180#issu
 ## Post-installation Steps
 
 * [Basic configuration](post-installation.md).
-* [Getting Started guide](/tutorials/getting-started.md).
+* [Getting Started guide](../tutorials/getting-started.md).

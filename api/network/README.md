@@ -48,7 +48,7 @@ To encrypt TCP traffic, setup an [SSH tunnel](http://axibase.com/products/axibas
 
 Authentication and authorization are not supported for plain text commands received over TCP and UDP protocols.
 
-Utilize the [HTTP command](/api/data/command.md) to send plain-text commands over http/https protocols with authentication and authorization enabled.
+Utilize the [HTTP command](../../api/data/command.md) to send plain-text commands over http/https protocols with authentication and authorization enabled.
 
 ## Connection
 
@@ -281,7 +281,7 @@ The timestamp field encodes the time of an observation or an event as determined
 |:---|:---|:---|
 |ms|long|UNIX milliseconds since 1970-01-01T00:00:00Z |
 |s|int|UNIX seconds since 1970-01-01T00:00:00Z|
-|d|string|[ISO 8601 date format](/api/data/date-format.md). Supported formats:<br>UTC timezone (Z) = yyyy-MM-dd'T'HH:mm:ss[.SSS]'Z', for example 2016-06-09T16:15:04.005Z<br>Timezone offset = yyyy-MM-dd'T'HH:mm:ss[.SSS]±hh:mm, for example 2016-06-09T12:15:04.005-04:00<br>Time zone +hh:mm is ahead of UTC and timezone -hh:mm is behind UTC.|
+|d|string|[ISO 8601 date format](../../api/data/date-format.md). Supported formats:<br>UTC timezone (Z) = yyyy-MM-dd'T'HH:mm:ss[.SSS]'Z', for example 2016-06-09T16:15:04.005Z<br>Timezone offset = yyyy-MM-dd'T'HH:mm:ss[.SSS]±hh:mm, for example 2016-06-09T12:15:04.005-04:00<br>Time zone +hh:mm is ahead of UTC and timezone -hh:mm is behind UTC.|
 
 Date limits:
 
