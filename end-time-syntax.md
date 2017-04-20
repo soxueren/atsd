@@ -4,7 +4,7 @@
 
 Endtime syntax implements convenient calendar [keywords](#keywords) and [arithmetic](#expressions) used as an alternative to ISO format in API requests, widget configurations, export settings, etc. to specify interval start and end time.
 
-Endtime [keyword](#keywords) are calculated based on the current server time and the server's [time zone](/api/network/timezone-list.md).
+Endtime [keyword](#keywords) are calculated based on the current server time and the server's [time zone](./api/network/timezone-list.md).
 
 For example, if current time is `May 15, 2016 15:28:44`, the expression `current_hour - 1 * day` would return `May 14, 2016 15:00:00`.
 
