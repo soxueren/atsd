@@ -19,7 +19,7 @@ Weekly Change Log: January 16 - January 22, 2017
 
 | Issue| Category        | Type    | Subject                                                                             |
 |------|-----------------|---------|-------------------------------------------------------------------------------------|
-| [3784](#issue-3784)| jdbc            | Feature | Added the [`${SPLIT_CONDITION}`](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/jdbc.md#job-configuration) placeholder support in the JDBC job to allow fetching large result sets in multiple iterations. |
+| [3784](#issue-3784)| jdbc            | Feature | Added the [`${SPLIT_CONDITION}`](https://github.com/axibase/axibase-collector/blob/master/jobs/jdbc.md#job-configuration) placeholder support in the JDBC job to allow fetching large result sets in multiple iterations. |
 | 3656 | socrata         | Bug     | Refactored the Socrata job so that a dataset with more than 100,000 rows or more than 100Mb can be processed without an OutOfMemory error. |
 
 ### Charts
