@@ -162,7 +162,7 @@ Additionally, some user interface improvements were recently made to the JDBC co
 * Unified number formatting: unnecessary zeroes in the fractional part of floating-point numbers are not shown.
 * Metric names are generated in lower-case, just as they will be saved in ATSD.
 
-As a result, PI tags can be retrieved using the JDBC job, and a [tutorial](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/examples/pi/README.md) 
+As a result, PI tags can be retrieved using the JDBC job, and a [tutorial](https://github.com/axibase/axibase-collector/blob/master/jobs/examples/pi/README.md)
 is provided showing you how to configure the task.
 
 #### PI Server Tag Information

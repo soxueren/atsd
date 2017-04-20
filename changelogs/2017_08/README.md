@@ -48,7 +48,7 @@ Custom network commands specified in `Raw Commands` textarea can be executed.
 
 ![](Images/Figure_01.png)
 
-The following [placeholders](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/json.md#placeholders) together with [string functions](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/placeholders.md#string-functions) are supported:
+The following [placeholders](https://github.com/axibase/axibase-collector/blob/master/jobs/json.md#placeholders) together with [string functions](https://github.com/axibase/axibase-collector/blob/master/jobs/placeholders.md#string-functions) are supported:
 * ITEM
 * PATH
 * FILE

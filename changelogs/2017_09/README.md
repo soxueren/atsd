@@ -12,7 +12,7 @@ Weekly Change Log: February 27 - March 5, 2017
 
 | Issue| Category        | Type    | Subject                                                                              |
 |------|-----------------|---------|--------------------------------------------------------------------------------------|  
-| [3977](#issue-3977) | UI              | Feature | Display linked job configurations for HTTP Pools, [Database Configurations](https://github.com/axibase/axibase-collector/blob/master/docs/jobs/jdbc-data-source.md), and [Replacement Tables](https://github.com/axibase/axibase-collector/blob/master/docs/collections.md#replacement-tables). |
+| [3977](#issue-3977) | UI              | Feature | Display linked job configurations for HTTP Pools, [Database Configurations](https://github.com/axibase/axibase-collector/blob/master/jobs/jdbc-data-source.md), and [Replacement Tables](https://github.com/axibase/axibase-collector/blob/master/collections.md#replacement-tables). |
 | [3976](#issue-3976) | collection      | Feature | Added an option to specify executable script text on the Item List configuration page.                        |
 | 3974 | http-pool       | Bug     | Fixed an error when deleting an HTTP Pool.                                 |
 | 3969 | json            | Bug     | Fixed a conflict between `Included Fields` and `Metric Name & Value` fields.     |
