@@ -70,7 +70,7 @@ The administrative interface in ATSD has been simplified by consolidating multip
    The section provides information about the installed ATSD version (Revision Number), as well as the HBase compatibility version. The ATSD revision number is an always
    incrementing counter, meaning it doesn't adhere to semantic versioning. Each change to the ATSD code will increment the revision number. Note that the revision number of the ATSD
    HBase jar file deployed on the HBase region server in the `/hbase/lib` directory is incremented separately from the ATSD revision number. When upgrading a distributed version of ATSD,
-   follow [these steps](/installation/cloudera.md#updating-atsd). If you're installing an ATSD version with a higher revision number and
+   follow [these steps](../../installation/cloudera.md#updating-atsd). If you're installing an ATSD version with a higher revision number and
    if the atsd-hbase.*.jar version is the same, skip the region server deployment stage altogether and upgrade just ATSD itself, without restarting your region servers.
 
 2. **JVM System Properties**
