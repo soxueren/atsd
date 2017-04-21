@@ -14,9 +14,9 @@ Retrieve a list of metrics matching the specified filter conditions.
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-| expression |string|Include metrics that match an [expression](/api/meta/expression.md) filter. Use the `name` variable for metric name. The wildcard `*` is supported.|
-| minInsertDate |string|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
-| maxInsertDate |string|Include metrics with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](/end-time-syntax.md) syntax.|
+| expression |string|Include metrics that match an [expression](../../../api/meta/expression.md) filter. Use the `name` variable for metric name. The wildcard `*` is supported.|
+| minInsertDate |string|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or using [endtime](../../../end-time-syntax.md) syntax.|
+| maxInsertDate |string|Include metrics with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](../../../end-time-syntax.md) syntax.|
 | limit |integer|Maximum number of metrics to retrieve, ordered by name.|
 | tags |string|Comma-separated list of metric tag names to be displayed in the response.<br>For example, `tags=OS,location`<br>Specify `tags=*` to print all metric tags.|
 
@@ -32,11 +32,11 @@ Retrieve a list of metrics matching the specified filter conditions.
 |tags| object | An object containing tags as names and values.<br>For example, `"tags": {"table": "axibase-collector"}`|
 |dataType| string | [Data Type](#data-types).|
 |interpolate| string | Interpolation mode: `LINEAR` or `PREVIOUS`. <br>Used in SQL `WITH INTERPOLATE` clause when interpolation mode is set to `AUTO`, for example, `WITH INTERPOLATE(1 MINUTE, AUTO)`. |ß
-|timeZone| string | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](/api/network/timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in metric-specific timezone.|
+|timeZone| string | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](../../../api/network/timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in metric-specific timezone.|
 |timePrecision| string | Time precision: SECONDS or MILLISECONDS.|
 |enabled| boolean | Enabled status. Incoming data is discarded for disabled metrics.|
 |persistent | boolean | Persistence status. Non-persistent metrics are not stored in the database and are only processed by the rule engine.|
-|filter | string | Persistence filter [expression](/api/meta/expression.md). Discards series that do not match this filter.|
+|filter | string | Persistence filter [expression](../../../api/meta/expression.md). Discards series that do not match this filter.|
 |lastInsertDate| string | Last time a value was received for this metric by any series. ISO date.|
 |retentionDays| integer | Number of days to retain values for this metric in the database.|
 |versioned| boolean | If set to true, enables versioning for the specified metric. <br>When metrics are versioned, the database retains the history of series value changes for the same timestamp along with `version_source` and `version_status`.|

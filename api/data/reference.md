@@ -48,7 +48,7 @@
 
 | **Name** | **Method** | **Path** | **Content-Type** | **Description** |
 |:---|:---|:---|:---|:---|
-| [SQL Query](/api/sql/api.md) | POST | `/api/sql` | `text/plain` | Execute an SQL query and retrieve results in CSV or JSON format. |
+| [SQL Query](../../api/sql/api.md) | POST | `/api/sql` | `text/plain` | Execute an SQL query and retrieve results in CSV or JSON format. |
 
 
 

@@ -1,15 +1,15 @@
 # nmon
 
-- [Visualizing nmon Files in ad-hoc Mode](/integration/nmon/ad-hoc.md)
-- [Deploy nmon](/integration/nmon/deploy.md)
-- [nmon File Streaming over Telnet](/integration/nmon/file-streaming.md)
-- [File Upload](/integration/nmon/file-upload.md)
-- [Format](/integration/nmon/format.md)
-- [Headers](/integration/nmon/headers.md)
-- [Parser](/integration/nmon/parser.md)
-- [Scheduled File Upload to ATSD](/integration/nmon/scheduled-file-upload.md)
-- [Sender Script](/integration/nmon/sender-script.md)
-- [SSH Tunnel Setup](/integration/nmon/ssh-tunneling.md)
+- [Visualizing nmon Files in ad-hoc Mode](../../integration/nmon/ad-hoc.md)
+- [Deploy nmon](../../integration/nmon/deploy.md)
+- [nmon File Streaming over Telnet](../../integration/nmon/file-streaming.md)
+- [File Upload](../../integration/nmon/file-upload.md)
+- [Format](../../integration/nmon/format.md)
+- [Headers](../../integration/nmon/headers.md)
+- [Parser](../../integration/nmon/parser.md)
+- [Scheduled File Upload to ATSD](../../integration/nmon/scheduled-file-upload.md)
+- [Sender Script](../../integration/nmon/sender-script.md)
+- [SSH Tunnel Setup](../../integration/nmon/ssh-tunneling.md)
 
 ## Overview
 
@@ -28,7 +28,7 @@ On AIX, nmon is pre-installed on AIX 5.3 and 6.1 and newer versions by default. 
 
 In Linux, nmon is [open sourced under GPL license](https://github.com/axibase/nmon). It can be downloaded as an [executable binary](https://github.com/axibase/nmon/releases) or can becompiled from source. Supported distributions include Ubuntu, Debian, RHEL, CentOS, Fedora, SLES, and OpenSUSE.
 
-The nmon file format is supported in Axibase Time Series Database natively. As a result, ATSD can be deployed as a centralized repository of nmon-sourced statistics and system commands collected from remote systems while providing access to [Visualization](http://axibase.com/products/axibase-time-series-database/visualization/ "Visualization"), [Alerting](/rule-engine "Rule Engine"), and [Forecasting](http://axibase.com/products/axibase-time-series-database/forecasts/ "Forecasts") features.
+The nmon file format is supported in Axibase Time Series Database natively. As a result, ATSD can be deployed as a centralized repository of nmon-sourced statistics and system commands collected from remote systems while providing access to [Visualization](http://axibase.com/products/axibase-time-series-database/visualization/ "Visualization"), [Alerting](../../rule-engine "Rule Engine"), and [Forecasting](http://axibase.com/products/axibase-time-series-database/forecasts/ "Forecasts") features.
 
 [![](resources/widget-bar-2.png "widget bar 2")](http://axibase.com/products/axibase-time-series-database/visualization/widgets/)
 

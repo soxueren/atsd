@@ -70,7 +70,7 @@ The administrative interface in ATSD has been simplified by consolidating multip
    The section provides information about the installed ATSD version (Revision Number), as well as the HBase compatibility version. The ATSD revision number is an always
    incrementing counter, meaning it doesn't adhere to semantic versioning. Each change to the ATSD code will increment the revision number. Note that the revision number of the ATSD
    HBase jar file deployed on the HBase region server in the `/hbase/lib` directory is incremented separately from the ATSD revision number. When upgrading a distributed version of ATSD,
-   follow [these steps](/installation/cloudera.md#updating-atsd). If you're installing an ATSD version with a higher revision number and
+   follow [these steps](../../installation/cloudera.md#updating-atsd). If you're installing an ATSD version with a higher revision number and
    if the atsd-hbase.*.jar version is the same, skip the region server deployment stage altogether and upgrade just ATSD itself, without restarting your region servers.
 
 2. **JVM System Properties**
@@ -162,8 +162,8 @@ Additionally, some user interface improvements were recently made to the JDBC co
 * Unified number formatting: unnecessary zeroes in the fractional part of floating-point numbers are not shown.
 * Metric names are generated in lower-case, just as they will be saved in ATSD.
 
-As a result, PI tags can be retrieved using the JDBC job, and a [tutorial](https://github.com/axibase/axibase-collector/blob/master/jobs/examples/pi/README.md) 
-is provided showing you how to configure the task.
+
+As a result, PI tags can be retrieved using the JDBC job, and a [tutorial](https://github.com/axibase/axibase-collector/blob/master/jobs/examples/pi/README.md) is provided showing you how to configure the task.
 
 #### PI Server Tag Information
 

@@ -108,15 +108,15 @@ Processing errors are returned in JSON format:
 
 ## Authentication
 
-* User [authentication](/administration/user-authentiication.md) is required.
+* User [authentication](../../administration/user-authentiication.md) is required.
 * All requests must be authenticated using BASIC AUTHENTICATION.
 * The authentication method is **HTTP BASIC**.
 * The client may use session cookies to execute multiple requests without repeating authentication.
 
 ## Authorization
 
-* User must have [**API_DATA_READ**/**API_DATA_WRITE**](/administration/user-authorization.md#available-api-roles) role.
-* User must have read/write [**entity permission**](/administration/user-authorization.md#entity-permissions) for specific or all entities.
+* User must have [**API_DATA_READ**/**API_DATA_WRITE**](../../administration/user-authorization.md#available-api-roles) role.
+* User must have read/write [**entity permission**](../../administration/user-authorization.md#entity-permissions) for specific or all entities.
  
 ## Cross-Domain Requests
 

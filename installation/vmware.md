@@ -94,4 +94,4 @@ axibase.
 ## Post-installation Steps
 
 * [Basic configuration](post-installation.md).
-* [Getting Started guide](/tutorials/getting-started.md).
+* [Getting Started guide](../tutorials/getting-started.md).

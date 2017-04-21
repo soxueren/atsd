@@ -80,14 +80,14 @@ Processing errors are returned in JSON format:
 
 ## Authentication
 
-* User [authentication](/administration/user-authentiication.md) is required.
+* User [authentication](../../administration/user-authentiication.md) is required.
 * All requests must be authenticated using BASIC AUTHENTICATION.
 * The authentication method is **HTTP BASIC**.
 * The client may enable session cookies to execute multiple requests without re-sending BASIC authentication header.
 
 ## Authorization
 
-* User must have [**API_META_READ**/**API_META_WRITE**](/administration/user-authorization.md#available-api-roles) role.
+* User must have [**API_META_READ**/**API_META_WRITE**](../../administration/user-authorization.md#available-api-roles) role.
  
 ## Cross-domain Requests
 

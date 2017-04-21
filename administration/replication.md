@@ -25,7 +25,7 @@ Both the master and slave machines must have static a IP addresses in the
 local network.
 
 Both machines must have identical hardware configurations. [See ATSD
-requirements.](requirements.md "ATSD Requirements")
+requirements.](requirements.md)
 
 The same versions of ATSD must be installed on both machines. [See ATSD
 installation
@@ -171,7 +171,7 @@ add_peer '1', "atsd_slave:2181:/hbase"
 > Note:: If your ATSD installation has suffered an unexpected shutdown or
 ungraceful stop and your Zookeeper is corrupted, [after solving this
 issue using our
-guide](corrupted-zookeeper.md "Restoring a corrupted zookeeper"),
+guide](corrupted-zookeeper.md),
 be sure to execute the `add_peer` commands again to restart the
 replication.
 

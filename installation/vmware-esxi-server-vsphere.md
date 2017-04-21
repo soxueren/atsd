@@ -10,7 +10,7 @@ fully configured.
 
 [If you will be installing ATSD in VMware player, please use our
 separate guide for this installation
-method.](vmware.md "Install ATSD on VMware")
+method.](vmware.md)
 
 ## Download
 
@@ -107,4 +107,4 @@ axibase.
 ## Post-installation Steps
 
 * [Basic configuration](post-installation.md).
-* [Getting Started guide](/tutorials/getting-started.md).
+* [Getting Started guide](../tutorials/getting-started.md).

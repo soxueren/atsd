@@ -1,4 +1,5 @@
-﻿# Overview
+﻿Overview
+==============================================
 
 Axibase Time Series Database supports SQL query language for retrieving time series data.
 
@@ -173,7 +174,7 @@ WHERE datetime >= NOW - 15*MINUTE
 | TIMESTAMP | - |
 | JAVA_OBJECT | - |
 
-The data type returned by the database for a given `value` column depends on the data type of the [metric](/api/meta/metric/list.md#data-types).
+The data type returned by the database for a given `value` column depends on the data type of the [metric](../../api/meta/metric/list.md#data-types).
 
 The `NUMBER` (parent type for all numeric data types) and `STRING` type can be used to convert data types with the [`CAST`](#cast) function.
 
@@ -348,7 +349,7 @@ Each series sample can contain:
 * Numeric value, accessible with the `value` column.
 * String value, accessible with the `text` column.
 
-The text value can be inserted with [`series`](/api/network/series.md#fields) command and the series [insert](/api/data/series/insert.md) method in Data API.
+The text value can be inserted with [`series`](../../api/network/series.md#fields) command and the series [insert](../../api/data/series/insert.md) method in Data API.
 
 ```ls
 series d:2016-10-13T08:00:00Z e:sensor-1 m:temperature=20.3
@@ -372,7 +373,7 @@ WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
 
 #### Numeric Precedence
 
-If the `value` column in an `atsd_series` query returns numbers for metrics with different [data types](/api/meta/metric/list.md#data-types), the prevailing data type is determined based on the following rules:
+If the `value` column in an `atsd_series` query returns numbers for metrics with different [data types](../../api/meta/metric/list.md#data-types), the prevailing data type is determined based on the following rules:
 
 1. If all data types are integers (`short`, `integer`, `long`), the prevailing integer type is returned.
 2. If all data types are decimals (`float`, `double`, `decimal`), the prevailing decimal type is returned.
@@ -671,7 +672,7 @@ SELECT datetime, entity, value
 WHERE datetime BETWEEN '2016-12-10T14:00:15Z' AND '2016-12-10T15:30:00.077Z'
 ```
 
-Both columns support [End Time](/end-time-syntax.md) syntax.
+Both columns support [End Time](../../end-time-syntax.md) syntax.
 
 ```sql
 SELECT datetime, entity, value
@@ -744,7 +745,7 @@ PERIOD({count} {unit} [, option])
 * `interpolate` = PREVIOUS | NEXT | LINEAR | VALUE {number}
 * `extend` = EXTEND
 * `align` = START_TIME, END_TIME, FIRST_VALUE_TIME, CALENDAR
-* `timezone` = [Time Zone ID](/api/network/timezone-list.md), enclosed in double quotes.
+* `timezone` = [Time Zone ID](../../api/network/timezone-list.md), enclosed in double quotes.
 
 The options are separated by comma and can be specified in any order.
 
@@ -759,7 +760,7 @@ PERIOD(1 DAY, "US/Eastern")
 | **Name** | **Description** |
 |:---|:---|
 | count | [**Required**] Number of time units contained in the period. |
-| unit | [**Required**] [Time unit](/api/data/series/time-unit.md) such as `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, `YEAR`. |
+| unit | [**Required**] [Time unit](../../api/data/series/time-unit.md) such as `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, `YEAR`. |
 | interpolate | Apply [interpolation function](#interpolation), such as `LINEAR` or `VALUE 0`, to add missing periods.|
 | extend | Add missing periods at the beginning and end of the selection interval using `VALUE {n}` or `NEXT` and `PREVIOUS` interpolation functions.|
 | align | Align the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
@@ -1594,7 +1595,7 @@ ORDER BY base.datetime
 |-------------|-------------|-------------|-------------|
  ```
 
-In addition, [endtime](/end-time-syntax.md#keywords) keywords such as `NOW`, `PREVIOUS_HOUR` and [interval units](/end-time-syntax.md#interval-units) such as `MINUTE`, `HOUR` are reserved.
+In addition, [endtime](../../end-time-syntax.md#keywords) keywords such as `NOW`, `PREVIOUS_HOUR` and [interval units](../../end-time-syntax.md#interval-units) such as `MINUTE`, `HOUR` are reserved.
 
 ## Aggregation Functions
 
@@ -1691,7 +1692,7 @@ date_format(long milliseconds[, string time_format[, string time_zone]])
 
 If the `time_format` argument is not provided, ISO 8601 format is applied.
 
-The `time_zone` parameter accepts GTM offset in the format of `GMT-hh:mm` or a [time zone name](/api/network/timezone-abnf.md) and allows formatting dates in a time zone, different from the database time zone.
+The `time_zone` parameter accepts GTM offset in the format of `GMT-hh:mm` or a [time zone name](../../api/network/timezone-abnf.md) and allows formatting dates in a time zone, different from the database time zone.
 
 In addition, the `time_zone` parameter can be specified as `AUTO` in which case the date is formatted with entity-specific time zone. If the entity-specific time zone is not defined, metric-specific time zone is used instead. If neither entity- nor metric-specific time zone is specified, the database timezone is applied.
 
@@ -2334,11 +2335,11 @@ LIMIT 1
 
 ## Authorization
 
-The database filters returned records based on [entity read permissions](/administration/user-authorization.md#entity-permissions) of the user executing the query.
+The database filters returned records based on [entity read permissions](../../administration/user-authorization.md#entity-permissions) of the user executing the query.
 
 This means that the same query executed by different users may produce different result sets.
 
-Scheduled SQL queries are executed with [All Entities: Read](/administration/user-authorization.md#all-entities-permissions) permission and are not filtered.
+Scheduled SQL queries are executed with [All Entities: Read](../../administration/user-authorization.md#all-entities-permissions) permission and are not filtered.
 
 ## Options
 

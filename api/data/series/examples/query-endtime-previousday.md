@@ -2,7 +2,7 @@
 
 ## Description
 
-Select data between 00:00 today and 00:00 yesterday using [endtime](/end-time-syntax.md) syntax.
+Select data between 00:00 today and 00:00 yesterday using [endtime](../../../../end-time-syntax.md) syntax.
 
 Note that DAY, WEEK, MONTH, QUARTER, and YEAR start times are computed according to server timezone in endtime calculations.
 

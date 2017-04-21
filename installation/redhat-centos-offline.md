@@ -17,7 +17,7 @@ and copying them to the target machine with similar characteristics for offline 
 ## Requirements
 
 - Minimum RAM: 1 GB 
-- See [Requirements](../administration/requirements.md "ATSD Requirements") for additional information.
+- See [Requirements](../administration/requirements.md) for additional information.
 
 ## Installation Steps
 
@@ -75,4 +75,4 @@ Web interface is accessible on port 8088 (http) and 8443 (https).
 ## Post-installation Steps
 
 * [Basic configuration](post-installation.md).
-* [Getting Started guide](/tutorials/getting-started.md).
+* [Getting Started guide](../tutorials/getting-started.md).

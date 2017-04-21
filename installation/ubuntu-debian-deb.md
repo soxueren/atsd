@@ -10,7 +10,7 @@
 ## Requirements
 
 - Minimum RAM: 1 GB 
-- See [Requirements](../administration/requirements.md "ATSD Requirements") for additional information.
+- See [Requirements](../administration/requirements.md) for additional information.
 
 ## Check Connection
 
@@ -40,7 +40,7 @@ sudo add-apt-repository ppa:openjdk-r/ppa
 sudo apt-get update && sudo apt-get install -y openjdk-7-jdk sysstat curl hostname
 ```
 
-> If there are any issues with installing the dependencies, [check the repositories](modifying-ubuntu-debian-repositories.md "Modifying Repositories") and retry the command.
+> If there are any issues with installing the dependencies, [check the repositories](modifying-ubuntu-debian-repositories.md) and retry the command.
 
 #### Follow the Prompts to Install ATSD
 
@@ -71,4 +71,4 @@ Web interface is accessible on port 8088 (http) and 8443 (https).
 ## Post-installation Steps
 
 * [Basic configuration](post-installation.md).
-* [Getting Started guide](/tutorials/getting-started.md).
+* [Getting Started guide](../tutorials/getting-started.md).

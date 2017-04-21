@@ -5,10 +5,10 @@ Weekly Change Log: January 16 - January 22, 2017
 
 | Issue| Category        | Type    | Subject                                                                             |
 |------|-----------------|---------|-------------------------------------------------------------------------------------|
-| [3797](#issue-3797) | sql             | Feature | Implemented support for the [`ROW_NUMBER`](/api/sql/examples/partition-row-number.md#partition---row-number) condition after the `GROUP BY` clause. |
-| [3796](#issue-3696) | api-network     | Feature | Added support for the [`append`](/api/network/series.md#text-append) flag to concatenate text values for the same timestamp. |
-| [3795](#issue-3795) | sql             | Feature     | Implemented support for entity tags in the [`GROUP BY`](/api/sql#grouping) clause. |
-| 3786 | statistics      | Bug     | Added the [`LIMIT 100`](/api/sql#limiting) clause for pre-defined SQL query on the [series statistics](#issue-3680) page. |
+| [3797](#issue-3797) | sql             | Feature | Implemented support for the [`ROW_NUMBER`](../../api/sql/examples/partition-row-number.md#partition---row-number) condition after the `GROUP BY` clause. |
+| [3796](#issue-3696) | api-network     | Feature | Added support for the [`append`](../../api/network/series.md#text-append) flag to concatenate text values for the same timestamp. |
+| [3795](#issue-3795) | sql             | Feature     | Implemented support for entity tags in the [`GROUP BY`](../../api/sql#grouping) clause. |
+| 3786 | statistics      | Bug     | Added the [`LIMIT 100`](../../api/sql#limiting) clause for pre-defined SQL query on the [series statistics](#issue-3680) page. |
 | 3783 | sql             | Bug     | Removed extra comma if all columns contain `null` (empty string). |
 | 3781 | jdbc            | Bug     | Fixed empty row issue for the JDBC Driver. |
 | 3753 | jdbc            | Bug     | Corrected error in handling metadata when creating a ResultSet. |  
@@ -34,7 +34,7 @@ Weekly Change Log: January 16 - January 22, 2017
 ### Issue 3797
 --------------
 
-Support was added to the [`ROW_NUMBER`](/api/sql/examples/partition-row-number.md#partition---row-number) function after the [`GROUP BY`](/api/sql#grouping) clause for [`SELECT`](/api/sql#syntax) statements.
+Support was added to the [`ROW_NUMBER`](../../api/sql/examples/partition-row-number.md#partition---row-number) function after the [`GROUP BY`](../../api/sql#grouping) clause for [`SELECT`](../../api/sql#syntax) statements.
 
 Now you can specify the `ROW_NUMBER` condition in two parts of a `SELECT` statement: before or after the `GROUP BY` clause. Generally, a `SELECT` statement may contain two `ROW_NUMBER`
 conditions. If the `ROW_NUMBER` condition is placed before the `GROUP BY` clause, this condition is applied before grouping. If the `ROW_NUMBER` condition is placed after the `GROUP BY`
@@ -89,7 +89,7 @@ ORDER BY Diff DESC
 ### Issue 3796
 --------------
 
-The [`append`](/api/network/series.md#text-append) flag applies to text values specified with the `x:` field.
+The [`append`](../../api/network/series.md#text-append) flag applies to text values specified with the `x:` field.
 
 If the append flag is set to true, ATSD checks the previous text value for the same timestamp. If the previous value is found, the new value is appended at the end using `;\n` (semi-colon followed by line feed) as a separator.
 
@@ -131,7 +131,7 @@ GROUP BY entity.tags.app
 ### Issue 3691
 --------------
 
-Implemented useful [date functions](/rule-engine/expression.md#time-functions) in the rule engine to convert an ISO8601 date string into a numeric epoch time or into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) date object. These functions can be used in rule expressions.
+Implemented useful [date functions](../../rule-engine/expression.md#time-functions) in the rule engine to convert an ISO8601 date string into a numeric epoch time or into a [Joda-time](http://joda-time.sourceforge.net/apidocs/org/joda/time/DateTime.html) date object. These functions can be used in rule expressions.
 
 ```javascript
 /**

@@ -9,15 +9,15 @@ amount of data received, memory usage, and read/write activity.
 
 You can retrieve, test, or view the metrics using the following methods:
 
--   [JMX in JSON format](monitoring-metrics/json.md "ATSD Metrics – JSON")
--   [JMX](monitoring-metrics/jmx.md "ATSD Metrics – JMX")
--   [File](monitoring-metrics/file.md  "ATSD Metrics – File")
--   [Rule Engine](monitoring-metrics/rule-engine.md  "ATSD Metrics – Rule Engine")
--   [Ingestion Statistics](monitoring-metrics/ingestion-statistics.md  "ATSD Metrics – Ingestion Statistics")
--   [Database Tables](monitoring-metrics/database-tables.md  "ATSD Metrics – Database Tables")
--   [I/O Tests](monitoring-metrics/io-tests.md  "ATSD Metrics – I/O Tests")
--   [HBase Write Test](monitoring-metrics/hbase-write-test.md  "ATSD Metrics – HBase Write Test")
--   [Portals](monitoring-metrics/portals.md  "ATSD Metrics – Portals")
+-   [JMX in JSON format](monitoring-metrics/json.md)
+-   [JMX](monitoring-metrics/jmx.md)
+-   [File](monitoring-metrics/file.md)
+-   [Rule Engine](monitoring-metrics/rule-engine.md)
+-   [Ingestion Statistics](monitoring-metrics/ingestion-statistics.md)
+-   [Database Tables](monitoring-metrics/database-tables.md)
+-   [I/O Tests](monitoring-metrics/io-tests.md)
+-   [HBase Write Test](monitoring-metrics/hbase-write-test.md)
+-   [Portals](monitoring-metrics/portals.md)
 
 ## Collected Metrics
 

@@ -2,7 +2,7 @@
 
 ## Requirements
 
-* OS and hardware [requirements](/administration/requirements.md)
+* OS and hardware [requirements](../administration/requirements.md)
 
 ## Installation Guides
 
@@ -38,8 +38,8 @@ By installing Axibase Time Series Database you agree to the following **[Terms a
 
 ## Tutorials
 
-* [Getting Started Guide](/tutorials/getting-started.md)
+* [Getting Started Guide](../tutorials/getting-started.md)
 
 ## Documentation
 
-* [Documentation](/README.md#axibase-time-series-database-documentation)
+* [Documentation](../README.md#axibase-time-series-database-documentation)

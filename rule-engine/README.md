@@ -4,7 +4,7 @@
 
 The Rule Engine enables automation of repetitive tasks based on the analysis of incoming data. Such tasks may include invoking a script to resolve a problem,  
 [sending an
-email](email-action.md "Email Action")
+email](email-action.md)
 or raising a ticket in the centralized incident management system.
 
 In abstract syntax terms, the rule engine evaluates a set of `IF-THEN` statements on incoming data:

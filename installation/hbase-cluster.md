@@ -202,4 +202,4 @@ su - axibase -c /opt/atsd/atsd/bin/start-atsd.sh
 ## Post-installation Steps
 
 * [Basic configuration](post-installation.md).
-* [Getting Started guide](/tutorials/getting-started.md).
+* [Getting Started guide](../tutorials/getting-started.md).
