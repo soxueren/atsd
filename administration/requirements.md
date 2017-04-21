@@ -21,7 +21,7 @@
 
 ## Operating Systems
 
--   Ubuntu 14.04, 16.04
+-   Ubuntu 14.04, 16.04 (with Oracle JDK)
 -   RedHat Enterprise Linux 6.x, 7.x
 -   SUSE Linux Enterprise Server 11 SP3, 12.x
 -   Debian 6.x, 7.x
