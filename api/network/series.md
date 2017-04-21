@@ -1,5 +1,4 @@
-`series` Command
-===============================
+# `series` Command
 
 ## Description
 
