@@ -21,6 +21,6 @@ Receiving ingestion statistics allows you to:
     rule engine without storing it on disk.
 
 [Learn how to configure the metric persistence filter
-here.](../metric-persistence-filter.md "Metric Persistence Filter")
+here.](../metric-persistence-filter.md)
 
 ![](images/ingestion_statistics.png "ingestion_statistics")

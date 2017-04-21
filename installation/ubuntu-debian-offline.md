@@ -15,7 +15,7 @@ and copying them to the target machine with similar characteristics for offline 
 ## Requirements
 
 - Minimum RAM: 1 GB 
-- See [Requirements](../administration/requirements.md "ATSD Requirements") for additional information.
+- See [Requirements](../administration/requirements.md) for additional information.
 
 ## Installation Steps
 

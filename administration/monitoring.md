@@ -13,11 +13,11 @@ You can retrieve, test, or view the metrics using the following methods:
 -   [JMX](monitoring-metrics/jmx.md)
 -   [File](monitoring-metrics/file.md)
 -   [Rule Engine](monitoring-metrics/rule-engine.md)
--   [Ingestion Statistics](monitoring-metrics/ingestion-statistics.md  "ATSD Metrics – Ingestion Statistics")
--   [Database Tables](monitoring-metrics/database-tables.md  "ATSD Metrics – Database Tables")
--   [I/O Tests](monitoring-metrics/io-tests.md  "ATSD Metrics – I/O Tests")
--   [HBase Write Test](monitoring-metrics/hbase-write-test.md  "ATSD Metrics – HBase Write Test")
--   [Portals](monitoring-metrics/portals.md "ATSD Metrics – Portals")
+-   [Ingestion Statistics](monitoring-metrics/ingestion-statistics.md)
+-   [Database Tables](monitoring-metrics/database-tables.md)
+-   [I/O Tests](monitoring-metrics/io-tests.md)
+-   [HBase Write Test](monitoring-metrics/hbase-write-test.md)
+-   [Portals](monitoring-metrics/portals.md)
 
 ## Collected Metrics
 

@@ -22,7 +22,7 @@ If the HBase server did not start correctly and the file
 Then execute the following steps to fix the issue:
 
 > Note: If your ATSD installation has a replication setup according to the [replication
-guide](replication.md "ATSD Replication"), execute the `add_peer` commands on the master machine again
+guide](replication.md), execute the `add_peer` commands on the master machine again
 to restart the replication after you have restored the corrupted zookeeper using this guide.
 
 Stop HBase:

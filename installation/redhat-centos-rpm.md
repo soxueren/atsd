@@ -12,7 +12,6 @@
 ## Requirements
 
 - Minimum RAM: 1 GB
-- See [Requirements](../administration/requirements.md "ATSD Requirements") for additional information.
 - See [Requirements](../administration/requirements.md) for additional information.
 
 ## Connection

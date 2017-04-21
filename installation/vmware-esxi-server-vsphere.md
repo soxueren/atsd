@@ -10,7 +10,7 @@ fully configured.
 
 [If you will be installing ATSD in VMware player, please use our
 separate guide for this installation
-method.](vmware.md "Install ATSD on VMware")
+method.](vmware.md)
 
 ## Download
 

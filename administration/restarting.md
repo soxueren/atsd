@@ -19,7 +19,7 @@ Use these scripts to gracefully restart ATSD.
 | `atsd-tsd.sh` | Start, stop, and get status of ATSD. | start, stop, status | `/opt/atsd/bin/atsd-tsd.sh stop` |
 | `atsd-hbase.sh` | Start, stop, and get status of HBase. | start, stop, status | `/opt/atsd/bin/atsd-hbase.sh status` |
 | `atsd-dfs.sh` | Start, stop, and get status of HDFS. | start, stop, status | `/opt/atsd/bin/atsd-dfs.sh start` |
-| `update.sh` | [Update ATSD](update.md "Update ATSD") in interactive mode.<br>`-t` - Upgrade and restart ATSD silently. No HBase and HDFS restart.<br>`-a` - Upgrade and restart ATSD, HBase, and HDFS silently.| -a, -t | `/opt/atsd/bin/update.sh` |
+| `update.sh` | [Update ATSD](update.md) in interactive mode.<br>`-t` - Upgrade and restart ATSD silently. No HBase and HDFS restart.<br>`-a` - Upgrade and restart ATSD, HBase, and HDFS silently.| -a, -t | `/opt/atsd/bin/update.sh` |
 
 ## Examples
 
