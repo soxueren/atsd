@@ -100,7 +100,7 @@ Metric names in the `FROM` clause that contain reserved keywords, identifiers or
 
 #### `atsd_series` Table
 
-As an alternative to specifying metric names as table names, the `FROM` query can refer to the pre-defined [`atsd_series` table](examples/select-atsd_series.md) and include `metric` names in the `WHERE` clause instead.
+As an alternative to specifying metric names as tables, the `FROM` query can refer to the pre-defined [`atsd_series` table](examples/select-atsd_series.md) and include `metric` names in the `WHERE` clause instead.
 
 ```sql
 SELECT entity, metric, datetime, value
@@ -116,24 +116,22 @@ WHERE metric = 'mpstat.cpu_busy'
 
 ### WHERE Clause
 
-The `WHERE` clause is a condition which rows must satisfy in order to match the query.
+The `WHERE` clause is a condition which rows must satisfy in order to be included in results.
 
-Columns referenced in the `WHERE` clause are replaced by their value for their given row. The clause is then evaluated for each row, and if true, the row is included in the result set.
+Columns referenced in the `WHERE` clause are replaced by their value for the given row. The condition is then evaluated for each row, and if the result is `TRUE`, the row is included in the result set.
 
-Typically, the `WHERE` clause includes a [interval condition](#interval-condition) for which the data must be analyzed, although this is not required.
+Typically, the `WHERE` clause includes an [interval condition](#interval-condition) to retrieve data for the specified time range.
 
-The clause can be built from multiple conditions, with each comparing values using comparison operators:
+The clause can be built from multiple conditions, each comparing values using operators:
 
 * Numeric operators: `<, >, <=, >=, =, <>, !=`.
-* String operators: `<, >, <=, >=, =, <>, !=, LIKE, REGEX, IS NULL, IS NOT NULL`.
+* String operators: `<, >, <=, >=, =, <>, !=, LIKE, REGEX, IS`.
 
-> Operators `!=` and `<>` cannot be applied to time columns: `time` and `datetime`.
+> Operators `!=` and `<>` cannot be applied to columns `time` and `datetime`.
 
 > Operators `<, >, <=, >=` applied to string values, such as series/entity/metric tag values, perform [lexicographical comparison](examples/filter-operators-string.md).
 
-The result of evaluating a condition is a boolean value. Multiple conditions can be combined using the logical operators `AND`, `OR`, and `NOT`.  The operator `AND` takes precedence over `OR` and the operator `NOT` takes precedence over both `AND` and `OR`.
-
-Arithmetic operators, such as `*`, `-`, `+`, `/`, and `%` (modulo), may be applied to values before they are compared.
+The result of evaluating a condition is a boolean value. Multiple conditions can be combined using the logical operators `AND`, `OR`, and `NOT`.
 
 ```sql
 SELECT entity, datetime, value, tags.*
@@ -143,6 +141,19 @@ WHERE datetime >= NOW - 15*MINUTE
        OR tags.file_system LIKE '/dev/*'
        OR value/1024 > 100000)
 ```
+
+#### Operator Precedence
+
+* `-` (unary minus)
+* `*`, `/`, `%` (modulo)
+* `+`, `-` (binary minus)
+* `=`, `<>`, `>=`, `>`, `<=`, `<`, `!=`, `IS`, `LIKE`, `REGEX`, `IN`
+* `BETWEEN`, `CASE`, `WHEN`, `THEN`, `ELSE`
+* `NOT`
+* `AND`
+* `OR`
+
+Operators with the same precedence level within an expression are processed from left to right.
 
 ### Other Clauses
 
