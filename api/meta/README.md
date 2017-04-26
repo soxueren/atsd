@@ -80,7 +80,7 @@ Processing errors are returned in JSON format:
 
 ## Authentication
 
-* User [authentication](../../administration/user-authentiication.md) is required.
+* User [authentication](../../administration/user-authentication.md) is required.
 * All requests must be authenticated using BASIC AUTHENTICATION.
 * The authentication method is **HTTP BASIC**.
 * The client may enable session cookies to execute multiple requests without re-sending BASIC authentication header.
