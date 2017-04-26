@@ -30,7 +30,7 @@ Retrieve a list of entities that are members of the specified entity group and a
 
 ### Fields
 
-Refer to fields specified in [Entity List](../../../api/meta/entiyt/list.md#fields) method.
+Refer to fields specified in [Entity List](../../../api/meta/entity/list.md#fields) method.
 
 ## Example
 

@@ -10,7 +10,7 @@
 
 * Image name: `axibase/atsd:latest`
 * Base: ubuntu:14.04
-* [Dockerfile](https://github.com/axibase/dockers/blob/master/atsd/Dockerfile)
+* [Dockerfile](https://github.com/axibase/dockers/blob/master/Dockerfile)
 * [Docker Hub](https://hub.docker.com/r/axibase/atsd/)
 
 ### RedHat Enterprise Linux Activated Image Information
