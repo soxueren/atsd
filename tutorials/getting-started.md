@@ -1,22 +1,19 @@
-# Hello World – Getting Started with ATSD
+# Getting Started: Part 1
 
-The purpose of this article is to guide the user through the first steps of starting Axibase Time Series Database.
+The purpose of this article is to guide the reader through the first steps of using Axibase Time Series Database.
 
-##### Step 1:
+### Prerequisites
 
-[Download and Install Axibase Time Series Database.](../installation/README.md)
+* [Install Axibase Time Series Database.](../installation/README.md)
+* Login into the ATSD web interface at `https://atsd_hostname:8443/`
 
-##### Step 2:
+### Insert Data Manually
 
-Login into the ATSD web interface at `https://atsd_hostname:8443/`
+Open the Data Entry form located under the Metrics tab in the top menu.
 
-##### Step 3:
+![](resources/data-entry.png)
 
-Open the Data Entry page located under the Metrics tab in the top menu:
-
-![](resources/series.png)
-
-Complete the Entity, Metric, and Value fields. Press Send:
+Fill out the Entity, Metric, and Value fields, press Send:
 
 ```properties
 metric = my-metric
@@ -24,38 +21,24 @@ entity = my-entity
 value = 24
 ```
 
-To simplify this example, we will ignore tags. [Tags can be used to enrich the time series.](https://axibase.com/products/axibase-time-series-database/data-model/entity-and-metric-tags/)
+> By default the Time field is set to current server time and is displayed in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601).
 
-##### Step 4:
+> We will ignore series tags to simplify this example. Tags can be used to add [metadata about the time series.](https://axibase.com/products/axibase-time-series-database/data-model/entity-and-metric-tags/)
 
-Execute multiple inserts with different timestamps (i.e. 5 minutes, 15 minutes, 1 hour) by modifying the Time field.
+Insert additional observations by modifying the Time and Value fields.
 
-Make sure to enter different times for each insert.
+![](resources/data-entry-repeat.png)
 
-Time format is set to current time by default in the [ISO format](https://en.wikipedia.org/wiki/ISO_8601).
+### Graph Data
 
-You can simply change the minutes and hours:
+Open a time chart using the following link `https://atsd_hostname:8443/portals/series?entity=my-entity&metric=my-metric`
 
-2016-02-15T12:35:00Z
-
-2016-02-15T12:20:00Z
-
-2016-02-15T11:30:00Z
-
-![](http://axibase.com/wp-content/uploads/2015/06/series_time.png)
-
-##### Step 5:
-
-Open a time chart using the following link: [http://atsd_server:8088/portals/series?entity=my-entity&metric=my-metric](http://atsd_server:8088/portals/series?entity=my-entity&metric=my-metric)
-
-In the upper right corner switch to [detail] data type to view the values you previously inserted.
+In the upper right corner switch to [detail] data type to view the detailed values you inserted in the previous step.
 
 Click [all] in the timespan control to view all data instead of the last 24 hours.
 
 ![](http://axibase.com/wp-content/uploads/2015/06/hello_world_time_chart4.png)
 
-##### Step 6:
+Spend a moment learning the basic [time chart controls](http://axibase.com/products/axibase-time-series-database/visualization/widgets/time-chart/).
 
-Spend a moment learning the basic [time chart controls.](http://axibase.com/products/axibase-time-series-database/visualization/widgets/time-chart/)
-
-[Continue to Next Page](getting-started-2.md)
+[Continue to Next Page](getting-started-2.md).

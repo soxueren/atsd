@@ -1,45 +1,44 @@
-##### Step 7:
+# Getting Started: Part 2
 
-Create a sample portal containing the Time Chart and Gauge widgets in the Portal Editor located under the Admin tab: [http://atsd_server:8088/portals/edit](http://atsd_server:8088/portals/edit)
+### Create Portal
 
-View the created portal from the top menu drop-down called Portals. You will see the created Hello World portal there.
+Open Portal Editor located on the **Configuration: Portals** page.
 
-Copy the following configuration into the Portal Settings Editor page. Press SAVE:
+Copy the following configuration into the Content area. Enter a portal name. Press [Save]:
 
-```
+```ls
 [configuration]
-height-units = 2
-width-units = 2
-offset-right = 40
- 
+  height-units = 2
+  width-units = 2
+  time-span = 12 hour
+
 [group]
- 
-[widget]
-type = chart
-time-span = 6 hour
-max-range = 100
- 
-[series]
-entity = my-entity
-metric = my-metric
- 
-[widget]
-type = gauge
-time-span = 6 hour
-max-range = 100
-thresholds = 0, 60, 80, 100
- 
-[series]
-entity = my-entity
-metric = my-metric
+
+  [widget]
+    type = chart
+    [series]
+      entity = my-entity
+      metric = my-metric
+
+  [widget]
+    type = gauge
+    thresholds = 0, 60, 80, 100
+    [series]
+      entity = my-entity
+      metric = my-metric
 ```
 
-![](resources/hello_world_portal1.png)
+The above configuration defines two widgets: a linear time chart and a gauge.
 
-Resulting Portal:
+![](resources/portal-hello-world-edit.png)
 
-![](resources/hello_world_portal_view1.png)
+To view the portal, reload the top menu, click on [Portals] drop-down in the top menu, and select the portal by name.
 
-[Use our Visualization guide to add more widgets to the portal.](https://axibase.com/products/axibase-time-series-database/visualization/)
 
-[Continue to Next Page](getting-started-3.md)
+![](resources/portal-hello-world-view.png)
+
+Review the [basic syntax](https://axibase.com/products/axibase-time-series-database/visualization/widgets/selecting-series/) used to select series.
+
+Refer to [Visualization documentation](https://axibase.com/products/axibase-time-series-database/visualization/) to add more widgets to the portal.
+
+[Continue to Next Page](getting-started-3.md).
