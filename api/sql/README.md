@@ -2655,3 +2655,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [Join: Derived Series](examples/join-derived-series.md)
 - [Outer Join With Aggregation](examples/outer-join-with-aggregation.md)
 - [Outer Join](examples/outer-join.md)
+
+### Consolidated
+
+- [PI Compatibility](examples/pi.md)
