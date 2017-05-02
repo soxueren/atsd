@@ -13,11 +13,11 @@
 ## Disk Space
 
 - Application files: 5 GB
-- Data files: depends on the amount of collected data and replication factor, if applicable.
+- Data files: depends on the amount of collected data.
 
 ## Architecture
 
-- x86_64 / 64bit
+- x86_64 / 64 bit
 
 ## Operating Systems
 
@@ -28,7 +28,6 @@
 -   CentOS 6.x, 7.x
 -   Oracle Linux 6, 7
 -   Oracle UEK 2, 3
--   Docker Engine 1.7+
 
 ## Hostname
 

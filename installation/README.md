@@ -2,11 +2,12 @@
 
 ## Requirements
 
+* Linux 64-bit
 * OS and hardware [requirements](../administration/requirements.md)
 
 ## Installation Guides
 
-| **Linux Distribution** | **Format** | **Installation Guide** |
+| **Distribution** | **Format** | **Installation Guide** |
 | :--- | --- | :---: |
 | Ubuntu/Debian | apt | [View](ubuntu-debian-apt.md)|
 | Ubuntu/Debian  | [deb](https://axibase.com/public/atsd_ce_deb_latest.htm) | [View](ubuntu-debian-deb.md) |
