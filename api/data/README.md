@@ -41,7 +41,7 @@ For correct Unicode handling, specify the charset `Content-Type: application/jso
 
 ## URI Encoding
 
-Request parameter values and parameterized path segments, such as [`/api/v1/properties/{entity}/types`](properties/property-types.md), should be [URL encoded](https://tools.ietf.org/html/rfc3986#section-2.1) to translate special characters, such as `: / ? # [ ] @`, into a percent format that can be transmitted safely as part of the request URI.
+Request parameter values and parameterized path segments, such as [`/api/v1/properties/{entity}/types`](../../api/meta/entity/property-types.md), should be [URL encoded](https://tools.ietf.org/html/rfc3986#section-2.1) to translate special characters, such as `: / ? # [ ] @`, into a percent format that can be transmitted safely as part of the request URI.
 
 | **Input** | **Encoded Value** | **URI** |
 |:---|:---|:---|
