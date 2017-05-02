@@ -32,7 +32,7 @@ In case of Local authentication, ATSD stores the hashcode of the user's password
 
 The user's identity is verified if the hashcode of the submitted password matches the stored hashcode for the specified username.
 
-The password is subject to the requirements outlined [below](password-requirement).
+The password is subject to the requirements outlined [below](#password-requirements).
 
 ### LDAP Accounts
 

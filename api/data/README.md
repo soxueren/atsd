@@ -41,7 +41,7 @@ For correct Unicode handling, specify the charset `Content-Type: application/jso
 
 ## URI Encoding
 
-Request parameter values and parameterized path segments, such as [`/api/v1/properties/{entity}/types`](data/properties/property-types.md), should be [URL encoded](https://tools.ietf.org/html/rfc3986#section-2.1) to translate special characters, such as `: / ? # [ ] @`, into a percent format that can be transmitted safely as part of the request URI.
+Request parameter values and parameterized path segments, such as [`/api/v1/properties/{entity}/types`](../../api/meta/entity/property-types.md), should be [URL encoded](https://tools.ietf.org/html/rfc3986#section-2.1) to translate special characters, such as `: / ? # [ ] @`, into a percent format that can be transmitted safely as part of the request URI.
 
 | **Input** | **Encoded Value** | **URI** |
 |:---|:---|:---|
@@ -73,7 +73,7 @@ Refer to [ISO 8601 date format examples](date-format.md).
 * No thousands separator.
 * No digit grouping.
 * Negative numbers use a negative sign (`-`) at the beginning of the number.
-* Not-a-Number is literal `NaN` unless specified [otherwise](data/series/insert.md#fields).
+* Not-a-Number is literal `NaN` unless specified [otherwise](series/insert.md#fields).
 
 ## Syntax
 
@@ -108,7 +108,7 @@ Processing errors are returned in JSON format:
 
 ## Authentication
 
-* User [authentication](../../administration/user-authentiication.md) is required.
+* User [authentication](../../administration/user-authentication.md) is required.
 * All requests must be authenticated using BASIC AUTHENTICATION.
 * The authentication method is **HTTP BASIC**.
 * The client may use session cookies to execute multiple requests without repeating authentication.
