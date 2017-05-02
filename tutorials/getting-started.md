@@ -24,7 +24,7 @@ entity = my-entity
 value = 24
 ```
 
-To simplify this example, we will ignore tags. [Tags can be used to enrich the time series.](https://axibase.com/products/axibase-time-series-database/data-model/entity-and-metric-tags/)
+To simplify this example, we will ignore tags. [Tags can be used to enrich the time series.](https://axibase.com/products/axibase-time-series-database/data-model/)
 
 ##### Step 4:
 
