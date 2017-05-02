@@ -84,7 +84,7 @@ LIMIT 1
 ### Issue 3907
 --------------
 
-See the [guide](https://github.com/axibase/website/blob/master/user-guide/data-sources/axibase_tsd.md) on how to integrate Redash with ATSD.
+See the [guide](https://redash.io/help/data-sources/axibase_tsd.html) on how to integrate Redash with ATSD.
 
 
 ### Collector

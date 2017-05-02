@@ -1,77 +1,53 @@
-##### Step 8:
+# Getting Started: Part 3
 
-Open the [Export Page](https://axibase.com/products/axibase-time-series-database/exporting-data/data-export/) located on the main navigation bar, export data for the my-entity and my-metric into a CSV file, and try display it as HTML: [http://atsd_server.com:8088/export](http://nur.axibase.com:8088/export)
+### Export Data
 
-![](resources/hello_world_export1.png)
+Open the [Export] tab located in the top menu.
 
-##### Step 9:
+Complete the form to download data for the `my-entity` and `my-metric` into a CSV file as well as to displayed it as HTML.
 
-Test [ATSD API](../api/README.md) by installing a RestClient and executing a sample [series query](../api/data/series/query.md) request for my-entity and my-metric.
+![](resources/export.png)
 
-[RestClient for Google Chrome.](https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?hl=en)
+### Execute API Requests
 
-[RestClient for Firefox.](https://addons.mozilla.org/ru/firefox/addon/restclient/)
+Experiment with [Data API](../api/data/README.md) by executing sample [series query](../api/data/series/query.md) requests using the built-in API client.
 
-Method: POST
+Open **Admin: API Client** page, select Series: Query Detailed template.
 
-URL: `http://atsd_server.com:8088/api/v1/series`
+Adjust `startDate` and `endDate` fields, replace `entity` and `metric` field values accordingly.
 
-In the request be sure to specify:
-
-* endDate – end of the selection interval. Specified in ISO format or using [endtime](../end-time-syntax.md) syntax.
-
-* interval – duration of the selection interval. Specified as unit and count.
-
-* timeFormat – response time format. Possible values: iso, milliseconds. Default value: milliseconds.
-
-* metric – my-metric.
-
-* entity – my-entity.
-
-Request:
+* Request
 
 ```json
+[{
+  "startDate": "2017-05-01T00:00:00Z",
+  "endDate":   "2017-05-02T00:00:00Z",
+  "entity": "my-entity",
+  "metric": "my-metric"
+}]
+```
+
+* Response
+
+```json
+ [
   {
-        "queries": [
-            {
-                "endDate": "2015-06-24T16:00:00Z",
-                "interval": {"count": 1, "unit": "DAY"},
-                "timeFormat": "iso",
-                "entity": "my-entity",
-                "metric": "my-metric"
-            }
-        ]
-    }
-```
-
-Response:
-
-```json
- {
-    "series": [
-        {
-            "entity": "my-entity",
-            "metric": "my-metric",
-            "tags": {},
-            "type": "HISTORY",
-            "aggregate": {
-                "type": "DETAIL"
-            },
-            "data": [
-                {
-                    "d": "2015-06-24T10:00:55Z",
-                    "v": 24
-                },
-                {
-                    "d": "2015-06-24T10:10:55Z",
-                    "v": 21
-                }
-            ]
-        }
+    "entity": "my-entity",
+    "metric": "my-metric",
+    "tags": {},
+    "type": "HISTORY",
+    "aggregate": {
+      "type": "DETAIL"
+    },
+    "data": [ 
+      { "d": "2017-05-01T20:10:00.000Z", "v": 15 },
+      { "d": "2017-05-01T20:20:00.000Z", "v": 10.8 },
+      { "d": "2017-05-01T20:30:00.000Z", "v": 24 }
     ]
-}
+  }
+]
 ```
 
-![](resources/hello_world_api1.png)
+![](resources/api-client.png)
 
-[Continue to Next Page](getting-started-4.md)
+[Continue to Next Page](getting-started-4.md).

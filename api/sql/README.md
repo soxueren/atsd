@@ -1276,7 +1276,7 @@ WITH time >= last_time - 1*MINUTE
 Calculate the `average` for the most recent hour for each series that received data in the current month:
 
 ```sql
-SELECT entity, AVG(cpu_busy.value), date_format(MAX(time)) AS Last_Date
+SELECT entity, AVG(value), date_format(MAX(time)) AS Last_Date
   FROM mpstat.cpu_busy
 WHERE datetime >= CURRENT_MONTH
   GROUP BY entity

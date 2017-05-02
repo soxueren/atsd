@@ -1,33 +1,32 @@
-##### Step 10:
+# Getting Started: Part 4
 
-Open **Configuration -> Rules** page to create an alert rule for my-entity and my-metric using the build in [Rule Engine](../rule-engine).
+### Alerts
 
-The following expression and settings will raise an alert if the average of the last 3 values is above 50:
+Open **Configuration: Rules** page to create an alert rule for `my-entity` and `my-metric` using the build-in [Rule Engine](../rule-engine).
 
+The following expression will raise an alert if the last value is greater than 50:
+
+```java
+value > 50
 ```
-avg() > 50
-```
 
-![](resources/hello_world_rule1.png)
+![](resources/rule-engine-config.png)
 
-##### Step 11:
+Create the rule manually or import [my-metric-rule.xml](resources/my-metric-rule.xml) file on **Configuration: Rules** > [Import] page.
 
-Enter at least 3 values above 50 on the Data Entry page and observe an alert raised on the Alerts page located on the main menu bar: [https://atsd_server:8443/rules/all-alerts.xhtml](http://atsd_server:8088/rules/all-alerts.xhtml)
+> Make sure that 'Discard Out-of-Order Values' option is **disabled** on the [Filters] tab.
 
-![](resources/alert_hello_world.png)
+Return to Data Entry page and submit a new value greater than 50.
 
-##### Congratulations! You have reached the end of the Hello World introduction to Axibase Time Series Database.
+Click on Alerts tab in the top menu to review the newly created alert.
 
-You can continue learning about ATSD on the following pages:
+![](resources/alert.png)
 
-[API](../api#axibase-time-series-database-api)
+Update Time field value to a later timestamp and insert a value smaller than 50. Verify that the alert was deleted.
 
-[Writing Data](https://axibase.com/products/axibase-time-series-database/writing-data/)
+To receive alert notifications via email, configure the **Admin: Email Client** and specify notification rule on the 'Email Notifications' tab in the Rule Editor.
 
-[Reading Data](../api#api-clients)
+![](resources/rule-email.png)
 
-[Exporting Data](https://axibase.com/products/axibase-time-series-database/exporting-data/)
+[Continue to Next Page](getting-started-5.md).
 
-[Visualization](https://axibase.com/products/axibase-time-series-database/visualization/)
-
-[Rule Engine](../rule-engine)
