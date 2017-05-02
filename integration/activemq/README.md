@@ -130,7 +130,7 @@ If the `activemq_hostname` cannot be resolved, add it to `/etc/hosts` manually.
 1. Click the Jobs tab in the top menu.
 1. Locate the `jmx-activemq` job.
 1. On the JMX Job page, enable its status by checking on the Enabled check box.
-1. Adjust the cron expression if required. By default, the job will be executed every 10 seconds. For more information on cron expressions, see [Scheduling](http://axibase.com/products/axibase-time-series-database/writing-data/collector/set_schedule/).  
+1. Adjust the cron expression if required. By default, the job will be executed every 10 seconds. For more information on cron expressions, see [Scheduling](https://github.com/axibase/axibase-collector/blob/master/scheduling.md).  
 
 ![JMX_JOB](https://axibase.com/wp-content/uploads/2016/03/jmx_job_to_configuration.png)
 
@@ -144,7 +144,7 @@ If the `activemq_hostname` cannot be resolved, add it to `/etc/hosts` manually.
    **User Name** — JMX user name such as monitorRole. Read-only permissions are sufficient.  
    **Password** — Password for JMX user.  
    **Entity** — Optionally, specify the output of the hostname command on the ActiveMQ server if it’s different from `activemq_hostname` (for example if `activemq_hostname` represents a fully qualified name).  
-Other parameters are optional. For more information on JMX configuration, see [JMX](http://axibase.com/products/axibase-time-series-database/download-atsd/administration/atsd-metrics-jmx/).   
+Other parameters are optional. For more information on JMX configuration, see [JMX](https://github.com/axibase/axibase-collector/blob/master/jobs/jmx.md).   
 
 1. Click Test to validate the configuration.  
 If the specified configuration is correct, this indicates that there must be no errors or empty fields in the test results.
