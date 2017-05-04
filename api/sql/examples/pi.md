@@ -1,6 +1,8 @@
-# PI Compatibility Examples
+# PI Query Examples
 
-## `atsd_series` table syntax supports `WHERE metric LIKE` condition
+## New `atsd_series` syntax options
+
+### `WHERE metric LIKE` condition
 
 ```sql
 SELECT datetime, metric, value
@@ -45,7 +47,7 @@ ORDER BY metric, datetime
 | 2016-10-04T02:10:21Z | tv6.pack:r04 | 19.9  |
 ```
 
-## `atsd_series` table syntax supports `WHERE metric IN metrics(entityName)`
+### `WHERE metric IN metrics(entityName)` condition
 
 ```sql
 SELECT datetime, metric, value
@@ -70,7 +72,7 @@ WITH INTERPOLATE(5 MINUTE)
 | 2016-10-04T02:10:00Z | tv6.pack:r04 | 18.2  |
 ```
 
-## `atsd_series` table syntax supports JOINs
+### JOINs
 
 ```sql
 SELECT t1.entity, t1.metric, t1.datetime,
@@ -82,7 +84,7 @@ FROM atsd_series t1
   JOIN 'TV6.Elapsed_Time' t2
   JOIN 'TV6.Unit_BatchID' t3
   JOIN 'TV6.Unit_Procedure' t4
-WHERE t1.metric LIKE ('tv6.pack*')
+WHERE t1.metric LIKE 'tv6.pack*'
   AND t1.datetime BETWEEN '2016-10-04T00:00:00Z' AND '2016-10-05T00:00:00Z'
   AND t1.entity = 'br-1211'
 WITH INTERPOLATE(1 MINUTE, LINEAR, INNER, NONE, START_TIME)
@@ -112,6 +114,8 @@ WITH INTERPOLATE(1 MINUTE, LINEAR, INNER, NONE, START_TIME)
 
 ## New LAG and LEAD functions
 
+* LAG function
+
 ```sql
 SELECT datetime, text, LAG(text)
   FROM 'TV6.Unit_BatchID'
@@ -127,10 +131,12 @@ WHERE entity = 'br-1211' AND (text = '800' OR LAG(text) = '800')
 | 2016-10-04T02:07:05Z | Inactive | 800       |
 ```
 
-* LAG function [examples](../../README.md#lag)
+* LEAD function [examples](../../README.md#lag)
 
 
-## Interval condition supports subqueries WHERE datetime BETWEEN (SELECT ...)
+## BETWEEN clause supports subqueries
+
+* The `BETWEEN` clause (Interval condition) accepts subqueries
 
 ```sql
 SELECT t1.entity, t1.metric, t1.datetime,
@@ -142,8 +148,12 @@ FROM atsd_series t1
   JOIN 'TV6.Elapsed_Time' t2
   JOIN 'TV6.Unit_BatchID' t3
   JOIN 'TV6.Unit_Procedure' t4
-WHERE t1.metric LIKE ('tv6.pack*')
-  AND t1.datetime BETWEEN (SELECT datetime FROM 'TV6.Unit_BatchID' WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800'))
+WHERE t1.metric LIKE 'tv6.pack*'
+  -- subquery in the datatime condition
+  AND t1.datetime BETWEEN (
+    SELECT datetime FROM 'TV6.Unit_BatchID'
+    WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800')
+  )
   AND t1.entity = 'br-1211'
 WITH INTERPOLATE(1 MINUTE, LINEAR, OUTER, EXTEND, START_TIME)
   ORDER BY t1.metric, t1.datetime
@@ -172,7 +182,9 @@ WITH INTERPOLATE(1 MINUTE, LINEAR, OUTER, EXTEND, START_TIME)
 | br-1211   | tv6.pack:r04 | 2016-10-04T02:06:10Z | 21.0     | 275.0        | 800           | Proc2          |
 ```
 
-## New `interval_number()` function enumerates consecutive intervals
+## New `interval_number()` function
+
+* The `interval_number()` function enumerates consecutive intervals in the SELECT statement.
 
 ```sql
 SELECT t1.entity, t1.metric, t1.datetime,
@@ -188,8 +200,11 @@ FROM atsd_series t1
   JOIN 'TV6.Elapsed_Time' t2
   JOIN 'TV6.Unit_BatchID' t3
   JOIN 'TV6.Unit_Procedure' t4
-WHERE t1.metric LIKE ('tv6.pack*')
-  AND t1.datetime BETWEEN (SELECT datetime FROM 'TV6.Unit_BatchID' WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800'))
+WHERE t1.metric LIKE 'tv6.pack*'
+  AND t1.datetime BETWEEN (
+      SELECT datetime FROM 'TV6.Unit_BatchID'
+      WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800')
+  )
   AND t1.entity = 'br-1211'
 WITH INTERPOLATE(1 MINUTE, LINEAR, OUTER, EXTEND, START_TIME)
   ORDER BY t1.metric, t1.datetime
@@ -218,7 +233,9 @@ WITH INTERPOLATE(1 MINUTE, LINEAR, OUTER, EXTEND, START_TIME)
 | br-1211   | tv6.pack:r04 | 2016-10-04T02:06:10Z | 21.0     | 275.0        | 800           | Proc2          | 800.2        |
 ```
 
-## PERIOD aggregation support user-defined timezones
+## User-defined timezones in PERIOD
+
+* The PERIOD aggregation supports user-defined timezones.
 
 ```sql
 SELECT datetime, date_format(time, "yyyy-MM-dd HH:mm:ss z", "US/Eastern") AS 'Local Date',
@@ -236,7 +253,7 @@ WHERE metric LIKE 'tv6.p*'
 | 2016-10-03T04:00:00Z | 2016-10-03 00:00:00 EDT | 99.9       | 17.1       |
 ```
 
-## GROUP BY text (annotation) value
+## GROUP BY text
 
 ```sql
 SELECT t1.metric,
@@ -246,8 +263,11 @@ FROM atsd_series t1
   JOIN 'TV6.Elapsed_Time' t2
   JOIN 'TV6.Unit_BatchID' t3
   JOIN 'TV6.Unit_Procedure' t4
-WHERE t1.metric LIKE ('tv6.pack*')
-  AND t1.datetime BETWEEN (SELECT datetime FROM 'TV6.Unit_BatchID' WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800'))
+WHERE t1.metric LIKE 'tv6.pack*'
+  AND t1.datetime BETWEEN (
+    SELECT datetime FROM 'TV6.Unit_BatchID'
+    WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800')
+  )
   AND t1.entity = 'br-1211'
 WITH INTERPOLATE(1 MINUTE, LINEAR, OUTER, EXTEND, START_TIME)
   GROUP BY t1.metric, t4.text
