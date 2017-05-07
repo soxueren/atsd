@@ -828,54 +828,48 @@ GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 
 #### `CALENDAR` Alignment
 
-The `CALENDAR` alignment calculates the first period according to the rules below and creates subsequent periods by incrementing the duration specified in the `PERIOD` function.
+The `CALENDAR` alignment calculates the initial period according to the rules below and creates subsequent periods by incrementing the duration specified by the `PERIOD` function. The inital period is defined as the earliest period that intersects with the selection interval.
 
-
-* Start time of the selection interval is rounded down to calculate the _base time_ using the rules below.
-* If the _base time_ is equal or greater than start time and less than end time, the _base time_ becomes the first period.
-* If the _base time_ is earlier than start time, increment it by period duration until it is equal or greater than start time and less than end time. This period becomes the first period.
+* Start time of the selection interval is rounded to calculate the _base time_ using the rule table below.
+* If the period starting with the _base time_ intersects with the selection interval, it becomes the initial period.
+* Otherwise, the period starting with _base time_ is incremented (decremented if _base time_ exceeds start time) to find the earliest period intersecting with the selection interval. This period becomes the initial period.
 
 **Rounding Rules**
 
-| **Time Unit**   | **Rounded (Base) Time** |
+| **Time Unit**   | **Base Time (Rounded)** |
 |-------------|-----------|
-| MILLISECOND | 00:00 in a given hour. |
-| SECOND | 00:00 in a given hour. |
-| MINUTE | 00:00 in a given hour. |
-| HOUR | 00:00 on a given day. |
-| DAY | 00:00 on the 1st day in a given month. |
-| WEEK | 00:00 on the 1st Monday in a given month. |
-| MONTH | 00:00 on January 1st in a given year. |
-| QUARTER | 00:00 on January 1st in a given year. |
-| YEAR | 00:00 on January 1st, 1970. |
+| MILLISECOND | 0m:0s in a given hour. |
+| SECOND | 0m:0s in a given hour. |
+| MINUTE | 0m:0s in a given hour. |
+| HOUR | 0h:0m:0s on a given day. |
+| DAY | 0h:0m:0s on the 1st day in a given month. |
+| WEEK | 0h:0m:0s on the 1st Monday in a given month. |
+| MONTH | 0h:0m:0s on January 1st in a given year. |
+| QUARTER | 0h:0m:0s on January 1st in a given year. |
+| YEAR | 0h:0m:0s on January 1st, 1970. |
 
-Example:
-  - Selection interval is [`2016-06-20 15:05` - `2016-06-24 00:00`).
-  - Period is set to `45 MINUTE`.
-  - Start time `15:05` is rounded to `2016-06-20 00:00` as the **base** time.
-  - Base time is incremented by 45 minutes until a period start is >= `15:05`: 00:00, 00:45, 01:30, etc.
-  - The first period to reach the start of the selection interval is `15:45` or `[2016-06-20 15:45 - 2016-06-20 16:30)`.
-  - The next period is incremented by 45 minutes from the start of the previous period to `[2016-06-20 16:30 - 2016-06-20 17:15)`.
+Examples:
 
 ```ls
-| Period     | Start Date        | End Date          | 1st Period        | 2nd Period        | Last Period      |
-|------------|-------------------|-------------------|-------------------|-------------------|------------------|
-| 45 MINUTE  | 2016-06-20 15:05  | 2016-06-24 00:00  | 2016-06-20 15:45  | 2016-06-20 16:30  | 2016-06-23 23:15 |
-| 45 MINUTE  | 2016-06-20 15:00  | 2016-06-24 00:00  | 2016-06-20 15:00  | 2016-06-20 15:45  | 2016-06-23 23:15 |
-| 1 HOUR     | 2016-06-20 16:00  | 2016-06-24 00:00  | 2016-06-20 16:00  | 2016-06-20 17:00  | 2016-06-23 23:00 |
-| 1 HOUR     | 2016-06-20 16:05  | 2016-06-23 23:55  | 2016-06-20 17:00  | 2016-06-20 18:00  | 2016-06-23 23:00 |
-| 1 HOUR     | 2016-06-20 16:30  | 2016-06-24 00:00  | 2016-06-20 17:00  | 2016-06-20 18:00  | 2016-06-23 23:00 |
-| 7 HOUR     | 2016-06-20 16:00  | 2016-06-24 00:00  | 2016-06-20 21:00  | 2016-06-21 04:00  | 2016-06-23 19:00 |
-| 10 HOUR    | 2016-06-20 16:00  | 2016-06-24 00:00  | 2016-06-20 20:00  | 2016-06-21 06:00  | 2016-06-23 18:00 |
-| 1 DAY      | 2016-06-01 16:00  | 2016-06-24 00:00  | 2016-06-02 00:00  | 2016-06-03 00:00  | 2016-06-23 00:00 |
-| 2 DAY      | 2016-06-01 16:00  | 2016-06-24 00:00  | 2016-06-03 00:00  | 2016-06-05 00:00  | 2016-06-23 00:00 |
-| 5 DAY      | 2016-06-01 16:00  | 2016-06-24 00:00  | 2016-06-06 00:00  | 2016-06-11 00:00  | 2016-06-21 00:00 |
-| 1 WEEK     | 2016-06-01 16:00  | 2016-06-24 00:00  | 2016-06-06 00:00  | 2016-06-13 00:00  | 2016-06-20 00:00 |
-| 1 WEEK     | 2016-05-01 16:00  | 2016-05-24 00:00  | 2016-05-02 00:00  | 2016-05-09 00:00  | 2016-05-23 00:00 |
-| 1 WEEK     | 2016-06-01 00:00  | 2016-06-02 00:00  | 1st Monday Jun-06 | -                 | -                |
+| Period     | Start Time        | End Time          | _base time_       | Initial Period    | 2nd Period        | Last Period      |
+|------------|-------------------|-------------------|-------------------|-------------------|-------------------|------------------|
+| 45 MINUTE  | 2016-06-20 15:05  | 2016-06-24 00:00  | 2016-06-20 15:00  | 2016-06-20 15:00  | 2016-06-20 15:45  | 2016-06-23 23:15 |
+| 45 MINUTE  | 2016-06-20 15:00  | 2016-06-24 00:00  | 2016-06-20 15:00  | 2016-06-20 15:00  | 2016-06-20 15:45  | 2016-06-23 23:15 |
+| 45 MINUTE  | 2016-06-20 15:55  | 2016-06-24 00:00  | 2016-06-20 15:00  | 2016-06-20 15:45  | 2016-06-20 16:30  | 2016-06-23 23:15 |
+| 60 MINUTE  | 2016-06-20 15:30  | 2016-06-24 00:00  | 2016-06-20 15:00  | 2016-06-20 15:00  | 2016-06-20 16:00  | 2016-06-23 23:00 |
+| 1 HOUR     | 2016-06-20 15:30  | 2016-06-24 00:00  | 2016-06-20 00:00  | 2016-06-20 15:00  | 2016-06-20 16:00  | 2016-06-23 23:00 |
+| 1 HOUR     | 2016-06-20 16:00  | 2016-06-24 00:00  | 2016-06-20 00:00  | 2016-06-20 16:00  | 2016-06-20 17:00  | 2016-06-23 23:00 |
+| 1 HOUR     | 2016-06-20 16:05  | 2016-06-23 23:55  | 2016-06-20 00:00  | 2016-06-20 16:00  | 2016-06-20 17:00  | 2016-06-23 23:00 |
+| 7 HOUR     | 2016-06-20 16:00  | 2016-06-24 00:00  | 2016-06-20 00:00  | 2016-06-20 14:00  | 2016-06-20 21:00  | 2016-06-23 19:00 |
+| 10 HOUR    | 2016-06-20 16:00  | 2016-06-24 00:00  | 2016-06-20 00:00  | 2016-06-20 10:00  | 2016-06-20 20:00  | 2016-06-23 18:00 |
+| 1 DAY      | 2016-06-01 16:00  | 2016-06-24 00:00  | 2016-06-01 00:00  | 2016-06-01 00:00  | 2016-06-02 00:00  | 2016-06-23 00:00 |
+| 2 DAY      | 2016-06-01 16:00  | 2016-06-24 00:00  | 2016-06-01 00:00  | 2016-06-01 00:00  | 2016-06-03 00:00  | 2016-06-23 00:00 |
+| 5 DAY      | 2016-06-01 16:00  | 2016-06-24 00:00  | 2016-06-01 00:00  | 2016-06-01 00:00  | 2016-06-11 00:00  | 2016-06-21 00:00 |
+| 1 WEEK     | 2016-06-01 16:00  | 2016-06-24 00:00  | 2016-06-06 00:00  | 2016-05-30 00:00  | 2016-06-06 00:00  | 2016-06-20 00:00 |
+| 1 WEEK     | 2016-06-07 16:00  | 2016-06-24 00:00  | 2016-06-06 00:00  | 2016-06-06 00:00  | 2016-06-13 00:00  | 2016-06-20 00:00 |
+| 1 WEEK     | 2016-05-01 16:00  | 2016-05-24 00:00  | 2016-05-02 00:00  | 2016-04-25 00:00  | 2016-05-02 00:00  | 2016-05-23 00:00 |
+| 1 WEEK     | 2016-06-01 00:00  | 2016-06-02 00:00  | 2016-06-06 00:00  | 2016-05-30 00:00  | -                 | -                |
 ```
-
-> If the last period's end time exceeds the end time of the selection interval, the last period may contain partial data.
 
 For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units the start of the day is determined according to the **database timezone**, unless a user-defined timezone is specified as an option, for example `GROUP BY entity, PERIOD(1 MONTH, "UTC")`.
 

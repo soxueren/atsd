@@ -37,28 +37,27 @@ For example, `1 HOUR` initializes 1-hour long periods starting at `0` minutes of
 
 ### `CALENDAR` Alignment
 
-The `CALENDAR` alignment calculates the first period according to the rules below and creates subsequent periods by incrementing the duration specified with `count` and `unit` fields.
+The `CALENDAR` alignment calculates the initial period according to the rules below and creates subsequent periods by incrementing the duration specified with `count` and `unit` fields. The initial period is defined as the earliest period starting within the selection interval.
 
-* `startDate` of the selection interval is rounded down to calculate the _base time_ using the rules below.
-* If the _base time_ is equal or greater than `startDate` and less than `endDate`, the _base time_ becomes the first period.
-* If the _base time_ is earlier than `startDate`, increment it by period duration until it is equal or greater than `startDate` and less than `endDate`. This period becomes the first period.
+* `startDate` of the selection interval is rounded to calculate the _base time_ using the rule table below.
+* If the _base time_ is within the selection interval, it becomes the initial period.
+* Otherwise, the period starting with _base time_ is incremented (decremented if _base time_ exceeds start time) to find the earliest period starting withing the selection interval. This period becomes the initial period.
 
 **`startDate` Rounding Rules**
 
-| **Time Unit**   | **Rounded (Base) Time** |
+| **Time Unit**   | **Base Time (Rounded)** |
 |-------------|-----------|
-| NANOSECOND | 00:00 in a given hour. |
-| MILLISECOND | 00:00 in a given hour. |
-| SECOND | 00:00 in a given hour. |
-| MINUTE | 00:00 in a given hour. |
-| HOUR | 00:00 on a given day. |
-| DAY | 00:00 on the 1st day in a given month. |
-| WEEK | 00:00 on the 1st Monday in a given month. |
-| MONTH | 00:00 on January 1st in a given year. |
-| QUARTER | 00:00 on January 1st in a given year. |
-| YEAR | 00:00 on January 1st, 1970. |
+| MILLISECOND | 0m:0s in a given hour. |
+| SECOND | 0m:0s in a given hour. |
+| MINUTE | 0m:0s in a given hour. |
+| HOUR | 0h:0m:0s on a given day. |
+| DAY | 0h:0m:0s on the 1st day in a given month. |
+| WEEK | 0h:0m:0s on the 1st Monday in a given month. |
+| MONTH | 0h:0m:0s on January 1st in a given year. |
+| QUARTER | 0h:0m:0s on January 1st in a given year. |
+| YEAR | 0h:0m:0s on January 1st, 1970. |
 
-For example, if period is `2 HOUR`, start date of `2016-06-20 15:08` will be rounded to `2016-06-20 00:00` as the **base** time, and the first period will start at `2016-06-20 16:00`.
+For example, if period is `2 HOUR`, start date of `2016-06-20 15:08` will be rounded to `2016-06-20 00:00` as the **base** time, and the initial period will start at `2016-06-20 16:00`.
 
 Start of the day is determined according to the server timezone for `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units.
 
@@ -91,7 +90,7 @@ Start of the day is determined according to the server timezone for `DAY`, `WEEK
 #### Calculation Examples
 
 ```ls
-| Period     | Start Date        | End Date          | 1st Period        | 2nd Period        | Last Period      |
+| Period     | Start Date        | End Date          | Initial Period    | 2nd Period        | Last Period      |
 |-----------:|-------------------|-------------------|-------------------|-------------------|------------------|
 | 1 MINUTE   | 2016-06-20 15:05  | 2016-06-24 00:00  | 2016-06-20 15:05  | 2016-06-20 15:06  | 2016-06-23 23:59 |
 | 3 MINUTE   | 2016-06-20 15:05  | 2016-06-24 00:00  | 2016-06-20 15:06  | 2016-06-20 15:09  | 2016-06-23 23:57 |
