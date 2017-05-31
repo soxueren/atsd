@@ -1,14 +1,15 @@
-# Partition - `ROW_NUMBER` with `ORDER BY` avg
+# Partition
+
+## Query using `ROW_NUMBER` partitioning with `ORDER BY` average
 
 Retrieve top-3 15-minute periods with maximum average disk usage, for each disk matching '/dev*' pattern.
 
-## Query
-
 ```sql
 SELECT entity, tags.*, datetime, avg(value)
-  FROM df.disk_used 
-WHERE datetime > now - 1 * day
+  FROM df.disk_used
+WHERE datetime BETWEEN '2017-05-30T00:00:00Z' AND '2017-05-31T00:00:00Z'
   AND tags.file_system LIKE '/dev/*'
+  AND entity LIKE '*00*'
 GROUP BY entity, tags, period(15 minute)
   WITH row_number(entity, tags ORDER BY avg(value) DESC) <= 3
 ```
@@ -16,30 +17,40 @@ GROUP BY entity, tags, period(15 minute)
 ## Results
 
 ```ls
-| entity       | tags.mount_point | tags.file_system                                       | datetime                 | avg(value) | 
-|--------------|------------------|--------------------------------------------------------|--------------------------|-----------:| 
-| nurswgvml006 | /                | /dev/mapper/vg_nurswgvml006-lv_root                    | 2016-06-18T20:30:00.000Z | 5413803.1  | 
-| nurswgvml006 | /                | /dev/mapper/vg_nurswgvml006-lv_root                    | 2016-06-18T20:15:00.000Z | 5413709.1  | 
-| nurswgvml006 | /                | /dev/mapper/vg_nurswgvml006-lv_root                    | 2016-06-18T20:00:00.000Z | 5413353.0  | 
-| nurswgvml006 | /media/datadrive | /dev/sdc1                                              | 2016-06-18T02:45:00.000Z | 53977000.1 | 
-| nurswgvml006 | /media/datadrive | /dev/sdc1                                              | 2016-06-18T01:30:00.000Z | 53704456.3 | 
-| nurswgvml006 | /media/datadrive | /dev/sdc1                                              | 2016-06-18T02:00:00.000Z | 52554126.5 | 
-| nurswgvml007 | /                | /dev/mapper/vg_nurswgvml007-lv_root                    | 2016-06-18T20:30:00.000Z | 8726755.3  | 
-| nurswgvml007 | /                | /dev/mapper/vg_nurswgvml007-lv_root                    | 2016-06-18T20:15:00.000Z | 8722492.9  | 
-| nurswgvml007 | /                | /dev/mapper/vg_nurswgvml007-lv_root                    | 2016-06-18T20:00:00.000Z | 8719981.4  | 
-| nurswgvml010 | /                | /dev/sda1                                              | 2016-06-18T06:30:00.000Z | 6565711.1  | 
-| nurswgvml010 | /                | /dev/sda1                                              | 2016-06-18T06:15:00.000Z | 6504368.9  | 
-| nurswgvml010 | /                | /dev/sda1                                              | 2016-06-18T03:45:00.000Z | 6482958.6  | 
-| nurswgvml010 | /app             | /dev/sdb1                                              | 2016-06-18T02:00:00.000Z | 30443142.1 | 
-| nurswgvml010 | /app             | /dev/sdb1                                              | 2016-06-18T19:30:00.000Z | 30440675.5 | 
-| nurswgvml010 | /app             | /dev/sdb1                                              | 2016-06-18T13:30:00.000Z | 30440674.3 | 
-| nurswgvml011 | /                | /dev/sda1                                              | 2016-06-18T20:30:00.000Z | 6860848.4  | 
-| nurswgvml011 | /                | /dev/sda1                                              | 2016-06-18T20:15:00.000Z | 6860539.4  | 
-| nurswgvml011 | /                | /dev/sda1                                              | 2016-06-18T19:45:00.000Z | 6859553.2  | 
-| nurswgvml102 | /                | /dev/disk/by-uuid/8a5a178f-4dba-4282-803a-1fe43fc6220a | 2016-06-18T20:30:00.000Z | 1528761.0  | 
-| nurswgvml102 | /                | /dev/disk/by-uuid/8a5a178f-4dba-4282-803a-1fe43fc6220a | 2016-06-18T20:15:00.000Z | 1528724.0  | 
-| nurswgvml102 | /                | /dev/disk/by-uuid/8a5a178f-4dba-4282-803a-1fe43fc6220a | 2016-06-18T20:00:00.000Z | 1528686.6  | 
-| nurswgvml502 | /                | /dev/sda1                                              | 2016-06-18T20:30:00.000Z | 30142965.6 | 
-| nurswgvml502 | /                | /dev/sda1                                              | 2016-06-18T19:45:00.000Z | 30142827.9 | 
-| nurswgvml502 | /                | /dev/sda1                                              | 2016-06-18T20:15:00.000Z | 30142776.7 | 
+| entity       | tags.file_system                    | tags.mount_point | datetime             | avg(value) |
+|--------------|-------------------------------------|------------------|----------------------|------------|
+| nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | /                | 2017-05-30T22:45:00Z | 8655026.5  |
+| nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | /                | 2017-05-30T23:45:00Z | 8654091.1  |
+| nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | /                | 2017-05-30T21:45:00Z | 8651712.4  |
+| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | /                | 2017-05-30T23:30:00Z | 6646798.4  |
+| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | /                | 2017-05-30T23:45:00Z | 6646737.4  |
+| nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | /                | 2017-05-30T23:15:00Z | 6646709.7  |
+| nurswgvml006 | /dev/sdc1                           | /media/datadrive | 2017-05-30T01:15:00Z | 63184084.9 |
+| nurswgvml006 | /dev/sdc1                           | /media/datadrive | 2017-05-30T01:30:00Z | 62713797.9 |
+| nurswgvml006 | /dev/sdc1                           | /media/datadrive | 2017-05-30T01:45:00Z | 61794611.6 |
+```
+
+## Query using `ROW_NUMBER` partitioning and display row number
+
+```sql
+SELECT entity, datetime, avg(value), row_number()
+  FROM mpstat.cpu_busy
+WHERE datetime BETWEEN '2017-05-30T00:00:00Z' AND '2017-05-31T00:00:00Z'
+  AND entity LIKE '*00*'
+GROUP BY entity, period(15 minute)
+  WITH row_number(entity ORDER BY avg(value) DESC) <= 3
+ORDER BY entity, datetime
+```
+
+## Results
+
+```ls
+| entity       | datetime             | avg(value) | row_number() |
+|--------------|----------------------|------------|--------------|
+| nurswgvml006 | 2017-05-30T01:00:00Z | 100.0      | 1            |
+| nurswgvml006 | 2017-05-30T01:15:00Z | 100.0      | 2            |
+| nurswgvml006 | 2017-05-30T01:30:00Z | 94.7       | 3            |
+| nurswgvml007 | 2017-05-30T15:00:00Z | 13.6       | 3            |
+| nurswgvml007 | 2017-05-30T16:30:00Z | 77.5       | 1            |
+| nurswgvml007 | 2017-05-30T16:45:00Z | 28.1       | 2            |
 ```
