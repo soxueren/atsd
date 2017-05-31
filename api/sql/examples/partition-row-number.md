@@ -41,7 +41,7 @@ Examples:
 
 ## `ROW_NUMBER` column
 
-The `ROW_NUMBER()` column is available in `SELECT` expressions and `ORDER BY` clause.
+The `ROW_NUMBER()` column, without arguments, is available in the `SELECT` expression and `ORDER BY` clause.
 
 ```sql
 SELECT datetime, entity, value, row_number()

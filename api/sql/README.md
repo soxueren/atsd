@@ -1283,7 +1283,7 @@ WITH ROW_NUMBER(entity, tags ORDER BY period(15 minute)) <= 2
 | nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | 2017-01-09T00:15:00Z | 9005158    | 60           | 9071668      | 9010264   |
 ```
 
-The `row_number()` column can be included in the `SELECT` expression and in the `ORDER BY` clause.
+The `row_number()` column, without arguments, can be included in the `SELECT` expression and in the `ORDER BY` clause.
 
 ```sql
 SELECT datetime, entity, value, row_number()
