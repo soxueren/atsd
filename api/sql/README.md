@@ -308,49 +308,69 @@ SELECT t1.datetime, t1.entity, t1.value + t2.value AS cpu_sysusr
 WHERE t1.datetime >= NOW - 1*MINUTE
 ```
 
-The list of all predefined columns may be requested with the `SELECT *` syntax, except for queries with the `GROUP BY` clause and multiple-metric queries using the `atsd_series` table.
+The list of all predefined columns may be requested with the `SELECT *` syntax, except for queries with the `GROUP BY` clause and multiple-metric queries from the `atsd_series` table.
 
 ```sql
-SELECT * FROM "mpstat.cpu_busy" t1
+SELECT * 
+  FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
-WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:00Z'
+WHERE t1.datetime BETWEEN '2016-06-16T13:00:00Z' AND '2016-06-16T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
 
 ```ls
-| t1.entity       | t1.datetime          | t1.value       | t2.entity      | t2.datetime          | t2.value      |
-|-----------------|----------------------|----------------|----------------|----------------------|---------------|
-| nurswgvml006    | 2016-06-16T13:00:01Z | 37.1           | nurswgvml006   | 2016-06-16T13:00:01Z | null          |
-| nurswgvml006    | 2016-06-16T13:00:12Z | null           | nurswgvml006   | 2016-06-16T13:00:12Z | 67932.0       |
-| nurswgvml006    | 2016-06-16T13:00:17Z | 16.0           | nurswgvml006   | 2016-06-16T13:00:17Z | null          |
-| nurswgvml006    | 2016-06-16T13:00:27Z | null           | nurswgvml006   | 2016-06-16T13:00:27Z | 73620.0       |
+| t1.entity    | t1.datetime          | t1.value | t2.entity    | t2.datetime          | t2.value | 
+|--------------|----------------------|----------|--------------|----------------------|----------| 
+| nurswgvml006 | 2016-06-16T13:00:01Z | 37       | null         | null                 | null     | 
+| null         | null                 | null     | nurswgvml006 | 2016-06-16T13:00:12Z | 67932    | 
+| nurswgvml006 | 2016-06-16T13:00:17Z | 16       | null         | null                 | null     | 
+| null         | null                 | null     | nurswgvml006 | 2016-06-16T13:00:27Z | 73620    | 
 ```
 
 In the case of a `JOIN` query, the `SELECT *` syntax can be applied to each table separately.
 
 ```sql
-SELECT t1.*, t2.value FROM "mpstat.cpu_busy" t1
+SELECT t1.*, t2.datetime, t2.value 
+  FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
-WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:00Z'
+WHERE t1.datetime BETWEEN '2016-06-16T13:00:00Z' AND '2016-06-16T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
 
 ```ls
-| t1.entity       | t1.datetime          | t1.value       | t2.value |
-|-----------------|----------------------|----------------|----------|
-| nurswgvml006    | 2016-06-16T13:00:01Z | 37.1           | null     |
-| nurswgvml006    | 2016-06-16T13:00:12Z | null           | 67932.0  |
-| nurswgvml006    | 2016-06-16T13:00:17Z | 16.0           | null     |
-| nurswgvml006    | 2016-06-16T13:00:27Z | null           | 73620.0  |
+| t1.entity    | t1.datetime          | t1.value | t2.datetime          | t2.value | 
+|--------------|----------------------|----------|----------------------|----------| 
+| nurswgvml006 | 2016-06-16T13:00:01Z | 37       | null                 | null     | 
+| null         | null                 | null     | 2016-06-16T13:00:12Z | 67932    | 
+| nurswgvml006 | 2016-06-16T13:00:17Z | 16       | null                 | null     | 
+| null         | null                 | null     | 2016-06-16T13:00:27Z | 73620    | 
 ```
 
 The `time` and `datetime` columns are interchangeable and can be used as equivalents, for instance in the `GROUP BY` clause and the `SELECT` expression.
 
 ```sql
-SELECT entity, datetime, count(*)
+SELECT datetime, entity, count(*)
   FROM "df.disk_used"
-WHERE datetime >= "2016-07-03T21:02:00Z" AND datetime < "2016-07-03T21:02:15Z"
-  GROUP BY entity, time
+WHERE datetime BETWEEN '2016-07-03T21:02:00Z' AND '2016-07-03T21:02:15Z'
+  GROUP BY time, entity
+```
+
+The `SELECT` expression in `JOIN` queries can include both fully qualified column names such as {table}.datetime as well as short names `datetime` and `time` containing row timestamp calculated as `COALESCE(t1.datetime, t2.datetime, ...)`.
+
+```sql
+SELECT datetime, t1.datetime, t2.datetime
+  FROM "mpstat.cpu_busy" t1
+  OUTER JOIN "meminfo.memfree" t2
+WHERE t1.datetime BETWEEN '2016-06-16T13:00:00Z' AND '2016-06-16T13:10:00Z'
+  AND t1.entity = 'nurswgvml006'
+```
+
+```ls
+| datetime             | t1.datetime          | t2.datetime          | 
+|----------------------|----------------------|----------------------| 
+| 2016-06-16T13:00:01Z | 2016-06-16T13:00:01Z | null                 | 
+| 2016-06-16T13:00:12Z | null                 | 2016-06-16T13:00:12Z | 
+| 2016-06-16T13:00:17Z | 2016-06-16T13:00:17Z | null                 | 
 ```
 
 ### Series Value Columns
@@ -999,7 +1019,9 @@ WITH INTERPOLATE(30 SECOND)
 WITH INTERPOLATE (period [, inter_func[, boundary[, fill [, alignment]]]])
 ```
 
-The `WITH INTERPOLATE` clause is included prior to the `ORDER BY` and `LIMIT` clauses and applies to all series retrieved by the query separately.
+The `WITH INTERPOLATE` clause is included prior to the `ORDER BY` and `LIMIT` clauses. 
+
+If the query retrieves multiple series, the interpolation is applied to each series separately.
 
 If the `WHERE` condition includes multiple date ranges, the interpolation is performed for each date range and series separately.
 
@@ -1013,26 +1035,37 @@ WITH INTERPOLATE (1 MINUTE, LINEAR, OUTER, NAN, START_TIME)
 
 | **Name** | **Description**|
 |:---|:---|
-| `period` | Regular interval for aligning interpolated values (for example, `5 MINUTE`). Specified as `count unit`. |
-| `inter_func` | Interpolation function to calculate values at regular timestamps based on adjacent values. |
-| `boundary` | Retrieval of raw values outside of the selection interval to interpolate leading and trailing values.  |
-| `fill` | Method for filling missing values at the beginning and the end of the selection interval. |
-| `alignment` | Aligns regular timestamps based on calendar or start time. |
+| `period` | Regular interval for aligning interpolated values. |
+| `inter_func` | Interpolation function to calculate values at regular timestamps based on adjacent values. Default: `LINEAR`.|
+| `boundary` | Retrieval of raw values outside of the selection interval to interpolate leading and trailing values. Default: `INNER`. |
+| `fill` | Method for filling missing values at the beginning and the end of the selection interval. Default: `NONE`. |
+| `alignment` | Aligns regular timestamps based on calendar or start time. Default: `CALENDAR`. |
 
 [![](images/chartlab.png)](https://apps.axibase.com/chartlab/712f37cb)
 
 ![INTERPOLATE Parameters](images/regularize_sinusoid.png)
 
+### Interpolation Period
+
+The interpolation period is specified as `count unit`, for example `5 MINUTE`, or `DETAIL`.
+
+| **Name** | **Description** |
+|:---|:---|
+| count | [**Required**] Number of time units contained in the period. |
+| unit | [**Required**] [Time unit](../../api/data/series/time-unit.md) such as `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, `YEAR`. |
+
+The `DETAIL` mode can be used to fill missing values in `OUTER JOIN` queries while retaining the original timestamps of the merged series. 
+
 ### Interpolation Function
 
 | **Name** | **Description**|
 |:---|:---|
-| `LINEAR` | Calculates the value at the desired timestamp by linearly interpolating prior and next values. |
-| `PREVIOUS` | Sets the value at the desired timestamp based on the previously recorded raw value.<br>This step-like function is appropriate for metrics with discrete values (digital signal) or in cases where the value has been updated.|
-| `AUTO` | [**Default**] Applies an interpolation function (`LINEAR` or `PREVIOUS`) based on a metric's Interpolation setting.<br>If multiple metrics are specified in the query, `AUTO` applies its own interpolation mode for each metric.  |
+| `LINEAR` | Calculates the value at the desired timestamp by linearly interpolating prior and next values.|
+| `PREVIOUS` | Sets the value at the desired timestamp based on the previously recorded raw value.<br>This step-like function is appropriate for metrics with discrete values (digital signals).|
+| `AUTO` | [**Default**] Applies an interpolation function (`LINEAR` or `PREVIOUS`) based on the metric's Interpolation setting.<br>If multiple metrics are specified in the query, `AUTO` applies its own interpolation mode for each metric.  |
 
 * NaN (Not-A-Number) raw values are ignored from interpolation.
-* The `value` condition in the `WHERE` clause applies to interpolated series values instead of raw values, <br>i.e. filtering out raw values prior to interpolation is not supported.
+* The `value` condition in the `WHERE` clause applies to interpolated series values instead of raw values. Filtering out raw values prior to interpolation is not supported.
 
 ### Boundary
 
@@ -1135,7 +1168,7 @@ Partitioning is implemented with the `ROW_NUMBER` function, which returns the se
 
 A partition is a subset of all rows within the result set, grouped by an entity and/or series tags. Each row in the result set may belong to only one partition.
 
-For example, a result set partitioned by an entity and ordered by time would have the following row numbers:
+For example, a result set partitioned by entity and ordered by time would have the following row numbers:
 
 ```ls
 |--------------|----------------------|-------| ROW_NUMBER
@@ -1240,7 +1273,7 @@ WITH ROW_NUMBER(entity, tags ORDER BY period(15 minute)) <= 2
 ```
 
 ```ls
-| entity       | tags.file_system                    | datetime             | avg(value) | count(value) | first(value) | last......|
+| entity       | tags.file_system                    | datetime             | avg(value) | count(value) | first(value) | last      |
 |--------------|-------------------------------------|----------------------|------------|--------------|--------------|-----------|
 | nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | 2017-01-09T00:00:00Z | 6285986    | 60           | 6285696      | 6286312   |
 | nurswgvml006 | /dev/mapper/vg_nurswgvml006-lv_root | 2017-01-09T00:15:00Z | 6286339    | 60           | 6286312      | 6286372   |
@@ -1248,6 +1281,27 @@ WITH ROW_NUMBER(entity, tags ORDER BY period(15 minute)) <= 2
 | nurswgvml006 | /dev/sdc1                           | 2017-01-09T00:15:00Z | 57600482   | 60           | 57580072     | 57510460  |
 | nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | 2017-01-09T00:00:00Z | 9046720    | 60           | 9024392      | 9071064   |
 | nurswgvml007 | /dev/mapper/vg_nurswgvml007-lv_root | 2017-01-09T00:15:00Z | 9005158    | 60           | 9071668      | 9010264   |
+```
+
+The `row_number()` column can be included in the `SELECT` expression and in the `ORDER BY` clause.
+
+```sql
+SELECT datetime, entity, value, row_number()
+  FROM cpu_busy
+WHERE datetime BETWEEN '2017-05-30T09:00:00Z' AND '2017-05-30T09:05:00Z'
+  WITH ROW_NUMBER(entity ORDER BY datetime DESC) <= 2
+ORDER BY row_number() DESC
+```
+
+```ls
+| datetime             | entity       | value | row_number() | 
+|----------------------|--------------|-------|--------------| 
+| 2017-05-30T09:04:42Z | nurswgvml007 | 1.0   | 2            | 
+| 2017-05-30T09:04:40Z | nurswgvml006 | 1.0   | 2            | 
+| 2017-05-30T09:04:38Z | nurswgvml010 | 0.2   | 2            | 
+| 2017-05-30T09:04:58Z | nurswgvml007 | 14.1  | 1            | 
+| 2017-05-30T09:04:56Z | nurswgvml006 | 1.0   | 1            | 
+| 2017-05-30T09:04:54Z | nurswgvml010 | 0.0   | 1            | 
 ```
 
 ### LAST_TIME Syntax
@@ -1372,11 +1426,11 @@ The above query would scan all samples for 'm-1' metric in the database, even th
 
 ## Joins
 
-Data for multiple virtual tables can be merged with the `JOIN` and `OUTER JOIN` clauses.
+Data for multiple virtual tables (metrics) can be merged with the `JOIN` and `OUTER JOIN` clauses.
 
 The syntax follows the SQL-92 notation using the `JOIN` clause as opposed to enumerating columns in the `WHERE` clause according to ANSI-89.
 
-Since joined tables always contain the same predefined columns, a join condition doesn't have to be specified explicitly, similar to NATURAL JOIN in standard SQL:
+Since joined tables always contain the same predefined columns, a `JOIN` condition doesn't have to be specified explicitly, similar to NATURAL JOIN in standard SQL:
 
 | **ATSD SQL** | **Standard SQL Equivalent** |
 |:---|---|
@@ -1402,7 +1456,7 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
   AND t1.entity = 'nurswgvml006'
 ```
 
-In this particular case, since timestamps for each of these metrics are identical and being collected by the same script, `JOIN` produces merged rows for all the detailed records.
+In this particular case, since timestamps for each of these metrics are identical and being collected by the same script, `JOIN` produces merged rows for all the detailed records. This is typically the case when multiple metrics are inserted with one command or when time is controlled externally. 
 
 ```ls
 | datetime             | entity       | t1.value | t2.value | t3.value |
@@ -1412,9 +1466,9 @@ In this particular case, since timestamps for each of these metrics are identica
 | 2016-06-16T13:00:33Z | nurswgvml006 | 0.0      | 1.0      | 0.0      |
 ```
 
-This is typically the case when multiple metrics are inserted with one command or when time is controlled externally. As in the example above, the metrics 'cpu_system', 'cpu_user', 'cpu_iowait' are all timestamped by the same collector script with the same time during each `mpstat` command invocation.
+As in the example above, 'cpu_system', 'cpu_user', 'cpu_iowait' measurements are obtained by invoking `mpstat` command and are timestamped by the collecting script with the same time.
 
-However, when merging records for irregular metrics collected by independent sources, `JOIN` results may contain a small subset of rows with coincidentally identical times.
+However, when merging records for irregular metrics collected by independent sources, `JOIN` results may contain only a subset of rows with identical times.
 
 ```sql
 SELECT t1.datetime, t1.entity, t1.value AS cpu, t2.value AS mem
@@ -1480,9 +1534,9 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 
 When `USING entity` is specified, rows are joined by entity and time instead of entity, time, and series tags.
 
-This allows merging of virtual tables with different tag columns, including merging a table without tag column with a series containing multiple tag columns.
+This allows merging of virtual tables with different tag columns, including merging a series without tag columns with a series containing multiple tag columns.
 
-`USING entity` is supported by both inner and outer JOIN.
+`USING entity` is supported in both inner and outer `JOIN` queries.
 
 ```sql
 SELECT t1.entity, t1.datetime, AVG(t1.value), AVG(t2.value), t1.tags.*, t2.tags.*
@@ -1490,7 +1544,7 @@ SELECT t1.entity, t1.datetime, AVG(t1.value), AVG(t2.value), t1.tags.*, t2.tags.
   JOIN USING entity df.disk_used t2
 WHERE t1.datetime >= CURRENT_HOUR
   AND t1.entity = 'nurswgvml007'
-GROUP BY t1.entity, t1.tags, t2.tags, t1.PERIOD(1 MINUTE)
+GROUP BY t1.entity, t1.tags, t2.tags, t1.PERIOD(5 MINUTE)
 ```
 
 ```ls
@@ -1505,55 +1559,89 @@ GROUP BY t1.entity, t1.tags, t2.tags, t1.PERIOD(1 MINUTE)
 To combine all records from joined tables, use `OUTER JOIN`, which returns rows with equal time, entity, and tags as well as rows from one table for which no rows from the other satisfy the join condition.
 
 ```sql
-SELECT t1.datetime, t1.entity, t1.value AS cpu, t2.value AS mem
+SELECT t1.datetime, t1.entity, t1.value AS cpu, 
+       t2.datetime, t2.entity, t2.value AS mem
   FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
 
-`OUTER JOIN` for detailed records, without period aggregation, produces rows that have NULLs in value columns because the underlying metric didn't record any value at the specified time.
+`OUTER JOIN` on detailed records, without period aggregation, produces rows with `NULL` columns for series that didn't record any value at the specified time.
 
 ```ls
-| datetime             | entity       | cpu  | mem     |
-|----------------------|--------------|-----:|--------:|
-| 2016-06-16T13:00:01Z | nurswgvml006 | 37.1 | null    |
-| 2016-06-16T13:00:12Z | nurswgvml006 | null | 67932.0 |
-| 2016-06-16T13:00:17Z | nurswgvml006 | 16.0 | null    |
-| 2016-06-16T13:00:27Z | nurswgvml006 | null | 73620.0 |
-| 2016-06-16T13:00:33Z | nurswgvml006 | 1.0  | null    |
+| t1.datetime          | t1.entity    | cpu  | t2.datetime          | t2.entity    | mem   | 
+|----------------------|--------------|------|----------------------|--------------|-------| 
+| 2016-06-16T13:00:01Z | nurswgvml006 | 37   | null                 | null         | null  | 
+| null                 | null         | null | 2016-06-16T13:00:12Z | nurswgvml006 | 67932 | 
+| 2016-06-16T13:00:17Z | nurswgvml006 | 16   | null                 | null         | null  | 
+| null                 | null         | null | 2016-06-16T13:00:27Z | nurswgvml006 | 73620 | 
 ```
 
-To regularize the series, apply `GROUP BY` with period aggregation and apply one of statistical functions to return one value for the period for each series.
+In addition to qualified column names such as t1.datetime, the JOIN queries expose `datetime` and `time` columns containing row timestamp calculated as `COALESCE(t1.datetime, t2.datetime, ...)`.
 
 ```sql
-SELECT t1.datetime, t1.entity, AVG(t1.value) AS avg_cpu, AVG(t2.value) AS avg_mem
+SELECT datetime, isnull(t1.entity, t2.entity) AS server,
+  t1.datetime, t1.entity, t1.value AS cpu, 
+  t2.datetime, t2.entity, t2.value AS mem
   FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
-WHERE t1.datetime >= '2016-06-16T13:02:40Z' AND t1.datetime < '2016-06-16T13:10:00Z'
+WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
-GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
 ```
 
 ```ls
-| datetime             | entity       | avg_cpu | avg_mem  |
-|----------------------|--------------|---------|----------|
-| 2016-06-16T13:02:00Z | nurswgvml006 | 9.5     | 72620.0  |
-| 2016-06-16T13:03:00Z | nurswgvml006 | 6.1     | 70799.0  |
-| 2016-06-16T13:04:00Z | nurswgvml006 | 15.1    | 71461.0  |
+| datetime             | server       | t1.datetime          | t1.entity    | cpu  | t2.datetime          | t2.entity    | mem     | 
+|----------------------|--------------|----------------------|--------------|------|----------------------|--------------|---------| 
+| 2016-06-16T13:00:01Z | nurswgvml006 | 2016-06-16T13:00:01Z | nurswgvml006 | 37.1 | null                 | null         | null    | 
+| 2016-06-16T13:00:12Z | nurswgvml006 | null                 | null         | null | 2016-06-16T13:00:12Z | nurswgvml006 | 67932.0 | 
+| 2016-06-16T13:00:17Z | nurswgvml006 | 2016-06-16T13:00:17Z | nurswgvml006 | 16.0 | null                 | null         | null    | 
+| 2016-06-16T13:00:27Z | nurswgvml006 | null                 | null         | null | 2016-06-16T13:00:27Z | nurswgvml006 | 73620.0 | 
 ```
 
-The choice of an aggregation function applied to numeric columns depends on the use case.
+To regularize the merged series in join queries, apply interpolation or period aggregation using a statistical function.
 
-While `AVG` and `PERCENTILE` functions smooth the values, the `LAST` or `FIRST` functions produce a subset of raw values in a downsampling effect.
+* Interpolation
 
 ```sql
-SELECT t1.datetime, t1.entity, LAST(t1.value) AS cpu, LAST(t2.value) AS mem
+SELECT t1.datetime, t1.entity, t1.value AS cpu, 
+       t2.datetime, t2.entity, t2.value AS mem
   FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
-WHERE t1.datetime >= '2016-06-16T13:02:40Z' AND t1.datetime < '2016-06-16T13:10:00Z'
+WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
-GROUP BY t1.entity, t1.PERIOD(1 MINUTE)
+  WITH INTERPOLATE(15 SECOND, LINEAR, OUTER)
+```
+
+```ls
+| t1.datetime          | t1.entity    | cpu  | t2.datetime          | t2.entity    | mem     | 
+|----------------------|--------------|------|----------------------|--------------|---------| 
+| 2016-06-16T13:00:00Z | nurswgvml006 | 34.9 | 2016-06-16T13:00:00Z | nurswgvml006 | 69903.2 | 
+| 2016-06-16T13:00:15Z | nurswgvml006 | 18.6 | 2016-06-16T13:00:15Z | nurswgvml006 | 69069.6 | 
+| 2016-06-16T13:00:30Z | nurswgvml006 | 3.8  | 2016-06-16T13:00:30Z | nurswgvml006 | 74041.6 | 
+```
+
+* Aggregation
+
+The `PERIOD()` column (without the preceding table name) calculates the start of the period based on the row `datetime` column.
+
+```sql
+SELECT datetime, ISNULL(t1.entity, t2.entity) AS server, 
+  AVG(t1.value) AS avg_cpu, AVG(t2.value) AS avg_mem
+FROM "mpstat.cpu_busy" t1
+  OUTER JOIN "meminfo.memfree" t2
+WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:00Z'
+GROUP BY PERIOD(1 MINUTE), server
+  ORDER BY datetime
+```
+
+```ls
+| datetime             | server       | avg_cpu | avg_mem  | 
+|----------------------|--------------|---------|----------| 
+| 2016-06-16T13:00:00Z | nurswgvml006 | 15.8    | 73147.0  | 
+| 2016-06-16T13:00:00Z | nurswgvml007 | 9.8     | 259757.0 | 
+| 2016-06-16T13:01:00Z | nurswgvml006 | 2.8     | 69925.0  | 
+| 2016-06-16T13:01:00Z | nurswgvml007 | 3.5     | 252451.0 | 
 ```
 
 >  Note that records returned by a `JOIN USING entity` condition include series with last insert date greater than start date specified in the query.
@@ -1888,6 +1976,32 @@ AND LOWER(tags.file_system) LIKE '*root'
 
 ## Other Functions
 
+### ISNULL
+
+The `ISNULL` function returns `arg2` if the `arg1` is `NULL` or `NaN` (Non-A-Number) in case of numeric data types.
+
+```sql
+ISNULL(arg1, arg2)
+```
+
+The function accepts arguments with different data types, for example numbers and strings `ISNULL(value, text)`.
+
+>If the datatypes are different, the database will classify the column as `JAVA_OBJECT` to the [JDBC](https://github.com/axibase/atsd-jdbc) driver.
+
+### COALESCE
+
+The `COALESCE` function returns the first argument that is not `NULL` and not `NaN` (Non-A-Number) in case of umeric data types.
+
+```sql
+COALESCE(arg1, arg2, ..., argN)
+```
+
+At least two arguments must be specified. If all arguments evaluate to `NULL` or `NaN`, the function returns `NULL`.
+
+The function accepts arguments with different data types, for example numbers and strings `COALESCE(value, text, 'Unknown')`.
+
+>If the datatypes are different, the database will classify the column as `JAVA_OBJECT` to the [JDBC](https://github.com/axibase/atsd-jdbc) driver.
+
 ### LAG
 
 The `LAG` function lets you access the previous row within the same result set. If the previous row doesn't exist, the function returns `NULL`.
@@ -1981,18 +2095,6 @@ LEAD(columnName)
 ```
 
 The `LEAD` function operates similarly to the `LAG` function.
-
-### ISNULL
-
-The `ISNULL` function returns `altValue` if the `inputValue` is `NULL` or `NaN` (Non-A-Number) in case of numeric data types.
-
-```sql
-ISNULL(inputValue, altValue)
-```
-
-The function accepts arguments with different data types, for example numbers and strings `ISNULL(value, text)`.
-
->If the datatypes are different, the database will classify the column as `JAVA_OBJECT` to the [JDBC](https://github.com/axibase/atsd-jdbc) driver.
 
 ### CAST
 

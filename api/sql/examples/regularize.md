@@ -411,7 +411,7 @@ WITH INTERPOLATE(30 SECOND, LINEAR, OUTER)
 
 The `WITH INTERPOLATE` transformation regularizes all series returned by the query to the same timestamps, so that their values can be joined.
 
-Series **t1**. This series is interpolated with the `PREVIOUS` function.
+Series **t1**. This metric will be interpolated with the `PREVIOUS` function.
 
 ```sql
 SELECT t1.entity, t1.datetime, t1.value
@@ -429,7 +429,7 @@ WHERE t1.datetime >= '2016-09-18T14:00:00.000Z' AND t1.datetime < '2016-09-18T14
 | nurswgvml006 | 2016-09-18T14:00:51.000Z | 68156.0  |
 ```
 
-Series **t2**. This series is interpolated with the `LINEAR` function.
+Series **t2**. This metric will be interpolated with the `LINEAR` function.
 
 ```sql
 SELECT t2.entity, t2.datetime, t2.value
@@ -447,7 +447,7 @@ WHERE t2.datetime >= '2016-09-18T14:00:00.000Z' AND t2.datetime < '2016-09-18T14
 | nurswgvml006 | 2016-09-18T14:00:58.000Z | 9.0      |
 ```
 
-JOINed multi-variate series:
+JOINed series:
 
 ```sql
 SELECT t1.entity AS 'entity', t1.datetime AS 'datetime', t1.value as 'cpu', t2.value as 'mem'
@@ -466,7 +466,7 @@ AND t1.entity = 'nurswgvml006'
 | nurswgvml006 | 2016-09-18T14:00:45.000Z | 68904.0 | 14.8 |
 ```
 
-Without interpolation, a join of Series 1 and Series 2 would have produced an empty result because their raw times are different.
+Without interpolation, a join of Series 1 and Series 2 would have produced an empty result because their row times are different.
 
 ### `value` Filter
 
@@ -503,6 +503,7 @@ WHERE datetime >= '2016-09-18T14:03:30.000Z' AND datetime <= '2016-09-18T14:04:3
 ```
 
 ```ls
+
 | datetime                 | value |
 |--------------------------|-------|
 | 2016-09-18T14:03:38.000Z | 4.0   |
