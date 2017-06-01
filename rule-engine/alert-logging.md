@@ -1,16 +1,16 @@
 # Alert Logging
 
-Alert Logging enables recording Open, Repeat, and Cancel messages in the database as well as in log files located on the local file system for automation and audit.
+Alert Logging enables recording of Open, Repeat, and Cancel status changes in the database as well as in log files located on the local file system for automation and audit.
 
 ## Logging to Database
 
 `OPEN` and `CANCEL` status changes are automatically stored in the database and can be retrieved with [Data API: Alert History Query](../api/data/alerts/history-query.md). The records are visible on the **Alerts: Alert History** page.
 
-In addition, the 'Generate Messages' checkbox can be enabled for each rule separately to produce ATSD messages which can be retrieved with [Data API: Message History Query](../api/data/alerts/history-query.md) and are visible on the **Messages** tab. The messages are persisted with `alert` type and `rule-engine` source.
+In addition, the 'Generate Messages' checkbox can be enabled for each rule separately to produce ATSD messages which can be retrieved with [Data API: Message Query](../api/data/messages/query.md) and are visible on the **Messages** tab. The messages are persisted with `alert` type and `rule-engine` source.
 
 ## Logging to Files
 
-Logging to files can be enabled for each rule separately by selecting one of the pre-configured loggers in `Alert Logger` drop-down.
+Logging to files can be enabled for each rule separately by selecting one of the pre-configured loggers in the `Alert Logger` drop-down.
 
 Loggers are defined by users with administrative privileges on the **Admin: Configuration Files: logback.xml** page. Once a new logger is created and the `logback.xml` file is re-scanned, the new logger is available in the Rule Editor in the `Alert Logger` drop-down.
 
@@ -54,7 +54,7 @@ The default logger named `atsd.alert.default` is available even if it's not defi
 
 ### Custom Logger
 
-Custom logger names must start with `atsd.alert.` prefix and should specify a unique file name (including rolled over file name pattern) that is different from file names used by other loggers. Similarly, each custom logger must specify a unique appender name.
+Custom logger names must start with `atsd.alert.` prefix and should specify a unique file name (including roll-over pattern) that is different from file names used by other loggers. Similarly, custom loggers must specify unique appender names.
 
 Multiple custom loggers can be created to customize alert logging for various rules.
 
