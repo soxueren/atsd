@@ -130,7 +130,7 @@ specific for each time series:
 The default expression can be superseded for a given entity or
 an entity group by adding an entry to the Overrides table. The
 override entry can be also created by clicking on the `Override` link on the Alerts tab
-or in the email alert message.
+or on a link in the email notification message.
 
 In the example below, an alert will be created when
 the `avg` of the `nur-entities-name` entity name is greater than 90.
@@ -163,16 +163,19 @@ outside of the time interval as time passes.
 
 ![Time Based Window](images/time_based_window3.png "time_based_window")
 
+## Alert Logging
+
+Alerts can be [logged](alert-logging.md) in the database as well as in log files for automation and audit.
 
 ## Alert Severity
 
-Severity of alerts raised by the rule engine is specified in the Alerts tab in Rule Editor.
+Severity of alerts raised by the rule engine is specified on the Alerts tab in Rule Editor.
 
 If an alert is raised by an expression defined in the Threshold table, its severity overrides
-the default severity configured in the Alert tab.
+severity set on the Alert tab.
 
-> For rules that act on 'message' data, the alert severity can be set to be inherited from the message.
-To configure this behavior, set Severity on the Alerts tab to 'unknown'.
+> For 'message' rules, the alert severity can be inherited from the underlying message.
+To enable this behavior, set Severity on the Alerts tab to 'unknown'.
 
 ## Rule Editor
 

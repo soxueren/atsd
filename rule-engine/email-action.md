@@ -1,6 +1,5 @@
 # Email Action
 
-
 Email Action enables delivery of email messages to one or multiple
 subscribers on window status changes based on incoming data.
 
@@ -12,7 +11,7 @@ subscribers on window status changes based on incoming data.
 
 ## Creating a Rule
 
-To enable email notifications for a metric of interest, open the **Confguration > Rules** page and create a new
+To enable email notifications for a metric of interest, open the **Configuration > Rules** page and create a new
 rule.
 
 Specify rule name, metric name, and an expression to evaluate incoming
@@ -50,8 +49,7 @@ email addresses.
 Enter Subject text and click Enabled for each status change (`OPEN`,
 `REPEAT`, `CANCEL`) that you would like to receive. Additionally, to enable
 notifications on `REPEAT` status, set the Repeat Interval to the desired
-notification frequency, for example, every 10-th sample or every 5
-minutes.
+notification frequency, for example, every 10-th sample or every 5 minutes.
 
 The default Subject text is
 `Rule ${rule}. Status ${status}. Entity: for ${entity}. Metric: ${metric}. Tags: ${tags}`.
