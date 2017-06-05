@@ -99,7 +99,6 @@ entity_tags | {version=community}
 entity_tags.tag_name | community
 event_tags | {location=dc-5}
 expression | true
-message |
 metric | jvm_memory_free
 min_interval_expired | 5 MINUTE
 open_value | 3103100000
@@ -123,16 +122,12 @@ threshold | max() > 20
 
 #### Time Placeholders
 
-`_time` placeholders contain time in local server timezone (2017-05-30 14:05:39 PST), `_datetime` - in IS8601 UTC (2017-05-30T06:05:39.003Z)
+`_time` placeholders contain time in local server timezone (2017-05-30 14:05:39 PST), `_datetime` - in ISO8601 UTC (2017-05-30T06:05:39.003Z)
 
 * alert_open_time
 * alert_open_datetime
-* last_alert_time
-* last_alert_datetime
 * alert_open_time
 * alert_open_datetime
-* last_action_time
-* last_action_datetime
 * received_time
 * received_dateime
 * event_time
