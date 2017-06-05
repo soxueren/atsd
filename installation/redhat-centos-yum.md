@@ -45,6 +45,26 @@ sudo yum install -y atsd
 
 It may take up to 5 minutes to initialize the database.
 
+### Docker Container Installation
+
+If the installation is performed in a Docker container, the `yum` command will exit with the following message:
+
+```
+Docker container installation. Initialization deferred. 
+```
+
+Execute the following additional step to complete the installation:
+
+```sh
+/opt/atsd/install_user.sh
+```
+
+Start the database:
+
+```sh
+/opt/atsd/bin/atsd-all.sh start
+```
+
 ## Check Installation
 
 ```sh
