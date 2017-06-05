@@ -1064,7 +1064,7 @@ The `DETAIL` mode can be used to fill missing values in `OUTER JOIN` queries whi
 | `PREVIOUS` | Sets the value at the desired timestamp based on the previously recorded raw value.<br>This step-like function is appropriate for metrics with discrete values (digital signals).|
 | `AUTO` | [**Default**] Applies an interpolation function (`LINEAR` or `PREVIOUS`) based on the metric's Interpolation setting.<br>If multiple metrics are specified in the query, `AUTO` applies its own interpolation mode for each metric.  |
 
-* NaN (Not-A-Number) raw values are ignored from interpolation.
+* NaN (Not-A-Number) values are ignored from interpolation.
 * The `value` condition in the `WHERE` clause applies to interpolated series values instead of raw values. Filtering out raw values prior to interpolation is not supported.
 
 ### Boundary
@@ -1711,7 +1711,7 @@ The functions accept `value` column or a numeric expression as an argument, for 
 * `NULL` and `NaN` values are ignored by aggregation functions.
 * If the aggregation function of DOUBLE datatype cannot find a single value other than `NULL` or `NaN`, it returns `NaN`.
 * If the aggregation function of LONG datatype cannot find a single value other than `NULL` or `NaN`, it returns `NULL`.
-* Nesting aggregation functions such as `AVG(MAX(value))` is not supported.
+* Nested aggregation functions such as `AVG(MAX(value))` are not supported.
 
 ```sql
 SELECT entity, AVG(value), MAX(value), COUNT(*), PERCENTILE(80, value)
@@ -1978,7 +1978,7 @@ AND LOWER(tags.file_system) LIKE '*root'
 
 ### ISNULL
 
-The `ISNULL` function returns `arg2` if the `arg1` is `NULL` or `NaN` (Non-A-Number) in case of numeric data types.
+The `ISNULL` function returns `arg2` if the `arg1` is `NULL` or `NaN` (Non-A-Number) in case of numeric expressions.
 
 ```sql
 ISNULL(arg1, arg2)
@@ -1990,7 +1990,7 @@ The function accepts arguments with different data types, for example numbers an
 
 ### COALESCE
 
-The `COALESCE` function returns the first argument that is not `NULL` and not `NaN` (Non-A-Number) in case of umeric data types.
+The `COALESCE` function returns the first argument that is not `NULL` and not `NaN` (Non-A-Number) in case of numeric expressions.
 
 ```sql
 COALESCE(arg1, arg2, ..., argN)
@@ -2416,15 +2416,13 @@ Since the `WHERE` clause selects only rows that evaluate to `true`, conditions s
 
 ## Not a Number (NaN)
 
-Unlike relational databases where division by zero or square root of a negative number is likely to cause an unrecoverable error, ATSD attempts to return special values in cases when computation result cannot be represented with real numbers.
+Unlike relational databases where division by zero or square root of a negative number may cause an execution error, ATSD returns special values if the computation result cannot be represented with a real number.
 
 The returned values follow [IEEE 754-2008](https://standards.ieee.org/findstds/standard/754-2008.html) standard.
 
 * NaN for indeterminate results such as `0/0` (zero divided by zero).
 * NaN for illegal values
 * Signed Infinity for x/0 where x != 0
-
-> "NaN" stands for "Not a Number".
 
 Since long/bigint datatype does not have a reserved `Infinity` value, the returned Double `Infinity` value, when cast to long, is set to `Long.MAX_VALUE`/`Long.MIN_VALUE` value.
 
@@ -2439,6 +2437,8 @@ LIMIT 1
 |-------|---------------|---------|-----------------------|-----|------|---------|
 | 0.0   | NaN           | NaN     | 9223372036854775807.0 | ∞   | -∞   | NaN     |
 ```
+
+The result of comparing NaN with another number is indeterminate (NULL).
 
 ## Authorization
 
