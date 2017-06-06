@@ -2,13 +2,13 @@
 
 ## Description
 
-Insert data using Network API commands over HTTP.
+Submit data commands in Network API syntax over HTTP.
 
 Multiple commands can be submitted as a batch in one request, separated by a line feed character.
 
-Commands are processed sequentially.
+Commands are parsed, validated and processed sequentially.
 
-In case of syntax error or out-of-range date in one of commands, the invalid command is discarded and processing continues.
+In case of syntax errors or an out-of-range date in one of commands, the invalid command is discarded and processing continues.
 
 > Note that processing behavior is different from the Data Entry page which terminates processing on the first invalid or out-of-range command.
 
@@ -18,9 +18,9 @@ Supported Network API commands:
 
 * [series](../../../api/network/series.md)
 * [property](../../../api/network/property.md)
-* [message](../../../api/network/message.md) 
-* [metric](../../../api/network/metric.md) 
-* [entity](../../../api/network/entity.md) 
+* [message](../../../api/network/message.md)
+* [metric](../../../api/network/metric.md)
+* [entity](../../../api/network/entity.md)
 
 ## Request
 
@@ -28,13 +28,15 @@ Supported Network API commands:
 |:---|:---|---:|
 | POST | `/api/v1/command` | `text/plain` |
 
-### Parameters
+### Query String Parameters
 
-None.
+| **Name** | **Type** | **Description** |
+|:---|:---|:---|
+| commit   | boolean   | Store the commands synchronously and return the response after the commands have been committed to the underlying storage. Default: false.|
 
 ### Payload
 
-List of network commands, separated by line feed.
+List of network commands (series, metric, property, etc.), separated by line feed.
 
 ## Response
 
