@@ -15,15 +15,13 @@ alert_duration | 00:00:05:12
 alert_duration_interval |
 alert_message | Alert open: ${entity}, ${metric}, ${tags}.
 alert_type | OPEN
-alert_repeat_count | 3
 columns | {memkb = round(value/1024)} - variables
 entity | atsd
 entity_label | Axibase TSD
-entity.label | Axibase TSD
 entity_tags | {version=community}
 entity_tags.tag_name | community
 event_tags | {location=dc-5}
-expression | true
+expression | value < 512*1024*1024
 metric | jvm_memory_free
 min_interval_expired | 5 MINUTE
 open_value | 3103100000
@@ -32,7 +30,6 @@ repeat_count | 0
 repeat_interval | 1 MINUTE
 rule | memory_low
 rule_expression | value < 512*1024*1024
-expression | value < 512*1024*1024
 rule_filter | entity != 'nurswghbs001'
 rule_name | memory_low
 schedule | * * * * MON-FRI
@@ -68,10 +65,8 @@ threshold | max() > 20
 
 * alert_open_time
 * alert_open_datetime
-* alert_open_time
-* alert_open_datetime
 * received_time
-* received_dateime
+* received_datetime
 * event_time
 * event_datetime
 * window_first_time
