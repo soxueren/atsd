@@ -90,7 +90,6 @@ alert_duration | 00:00:05:12
 alert_duration_interval |
 alert_message | Alert open: ${entity}, ${metric}, ${tags}.
 alert_type | OPEN
-alert_repeat_count | 3
 columns | {memkb = round(value/1024)} - variables
 entity | atsd
 entity_label | Axibase TSD
