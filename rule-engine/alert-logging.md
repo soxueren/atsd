@@ -98,7 +98,6 @@ entity_tags.tag_name | community
 event_tags | {location=dc-5}
 expression | value < 512*1024*1024
 metric | jvm_memory_free
-min_interval_expired | 5 MINUTE
 open_value | 3103100000
 properties |
 repeat_count | 0
