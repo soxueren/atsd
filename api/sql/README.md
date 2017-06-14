@@ -2414,6 +2414,23 @@ Since the `WHERE` clause selects only rows that evaluate to `true`, conditions s
 
 `NULL` and `NaN` values are ignored by aggregate functions.
 
+Within a logical expressions `NaN` evaluates as `NULL`. Truth tables for logical operators:
+
+| **X** | **NOT X** |
+|:---|:---|
+| `true` | `false` |
+| `false` | `true` |
+| `NULL` | `NULL` |
+
+| **X** | **Y** | **X AND Y** | **X OR Y** |
+|:---|:---|:---|:---|
+| `true` | `true` | `true` | `true` |
+| `true` | `false` | `false` | `true` |
+| `false` | `false` | `false` | `false` |
+| `true` | `NULL` | `NULL` | `true` |
+| `false` | `NULL` | `false` | `NULL` |
+| `NULL` | `NULL` | `NULL` | `NULL` |
+
 ## Not a Number (NaN)
 
 Unlike relational databases where division by zero or square root of a negative number may cause an execution error, ATSD returns special values if the computation result cannot be represented with a real number.
