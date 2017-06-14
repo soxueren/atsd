@@ -27,6 +27,8 @@ Default formatting declared, making user input optional. Addition of new formats
 * `MMM-dd,E` where `E` displays the day of the week by three-letter abbreviation.
 * `MMM-dd, EEEE` where `EEEE` displays the day of the week by full name.
 
+![4166](Images/4166.png)
+
 #### Issue 4165
 
 [`FROM atsd_series`](https://github.com/axibase/atsd/blob/master/api/sql/examples/select-atsd_series.md) command allows a built-in table to be queried directly.
