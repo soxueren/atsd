@@ -716,7 +716,7 @@ The `time` column accepts Unix milliseconds, whereas the `datetime` column accep
 
 ```sql
 SELECT datetime, entity, value
-  FROM "mpstat.cpu_busy"
+  FROM mpstat.cpu_busy
 WHERE datetime BETWEEN '2016-12-10T14:00:15Z' AND '2016-12-10T15:30:00.077Z'
 ```
 
@@ -724,11 +724,39 @@ Both columns support [End Time](../../end-time-syntax.md) syntax.
 
 ```sql
 SELECT datetime, entity, value
-  FROM "mpstat.cpu_busy"
+  FROM mpstat.cpu_busy
 WHERE time >= PREVIOUS_MINUTE AND datetime < CURRENT_MINUTE
 ```
 
 > Not_equal operators `!=` and `<>` are **not** supported with `time` and `datetime` columns.
+
+### Local Time Bounderies
+
+To specify the interval range in local time, use the `date_parse` function to convert the string datetime into Unix milliseconds.
+
+```sql
+SELECT datetime as utc_time, date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') AS local_datetime, value 
+  FROM mpstat.cpu_busy
+  WHERE entity = 'nurswgvml007'
+    AND time >= date_parse('2017-05-01 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') 
+    AND  time < date_parse('2017-05-03 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna')
+```
+
+```ls
+| utc_time            | local_datetime      | value  | 
+|---------------------|---------------------|--------| 
+| 2017-05-01 10:00:15 | 2017-05-01 12:00:15 | 4.9500 | 
+| 2017-05-01 10:00:31 | 2017-05-01 12:00:31 | 3.0000 | 
+| 2017-05-01 10:00:47 | 2017-05-01 12:00:47 | 3.0900 | 
+```
+
+The above approach is more efficient than comparing datetime as strings:
+
+```sql
+  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') >= '2017-05-01 12:00:00' 
+```
+
+### Multiple Intervals
 
 The query may select multiple intervals using the `OR` operator.
 
@@ -756,11 +784,13 @@ WHERE entity = 'nurswgvml007'
 Multiple intervals are treated separately for the purpose of interpolating and regularizing values.
 In particular, the values between such intervals are not interpolated.
 
+### Interval Subqueries
+
 As an alternative to specifying lower and upper boundary manually, the `BETWEEN` operator allows retrieving the time range with a [subquery](examples/filter-by-date.md#query-using-between-subquery).
 
 ```sql
 SELECT datetime, value
-  FROM cpu_busy
+  FROM mpstat.cpu_busy
 WHERE entity = 'nurswgvml007'
   AND datetime BETWEEN (SELECT datetime FROM 'maintenance-rfc'
   WHERE entity = 'nurswgvml007'
@@ -817,7 +847,7 @@ PERIOD(1 DAY, "US/Eastern")
 
 ```sql
 SELECT entity, date_format(PERIOD(5 MINUTE, END_TIME)), AVG(value)
-  FROM "mpstat.cpu_busy"
+  FROM mpstat.cpu_busy
 WHERE datetime >= CURRENT_HOUR AND datetime < NEXT_HOUR
   GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 ```
@@ -826,7 +856,7 @@ The period specified in the `GROUP BY` clause can be entered without option fiel
 
 ```sql
 SELECT entity, PERIOD(5 MINUTE), AVG(value)
-  FROM "mpstat.cpu_busy"
+  FROM mpstat.cpu_busy
 WHERE datetime >= CURRENT_HOUR AND datetime < NEXT_HOUR
   GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 ```
@@ -835,7 +865,7 @@ In grouping queries, the `time` column returns the same value as `PERIOD()`, and
 
 ```sql
 SELECT entity, datetime, AVG(value)
-  FROM "mpstat.cpu_busy"
+  FROM mpstat.cpu_busy
 WHERE datetime >= CURRENT_HOUR AND datetime < NEXT_HOUR
   GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 ```
@@ -857,7 +887,7 @@ For example, `period(1 HOUR)` initializes 1-hour long periods starting at `0` mi
 
 ```sql
 SELECT entity, datetime, COUNT(value)
-  FROM "mpstat.cpu_busy"
+  FROM mpstat.cpu_busy
 WHERE datetime >= now-1*HOUR AND datetime < now
   AND entity = 'nurswgvml006'
 GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
@@ -915,7 +945,8 @@ For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units the start of the day is 
 * If the end time in the query is inclusive, 1 millisecond is added to the period end time since the period end time must be exclusive.
 
 ```sql
-SELECT entity, datetime, COUNT(value) FROM "mpstat.cpu_busy"
+SELECT entity, datetime, COUNT(value) 
+  FROM mpstat.cpu_busy
 WHERE datetime >= '2016-06-18T10:02:00Z' AND datetime < '2016-06-18T10:32:00Z'
   AND entity = 'nurswgvml007'
 GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
@@ -930,7 +961,8 @@ GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
 ```
 
 ```sql
-SELECT entity, datetime, COUNT(value) FROM "mpstat.cpu_busy"
+SELECT entity, datetime, COUNT(value) 
+  FROM mpstat.cpu_busy
 WHERE datetime >= '2016-06-18T10:02:00Z' AND datetime <= '2016-06-18T10:32:00Z'
   AND entity = 'nurswgvml007'
 GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
@@ -949,7 +981,8 @@ GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
 1 millisecond is added to the period start if the start time in the query is exclusive.
 
 ```sql
-SELECT entity, datetime, COUNT(value) FROM "mpstat.cpu_busy"
+SELECT entity, datetime, COUNT(value) 
+  FROM mpstat.cpu_busy
 WHERE datetime > '2016-06-18T10:02:00Z' AND datetime < '2016-06-18T10:32:00Z'
   AND entity = 'nurswgvml007'
 GROUP BY entity, PERIOD(10 MINUTE, START_TIME)
@@ -978,7 +1011,8 @@ The behavior can be changed by referencing an interpolation function as part of 
 
 ```sql
 SELECT entity, period(5 MINUTE), AVG(value)
-  FROM "mpstat.cpu_busy" WHERE datetime >= CURRENT_HOUR
+  FROM mpstat.cpu_busy
+  WHERE datetime >= CURRENT_HOUR
 GROUP BY entity, period(5 MINUTE, LINEAR)
 ```
 
