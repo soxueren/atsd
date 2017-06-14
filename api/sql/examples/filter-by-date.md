@@ -106,6 +106,24 @@ series e:e1 d:2017-04-15T01:00:00Z m:m1=1
 series e:e1 d:2017-04-15T02:00:00Z m:m1=2
 ```
 
+## Query using Local Time
+
+```sql
+SELECT datetime as utc_time, date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') AS local_datetime, value 
+  FROM mpstat.cpu_busy
+  WHERE entity = 'nurswgvml007'
+    AND time >= date_parse('2017-05-01 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') 
+    AND  time < date_parse('2017-05-03 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna')
+```
+
+```ls
+| utc_time            | local_datetime      | value  | 
+|---------------------|---------------------|--------| 
+| 2017-05-01 10:00:15 | 2017-05-01 12:00:15 | 4.9500 | 
+| 2017-05-01 10:00:31 | 2017-05-01 12:00:31 | 3.0000 | 
+| 2017-05-01 10:00:47 | 2017-05-01 12:00:47 | 3.0900 | 
+```
+
 ## Query using `BETWEEN`
 
 The `BETWEEN` operator is inclusive and includes samples recorded at both the start and the end of the interval.
