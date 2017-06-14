@@ -3,82 +3,50 @@ Weekly Change Log: May 08, 2017 - May 14, 2017
 
 ### ATSD
 
-| Issue| Category    | Type    | Subject                                                             |
-|------|-------------|---------|----------------------
-| 4185 | export | Bug | Fixed a compatibility issue with Java 8 |
-| 4176 | UI | Bug | Fixed an interface issue that resulted in a broken page while toggling Tag select |
-| 4174 | csv | Bug | Fixed a compatibility issue that resulted from an update of the Java 8 [Rhino](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/Rhino) engine |
-| 4172 | rule engine | Bug | Fixed invalid behavior in [Alerts History](https://nur.axibase.com/rules/alerts/search) caused by [Freemarker](https://axibase.com/products/axibase-time-series-database/visualization/freemarker/) template error.
-| [4166](Issue-4166) | UI | Feature | User-definable time formatting enabled. |
-| [4165](#Issue-4165) | UI | Feature | Added additional SQL [syntax](https://github.com/axibase/atsd/tree/master/api/sql#syntax), [keyword](https://github.com/axibase/atsd/tree/master/api/sql#keywords), and [aggregation](https://github.com/axibase/atsd/tree/master/api/sql#aggregation-functions) options. |
-| 4159 | UI | Bug | Removed an unneeded sorting option in [System Information](https://nur.axibase.com/admin/system-information). |
-| 4158 | sql | Bug | Fixed an error which prevented immediate execution of SQL queries in the [SQL Console](https://github.com/axibase/atsd/tree/master/api/sql) |
-| 4156 | export | Bug | Fixed error notification protocol which informed user of an [Output Path](https://github.com/axibase/atsd/tree/master/api/sql#query-control-messages) error. |
-| [4146](#Issue-4146) | sql | Feature | Added a feature to include non-empty periods with start times earlier than the interval selected in calculations. |
-| [4140](#Issue-4140) | UI | Feature | Truncated redundant links to dropdown menu. |
-| 3838 | sql | Bug | Fixed an error caused by referring to a column alias using the [`GROUP BY`](https://github.com/axibase/atsd/tree/master/api/sql#grouping) command. |
+| Issue| Category    | Type    | Subject              |
+|------|-------------|---------|----------------------|
+| 4185 | sql | Bug | Fixed an NullPointerException caused by empty output path in scheduled SQL queries. |
+| 4176 | UI | Bug | Fixed a paging issue on Entities page. |
+| 4174 | csv | Support | Ensure compatibility of schema-based browsers with Java 8. |
+| 4172 | rule engine | Bug | Fixed broken rendering of the Alerts History detail page. |
+| [4166](Issue-4166) | UI | Feature | Apply user-defined time format to datetime columns on the SQL console. |
+| 4165 | UI | Feature | Extend SQL syntax highlighter with extended ATSD keywords. |
+| 4159 | UI | Bug | Removed an unneeded sorting option on the System Information page. |
+| 4156 | sql | Bug | Ensure email delivery in case of file write errors in scheduled SQL queries. |
+| [4146](#Issue-4146) | sql | Feature | Modified [`GROUP BY PERIOD`](https://github.com/axibase/atsd/tree/master/api/sql#grouping) processing to include all samples within the period. |
+| [4140](#Issue-4140) | UI | Feature | Replace named links with drop-down menus in record tables. |
+| [3838](#Issue-3838) | sql | Feature | Add support for column aliases in the `ORDER BY` clause. |
 
 ### ATSD
 
 #### Issue 4166
 
-`TIME_FORMAT` command renamed as [`DATE_FORMAT`](https://github.com/axibase/atsd/blob/master/api/sql/examples/datetime-format.md).
-Default formatting declared, making user input optional. Addition of new formats:
-* `MMM-dd,E` where `E` displays the day of the week by three-letter abbreviation.
-* `MMM-dd, EEEE` where `EEEE` displays the day of the week by full name.
-
-#### Issue 4165
-
-[`FROM atsd_series`](https://github.com/axibase/atsd/blob/master/api/sql/examples/select-atsd_series.md) command allows a built-in table to be queried directly.
-
-Keywords:
-
-```
-|-------------|-------------|-------------|-------------|
-| AND         | AS          | ASC         | BETWEEN     |
-| BY          | CASE        | CAST        | DESC        |
-| ELSE        | FROM        | GROUP       | HAVING      |
-| IN          | INNER       | INTERPOLATE | ISNULL      |
-| JOIN        | LAG         | LAST_TIME   | LEAD        |
-| LIKE        | LIMIT       | LOOKUP      | NOT         |
-| OFFSET      | OPTION      | OR          | ORDER       |
-| OUTER       | PERIOD      | REGEX       | ROW_NUMBER  |
-| SELECT      | THEN        | USING       | VALUE       |
-| WHEN        | WHERE       | WITH        |             |
-|-------------|-------------|-------------|-------------|
-```
-
-Aggregation Functions:
-```
-|----------------|----------------|----------------|----------------|
-| AVG            | CORREL         | COUNT          | COUNTER        |
-| DELTA          | FIRST          | LAST           | MAX            |
-| MAX_VALUE_TIME | MEDIAN         | MIN            | MIN_VALUE_TIME |
-| PERCENTILE     | SUM            | STDDEV         | WAVG           |
-| WTAVG          |                |                |                |
-|----------------|----------------|----------------|----------------|
+```sql
+SELECT datetime, date_format(time), date_format(time, 'yyyy-MM-dd HH:mm:ss z')
+  FROM mpstat.cpu_busy
+  WHERE entity = 'nurswgvml007'
+  AND datetime > current_hour
+LIMIT 3
 ```
 
 #### Issue 4146
 
-Given the following data:
-```
-series e:eg-1 m:eg-1=1 d:2017-05-01T00:30:00Z
-series e:eg-1 m:eg-1=2 d:2017-05-01T01:00:00Z
-series e:eg-1 m:eg-1=3 d:2017-05-01T01:30:00Z
-series e:eg-1 m:eg-1=4 d:2017-05-01T01:45:00Z
-series e:eg-1 m:eg-1=5 d:2017-05-02T02:00:00Z
-series e:eg-1 m:eg-1=6 d:2017-05-03T03:00:00Z
-```
-And the following command: 
-```
+```sql
 SELECT datetime, avg(value), count(value)
-  FROM 'eg-1'
-WHERE datetime >= '2017-05-01T00:05:00Z' AND datetime < '2017-05-04T00:00:00Z'
-GROUP BY PERIOD(1 HOUR)
+  FROM mpstat.cpu_busy
+WHERE datetime >= '2017-05-01T00:05:00Z' AND datetime < '2017-05-02T00:00:00Z'
+  GROUP BY PERIOD(1 HOUR)
 ```
-Data outside the `datetime` range was not be considered, even for calculations
-such as `avg(val)`.
+
+The period starting at '2017-05-01T00:00:00Z' is now included even though it starts earlier than the selection interval start time '2017-05-01T00:05:00Z'.
+
+```ls
+| datetime             | avg(value) | count(value) | 
+|----------------------|------------|--------------| 
+| 2017-05-01T00:00:00Z | 1          | 1            | <-- included
+| 2017-05-01T01:00:00Z | 3          | 3            | 
+| 2017-05-01T02:00:00Z | 5          | 1            | 
+```
 
 #### Issue 4140
 
