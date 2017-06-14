@@ -155,6 +155,23 @@ WHERE datetime >= NOW - 15*MINUTE
 
 Operators with the same precedence level within an expression are processed from left to right.
 
+#### Truth Tables for Logical Operators
+
+| **X** | **NOT X** |
+|:---|:---|
+| `true` | `false` |
+| `false` | `true` |
+| `NULL` | `NULL` |
+
+| **X** | **Y** | **X AND Y** | **X OR Y** |
+|:---|:---|:---|:---|
+| `true` | `true` | `true` | `true` |
+| `true` | `false` | `false` | `true` |
+| `false` | `false` | `false` | `false` |
+| `true` | `NULL` | `NULL` | `true` |
+| `false` | `NULL` | `false` | `NULL` |
+| `NULL` | `NULL` | `NULL` | `NULL` |
+
 ### Other Clauses
 
 * **JOIN / OUTER JOIN**
@@ -2414,22 +2431,7 @@ Since the `WHERE` clause selects only rows that evaluate to `true`, conditions s
 
 `NULL` and `NaN` values are ignored by aggregate functions.
 
-Within a logical expressions `NaN` evaluates as `NULL`. Truth tables for logical operators:
-
-| **X** | **NOT X** |
-|:---|:---|
-| `true` | `false` |
-| `false` | `true` |
-| `NULL` | `NULL` |
-
-| **X** | **Y** | **X AND Y** | **X OR Y** |
-|:---|:---|:---|:---|
-| `true` | `true` | `true` | `true` |
-| `true` | `false` | `false` | `true` |
-| `false` | `false` | `false` | `false` |
-| `true` | `NULL` | `NULL` | `true` |
-| `false` | `NULL` | `false` | `NULL` |
-| `NULL` | `NULL` | `NULL` | `NULL` |
+Logical expressions treat `NaN` as `NULL`. Refer to truth tables above for more details on how `NULL` is evaluated by logical operators.
 
 ## Not a Number (NaN)
 
