@@ -2,12 +2,12 @@
 
 ## Description
 
-Applying periodic aggregation to a time series with varying intervals between observations using the `FIRST` and `LAST` statistic function provides a technique for regularizing the series, including fill gaps with interpolated values.
+The underlying series can be regularized by applying periodic aggregation using the `FIRST` or `LAST` function and enabling interpolation to fill the gaps created by periods without data.
 
-* `FIRST` function returns the first observed value in each period.
-* `LAST` function returns the last observed value in each period.
+* `FIRST` returns the first observed value in the given period.
+* `LAST` = returns the last observed value in the given period.
 
-Unlike average and rank functions, such as percentiles, `FIRST` and `LAST` functions do not average out the values of the underlying series.
+Unlike `AVERAGE` and percentile function, `FIRST` and `LAST` do not average out the values of the underlying series.
 
 The process is sometimes called downsampling.
 
@@ -29,9 +29,9 @@ POST https://atsd_host:8443/api/v1/series/query
     "entity": "nurswgvml007",
     "metric": "cpu_busy",
     "aggregate": {
-	   "period": {"count": 1, "unit": "MINUTE"},
-       "type": "FIRST",
-       "interpolate": {"type": "LINEAR"}
+      "period": {"count": 1, "unit": "MINUTE"},
+      "type": "FIRST",
+      "interpolate": {"type": "LINEAR"}
     }
   }
 ]
