@@ -5,6 +5,14 @@ and status of ATSD and components.
 
 Use these scripts to gracefully restart ATSD.
 
+## Permissions
+
+If logged in as root other another user, change user to 'axibase' to ensure that no files are locked.
+
+```
+su axibase
+```
+
 ## Script Directory
 
 ```sh
@@ -37,7 +45,7 @@ To control ATSD running inside a Docker container, open a `/bin/bash` session wi
 
 ```sh
 docker exec -it atsd /bin/bash
-/opt/atsd/bin/update.sh 
+/opt/atsd/bin/update.sh
 ```
 
 ```sh
@@ -50,7 +58,7 @@ Switch to `axibase` user and run `jps`:
 
 ```java
 27392 Jps
-22110 Server 
+22110 Server
 18494 HMaster
 18387 HQuorumPeer
 18673 HRegionServer
@@ -59,17 +67,17 @@ Switch to `axibase` user and run `jps`:
 25790 DataNode
 ```
 
-Process affiliation:
+## Process Affiliation
 
-```java
-Server - ATSD 
-HMaster - HBase
-HQuorumPeer - HBase
-HRegionServer - HBase
-NameNode - HDFS
-SecondaryNameNode - HDFS
-DataNode - HDFS
-```
+| **Process Type** | **Process Name** |
+|---|---|
+| HDFS | DataNode |
+| HDFS | SecondaryNameNode |
+| HDFS | NameNode |
+| HBase | HRegionServer |
+| HBase | HQuorumPeer |
+| HBase | HMaster |
+| ATSD | Server |
 
 ## Safe Restart
 
@@ -118,11 +126,21 @@ The `jps` output should display only HDFS processes at this time:
 25587 NameNode
 ```
 
-If HBase processes are still running, retry `./atsd-hbase.sh stop`.
+If any HBase processes are still running, retry `./atsd-hbase.sh stop`.
 
-If subsequent  `./atsd-hbase.sh stop` executions fail to stop HBase processes, kill HBase processes by pid with SIGTERM (no flags).
+If the above fails to stop HBase processes, execute the following commands:
 
-Make sure you don't kill HDFS processes.
+```sh
+/opt/atsd/hbase/bin/hbase-daemon.sh stop regionserver
+/opt/atsd/hbase/bin/hbase-daemon.sh stop master
+/opt/atsd/hbase/bin/hbase-daemons.sh stop zookeeper
+```
+
+
+
+If subsequent  `./atsd-hbase.sh stop` executions fail to stop HBase processes, kill HBase processes by PID with SIGTERM (no flags).
+
+Make sure you **don't** kill HDFS processes NameNode, DataNode, SecondaryNameNode.
 
 ```sh
 kill 18494
@@ -132,33 +150,80 @@ If any HBase process fails to stop after that and is still visible in `jps`, con
 
 ### Start Services
 
-Start HBase and ATSD in the reverse order
+Start HDFS, HBase and ATSD in the reverse order:
+
+* Start HDFS, if `jps` shows that no HDFS processes are running:
+
+```sh
+./atsd-dfs.sh start
+```
+
+* Start HBase, if `jps` shows that no HBase processes are running:
 
 ```sh
 ./atsd-hbase.sh start
 ```
 
+* Start ATSD, if `jps` shows that no ATSD process is running:
+
 ```sh
 ./atsd-tsd.sh start
 ```
 
-### Permissions
+## Zookeeper Cache
 
-The `/opt/atsd/bin/atsd-all.sh` script relies on the **[jps](http://docs.oracle.com/javase/7/docs/technotes/tools/share/jps.html)** command to ensure that Java processes are started in the correct order.
+If ATSD fails to start and the `atsd.log` contains the `TableExistsException` error for any table, clean the Zookeeper cache.
 
-The `jps` command requires write permissions to the `/tmp/hsperfdata_axibase` directory in order to store temporary files. If permissions to this directory are missing (i.e. it's owned by root), `jps` fails to identify other running Java processes under the current user and returns an imcomplete list, despite the fact that such processes are running and are visible with `ps aux | grep java`. 
+```ls
+Caused by:
+  org.apache.hadoop.ipc.RemoteException:
+  org.apache.hadoop.hbase.TableExistsException: atsd_message
+```
+
+Open Zookeper shell:
+
+```sh
+/opt/atsd/hbase/bin/hbase zkcli
+```
+
+Execute the command to remove the ephemeral `/hbase` directory from Zookeeper cache:
+
+```sh
+rmr /hbase
+```
+
+## File Permissions
+
+### JPS
+
+The `/opt/atsd/bin/atsd-all.sh` script relies on the **[jps](http://docs.oracle.com/javase/7/docs/technotes/tools/share/jps.html)** utility to determine that Java processes are started in the correct order.
+
+The `jps` utility requires write permissions to the `/tmp/hsperfdata_axibase` directory in order to store temporary files. If permissions to this directory are missing when it is owned by root, `jps` returns an incomplete process list, even if processes are running and can be listed with `ps aux | grep java`.
 
 If `jps` output is incomplete, the `atsd-all.sh` script aborts the startup procedure with the following message:
 
 ```
-nurswgvml007 atsdService: * [ATSD] DataNode is not running. 
+nurswgvml007 atsdService: * [ATSD] DataNode is not running.
 ```
 
-Execute the following steps to fix this issue:
+* Solution: Stop all ATSD services. Remove `/tmp/hsperfdata_axibase` directory.
 
-* [Stop](#stop-services) ATSD services
-* Remove /tmp/hsperfdata_axibase directory
-* Start ATSD with `/opt/atsd/bin/atsd-all.sh`
+### Temporary Files
 
+ATSD uses `/tmp/atsd` directory to store temporary files. If this directory is owned by root, ATSD cannot function properly.
 
+* Solution: Stop all ATSD services. Grant ownership to `/tmp/atsd` directory to the 'axibase' user.
 
+```sh
+chown -R axibase:axibase /tmp/atsd
+```
+
+### `/opt/atsd` directory
+
+ATSD uses `/opt/atsd` directory to store log files, backup files, and other files. If this directory is owned by root, ATSD cannot function properly.
+
+* Solution: Stop all ATSD services. Grant ownership to `/opt/atsd` directory to the 'axibase' user.
+
+```sh
+chown -R axibase:axibase /opt/atsd
+```
