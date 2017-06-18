@@ -1,23 +1,20 @@
 # Restarting
 
-ATSD provides wrapper scripts that control the start, stop,
-and status of ATSD and components.
+ATSD provides scripts to control ATSD and its components.
 
-Use these scripts to gracefully restart ATSD.
+Use these scripts to gracefully restart ATSD and to resolve startup issues.
 
 ## Permissions
 
-If logged in as root other another user, change user to 'axibase' to ensure that no files are locked.
+If logged in as root or another user, change user to 'axibase' to ensure that no files are locked.
 
-```
+```sh
 su axibase
 ```
 
 ## Script Directory
 
-```sh
- /opt/atsd/bin
-```
+The scripts are located in the `/opt/atsd/bin` directory.
 
 ## Scripts
 
@@ -41,10 +38,13 @@ su axibase
 
 ## Docker Container
 
-To control ATSD running inside a Docker container, open a `/bin/bash` session with `docker exec -it` and execute commands as usual:
+To restart and update an ATSD instance running inside a Docker container, open a `/bin/bash` session with `docker exec -it` and execute commands as usual:
 
 ```sh
 docker exec -it atsd /bin/bash
+```
+
+```sh
 /opt/atsd/bin/update.sh
 ```
 
@@ -54,7 +54,7 @@ docker exec -it atsd tail -f /opt/atsd/atsd/logs/atsd.log
 
 ## Processes
 
-Switch to `axibase` user and run `jps`:
+Switch to `axibase` user and run the `jps` utility to display Java processes running under the current user.
 
 ```java
 27392 Jps
@@ -67,9 +67,9 @@ Switch to `axibase` user and run `jps`:
 25790 DataNode
 ```
 
-## Process Affiliation
+## Process Types
 
-| **Process Type** | **Process Name** |
+| **Type** | **Process Name** |
 |---|---|
 | HDFS | DataNode |
 | HDFS | SecondaryNameNode |
@@ -81,12 +81,6 @@ Switch to `axibase` user and run `jps`:
 
 ## Safe Restart
 
-Change to script directory:
-
-```sh
-cd /opt/atsd/bin
-```
-
 ### Stop Services
 
 * Stop ATSD
@@ -94,7 +88,7 @@ cd /opt/atsd/bin
 Stop ATSD and wait for the script to exit:
 
 ```
-./atsd-tsd.sh stop
+/opt/atsd/bin/atsd-tsd.sh stop
 ```
 
 Verify that the `Server` process is **not** present in `jps` output:
@@ -108,7 +102,7 @@ If the `Server` process is still running, kill it forcefully with `kill -9 {Serv
 * Stop HBase and wait for the script to exit
 
 ```sh
-./atsd-hbase.sh stop
+/opt/atsd/bin/atsd-hbase.sh stop
 ```
 
 Verify that the `HMaster`, `HRegionServer`, `HQuorumPeer` processes are **not** present in the `jps` output:
@@ -155,19 +149,19 @@ Start HDFS, HBase and ATSD in the reverse order:
 * Start HDFS, if `jps` shows that no HDFS processes are running:
 
 ```sh
-./atsd-dfs.sh start
+/opt/atsd/bin/atsd-dfs.sh start
 ```
 
 * Start HBase, if `jps` shows that no HBase processes are running:
 
 ```sh
-./atsd-hbase.sh start
+/opt/atsd/bin/atsd-hbase.sh start
 ```
 
 * Start ATSD, if `jps` shows that no ATSD process is running:
 
 ```sh
-./atsd-tsd.sh start
+/opt/atsd/bin/atsd-tsd.sh start
 ```
 
 ## Zookeeper Cache
