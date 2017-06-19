@@ -16,7 +16,6 @@ Weekly Change Log: May 22, 2017 - May 28, 2017
 | 4181 | sql | Bug | Fixed an interpolation error which incorrectly interpreted time data from before 1970. |
 | 4152 | sql | Bug | Fixed bug in [`WHERE`](https://github.com/axibase/atsd/tree/master/api/sql#where-clause) expressions that failed to correctly interpret multiple conditions when using the [`METRIC LIKE`](https://github.com/axibase/atsd/tree/master/api/sql#metrics) command |
 | 4133 | test | Feature | Error-message instances added in [`SQL Console`](https://github.com/axibase/atsd/tree/master/api/sql). |
-| 4101 | sql | Bug | Time period sorting inconsistency resolved by defining rounding parameters |
 | [3834](#Issue_3834) |UI | Feature| Client-side data configuration enabled without the need to reload and reprocess data. |
 
 ### ATSD
@@ -29,6 +28,8 @@ Bracket notation is unneeded here and would trigger an ExceptionError, the prese
 
 #### Issue 3834
 
-![Issue3834](Images/3834.1.png)
+![Issue3834](Images/3834.2.png)
 
 Modifying these fields no longer requires preforming the query a second time.
+
+![Issue3834.2](Images/3834.3.png)

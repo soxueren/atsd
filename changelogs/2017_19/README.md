@@ -5,7 +5,7 @@ Weekly Change Log: May 08, 2017 - May 14, 2017
 
 | Issue| Category    | Type    | Subject              |
 |------|-------------|---------|----------------------|
-| 4185 | sql | Bug | Fixed an NullPointerException caused by empty output path in scheduled SQL queries. |
+| 4183 | sql | Bug | Fixed an NullPointerException caused by empty output path in scheduled SQL queries. |
 | 4176 | UI | Bug | Fixed a paging issue on Entities page. |
 | 4174 | csv | Support | Ensure compatibility of schema-based browsers with Java 8. |
 | 4172 | rule engine | Bug | Fixed broken rendering of the Alerts History detail page. |
