@@ -727,15 +727,16 @@ WHERE datetime BETWEEN '2016-12-10T14:00:15Z' AND '2016-12-10T15:30:00.077Z'
 
 ### Endtime Syntax
 
-`time` or `datetime` columns support [endtime](../../end-time-syntax.md) syntax.
+The `time` and `datetime` columns support [endtime](../../end-time-syntax.md) syntax.
 
 ```sql
 SELECT datetime, entity, value
   FROM mpstat.cpu_busy
-WHERE time >= NOW - 15 * MINUTE AND datetime < CURRENT_MINUTE
+WHERE time >= NOW - 15 * MINUTE 
+  AND datetime < CURRENT_MINUTE
 ```
 
-The `endtime` expressions are evaluated according to the server [time zone](../../api/network/timezone-list.md) which can be customized using the [`endtime()`](#endtime_) function.
+The `endtime` expressions are evaluated according to the server [time zone](../../api/network/timezone-list.md) which can be customized using the [`endtime()`](#endtime) function.
 
 ```sql
 SELECT value, datetime, 
