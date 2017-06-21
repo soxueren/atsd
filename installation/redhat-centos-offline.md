@@ -3,7 +3,7 @@
 ## Overview
 
 The installation process involves downloading dependencies to an intermediate machine with Internet access  
-and copying them to the target machine with similar characteristics for offline installation. 
+and copying them to the target machine with similar characteristics for offline installation.
 
 ## Supported Versions
 
@@ -16,8 +16,14 @@ and copying them to the target machine with similar characteristics for offline 
 
 ## Requirements
 
-- Minimum RAM: 1 GB 
+- Minimum RAM: 1 GB
 - See [Requirements](../administration/requirements.md) for additional information.
+
+## Configuration
+
+The database will be installed in `/opt/atsd` directory under `axibase` user.
+
+To customize the installation directory, specify `--prefix` option as described below.
 
 ## Installation Steps
 
@@ -53,6 +59,16 @@ sudo yum install -y atsd_ce_amd64.rpm
 ```
 
 It may take up to 5 minutes to initialize the database.
+
+## Custom Installation Directory
+
+To install ATSD in a custom directory, specify `--prefix` parameter:
+
+```sh
+sudo rpm -Uvh --prefix=/mnt/atsd atsd_ce_amd64.rpm
+```
+
+> ATSD cannot be installed in a `/home/user` directory other than `/home/axibase` due to permission issues.
 
 ## Check Installation
 

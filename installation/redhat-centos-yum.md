@@ -11,9 +11,14 @@
 
 ## Requirements
 
-- Minimum RAM: 1 GB 
+- Minimum RAM: 1 GB
 - See [Requirements](../administration/requirements.md) for additional information.
 
+## Configuration
+
+The database will be installed in `/opt/atsd` directory under `axibase` user.
+
+To customize the installation directory, use [`rpm`](redhat-centos-rpm.md) option instead.
 
 ## Installation Steps
 
@@ -29,7 +34,6 @@ gpgcheck=0
 protect=1
 EOF"      
 ```
-
 
 Update repositories:
 
@@ -50,10 +54,10 @@ It may take up to 5 minutes to initialize the database.
 If the installation is performed in a Docker container, the `yum` command will exit with the following message:
 
 ```
-Docker container installation. Initialization deferred. 
+Docker container installation. Initialization deferred.
 ```
 
-Execute the following additional step to complete the installation:
+Execute the following command to complete the installation:
 
 ```sh
 /opt/atsd/install_user.sh
