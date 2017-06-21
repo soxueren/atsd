@@ -43,28 +43,35 @@ GROUP BY tags.region, period(1 MONTH)
 
 ## Example: Daily Averages
 
-To calculate averages or totals for each day in the week, use `date_format(time, 'EEE')` or `date_format(time, 'u')` functions.
+To calculate averages or totals by day of the week, use `date_format(time, 'EEE')` or `date_format(time, 'u')` functions.
 The `EEE` pattern returns short day name for each sample: Mon, Tue, Wed, Thu, Fri, Sat, Sun, whereas `u` pattern returns day number starting with 1 for Monday.
 
 ```sql
-SELECT date_format(time, 'EEE'),
-  avg(value)
+SELECT date_format(time, 'u') AS day_of_week, avg(value) AS average
 FROM mpstat.cpu_busy
   WHERE datetime >= previous_week
 GROUP BY date_format(time, 'u')
   ORDER BY date_format(time, 'u')
 ```
 
+```sql
+SELECT substr(date_format(time, 'u-EEE'), 3) AS day_of_week, avg(value) AS average
+FROM mpstat.cpu_busy
+  WHERE datetime >= previous_week
+GROUP BY date_format(time, 'u-EEE')
+  ORDER BY date_format(time, 'u-EEE')
+```
+
 ```ls
-| date_format(time,'EEE') | avg(value) |
-|-------------------------|------------|
-| Mon                     | 31.2       |
-| Tue                     | 31.1       |
-| Wed                     | 30.6       |
-| Thu                     | 29.0       |
-| Fri                     | 26.9       |
-| Sat                     | 26.6       |
-| Sun                     | 26.7       | 
+| day_of_week | average |
+|-------------|---------|
+| Mon         | 5.73    |
+| Tue         | 7.05    |
+| Wed         | 7.36    |
+| Thu         | 7.50    |
+| Fri         | 8.48    |
+| Sat         | 6.08    |
+| Sun         | 5.97    |
 ```
 
 ## Example: Diurnal Seasonality
@@ -116,12 +123,12 @@ GROUP BY date_format(time, 'HH')
 The weekly diurnal charts take day of week into account and can be used, for example, to calculate both weekly seasonality, as well as weekly highs and lows using different columns in the ORDER clause.
 
 ```sql
-SELECT date_format(time, 'EEEEE, HH:00') AS 'day, hour',
+SELECT concat(date_format(time, 'EEEEE, HH'), ':00') AS 'day, hour',
   avg(value)
 FROM mpstat.cpu_busy
   WHERE datetime >= current_week
   AND date_format(time, 'HH') >= '09' AND date_format(time, 'HH') < '18'
-GROUP BY date_format(time, 'EEE HH')
+GROUP BY date_format(time, 'EEEEE HH')
   ORDER BY 2 DESC
 ```
 
@@ -130,11 +137,14 @@ GROUP BY date_format(time, 'EEE HH')
 ```ls
 | day, hour        | avg(value) |
 |------------------|------------|
-| Thursday, 10:00  | 8.6        |
-| Wednesday, 13:00 | 8.4        |
-| Tuesday, 09:00   | 7.7        |
-| Wednesday, 11:00 | 7.4        |
-| Monday, 10:00    | 7.3        |
+| Wednesday, 14:00 | 18.70      |
+| Tuesday, 14:00   | 12.99      |
+| Wednesday, 09:00 | 12.53      |
+| Wednesday, 16:00 | 12.29      |
+| Tuesday, 13:00   | 11.50      |
+| Wednesday, 15:00 | 10.71      |
+| Monday, 16:00    | 10.12      |
+| Thursday, 09:00  | 9.63       |
 ```
 
 ## Example: Numeric Comparison

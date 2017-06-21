@@ -75,7 +75,7 @@ WHERE entity = 'nurswgvml007'
 | 2016-06-18T20:00:43.000Z | 6.1   |
 ```
 
-## Query with Endtime Syntax (TimeZone)
+## Query with Endtime Syntax
 
 [Endtime](../../../end-time-syntax.md) keywords are calculated based on the current server time and the server's [time zone](../../../api/network/timezone-list.md).
 
@@ -104,6 +104,50 @@ series e:e1 d:2017-04-14T23:00:00Z m:m1=23
 series e:e1 d:2017-04-15T00:00:00Z m:m1=0
 series e:e1 d:2017-04-15T01:00:00Z m:m1=1
 series e:e1 d:2017-04-15T02:00:00Z m:m1=2
+```
+
+## Query with Endtime Syntax in Custom Timezone
+
+The `endtime()` function enables specifying a user-defined [time zone](../../../api/network/timezone-list.md) when evaluating [endtime](../../../end-time-syntax.md) keywords and expressions.
+
+The following example selects data between 0h:0m:0s of the previous day and 0h:0m:0s of the current day according to PST timezone, even though the server itself runs in UTC timezone.
+
+```sql
+SELECT value, datetime, 
+  date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'UTC') AS 'UTC_datetime',
+  date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'US/Pacific') AS 'PST_datetime'
+FROM mpstat.cpu_busy
+  WHERE entity = 'nurswgvml007'
+AND datetime BETWEEN endtime(YESTERDAY, 'US/Pacific') AND endtime(CURRENT_DAY, 'US/Pacific')
+  ORDER BY datetime
+```
+
+```ls
+| value | datetime             | UTC_datetime           | PST_datetime           | 
+|-------|----------------------|------------------------|------------------------| 
+| 6.86  | 2017-06-16T07:00:05Z | 2017-06-16T07:00:05UTC | 2017-06-16T00:00:05PDT | 
+| 6.06  | 2017-06-16T07:00:21Z | 2017-06-16T07:00:21UTC | 2017-06-16T00:00:21PDT | 
+  ....
+| 3.03  | 2017-06-17T06:59:29Z | 2017-06-17T06:59:29UTC | 2017-06-16T23:59:29PDT | 
+| 2.97  | 2017-06-17T06:59:45Z | 2017-06-17T06:59:45UTC | 2017-06-16T23:59:45PDT | 
+```
+
+## Query using Local Time
+
+```sql
+SELECT datetime as utc_time, date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') AS local_datetime, value 
+  FROM mpstat.cpu_busy
+  WHERE entity = 'nurswgvml007'
+    AND time >= date_parse('2017-05-01 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') 
+    AND  time < date_parse('2017-05-03 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna')
+```
+
+```ls
+| utc_time            | local_datetime      | value  | 
+|---------------------|---------------------|--------| 
+| 2017-05-01 10:00:15 | 2017-05-01 12:00:15 | 4.9500 | 
+| 2017-05-01 10:00:31 | 2017-05-01 12:00:31 | 3.0000 | 
+| 2017-05-01 10:00:47 | 2017-05-01 12:00:47 | 3.0900 | 
 ```
 
 ## Query using `BETWEEN`
