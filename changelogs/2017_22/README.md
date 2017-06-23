@@ -4,13 +4,13 @@ Weekly Change Log: May 29, 2017 - June 04, 2017
 
 | Issue| Category    | Type    | Subject              |
 |------|-------------|---------|----------------------|
-| 4236 | sql | Bug | Resolved UnhandledExceptionError when using [`JOIN`](https://github.com/axibase/atsd/tree/master/api/sql#joins)  and [`INTERPOLATE(DETAIL)`](https://github.com/axibase/atsd/tree/master/api/sql#interpolation) functions together. |
-| 4224 | sql | Bug | Fixed a bug which rendered time and date information as a measure of milliseconds when concatenated with the [`CONCAT`](https://github.com/axibase/atsd/tree/master/api/sql#string-functions) function.|
-| 4199 | admin | Bug | Fixed a bug which failed to update `HOSTNAME` and server URL during refresh |
-| [4163](#issue-4163) | UI | Feature | Several enhancements to the ATSD User Interface |
-| [4144](#issue-4144) | rule engine | Feature | Configuration > Rules, features added to enhance usability.|
-| 4107 | UI | Bug | Layout of several pages refactored to newest standards |
-| 3900 | UI | Bug | Fixed MessageStats API bug to parse JSON data when given an unexpected field. |
+| 4236 | sql | Bug | Resolved error when using [`JOIN`](https://github.com/axibase/atsd/tree/master/api/sql#joins)  and [`INTERPOLATE(DETAIL)`](https://github.com/axibase/atsd/tree/master/api/sql#interpolation) clauses together. |
+| 4224 | sql | Bug | Fixed a bug which caused the `datetime` column to be rendered in milliseconds when referenced by the [`CONCAT`](https://github.com/axibase/atsd/tree/master/api/sql#string-functions) function.|
+| 4199 | admin | Bug | Fixed a bug which failed to update `HOSTNAME` and server URL in Admin: Server Properties at runtime. |
+| [4163](#issue-4163) | UI | Feature | Several enhancements to the User Interface: tooltips, column visibility, icons, auto-completes. |
+| [4144](#issue-4144) | rule engine | Feature | Add a page displaying all active email subscribers in the Rule Engine.|
+| 4107 | UI | Bug | Layout of several forms refactored to adhere to the latest guidelines. |
+| 3900 | UI | Bug | Fixed an issue with message counter chart failing to render on timespan change. |
 
 ### ATSD
 
@@ -25,23 +25,20 @@ property values:
 
 ![4163.2](Images/4163.2.png)
 
-3. Configuration > Portals, `VIEW` button allows for real-time viewing of 
-Portal during configuration, even if certain `[GROUP]` clusters are missing
-entities:
+3. Configuration > Portals, `View` button allows for viewing of 
+Portal during configuration:
 
 ![4163.3](Images/4163.3.1.png)
 
-4. 'Remember Me' feature added for instances of nur.axibase.com to preserve
-login information between sessions:
+4. 'Remember Me' tooltip added:
 
 ![4163.4](Images/4163.4.png)
 
-5. Admin > Users, syntax simplified for User Roles, `ROLE_` prefix removed:
+5. Admin > Users. `ROLE_` prefix removed:
 
 ![4163.5](Images/4163.5.png)
 
-6. Metric, unneeded columns removed from the main page, still shown on 
-individual entity page.
+6. Detailed columns removed from the Entities tab.
 
 7. Alerts, second precision added to date column, `ACKNOWLEDGE` column shortened to
 `ACK`:
@@ -56,6 +53,5 @@ Configuration > Rules
 
 ![4144](Images/4144.png)
 
-Subscribers button allows the user to audit email subscribers, configurations, and rules 
-without exporting data and reviewing .xml file. 
+Subscribers button displays all email subscribers. 
 

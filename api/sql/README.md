@@ -68,7 +68,7 @@ Example:
 ```sql
 SELECT datetime, entity, value     -- SELECT expression
   FROM "mpstat.cpu_busy"           -- query
-WHERE datetime >= NOW - 1*HOUR    -- WHERE clause
+WHERE datetime >= '2017-06-15T00:00:00Z'    -- WHERE clause
   LIMIT 1                          -- other clauses
 ```
 
@@ -89,7 +89,7 @@ A virtual table represents a subset of records for the given metric stored by th
 ```sql
 SELECT datetime, entity, value
   FROM "mpstat.cpu_busy"
-WHERE datetime >= NOW - 1*MINUTE
+WHERE datetime >= '2017-06-15T00:00:00Z'
 ```
 
 In the example above, "mpstat.cpu_busy" table contains records for the `mpstat.cpu_busy` metric.
@@ -109,7 +109,7 @@ WHERE metric = 'mpstat.cpu_busy'
   -- WHERE metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user')
   -- WHERE metric LIKE 'mpstat.cpu*'
   AND entity = 'nurswgvml007'
-  AND datetime >= CURRENT_HOUR
+  AND datetime >= '2017-06-15T00:00:00Z'
 ```
 
 > The number of metrics retrieved with `metric LIKE (expr)` condition is limited to 50.
@@ -136,7 +136,7 @@ The result of evaluating a condition is a boolean value. Multiple conditions can
 ```sql
 SELECT entity, datetime, value, tags.*
   FROM "df.disk_used"
-WHERE datetime >= NOW - 15*MINUTE
+WHERE datetime >= '2017-06-15T00:00:00Z'
   AND (entity IN ('nurswgvml007', 'nurswgvml010')
        OR tags.file_system LIKE '/dev/*'
        OR value/1024 > 100000)
@@ -154,6 +154,23 @@ WHERE datetime >= NOW - 15*MINUTE
 * `OR`
 
 Operators with the same precedence level within an expression are processed from left to right.
+
+#### Truth Tables for Logical Operators
+
+| **X** | **NOT X** |
+|:---|:---|
+| `true` | `false` |
+| `false` | `true` |
+| `NULL` | `NULL` |
+
+| **X** | **Y** | **X AND Y** | **X OR Y** |
+|:---|:---|:---|:---|
+| `true` | `true` | `true` | `true` |
+| `true` | `false` | `false` | `true` |
+| `false` | `false` | `false` | `false` |
+| `true` | `NULL` | `NULL` | `true` |
+| `false` | `NULL` | `false` | `NULL` |
+| `NULL` | `NULL` | `NULL` | `NULL` |
 
 ### Other Clauses
 
@@ -305,7 +322,7 @@ New columns can be created by applying functions and arithmetic expressions to e
 SELECT t1.datetime, t1.entity, t1.value + t2.value AS cpu_sysusr
   FROM "mpstat.cpu_system" t1
   JOIN "mpstat.cpu_user" t2
-WHERE t1.datetime >= NOW - 1*MINUTE
+WHERE t1.datetime >= '2017-06-15T00:00:00Z'
 ```
 
 The list of all predefined columns may be requested with the `SELECT *` syntax, except for queries with the `GROUP BY` clause and multiple-metric queries from the `atsd_series` table.
@@ -314,17 +331,17 @@ The list of all predefined columns may be requested with the `SELECT *` syntax, 
 SELECT * 
   FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
-WHERE t1.datetime BETWEEN '2016-06-16T13:00:00Z' AND '2016-06-16T13:10:00Z'
+WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
 
 ```ls
 | t1.entity    | t1.datetime          | t1.value | t2.entity    | t2.datetime          | t2.value | 
 |--------------|----------------------|----------|--------------|----------------------|----------| 
-| nurswgvml006 | 2016-06-16T13:00:01Z | 37       | null         | null                 | null     | 
-| null         | null                 | null     | nurswgvml006 | 2016-06-16T13:00:12Z | 67932    | 
-| nurswgvml006 | 2016-06-16T13:00:17Z | 16       | null         | null                 | null     | 
-| null         | null                 | null     | nurswgvml006 | 2016-06-16T13:00:27Z | 73620    | 
+| nurswgvml006 | 2017-06-16T13:00:01Z | 37       | null         | null                 | null     | 
+| null         | null                 | null     | nurswgvml006 | 2017-06-16T13:00:12Z | 67932    | 
+| nurswgvml006 | 2017-06-16T13:00:17Z | 16       | null         | null                 | null     | 
+| null         | null                 | null     | nurswgvml006 | 2017-06-16T13:00:27Z | 73620    | 
 ```
 
 In the case of a `JOIN` query, the `SELECT *` syntax can be applied to each table separately.
@@ -333,17 +350,17 @@ In the case of a `JOIN` query, the `SELECT *` syntax can be applied to each tabl
 SELECT t1.*, t2.datetime, t2.value 
   FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
-WHERE t1.datetime BETWEEN '2016-06-16T13:00:00Z' AND '2016-06-16T13:10:00Z'
+WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
 
 ```ls
 | t1.entity    | t1.datetime          | t1.value | t2.datetime          | t2.value | 
 |--------------|----------------------|----------|----------------------|----------| 
-| nurswgvml006 | 2016-06-16T13:00:01Z | 37       | null                 | null     | 
-| null         | null                 | null     | 2016-06-16T13:00:12Z | 67932    | 
-| nurswgvml006 | 2016-06-16T13:00:17Z | 16       | null                 | null     | 
-| null         | null                 | null     | 2016-06-16T13:00:27Z | 73620    | 
+| nurswgvml006 | 2017-06-16T13:00:01Z | 37       | null                 | null     | 
+| null         | null                 | null     | 2017-06-16T13:00:12Z | 67932    | 
+| nurswgvml006 | 2017-06-16T13:00:17Z | 16       | null                 | null     | 
+| null         | null                 | null     | 2017-06-16T13:00:27Z | 73620    | 
 ```
 
 The `time` and `datetime` columns are interchangeable and can be used as equivalents, for instance in the `GROUP BY` clause and the `SELECT` expression.
@@ -351,7 +368,7 @@ The `time` and `datetime` columns are interchangeable and can be used as equival
 ```sql
 SELECT datetime, entity, count(*)
   FROM "df.disk_used"
-WHERE datetime BETWEEN '2016-07-03T21:02:00Z' AND '2016-07-03T21:02:15Z'
+WHERE datetime BETWEEN '2017-06-15T21:02:00Z' AND '2017-06-15T21:02:15Z'
   GROUP BY time, entity
 ```
 
@@ -361,16 +378,16 @@ The `SELECT` expression in `JOIN` queries can include both fully qualified colum
 SELECT datetime, t1.datetime, t2.datetime
   FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
-WHERE t1.datetime BETWEEN '2016-06-16T13:00:00Z' AND '2016-06-16T13:10:00Z'
+WHERE t1.datetime BETWEEN '2017-06-15T13:00:00Z' AND '2017-06-15T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
 
 ```ls
 | datetime             | t1.datetime          | t2.datetime          | 
 |----------------------|----------------------|----------------------| 
-| 2016-06-16T13:00:01Z | 2016-06-16T13:00:01Z | null                 | 
-| 2016-06-16T13:00:12Z | null                 | 2016-06-16T13:00:12Z | 
-| 2016-06-16T13:00:17Z | 2016-06-16T13:00:17Z | null                 | 
+| 2017-06-15T13:00:01Z | 2017-06-15T13:00:01Z | null                 | 
+| 2017-06-15T13:00:12Z | null                 | 2017-06-15T13:00:12Z | 
+| 2017-06-15T13:00:17Z | 2017-06-15T13:00:17Z | null                 | 
 ```
 
 ### Series Value Columns
@@ -391,15 +408,15 @@ series d:2016-10-13T10:30:00Z e:sensor-1 x:status="Shutdown by adm-user, RFC-543
 ```sql
 SELECT entity, metric, datetime, value, text
   FROM atsd_series
-WHERE metric IN ('temperature', 'status') AND datetime >= '2016-10-13T08:00:00Z'
+WHERE metric IN ('temperature', 'status') AND datetime >= '2017-06-15T08:00:00Z'
 ```
 
 ```ls
 | entity   | metric      | datetime             | value | text                           |
 |----------|-------------|----------------------|-------|--------------------------------|
-| sensor-1 | temperature | 2016-10-13T08:00:00Z | 20.3  | null                           |
-| sensor-1 | temperature | 2016-10-13T08:15:00Z | 24.4  | Provisional                    |
-| sensor-1 | status      | 2016-10-13T10:30:00Z | NaN   | Shutdown by adm-user, RFC-5434 |
+| sensor-1 | temperature | 2017-06-15T08:00:00Z | 20.3  | null                           |
+| sensor-1 | temperature | 2017-06-15T08:15:00Z | 24.4  | Provisional                    |
+| sensor-1 | status      | 2017-06-15T10:30:00Z | NaN   | Shutdown by adm-user, RFC-5434 |
 ```
 
 #### Numeric Precedence
@@ -421,14 +438,16 @@ If the property is not present, the `tags.{tag-name}` expression returns `NULL`.
 ```sql
 SELECT datetime, entity, value, tags.*, tags, tags.mount_point, tags.file_system
   FROM "df.disk_used"
-WHERE entity = 'nurswgvml010' AND datetime >= NOW - 1*MINUTE
+WHERE entity = 'nurswgvml010' 
+  AND datetime >= '2017-06-15T00:00:00Z'
   ORDER BY datetime
 ```
 
 ```ls
-| datetime             | entity       | value      | tags.mount_point | tags.file_system | tags                                   | tags.mount_point | tags.file_system |
-| 2016-06-18T11:22:35Z | nurswgvml010 | 6478200.0  | /                | /dev/sda1        | file_system=/dev/sda1;mount_point=/    | /                | /dev/sda1        |
-| 2016-06-18T11:22:35Z | nurswgvml010 | 30440664.0 | /app             | /dev/sdb1        | file_system=/dev/sdb1;mount_point=/app | /app             | /dev/sdb1        |
+| datetime             | entity       | value         | tags.file_system | tags.mount_point | tags                                   | tags.mount_point | tags.file_system | 
+|----------------------|--------------|---------------|------------------|------------------|----------------------------------------|------------------|------------------| 
+| 2017-06-15T00:00:09Z | nurswgvml010 | 8348272.0000  | /dev/sda1        | /                | file_system=/dev/sda1;mount_point=/    | /                | /dev/sda1        | 
+| 2017-06-15T00:00:09Z | nurswgvml010 | 31899136.0000 | /dev/sdb1        | /app             | file_system=/dev/sdb1;mount_point=/app | /app             | /dev/sdb1        | 
 ```
 
 To filter records with or without specified series tags, use the `IS NOT NULL` or `IS NULL` operators.
@@ -447,7 +466,7 @@ GROUP BY entity, tags
 ```ls
 | entity       | count(value) | tags.mount_point | tags.file_system |
 |--------------|--------------|------------------|------------------|
-| nurswgvml010 | 20.0         | /                | /dev/sda1        |
+| nurswgvml010 | 20           | /                | /dev/sda1        |
 ```
 
 ### Entity Tag Columns
@@ -536,9 +555,9 @@ ORDER BY datetime
 ```ls
 | datetime             | entity       | value | entity.groups                            |
 |----------------------|--------------|-------|------------------------------------------|
-| 2016-07-14T15:00:06Z | nurswgvml009 | 3.0   | nur-collectors;nmon-linux                |
-| 2016-07-14T15:00:07Z | nurswgvml007 | 44.7  | java-loggers;nur-collectors;nmon-linux   |
-| 2016-07-14T15:00:16Z | nurswgvml006 | 4.0   | nur-collectors;nmon-linux;nmon-sub-group |
+| 2017-06-15T15:00:06Z | nurswgvml009 | 3.0   | nur-collectors;nmon-linux                |
+| 2017-06-15T15:00:07Z | nurswgvml007 | 44.7  | java-loggers;nur-collectors;nmon-linux   |
+| 2017-06-15T15:00:16Z | nurswgvml006 | 4.0   | nur-collectors;nmon-linux;nmon-sub-group |
 ```
 
 The `entity.group` column can be referenced in the `WHERE` clause to filter results based on group membership.
@@ -565,8 +584,8 @@ ORDER BY datetime
 ```ls
 | datetime             | entity       | value | entity.groups                            |
 |----------------------|--------------|-------|------------------------------------------|
-| 2016-07-14T15:00:07Z | nurswgvml007 | 44.7  | java-loggers;nur-collectors;nmon-linux   |
-| 2016-07-14T15:00:21Z | nurswgvml102 | 4.0   | java-loggers;network-rtr                 |
+| 2017-06-15T15:00:07Z | nurswgvml007 | 44.7  | java-loggers;nur-collectors;nmon-linux   |
+| 2017-06-15T15:00:21Z | nurswgvml102 | 4.0   | java-loggers;network-rtr                 |
 ```
 
 ### Group By Columns
@@ -657,7 +676,6 @@ WHERE tags.file_system LIKE '/dev/*'
   AND datetime >= NOW - 1*HOUR
 ```
 
-
 ### REGEX Expression
 
 The `REGEX` expression matches column value against a [regex](https://docs.oracle.com/javase/7/docs/api/java/util/regex/Pattern.html) pattern and returns `true` if the text is matched.
@@ -693,25 +711,80 @@ Special constructs such as `(?i)` can be applied to enable a [case-insensitive m
 
 ## Interval Condition
 
-An interval condition may be specified in the `WHERE` clause using `time` or `datetime` columns.
+An interval condition determines the selection interval and is specified in the `WHERE` clause using `time` or `datetime` columns.
 
 The `time` column accepts Unix milliseconds, whereas the `datetime` column accepts literal dates in ISO 8601 format with optional millisecond precision.
 
 ```sql
 SELECT datetime, entity, value
-  FROM "mpstat.cpu_busy"
+  FROM mpstat.cpu_busy
 WHERE datetime BETWEEN '2016-12-10T14:00:15Z' AND '2016-12-10T15:30:00.077Z'
 ```
 
-Both columns support [End Time](../../end-time-syntax.md) syntax.
+> Note that the `BETWEEN` operator is inclusive: `time BETWEEN 'a' AND 'b'` is equivalent to `time >= 'a' and time <= 'b'`.
+
+> Equality operators `!=` and `<>`  **cannot** be applied to `time` and `datetime` columns.
+
+### Endtime Syntax
+
+The `time` and `datetime` columns support [endtime](../../end-time-syntax.md) syntax.
 
 ```sql
 SELECT datetime, entity, value
-  FROM "mpstat.cpu_busy"
-WHERE time >= PREVIOUS_MINUTE AND datetime < CURRENT_MINUTE
+  FROM mpstat.cpu_busy
+WHERE time >= NOW - 15 * MINUTE 
+  AND datetime < CURRENT_MINUTE
 ```
 
-> Not_equal operators `!=` and `<>` are **not** supported with `time` and `datetime` columns.
+The `endtime` expressions are evaluated according to the server [time zone](../../api/network/timezone-list.md) which can be customized using the [`endtime()`](#endtime) function.
+
+```sql
+SELECT value, datetime, 
+  date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'UTC') AS 'UTC_datetime',
+  date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'US/Pacific') AS 'PST_datetime'
+FROM mpstat.cpu_busy
+  WHERE entity = 'nurswgvml007'
+AND datetime BETWEEN endtime(YESTERDAY, 'US/Pacific') AND endtime(CURRENT_DAY, 'US/Pacific')
+  ORDER BY datetime
+```
+
+```ls
+| value | datetime             | UTC_datetime           | PST_datetime           | 
+|-------|----------------------|------------------------|------------------------| 
+| 6.86  | 2017-06-16T07:00:05Z | 2017-06-16T07:00:05UTC | 2017-06-16T00:00:05PDT | 
+| 6.06  | 2017-06-16T07:00:21Z | 2017-06-16T07:00:21UTC | 2017-06-16T00:00:21PDT | 
+  ....
+| 3.03  | 2017-06-17T06:59:29Z | 2017-06-17T06:59:29UTC | 2017-06-16T23:59:29PDT | 
+| 2.97  | 2017-06-17T06:59:45Z | 2017-06-17T06:59:45UTC | 2017-06-16T23:59:45PDT | 
+```
+
+### Local Time Bounderies
+
+To specify the interval range in local time, use the `date_parse` function to convert the string datetime into Unix milliseconds.
+
+```sql
+SELECT datetime as utc_time, date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') AS local_datetime, value 
+  FROM mpstat.cpu_busy
+  WHERE entity = 'nurswgvml007'
+    AND time >= date_parse('2017-06-15 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') 
+    AND  time < date_parse('2017-06-18 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna')
+```
+
+```ls
+| utc_time            | local_datetime      | value  | 
+|---------------------|---------------------|--------| 
+| 2017-06-15 10:00:15 | 2017-06-15 12:00:15 | 4.9500 | 
+| 2017-06-15 10:00:31 | 2017-06-15 12:00:31 | 3.0000 | 
+| 2017-06-15 10:00:47 | 2017-06-15 12:00:47 | 3.0900 | 
+```
+
+Converting a date to milliseconds and comparing it to the time column is more efficient than comparing formatted strings:
+
+```sql
+  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') >= '2017-05-01 12:00:00' 
+```
+
+### Multiple Intervals
 
 The query may select multiple intervals using the `OR` operator.
 
@@ -739,11 +812,13 @@ WHERE entity = 'nurswgvml007'
 Multiple intervals are treated separately for the purpose of interpolating and regularizing values.
 In particular, the values between such intervals are not interpolated.
 
+### Interval Subqueries
+
 As an alternative to specifying lower and upper boundary manually, the `BETWEEN` operator allows retrieving the time range with a [subquery](examples/filter-by-date.md#query-using-between-subquery).
 
 ```sql
 SELECT datetime, value
-  FROM cpu_busy
+  FROM mpstat.cpu_busy
 WHERE entity = 'nurswgvml007'
   AND datetime BETWEEN (SELECT datetime FROM 'maintenance-rfc'
   WHERE entity = 'nurswgvml007'
@@ -800,7 +875,7 @@ PERIOD(1 DAY, "US/Eastern")
 
 ```sql
 SELECT entity, date_format(PERIOD(5 MINUTE, END_TIME)), AVG(value)
-  FROM "mpstat.cpu_busy"
+  FROM mpstat.cpu_busy
 WHERE datetime >= CURRENT_HOUR AND datetime < NEXT_HOUR
   GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 ```
@@ -809,7 +884,7 @@ The period specified in the `GROUP BY` clause can be entered without option fiel
 
 ```sql
 SELECT entity, PERIOD(5 MINUTE), AVG(value)
-  FROM "mpstat.cpu_busy"
+  FROM mpstat.cpu_busy
 WHERE datetime >= CURRENT_HOUR AND datetime < NEXT_HOUR
   GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 ```
@@ -818,7 +893,7 @@ In grouping queries, the `time` column returns the same value as `PERIOD()`, and
 
 ```sql
 SELECT entity, datetime, AVG(value)
-  FROM "mpstat.cpu_busy"
+  FROM mpstat.cpu_busy
 WHERE datetime >= CURRENT_HOUR AND datetime < NEXT_HOUR
   GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 ```
@@ -840,7 +915,7 @@ For example, `period(1 HOUR)` initializes 1-hour long periods starting at `0` mi
 
 ```sql
 SELECT entity, datetime, COUNT(value)
-  FROM "mpstat.cpu_busy"
+  FROM mpstat.cpu_busy
 WHERE datetime >= now-1*HOUR AND datetime < now
   AND entity = 'nurswgvml006'
 GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
@@ -898,7 +973,8 @@ For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units the start of the day is 
 * If the end time in the query is inclusive, 1 millisecond is added to the period end time since the period end time must be exclusive.
 
 ```sql
-SELECT entity, datetime, COUNT(value) FROM "mpstat.cpu_busy"
+SELECT entity, datetime, COUNT(value) 
+  FROM mpstat.cpu_busy
 WHERE datetime >= '2016-06-18T10:02:00Z' AND datetime < '2016-06-18T10:32:00Z'
   AND entity = 'nurswgvml007'
 GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
@@ -913,7 +989,8 @@ GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
 ```
 
 ```sql
-SELECT entity, datetime, COUNT(value) FROM "mpstat.cpu_busy"
+SELECT entity, datetime, COUNT(value) 
+  FROM mpstat.cpu_busy
 WHERE datetime >= '2016-06-18T10:02:00Z' AND datetime <= '2016-06-18T10:32:00Z'
   AND entity = 'nurswgvml007'
 GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
@@ -932,7 +1009,8 @@ GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
 1 millisecond is added to the period start if the start time in the query is exclusive.
 
 ```sql
-SELECT entity, datetime, COUNT(value) FROM "mpstat.cpu_busy"
+SELECT entity, datetime, COUNT(value) 
+  FROM mpstat.cpu_busy
 WHERE datetime > '2016-06-18T10:02:00Z' AND datetime < '2016-06-18T10:32:00Z'
   AND entity = 'nurswgvml007'
 GROUP BY entity, PERIOD(10 MINUTE, START_TIME)
@@ -961,7 +1039,8 @@ The behavior can be changed by referencing an interpolation function as part of 
 
 ```sql
 SELECT entity, period(5 MINUTE), AVG(value)
-  FROM "mpstat.cpu_busy" WHERE datetime >= CURRENT_HOUR
+  FROM mpstat.cpu_busy
+  WHERE datetime >= CURRENT_HOUR
 GROUP BY entity, period(5 MINUTE, LINEAR)
 ```
 
@@ -2153,6 +2232,30 @@ ORDER BY datetime
 | mpstat.cpu_steal  | 2017-04-06T16:00:18Z | 0.0   |
 ```
 
+### endtime()
+
+The `endtime()` function enables specifying a user-defined [time zone](../../api/network/timezone-list.md) when evaluating [endtime](../../end-time-syntax.md#keywords) keywords and expressions.
+
+```sql
+SELECT value, datetime, 
+  date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'UTC') AS 'UTC_datetime',
+  date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'US/Pacific') AS 'PST_datetime'
+FROM mpstat.cpu_busy
+  WHERE entity = 'nurswgvml007'
+  -- select data between 0h:0m:0s of the previous day and 0h:0m:0s of the current day according to PST timezone
+AND datetime BETWEEN endtime(YESTERDAY, 'US/Pacific') AND endtime(CURRENT_DAY, 'US/Pacific')
+  ORDER BY datetime
+```
+
+```ls
+| value | datetime             | UTC_datetime           | PST_datetime           | 
+|-------|----------------------|------------------------|------------------------| 
+| 6.86  | 2017-06-16T07:00:05Z | 2017-06-16T07:00:05UTC | 2017-06-16T00:00:05PDT | 
+| 6.06  | 2017-06-16T07:00:21Z | 2017-06-16T07:00:21UTC | 2017-06-16T00:00:21PDT | 
+  ....
+| 3.03  | 2017-06-17T06:59:29Z | 2017-06-17T06:59:29UTC | 2017-06-16T23:59:29PDT | 
+| 2.97  | 2017-06-17T06:59:45Z | 2017-06-17T06:59:45UTC | 2017-06-16T23:59:45PDT | 
+```
 
 ### LOOKUP
 
@@ -2413,6 +2516,8 @@ Assuming tags.status is `NULL`:
 Since the `WHERE` clause selects only rows that evaluate to `true`, conditions such as `tags.{name} = 'a' OR tags.{name} != 'a'` will not include rows with undefined `{name}` tag because both expressions will evaluate to `NULL` and (`NULL` OR `NULL`) still returns `NULL`.
 
 `NULL` and `NaN` values are ignored by aggregate functions.
+
+Logical expressions treat `NaN` as `NULL`. Refer to truth tables above for more details on how `NULL` is evaluated by logical operators.
 
 ## Not a Number (NaN)
 

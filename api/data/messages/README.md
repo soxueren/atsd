@@ -4,4 +4,5 @@
 |:---|:---|:---|:---|:---|
 | [Insert](insert.md) | POST | `/api/v1/messages/insert` | `application/json` | Insert an array of messages. |
 | [Query](query.md) | POST | `/api/v1/messages/query` | `application/json` | Retrieve message records for the specified filters. |
+| [Delete](delete.md) | - | - | - | Execute administrative actions to delete message records. |
 | [Statistics Query](stats-query.md) | POST | `/api/v1/messages/stats/query` | `application/json` |  Retrieve message counters as series for the specified filters.  |

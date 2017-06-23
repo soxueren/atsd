@@ -14,6 +14,12 @@
 - Minimum RAM: 1 GB
 - See [Requirements](../administration/requirements.md) for additional information.
 
+## Configuration
+
+The database will be installed in `/opt/atsd` directory under `axibase` user.
+
+To customize the installation directory, specify `--prefix` option as described below.
+
 ## Connection
 
 If the target machine does not have Internet connection to download
@@ -36,12 +42,28 @@ sudo yum install -y atsd_ce_amd64.rpm
 
 It may take up to 5 minutes to initialize the database.
 
+## Custom Installation Directory
+
+Install ATSD dependencies:
+
+```sh
+sudo yum install java-1.7.0-openjdk-devel sysstat which curl net-tools iproute
+```
+
+Install ATSD in a custom directory by specifying `--prefix` parameter:
+
+```sh
+sudo rpm -Uvh --prefix=/mnt/atsd atsd_ce_amd64.rpm
+```
+
+> ATSD cannot be installed in a `/home/user` directory other than `/home/axibase` due to permission issues.
+
 ### Docker Container Installation
 
 If the installation is performed in a Docker container, the `yum` command will exit with the following message:
 
 ```
-Docker container installation. Initialization deferred. 
+Docker container installation. Initialization deferred.
 ```
 
 Execute the following additional step to complete the installation:
