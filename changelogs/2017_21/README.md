@@ -2,7 +2,6 @@ Weekly Change Log: May 22, 2017 - May 28, 2017
 ==================================================
 ### ATSD
 
-
 | Issue| Category    | Type    | Subject              |
 |------|-------------|---------|----------------------|
 | 4222 | export | Bug | Optimize export scan by adding entity to the scan filter. |
@@ -21,6 +20,8 @@ Weekly Change Log: May 22, 2017 - May 28, 2017
 
 #### Issue 3834
 
-![Issue3834](Images/3834.1.png)
+![Issue3834](Images/3834.2.png)
 
 Modifying these fields no longer requires preforming the query a second time.
+
+![Issue3834.2](Images/3834.3.png)
