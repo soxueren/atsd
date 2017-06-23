@@ -7,16 +7,16 @@ Weekly Change Log: June 12, 2017 - June 18, 2017
 | 4287 | UI | Bug | Enable syntax highlighting for extended SQL keywords. |
 | 4282 | UI | Bug | Statistics page link does not generate a valid SQL query for metrics with tags. |
 | 4275 | security | Bug | Enforce logout for the deleted user .|
-| [4273](#Issue-4273) | UI | Bug | User Interface 'More' link drop-down replaced with icons. |
+| [4273](#issue-4273) | UI | Bug | User Interface 'More' link drop-down replaced with icons. |
 | 4268 | core | Support | Java 8 startup validation added. |
 | 4262 | UI | Bug | Support for [EndTime](https://github.com/axibase/atsd/blob/master/end-time-syntax.md) expressions added to Rule Editor > Test tab. |
 | 4260 | sql | Bug | Corrected [`ROUND`](https://github.com/axibase/atsd/tree/master/api/sql#mathematical-functions) function error with [`NaN`](https://github.com/axibase/atsd/tree/master/api/sql#not-a-number-nan) values.|
 | 4258 | sql | Bug | Fixed an error that occurred when using non-overlapping interval conditions from different metrics. |
-| [4247](#Issue-4247) | sql | Feature | [`NaN`](https://github.com/axibase/atsd/tree/master/api/sql#not-a-number-nan) comparison logic changed. `NaN` is compared similar to `NULL`. |
+| [4247](#issue-4247) | sql | Feature | [`NaN`](https://github.com/axibase/atsd/tree/master/api/sql#not-a-number-nan) comparison logic changed. `NaN` is compared similar to `NULL`. |
 | 4231 | sql | Bug | Fixed an error that occurred when trying to compare [`date_format`](https://github.com/axibase/atsd/tree/master/api/sql#date-formatting-functions) with date string. |
 | 4192 | client | Feature | Enable support for gzip compression in [ATSD Java API](https://github.com/axibase/atsd-api-java) client. |
-| [4187](#Issue-4187) | UI | Feature | Add support for SQL syntax themes. |
-| [4166](#Issue-4166) | UI | Feature | Apply user-defined 'Time Format' to [`date_format`](https://github.com/axibase/atsd/tree/master/api/sql#date-formatting-functions) function results in SQL console. |
+| [4187](#issue-4187) | UI | Feature | Add support for SQL syntax themes. |
+| [4166](#issue-4166) | UI | Feature | Apply user-defined 'Time Format' to [`date_format`](https://github.com/axibase/atsd/tree/master/api/sql#date-formatting-functions) function results in SQL console. |
 | 4129 | sql | Bug | Disallow non-posisitve period in [`PERIOD`](https://github.com/axibase/atsd/tree/master/api/sql#period) and [`INTERPOLATE`](https://github.com/axibase/atsd/tree/master/api/sql#interpolation). |
 | 4121 | sql | Bug | [`ORDER BY`](https://github.com/axibase/atsd/tree/master/api/sql#ordering) clause cannot reference ungrouped columns. |
 | 3838 | sql | Feature | Add support for column aliases in [ORDER BY](https://github.com/axibase/atsd/tree/master/api/sql#ordering) clause. |
