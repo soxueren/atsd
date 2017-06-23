@@ -7,8 +7,8 @@ Weekly Change Log: May 29, 2017 - June 04, 2017
 | 4236 | sql | Bug | Resolved UnhandledExceptionError when using [`JOIN`](https://github.com/axibase/atsd/tree/master/api/sql#joins)  and [`INTERPOLATE(DETAIL)`](https://github.com/axibase/atsd/tree/master/api/sql#interpolation) functions together. |
 | 4224 | sql | Bug | Fixed a bug which rendered time and date information as a measure of milliseconds when concatenated with the [`CONCAT`](https://github.com/axibase/atsd/tree/master/api/sql#string-functions) function.|
 | 4199 | admin | Bug | Fixed a bug which failed to update `HOSTNAME` and server URL during refresh |
-| [4163](#Issue-4163) | UI | Feature | Several enhancements to the ATSD User Interface |
-| [4144](#Issue-4144) | rule engine | Feature | Configuration > Rules, features added to enhance usability.|
+| [4163](#issue-4163) | UI | Feature | Several enhancements to the ATSD User Interface |
+| [4144](#issue-4144) | rule engine | Feature | Configuration > Rules, features added to enhance usability.|
 | 4107 | UI | Bug | Layout of several pages refactored to newest standards |
 | 3900 | UI | Bug | Fixed MessageStats API bug to parse JSON data when given an unexpected field. |
 

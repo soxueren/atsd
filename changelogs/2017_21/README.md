@@ -12,11 +12,11 @@ Weekly Change Log: May 22, 2017 - May 28, 2017
 | 4212 | data-in| Bug| Repaired a bug which caused a NumberFormatException, instead of triggering an error message instance upon the discovery of incorrectly-inputted data |
 | 4211 | sql | Bug | Repaired a bug which caused incorrect parsing of date data in the [SQL Console](https://github.com/axibase/atsd/tree/master/api/sql) resulting in an IllegalArgumentException for valid time dependant queries. |
 | 4208 | data-in| Bug | Fixed a bug with resource-clearing if disconnect on error mode is off |
-| [4195](#Issue_4195) | sql | Bug | Fixed an exception error produced by redundant notation in query. |
+| [4195](#issue_4195) | sql | Bug | Fixed an exception error produced by redundant notation in query. |
 | 4181 | sql | Bug | Fixed an interpolation error which incorrectly interpreted time data from before 1970. |
 | 4152 | sql | Bug | Fixed bug in [`WHERE`](https://github.com/axibase/atsd/tree/master/api/sql#where-clause) expressions that failed to correctly interpret multiple conditions when using the [`METRIC LIKE`](https://github.com/axibase/atsd/tree/master/api/sql#metrics) command |
 | 4133 | test | Feature | Error-message instances added in [`SQL Console`](https://github.com/axibase/atsd/tree/master/api/sql). |
-| [3834](#Issue_3834) |UI | Feature| Client-side data configuration enabled without the need to reload and reprocess data. |
+| [3834](#issue_3834) |UI | Feature| Client-side data configuration enabled without the need to reload and reprocess data. |
 
 ### ATSD
 
