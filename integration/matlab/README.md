@@ -14,6 +14,7 @@ There's two ways of connecting ATSD JDBC driver to MatLab: static and dynamic
 
 ### Static:
 - Run the `prefdir` command in the Command Window. The output of this command is a file path to a folder on your computer.
+
 ![](resources/prefdir.png)
 - Close MatLab if it is running.
 - Navigate to the folder (output of `prefdir` command) and create a file called `javaclasspath.txt` in the folder.
@@ -25,6 +26,7 @@ There's two ways of connecting ATSD JDBC driver to MatLab: static and dynamic
 - Run the javaaddpath(dpath) command in the Command Window, where dpath is a path to database driver JAR file.
 
 Example:
+
 ![](resources/java_add_path.png)
 
 ## Configure ATSD Connection
@@ -39,6 +41,7 @@ Example:
 - Now connect to ATSD using "Data source name" and login with password to open Database Browser window.
 
 Example:
+
 ![](resources/new_jdbc_data_source.png)
 
 ATSD_HOSTNAME is a hostname address of ATSD instance you want connect to
@@ -88,6 +91,7 @@ data = res.Data
 ```
 
 Expected result:
+
 ![](resources/verify_example.png)
 
 ## Review Tables in Database Explorer
@@ -118,6 +122,7 @@ data = res.Data;
 ## Write Data
 
 `data` example:
+
 ![](resources/data_example.png)
 
 Example of inserting data into ATSD (assuming `conn_atsd` is set already and `data` variable has needed values):
