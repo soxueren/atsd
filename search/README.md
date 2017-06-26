@@ -1,35 +1,35 @@
-# Search Syntax
+# Search
 
 ## Overview
 
-The search interface allows finding series records by entity, metric as well as by series, entity, and metric tags.
+The search interface allows finding series records by matching the user-defined keywords against the following entity, metric, and tag fields:
+
+* Entity name
+* Entity label
+* Metric name
+* Metric label
+* Series tag names
+* Series tag values
+* Entity tag names
+* Entity tag values
+* Metric tag names
+* Metric tag values
 
 ## Syntax
 
-A search query consists of terms and boolean operators. There are two types of terms: words and phrases.
+A search query consists of terms and boolean operators. There are two types of terms: keywords and phrases.
 
-A word term is a single word such as `location` or `nur`.
+A keyword term is a single word such as `location` or `nur`.
 
 A phrase is a group of words surrounded by double quotes such as `location nur`.
 
 Multiple terms can be combined together using boolean operators to form a more complex query.
 
-A word may be prefixed with a field name to narrow the scope of the search to the particular series property, for example `entity:nurswgvml007`.
+A keyword may be prefixed with a field name to narrow the scope of the search to the particular series property, for example `entity:nurswgvml007`.
+
+If the field is not specified, the search is performed in all fields.
 
 ### Fields
-
-If the field is not specified is in the term, the search is performed in all fields including:
-
-* entity name
-* entity label
-* metric name
-* metric label
-* series tag names
-* series tag values
-* entity tag names
-* entity tag values
-* metric tag names
-* metric tag values
 
 | **Field** | **Description** | **Example** |
 |---|---|---|
@@ -48,7 +48,7 @@ To combine multiple terms, use boolean operators `AND`, `OR`, and `NOT`. The ope
 entity:nurswgvml007* AND mount_point:\/opt
 ```
 
-The default operator applied to combine multiple words is `OR`. The following expressions are equivalent:
+The default operator applied to combine multiple keyword is `OR`. The following expressions are equivalent:
 
 ```ls
 location OR nur
@@ -65,7 +65,7 @@ location nur
 
 ### Wildcards
 
-The word terms support single and multiple character wildcards.
+The keywords support single and multiple character wildcards.
 
 * "*" symbol matches multiple characters.
 
@@ -79,12 +79,7 @@ he*
 h?llo
 ```
 
-The wildcards can be used at the end or in the middle of a word. The following expressions will fail with an error:
-
-```ls
-*007
-mount_point:*opt
-```
+> The wildcards can be used at the end or in the middle of a keyword.
 
 ### Reserved Characters
 
@@ -119,15 +114,15 @@ metric:mpstat.cpu*     /* Search for metrics starting with 'mpstat.cpu' */
 
 metric:mpstat.*cpu*     /* Search for metrics starting with 'mpstat.' and containing 'cpu' */
 
-location     /* Search for any field name or value containing the word 'location' */
+location     /* Search for any field name or value containing the keyword 'location' */
 
 location*     /* Search for any field name or value starting with 'location' */
 
-location baltimore     /* Search for any field name or value containing words 'location' or 'Baltimore' */
+location baltimore     /* Search for any field name or value containing keywords 'location' or 'Baltimore' */
 
-location AND baltimore     /* Search for any field name or value containing both words 'location' and 'baltimore' */
+location AND baltimore     /* Search for any field name or value containing both keywords 'location' and 'baltimore' */
 
-location:baltimore     /* Search for series with series tag, metric tag or entity tag named 'location' containing the word 'baltimore' */
+location:baltimore     /* Search for series with series tag, metric tag or entity tag named 'location' containing the keyword 'baltimore' */
 
 location:balt*     /* Search for series with series tag, metric tag or entity tag named 'location' starting with 'balt' */
 ```
