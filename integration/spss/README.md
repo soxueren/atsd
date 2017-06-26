@@ -20,6 +20,7 @@ Firstly, run these queries on HBS Axibase server and export results into CSV fil
 **NB**: SPSS merges datasets by common columns. So, we have to make aliases for 'value' metric as 'weight' and 'datetime' column as 'timedate'. Otherwise, we would have got merged dataset with data only for 2017 year. On the other hand, you may try to exclude column datetime(+) during merge. But it should be better to give aliases for columns in SQL query.
 
 Secondly, import your CSV files in IBM SPSS.
+
 1. In SPSS File -> Import Data -> CSV Data... Choose your CSV documents and check Open button. You should import both CSV (prices and weights) for converting into datasets with .sav extension.
 
 **Look at main menu items for working in the future:**
@@ -29,6 +30,7 @@ Secondly, import your CSV files in IBM SPSS.
  * **Analyze** contains majority of statistical methods and machine learning algorithms (forecasting, regression, classification, neural networks etc.)
 
 Finally, make merge of .sav files.
+
 2. Data -> Merge Files... -> Add Variables -> Select file you want to merge with current -> Continue -> Set lookup table you want to merge with current -> Choose "One-to-Many" link and go to 'Variables' tab in dialogue window.
 Move necessary columns to included list, unnecessary columns - to excluded list. To select join key move column to the field 'Key Variables'
 ![](resources/merge_p1.png)
@@ -39,6 +41,7 @@ Move necessary columns to included list, unnecessary columns - to excluded list.
 ### So, data preprocessing was over we are ready to make various analysis with dataset.
 
 Again, we want to know common yearly index of customer basket. Let we compute new column with production of value and (weight/1000) and then get sum of products for yearly period.
+
 3. Transform -> Compute Variable...  Select columns from the left field into expression text field and use all operations you need. Don't forget to dive a name for new column!
 ![](resources/transform_compute_variable.png)
 
@@ -48,6 +51,7 @@ There are several ways in SPSS for data aggregation.
 ![](resources/analysis_reports_summary_columns.png)
 
 Next way to calculate sum of indexes is aggregation function.
+
 4. (2) Data -> Aggregate... (Data Aggregation). Set categ_ind as summary variable and assign SUM function, set datetime as break variable (like GROUP BY in SQL). Columns formatting is available here too.
 ![](resources/data_aggregate_data.png)
 
