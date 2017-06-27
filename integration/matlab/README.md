@@ -1,63 +1,62 @@
 # MATLAB
 
 - [Install ATSD Driver](#install-atsd-driver)
-- [Configure ATSD Connection](#configure-atsd-connection)
+- [Configure Database Connection](#configure-database-connection)
 - [Verify Connection](#verify-connection)
 - [Review Tables in Database Explorer](#review-tables-in-database-explorer)
 - [Load Data](#load-data)
 - [Write Data](#write-data)
 - [Calculate Derived Series](#calculate-derived-series)
 
-## Install ATSD driver
+## Install ATSD Driver
 
-[Download latest version of ATSD JDBC driver here (DEPS version)](https://github.com/axibase/atsd-jdbc/releases)
+[Download ATSD JDBC driver (with dependencies)](https://github.com/axibase/atsd-jdbc/releases)
 
-There's two ways of connecting ATSD JDBC driver to MatLab: static and dynamic
+There are two ways of enabling ATSD JDBC driver in MatLab: static and dynamic
 
-### Static:
-- Run the `prefdir` command in the MatLab Command Window. The output of this command is a file path to a folder on your computer.
+### Static
+
+- Run the `prefdir` command in the MatLab Command Window. The command displayes path to a directory used in subsequent steps.
 
 ![](resources/prefdir.png)
-- Close MatLab if it is running.
-- Navigate to the folder (output of `prefdir` command) and create a file called `javaclasspath.txt` in the folder.
-- Open javaclasspath.txt. Add the full path to the database driver JAR file in `javaclasspath.txt`. The full path includes the path to the folder where you downloaded the JAR file from the database provider and the JAR file name. For example, `/home/user/MATLAB/atsd-jdbc-1.2.22-DEPS.jar`
+- Close MatLab if it's running.
+- Navigate to the `prefdir` directory above and create a file named `javaclasspath.txt`.
+- Open `javaclasspath.txt` file. Add the full path to the ATSD driver JAR file, for example, `/home/user/MATLAB/atsd-jdbc-1.2.22-DEPS.jar`
 - Save and close `javaclasspath.txt`.
 - Restart MatLab.
 
-### Dynamic:
-- Run the javaaddpath(`dpath`) command in the MatLab Command Window, where dpath is a path to database driver JAR file.
+### Dynamic
+
+- Run the `javaaddpath('dpath')` command in the MatLab Command Window, where `'dpath'` is the full path to the ATSD driver JAR file.
 
 Example:
 
 ![](resources/java_add_path.png)
 
-## Configure ATSD Connection
+## Configure Database Connection
 
 ### ATSD connection via Database Explorer
 
-- Click New - JDBC.
-- Vendor - OTHER.
-- Driver is a class path of ATSD JDBC driver (com.axibase.tsd.driver.jdbc.AtsdDriver).
-- URL is a JDBC URL like `jdbc:axibase:atsd:https://ATSD_HOSTNAME:8443/api/sql;catalog=atsd;tables="TABLE_NAME_FILTER";expandTags=true;trustServerCertificate=true`  
+- Click 'New - JDB' option.
+- Select 'Vendor - OTHER'.
+- Set Driver field to `com.axibase.tsd.driver.jdbc.AtsdDriver`.
+- Specify JDBC URL like `jdbc:axibase:atsd:https://ATSD_HOSTNAME:8443/api/sql;catalog=atsd;tables="TABLE_NAME_FILTER";expandTags=true;trustServerCertificate=true`  
 [Information about ATSD JDBC URL parameters](https://github.com/axibase/atsd-jdbc/blob/master/README.md)
-- Leave Username and Password fields empty -- there are only for test connection.
-- Now connect to ATSD using "Data source name" and login with password to open Database Browser window.
+- Leave Username and Password fields empty.
+- Now connect to ATSD using "Data source name" button and login on the Database Browser window.
 
 Example:
 
 ![](resources/new_jdbc_data_source.png)
 
-ATSD_HOSTNAME is a hostname address of ATSD instance you want connect to
+`ATSD_HOSTNAME` is a hostname address of ATSD instance you want connect to
 
-TABLE_NAME_FILTER is a list of comma-separated metrics or metric expressions to be displayed as tables in the MatLab Database Browser
+`TABLE_NAME_FILTER` is a list of comma-separated metrics or metric expressions to be displayed as tables in the MatLab Database Browser.
 
-TABLE_NAME_FILTER examples:
+`TABLE_NAME_FILTER` examples:
 - `*java*` for metrics that contains word `java`
 - `custom.metric*` for metrics which name starts with `custom.metric`
 - `*2017` for metrics which name ends with `2017`
-
-URL for http connection example:  
-```jdbc:axibase:atsd:http://ATSD_HOSTNAME:8088/api/sql;catalog=atsd;tables="TABLE_NAME_FILTER";expandTags=true```
 
 ### ATSD connection via MatLab Command Window
 
@@ -71,20 +70,10 @@ password = 'PASSWORD';
 conn_atsd = database('', username, password, driver, url);
 ```
 
-Example of http conenction to ATSD:
-
-```matlab
-driver = 'com.axibase.tsd.driver.jdbc.AtsdDriver';
-url = 'jdbc:axibase:atsd:https://ATSD_HOSTNAME:8088/api/sql';
-username = 'USERNAME';
-password = 'PASSWORD';
-conn_atsd = database('', username, password, driver, url);
-```
-
 ## Verify Connection
 
-ATSD connection via Command Window can be verified using `SELECT 1` query. `data` should be 1.
-Assuming you have `conn_atsd` variable set up:
+ATSD connection via Command Window can be verified using the `SELECT 1` query. The returned `data` should be 1.
+Assuming `conn_atsd` is defined:
 
 ```matlab
 sqlquery = 'SELECT 1';
@@ -99,21 +88,21 @@ Expected result:
 
 ## Review Tables in Database Explorer
 
-For example let WANTED_METRIC be `*java*`. So Database Browser would look like that (one metric table is opened for example):
+For example, set `TABLE_NAME_FILTER` variable to `*java*`. The Database Browser would display a set of tables matching the expression:
 
 ![](resources/database_browser.png)
 
-Any number of columns may be picked -- then Data Preview window will be opened, having first N rows of resultset (N=25 by default).
+Select one or multiple columns to open the Data Preview window displaying the first N rows of the resultset (25 by default).
 
 Example with datetime, value and text fields selected:
 
 ![](resources/data_preview.png)
 
-Full resultset can be imported via interface button Import (that one with green arrow).
+Full resultset can be imported via Import button highlighted with green arrow.
 
 ## Load Data
 
-Example of simple sql request to ATSD and importing resultset into MatLab variable (assuming `conn_atsd` is set already):
+Execute a SQL query to import the resultset into a MatLab variable:
 
 ```matlab
 sqlquery = 'SELECT * FROM gc_time_percent LIMIT 50';
@@ -128,22 +117,20 @@ data = res.Data;
 
 ![](resources/data_example.png)
 
-Example of inserting data into ATSD (assuming `conn_atsd` is set already and `data` variable has needed values):
+To insert data into ATSD (assuming `data` variable has required values):
 
 ```matlab
 colnames = {'datetime', 'entity', 'value'};
 insert(conn_atsd, 'METRIC_NAME', colnames, data);
 ```
 
-`colnames` is a cell array which describes names and order of columns in payload
+`colnames` is a cell array which describes names and order of columns in the request.
 
-`METRIC_NAME` is a name of a metric in which `data` should be inserted
+`METRIC_NAME` is a name of a metric under which the rows in `data` should be inserted.
 
 ## Calculate Derived Series
 
-Calculation of inflation index in MatLab (importing data via ATSD):
-
-Creating connection to ATSD:
+### Establish connection to ATSD
 
 ```matlab
 driver = 'com.axibase.tsd.driver.jdbc.AtsdDriver';
@@ -153,67 +140,70 @@ password = 'PASSWORD';
 conn_atsd = database('', username, password, driver, url);
 ```
 
-Load prices data from ATSD to MatLab:
+### Load pricing data into variable `prices`
 
 ```matlab
-% sql query to get prices for 2017 year
+% SQL query to get prices for a date range
 sqlquery = 'SELECT datetime, tags.category, value FROM inflation.cpi.categories.price WHERE datetime BETWEEN "2013-01-01T00:00:00Z" AND "2017-01-01T00:00:00Z" ORDER BY 1, 2';
-% getting cursor from ATSD
+% get cursor from ATSD
 curs = exec(conn_atsd, sqlquery);
-% fetching data from cursor
+% fetch data from cursor
 res = fetch(curs);
-% fetching prices resultset from data as cell array
+% initialize resultset from data as cell array
 prices_resultset = res.Data;
-% fetching first two columns from prices (which contains Datetime and Category fields)
+% fetch first two columns from the resultset (datetime and category fields)
 time_and_categories = prices_resultset(:,1:2);
-% fetching second column from prices resultset (which contains value field)
-% converting column to numeric array
+% fetch second column from prices resultset (value field)
+% convert column to numeric array
 prices = cell2mat(prices_resultset(:,3));
 ```
 
 ![](resources/prices_example.png)
 
-Load weights data from ATSD to MatLab:
+### Load weights data into variable `weights`
 
 ```matlab
-% sql query to get weights for 2017 year
+% SQL query to get weights
 sqlquery = 'SELECT tags.category, value FROM inflation.cpi.categories.weight WHERE datetime = "2017-01-01T00:00:00Z" ORDER BY 1';
-% getting cursor from ATSD
+% get cursor from ATSD
 curs = exec(conn_atsd, sqlquery);
-% fetching data from cursor
+% fetch data from cursor
 res = fetch(curs);
-% fetching weights resultset from data as cell array
+% initialize weights resultset from data as cell array
 weights_resultset = res.Data;
-% fetching second column from weights resultset (which contains value field)
-% converting column to numeric array
+% fetch second column from weights resultset (value field)
+% convert column to numeric array
 weights = cell2mat(weights_resultset(:,2));
-% repeating weights column for 2017 values (5,1 means that resulting matrix will increase in height 5 times)
+% repeat weights column for 2017 values (5,1 means that resulting matrix will increase in height 5 times)
 weights = repmat(weights, 5, 1);
 ```
 
 ![](resources/weights_example.png)
 
-Calculation of derived series:
+### Calculate Weighted Index
 
 ```matlab
-% element wise multiplication of 2 columns (1000 value is here because weights is a propotrion out of 1000)
+% element-wise multiply of 2 columns (1000 value is here because weights is a proportion out of 1000)
 inflation_cpi_composite_price = prices .* weights / 1000;
 ```
 
 ![](resources/inflation_example.png)
 
-Creating payload cell-matrix and inserting it into ATSD:
+### Creating cell-matrix and insert it into ATSD
 
 ```matlab
-% appending Category and Inflation columns
+% append Category and Inflation columns
 payload = [time_and_categories, num2cell(inflation_cpi_composite_price)];
-% colnames is a cell array which describes names and order of columns in payload
+% define colnames which is a cell array describing names and order of columns in payload
 colnames = {'datetime', 'tags.category', 'value'};
-% inserting data into ATSD
+% insert data into ATSD
 insert(conn_atsd, 'inflation.cpi.composite.price', colnames, payload);
 ```
 
-Used MATLAB functions:
+## Reference
+
+* MATLAB functions:
+
 - [database](https://www.mathworks.com/help/database/ug/database.html)
 - [exec](https://www.mathworks.com/help/database/ug/exec.html)
 - [fetch](https://www.mathworks.com/help/database/ug/fetch.html)
