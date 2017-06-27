@@ -65,8 +65,12 @@ After importing of your CSV files save them as datasets prices.sav and weights.s
 
 In the end of data preprocessing, lets make merge of .sav files. In our case, we open prices.sav in SPSS and then merge if with weights.sav.
 
-* **Data -> Merge Files... -> Add Variables...** -> Select file you want to merge with current -> Continue -> Set lookup table you want to merge with current -> Choose "One-to-Many" link and go to 'Variables' tab in dialogue window.
-Move necessary columns to included list, unnecessary columns - to excluded list. To select join key move your column to the field 'Key Variables'
+* **Data -> Merge Files... -> Add Variables...** -> 
+  * Select file you want to merge with current 
+  * Set lookup table you want to merge with current 
+  * Choose "One-to-Many" link and go to 'Variables' tab in dialogue window.
+  * Move necessary columns (datetime from current dataset, value, weight) to included list, unnecessary columns (timedate from the second dataset) - to excluded list. 
+  * To select join key move your column to the field 'Key Variables', in our case, join columns are marketing category and entity.
 ![](resources/merge_p1.png)
 ![](resources/merge_p2.png)
 
@@ -85,10 +89,12 @@ Again, we want to know common yearly index of customer basket. Let we compute ne
 
 Open prices_merged.sav file and create new column categ_ind.
 
-* **Transform -> Compute Variable...**  Select columns from the left field into expression text field and use all operations you need. Don't forget to give a name for new column!
+* **Transform -> Compute Variable...**  
+  * Select columns from the left field into expression text field and use all operations you need. 
+  * Don't forget to give a name for new column!
 ![](resources/transform_compute_variable.png)
 
-The categ_ind column has appeared on the right end of our table.
+We have got categ_ind column on the right end of our table.
 ![](resources/create_new_column.png)
 
 
@@ -100,7 +106,9 @@ The categ_ind column has appeared on the right end of our table.
 
     You don't need to create new data column. Aggregation of data by this way allows you publish results in HTM report.
     
-    * **Analyze -> Reports -> Report Summaries in Columns...** Move categ_index column to 'Summary variables' field and select aggregation function SUM. Set datetime column as a break variable. You can format aggregation columns in dialogue window.
+    * **Analyze -> Reports -> Report Summaries in Columns...** 
+      * Move categ_index column to 'Summary variables' field and select aggregation function SUM. 
+      * Set datetime column as a break variable. You can format aggregation columns in dialogue window.
     ![](resources/analysis_reports_summary_columns.png)
     
     To publish report click in Output window **File -> Export As a Web Report**.
@@ -118,7 +126,10 @@ The categ_ind column has appeared on the right end of our table.
     
     Next way to calculate sum of indexes is aggregation function.
     
-    * **Data -> Aggregate...** Set categ_ind as summary variable and assign SUM function, set datetime as break variable (like GROUP BY in SQL). Column formatting and output writing ways are available here too.
+    * **Data -> Aggregate...** 
+      * Set categ_ind as summary variable and assign SUM function 
+      * Set datetime as break variable (like GROUP BY in SQL)
+      * Column formatting and output writing ways are available here too
     ![](resources/data_aggregate_data.png)
     
     The last column on the right demonstrates aggregation results.
