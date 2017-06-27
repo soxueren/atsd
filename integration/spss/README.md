@@ -98,41 +98,41 @@ We have got categ_ind column on the right end of our table.
 ![](resources/create_new_column.png)
 
 
-* <a name="22"></a>**Data Aggregation as example of analysis**
+<a name="22"></a>**Data Aggregation as example of analysis**
 
    There are several ways in SPSS for data aggregation.
   
    <a name="analyze"></a>**Aggregation with Analyze block**
 
-    You don't need to create new data column. Aggregation of data by this way allows you publish results in HTM report.
+   You don't need to create new data column. Aggregation of data by this way allows you publish results in HTM report.
     
-    * **Analyze -> Reports -> Report Summaries in Columns...** 
+   * **Analyze -> Reports -> Report Summaries in Columns...** 
       * Move categ_index column to 'Summary variables' field and select aggregation function SUM. 
       * Set datetime column as a break variable. You can format aggregation columns in dialogue window.
     ![](resources/analysis_reports_summary_columns.png)
     
-    To publish report click in Output window **File -> Export As a Web Report**.
+   To publish report click in Output window **File -> Export As a Web Report**.
     There will be log and main section with your calculations.
     
-    It's example of SPSS output.
+   It's example of SPSS output.
     ![](resources/htm_report_spss.png)
     
-    It's screenshot of HTM report's version:
+   It's screenshot of HTM report's version:
     ![](resources/htm_version_output.png)
     
-    HTM file: [Yearly Index Calculation](resources/index_calculation.htm)
+   HTM file: [Yearly Index Calculation](resources/index_calculation.htm)
     
-    <a name="dataaggr"></a>**Aggregation with Data block**
+   <a name="dataaggr"></a>**Aggregation with Data block**
     
-    Next way to calculate sum of indexes is aggregation function.
+   Next way to calculate sum of indexes is aggregation function.
     
-    * **Data -> Aggregate...** 
+   * **Data -> Aggregate...** 
       * Set categ_ind as summary variable and assign SUM function 
       * Set datetime as break variable (like GROUP BY in SQL)
       * Column formatting and output writing ways are available here too
     ![](resources/data_aggregate_data.png)
     
-    The last column on the right demonstrates aggregation results.
+   The last column on the right demonstrates aggregation results.
     ![](resources/aggr_data_new_column.png)
 
 > To change decimals of a scale variable click 'Variable View' tab in the lower left corner of SPSS. This tab shows useful info about dataset variables (data type, measure, role etc.) and allows to add/delete/edit columns.
