@@ -14,6 +14,7 @@ The search interface allows finding series records by matching the user-defined 
 * Entity tag values
 * Metric tag names
 * Metric tag values
+* Last Insert Date
 
 ## Syntax
 
@@ -37,6 +38,7 @@ If the field is not specified, the search is performed in all fields.
 | entity.label | Entity label. | `entity.label:nur*007` |
 | metric | Metric name. | `metric:mpstat.cpu_busy` |
 | metric.label | Metric label. | `metric.label:"cpu busy"` |
+| date | Last insert date `yyyy-MM-dd`. | `date:2017-06-25` |
 | {tag.name} | Series/metric/entity tag name. | `location:nur` |
 | contents | All fields. | `nurswgvml007` or `contents:nurswgvml007` |
 
@@ -137,6 +139,12 @@ location:baltimore
 
 /* Search for series with series tag, metric tag or entity tag named 'location' starting with 'balt' */
 location:balt*
+
+/* Search for series with last insert date of June 15, 2017  */
+date:2017-06-15
+
+/* Search for series with last insert date in June, 2017  */
+date:2017-06-*
 ```
 
 ### Scheduling
