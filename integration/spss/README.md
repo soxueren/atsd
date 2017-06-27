@@ -1,6 +1,6 @@
 ## Introduction to IBM SPSS calculations. Data Aggregation.
 
-IBM SPSS is one of the most popular applications package for data mining and statistics researches. In fact, SPSS library includes engines for various scientific spheres from simple predictions to complex text mining. Furthermore, SPSS has Modeler application where researchers can build diagrams for performance all processes from import datasets to analysis charts and summary tables. 
+IBM SPSS is one of the most popular applications package for data mining and statistics researches. In fact, SPSS library includes engines for various scientific spheres from simple predictions to complex text mining. Furthermore, SPSS has Modeler toolkit where researchers can build diagrams for performance all processes from import datasets to analysis charts and estimation tables. 
 
 In this documentation we consider main tools of IBM SPSS Statistics. 
 
@@ -142,4 +142,4 @@ We have got categ_ind column on the right end of our table.
 > To change decimals of a scale variable click 'Variable View' tab in the lower left corner of SPSS. This tab shows useful info about dataset variables (data type, measure, role etc.) and allows to add/delete/edit columns.
 ![](resources/variables_descr.png)
 
-> After user operation (analysis, chart building, open/close file, merge etc.) SPSS generates output file .spv with procedure commands. Storing of these outputs is a matter of your taste. It'll be useful to have logs in order to check correctness of user operations.
+> After user operation (analysis, chart building, open/close file, merge etc.) SPSS generates output file .spv with procedure commands. Storing of these outputs is a matter of your taste. It dependents on achievements, either you would check correctness of operations or not.
