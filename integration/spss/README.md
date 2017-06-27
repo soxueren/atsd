@@ -39,13 +39,13 @@ SELECT entity, datetime, value, tags.category
 FROM inflation.cpi.categories.price 
 ORDER BY tags.category, datetime
 ```
-Press Execute button to run these queries and export results to CSV files (for example, prices.csv and weights.csv).
+Press `Execute` button to run these queries and export results to CSV files (for example, `prices.csv` and `weights.csv`).
 
 Screenshot for dataset with prices
 ![](resources/sql_run.png)
 ![](resources/sql_export.png)
 
-> Note SPSS makes merge of datasets by common columns. So, we have to write aliases for 'value' metric as 'weight' and 'datetime' column as 'timedate'. Otherwise, we would have got merged dataset with data only for 2017 year. On the other hand, you may try to exclude column datetime(+) before merge. But it should be better to give aliases for columns in SQL query.
+> Note SPSS makes merge of datasets by common columns. So, in the first query we have to write aliases for metric's value as `weight` and for datetime column as `timedate`. Otherwise, we would have got merged dataset with data only for 2017 year. On the other hand, you may try to exclude second `datetime` column before merge. But it should be better to give aliases for columns in SQL query.
 
 <a name="110"></a>**Intro to IBM SPSS GUI**
 
@@ -63,24 +63,24 @@ Next step is importing of data.
 * **File -> Import Data -> CSV Data...** Choose your CSV documents and check Open button.
 ![](resources/import_dataset.png)
 
-After importing of your CSV files save them as datasets prices.sav and weights.sav.
+After importing of your CSV files save them as datasets `prices.sav` and `weights.sav`.
 
 <a name="13"></a>**Merge datasets**
 
-In the end of data preprocessing, lets make merge of .sav files. In our case, we open prices.sav in SPSS and then merge if with weights.sav.
+In the end of data preprocessing, lets make merge of `.sav` files. In our case, we open `prices.sav` in SPSS and then add `weight` column from `weights.sav`.
 
-* **Data -> Merge Files... -> Add Variables...** -> 
-  * Select file you want to merge with current 
-  * Set lookup table you want to merge with current 
+* **Data -> Merge Files... -> Add Variables...**
+  * Select file you want to merge with current (`weights.sav`)
+  * Set lookup table you want to merge with current (table of weights)
   * Choose "One-to-Many" link and go to 'Variables' tab in dialogue window.
-  * Move necessary columns (datetime from current dataset, value, weight) to included list, unnecessary columns (timedate from the second dataset) - to excluded list. 
-  * To select join key move your column to the field 'Key Variables', in our case, join columns are marketing category and entity.
+  * Move necessary columns (`datetime` from current dataset, `value`, `weight`) to included list, unnecessary columns (`timedate` from the second dataset) - to excluded list. 
+  * To select join key move your column to the field 'Key Variables', in our case, join columns are `tags.category` and `entity`.
 ![](resources/merge_p1.png)
 ![](resources/merge_p2.png)
 
 > Be careful during files union, don't forget about final count of observations and check correctness of merged data. For example, we have files with 10 lines and 27 lines. If you select file with 10 lines as the basic, the final file will contain only 10 lines with new column. Otherwise, final dataset would have 27 lines.
 
-Our merged file prices_merged.sav
+Then our merged file can be saved as `prices_merged.sav`
 ![](resources/merged_data.png)
 
 ### <a name="2"></a>Data Analysis
@@ -89,16 +89,17 @@ So, data preprocessing was over and we are ready to make various analysis with n
 
 <a name="21"></a>**Create new column in dataset**
 
-Again, we want to know common yearly index of customer basket. Let we compute new column with production of value and (weight/1000) and then get sum of products for yearly period. 
+Again, we want to know common yearly index of customer basket. Let we compute new column with production of `value` and `(weight/1000)` and then get sum of products for yearly period. 
 
-Open prices_merged.sav file and create new column categ_ind.
+Open prices_merged.sav file and create new column `categ_ind`.
 
 * **Transform -> Compute Variable...**  
-  * Select columns from the left field into expression text field and use all operations you need. 
+  * Select columns from the left field into expression field and apply all operations you need. 
+     > We selected `value` and `weight` columns, divided `weight` by 1000 and lastly get production of final partitive and `value`. 
   * Don't forget to give a name for new column!
 ![](resources/transform_compute_variable.png)
 
-We have got categ_ind column on the right end of our table.
+We have got `categ_ind` column on the right end of our table.
 ![](resources/create_new_column.png)
 
 
@@ -108,11 +109,11 @@ We have got categ_ind column on the right end of our table.
   
    <a name="analyze"></a>**Aggregation with Analyze block**
 
-   You don't need to create new data column. Aggregation of data by this way allows you publish results in HTM report.
+   In this case you don't need to create new data column. Analyze tools block allows you to publish all significant results in HTM report.
     
    * **Analyze -> Reports -> Report Summaries in Columns...** 
-      * Move categ_index column to 'Summary variables' field and select aggregation function SUM. 
-      * Set datetime column as a break variable. You can format aggregation columns in dialogue window.
+      * Move `categ_index` column to `Summary variables` field and select aggregation function SUM. 
+      * Set `datetime` column as a break variable. You can format aggregation columns in dialogue window.
     ![](resources/analysis_reports_summary_columns.png)
     
    To publish report click in Output window **File -> Export As a Web Report**.
@@ -128,18 +129,18 @@ We have got categ_ind column on the right end of our table.
     
    <a name="dataaggr"></a>**Aggregation with Data block**
     
-   Next way to calculate sum of indexes is aggregation function.
+   Next way to calculate sum of indexes in year is aggregation function from Data tools block.
     
    * **Data -> Aggregate...** 
-      * Set categ_ind as summary variable and assign SUM function 
-      * Set datetime as break variable (like GROUP BY in SQL)
-      * Column formatting and output writing ways are available here too
+      * Set `categ_ind` as summary variable and assign SUM function 
+      * Set `datetime` as break variable (like GROUP BY in SQL)
+      * Column formatting and output writing possibilities are available here too
     ![](resources/data_aggregate_data.png)
     
-   The last column on the right demonstrates aggregation results.
+   The last column `categ_ind_sum` on the right demonstrates aggregation results.
     ![](resources/aggr_data_new_column.png)
 
-> To change decimals of a scale variable click 'Variable View' tab in the lower left corner of SPSS. This tab shows useful info about dataset variables (data type, measure, role etc.) and allows to add/delete/edit columns.
+> To change decimals of a scale variable click `Variable View` tab in the lower left corner of SPSS. This tab shows useful info about dataset variables (data type, measure, role etc.) and allows to add/delete/edit columns.
 ![](resources/variables_descr.png)
 
 > After user operation (analysis, chart building, open/close file, merge etc.) SPSS generates output file .spv with procedure commands. Storing of these outputs is a matter of your taste. It dependents on achievements, either you would check correctness of operations or not.
