@@ -10,7 +10,7 @@
 
 ## Install ATSD Driver
 
-[Download ATSD JDBC driver (with dependencies)](https://github.com/axibase/atsd-jdbc/releases)
+Download ATSD [JDBC driver](https://github.com/axibase/atsd-jdbc/releases) with dependencies.
 
 There are two ways of enabling ATSD JDBC driver in MatLab: static and dynamic
 
@@ -35,7 +35,7 @@ Example:
 
 ## Configure Database Connection
 
-### ATSD connection via Database Explorer
+### Connect in Database Explorer
 
 - Click 'New - JDB' option.
 - Select 'Vendor - OTHER'.
@@ -58,7 +58,7 @@ Example:
 - `custom.metric*` for metrics which name starts with `custom.metric`
 - `*2017` for metrics which name ends with `2017`
 
-### ATSD connection via MatLab Command Window
+### Connect in MatLab Command Window
 
 Example of https connection to ATSD:
 
@@ -189,7 +189,7 @@ inflation_cpi_composite_price = prices .* weights / 1000;
 
 ![](resources/inflation_example.png)
 
-### Creating cell-matrix and insert it into ATSD
+### Create cell-matrix to insert it into ATSD
 
 ```matlab
 % append Category and Inflation columns
@@ -202,7 +202,7 @@ insert(conn_atsd, 'inflation.cpi.composite.price', colnames, payload);
 
 ## Reference
 
-* MATLAB functions:
+MATLAB functions:
 
 - [database](https://www.mathworks.com/help/database/ug/database.html)
 - [exec](https://www.mathworks.com/help/database/ug/exec.html)
