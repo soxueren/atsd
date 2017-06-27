@@ -1,12 +1,15 @@
-## Introduction to IBM STSS calculations. Data Aggregation.
+## Introduction to IBM SPSS calculations. Data Aggregation.
 
 * [**Data preprocessing**](#1)
   * [**Execute and export SQL query from ATSD**](#11)
+  * [**Intro to IBM SPSS GUI**](#110)
   * [**Import data into IBM SPSS**](#12)
   * [**Merge datasets**](#13)
 * [**Data Analysis**](#2)
   * [**Create new column in dataset**](#21)
   * [**Data Aggregation as example of analysis**](#22)
+    * [Aggregation with Analyze block](#analyze)
+    * [Aggregation with Data block](#dataaggr)
 
 ### <a name="1"></a>Data preprocessing
 
@@ -14,7 +17,7 @@ Before data analysis we must take datasets and preprocess them.
 
 <a name="11"></a>**Execute and export SQL query from ATSD**
 
-Let we have one source, it's database server (HBS Axibase in our case, [link to sql console](https://hbs.axibase.com:9443/sql/console)) where we can execute SQL queries and export results.
+Let we have one source, it's database server ATSD of Axibase Comp. [https://ATSD_SERVER:8433/](https://ATSD_SERVER:8433/).
 
 Suppose we solve a problem of yearly consumer basket index calculation. We have two datasets:
 
@@ -32,71 +35,96 @@ SELECT entity, datetime, value, tags.category
 FROM inflation.cpi.categories.price 
 ORDER BY tags.category, datetime
 ```
-Firstly, press Execute button to run these queries and export results to CSV files.
+Press Execute button to run these queries and export results to CSV files (for example, prices.csv and weights.csv).
 
 Screenshot for dataset with prices
 ![](resources/sql_run.png)
 ![](resources/sql_export.png)
 
-**NB**: SPSS makes merge of datasets by common columns. So, we have to write aliases for 'value' metric as 'weight' and 'datetime' column as 'timedate'. Otherwise, we would have got merged dataset with data only for 2017 year. On the other hand, you may try to exclude column datetime(+) before merge. But it should be better to give aliases for columns in SQL query.
+> Note SPSS makes merge of datasets by common columns. So, we have to write aliases for 'value' metric as 'weight' and 'datetime' column as 'timedate'. Otherwise, we would have got merged dataset with data only for 2017 year. On the other hand, you may try to exclude column datetime(+) before merge. But it should be better to give aliases for columns in SQL query.
 
-<a name="12"></a>**Import data to IBM SPSS**
+<a name="110"></a>**Intro to IBM SPSS GUI**
 
-Secondly, import your CSV files in IBM SPSS.
-
-* File -> Import Data -> CSV Data... Choose your CSV documents and check Open button. You should import both CSV (prices and weights) for converting into datasets with .sav extension.
-
-**Lets look at main menu items for working in the future:**
-.
+**Lets look at main menu items for work in the future:**
+![](resources/ibm_spss_gui.png)
+ * **File** has standard operations for any program: import data from Excel/CSV extensions, create own datasets with .sav extension, connect to OBDC server for data extraction, save files
  * **Data** includes common operations with datasets (select rows, aggregation, merge/split files etc.);
  * **Transform** gives opportunities for data transformation (calculating new variables, convert current dataset into time series or another data structure, turn ordinal variables into dummy variables etc.);
  * **Analyze** contains majority of statistical methods and machine learning algorithms (forecasting, regression, classification, neural networks etc.)
 
+<a name="12"></a>**Import data to IBM SPSS**
+
+Next step is importing of data.
+
+* **File -> Import Data -> CSV Data...** Choose your CSV documents and check Open button.
+![](resources/import_dataset.png)
+
+After importing of your CSV files save them as datasets prices.sav and weights.sav.
+
 <a name="13"></a>**Merge datasets**
 
-Finally, make merge of .sav files.
+In the end of data preprocessing, lets make merge of .sav files. In our case, we open prices.sav in SPSS and then merge if with weights.sav.
 
-* Data -> Merge Files... -> Add Variables -> Select file you want to merge with current -> Continue -> Set lookup table you want to merge with current -> Choose "One-to-Many" link and go to 'Variables' tab in dialogue window.
+* **Data -> Merge Files... -> Add Variables...** -> Select file you want to merge with current -> Continue -> Set lookup table you want to merge with current -> Choose "One-to-Many" link and go to 'Variables' tab in dialogue window.
 Move necessary columns to included list, unnecessary columns - to excluded list. To select join key move your column to the field 'Key Variables'
 ![](resources/merge_p1.png)
 ![](resources/merge_p2.png)
 
-**NB:** Be careful during files union, don't forget about final count of observations and check correctness of merged data. For example, we have files with 10 lines and 27 lines. If you select file with 10 lines as the basic, the final file will contain only 10 lines with new column. Otherwise, final dataset would have 27 lines.
+> Be careful during files union, don't forget about final count of observations and check correctness of merged data. For example, we have files with 10 lines and 27 lines. If you select file with 10 lines as the basic, the final file will contain only 10 lines with new column. Otherwise, final dataset would have 27 lines.
+
+Our merged file prices_merged.sav
+![](resources/merged_data.png)
 
 ### <a name="2"></a>Data Analysis
 
-So, data preprocessing was over and we are ready to make various analysis with dataset.
+So, data preprocessing was over and we are ready to make various analysis with new dataset.
 
 <a name="21"></a>**Create new column in dataset**
 
-Again, we want to know common yearly index of customer basket. Let we compute new column with production of value and (weight/1000) and then get sum of products for yearly period.
+Again, we want to know common yearly index of customer basket. Let we compute new column with production of value and (weight/1000) and then get sum of products for yearly period. 
 
-* Transform -> Compute Variable...  Select columns from the left field into expression text field and use all operations you need. Don't forget to give a name for new column!
+Open prices_merged.sav file and create new column categ_ind.
+
+* **Transform -> Compute Variable...**  Select columns from the left field into expression text field and use all operations you need. Don't forget to give a name for new column!
 ![](resources/transform_compute_variable.png)
 
+The categ_ind column has appeared on the right end of our table.
+![](resources/create_new_column.png)
 
-<a name="22"></a>**Data Aggregation as example of analysis**
 
-There are several ways in SPSS for data aggregation. 
+* <a name="22"></a>**Data Aggregation as example of analysis**
 
-* Analyze -> Reports -> Report Summaries in Columns. Move categ_index column to 'Summary variables' field and select aggregation function SUM. Set datetime column as a break variable. You can format aggregation columns in dialogue window.
-![](resources/analysis_reports_summary_columns.png)
+   There are several ways in SPSS for data aggregation.
+  
+   <a name="analyze"></a>**Aggregation with Analyze block**
 
-Next way to calculate sum of indexes is aggregation function.
+    You don't need to create new data column. Aggregation of data by this way allows you publish results in HTM report.
+    
+    * **Analyze -> Reports -> Report Summaries in Columns...** Move categ_index column to 'Summary variables' field and select aggregation function SUM. Set datetime column as a break variable. You can format aggregation columns in dialogue window.
+    ![](resources/analysis_reports_summary_columns.png)
+    
+    To publish report click in Output window **File -> Export As a Web Report**.
+    There will be log and main section with your calculations.
+    
+    It's example of SPSS output.
+    ![](resources/htm_report_spss.png)
+    
+    It's screenshot of HTM report's version:
+    ![](resources/htm_version_output.png)
+    
+    HTM file: [Yearly Index Calculation](resources/index_calculation.htm)
+    
+    <a name="dataaggr"></a>**Aggregation with Data block**
+    
+    Next way to calculate sum of indexes is aggregation function.
+    
+    * **Data -> Aggregate...** Set categ_ind as summary variable and assign SUM function, set datetime as break variable (like GROUP BY in SQL). Column formatting and output writing ways are available here too.
+    ![](resources/data_aggregate_data.png)
+    
+    The last column on the right demonstrates aggregation results.
+    ![](resources/aggr_data_new_column.png)
 
-* Data -> Aggregate... (Data Aggregation). Set categ_ind as summary variable and assign SUM function, set datetime as break variable (like GROUP BY in SQL). Column formatting and output writing ways are available here too.
-![](resources/data_aggregate_data.png)
+> To change decimals of a scale variable click 'Variable View' tab in the lower left corner of SPSS. This tab shows useful info about dataset variables (data type, measure, role etc.) and allows to add/delete/edit columns.
+![](resources/variables_descr.png)
 
-If you make aggregation in Analyze section, you can convert your output .sav into HTM. There will be log and report sections.
-
-It's example of SPSS output.
-![](resources/htm_report_spss.png)
-
-It's screenshot of HTM report's version:
-![](resources/htm_version_output.png)
-
-HTM file: [Yearly Index Calculation](resources/index_calculation.htm)
-
-**NB:** To change decimals of a scale variable click 'Variable View' tab in the lower left corner of SPSS. This tab shows useful info about dataset variables (data type, measure, role etc.) and allows to add/delete/edit columns.
-
-**NB:** After user operation (analysis, chart building, open/close file, merge etc.) SPSS generates output file .spv with procedure commands. You may save either all files or those what contains useful information about data analysis. In addition, if you save .sav file, you should convert .sav into HTM report for publications.
+> After user operation (analysis, chart building, open/close file, merge etc.) SPSS generates output file .spv with procedure commands. You may save either all files or those what contains useful information about data analysis. In addition, if you save .sav file, you should convert .sav into HTM report for publications.
