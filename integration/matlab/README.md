@@ -10,20 +10,22 @@
 
 ## Install ATSD driver
 
+[Download latest version of ATSD JDBC driver here (DEPS version)](https://github.com/axibase/atsd-jdbc/releases)
+
 There's two ways of connecting ATSD JDBC driver to MatLab: static and dynamic
 
 ### Static:
-- Run the `prefdir` command in the Command Window. The output of this command is a file path to a folder on your computer.
+- Run the `prefdir` command in the MatLab Command Window. The output of this command is a file path to a folder on your computer.
 
 ![](resources/prefdir.png)
 - Close MatLab if it is running.
 - Navigate to the folder (output of `prefdir` command) and create a file called `javaclasspath.txt` in the folder.
-- Open javaclasspath.txt. Add the full path to the database driver JAR file in `javaclasspath.txt`. The full path includes the path to the folder where you downloaded the JAR file from the database provider and the JAR file name. For example, `/home/alex/Downloads/atsd-jdbc-1.2.22-SNAPSHOT-DEPS.jar`
+- Open javaclasspath.txt. Add the full path to the database driver JAR file in `javaclasspath.txt`. The full path includes the path to the folder where you downloaded the JAR file from the database provider and the JAR file name. For example, `/home/user/MATLAB/atsd-jdbc-1.2.22-DEPS.jar`
 - Save and close `javaclasspath.txt`.
 - Restart MatLab.
 
 ### Dynamic:
-- Run the javaaddpath(dpath) command in the Command Window, where dpath is a path to database driver JAR file.
+- Run the javaaddpath(`dpath`) command in the MatLab Command Window, where dpath is a path to database driver JAR file.
 
 Example:
 
@@ -36,7 +38,8 @@ Example:
 - Click New - JDBC.
 - Vendor - OTHER.
 - Driver is a class path of ATSD JDBC driver (com.axibase.tsd.driver.jdbc.AtsdDriver).
-- URL is a JDBC URL like ```jdbc:axibase:atsd:https://ATSD_HOSTNAME:8443/api/sql;catalog=atsd;tables="WANTED_METRIC";expandTags=true;trustServerCertificate=true```
+- URL is a JDBC URL like `jdbc:axibase:atsd:https://ATSD_HOSTNAME:8443/api/sql;catalog=atsd;tables="TABLE_NAME_FILTER";expandTags=true;trustServerCertificate=true`  
+[Information about ATSD JDBC URL parameters](https://github.com/axibase/atsd-jdbc/blob/master/README.md)
 - Leave Username and Password fields empty -- there are only for test connection.
 - Now connect to ATSD using "Data source name" and login with password to open Database Browser window.
 
@@ -46,7 +49,7 @@ Example:
 
 ATSD_HOSTNAME is a hostname address of ATSD instance you want connect to
 
-TABLE_NAME_FILTER is a metric template (metrics that meet pattern requirement will be displayed in Database Browser)
+TABLE_NAME_FILTER is a list of comma-separated metrics or metric expressions to be displayed as tables in the MatLab Database Browser
 
 TABLE_NAME_FILTER examples:
 - `*java*` for metrics that contains word `java`
@@ -56,7 +59,7 @@ TABLE_NAME_FILTER examples:
 URL for http connection example:  
 ```jdbc:axibase:atsd:http://ATSD_HOSTNAME:8088/api/sql;catalog=atsd;tables="TABLE_NAME_FILTER";expandTags=true```
 
-### ATSD connection via Command Window
+### ATSD connection via MatLab Command Window
 
 Example of https connection to ATSD:
 
@@ -133,6 +136,8 @@ insert(conn_atsd, 'METRIC_NAME', colnames, data);
 ```
 
 `colnames` is a cell array which describes names and order of columns in payload
+
+`METRIC_NAME` is a name of a metric in which `data` should be inserted
 
 ## Calculate Derived Series
 
