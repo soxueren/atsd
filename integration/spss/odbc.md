@@ -2,8 +2,8 @@
 
 1) Install JRE 8
 2) Register an Easysoft account here http://www.easysoft.com/cgi-bin/account/register.cgi . This account will be used further during trial activation process.
-3) Download attached ATSD JDBC driver (atsd-jdbc-1.2.22-SNAPSHOT-DEPS.jar) or download from here, with DEPS https://github.com/axibase/atsd-jdbc/releases 
-4) Download attached Easysoft ODBC JDBC Bridge (odbc-jdbc-gateway-2_5_3-windows.exe)
+3) Download trial version of Easysoft ODBC JDBC Bridge from here http://www.easysoft.com/products/data_access/odbc_jdbc_gateway/#section=tab-1
+4) Download ATSD JDBC driver from here, with DEPS https://github.com/axibase/atsd-jdbc/releases
 5) Install and activate Easysoft 
 
 Run installer as administrator
@@ -76,7 +76,7 @@ User name: <atsd login>
 Password: <atsd password>
 Driver class: com.axibase.tsd.driver.jdbc.AtsdDriver
 Class Path: <path to ATSD JDBC Driver, for example C:\atsd-jdbc-1.2.22-SNAPSHOT-DEPS.jar>
-URL: <ATSD URL, for example jdbc:axibase:atsd:https://nur.axibase.com/api/sql;trustServerCertificate=true>
+URL: <ATSD URL, for example jdbc:axibase:atsd:https://atsd_host:atsd_port/api/sql;trustServerCertificate=true>
 ```
 
 ATSD JDBC URL format and parametres decribed here https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver
@@ -92,12 +92,12 @@ For using this datasource in SPSS Statistics, open attached script (Syntax1.sps)
 ![](images/spss_1.PNG)
 
 ```
-﻿* Encoding: UTF-8.
+* Encoding: UTF-8.
 
 GET DATA
   /TYPE=ODBC
   /CONNECT='DSN=ATSD;'
-  /SQL='SELECT datetime, value FROM test_m'
+  /SQL='SELECT datetime, value FROM gc_time_percent LIMIT 10'
   /ASSUMEDSTRWIDTH=255.
 
 CACHE.
