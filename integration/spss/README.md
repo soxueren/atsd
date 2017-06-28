@@ -3,8 +3,8 @@
 [IBM SPSS Statistics](https://www.ibm.com/analytics/us/en/technology/spss/) is an advanced statistical analysis tool. The following guide describes the process of loading data from Axibase Time Series Database into SPSS for calculating derived (computed) series.
 
 * [**Data preprocessing**](#data-preprocessing)
-  * [**Execute and export SQL query from ATSD**](#sqlexport)
-  * [**Intro to IBM SPSS GUI**](#spssintro)
+  * [**Execute and export SQL query from ATSD**](#execute-and-export-sql-query-from-atsd)
+  * [**Intro to IBM SPSS GUI**](#intro-to-ibm-spss-gui)
   * [**Import data into IBM SPSS**](#spssimport)
   * [**Merge datasets**](#spssmerge)
 * [**Data Analysis**](#data-analysis)
@@ -18,7 +18,7 @@
 
 Before data analysis we must take datasets and preprocess them.
 
-<a name="sqlexport"/>**Execute and export SQL query from ATSD**
+#### Execute and export SQL query from ATSD
 
 Let we have one source, it's database server ATSD of Axibase Comp. [https://ATSD_SERVER:8433/](https://ATSD_SERVER:8433/).
 
@@ -46,7 +46,7 @@ Screenshot for dataset with prices
 
 > Note SPSS makes merge of datasets by common columns. So, in the first query we have to write aliases for metric's value as `weight` and for datetime column as `timedate`. Otherwise, we would have got merged dataset with data only for 2017 year. On the other hand, you may try to exclude second `datetime` column before merge. But it should be better to give aliases for columns in SQL query.
 
-<a name="spssintro"/>**Intro to IBM SPSS GUI**
+#### Intro to IBM SPSS GUI
 
 **Lets look at main menu items for work in the future:**
 ![](resources/ibm_spss_gui.png)
