@@ -1,8 +1,6 @@
-## Introduction to IBM SPSS calculations. Data Aggregation.
+## IBM SPSS Data Analysis.
 
-IBM SPSS is one of the most popular applications package for data mining and statistics researches. In fact, SPSS library includes engines for various scientific spheres from simple predictions to complex text mining. Furthermore, SPSS has Modeler toolkit where researchers can build diagrams for performance all processes from import datasets to analysis charts and estimation tables. 
-
-In this documentation we consider main tools of IBM SPSS Statistics. 
+[IBM SPSS Statistics](https://www.ibm.com/analytics/us/en/technology/spss/) is an advanced statistical analysis tool. The following guide describes the process of loading data from Axibase Time Series Database into SPSS for calculating derived (computed) series.
 
 * [**Data preprocessing**](#1)
   * [**Execute and export SQL query from ATSD**](#11)
