@@ -2,19 +2,19 @@
 
 [IBM SPSS Statistics](https://www.ibm.com/analytics/us/en/technology/spss/) is an advanced statistical analysis tool. The following guide describes the process of loading data from Axibase Time Series Database into SPSS for calculating derived (computed) series.
 
-* [**Data preprocessing**](#preproc)
+* [**Data preprocessing**](#data-preprocessing)
   * [**Execute and export SQL query from ATSD**](#sqlexport)
   * [**Intro to IBM SPSS GUI**](#spssintro)
   * [**Import data into IBM SPSS**](#spssimport)
   * [**Merge datasets**](#spssmerge)
-* [**Data Analysis**](#analysis)
+* [**Data Analysis**](#data-analysis)
   * [**Create new column in dataset**](#compute)
   * [**Data Aggregation as example of analysis**](#aggr)
     * [Aggregation with Analyze block](#analyze)
     * [Aggregation with Data block](#dataaggr)
-* [**Sample Data**](#data)
+* [**Sample Data**](#sample-data)
 
-### <a name="preproc"/>Data preprocessing
+### Data preprocessing
 
 Before data analysis we must take datasets and preprocess them.
 
@@ -82,7 +82,7 @@ In the end of data preprocessing, lets make merge of `.sav` files. In our case, 
 Then our merged file can be saved as `prices_merged.sav`
 ![](resources/merged_data.png)
 
-### <a name="analysis"/>Data Analysis
+### Data Analysis
 
 So, data preprocessing was over and we are ready to make various analysis with new dataset.
 
@@ -144,7 +144,7 @@ We have got `categ_ind` column on the right end of our table.
 
 > After user operation (analysis, chart building, open/close file, merge etc.) SPSS generates output file .spv with procedure commands. Storing of these outputs is a matter of your taste. It dependents on achievements, either you would check correctness of operations or not.
 
-### <a name="data"/>Sample Data
+### Sample Data
 1. [Series commands](resources/commands.txt) that can be imported into ATSD on the **Metrics > Data Entry** page.
 
 2. In order to try SPSS you can download files [weights.csv](resources/weights.csv) and [prices.csv](resources/prices.csv) without retrieving data with SQL on your own.
