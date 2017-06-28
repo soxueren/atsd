@@ -71,15 +71,15 @@ A license manager window will appear after exiting from the installation wizard.
 
 Go to **Start**, type `ODBC` and launch ODBC Data Source Manager under an Administrator account
 
-![](images/ODBC_1.png)
+![](images/ODBC_1.PNG)
 
 Open **System DSN** tab, click **Add...**
 
-![](images/ODBC_2.png)
+![](images/ODBC_2.PNG)
 
 Choose the **ODBC-JDBC Gateway**, click **Finish**
 
-![](images/ODBC_3.png)
+![](images/ODBC_3.PNG)
 
 Enter following settings in the DSN Setup window:
 
@@ -94,15 +94,15 @@ URL: <ATSD URL, for example jdbc:axibase:atsd:https://atsd_host:8443/api/sql;tru
 
 Refer to ATSD JDBC [documentation](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver)  for additional details about the URL format and the driver parameters.
 
-![](images/ODBC_4.png)
+![](images/ODBC_4.PNG)
 
 Click Test to verify the settings. If result is OK, save the settings. The System DSN tab should now display the new data source.
 
-![](images/ODBC_5.png)
+![](images/ODBC_5.PNG)
 
 ### Configuring the Data Source in IBM SPSS Statistics
 
-Open the attached script (Syntax1.sps)
+Open the attached script (resources/Syntax1.sps)
 
 ![](images/spss_1.PNG)
 
@@ -112,12 +112,14 @@ Open the attached script (Syntax1.sps)
 GET DATA
   /TYPE=ODBC
   /CONNECT='DSN=ATSD;'
-  /SQL='SELECT datetime, value FROM gc_time_percent LIMIT 10'
+  /SQL='SELECT datetime, value ' +
+       'FROM gc_time_percent ' +
+       'LIMIT 10'
   /ASSUMEDSTRWIDTH=255.
 
 CACHE.
 EXECUTE.
-DATASET NAME DataSet1 WINDOW=FRONT.
+DATASET NAME DataSet5 WINDOW=FRONT.
 ```
 
 
