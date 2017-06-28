@@ -144,18 +144,21 @@ conn_atsd = database('', username, password, driver, url);
 
 ```matlab
 % SQL query to get prices for a date range
-sqlquery = 'SELECT datetime, tags.category, value FROM inflation.cpi.categories.price WHERE datetime BETWEEN "2013-01-01T00:00:00Z" AND "2017-01-01T00:00:00Z" ORDER BY 1, 2';
+sqlquery = 'SELECT entity datetime, tags.category, value FROM inflation.cpi.categories.price WHERE datetime BETWEEN "2013-01-01T00:00:00Z" AND "2017-01-01T00:00:00Z" ORDER BY 1, 2';
 % get cursor from ATSD
 curs = exec(conn_atsd, sqlquery);
 % fetch data from cursor
 res = fetch(curs);
 % initialize resultset from data as cell array
 prices_resultset = res.Data;
-% fetch first two columns from the resultset (datetime and category fields)
-time_and_categories = prices_resultset(:,1:2);
-% fetch second column from prices resultset (value field)
+% fetching datetime column and converting it to ISO format
+datetimes = cellstr(datestr(prices_resultset(:,2), 'yyyy-mm-ddTHH:MM:SSZ'));
+% fetching first and third columns from prices (which contains Entity and
+% Category fields) and concat it with datetime column
+entity_time_and_categories = [prices_resultset(:,1), datetimes, prices_resultset(:,3)];
+% fetch fourth column from prices resultset (value field)
 % convert column to numeric array
-prices = cell2mat(prices_resultset(:,3));
+prices = cell2mat(prices_resultset(:,4));
 ```
 
 ![](resources/prices_example.png)
@@ -192,10 +195,10 @@ inflation_cpi_composite_price = prices .* weights / 1000;
 ### Create cell-matrix to insert it into ATSD
 
 ```matlab
-% append Category and Inflation columns
-payload = [time_and_categories, num2cell(inflation_cpi_composite_price)];
+% append Entity, Datetime, Category and Inflation columns
+payload = [entity_time_and_categories, num2cell(inflation_cpi_composite_price)];
 % define colnames which is a cell array describing names and order of columns in payload
-colnames = {'datetime', 'tags.category', 'value'};
+colnames = {'entity', 'datetime', 'tags.category', 'value'};
 % insert data into ATSD
 insert(conn_atsd, 'inflation.cpi.composite.price', colnames, payload);
 ```
