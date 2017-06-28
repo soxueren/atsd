@@ -2,21 +2,28 @@
 
 [IBM SPSS Statistics](https://www.ibm.com/analytics/us/en/technology/spss/) is an advanced statistical analysis tool. The following guide describes the process of loading data from Axibase Time Series Database into SPSS for calculating derived (computed) series.
 
-* [**Data preprocessing**](#data-preprocessing)
-  * [**Execute and export SQL query from ATSD**](#execute-and-export-sql-query-from-atsd)
-  * [**Intro to IBM SPSS GUI**](#intro-to-ibm-spss-gui)
-  * [**Import data to IBM SPSS**](#import-data-to-ibm-spss)
-  * [**Merge datasets**](#merge-datasets)
-* [**Data Analysis**](#data-analysis)
-  * [**Create new dataset column**](#create-new-dataset-column)
-  * [**Data Aggregation**](#data-aggregation)
+* [Data preprocessing](#data-preprocessing)
+  * [Sample Data](#sample-data)
+  * [Execute and export SQL query from ATSD](#execute-and-export-sql-query-from-atsd)
+  * [Introduction to IBM SPSS GUI](#introduction-to-ibm-spss-gui)
+  * [Import data to IBM SPSS](#import-data-to-ibm-spss)
+  * [Merge datasets](#merge-datasets)
+* [Data Analysis](#data-analysis)
+  * [Create new dataset column](#create-new-dataset-column)
+  * [Data Aggregation](#data-aggregation)
     * [Aggregation with Analyze block](#aggregation-with-analyze-block)
     * [Aggregation with Data block](#aggregation-with-data-block)
-* [**Sample Data**](#sample-data)
 
 ## Data preprocessing
 
 Before data analysis we must take datasets and preprocess them.
+
+### Sample Data
+
+1. In order to try SPSS you can download files [weights.csv](resources/weights.csv) and [prices.csv](resources/prices.csv) without retrieving data with SQL on your own.
+
+2. In addition there are available [series commands](resources/commands.txt) that can be imported into ATSD on the **Metrics -> Data Entry** page of Axibase site.
+
 
 ### Execute and export SQL query from ATSD
 
@@ -28,14 +35,14 @@ Suppose we solve a problem of yearly consumer basket index calculation. We have 
 
 ```sql
 SELECT entity, datetime as timedate, value as weight, tags.category 
-FROM inflation.cpi.categories.weight 
+    FROM inflation.cpi.categories.weight 
 ORDER BY tags.category, datetime
 ```
  * dataset with prices in 5 years period (2013-2017), it shows average of yearly prices in all marketing categories
 
 ```sql
 SELECT entity, datetime, value, tags.category 
-FROM inflation.cpi.categories.price 
+    FROM inflation.cpi.categories.price 
 ORDER BY tags.category, datetime
 ```
 Press `Execute` button to run these queries and export results to CSV files (for example, `prices.csv` and `weights.csv`).
@@ -46,7 +53,7 @@ Screenshot for dataset with prices
 
 > Note SPSS makes merge of datasets by common columns. So, in the first query we have to write aliases for metric's value as `weight` and for datetime column as `timedate`. Otherwise, we would have got merged dataset with data only for 2017 year. On the other hand, you may try to exclude second `datetime` column before merge. But it should be better to give aliases for columns in SQL query.
 
-### Intro to IBM SPSS GUI
+### Introduction to IBM SPSS GUI
 
 **Lets look at main menu items for work in the future:**
 ![](resources/ibm_spss_gui.png)
@@ -66,7 +73,7 @@ After importing of your CSV files save them as datasets `prices.sav` and `weight
 
 ### Merge datasets
 
-In the end of data preprocessing, lets make merge of `.sav` files. In our case, we open `prices.sav` in SPSS and then add `weight` column from `weights.sav`.
+Merge the datasets by opening  the `prices.sav` file and adding the `weight` column from the `weights.sav` file.
 
 * **Data -> Merge Files... -> Add Variables...**
   * Select file you want to merge with current (`weights.sav`)
@@ -79,18 +86,16 @@ In the end of data preprocessing, lets make merge of `.sav` files. In our case, 
 
 > Be careful during files union, don't forget about final count of observations and check correctness of merged data. For example, we have files with 10 lines and 27 lines. If you select file with 10 lines as the basic, the final file will contain only 10 lines with new column. Otherwise, final dataset would have 27 lines.
 
-Then our merged file can be saved as `prices_merged.sav`
+Save the merged dataset into a new file `prices_merged.sav`.
 ![](resources/merged_data.png)
 
 ## Data Analysis
-
-So, data preprocessing was over and we are ready to make various analysis with new dataset.
 
 ### Create new dataset column
 
 Again, we want to know common yearly index of customer basket. Let we compute new column with production of `value` and `(weight/1000)` and then get sum of products for yearly period. 
 
-Open prices_merged.sav file and create new column `categ_ind`.
+Open `prices_merged.sav` file and create new column `categ_ind`.
 
 * **Transform -> Compute Variable...**  
   * Select columns from the left field into expression field and apply all operations you need. 
@@ -100,7 +105,6 @@ Open prices_merged.sav file and create new column `categ_ind`.
 
 We have got `categ_ind` column on the right end of our table.
 ![](resources/create_new_column.png)
-
 
 ### Data Aggregation
 
@@ -142,9 +146,4 @@ We have got `categ_ind` column on the right end of our table.
 > To change decimals of a scale variable click `Variable View` tab in the lower left corner of SPSS. This tab shows useful info about dataset variables (data type, measure, role etc.) and allows to add/delete/edit columns.
 ![](resources/variables_descr.png)
 
-> After user operation (analysis, chart building, open/close file, merge etc.) SPSS generates output file .spv with procedure commands. Storing of these outputs is a matter of your taste. It dependents on achievements, either you would check correctness of operations or not.
-
-## Sample Data
-1. [Series commands](resources/commands.txt) that can be imported into ATSD on the **Metrics > Data Entry** page.
-
-2. In order to try SPSS you can download files [weights.csv](resources/weights.csv) and [prices.csv](resources/prices.csv) without retrieving data with SQL on your own.
+> After user operation (analysis, chart building, open/close file, column computing, merge etc.) SPSS generates output file .spv with procedure commands. Storing of these outputs is a matter of your taste. It dependents on achievements, either you would check correctness of operations or not.
