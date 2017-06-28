@@ -5,7 +5,7 @@
 * [**Data preprocessing**](#data-preprocessing)
   * [**Execute and export SQL query from ATSD**](#execute-and-export-sql-query-from-atsd)
   * [**Intro to IBM SPSS GUI**](#intro-to-ibm-spss-gui)
-  * [**Import data into IBM SPSS**](#import-data-into-ibm-spss)
+  * [**Import data to IBM SPSS**](#import-data-to-ibm-spss)
   * [**Merge datasets**](#merge-datasets)
 * [**Data Analysis**](#data-analysis)
   * [**Create new dataset column**](#create-new-dataset-column)
