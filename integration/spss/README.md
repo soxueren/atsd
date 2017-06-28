@@ -2,22 +2,23 @@
 
 [IBM SPSS Statistics](https://www.ibm.com/analytics/us/en/technology/spss/) is an advanced statistical analysis tool. The following guide describes the process of loading data from Axibase Time Series Database into SPSS for calculating derived (computed) series.
 
-* [**Data preprocessing**](#1)
-  * [**Execute and export SQL query from ATSD**](#11)
-  * [**Intro to IBM SPSS GUI**](#110)
-  * [**Import data into IBM SPSS**](#12)
-  * [**Merge datasets**](#13)
-* [**Data Analysis**](#2)
-  * [**Create new column in dataset**](#21)
-  * [**Data Aggregation as example of analysis**](#22)
+* [**Data preprocessing**](#preproc)
+  * [**Execute and export SQL query from ATSD**](#sqlexport)
+  * [**Intro to IBM SPSS GUI**](#spssintro)
+  * [**Import data into IBM SPSS**](#spssimport)
+  * [**Merge datasets**](#spssmerge)
+* [**Data Analysis**](#analysis)
+  * [**Create new column in dataset**](#compute)
+  * [**Data Aggregation as example of analysis**](#aggr)
     * [Aggregation with Analyze block](#analyze)
     * [Aggregation with Data block](#dataaggr)
+* [**Sample Data**](#data)
 
-### <a name="1"></a>Data preprocessing
+### <a name="preproc"></a>Data preprocessing
 
 Before data analysis we must take datasets and preprocess them.
 
-<a name="11"></a>**Execute and export SQL query from ATSD**
+<a name="sqlexport"></a>**Execute and export SQL query from ATSD**
 
 Let we have one source, it's database server ATSD of Axibase Comp. [https://ATSD_SERVER:8433/](https://ATSD_SERVER:8433/).
 
@@ -45,7 +46,7 @@ Screenshot for dataset with prices
 
 > Note SPSS makes merge of datasets by common columns. So, in the first query we have to write aliases for metric's value as `weight` and for datetime column as `timedate`. Otherwise, we would have got merged dataset with data only for 2017 year. On the other hand, you may try to exclude second `datetime` column before merge. But it should be better to give aliases for columns in SQL query.
 
-<a name="110"></a>**Intro to IBM SPSS GUI**
+<a name="spssintro"></a>**Intro to IBM SPSS GUI**
 
 **Lets look at main menu items for work in the future:**
 ![](resources/ibm_spss_gui.png)
@@ -54,7 +55,7 @@ Screenshot for dataset with prices
  * **Transform** gives opportunities for data transformation (calculating new variables, convert current dataset into time series or another data structure, turn ordinal variables into dummy variables etc.);
  * **Analyze** contains majority of statistical methods and machine learning algorithms (forecasting, regression, classification, neural networks etc.)
 
-<a name="12"></a>**Import data to IBM SPSS**
+<a name="spssimport"></a>**Import data to IBM SPSS**
 
 Next step is importing of data.
 
@@ -63,7 +64,7 @@ Next step is importing of data.
 
 After importing of your CSV files save them as datasets `prices.sav` and `weights.sav`.
 
-<a name="13"></a>**Merge datasets**
+<a name="spssmerge"></a>**Merge datasets**
 
 In the end of data preprocessing, lets make merge of `.sav` files. In our case, we open `prices.sav` in SPSS and then add `weight` column from `weights.sav`.
 
@@ -81,11 +82,11 @@ In the end of data preprocessing, lets make merge of `.sav` files. In our case, 
 Then our merged file can be saved as `prices_merged.sav`
 ![](resources/merged_data.png)
 
-### <a name="2"></a>Data Analysis
+### <a name="analysis"></a>Data Analysis
 
 So, data preprocessing was over and we are ready to make various analysis with new dataset.
 
-<a name="21"></a>**Create new column in dataset**
+<a name="compute"></a>**Create new column in dataset**
 
 Again, we want to know common yearly index of customer basket. Let we compute new column with production of `value` and `(weight/1000)` and then get sum of products for yearly period. 
 
@@ -101,7 +102,7 @@ We have got `categ_ind` column on the right end of our table.
 ![](resources/create_new_column.png)
 
 
-<a name="22"></a>**Data Aggregation as example of analysis**
+<a name="aggr"></a>**Data Aggregation as example of analysis**
 
    There are several ways in SPSS for data aggregation.
   
@@ -142,3 +143,8 @@ We have got `categ_ind` column on the right end of our table.
 ![](resources/variables_descr.png)
 
 > After user operation (analysis, chart building, open/close file, merge etc.) SPSS generates output file .spv with procedure commands. Storing of these outputs is a matter of your taste. It dependents on achievements, either you would check correctness of operations or not.
+
+### <a name="data"></a>Sample Data
+1. [Series commands](resources/commands.txt) that can be imported into ATSD on the **Metrics > Data Entry** page.
+
+2. In order to try SPSS you can download files [weights.csv](resources/weights.csv) and [prices.csv](resources/prices.csv) without retrieving data with SQL on your own.
