@@ -22,12 +22,12 @@ Before data analysis we must take datasets and preprocess them.
 
 1. In order to try SPSS you can download files [weights.csv](resources/weights.csv) and [prices.csv](resources/prices.csv) without retrieving data with SQL on your own.
 
-2. In addition there are available [series commands](resources/commands.txt) that can be imported into ATSD on the **Metrics -> Data Entry** page of Axibase site.
+2. In addition there are available [series commands](resources/commands.txt) that can be imported into ATSD on the **Metrics -> Data Entry** page of ATSD server.
 
 
 ### Execute and export SQL query from ATSD
 
-Let we have one source, it's database server ATSD of Axibase Comp. [https://ATSD_SERVER:8433/](https://ATSD_SERVER:8433/).
+Let we have database server ATSD of Axibase Comp. [https://ATSD_SERVER:8433/](https://ATSD_SERVER:8433/).
 
 Suppose we solve a problem of yearly consumer basket index calculation. We have two datasets:
 
@@ -51,7 +51,7 @@ Screenshot for dataset with prices
 ![](resources/sql_run.png)
 ![](resources/sql_export.png)
 
-> Note SPSS makes merge of datasets by common columns. So, in the first query we have to write aliases for metric's value as `weight` and for datetime column as `timedate`. Otherwise, we would have got merged dataset with data only for 2017 year. On the other hand, you may try to exclude second `datetime` column before merge. But it should be better to give aliases for columns in SQL query.
+> Note that SPSS makes merge of datasets by common columns. So, in the first query we have to write aliases for metric's value as `weight` and for datetime column as `timedate`. Otherwise, we would have got merged dataset with data only for 2017 year. On the other hand, you may try to exclude second `datetime` column from `weights.csv` before merge. But it should be better to give aliases for columns in SQL query.
 
 ### Introduction to IBM SPSS GUI
 
@@ -91,9 +91,9 @@ Save the merged dataset into a new file `prices_merged.sav`.
 
 ## Data Analysis
 
-### Create new dataset column
+Again, we want to know yearly index of customer basket. Let we compute new column with production of `value` and `(weight/1000)` and then aggregate products by sum function for yearly period. 
 
-Again, we want to know common yearly index of customer basket. Let we compute new column with production of `value` and `(weight/1000)` and then get sum of products for yearly period. 
+### Create new dataset column
 
 Open `prices_merged.sav` file and create new column `categ_ind`.
 
