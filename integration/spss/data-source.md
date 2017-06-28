@@ -1,6 +1,6 @@
 ### Configuring the Data Source in IBM SPSS Statistics
 
-Open the attached ![script](resources/Syntax1.sps)
+Open the attached [script](resources/Syntax1.sps)
 
 ![](images/spss_1.PNG)
 
