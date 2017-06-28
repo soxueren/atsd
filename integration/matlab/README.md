@@ -144,24 +144,38 @@ conn_atsd = database('', username, password, driver, url);
 
 ```matlab
 % SQL query to get prices for a date range
-sqlquery = 'SELECT entity datetime, tags.category, value FROM inflation.cpi.categories.price WHERE datetime BETWEEN "2013-01-01T00:00:00Z" AND "2017-01-01T00:00:00Z" ORDER BY 1, 2';
+sqlquery = 'SELECT datetime, tags.category, value FROM inflation.cpi.categories.price WHERE datetime BETWEEN "2013-01-01T00:00:00Z" AND "2017-01-01T00:00:00Z" ORDER BY 1, 2';
 % get cursor from ATSD
 curs = exec(conn_atsd, sqlquery);
 % fetch data from cursor
 res = fetch(curs);
 % initialize resultset from data as cell array
 prices_resultset = res.Data;
-% fetching datetime column and converting it to ISO format
-datetimes = cellstr(datestr(prices_resultset(:,2), 'yyyy-mm-ddTHH:MM:SSZ'));
-% fetching first and third columns from prices (which contains Entity and
-% Category fields) and concat it with datetime column
-entity_time_and_categories = [prices_resultset(:,1), datetimes, prices_resultset(:,3)];
-% fetch fourth column from prices resultset (value field)
-% convert column to numeric array
-prices = cell2mat(prices_resultset(:,4));
 ```
 
-![](resources/prices_example.png)
+![](resources/prices_resultset.png)
+
+```matlab
+% fetch datetime column and convert it to ISO format
+datetimes = cellstr(datestr(prices_resultset(:,1), 'yyyy-mm-ddTHH:MM:SSZ'));
+```
+
+![](resources/datetimes_1.png)
+
+```matlab
+% get every 10th record from datetimes to form list of years
+datetimes = datetimes(1:10:length(datetimes));
+```
+
+![](resources/datetimes_2.png)
+
+```matlab
+% fetch third column from prices resultset (value field)
+% convert column to numeric array
+prices = cell2mat(prices_resultset(:,3));
+```
+
+![](resources/prices.png)
 
 ### Load weights data into variable `weights`
 
@@ -181,24 +195,45 @@ weights = cell2mat(weights_resultset(:,2));
 weights = repmat(weights, 5, 1);
 ```
 
-![](resources/weights_example.png)
+![](resources/weights.png)
 
 ### Calculate Weighted Index
 
 ```matlab
 % element-wise multiply of 2 columns (1000 value is here because weights is a proportion out of 1000)
-inflation_cpi_composite_price = prices .* weights / 1000;
+inflation_cpi_price = prices .* weights / 1000;
+```
+![](resources/inflation_1.png)
+
+```matlab
+% sum inflation prices for each year
+inflation_cpi_composite_price = sum(reshape(inflation_cpi_price, 10, 5));
+% transponse vector (transform row to column)
+inflation_cpi_composite_price = inflation_cpi_composite_price';
 ```
 
-![](resources/inflation_example.png)
+![](resources/inflation_2.png)
 
 ### Create cell-matrix to insert it into ATSD
 
 ```matlab
-% append Entity, Datetime, Category and Inflation columns
-payload = [entity_time_and_categories, num2cell(inflation_cpi_composite_price)];
+% form list of entities for result payload
+entity = 'bls.gov';
+entities = repmat(cellstr(entity), size(datetimes, 1), 1);
+```
+
+![](resources/entities.png)
+
+```matlab
+% append Entity, Datetime and Inflation columns
+payload = [entities, datetimes, num2cell(inflation_cpi_composite_price)];
+```
+
+![](resources/payload.png)
+
+```matlab
 % define colnames which is a cell array describing names and order of columns in payload
-colnames = {'entity', 'datetime', 'tags.category', 'value'};
+colnames = {'entity', 'datetime', 'value'};
 % insert data into ATSD
 insert(conn_atsd, 'inflation.cpi.composite.price', colnames, payload);
 ```
@@ -212,3 +247,7 @@ MATLAB functions:
 - [fetch](https://www.mathworks.com/help/database/ug/fetch.html)
 - [cell2mat](https://www.mathworks.com/help/matlab/ref/cell2mat.html)
 - [repmat](https://www.mathworks.com/help/matlab/ref/repmat.html)
+- [sum](https://www.mathworks.com/help/matlab/ref/sum.html)
+- [reshape](https://www.mathworks.com/help/matlab/ref/reshape.html)
+- [cellstr](https://www.mathworks.com/help/matlab/ref/cellstr.html)
+- [datestr](https://www.mathworks.com/help/matlab/ref/datestr.html)
