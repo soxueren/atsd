@@ -14,7 +14,7 @@
     * [Aggregation with Data block](#dataaggr)
 * [**Sample Data**](#data)
 
-### <a name="preproc"></a>Data preprocessing
+### [Data preprocessing](#preproc)
 
 Before data analysis we must take datasets and preprocess them.
 
@@ -82,7 +82,7 @@ In the end of data preprocessing, lets make merge of `.sav` files. In our case, 
 Then our merged file can be saved as `prices_merged.sav`
 ![](resources/merged_data.png)
 
-### <a name="analysis"></a>Data Analysis
+### [Data Analysis](#analysis)
 
 So, data preprocessing was over and we are ready to make various analysis with new dataset.
 
