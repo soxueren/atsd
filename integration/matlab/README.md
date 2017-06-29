@@ -10,18 +10,18 @@
 
 ## Install ATSD Driver
 
-Download ATSD [JDBC driver](https://github.com/axibase/atsd-jdbc/releases) with dependencies.
+Download the ATSD [JDBC driver](https://github.com/axibase/atsd-jdbc/releases) with dependencies.
 
-There are two ways of enabling ATSD JDBC driver in MatLab: static and dynamic
+There are two ways of enabling the ATSD JDBC driver in MatLab: static and dynamic
 
 ### Static
 
-- Run the `prefdir` command in the MatLab Command Window. The command displayes path to a directory used in subsequent steps.
+- Run the `prefdir` command in the MatLab Command Window. This command displays the path to a directory used in subsequent steps.
 
 ![](resources/prefdir.png)
 - Close MatLab if it's running.
 - Navigate to the `prefdir` directory above and create a file named `javaclasspath.txt`.
-- Open `javaclasspath.txt` file. Add the full path to the ATSD driver JAR file, for example, `/home/user/MATLAB/atsd-jdbc-1.2.22-DEPS.jar`
+- Open the `javaclasspath.txt` file. Add the full path to the ATSD driver JAR file, for example, `/home/user/MATLAB/atsd-jdbc-1.2.22-DEPS.jar`
 - Save and close `javaclasspath.txt`.
 - Restart MatLab.
 
@@ -37,28 +37,28 @@ Example:
 
 ### Connect in Database Explorer
 
-- Click 'New - JDB' option.
+- Click 'New - JDB'.
 - Select 'Vendor - OTHER'.
-- Set Driver field to `com.axibase.tsd.driver.jdbc.AtsdDriver`.
-- Specify JDBC URL like `jdbc:axibase:atsd:https://ATSD_HOSTNAME:8443/api/sql;catalog=atsd;tables="TABLE_NAME_FILTER";expandTags=true;trustServerCertificate=true`  
+- Set the Driver field to `com.axibase.tsd.driver.jdbc.AtsdDriver`.
+- Specify a JDBC URL like `jdbc:axibase:atsd:https://ATSD_HOSTNAME:8443/api/sql;catalog=atsd;tables="TABLE_NAME_FILTER";expandTags=true;trustServerCertificate=true`  
 [Information about ATSD JDBC URL parameters](https://github.com/axibase/atsd-jdbc/blob/master/README.md)
-- Leave Username and Password fields empty.
-- Now connect to ATSD using "Data source name" button and login on the Database Browser window.
+- Leave the Username and Password fields empty.
+- Now connect to ATSD using the "Data Source Name" button and log in on the Database Browser window.
 
 Example:
 
 ![](resources/new_jdbc_data_source.png)
 
-`ATSD_HOSTNAME` is a hostname address of ATSD instance you want connect to
+`ATSD_HOSTNAME` is the hostname address of the ATSD instance you want to connect to.
 
 `TABLE_NAME_FILTER` is a list of comma-separated metrics or metric expressions to be displayed as tables in the MatLab Database Browser.
 
 `TABLE_NAME_FILTER` examples:
 - `*java*` for metrics that contains word `java`
-- `custom.metric*` for metrics which name starts with `custom.metric`
-- `*2017` for metrics which name ends with `2017`
+- `custom.metric*` for metrics whose name starts with `custom.metric`
+- `*2017` for metrics whose name ends with `2017`
 
-### Connect in MatLab Command Window
+### Connect to the MatLab Command Window
 
 Example of https connection to ATSD:
 
@@ -72,7 +72,7 @@ conn_atsd = database('', username, password, driver, url);
 
 ## Verify Connection
 
-ATSD connection via Command Window can be verified using the `SELECT 1` query. The returned `data` should be 1.
+ATSD connection to Command Window can be verified using the `SELECT 1` query. The returned `data` should be 1.
 Assuming `conn_atsd` is defined:
 
 ```matlab
@@ -86,23 +86,23 @@ Expected result:
 
 ![](resources/verify_example.png)
 
-## Review Tables in Database Explorer
+## Review Tables in the Database Explorer
 
-For example, set `TABLE_NAME_FILTER` variable to `*java*`. The Database Browser would display a set of tables matching the expression:
+For example, set the `TABLE_NAME_FILTER` variable to `*java*`. The Database Browser would display a set of tables matching the expression:
 
 ![](resources/database_browser.png)
 
-Select one or multiple columns to open the Data Preview window displaying the first N rows of the resultset (25 by default).
+Select one or more columns to open the Data Preview window displaying the first N rows of the resultset (25 by default).
 
-Example with datetime, value and text fields selected:
+An example with the datetime, value, and text fields selected:
 
 ![](resources/data_preview.png)
 
-Full resultset can be imported via Import button highlighted with green arrow.
+The complete resultset can be imported with the Import button, highlighted with a green arrow.
 
 ## Load Data
 
-Execute a SQL query to import the resultset into a MatLab variable:
+Execute the SQL query to import the resultset into a MatLab variable:
 
 ```matlab
 sqlquery = 'SELECT * FROM gc_time_percent LIMIT 50';
@@ -117,20 +117,20 @@ data = res.Data;
 
 ![](resources/data_example.png)
 
-To insert data into ATSD (assuming `data` variable has required values):
+To insert data into ATSD (assuming the `data` variable has required values):
 
 ```matlab
 colnames = {'datetime', 'entity', 'value'};
 insert(conn_atsd, 'METRIC_NAME', colnames, data);
 ```
 
-`colnames` is a cell array which describes names and order of columns in the request.
+`colnames` is a cell array which describes the names and order of columns in the request.
 
-`METRIC_NAME` is a name of a metric under which the rows in `data` should be inserted.
+`METRIC_NAME` is the name of a metric under which the rows in `data` should be inserted.
 
 ## Calculate Derived Series
 
-### Establish connection to ATSD
+### Establish a connection to ATSD
 
 ```matlab
 driver = 'com.axibase.tsd.driver.jdbc.AtsdDriver';
@@ -140,7 +140,7 @@ password = 'PASSWORD';
 conn_atsd = database('', username, password, driver, url);
 ```
 
-### Load pricing data into variable `prices`
+### Load pricing data into the variable `prices`
 
 ```matlab
 % SQL query to get prices for a date range
@@ -177,7 +177,7 @@ prices = cell2mat(prices_resultset(:,3));
 
 ![](resources/prices.png)
 
-### Load weights data into variable `weights`
+### Load weights data into the variable `weights`
 
 ```matlab
 % SQL query to get weights
@@ -214,7 +214,7 @@ inflation_cpi_composite_price = inflation_cpi_composite_price';
 
 ![](resources/inflation_2.png)
 
-### Create cell-matrix to insert it into ATSD
+### Create cell-matrix to insert into ATSD
 
 ```matlab
 % form list of entities for result payload
