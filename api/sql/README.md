@@ -725,6 +725,13 @@ WHERE datetime BETWEEN '2016-12-10T14:00:15Z' AND '2016-12-10T15:30:00.077Z'
 
 > Equality operators `!=` and `<>`  **cannot** be applied to `time` and `datetime` columns.
 
+Avoid the [`date_format`](#date-formatting-functions) function in the `WHERE` condition as it will cause the database to perform a full scan and compare literal strings. Instead, filter the dates using the indexed `datetime` column.
+
+```sql
+WHERE date_format(time, 'yyyy') > '2014' -- Anti-pattern: Full scan with string comparison.
+WHERE datetime >= '2015-01-01T00:00:00Z' -- Recommended:  Range scan on indexed column.
+```
+
 ### Endtime Syntax
 
 The `time` and `datetime` columns support [endtime](../../end-time-syntax.md) syntax.
