@@ -7,59 +7,63 @@
 ## Install ATSD Driver
 
 - Download ATSD [JDBC driver](https://github.com/axibase/atsd-jdbc/releases) with dependencies
-- Put driver JAR file into `lib/jdbc` folder inside the Report Designer installation directory
-- Open report-designer (reopen if it was launched already)
+- Copy the driver JAR file into `lib/jdbc` directory in the Report Designer installation directory
+- Restart the Report Designer
 
 ## Configure Database Connection
-- Select the Data tab in the right hand structural pane
+
+- Select 'Data' tab in the properties pane on the right.
 
 ![](resources/data_pane.png)
 
-- Select the "Add Data Sources" button in the toolbar, or right click with your mouse on the data-sources node to open up the context menu
-- Select `Add a new connection` (it's a green plus icon)
+- Select 'Add Data Sources' button in the toolbar.
+- Select 'Add a new connection' (green plus icon).
 
 ![](resources/new_connection.png)
 
-- Pick `General` in left menu
-- Pick `Generic database` as Connection Type
-- Pick `Native (JDBC)` as Access
-- `Custom Connection URL` is a JDBC URL link. Specify JDBC URL like `jdbc:axibase:atsd:https://ATSD_HOSTNAME:8443/api/sql;catalog=atsd;tables="TABLE_NAME_FILTER";expandTags=true;trustServerCertificate=true`  
-[Information about ATSD JDBC URL parameters](https://github.com/axibase/atsd-jdbc/blob/master/README.md)
+- Select `General` in the left menu
+- Select `Generic database` as Connection Type
+- Select `Native (JDBC)` as Access
+
+### Configure ATSD connection properties
+
+- Enter JDBC URL into the `Custom Connection URL` field, for example:
+
+  `jdbc:axibase:atsd:https://ATSD_HOSTNAME:8443/api/sql;catalog=atsd;tables=inflation*;expandTags=true;trustServerCertificate=true`
+
+> `ATSD_HOSTNAME` is the hostname of the target ATSD instance
+> Review ATSD JDBC [URL parameters](https://github.com/axibase/atsd-jdbc/blob/master/README.md) for additional details.
+
 - Set Custom Driver Class Name field to `com.axibase.tsd.driver.jdbc.AtsdDriver`
 - Set `User Name` and `Password` fields to your ATSD Username and Password
 - Set `Connection Name` to `ATSD Connection`
 
-Example:
-
 ![](resources/atsd_connection.png)
 
-`ATSD_HOSTNAME` is a hostname address of ATSD instance you want connect to
+## Import Data
 
-## Import data from ATSD
-- Select the Data tab in the right hand structural pane
-- Select the "Add Data Sources" button in the toolbar, or right click with your mouse on the data-sources node to open up the context menu
-- Click on `ATSD Connection` that you have created to highlight it
-- Click on `Add Query` near Available Queries list
+- Select 'Data' tab in the properties pane on the right.
+- Select 'Add Data Sources' button in the toolbar.
+- Click on 'ATSD Connection'
+- Click on 'Add Query' in the Available Queries list
 
 ![](resources/add_query.png)
 
-- Now Query text field is available for edit. Write there some SQL query which results you want to include to your report. For example `SELECT datetime, value FROM 'METRIC_NAME'`
+- Enter a SQL query in the Query editor, for example `SELECT datetime, entitym value FROM jvm_memory_used LIMIT 10`
 
 ![](resources/query_text.png)
 
-- Click on Preview button to see query resultset and check that it is OK
+- Click on the 'Preview' button to review the resultset.
 
 ![](resources/preview.png)
 
-- Click `OK` button. List of queries will be added to `Data` pane
-- Click on your query with right mouse button and pick `Select Query`. Now in that tree view you can see selected field from query result
+- Click 'OK'. The list of queries will be added to the 'Data' pane.
+- Right-click on the query and choose 'Select Query'. The tree view will now display query results and fields.
 
 ![](resources/data_pane_updated.png)
 
-- Drag these field to report paper
-- Now click `Preview` button in the left top corner of your report (it's the eye icon) -- and you will see query results as part of your report
-
-Example of report:
+- Drag and drop these field into the report canvas.
+- Click `Preview` button in the top left corner (eye icon) to view query results.
 
 ![](resources/report.png)
 
