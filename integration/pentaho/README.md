@@ -11,11 +11,15 @@
 - Open report-designer (reopen if it was launched already)
 
 ## Configure Database Connection
-- Select the Data tab in the right hand structural pane  
+- Select the Data tab in the right hand structural pane
+
 ![](resources/data_pane.png)
+
 - Select the "Add Data Sources" button in the toolbar, or right click with your mouse on the data-sources node to open up the context menu
-- Select `Add a new connection` (it's a green plus icon)  
+- Select `Add a new connection` (it's a green plus icon)
+
 ![](resources/new_connection.png)
+
 - Pick `General` in left menu
 - Pick `Generic database` as Connection Type
 - Pick `Native (JDBC)` as Access
@@ -23,7 +27,10 @@
 [Information about ATSD JDBC URL parameters](https://github.com/axibase/atsd-jdbc/blob/master/README.md)
 - Set Custom Driver Class Name field to `com.axibase.tsd.driver.jdbc.AtsdDriver`
 - Set `User Name` and `Password` fields to your ATSD Username and Password
-- Set `Connection Name` to `ATSD Connection`  
+- Set `Connection Name` to `ATSD Connection`
+
+Example:
+
 ![](resources/atsd_connection.png)
 
 `ATSD_HOSTNAME` is a hostname address of ATSD instance you want connect to
@@ -32,15 +39,23 @@
 - Select the Data tab in the right hand structural pane
 - Select the "Add Data Sources" button in the toolbar, or right click with your mouse on the data-sources node to open up the context menu
 - Click on `ATSD Connection` that you have created to highlight it
-- Click on `Add Query` near Available Queries list  
+- Click on `Add Query` near Available Queries list
+
 ![](resources/add_query.png)
-- Now Query text field is available for edit. Write there some SQL query which results you want to include to your report. For example `SELECT datetime, value FROM 'METRIC_NAME'`  
+
+- Now Query text field is available for edit. Write there some SQL query which results you want to include to your report. For example `SELECT datetime, value FROM 'METRIC_NAME'`
+
 ![](resources/query_text.png)
-- Click on Preview button to see query resultset and check that it is OK  
+
+- Click on Preview button to see query resultset and check that it is OK
+
 ![](resources/preview.png)
+
 - Click `OK` button. List of queries will be added to `Data` pane
-- Click on your query with right mouse button and pick `Select Query`. Now in that tree view you can see selected field from query result  
+- Click on your query with right mouse button and pick `Select Query`. Now in that tree view you can see selected field from query result
+
 ![](resources/data_pane_updated.png)
+
 - Drag these field to report paper
 - Now click `Preview` button in the left top corner of your report (it's the eye icon) -- and you will see query results as part of your report
 
