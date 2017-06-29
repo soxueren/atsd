@@ -145,9 +145,10 @@ SPSS provides two alternatives to aggregate data by period.
 * Set `categ_ind` as summary variable and apply `SUM` function
 * Set `datetime` as the 'break' (grouping) variable
 * Customize column formats and output options
+* Select creating of new dataset with break and aggregated variables 
 
     ![](resources/data_aggregate_data.png)
     
-* The last column `categ_ind_sum` on the right contains the aggregation results.
+* Create new dataset with final columns `datetime` and `CPI`.
 
     ![](resources/aggr_data_new_column.png)
