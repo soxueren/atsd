@@ -10,9 +10,9 @@ SPSS provides several options for loading datasets from external data sources su
 
 1. Login into ATSD web interface
 2. Open **Metrics -> Data Entry** form, select the 'Commands' tab.
-3. Copy [series commands](resources/commands.txt) into the form and click Submit.
+3. Copy [series commands](resources/commands.txt) into the form and click Submit/Send.
 
-{screenshot after commands submitted}
+![](resources/metrics_entry.png)
 
 The commands contain consumer price index (CPI) for each category of items in a consumer basket as well as the weight of each category in the CPI basket. The price index is available for years 2013-2017 and is baselined to year 2016. The weights are available for year 2017 and will be applied to all prior years. The weights are specified using 1000 as the total. The underlying data is available in the following [Excel file](resources/eng_e02.xls).
 
@@ -60,12 +60,14 @@ To prevent the `datetime` and `value` columns from being used in the merge opera
 
 ## SPSS User Interface
 
-{refactor as table}
 
- * **File** has standard operations for any program: import data from Excel/CSV extensions, create own datasets with .sav extension, connect to OBDC server for data extraction, save files
- * **Data** includes common operations with datasets (select rows, aggregation, merge/split files etc.);
- * **Transform** gives opportunities for data transformation (calculating new variables, convert current dataset into time series or another data structure, turn ordinal variables into dummy variables etc.);
- * **Analyze** contains majority of statistical methods and machine learning algorithms (forecasting, regression, classification, neural networks etc.)
+Menu Item | Description
+--------- | -----------
+File | Standard operations for any program (import data from Excel/CSV files, create/save datasets, connect to OBDC server for data extraction etc.)
+Data | Common operations with datasets (select rows, aggregation, merge/split files etc.)
+Transform | Data transformation (calculating new variables, convert current dataset into time series or another data structure, turn ordinal variables into dummy variables etc.)
+Analyze | Statistical methods and machine learning algorithms (forecasting, regression, classification, neural networks etc.)
+
 
 ![](resources/ibm_spss_gui.png)
 
