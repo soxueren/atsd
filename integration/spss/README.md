@@ -60,14 +60,12 @@ To prevent the `datetime` and `value` columns from being used in the merge opera
 
 ## SPSS User Interface
 
-
-Menu Item | Description
+**Menu Item** | **Description**
 --------- | -----------
-File | Standard operations for any program (import data from Excel/CSV files, create/save datasets, connect to OBDC server for data extraction etc.)
-Data | Common operations with datasets (select rows, aggregation, merge/split files etc.)
-Transform | Data transformation (calculating new variables, convert current dataset into time series or another data structure, turn ordinal variables into dummy variables etc.)
-Analyze | Statistical methods and machine learning algorithms (forecasting, regression, classification, neural networks etc.)
-
+File | Import data from files, create and save datasets, connect to databases.
+Data | Prepare datasets: select rows, aggregate, merge, split.
+Transform | Transform data:  calculating new variables, convert dataset into time series or another data structure.
+Analyze | Apply statistical functions to the dataset.
 
 ![](resources/ibm_spss_gui.png)
 
