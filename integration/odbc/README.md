@@ -2,13 +2,13 @@
 
 ### Overview
 
-This document describes how to install an ODBC-JDBC bridge on a Windows machine. The purpose of the bridge is to serve as a data link between Axibase Time Series Database and Windows applications that do not support [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/overview/) driver technology. 
+This document describes how to install an ODBC-JDBC bridge on a Windows machine. The purpose of the bridge is to serve as a data link between the Axibase Time Series Database and Windows applications that do not support [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/overview/) driver technology. 
 
 The bridge intercepts SQL queries from the client applications via the Microsoft [ODBC](https://docs.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc) protocol and transmits the queries into ATSD using the [ATSD JDBC driver](https://github.com/axibase/atsd-jdbc). 
 
 ### Downloads and Pre-requisites
 
-1. Download and Install Java Runtime Environment 8 on the Windows system.
+1. Download and install Java Runtime Environment 8 for the Windows Operating System.
 2. [Register](http://www.easysoft.com/cgi-bin/account/register.cgi) an account with the ODBC-JDBC Bridge vendor. The account is required for trial license activation.
 3. [Download](http://www.easysoft.com/products/data_access/odbc_jdbc_gateway/#section=tab-1) the trial version of the ODBC-JDBC Bridge.
 4. [Download](https://github.com/axibase/atsd-jdbc/releases) ATSD JDBC driver with dependencies.
@@ -29,15 +29,15 @@ Install and activate the bridge as follows:
 
 ![](images/easysoft_install_2.PNG)
 
-  Choose installation path
+  Choose an installation path
 
 ![](images/easysoft_install_3.PNG)
 
-  Confirm installation
+  Confirm the installation
 
 ![](images/easysoft_install_4.PNG)
 
-  Check the **License Manager** checkbox and finish
+  Check the **License Manager** box and finish
 
 ![](images/easysoft_install_5.PNG)
 
@@ -59,7 +59,7 @@ A license manager window will appear after exiting from the installation wizard.
 
 ![](images/easysoft_activate_4.PNG)
 
-  If the activation succeeds, a popup window will appear
+  If the activation succeeds, a pop-up window will appear
 
 ![](images/easysoft_activate_5.PNG)
 
@@ -96,6 +96,6 @@ Refer to ATSD JDBC [documentation](https://github.com/axibase/atsd-jdbc#jdbc-con
 
 ![](images/ODBC_4.PNG)
 
-Click Test to verify the settings. If result is OK, save the settings. The System DSN tab should now display the new data source.
+Click Test to verify the settings. If result is correct, save the settings. The System DSN tab should now display the new data source.
 
 ![](images/ODBC_5.PNG)
