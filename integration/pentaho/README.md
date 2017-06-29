@@ -66,3 +66,5 @@ Example of report:
 Example of report preview:
 
 ![](resources/report_preview.png)
+
+[File with example report](resources/report.prpt)
