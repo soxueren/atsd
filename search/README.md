@@ -30,9 +30,6 @@ A keyword may be prefixed with a field name to narrow the scope of the search to
 
 If the field is not specified, the search is performed in all fields.
 
-## Synonyms
-
-[Synonym search](synonyms.md) is supported by adding keyword mappings to the `conf/synonym.conf` file.
 
 ### Fields
 
@@ -104,6 +101,10 @@ mount_point:\/opt
 ### Case Sensitivity
 
 Search is case-insensitive.
+
+## Synonyms
+
+[Synonym search](synonyms.md) is supported by adding keyword mappings to the `conf/synonym.conf` file.
 
 ## Examples
 
