@@ -83,3 +83,7 @@ https.keyStorePassword=
 https.keyManagerPassword=
 https.trustStorePassword=
 ```
+
+### References
+
+* Jetty SSL Configuration: http://www.eclipse.org/jetty/documentation/current/configuring-ssl.html
