@@ -2,7 +2,7 @@
 
 ## Overview
 
-The search interface allows finding series records by matching the user-defined keywords against the following entity, metric, and tag fields:
+The search interface allows finding series records by matching keywords against metadata fields including:
 
 * Entity name
 * Entity label
@@ -29,6 +29,10 @@ Multiple terms can be combined together using boolean operators to form a more c
 A keyword may be prefixed with a field name to narrow the scope of the search to the particular series property, for example `entity:nurswgvml007`.
 
 If the field is not specified, the search is performed in all fields.
+
+## Synonyms
+
+[Synonym search](synonyms.md) is supported by adding keyword mappings to the `conf/synonym.conf` file.
 
 ### Fields
 
