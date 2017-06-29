@@ -1,149 +1,153 @@
 # IBM SPSS Data Analysis.
 
-[IBM SPSS Statistics](https://www.ibm.com/analytics/us/en/technology/spss/) is an advanced statistical analysis tool. The following guide describes the process of loading data from Axibase Time Series Database into SPSS for calculating derived (computed) series.
+## Overview
 
-* [Data preprocessing](#data-preprocessing)
-  * [Sample Data](#sample-data)
-  * [Execute and export SQL query from ATSD](#execute-and-export-sql-query-from-atsd)
-  * [Introduction to IBM SPSS GUI](#introduction-to-ibm-spss-gui)
-  * [Import data to IBM SPSS](#import-data-to-ibm-spss)
-  * [Merge datasets](#merge-datasets)
-* [Data Analysis](#data-analysis)
-  * [Create new dataset column](#create-new-dataset-column)
-  * [Data Aggregation](#data-aggregation)
-    * [Aggregation with Analyze block](#aggregation-with-analyze-block)
-    * [Aggregation with Data block](#aggregation-with-data-block)
+[IBM SPSS](https://www.ibm.com/analytics/us/en/technology/spss/) is an advanced statistical analysis tool. The following guide describes the process of loading data from Axibase Time Series Database into SPSS as well as calculating derived series using Weighted CPI as an example.
 
-## Data preprocessing
+SPSS provides several options for loading datasets from external data sources such as Excel files and databases. To complete this exercise you need to have sample data available in your ATSD instance.
 
-Before data analysis we must take datasets and preprocess them.
+## Load Data
 
-### Sample Data
+1. Login into ATSD web interface
+2. Open **Metrics -> Data Entry** form, select the 'Commands' tab.
+3. Copy [series commands](resources/commands.txt) into the form and click Submit.
 
-1. In order to try SPSS you can download files [weights.csv](resources/weights.csv) and [prices.csv](resources/prices.csv) without retrieving data with SQL on your own.
+{screenshot after commands submitted}
 
-2. In addition there are available [series commands](resources/commands.txt) that can be imported into ATSD on the **Metrics -> Data Entry** page of ATSD server.
+The commands contain consumer price index (CPI) for each category of items in a consumer basket as well as the weight of each category in the CPI basket. The price index is available for years 2013-2017 and is baselined to year 2016. The weights are available for year 2017 and will be applied to all prior years. The weights are specified using 1000 as the total. The underlying data is available in the following [Excel file](resources/eng_e02.xls).
 
+The calculate a weighted inflation index we need to multiple CPI of each category by its weight and sum the products.
 
-### Execute and export SQL query from ATSD
+## Export Data
 
-Let we have database server ATSD of Axibase Comp. [https://ATSD_SERVER:8433/](https://ATSD_SERVER:8433/).
+ATSD provides a web-based SQL console that allows exporting query results into different formats including Excel, CSV, JSON with optional metadata composed according to [W3C Model for Tabular Data](https://github.com/axibase/atsd/blob/master/api/sql/api.md#metadata).
 
-Suppose we solve a problem of yearly consumer basket index calculation. We have two datasets:
+> If you don't have an ATSD instance available, [weights.csv](resources/weights.csv) and [prices.csv](resources/prices.csv) files are provided for your convenience. The files contain output of SQL queries discussed below.
 
- * dataset with weights for every marketing category (to 2017 year)
+### Prices
 
-```sql
-SELECT entity, datetime as timedate, value as weight, tags.category 
-    FROM inflation.cpi.categories.weight 
-ORDER BY tags.category, datetime
-```
- * dataset with prices in 5 years period (2013-2017), it shows average of yearly prices in all marketing categories
+Select CPI price data by executing the following query: 
 
 ```sql
 SELECT entity, datetime, value, tags.category 
-    FROM inflation.cpi.categories.price 
+  FROM inflation.cpi.categories.price 
 ORDER BY tags.category, datetime
 ```
-Press `Execute` button to run these queries and export results to CSV files (for example, `prices.csv` and `weights.csv`).
 
-Screenshot for dataset with prices
 ![](resources/sql_run.png)
+
+Export query results into `prices.csv` file.
+
 ![](resources/sql_export.png)
 
-> Note that SPSS makes merge of datasets by common columns. So, in the first query we have to write aliases for metric's value as `weight` and for datetime column as `timedate`. Otherwise, we would have got merged dataset with data only for 2017 year. On the other hand, you may try to exclude second `datetime` column from `weights.csv` before merge. But it should be better to give aliases for columns in SQL query.
+### Weights
 
-### Introduction to IBM SPSS GUI
+Select Weight data by executing the following query: 
 
-**Lets look at main menu items for work in the future:**
-![](resources/ibm_spss_gui.png)
+```sql
+SELECT entity, datetime as timedate, value as weight, tags.category 
+  FROM inflation.cpi.categories.weight 
+ORDER BY tags.category, datetime
+```
+
+Export query results into `weights.csv` file.
+
+### Column Aliases
+
+SPSS performs a merge of datasets using equal column names, similar to a `SELF JOIN` in SQL terms. 
+
+To prevent the `datetime` and `value` columns from being used in the merge operation, we change their names in the **Weights** query using column aliases. Otherwise, the merged dataset produced by SPSS would contain data only for year 2017.
+
+## SPSS User Interface
+
+{refactor as table}
+
  * **File** has standard operations for any program: import data from Excel/CSV extensions, create own datasets with .sav extension, connect to OBDC server for data extraction, save files
  * **Data** includes common operations with datasets (select rows, aggregation, merge/split files etc.);
  * **Transform** gives opportunities for data transformation (calculating new variables, convert current dataset into time series or another data structure, turn ordinal variables into dummy variables etc.);
  * **Analyze** contains majority of statistical methods and machine learning algorithms (forecasting, regression, classification, neural networks etc.)
 
-### Import data to IBM SPSS
+![](resources/ibm_spss_gui.png)
 
-Next step is importing of data.
+## Import Data
 
-* **File -> Import Data -> CSV Data...** Choose your CSV documents and check Open button.
+* Open **File -> Import Data -> CSV Data...**.
+* Select CSV files and click Open to import the `prices.sav` and `weights.sav` files.
+
 ![](resources/import_dataset.png)
 
-After importing of your CSV files save them as datasets `prices.sav` and `weights.sav`.
+As a result, data from CSV files is now available as SPSS datasets `prices.sav` and `weights.sav`.
 
-### Merge datasets
+## Merge Datasets
 
-Merge the datasets by opening  the `prices.sav` file and adding the `weight` column from the `weights.sav` file.
+Merge the two datasets by adding the `weight` column from the `weights.sav` dataset to the `prices.sav` dataset.
 
-* **Data -> Merge Files... -> Add Variables...**
-  * Select file you want to merge with current (`weights.sav`)
-  * Set lookup table you want to merge with current (table of weights)
-  * Choose "One-to-Many" link and go to 'Variables' tab in dialogue window.
-  * Move necessary columns (`datetime` from current dataset, `value`, `weight`) to included list, unnecessary columns (`timedate` from the second dataset) - to excluded list. 
-  * To select join key move your column to the field 'Key Variables', in our case, join columns are `tags.category` and `entity`.
+* Open **Data -> Merge Files... -> Add Variables...**
+* Select `weights.sav` dataset
+* Set lookup table you want to merge with current (table of weights)
+* Choose "One-to-Many" link and open 'Variables' tab in the dialog window.
+* Move `datetime` from the current dataset, `value`, `weight` to included list
+* Move `timedate` from the second dataset - to excluded list.
+* Add `tags.category` and `entity` to 'Key Variables' to join the dataset by these columns.
+
 ![](resources/merge_p1.png)
 ![](resources/merge_p2.png)
 
-> Be careful during files union, don't forget about final count of observations and check correctness of merged data. For example, we have files with 10 lines and 27 lines. If you select file with 10 lines as the basic, the final file will contain only 10 lines with new column. Otherwise, final dataset would have 27 lines.
+> Since the two datasets have different row counts, make sure you select all the rows. The final dataset should have 27 lines.
 
 Save the merged dataset into a new file `prices_merged.sav`.
+
 ![](resources/merged_data.png)
 
-## Data Analysis
+## Analyze Dataset
 
-Again, we want to know yearly index of customer basket. Let we compute new column with production of `value` and `(weight/1000)` and then aggregate products by sum function for yearly period. 
+To calculate the weighted CPI for each year we need to multiply the category CPI by its weight devided by 1000 and then to sum the products.
 
-### Create new dataset column
+### Calculate Weighted CPI per Category
 
-Open `prices_merged.sav` file and create new column `categ_ind`.
+Open `prices_merged.sav` dataset and create new column named `categ_ind`.
 
-* **Transform -> Compute Variable...**  
-  * Select columns from the left field into expression field and apply all operations you need. 
-     > We selected `value` and `weight` columns, divided `weight` by 1000 and lastly get production of final partitive and `value`. 
-  * Don't forget to give a name for new column!
+* Open **Transform -> Compute Variable...**  
+* Select columns from the left into the expression editor and specify a formula. 
+* Select `value` and `weight` columns, divided `weight` by 1000 and multiple `value` by adjusted `weight`. 
+* Assign a name to the new column.
+
 ![](resources/transform_compute_variable.png)
 
-We have got `categ_ind` column on the right end of our table.
+As a result, we have `categ_ind` column available in the dataset.
+
 ![](resources/create_new_column.png)
 
-### Data Aggregation
+### Calculate Annual CPI
 
-   There are several ways in SPSS for data aggregation.
+SPSS provides two alternatives to aggregate data by period.
   
-   #### Aggregation with Analyze block
+#### Aggregation using Analyze Menu
+    
+* Open **Analyze -> Reports -> Report Summaries in Columns...** 
+* Move `categ_index` column to 'Summary Variables' field and select `SUM` aggregation function. 
+* Set `datetime` column as the 'break' (grouping) variable. You can format aggregation columns in the dialog window.
 
-   In this case you don't need to create new data column. Analyze tools block allows you to publish all significant results in HTM report.
+![](resources/analysis_reports_summary_columns.png)
     
-   * **Analyze -> Reports -> Report Summaries in Columns...** 
-      * Move `categ_index` column to `Summary variables` field and select aggregation function SUM. 
-      * Set `datetime` column as a break variable. You can format aggregation columns in dialogue window.
-    ![](resources/analysis_reports_summary_columns.png)
+* Publish the report selecting **File -> Export As a Web Report** in the output window.
+* The output contains the processing log and the results window.
     
-   To publish report click in Output window **File -> Export As a Web Report**.
-    There will be log and main section with your calculations.
-    
-   It's example of SPSS output.
     ![](resources/htm_report_spss.png)
     
-   It's screenshot of HTM report's version:
+* The report is available in [HTML format]((resources/index_calculation.htm)).
+
     ![](resources/htm_version_output.png)
+
+#### Aggregation using Data Menu
     
-   HTM file: [Yearly Index Calculation](resources/index_calculation.htm)
-    
-   #### Aggregation with Data block
-    
-   Next way to calculate sum of indexes in year is aggregation function from Data tools block.
-    
-   * **Data -> Aggregate...** 
-      * Set `categ_ind` as summary variable and assign SUM function 
-      * Set `datetime` as break variable (like GROUP BY in SQL)
-      * Column formatting and output writing possibilities are available here too
+* Open **Data -> Aggregate...** 
+* Set `categ_ind` as summary variable and apply `SUM` function
+* Set `datetime` as the 'break' (grouping) variable
+* Customize column formats and output options
+
     ![](resources/data_aggregate_data.png)
     
-   The last column `categ_ind_sum` on the right demonstrates aggregation results.
+* The last column `categ_ind_sum` on the right contains the aggregation results.
+
     ![](resources/aggr_data_new_column.png)
-
-> To change decimals of a scale variable click `Variable View` tab in the lower left corner of SPSS. This tab shows useful info about dataset variables (data type, measure, role etc.) and allows to add/delete/edit columns.
-![](resources/variables_descr.png)
-
-> After user operation (analysis, chart building, open/close file, column computing, merge etc.) SPSS generates output file .spv with procedure commands. Storing of these outputs is a matter of your taste. It dependents on achievements, either you would check correctness of operations or not.
