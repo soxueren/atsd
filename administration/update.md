@@ -9,7 +9,7 @@ copying files, and gracefully restarting ATSD services.
 
 ## Check Revision
 
-* Open the **Admin:Build Info** page
+* Open the **Admin / System Information** page
 * Take note of the current Revision Number
 
 ## Update Command
@@ -40,10 +40,10 @@ The update process may take a few minutes to complete.
 To verify that ATSD is working correctly, open the ATSD web interface:
 
 ```sh
- http://atsd_host:8088/
+ http://atsd_host:8443/
 ```
 
-* Open the **Admin:Build Info** page
+* Open the **Admin / System Information** page
 * Verify that the Revision Number has changed compared to the pre-installation stage
 
 ![](images/ATSD_build_info.png "ATSD_build_info")
