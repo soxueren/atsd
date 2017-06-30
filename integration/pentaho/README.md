@@ -3,6 +3,9 @@
 - [Install ATSD Driver](#install-atsd-driver)
 - [Configure Database Connection](#configure-database-connection)
 - [Import data from ATSD](#import-data-from-atsd)
+- [Verify Connection](#verify-connection)
+- [View Schema](#view-schema)
+- [Import Data](#import-data)
 
 ## Install ATSD Driver
 
@@ -29,7 +32,7 @@
 
 - Enter JDBC URL into the `Custom Connection URL` field, for example:
 
-  `jdbc:axibase:atsd:https://ATSD_HOSTNAME:8443/api/sql;catalog=atsd;tables=inflation*;expandTags=true;trustServerCertificate=true`
+  `jdbc:axibase:atsd:https://ATSD_HOSTNAME:8443/api/sql;tables=inflation*;expandTags=true;trustServerCertificate=true`
 
 > `ATSD_HOSTNAME` is the hostname of the target ATSD instance
 > Review ATSD JDBC [URL parameters](https://github.com/axibase/atsd-jdbc/blob/master/README.md) for additional details.
@@ -55,7 +58,8 @@ Result of `SELECT 1` test query:
 ## View Schema
 
 - Edit `Custom Connection URL` field in ATSD Connection properties
-- Append `;tables="TABLE_NAME_FILTER"` to the end of `Custom Connection URL` field
+- Edit `tables="TABLE_NAME_FILTER"` in `Custom Connection URL` field
+- SET `TABLE_NAME_FILTER` to your table name filter
 
 `TABLE_NAME_FILTER` is a list of comma-separated metrics or metric expressions to be displayed as tables in the MatLab Database Browser.
 
