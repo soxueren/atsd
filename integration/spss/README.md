@@ -2,7 +2,7 @@
 
 ## Overview
 
-The [IBM Statistical Package for the Social Sciences](https://www.ibm.com/analytics/us/en/technology/spss/) is an advanced statistical analysis tool. This guide describes the process of loading data from the Axibase Time Series Database into SPSS and demonstrates how to calculate the value of a derived series, using Weighted Consumer Price Indices as an example.
+The [IBM Statistical Package for the Social Sciences](https://www.ibm.com/analytics/us/en/technology/spss/) (SPSS) is an advanced statistical analysis tool. This guide describes the process of loading data from the Axibase Time Series Database into SPSS and demonstrates how to calculate the value of a derived series, using Weighted Consumer Price Indices as an example.
 
 SPSS provides several options for loading datasets from external data sources, such as Excel files or other databases. To complete this exercise, sample data must be available in your instance of ATSD.
 
@@ -14,9 +14,9 @@ SPSS provides several options for loading datasets from external data sources, s
 
 ![](resources/metrics_entry.png)
 
-The commands contain the Consumer Price Index (CPI) for each category of items in a consumer's basket as well as a weight for each category in the CPI basket. The CPI is tracked from 2013 to 2017 and uses Year 2016 values as the baseline. Alternatively, weight values are also available for 2017, and may be used as the baseline as well. The underlying data is available in the following [Excel file](resources/eng_e02.xls).
+The commands contain the Consumer Price Index (CPI) for each category of items in a consumer's basket as well as a weight for each category in the CPI basket. The CPI is tracked from 2013 to 2017 and uses Year 2016 values as the baseline. Weight values are available for 2017. The underlying data is available in the following [Excel file](resources/eng_e02.xls).
 
-To calculate a weighted inflation index we need to multiply the CPI of each category by its weight divide by 1000 and sum the products.
+To calculate a weighted inflation index we need to multiply the CPI of each category by its weight divided by 1000 and sum the products.
 
 ## Export Data
 
@@ -54,7 +54,7 @@ Export query results into `weights.csv`.
 
 ### Column Aliases
 
-SPSS merges datasets using equivalent column names, similar to the `SELF JOIN` command in a structured query language. 
+SPSS merges datasets using matching column names, similar to the `SELF JOIN` command in SQL syntax. 
 
 To prevent the `datetime` and `value` columns from being merged, their names are changed in the **Weight** query using column aliases, otherwise the merged dataset produced by SPSS will only contain data for 2017.
 
@@ -83,7 +83,7 @@ Data from the CSV files are now available as SPSS datasets `prices.sav` and `wei
 Merge the two datasets by adding the `weight` column from the `weights.sav` dataset to the `prices.sav` dataset.
 
 * Open **Data -> Merge Files... -> Add Variables...**
-* Select `weights.sav` dataset
+* Select `weights.sav` dataset.
 * Select the desired table you want to merge it with. 
 * Choose the "One-to-Many" option and open the 'Variables' tab in the dialog window.
 * Import `datetime` from the current dataset, and add `value` and `weight` to the included list.
@@ -93,7 +93,7 @@ Merge the two datasets by adding the `weight` column from the `weights.sav` data
 ![](resources/merge_p1.png)
 ![](resources/merge_p2.png)
 
-> Since the two datasets have different row counts, make sure you select all the rows, the final dataset should have 27.
+> Since the two datasets have different row counts, make sure you select all the rows. The final dataset should have 27 rows.
 
 Save the merged dataset as a new file `prices_merged.sav`.
 
