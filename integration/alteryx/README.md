@@ -1,16 +1,18 @@
 # Alteryx Designer
 
 - [Create connection](#create-connection)
-- [Build SQL query to database](#create-connection)
+- [Build SQL query to database](#build-sql-query-to-database)
 
 ## Create database connection
 
 - Add **Input Data** tool to your workflow ![](images/input_data.png)
 - Choose **Other Databases→ODBC...** in Input Data configuration, you will see
   **ODBC Connection** dialog.
+
   ![](images/choose_odbc.png)
 
   ![](images/no_dsn.png)
+
 - In case you haven't configured ODBC connection with ATSD you follow
 - instructions in [ODBC-JDBC Bridge](../odbc/README.md), and for completing
   [Configure ODBC Data Source](../odbc/README.md#configure-odbc-data-source)
@@ -37,14 +39,17 @@ manually.
 - All the metric names you see at **Tables** tab satisfy `tables` pattern in
   your DSN URL. To be sure, that this list is in it's actual state, click
   **Refresh** button.
+
   ![](images/metrics_list.png)
 
 - At **Visual Query Tab** you can select columns that you need, add initial
   sorting, grouping, etc.
+
   ![](images/visual_builder.png)
 
 - In **SQL Editor** you can review and edit the query that was built or write
   your own query. To check that the query is valid you can press **Test Query**
+
   ![](images/sql_editor.png)
 
 Press **OK** when your query to ATSD is ready.
