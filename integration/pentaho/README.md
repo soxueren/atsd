@@ -10,12 +10,12 @@
 ## Install ATSD Driver
 
 - Download ATSD [JDBC driver](https://github.com/axibase/atsd-jdbc/releases) with dependencies
-- Copy the driver JAR file into `lib/jdbc` directory in the Report Designer installation directory
+- Copy the driver JAR file into the `lib/jdbc` directory in the Report Designer installation directory
 - Restart the Report Designer
 
 ## Configure Database Connection
 
-- Select 'Data' tab in the properties pane on the right.
+- Select the 'Data' tab in the properties pane on the right.
 
 ![](resources/data_pane.png)
 
@@ -65,8 +65,8 @@ Result of `SELECT 1` test query:
 
 `TABLE_NAME_FILTER` examples:
 - `*java*` for metrics that contains word `java`
-- `custom.metric*` for metrics which name starts with `custom.metric`
-- `*2017` for metrics which name ends with `2017`
+- `custom.metric*` for metrics whose name starts with `custom.metric`
+- `*2017` for metrics whose name ends with `2017`
 
 ATSD Schema can be viewed in SQL Query Designer tool:
 
@@ -78,8 +78,8 @@ ATSD Schema can be viewed in SQL Query Designer tool:
 
 `SQL Query Designer` is used for visual building of a Query:
 
-- Double click on table that you want to include to Query (it will be shown in right pane of `SQL Query Designer`)
-- Select fields inside table (this fields will be included in `SELECT` clause of a Query)
+- Double click on the table that you want to include to Query (it will be shown in right pane of `SQL Query Designer`)
+- Select fields inside the table (these fields will be included in `SELECT` clause of a Query)
 - Optionally add `WHERE`, `GROUP BY` and `HAVING` or `ORDER BY`
 - Click `OK` so your Query will be built and shown in text field
 > Remove newline symbol after `SELECT` keyword  
@@ -94,12 +94,12 @@ ATSD Schema can be viewed in SQL Query Designer tool:
 
 ![](resources/add_query.png)
 
-- Enter a SQL query in the Query editor, for example `SELECT datetime, entity, value FROM jvm_memory_used LIMIT 10`
+- Enter an SQL query in the Query editor, for example `SELECT datetime, entity, value FROM jvm_memory_used LIMIT 10`
 - Click on the 'Preview' button to review the resultset.
 
 ![](resources/preview.png)
 
-- It's possible to build a Query using `SQL Query Designer`
+- It is possible to build a Query using the `SQL Query Designer`
 
 - Click 'OK'. The list of queries will be added to the 'Data' pane.
 - Right-click on the query and choose 'Select Query'. The tree view will now display query results and fields.
@@ -107,7 +107,7 @@ ATSD Schema can be viewed in SQL Query Designer tool:
 ![](resources/data_pane_updated.png)
 
 - Drag and drop these field into the report canvas.
-- Click `Preview` button in the top left corner (eye icon) to view query results.
+- Click the `Preview` button in the top left corner (the eye icon) to view query results.
 
 ![](resources/report.png)
 
