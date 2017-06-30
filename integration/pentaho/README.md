@@ -1,11 +1,16 @@
 # Pentaho Report Designer
 
+- [Prerequisites](#prerequisites)
 - [Install ATSD Driver](#install-atsd-driver)
 - [Configure Database Connection](#configure-database-connection)
 - [Import data from ATSD](#import-data-from-atsd)
 - [Verify Connection](#verify-connection)
 - [View Schema](#view-schema)
 - [Import Data](#import-data)
+
+## Prerequisites
+
+Install Pentaho Report Designer 7.1
 
 ## Install ATSD Driver
 
