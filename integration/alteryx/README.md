@@ -5,7 +5,10 @@
 
 ## Create database connection
 
-- Add **Input Data** tool to your workflow ![](images/input_data.png)
+- Add **Input Data** tool to your workflow
+
+  ![](images/input_data.png)
+
 - Choose **Other Databases→ODBC...** in Input Data configuration, you will see
   **ODBC Connection** dialog.
 
