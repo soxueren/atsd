@@ -10,7 +10,7 @@ The synonyms can be created for all [metadata fields](README.md/#overview).
 
 ## Configuration
 
-The list of synonyms can be specified in the `conf/synonyms.conf` file accessible on the **Admin > Configuration Files** page.
+The list of synonyms can be specified in the `conf/synonym.conf` file accessible on the **Admin > Configuration Files** page.
 
 ## Syntax
 
@@ -61,4 +61,4 @@ However, `location:NYC` and `place:NYC` searches would produce different results
 
 ## Implementation
 
-After the `conf/synonyms.conf` file is updated, the search index must be refreshed by an administrator on the **Admin > Diagnostics > Search Index** page.
+After the `conf/synonym.conf` file is updated, the search index must be refreshed by an administrator on the **Admin > Diagnostics > Search Index** page.
