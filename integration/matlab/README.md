@@ -161,8 +161,8 @@ prices_resultset = res.Data;
 ![](resources/prices_resultset.png)
 
 ```matlab
-% fetch datetime column and convert it to ISO format
-datetimes = cellstr(datestr(prices_resultset(:,1), 'yyyy-mm-ddTHH:MM:SSZ'));
+% fetch datetime column
+datetimes = prices_resultset(:,1);
 ```
 
 ![](resources/datetimes_1.png)
