@@ -2,6 +2,7 @@
 
 - [Create connection](#create-connection)
 - [Build SQL query to database](#build-sql-query-to-database)
+- [Calculate and store derived series](#calculate-and-store-derived-series)
 
 ## Create database connection
 
@@ -64,3 +65,54 @@ Optionally, to see result of the query press **Run Workflow**.
 ![](images/run_workflow.png)
 
 ![](images/results.png)
+
+## Calculate and store derived series
+
+The example is based on this [data](../spss/resources/commands.txt)
+
+In this example you'll need these tools on the image:
+
+![](images/toolset.png)
+
+The final arrangement of the tools in workflow will be:
+
+![](images/arrange.png)
+
+We will go through each node, in order we add them into workflow
+
+1. **Input Data** tool with `inflation.cpi.categories.price` as table.
+2. **Input Data** tool with `inflation.cpi.categories.weight` as table.
+3. **Join** tool. Here it joins by `entity` and `tags.category` fields.
+   Some fields are exluded from join result. `value` fields for
+   `inflation.cpi.categories.price` and `inflation.cpi.categories.weight`
+   are renamed to `price` and `weight` respectively.
+
+   ![](images/join.png)
+
+4. **Formula** tool. It's input should be connected to **J** (_inner join_) output of 3rd
+   node. Next, you need to create new column to store result. Name
+   it `cpi_index`. Fill in the expression to calculate it's value, and don't
+   forget to specify the right resulting data type.
+
+   ![](images/add_column.png)
+
+   ![](images/formula.png)
+
+5. **Summarize** tool. Select fields from above to get actions list as in below
+   on the image. Be careful, **Output Field Name** for computed field must be
+   `value` here.
+
+   ![](images/summarize.png)
+
+6. Choose ODBC Connection as before and enter name for new metric, where we will
+   store result, in this case `bls.gov`, and edit **Output Options** and
+   **Table/FieldName SQL Style** options in configuration dialog.
+
+   ![](images/metric_name.png)
+
+   ![](images/output.png)
+
+And again, if you want to see final result, connect **Browse** tool to the output of **Summarize** node.
+When your workflow is finished, press **Run Workflow**.
+
+   ![](images/calc_results.png)
