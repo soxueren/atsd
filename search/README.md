@@ -16,6 +16,10 @@ The search interface allows finding series records by matching keywords against 
 * Metric tag values
 * Last Insert Date
 
+## Example
+
+![](resources/search-results.png)
+
 ## Syntax
 
 A search query consists of terms and boolean operators. There are two types of terms: keywords and phrases.
