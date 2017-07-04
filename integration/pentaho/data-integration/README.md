@@ -21,7 +21,7 @@ Install Pentaho Data Integration 7.1
 - Create new `Transformation` via File -> New -> Transformation
 - Open `View` pane of new `Transformation`
 
-![](resources/new_transformation.png)
+![](resources/view_pane.png)
 
 - Click with right mouse button on `Database connections` -> New
 - Select `General` in the left menu
