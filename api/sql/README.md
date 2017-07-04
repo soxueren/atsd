@@ -325,7 +325,7 @@ SELECT t1.datetime, t1.entity, t1.value + t2.value AS cpu_sysusr
 WHERE t1.datetime >= '2017-06-15T00:00:00Z'
 ```
 
-The list of all predefined columns may be requested with the `SELECT *` syntax, except for queries with the `GROUP BY` clause and multiple-metric queries from the `atsd_series` table.
+The list of all predefined columns may be requested with the `SELECT *` syntax, except for aggregation queries with the `GROUP BY` clause.
 
 ```sql
 SELECT * FROM "mpstat.cpu_busy" WHERE datetime > current_minute LIMIT 1
@@ -337,7 +337,7 @@ SELECT * FROM "mpstat.cpu_busy" WHERE datetime > current_minute LIMIT 1
 | 1499177532000 | 2017-07-04T14:12:12Z | 5     | null | cpu_busy | nurswgvml007 | null |
 ```
 
-`JOIN` queries with asterisk return columns for all tables merged in the query.
+`JOIN` queries with asterisk return columns for all tables referenced in the query.
 
 ```sql
 SELECT * 
