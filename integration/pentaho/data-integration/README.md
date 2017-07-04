@@ -144,6 +144,8 @@ Preview of `Add ID row 1`:
 
 ![](resources/id_1_preview.png)
 
+
+
 - Open `Design` pane and find `Add sequence` in `Transform` category. Drag and drop it to `Transformation` pane
 - Set `Step name` to `Add ID row 2`
 - Set `Name of value` to `id`
@@ -154,6 +156,8 @@ Preview of `Add ID row 1`:
 Preview of `Add ID row 2`:
 
 ![](resources/id_2_preview.png)
+
+
 
 - Open `Design` pane and find `Merge Join` in `Joins` category. Drag and drop it to `Transformation` pane
 - Connect `Merge Join` to `Add ID row 1` and choose `Right hand side stream of the join`
@@ -173,6 +177,10 @@ Diagram example:
 
 ### Calculations
 
+#### Price * Weight
+
+Element wise multiply 2 columns:
+
 - Open `Design` pane and find `Calculator` in `Transform` category. Drag and drop it to `Transformation` pane
 - Connect `Calculator` to `Merge Join`
 - Configure `Calculator` as shown in the screenshot below:
@@ -183,6 +191,10 @@ Diagram example:
 Preview of `Price * Weight`:
 
 ![](resources/PW_preview.png)
+
+#### Add column with constant 1000
+
+This column will be needed later in element wise division
 
 - Open `Design` pane and find `Add constants` in `Transform` category. Drag and drop it to `Transformation` pane
 - Connect `Add constants` to `Price * Weight`
@@ -195,6 +207,10 @@ Preview of `1000`:
 
 ![](resources/1000_preview.png)
 
+#### Divide by 1000
+
+Add new column that have Price * Weight value divided by 1000 (bacause weight is a proportion from 1000)
+
 - Open `Design` pane and find `Calculator` in `Transform` category. Drag and drop it to `Transformation` pane
 - Connect `Calculator` to `1000`
 - Configure `Calculator` as shown in the screenshot below:
@@ -206,6 +222,10 @@ Preview of `1000`:
 
 ![](resources/division_preview.png)
 
+#### Group By datetime
+
+Group by rows by `datetime` and sum weighted prices values (for each year)
+
 - Open `Design` pane and find `Group by` in `Statistics` category. Drag and drop it to `Transformation` pane
 - Connect `Group by` to `/1000`
 - Configure `Group by` as shown in the screenshot below:
@@ -216,6 +236,10 @@ Preview of `1000`:
 Preview of `Group by`:
 
 ![](resources/group_by_preview.png)
+
+#### Add column with constant 'bls.gov' as entity value
+
+This column will be needed later in element wise division
 
 - Open `Design` pane and find `Add constants` in `Transform` category. Drag and drop it to `Transformation` pane
 - Connect `Add constants` to `Group by`
@@ -239,7 +263,7 @@ Preview of `Entity`:
 
 > For INSERT operation Data Integration require ATSD to have that metric be created!
 
-Diagram example:
+Complete diagram example:
 
 ![](resources/result_diagram.png)
 
