@@ -175,6 +175,10 @@ ORDER BY datetime, tags.category
 
 > For INSERT operation Data Integration require ATSD to have that metric be created
 
+Transformation pane after it should look like that:
+
+![](resources/result.png)
+
 ## Reference
 
 Used Data Integration modules:
