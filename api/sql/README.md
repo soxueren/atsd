@@ -328,6 +328,18 @@ WHERE t1.datetime >= '2017-06-15T00:00:00Z'
 The list of all predefined columns may be requested with the `SELECT *` syntax, except for queries with the `GROUP BY` clause and multiple-metric queries from the `atsd_series` table.
 
 ```sql
+SELECT * FROM "mpstat.cpu_busy" WHERE datetime > current_minute LIMIT 1
+```
+
+```ls
+| time          | datetime             | value | text | metric   | entity       | tags | 
+|---------------|----------------------|-------|------|----------|--------------|------| 
+| 1499177532000 | 2017-07-04T14:12:12Z | 5     | null | cpu_busy | nurswgvml007 | null |
+```
+
+`JOIN` queries with asterisk return columns for all tables merged in the query.
+
+```sql
 SELECT * 
   FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
@@ -336,18 +348,16 @@ WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
 ```
 
 ```ls
-| t1.entity    | t1.datetime          | t1.value | t2.entity    | t2.datetime          | t2.value | 
-|--------------|----------------------|----------|--------------|----------------------|----------| 
-| nurswgvml006 | 2017-06-16T13:00:01Z | 37       | null         | null                 | null     | 
-| null         | null                 | null     | nurswgvml006 | 2017-06-16T13:00:12Z | 67932    | 
-| nurswgvml006 | 2017-06-16T13:00:17Z | 16       | null         | null                 | null     | 
-| null         | null                 | null     | nurswgvml006 | 2017-06-16T13:00:27Z | 73620    | 
+| t1.time       | t1.datetime          | t1.value          | t1.text | t1.metric | t1.entity    | t1.tags | t2.time       | t2.datetime          | t2.value | t2.text | t2.metric | t2.entity    | t2.tags | 
+|---------------|----------------------|-------------------|---------|-----------|--------------|---------|---------------|----------------------|----------|---------|-----------|--------------|---------| 
+| 1497618006000 | 2017-06-16T13:00:06Z | 5.050000190734863 | null    | cpu_busy  | nurswgvml006 | null    | 1497618006000 | 2017-06-16T13:00:06Z | 78328    | null    | memfree   | nurswgvml006 | null    | 
+| null          | null                 | null              | null    | null      | null         | null    | 1497618021000 | 2017-06-16T13:00:21Z | 76980    | null    | memfree   | nurswgvml006 | null    | 
 ```
 
 In the case of a `JOIN` query, the `SELECT *` syntax can be applied to each table separately.
 
 ```sql
-SELECT t1.*, t2.datetime, t2.value 
+SELECT t1.datetime, t1.value, t2.*
   FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
@@ -355,12 +365,10 @@ WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
 ```
 
 ```ls
-| t1.entity    | t1.datetime          | t1.value | t2.datetime          | t2.value | 
-|--------------|----------------------|----------|----------------------|----------| 
-| nurswgvml006 | 2017-06-16T13:00:01Z | 37       | null                 | null     | 
-| null         | null                 | null     | 2017-06-16T13:00:12Z | 67932    | 
-| nurswgvml006 | 2017-06-16T13:00:17Z | 16       | null                 | null     | 
-| null         | null                 | null     | 2017-06-16T13:00:27Z | 73620    | 
+| t1.datetime          | t1.value          | t2.time       | t2.datetime          | t2.value | t2.text | t2.metric | t2.entity    | t2.tags | 
+|----------------------|-------------------|---------------|----------------------|----------|---------|-----------|--------------|---------| 
+| 2017-06-16T13:00:06Z | 5.050000190734863 | 1497618006000 | 2017-06-16T13:00:06Z | 78328    | null    | memfree   | nurswgvml006 | null    | 
+| null                 | null              | 1497618021000 | 2017-06-16T13:00:21Z | 76980    | null    | memfree   | nurswgvml006 | null    | 
 ```
 
 The `time` and `datetime` columns are interchangeable and can be used as equivalents, for instance in the `GROUP BY` clause and the `SELECT` expression.
@@ -2733,7 +2741,7 @@ Given the amount of data stored in ATSD, it is easy to build a query that may ca
 Consider the following recommendations when developing queries:
 
 - Pre-test queries on a smaller dataset in ATSD-development instance.
-- Avoid `SELECT * FROM metric` queries without any conditions.
+- Avoid queries without any conditions. Apply LIMIT to reduce the number of rows returned.
 - Add the `WHERE` clause. Include as many conditions to the `WHERE` clause as possible, in particular add entity and [interval conditions](#interval-condition).
 - Make `WHERE` conditions narrow and specific, for example, specify a smaller time interval.
 - Avoid the `ORDER BY` clause since it may cause a full scan and a copy of data to a temporary table.
