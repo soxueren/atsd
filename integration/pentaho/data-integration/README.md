@@ -4,7 +4,8 @@
 - [Install ATSD Driver](#install-atsd-driver)
 - [Configure Database Connection](#configure-database-connection)
 - [View Schema](#view-schema)
-- [Transformation of ATSD data](#transformation-of-atsd-data)
+- [Load data](#load-data)
+- [Calculate Derived Series](#calculate-derived-series)
 
 ## Prerequisites
 
@@ -62,7 +63,7 @@ Click on `Explore` button to view ATSD Schema:
 
 ![](resources/database_explorer.png)
 
-## Transformation of ATSD data
+## Load Data
 
 - Drag and Drop `ATSD Connection` from `View` pane (Database connections folder)
 - Set `Step name` to a unique name in this `Transformation`
@@ -73,7 +74,11 @@ Example:
 
 ![](resources/table_input.png)
 
-### Example of a Transformation
+## Calculate Derived Series
+
+To calculate the weighted CPI for each year, the CPI value for a given category must be multiplied by its weight and divided by 1000. The resulting products are summed to give the value of the weighted CPI.
+
+### Load data from ATSD
 
 - Create 3 `Table input` from ATSD (`Prices`, `Datetimes` and `Weights`):
 > `Prices` has weighted prices for categories from 2013-2017 for 10 categories. SQL query:
@@ -101,13 +106,32 @@ FROM 'inflation.cpi.categories.weight'
 ORDER BY datetime, tags.category
 ```
 
+Example of `Datetimes`:
+
+![](resources/datetimes.png)
+
+### Duplicating Weights values
+
+In that step we will get `Weights` values repeated for each year from 2013 to 2017
+
 - Open `Design` pane and find `Join Rows (cartesian product)` in `Joins` category. Drag and drop it to `Transformation` pane.
 - Connect your `Join Rows (cartesian product)` with `Datetimes` and `Weights` using `Input Connection` button. That button shows when you hover your mouse pointer over `Join Rows` or any item inside `Transformation` pane
-> That operation will return catresian product of 2 tables (in our case we will get `Weights` repeated for each year from 2013 to 2017)
 
 ![](resources/connections.png)
 
 > After that by "connect" we will be meaning that way of conenction
+
+Diagram example:
+
+![](resources/join_diagram.png)
+
+Preview of `Join Rows (cartesian product)`:
+
+![](resources/join_preview.png)
+
+### Merging two tables into one
+
+In that step we will append two tables to perform calculations inside one table. For appending these tables we need to add column with unique identificators, because of Join operations in Pentaho Data Integration work that way.
 
 - Open `Design` pane and find `Add sequence` in `Transform` category. Drag and drop it to `Transformation` pane
 - Set `Step name` to `Add ID row 1`
@@ -116,12 +140,20 @@ ORDER BY datetime, tags.category
 - Connect `Add ID row 1` to `Prices`
 > That operation will add column `id` to input (unique integer identificator)
 
+Preview of `Add ID row 1`:
+
+![](resources/id_1_preview.png)
+
 - Open `Design` pane and find `Add sequence` in `Transform` category. Drag and drop it to `Transformation` pane
 - Set `Step name` to `Add ID row 2`
 - Set `Name of value` to `id`
 - Set `Counter name` to `id_2`
 - Connect `Add ID row 2` to `Join Rows (cartesian product)`
 > That operation will add column `id` to input (unique integer identificator)
+
+Preview of `Add ID row 2`:
+
+![](resources/id_2_preview.png)
 
 - Open `Design` pane and find `Merge Join` in `Joins` category. Drag and drop it to `Transformation` pane
 - Connect `Merge Join` to `Add ID row 1` and choose `Right hand side stream of the join`
@@ -131,12 +163,26 @@ ORDER BY datetime, tags.category
 
 ![](resources/merge_join.png)
 
+Preview of `Merge Join`:
+
+![](resources/merge_preview.png)
+
+Diagram example:
+
+![](resources/merge_diagram.png)
+
+### Calculations
+
 - Open `Design` pane and find `Calculator` in `Transform` category. Drag and drop it to `Transformation` pane
 - Connect `Calculator` to `Merge Join`
 - Configure `Calculator` as shown in the screenshot below:
 > That operation will calculate new field `P*W` (price multiplied by weight)
 
 ![](resources/calculator_1.png)
+
+Preview of `Price * Weight`:
+
+![](resources/PW_preview.png)
 
 - Open `Design` pane and find `Add constants` in `Transform` category. Drag and drop it to `Transformation` pane
 - Connect `Add constants` to `Price * Weight`
@@ -145,12 +191,20 @@ ORDER BY datetime, tags.category
 
 ![](resources/constants_1.png)
 
+Preview of `1000`:
+
+![](resources/1000_preview.png)
+
 - Open `Design` pane and find `Calculator` in `Transform` category. Drag and drop it to `Transformation` pane
 - Connect `Calculator` to `1000`
 - Configure `Calculator` as shown in the screenshot below:
 > That operation will calculate new field `P*W/1000` (price multiplied by weight and divided by 1000)
 
 ![](resources/calculator_2.png)
+
+Preview of `1000`:
+
+![](resources/division_preview.png)
 
 - Open `Design` pane and find `Group by` in `Statistics` category. Drag and drop it to `Transformation` pane
 - Connect `Group by` to `/1000`
@@ -159,12 +213,22 @@ ORDER BY datetime, tags.category
 
 ![](resources/group_by.png)
 
+Preview of `Group by`:
+
+![](resources/group_by_preview.png)
+
 - Open `Design` pane and find `Add constants` in `Transform` category. Drag and drop it to `Transformation` pane
 - Connect `Add constants` to `Group by`
 - Configure `Add constants` as shown in the screenshot below:
 > That operation will add new column `entity` that have value `bls.gov` for each row
 
 ![](resources/constants_2.png)
+
+Preview of `Entity`:
+
+![](resources/entity_preview.png)
+
+### Load derived series to ATSD
 
 - Open `Design` pane and find `Insert / Update` in `Output` category. Drag and drop it to `Transformation` pane
 - Connect `Insert / Update` to `Entity`
@@ -173,11 +237,30 @@ ORDER BY datetime, tags.category
 
 ![](resources/insert.png)
 
-> For INSERT operation Data Integration require ATSD to have that metric be created
+> For INSERT operation Data Integration require ATSD to have that metric be created!
 
-Transformation pane after it should look like that:
+Diagram example:
 
-![](resources/result.png)
+![](resources/result_diagram.png)
+
+### Check results
+
+You can check the results with that SQL query:
+
+```sql
+SELECT * 
+FROM 'inflation.cpi.composite.price' 
+```
+
+```ls
+| entity  | datetime                 | value              |
+|---------|--------------------------|--------------------|
+| bls.gov | 2013-01-01T00:00:00.000Z | 100.89632897771745 |
+| bls.gov | 2014-01-01T00:00:00.000Z | 101.29925299205442 |
+| bls.gov | 2015-01-01T00:00:00.000Z | 100.60762066801131 |
+| bls.gov | 2016-01-01T00:00:00.000Z | 100.00753061641115 |
+| bls.gov | 2017-01-01T00:00:00.000Z | 100.12572021999999 |
+```
 
 ## Reference
 
