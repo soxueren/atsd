@@ -17,8 +17,8 @@
 
   ![](images/no_dsn.png)
 
-- In case you haven't configured ODBC connection with ATSD you follow
-- instructions in [ODBC-JDBC Bridge](../odbc/README.md), and for completing
+- In case you haven't configured ODBC connection with ATSD you nedd to follow
+  instructions in [ODBC-JDBC Bridge](../odbc/README.md), and for completing
   [Configure ODBC Data Source](../odbc/README.md#configure-odbc-data-source)
   step of this instuction you can open **ODBC Data Source Administrator** window
   by pressing **ODBC Admin** button in **ODBC Connection** dialog. Apparently
