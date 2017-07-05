@@ -134,8 +134,8 @@ Preview of `Join Rows (cartesian product)`:
 In that step we will append two tables to perform calculations inside one table. This table have unique row identifier (pair `datetime - tags.category`) so we can join them with INNER JOIN operation.
 
 - Open `Design` pane and find `Merge Join` in `Joins` category. Drag and drop it to `Transformation` pane
-- Connect `Merge Join` to `Add ID row 1` and choose `Right hand side stream of the join`
-- Connect `Merge Join` to `Add ID row 2` and choose `Left hand side stream of the join`
+- Connect `Merge Join` to `Join Rows (cartesian product)` and choose `Right hand side stream of the join`
+- Connect `Merge Join` to `Prices` and choose `Left hand side stream of the join`
 - Configure `Merge Join` as shown in the screenshot below:
 > That operation will join 2 tables into one table
 
