@@ -84,7 +84,7 @@ To calculate the weighted CPI for each year, the CPI value for a given category 
 > `Prices` has weighted prices for categories from 2013-2017 for 10 categories. SQL query:
 
 ```sql
-SELECT value
+SELECT value, tags.category, datetime
 FROM 'inflation.cpi.categories.price'
 ORDER BY datetime, tags.category
 ```
@@ -101,7 +101,7 @@ ORDER BY datetime
 > `Weights` has weights for 10 categories for 2017 year. SQL query:
 
 ```sql
-SELECT value
+SELECT tags.category, value
 FROM 'inflation.cpi.categories.weight'
 ORDER BY datetime, tags.category
 ```
@@ -110,7 +110,7 @@ Example of `Datetimes`:
 
 ![](resources/datetimes.png)
 
-### Duplicating Weights values
+### Duplicate Weights values
 
 In that step we will get `Weights` values repeated for each year from 2013 to 2017
 
@@ -129,35 +129,9 @@ Preview of `Join Rows (cartesian product)`:
 
 ![](resources/join_preview.png)
 
-### Merging two tables into one
+### Merge two tables into one
 
-In that step we will append two tables to perform calculations inside one table. For appending these tables we need to add column with unique identificators, because of Join operations in Pentaho Data Integration work that way.
-
-- Open `Design` pane and find `Add sequence` in `Transform` category. Drag and drop it to `Transformation` pane
-- Set `Step name` to `Add ID row 1`
-- Set `Name of value` to `id`
-- Set `Counter name` to `id_1`
-- Connect `Add ID row 1` to `Prices`
-> That operation will add column `id` to input (unique integer identificator)
-
-Preview of `Add ID row 1`:
-
-![](resources/id_1_preview.png)
-
-
-
-- Open `Design` pane and find `Add sequence` in `Transform` category. Drag and drop it to `Transformation` pane
-- Set `Step name` to `Add ID row 2`
-- Set `Name of value` to `id`
-- Set `Counter name` to `id_2`
-- Connect `Add ID row 2` to `Join Rows (cartesian product)`
-> That operation will add column `id` to input (unique integer identificator)
-
-Preview of `Add ID row 2`:
-
-![](resources/id_2_preview.png)
-
-
+In that step we will append two tables to perform calculations inside one table. This table have unique row identifier (pair `datetime - tags.category`) so we can join them with INNER JOIN operation.
 
 - Open `Design` pane and find `Merge Join` in `Joins` category. Drag and drop it to `Transformation` pane
 - Connect `Merge Join` to `Add ID row 1` and choose `Right hand side stream of the join`
@@ -175,6 +149,19 @@ Diagram example:
 
 ![](resources/merge_diagram.png)
 
+### Remove redundant columns
+
+- Open `Design` pane and find `Select values` in `Transform` category. Drag and drop it to `Transformation` pane
+- Connect `Select values` to `Merge Join`
+- Configure `Select values` as shown in the screenshot below:
+> That operation will join 2 tables into one table
+
+![](resources/remove.png)
+
+Preview of `Remove columns`:
+
+![](resources/remove_preview.png)
+
 ### Calculations
 
 #### Price * Weight
@@ -182,7 +169,7 @@ Diagram example:
 Element wise multiply 2 columns:
 
 - Open `Design` pane and find `Calculator` in `Transform` category. Drag and drop it to `Transformation` pane
-- Connect `Calculator` to `Merge Join`
+- Connect `Calculator` to `Remove columns`
 - Configure `Calculator` as shown in the screenshot below:
 > That operation will calculate new field `P*W` (price multiplied by weight)
 
