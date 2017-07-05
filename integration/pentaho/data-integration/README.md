@@ -242,7 +242,7 @@ Preview of `Entity`:
 
 - Open `Design` pane and find `Insert / Update` in `Output` category. Drag and drop it to `Transformation` pane
 - Connect `Insert / Update` to `Entity`
-- Configure `Insert / Update` as shown in the screenshot below:
+- Configure `Insert / Update` as shown in the screenshot below (`Tagret table` is a tagret metric in which we want to put the data):
 > That operation will insert calculated data as new metric in ATSD
 
 ![](resources/insert.png)
