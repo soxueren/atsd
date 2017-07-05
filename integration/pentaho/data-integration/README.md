@@ -154,7 +154,6 @@ Diagram example:
 - Open `Design` pane and find `Select values` in `Transform` category. Drag and drop it to `Transformation` pane
 - Connect `Select values` to `Merge Join`
 - Configure `Select values` as shown in the screenshot below:
-> That operation will join 2 tables into one table
 
 ![](resources/remove.png)
 
