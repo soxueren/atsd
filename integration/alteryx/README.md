@@ -145,8 +145,8 @@ We will go through each node, in order we add them into workflow
    > ![](images/join_output.png)
 
 6. **Formula** tool. Its input should be connected to the **J** (_inner join_)
-   output of the 3rd node. Next, you need to create anew column to store result. Name
-   it `value`. Fill in the expression to calculate it, and don't
+   output of the 3rd node. Next, you need to create a new column to store result.
+   Name it `value`. Fill in the expression to calculate it, and don't
    forget to specify the correct resultant data type.
 
    ![](images/add_column.png)
@@ -163,13 +163,13 @@ We will go through each node, in order we add them into workflow
 
    ![](images/sort.png)
 
-9. **Formula** tool. So store our new metric to ATSD we need to add `entity`
+9. **Formula** tool. So store our new series to ATSD we need to add `entity`
    column. It is done by **Formula** tool. There entity is `bls.gov`
 
    ![](images/entity.png)
 
 10. **Output Data** tool. Choose ODBC Connection as before and enter a name for
-    the new metric, where we will store the result, in this case
+    the _existing_ metric, where we will store the result, in this case
     `inflation.cpi.composite.price`, and edit **Output Options** and
     **Table/FieldName SQL Style** options in configuration dialog.
 
