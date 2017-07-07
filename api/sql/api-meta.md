@@ -1,8 +1,8 @@
-# SQL Query API Endpoint
+# SQL Query Metadata API Endpoint
 
 ## Description
 
-Retrieve SQL query metadata in JSON format without executing the query.
+Retrieve SQL query result metadata in JSON format without executing the query.
 
 ## Authorization
 
