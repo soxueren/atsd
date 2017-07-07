@@ -1830,6 +1830,14 @@ The `PERCENTILE` function accepts `percentile` parameter (0 to 100) and a numeri
 
 `PERCENTILE(value, 0)` is equal to `MIN(value)` whereas `PERCENTILE(value, 100)` is equal to `MAX(value)`.
 
+### FIRST
+
+The `FIRST` function returns value of the first sample (or value of expression `expr` for the first row) in the set which is ordered by datetime in ascending order.
+
+### LAST
+
+The `LAST` function returns value of the last sample (or value of expression `expr` for the last row) in the set which is ordered by datetime in ascending order.
+
 ### MIN_VALUE_TIME
 
 The `MIN_VALUE_TIME` function returns the Unix time in milliseconds (LONG datatype) of the first occurrence of the **minimum** value.
@@ -2828,6 +2836,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 
 - [Average Value](examples/aggregate.md)
 - [Percentiles](examples/aggregate-percentiles.md)
+- [First/Last](examples/aggregate-first-last.md)
 - [Counter Aggregator](examples/aggregate-counter.md)
 - [Maximum Value Time](examples/aggregate-max-value-time.md)
 - [Period Aggregation](examples/aggregate-period.md)

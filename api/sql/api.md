@@ -2,7 +2,9 @@
 
 ## Description
 
-Execute an SQL query and retrieve results in CSV or JSON format.
+Execute an SQL query and retrieve query results in CSV or JSON format, including optional result metadata.
+
+To obtain result metadata without executing the query, submit the quesy to [`/api/sql/meta`](api-meta.md) endpoint.
 
 ## Authorization
 
