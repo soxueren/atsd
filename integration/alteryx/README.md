@@ -27,7 +27,7 @@ as example. One of the ways to load it into ATSD is described
 - In case you haven't configured ODBC connection with ATSD before you need to
   follow instructions in [ODBC-JDBC Bridge](../odbc/README.md), and in order to
   complete the [Configure ODBC Data Source](../odbc/README.md#configure-odbc-data-source)
-  step of thes instructions you can open the **ODBC Data Source Administrator**
+  step of these instructions you can open the **ODBC Data Source Administrator**
   window by pressing **ODBC Admin** button in the **ODBC Connection** dialog. You will
   want to use the `tables` connection property in DSN URL set to some
   value. It allows you choose a table from the metrics list that satisfy some pattern.
@@ -57,7 +57,7 @@ After creating a connection you will see the **Choose Table or Specify Query** d
 It allows you to build the query to database by choosing table or specifying
 it's text manually.
 
-- All the metric names you see at **Tables** tab satisfy `tables` pattern in
+- All the metric names you see in the **Tables** tab satisfy `tables` pattern from
   your DSN URL. To be sure, that this list is the most current version, click
   the **Refresh** button.
 
@@ -84,7 +84,7 @@ it's text manually.
   your own query. To check connection press **Test Query**
 
   > **Note:**
-  > Don't use **Test Query** to validate the query sine it checks only `SELECT` part
+  > Don't use **Test Query** to validate the query since it checks only `SELECT` part
   > of the query, so if it has errors in another part, they won't be reported.
 
   ![](images/sql_editor.png)
@@ -101,8 +101,8 @@ Optionally, to see result of the query press **Run Workflow**.
 
 ## Calculate and store derived series
 
-It is a demonstration of creating a Alteryx Designer workflow that uses
-sereis from ATSD to create new series and store them back to ATSD.
+It is a demonstration of creating an Alteryx Designer workflow that uses
+series from ATSD to create new series and store them back to ATSD.
 
 The final arrangement of the tools in the workflow will be:
 
@@ -111,7 +111,7 @@ The final arrangement of the tools in the workflow will be:
 We will go through each node, in order we add them into workflow
 
 1. **Input Data** tool.
-   Repeate steps in previous section for this tool choose
+   Repeat steps in previous section for this tool choose
    `inflation.cpi.categories.price` table. Select `datetime`,
    `value` columns and manually add `tags.category` as shown below.
 
@@ -139,7 +139,7 @@ We will go through each node, in order we add them into workflow
 
    > **Note**
    >
-   > To check input or output of any node, _run the worflow_ and click its
+   > To check input or output of any node, _run the workflow_ and click its
    > input/output. You will see something like this
    >
    > ![](images/join_output.png)
@@ -177,7 +177,7 @@ We will go through each node, in order we add them into workflow
 
     ![](images/output.png)
 
-11. **Browse** tool. We add it for covenience to quickly view the final result.
+11. **Browse** tool. We add it for convenience to quickly view the final result.
 
 When your workflow is finished, press **Run Workflow**.
 The data will be fetched, processed, and new data stored. As said before, you can
