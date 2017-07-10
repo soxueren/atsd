@@ -261,16 +261,16 @@ The entity column is required to store computed metrics back in ATSD.
 ### Store Derived Series in ATSD
 
 - Open the `Design` pane.
-- Locate `Insert / Update` in the `Output` category. Drag and drop it to `Transformation` pane.
-- Connect `Insert / Update` to `Entity`.
-- Configure `Insert / Update` as shown in the screenshot below.
+- Locate `Table output` in the `Output` category. Drag and drop it to `Transformation` pane.
+- Connect `Table output` to `Entity`.
+- Configure `Table output` as shown in the screenshot below.
 
 > This operation will insert calculated data into ATSD.
 
 ![](resources/insert.png)
 
 - The `Target table` is the name of the metric which will contain the calculated series.
-- The metric doesn't have to be visible in the Schema, however it must exist in the datase for the insertion to work.
+- The metric doesn't have to be visible in the Schema
 
 Complete diagram:
 
