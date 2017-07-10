@@ -34,9 +34,8 @@ One of the ways to load dataset into ATSD is to send these commands with
 
   ![](images/no_dsn.png)
 
-- In case you have not configured the ODBC connection with ATSD before, you need to
-  follow the instructions shown here: [ODBC-JDBC Bridge](../odbc/README.md), and in order to
-  complete the [Configure ODBC Data Source](../odbc/README.md#configure-odbc-data-source)
+- Connect Alteryx and ATSD with [ODBC-JDBC Bridge](../odbc/README.md), and in
+  order to complete the [Configure ODBC Data Source](../odbc/README.md#configure-odbc-data-source)
   step of these instructions you must open the **ODBC Data Source Administrator**
   window by pressing the **ODBC Admin** button in the the **ODBC Connection** dialog. You will
   want to use the `tables` connection property in the DSN URL, set to some
