@@ -258,6 +258,10 @@ colnames = {'entity', 'datetime', 'value'};
 insert(conn_atsd, 'inflation.cpi.composite.price', colnames, payload);
 ```
 
+### MatLab script file
+
+- [Link to file](resources/script.m) that contains all the steps
+
 ## Reference
 
 MATLAB functions:
