@@ -83,7 +83,7 @@ Click on the `Explore` button to view the schema:
 
 ## Calculate Derived Series
 
-To calculate the category-weighted consumer price index (CPI) for each year, the CPI value for a given category must be multiplied by its weight and divided by 1000 since its weights are stored as units of 1000 (not as 100). The resulting products are summed as the weighted CPI for the given year.
+To calculate the category-weighted consumer price index (CPI) for each year, the CPI value for a given category must be multiplied by its weight and divided by 1000 since its weights are stored as units of 1000 (not 100). The resulting products are summed as the weighted CPI for the given year.
 
 ### Load Data from ATSD
 
@@ -118,12 +118,12 @@ ORDER BY datetime, tags.category
 
 ### Duplicate Weights
 
-Since the `Weights` are available only for one year, we will assume that the category weights are constant through the timespan and therefore can be repeated for each year from 2013 to 2017.
+Since the `Weights` are available for only one year, we will assume that the category weights are constant through the timespan and therefore can be repeated for each year from 2013 to 2017.
 
 - Open the `Design` pane.
 - Locate `Join Rows (cartesian product)` in `Joins` category. 
 - Drag and drop it to the `Transformation` pane.
-- Connect your `Join Rows (cartesian product)` with `Datetimes` and `Weights` using `Input Connection` button. That button is displayed on mouse over `Join Rows` or any item inside the `Transformation` pane.
+- Connect your `Join Rows (cartesian product)` with `Datetimes` and `Weights` using `Input Connection` button. That button is displayed when the mouse hovers over `Join Rows` or any item inside the `Transformation` pane.
 
 ![](resources/connections.png)
 
@@ -160,7 +160,7 @@ Diagram example:
 ### Remove Redundant Columns
 
 - Open the `Design` pane.
-- Locate `Select values` optopn in the `Transform` category. 
+- Locate the `Select values` option in the `Transform` category. 
 - Drag and drop it to `Transformation` pane.
 - Connect `Select values` to `Merge Join`.
 - Configure `Select values` as shown in the screenshot below:
@@ -269,7 +269,7 @@ The entity column is required to store computed metrics back in ATSD.
 
 ![](resources/insert.png)
 
-- The `Tagret table` is the name of the metric which will contain the calculated series.
+- The `Target table` is the name of the metric which will contain the calculated series.
 - The metric doesn't have to be visible in the Schema, however it must exist in the datase for the insertion to work.
 
 Complete diagram:
@@ -278,7 +278,7 @@ Complete diagram:
 
 ### Check Results
 
-Loging in the ATSD and execute the following query in the SQL tab to verify the results:
+Log in to ATSD and execute the following query in the SQL tab to verify the results:
 
 ```sql
 SELECT * 
