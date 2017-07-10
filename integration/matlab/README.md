@@ -1,5 +1,6 @@
 # MATLAB
 
+- [Prerequisites](#prerequisites)
 - [Install ATSD Driver](#install-atsd-driver)
 - [Configure Database Connection](#configure-database-connection)
 - [Verify Connection](#verify-connection)
@@ -7,6 +8,10 @@
 - [Load Data](#load-data)
 - [Write Data](#write-data)
 - [Calculate Derived Series](#calculate-derived-series)
+
+## Prerequisites
+
+Install MatLab R2017a with Database Toolbox
 
 ## Install ATSD Driver
 
@@ -156,8 +161,8 @@ prices_resultset = res.Data;
 ![](resources/prices_resultset.png)
 
 ```matlab
-% fetch datetime column and convert it to ISO format
-datetimes = cellstr(datestr(prices_resultset(:,1), 'yyyy-mm-ddTHH:MM:SSZ'));
+% fetch datetime column
+datetimes = prices_resultset(:,1);
 ```
 
 ![](resources/datetimes_1.png)

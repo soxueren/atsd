@@ -325,7 +325,19 @@ SELECT t1.datetime, t1.entity, t1.value + t2.value AS cpu_sysusr
 WHERE t1.datetime >= '2017-06-15T00:00:00Z'
 ```
 
-The list of all predefined columns may be requested with the `SELECT *` syntax, except for queries with the `GROUP BY` clause and multiple-metric queries from the `atsd_series` table.
+The list of all predefined columns may be requested with the `SELECT *` syntax, except for aggregation queries with the `GROUP BY` clause.
+
+```sql
+SELECT * FROM "mpstat.cpu_busy" WHERE datetime > current_minute LIMIT 1
+```
+
+```ls
+| time          | datetime             | value | text | metric   | entity       | tags | 
+|---------------|----------------------|-------|------|----------|--------------|------| 
+| 1499177532000 | 2017-07-04T14:12:12Z | 5     | null | cpu_busy | nurswgvml007 | null |
+```
+
+`JOIN` queries with asterisk return columns for all tables referenced in the query.
 
 ```sql
 SELECT * 
@@ -336,18 +348,16 @@ WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
 ```
 
 ```ls
-| t1.entity    | t1.datetime          | t1.value | t2.entity    | t2.datetime          | t2.value | 
-|--------------|----------------------|----------|--------------|----------------------|----------| 
-| nurswgvml006 | 2017-06-16T13:00:01Z | 37       | null         | null                 | null     | 
-| null         | null                 | null     | nurswgvml006 | 2017-06-16T13:00:12Z | 67932    | 
-| nurswgvml006 | 2017-06-16T13:00:17Z | 16       | null         | null                 | null     | 
-| null         | null                 | null     | nurswgvml006 | 2017-06-16T13:00:27Z | 73620    | 
+| t1.time       | t1.datetime          | t1.value          | t1.text | t1.metric | t1.entity    | t1.tags | t2.time       | t2.datetime          | t2.value | t2.text | t2.metric | t2.entity    | t2.tags | 
+|---------------|----------------------|-------------------|---------|-----------|--------------|---------|---------------|----------------------|----------|---------|-----------|--------------|---------| 
+| 1497618006000 | 2017-06-16T13:00:06Z | 5.050000190734863 | null    | cpu_busy  | nurswgvml006 | null    | 1497618006000 | 2017-06-16T13:00:06Z | 78328    | null    | memfree   | nurswgvml006 | null    | 
+| null          | null                 | null              | null    | null      | null         | null    | 1497618021000 | 2017-06-16T13:00:21Z | 76980    | null    | memfree   | nurswgvml006 | null    | 
 ```
 
 In the case of a `JOIN` query, the `SELECT *` syntax can be applied to each table separately.
 
 ```sql
-SELECT t1.*, t2.datetime, t2.value 
+SELECT t1.datetime, t1.value, t2.*
   FROM "mpstat.cpu_busy" t1
   OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
@@ -355,12 +365,10 @@ WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
 ```
 
 ```ls
-| t1.entity    | t1.datetime          | t1.value | t2.datetime          | t2.value | 
-|--------------|----------------------|----------|----------------------|----------| 
-| nurswgvml006 | 2017-06-16T13:00:01Z | 37       | null                 | null     | 
-| null         | null                 | null     | 2017-06-16T13:00:12Z | 67932    | 
-| nurswgvml006 | 2017-06-16T13:00:17Z | 16       | null                 | null     | 
-| null         | null                 | null     | 2017-06-16T13:00:27Z | 73620    | 
+| t1.datetime          | t1.value          | t2.time       | t2.datetime          | t2.value | t2.text | t2.metric | t2.entity    | t2.tags | 
+|----------------------|-------------------|---------------|----------------------|----------|---------|-----------|--------------|---------| 
+| 2017-06-16T13:00:06Z | 5.050000190734863 | 1497618006000 | 2017-06-16T13:00:06Z | 78328    | null    | memfree   | nurswgvml006 | null    | 
+| null                 | null              | 1497618021000 | 2017-06-16T13:00:21Z | 76980    | null    | memfree   | nurswgvml006 | null    | 
 ```
 
 The `time` and `datetime` columns are interchangeable and can be used as equivalents, for instance in the `GROUP BY` clause and the `SELECT` expression.
@@ -724,6 +732,13 @@ WHERE datetime BETWEEN '2016-12-10T14:00:15Z' AND '2016-12-10T15:30:00.077Z'
 > Note that the `BETWEEN` operator is inclusive: `time BETWEEN 'a' AND 'b'` is equivalent to `time >= 'a' and time <= 'b'`.
 
 > Equality operators `!=` and `<>`  **cannot** be applied to `time` and `datetime` columns.
+
+Avoid the [`date_format`](#date-formatting-functions) function in the `WHERE` condition as it will cause the database to perform a full scan and compare literal strings. Instead, filter the dates using the indexed `datetime` column.
+
+```sql
+WHERE date_format(time, 'yyyy') > '2014' -- Anti-pattern: Full scan with string comparison.
+WHERE datetime >= '2015-01-01T00:00:00Z' -- Recommended:  Range scan on indexed column.
+```
 
 ### Endtime Syntax
 
@@ -1815,6 +1830,14 @@ The `PERCENTILE` function accepts `percentile` parameter (0 to 100) and a numeri
 
 `PERCENTILE(value, 0)` is equal to `MIN(value)` whereas `PERCENTILE(value, 100)` is equal to `MAX(value)`.
 
+### FIRST
+
+The `FIRST` function returns value of the first sample (or value of expression `expr` for the first row) in the set which is ordered by datetime in ascending order.
+
+### LAST
+
+The `LAST` function returns value of the last sample (or value of expression `expr` for the last row) in the set which is ordered by datetime in ascending order.
+
 ### MIN_VALUE_TIME
 
 The `MIN_VALUE_TIME` function returns the Unix time in milliseconds (LONG datatype) of the first occurrence of the **minimum** value.
@@ -2726,7 +2749,7 @@ Given the amount of data stored in ATSD, it is easy to build a query that may ca
 Consider the following recommendations when developing queries:
 
 - Pre-test queries on a smaller dataset in ATSD-development instance.
-- Avoid `SELECT * FROM metric` queries without any conditions.
+- Avoid queries without any conditions. Apply LIMIT to reduce the number of rows returned.
 - Add the `WHERE` clause. Include as many conditions to the `WHERE` clause as possible, in particular add entity and [interval conditions](#interval-condition).
 - Make `WHERE` conditions narrow and specific, for example, specify a smaller time interval.
 - Avoid the `ORDER BY` clause since it may cause a full scan and a copy of data to a temporary table.
@@ -2813,6 +2836,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 
 - [Average Value](examples/aggregate.md)
 - [Percentiles](examples/aggregate-percentiles.md)
+- [First/Last](examples/aggregate-first-last.md)
 - [Counter Aggregator](examples/aggregate-counter.md)
 - [Maximum Value Time](examples/aggregate-max-value-time.md)
 - [Period Aggregation](examples/aggregate-period.md)
