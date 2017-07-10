@@ -274,7 +274,7 @@ The entity column is required to store computed metrics back in ATSD.
 
 Complete diagram:
 
-![](resources/result_diagram.png)
+![](resources/result.png)
 
 ### Check Results
 
