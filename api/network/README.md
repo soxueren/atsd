@@ -2,7 +2,7 @@
 
 Network API provides a set of plain text commands for inserting numeric time series, key=value properties, and tagged messages into the Axibase Time Series Database (ATSD) via **TCP** and **UDP** network protocols.
 
-You can use `netcat`, `telnet`, `UNIX pipes`, and any programming language such as [Java](examples/AtsdTcpClient.java) that lets you connect to the ATSD server via TCP/UDP protocol.
+You can use `netcat`, `telnet`, `UNIX pipes`, or any programming language such as [Java](examples/AtsdTcpClient.java) that lets you connect to the ATSD server via TCP/UDP protocol.
 
 ## Supported Commands
 
@@ -54,7 +54,7 @@ Utilize the [HTTP command](../../api/data/ext/command.md) to send plain-text com
 
 ### Single Command
 
-To send a single command, connect to an ATSD server, and send the command in plain text and terminate the connection.
+To send a single command, connect to an ATSD server, send the command in plain text, and terminate the connection.
 
 * netcat:echo
 
@@ -107,9 +107,9 @@ The above examples insert timestamped **temperature** and **humidity** metric sa
 
 ### Multiple Commands
 
-Separate commands by line feed symbol `\n` (LF, `0x0A`) when sending a batch containing multiple commands over the same connection.
+Separate commands by a line feed symbol `\n` (LF, `0x0A`) when sending a batch containing multiple commands over the same connection.
 
-Trailing line feed is not required for the last command in the batch.
+A trailing line feed is not required for the last command in the batch.
 
 Use the `-e` flag in `echo` commands to enable interpretation of backslash escapes.
 
@@ -130,9 +130,9 @@ A client application can establish a persistent connection in order to continuou
 
 Trailing line feed is not required for the last command when the connection is closed.
 
-Commands are processed as they're received by the server, without buffering.
+Commands are processed as they are received by the server, without buffering.
 
-To prevent the connection from timing out the client may send [`ping`](ping.md) command at a regular interval.
+To prevent the connection from timing out the client may send a [`ping`](ping.md) command at a regular interval.
 
 Clients can submit different types of commands over the same connection.
 
@@ -160,7 +160,7 @@ Connection closed by foreign host.
 
 If the connection is terminated due to client error, all valid commands sent prior to the first invalid command will be stored.
 
-Due to the fact that channel closing on client error may take some time, the database may also store a few valid commands received after the discarded command.
+Due to the fact that closing the channel due to client error may take some time, the database may also store a few valid commands received after the discarded command.
 
 ```
 valid command   - stored
@@ -224,12 +224,12 @@ command-name field-prefix:field-name[=field-value]
 ```
 
 * The order of fields is not important.
-* Refer to ABNF rules for particular commands for exact rules.
+* Refer to the ABNF rules of a particular command for its exact rules.
 
 Field name:
 
 * A field name can contain only printable characters.
-* If the field name contains a double-quote (") or equal (=) sign, it must be enclosed in double quotes. For example: `v:"os=name"=Ubuntu` or `v:"os""name"=Ubuntu`
+* If the field name contains a double-quote (") or an equal (=) sign, it must be enclosed in double quotes. For example: `v:"os=name"=Ubuntu` or `v:"os""name"=Ubuntu`
 * Any double quote character in the value must be escaped with another double quote.
 
 Field value:
@@ -244,7 +244,7 @@ Use CSV escaping methods in core libraries where available, for example [StringE
 ### Case Sensitivity
 
 * Field names are case-insensitive and are converted to lower case when stored in the database.
-* Field values are case-sensitive and are stored as submitted, except for entity name, metric name, and property type, which are converted to lower case.
+* Field values are case-sensitive and are stored as submitted, except for entity names, metric names, and property types, which are converted to lower case.
 
 ### Command Length Limits
 
@@ -285,16 +285,16 @@ The timestamp field encodes the time of an observation or an event as determined
 
 Date limits:
 
-* Minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 milliseconds from Epoch time.
-* Maximum date that can be stored by the database is **2106-02-07T06:59:59.999Z**, or 4294969199999 milliseconds from Epoch time.
+* The minimum time that can be stored in the database is **1970-01-01T00:00:00.000Z**, or 0 milliseconds from Epoch time.
+* The maximum date that can be stored by the database is **2106-02-07T06:59:59.999Z**, or 4294969199999 milliseconds from Epoch time.
 * If the timestamp field is not specified, time is set to current server time.
 
 ### Number Formatting
 
-* Decimal separator is period (`.`).
+* The decimal separator is a period (`.`).
 * No thousands separator.
 * No digit grouping.
-* Negative numbers use negative sign (`-`) at the beginning of the number.
+* Negative numbers use the negative sign (`-`) at the beginning of the number.
 * Not-a-Number is literal `NaN`.
 
 ## Debugging
