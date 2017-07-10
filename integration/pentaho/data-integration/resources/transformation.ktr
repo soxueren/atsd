@@ -454,7 +454,7 @@
       </attribute>
       <attribute>
         <code>CUSTOM_URL</code>
-        <attribute>jdbc:axibase:atsd:https://127.0.0.1:8443/api/sql;catalog=atsd;tables="*java*";expandTags=true;trustServerCertificate=true</attribute>
+        <attribute>jdbc:axibase:atsd:127.0.0.1:8443;catalog=atsd;tables="*java*";expandTags=true</attribute>
       </attribute>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
@@ -761,7 +761,7 @@ ORDER BY datetime</sql>
     <update_bypassed>Y</update_bypassed>
     <lookup>
       <schema />
-      <table>test1</table>
+      <table>inflation.cpi.composite.price</table>
       <key>
         <name>value</name>
         <field>value</field>
@@ -941,39 +941,6 @@ ORDER BY datetime, tags.category</sql>
     </GUI>
   </step>
   <step>
-    <name>Weights</name>
-    <type>TableInput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>ATSD Connection</connection>
-    <sql>SELECT tags.category, value
-FROM 'inflation.cpi.categories.weight'
-ORDER BY datetime, tags.category</sql>
-    <limit />
-    <lookup />
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>48</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Remove columns</name>
     <type>SelectValues</type>
     <description />
@@ -1006,6 +973,39 @@ ORDER BY datetime, tags.category</sql>
     <GUI>
       <xloc>448</xloc>
       <yloc>128</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Weights</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>ATSD Connection</connection>
+    <sql>SELECT tags.category, value
+FROM 'inflation.cpi.categories.weight'
+ORDER BY datetime, tags.category</sql>
+    <limit />
+    <lookup />
+    <execute_each_row>N</execute_each_row>
+    <variables_active>N</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>48</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
