@@ -8,7 +8,10 @@
 
 ## Overview
 
-Alteryx Designer is a graphical design environment to create and edit ETL (Extract, Transform, Load) workflows. The following guide includes examples of loading time series data from the Axibase Time Series Database (ATSD), calculating derived time series in Alteryx and storing the results back in ATSD.
+Alteryx Designer is a graphical design environment to create and edit ETL
+(Extract, Transform, Load) workflows. The following guide includes examples of
+loading time series data from the Axibase Time Series Database (ATSD),
+calculating derived time series in Alteryx and storing the results back in ATSD.
 
 ## Sample dataset
 
@@ -34,25 +37,22 @@ One of the ways to load dataset into ATSD is to send these commands with
 
   ![](images/no_dsn.png)
 
-- Connect Alteryx and ATSD with [ODBC-JDBC Bridge](../odbc/README.md), and in
-  order to complete the [Configure ODBC Data Source](../odbc/README.md#configure-odbc-data-source)
-  step of these instructions you must open the **ODBC Data Source Administrator**
-  window by pressing the **ODBC Admin** button in the the **ODBC Connection** dialog. You will
-  want to use the `tables` connection property in the DSN URL, set to some
-  value. It allows you choose a table from the metrics list that satisfies some pattern.
-  For example, if we use this URL:
+- Configure [ODBC Data Source](../odbc/README.md#configure-odbc-data-source). To do this,
+  you must open the **ODBC Data Source Administrator** window by pressing the **ODBC
+  Admin** button in the **ODBC Connection** dialog. It is highly recommended to use
+  `tables` property in the DSN URL. It allows you choose a table from the metrics list that satisfies some pattern. For example, if we use this URL:
   ```text
-  jdbc:axibase:atsd:http://atsd_host:8088/api/sql;tables=*
+  jdbc:axibase:atsd:atsd_host:8088;secure=false;tables=*
   ```
   then we will be able to view all the metrics available in a given ATSD instance at the
-  `atsd_host` host.
+  host with `atsd_host` name.
   Read more about the `table` property in the [JDBC driver](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) documentation.
   Also you need to check the **Strip Quote** flag in the DSN Setup dialog.
 
   ![](images/odbc_quotes.png)
 
-  When you're done, choose the name you specified for DSN during bridge
-  configuration from the **Data Source Name** list and press **OK**.
+- Choose the name you specified for DSN during bridge configuration from the **Data Source
+  Name** list and press **OK**.
 
 > **Note:**
 > In this example, `tables=inflation.*`
@@ -63,7 +63,7 @@ After creating a connection you will see the **Choose Table or Specify Query** d
 
 ![](images/choose_table.png)
 
-This allows you to build the query to a database by choosing a table or specifying
+It allows you build the query to a database by choosing a table or specifying
 its text manually.
 
 - All the metric names you see in the **Tables** tab satisfy the `tables` pattern from
@@ -99,7 +99,7 @@ its text manually.
 
   ![](images/sql_editor.png)
 
-Press **OK** when your query to ATSD is ready.
+Press **OK** when query is built.
 
 ### Check query result
 
@@ -123,7 +123,7 @@ The final arrangement of the tools in the workflow will be:
 We will go through each node, in order we add them into workflow
 
 1. **Input Data** tool.
-   Repeat the steps in the previous section for this tool choose
+   Repeat the steps in the previous section for this tool, choose
    `inflation.cpi.categories.price` table. Select `datetime`,
    `value` columns and manually add `tags.category` as shown below.
 
@@ -132,7 +132,7 @@ We will go through each node, in order we add them into workflow
 2. **Input Data** tool. Follow the same procedure as above but with the
    `inflation.cpi.categories.weight` table.
 
-3. **Filter** tool. Here we specifiy the condition `>= January 1st, 2010`
+3. **Filter** tool. Specify the condition `>= January 1st, 2010`
    and use the **T** (_true_) node output. This means that we retrieve only
    series created after 2009.
 
@@ -142,10 +142,9 @@ We will go through each node, in order we add them into workflow
 
 4. **Filter** tool. Follow the same procedure as above.
 
-5. **Join** tool. This tool joins the `entity` and `tags.category` fields.
-   Some fields are exluded from the join results. The `value` fields for
-   `inflation.cpi.categories.price` and `inflation.cpi.categories.weight`
-   are renamed to `price` and `weight` respectively.
+5. **Join** tool. Add joining by `tags.category` field. Some fields are exсluded from
+   the join results. The `value` fields for `inflation.cpi.categories.price` and
+   `inflation.cpi.categories.weight` are renamed to `price` and `weight` respectively.
 
    ![](images/join.png)
 
@@ -156,8 +155,8 @@ We will go through each node, in order we add them into workflow
    >
    > ![](images/join_output.png)
 
-6. **Formula** tool. Its input should be connected to the **J** (_inner join_)
-   output of the 3rd node. Next, you need to create a new column to store result.
+6. **Formula** tool. Connect its input to the **J** (_inner join_)
+   output of the 3rd node. Next, create a new column to store result.
    Name it `value`. Fill in the expression to calculate it, and do not
    forget to specify the correct resultant data type.
 
@@ -171,14 +170,13 @@ We will go through each node, in order we add them into workflow
 
    ![](images/summarize.png)
 
-8. **Sort** tool. We can use this tool to make the data appear in chronological order.
+8. **Sort** tool. Use it to make the data appear in chronological order.
 
    ![](images/sort.png)
 
-9. **Formula** tool. To store our new series to ATSD we need to add an `entity`
-   column. This can be done with the **Formula** tool. The entity is `bls.gov`.
-   The entity is `bls.gov`. The default data type `V_WString` is not supported
-   yet, use `String` or `WString` (for Unicode) instead.
+9. **Formula** tool. To store new series to ATSD you must add an `entity`
+   column with the **Formula** tool. Name it `bls.gov`. The default data type `V_WString`
+   is not supported yet, use `String` or `WString` (for Unicode) instead.
 
    ![](images/entity.png)
 
