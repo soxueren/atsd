@@ -1,15 +1,25 @@
 # Alteryx Designer
 
+- [Overview](#overview)
 - [Sample dataset](#sample-dataset)
 - [Create database connection](#create-database-connection)
 - [Build SQL query to database](#build-sql-query-to-database)
 - [Calculate and store a derived series](#calculate-and-store-derived-series)
 
+## Overview
+
+Alteryx Designer is a graphical design environment to create and edit ETL (Extract, Transform, Load) workflows. The following guide includes examples of loading time series data from the Axibase Time Series Database (ATSD), calculating derived time series in Alteryx and storing the results back in ATSD.
+
 ## Sample dataset
 
 For these instructions we will use [this dataset](resources/commands.txt)
-as an example. One of the ways to load it into ATSD is described
-[here](../spss/README.md#load-data).
+as an example. The series contain the Consumer Price Index (CPI) for each category
+of items in a consumer's basket as well as a weight for each category in the CPI
+basket. The weights are stored as fractions of 1000. The CPI is tracked from 2013 to
+2017 and uses Year 2016 values as the baseline. Weight values are available only for.
+One of the ways to load dataset into ATSD is to send these commands with
+**Metrics→Data Entry** in ATSD web interface.
+![](images/metrics_entry.png).
 
 ## Create database connection
 
@@ -84,8 +94,9 @@ its text manually.
   your own query. To check the connection press **Test Query**
 
   > **Note:**
-  > Don't use **Test Query** to validate the query since it only checks the `SELECT` portion
-  > of the query. If there are errors in another part of the query, they will not be reported.
+  > Don't use **Test Query** to validate the query since it only checks the `SELECT`
+  > portion of the query. If there are errors in another part of the query, they will
+  > not be reported.
 
   ![](images/sql_editor.png)
 
@@ -101,8 +112,10 @@ To see the result of the query press **Run Workflow**.
 
 ## Calculate and store a derived series
 
-The following is a demonstration of how to create an Alteryx Designer workflow that uses a
-series from ATSD to create an entirely new series and then to store that series back in ATSD.
+This section demonstrates how to create an Alteryx Designer workflow that uses a
+series from ATSD to create new series and then store these series back in ATSD.
+To calculate a weighted inflation index we multiply the CPI of each category by
+its weight divided by 1000 and sum the products.
 
 The final arrangement of the tools in the workflow will be:
 
@@ -182,7 +195,8 @@ We will go through each node, in order we add them into workflow
 11. **Browse** tool. Added for convenience, to quickly view the final result.
 
 When your workflow is finished, press **Run Workflow**.
-The data will be fetched, processed, and the new data will be stored. As stated before, you can
-see the output of any node, or see the final result by clicking over to the **Browse** node.
+The data will be fetched, processed, and the new data will be stored. As stated
+before, you can see the output of any node, or see the final result by clicking
+over to the **Browse** node.
 
    ![](images/calc_results.png)
