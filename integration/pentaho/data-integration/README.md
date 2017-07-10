@@ -7,15 +7,19 @@
 - [Load data](#load-data)
 - [Calculate Derived Series](#calculate-derived-series)
 
+## Overview 
+
+[Pentaho Data Integration](http://community.pentaho.com/projects/data-integration/) (PDI) provides a graphical design environment to create and edit ETL (Extract, Transform, Load) jobs and workflows. The following guide includes examples of loading time series data from the Axibase Time Series Database (ATSD), calculating derived time series in PDI and storing the results in ATSD.
+
 ## Prerequisites
 
-Install Pentaho Data Integration 7.1
+- Install Pentaho Data Integration 7.1
 
 ## Install ATSD Driver
 
 - Download ATSD [JDBC driver](https://github.com/axibase/atsd-jdbc/releases) with dependencies
 - Copy the driver JAR file into the `lib` directory in the Data Integration installation directory
-- Restart the Data Integration
+- Restart the Data Integration process
 
 ## Configure Database Connection
 
@@ -275,7 +279,7 @@ FROM 'inflation.cpi.composite.price'
 ## Reference
 
 Used Data Integration modules:
-- [Join Rows (cartesian product](http://wiki.pentaho.com/display/EAI/Join+Rows+%28Cartesian+product%29)
+- [Join Rows (cartesian product)](http://wiki.pentaho.com/display/EAI/Join+Rows+%28Cartesian+product%29)
 - [Merge Join](http://wiki.pentaho.com/display/EAI/Merge+Join)
 - [Calculator](http://wiki.pentaho.com/display/EAI/Calculator)
 - [Insert / Update](http://wiki.pentaho.com/display/EAI/Insert+-+Update)
