@@ -24,7 +24,7 @@ Install Pentaho Data Integration 7.1
 
 ![](resources/view_pane.png)
 
-- Click with right mouse button on `Database connections` -> New
+- Right-click on `Database connections` -> New
 - Select `General` in the left menu
 - Select `Generic database` as Connection Type
 - Select `Native (JDBC)` as Access
@@ -55,19 +55,19 @@ Install Pentaho Data Integration 7.1
 `TABLE_NAME_FILTER` is a list of comma-separated metrics or metric expressions to be displayed as tables in the MatLab Database Browser.
 
 `TABLE_NAME_FILTER` examples:
-- `*java*` for metrics that contains word `java`
+- `*java*` for metrics that contains the word `java`
 - `custom.metric*` for metrics whose name starts with `custom.metric`
 - `*2017` for metrics whose name ends with `2017`
 
-Click on `Explore` button to view ATSD Schema:
+Click on the `Explore` button to view the ATSD Schema:
 
 ![](resources/database_explorer.png)
 
 ## Load Data
 
-- Drag and Drop `ATSD Connection` from `View` pane (Database connections folder)
-- Set `Step name` to a unique name in this `Transformation`
-- Write SQL query which result will be taken as an `Table input` for this `Transformation`
+- Drag and Drop `ATSD Connection` from the `View` pane (Database Connections folder)
+- Set `Step name` to a unique name for this `Transformation`
+- Write an SQL query whose result will be taken as a `Table input` for this `Transformation`
 > Click `Preview` if you want to see SQL query results
 
 Example:
@@ -112,14 +112,14 @@ Example of `Datetimes`:
 
 ### Duplicate Weights values
 
-In that step we will get `Weights` values repeated for each year from 2013 to 2017
+In this step we will get `Weights` values repeated for each year from 2013 to 2017
 
-- Open `Design` pane and find `Join Rows (cartesian product)` in `Joins` category. Drag and drop it to `Transformation` pane.
-- Connect your `Join Rows (cartesian product)` with `Datetimes` and `Weights` using `Input Connection` button. That button shows when you hover your mouse pointer over `Join Rows` or any item inside `Transformation` pane
+- Open the `Design` pane and find `Join Rows (cartesian product)` in `Joins` category. Drag and drop it to the `Transformation` pane.
+- Connect your `Join Rows (cartesian product)` with `Datetimes` and `Weights` using `Input Connection` button. That button shows when you hover your mouse pointer over `Join Rows` or any item inside the `Transformation` pane
 
 ![](resources/connections.png)
 
-> After that by "connect" we will be meaning that way of conenction
+> After that, "connect" means way of conenction
 
 Diagram example:
 
@@ -131,9 +131,9 @@ Preview of `Join Rows (cartesian product)`:
 
 ### Merge two tables into one
 
-In that step we will append two tables to perform calculations inside one table. This table have unique row identifier (pair `datetime - tags.category`) so we can join them with INNER JOIN operation.
+In this step we will append two tables to perform calculations inside one table. This table will have a unique row identifier (pair `datetime - tags.category`) so we can join them with the INNER JOIN operation.
 
-- Open `Design` pane and find `Merge Join` in `Joins` category. Drag and drop it to `Transformation` pane
+- Open the `Design` pane and find `Merge Join` in the `Joins` category. Drag and drop it to the `Transformation` pane
 - Connect `Merge Join` to `Join Rows (cartesian product)` and choose `Right hand side stream of the join`
 - Connect `Merge Join` to `Prices` and choose `Left hand side stream of the join`
 - Configure `Merge Join` as shown in the screenshot below:
@@ -151,7 +151,7 @@ Diagram example:
 
 ### Remove redundant columns
 
-- Open `Design` pane and find `Select values` in `Transform` category. Drag and drop it to `Transformation` pane
+- Open the `Design` pane and find `Select values` in the `Transform` category. Drag and drop it to `Transformation` pane
 - Connect `Select values` to `Merge Join`
 - Configure `Select values` as shown in the screenshot below:
 
@@ -165,12 +165,12 @@ Preview of `Remove columns`:
 
 #### Price * Weight
 
-Element wise multiply 2 columns:
+Multiply 2 columns element-wise:
 
-- Open `Design` pane and find `Calculator` in `Transform` category. Drag and drop it to `Transformation` pane
+- Open the `Design` pane and find `Calculator` in `Transform` category. Drag and drop it to the `Transformation` pane
 - Connect `Calculator` to `Remove columns`
 - Configure `Calculator` as shown in the screenshot below:
-> That operation will calculate new field `P*W` (price multiplied by weight)
+> This operation will calculate a new field `P*W` (price multiplied by weight)
 
 ![](resources/calculator_1.png)
 
@@ -178,14 +178,14 @@ Preview of `Price * Weight`:
 
 ![](resources/PW_preview.png)
 
-#### Add column with constant 1000
+#### Add a column with a constant 1000
 
-This column will be needed later in element wise division
+(This column will be needed later in element wise division)
 
-- Open `Design` pane and find `Add constants` in `Transform` category. Drag and drop it to `Transformation` pane
+- Open the `Design` pane and find `Add constants` in `Transform` category. Drag and drop it to the `Transformation` pane
 - Connect `Add constants` to `Price * Weight`
 - Configure `Add constants` as shown in the screenshot below:
-> That operation will add new column `1000` that have value `1000` for each row
+> This operation will add a new column `1000` that has a value of `1000` for each row
 
 ![](resources/constants_1.png)
 
@@ -195,12 +195,12 @@ Preview of `1000`:
 
 #### Divide by 1000
 
-Add new column that have Price * Weight value divided by 1000 (bacause weight is a proportion from 1000)
+Add a new column that has Price * Weight divided by 1000 (because the weight is proportional to 1000)
 
-- Open `Design` pane and find `Calculator` in `Transform` category. Drag and drop it to `Transformation` pane
-- Connect `Calculator` to `1000`
-- Configure `Calculator` as shown in the screenshot below:
-> That operation will calculate new field `P*W/1000` (price multiplied by weight and divided by 1000)
+- Open the `Design` pane and find `Calculator` in the `Transform` category. Drag and drop it to the `Transformation` pane
+- Connect the `Calculator` to `1000`
+- Configure the `Calculator` as shown in the screenshot below:
+> This operation will calculate a new field `P*W/1000` (price multiplied by weight, divided by 1000)
 
 ![](resources/calculator_2.png)
 
@@ -210,12 +210,12 @@ Preview of `1000`:
 
 #### Group By datetime
 
-Group by rows by `datetime` and sum weighted prices values (for each year)
+Group by rows by `datetime` and sum weighted price values (for each year)
 
-- Open `Design` pane and find `Group by` in `Statistics` category. Drag and drop it to `Transformation` pane
+- Open the `Design` pane and find `Group by` in the`Statistics` category. Drag and drop it to `Transformation` pane
 - Connect `Group by` to `/1000`
 - Configure `Group by` as shown in the screenshot below:
-> That operation will group records by datetime and will calculate sum of `P*W/1000` values for each group
+> That operation will group records by datetime and calculate the sum of `P*W/1000` values for each group
 
 ![](resources/group_by.png)
 
@@ -223,14 +223,14 @@ Preview of `Group by`:
 
 ![](resources/group_by_preview.png)
 
-#### Add column with constant 'bls.gov' as entity value
+#### Add a column with constant 'bls.gov' as entity value
 
-This column will be needed later in element wise division
+(This column will be needed later in element wise division)
 
-- Open `Design` pane and find `Add constants` in `Transform` category. Drag and drop it to `Transformation` pane
+- Open the `Design` pane and find `Add constants` in the `Transform` category. Drag and drop it to the `Transformation` pane
 - Connect `Add constants` to `Group by`
 - Configure `Add constants` as shown in the screenshot below:
-> That operation will add new column `entity` that have value `bls.gov` for each row
+> This operation will add a new column `entity` that has the value `bls.gov` for each row
 
 ![](resources/constants_2.png)
 
@@ -240,14 +240,14 @@ Preview of `Entity`:
 
 ### Load derived series to ATSD
 
-- Open `Design` pane and find `Insert / Update` in `Output` category. Drag and drop it to `Transformation` pane
+- Open the `Design` pane and find `Insert / Update` in the `Output` category. Drag and drop it to `Transformation` pane
 - Connect `Insert / Update` to `Entity`
-- Configure `Insert / Update` as shown in the screenshot below (`Tagret table` is a tagret metric in which we want to put the data):
-> That operation will insert calculated data as new metric in ATSD
+- Configure `Insert / Update` as shown in the screenshot below (`Tagret table` is the tagret metric where we want to store the data):
+> This operation will insert calculated data as a new metric in ATSD
 
 ![](resources/insert.png)
 
-> For INSERT operation Data Integration require ATSD to have that metric be created!
+> For the INSERT operation, Data Integration requires ATSD to have that metric created already!
 
 Complete diagram example:
 
