@@ -78,7 +78,7 @@ Result of `SELECT 1` test query:
 ## View Schema
 
 - Edit `Custom Connection URL` field in ATSD Connection properties
-- Edit `tables="TABLE_NAME_FILTER"` in `Custom Connection URL` field
+- Edit `tables=TABLE_NAME_FILTER` in `Custom Connection URL` field
 - SET `TABLE_NAME_FILTER` to your table name filter
 
 `TABLE_NAME_FILTER` is a list of comma-separated metrics or metric expressions to be displayed as tables in the MatLab Database Browser.
