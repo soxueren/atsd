@@ -7,7 +7,7 @@
 
 ## Sample dataset
 
-For these instructions we will use [this dataset](../spss/resources/commands.txt)
+For these instructions we will use [this dataset](resources/commands.txt)
 as an example. One of the ways to load it into ATSD is described
 [here](../spss/README.md#load-data).
 
@@ -164,7 +164,9 @@ We will go through each node, in order we add them into workflow
    ![](images/sort.png)
 
 9. **Formula** tool. To store our new series to ATSD we need to add an `entity`
-   column. This can be done with the **Formula** tool. The entity is `bls.gov`
+   column. This can be done with the **Formula** tool. The entity is `bls.gov`.
+   The entity is `bls.gov`. The default data type `V_WString` is not supported
+   yet, use `String` or `WString` (for Unicode) instead.
 
    ![](images/entity.png)
 
