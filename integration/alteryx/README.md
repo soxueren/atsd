@@ -30,8 +30,8 @@ One of the ways to load dataset into ATSD is to send these commands with
 
   ![](images/input_data.png)
 
-- Choose **Other Databases→ODBC...** in the Input Data configuration,
-  you will see the **ODBC Connection** dialog.
+- Choose **Other Databases→ODBC...** in the Input Data configuration to
+  open the **ODBC Connection** dialog.
 
   ![](images/choose_odbc.png)
 
