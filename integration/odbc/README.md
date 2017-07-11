@@ -8,7 +8,7 @@ The bridge intercepts SQL queries from the client applications via the Microsoft
 
 ### Downloads and Pre-requisites
 
-1. Download and install Java Runtime Environment 8 for the Windows Operating System.
+1. Download and install Java Runtime Environment 7 for the Windows Operating System. Note that Java 8 is not fully supported by the ODBC-JDBC Bridge vendor.
 2. [Register](http://www.easysoft.com/cgi-bin/account/register.cgi) an account with the ODBC-JDBC Bridge vendor. The account is required for trial license activation.
 3. [Download](http://www.easysoft.com/products/data_access/odbc_jdbc_gateway/#section=tab-1) the trial version of the ODBC-JDBC Bridge.
 4. [Download](https://github.com/axibase/atsd-jdbc/releases) ATSD JDBC driver with dependencies.
