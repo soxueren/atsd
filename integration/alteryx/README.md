@@ -22,7 +22,7 @@ basket. The weights are stored as fractions of 1000. The CPI is tracked from 201
 2017 and uses Year 2016 values as the baseline. Weight values are available only for.
 One of the ways to load dataset into ATSD is to send these commands with
 **Metrics→Data Entry** in ATSD web interface.
-![](images/metrics_entry.png).
+![](images/metrics_entry.png)
 
 ## Create database connection
 
