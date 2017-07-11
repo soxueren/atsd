@@ -10,7 +10,7 @@ calculating derived time series in Alteryx and storing the results back in ATSD.
 
 ## Sample Dataset
 
-For the purpose of instructions below we will use [sample series commands](resources/commands.txt).
+For the purpose of instruction, we will use [sample series commands](resources/commands.txt).
 The series contain the Consumer Price Index (CPI) for each category
 of items in a consumer's basket as well as a weight for each category in the CPI
 basket. The weights are stored as fractions of 1000. The CPI is tracked from 2013 to
@@ -48,7 +48,7 @@ these commands on the **Metrics > Data Entry** page.
 
 - Append `tables` property to the DSN URL to filter metrics by name in the Query
   Builder. For example, `tables=*` displays all ATSD metrics as tables whereas `tables=infla*`
-  shows only metrics that start with 'infla' characters.
+  shows only metrics that start with the characters 'infla'. 
 
   ```text
   jdbc:axibase:atsd:ATSD_HOST:8443;tables=*
@@ -71,7 +71,7 @@ After creating a connection you will see the **Choose Table or Specify Query** d
 
 ![](images/choose_table.png)
 
-It allows you build a query by choosing a table or entering query
+This allows you build a query by choosing a table or entering query
 text manually.
 
 - Table names visible in the **Tables** tab satisfy the `tables` pattern
@@ -82,7 +82,7 @@ text manually.
 
 - In the **Visual Query Tab**, you can specify particular columns in the `SELECT` expression as well as add optional
   sorting and grouping to prepare your
-  data before processing it in the workflow. Below is a SQL query and a corresponding
+  data before processing it in the workflow. Below is an SQL query and corresponding
   configuration.
 
   ```sql
@@ -96,7 +96,7 @@ text manually.
   ![](images/visual_builder.png)
 
 - The **SQL Editor** allows you to review and modify pre-built queries or write
-  your own queries.
+  your own.
 
 - The **Test Query** button truncates the query after the `FROM` clause and sends only the remaining
   `SELECT ... FROM ...` expression to the database for validation.
@@ -117,7 +117,7 @@ Press **Run Workflow**, to see the result of the query.
 
 This section describes how to create a workflow that retrieves existing
 data from ATSD to produce new series in Designer and then store these series back in ATSD.
-To calculate a weighted inflation index we multiply the CPI of each category by
+To calculate a weighted inflation index, we multiply the CPI of each category by
 its weight divided by 1000 and sum the products.
 
 The resulting workflow will be implemented as follows:
@@ -198,8 +198,8 @@ The workflow consists of the following steps (nodes):
 Press **Run Workflow**.
 
 The data will be retrieved from the database and processed in Designer by the workflow
-with new series stored back in the database. 
+with the new series stored back in the database. 
 
-Click **Browse** node to view the results.
+Click on the **Browse** node to view the results.
 
    ![](images/calc_results.png)
