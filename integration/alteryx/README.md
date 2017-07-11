@@ -17,8 +17,8 @@ basket. The weights are stored as fractions of 1000. The CPI is tracked from 201
 2017 and uses Year 2016 values as the baseline. Weight values are available only for
 year 2017.
 
-To load the data into ATSD, login into the database web interface and submit these commands on the
-**Metrics→Data Entry** page.
+To load the data into ATSD, login into the database web interface and submit
+these commands on the **Metrics > Data Entry** page.
 
 ![](images/metrics_entry.png)
 
@@ -45,8 +45,8 @@ To load the data into ATSD, login into the database web interface and submit the
 - Configure the datasource as described [here](../odbc/README.md#configure-odbc-data-source).
 
 - Add `tables` property into the DSN URL to filter metrics by name in the Query
-  Builder. For example, `tables=*` exposes all metrics whereas `tables=infla*` shows
-  all metrics that start with 'infla' substring.
+  Builder. For example, `tables=*` exposes all metrics whereas `tables=infla*`
+  shows all metrics that start with 'infla' substring.
 
   ```text
   jdbc:axibase:atsd:ATSD_HOST:8443;tables=*
@@ -74,22 +74,21 @@ text manually.
 
 - Table names visible in the **Tables** tab satisfy the `tables` pattern
   specified in the DSN URL. Click the **Refresh** button to reload the list, if
-  neccessary.
+  necessary.
 
   ![](images/metrics_list.png)
 
 - In the **Visual Query Tab**, you can specify particular columns and add optional
   sorting and grouping to preview and prepare your
-  data before processing it in workflow. Below is a SQL query and a corresponding configuration.
+  data before processing it in workflow. Below is a SQL query and a corresponding
+  configuration.
 
   ```sql
-   Select
-      inflation.cpi.categories.price.datetime,
-      Sum(inflation.cpi.categories.price.value) As Sum_value
-   From inflation.cpi.categories.price
-   Group By inflation.cpi.categories.price.datetime
-   Having Sum(inflation.cpi.categories.price.value) > 1010
-   Order By inflation.cpi.categories.price.datetime
+   SELECT datetime, sum(value) AS sum_value
+       FROM inflation.cpi.categories.price
+       GROUP BY datetime
+       HAVING sum_value > 1010
+       ORDER BY datetime
   ```
 
   ![](images/visual_builder.png)
@@ -97,7 +96,8 @@ text manually.
 - The **SQL Editor** allows you to review and modify pre-built queries or write
   your own queries.
 
-- The **Test Query** button strips the `WHERE` clause from the query and sends only the remaining `SELECT` expression to the database for validation.
+- The **Test Query** button truncates the query and sends only the remaining
+  `SELECT ... FROM ...` expression to the database for validation.
 
   ![](images/sql_editor.png)
 
@@ -143,9 +143,10 @@ The workflow consists of the following steps (nodes):
 
 4. **Filter** tool. Follow the same procedure as above.
 
-5. **Join** tool. Join prices and weights by `tags.category` field. Deselect fields as shown
-   on the image. Rename `value` fields for `inflation.cpi.categories.price` and
-   `inflation.cpi.categories.weight` to `price` and `weight` respectively.
+5. **Join** tool. Join prices and weights by `tags.category` field. Deselect
+   fields as shown on the image. Rename `value` fields for
+   `inflation.cpi.categories.price` and `inflation.cpi.categories.weight` to
+   `price` and `weight` respectively.
 
    ![](images/join.png)
 
@@ -157,8 +158,9 @@ The workflow consists of the following steps (nodes):
    > ![](images/join_output.png)
 
 6. **Formula** tool. Connect its input to the **J** (_inner join_)
-   output of the 3rd node. Next, create a new column named `value` to store the result.
-   Fill in the expression to calculate it, and specify the correct data type.
+   output of the **Join** node. Next, create a new column named `value` to
+   store the result. Fill in the expression to calculate it, and specify the
+   correct data type.
 
    ![](images/add_column.png)
 
@@ -180,9 +182,8 @@ The workflow consists of the following steps (nodes):
    ![](images/entity.png)
 
 10. **Output Data** tool. Choose ODBC Connection as before and enter a name for
-    the _existing_ metric, in this case `inflation.cpi.composite.price`. Create a new metric in ATSD if necessary.
-    Edit **Output Options** and **Table/FieldName SQL Style** options in the
-    configuration dialog.
+    the new metric, in this case `inflation.cpi.composite.price`.
+    Edit **Output Options** in the configuration dialog.
 
     ![](images/metric_name.png)
 
