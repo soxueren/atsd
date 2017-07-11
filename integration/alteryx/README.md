@@ -41,9 +41,11 @@ One of the ways to load dataset into ATSD is to send these commands with
 
 - Open the **ODBC Data Source Administrator**
   window by pressing the **ODBC Admin** button in the **ODBC Connection** dialog.
+  Fill in the fields DSN, User Name, Password, Driver Class, Class Path and
+  URL as described [here](../odbc/README.md#configure-odbc-data-source).
 
 - Add `tables` property into the DSN URL of the dialog. It allows you choose a
-  table from the metrics list that satisfies some pattern. For example this URL:
+  table from the metrics list that satisfies some pattern. For example this URL
   ```text
   jdbc:axibase:atsd:atsd_host:8088;secure=false;tables=*
   ```
@@ -118,7 +120,7 @@ Press **Run Workflow**, to see the result of the query .
 ## Calculate and store a derived series
 
 This section demonstrates how to create an Alteryx Designer workflow that uses a
-series from ATSD to create new series and then store these series back in ATSD.
+series from ATSD to produce new series and then store these series back in ATSD.
 To calculate a weighted inflation index we multiply the CPI of each category by
 its weight divided by 1000 and sum the products.
 
@@ -139,8 +141,8 @@ We will go through each node.
    `inflation.cpi.categories.weight` table.
 
 3. **Filter** tool. Specify the condition `>= January 1st, 2010`
-   and use the **T** (_true_) node output. This means that we retrieve only
-   series created after 2009.
+   and use the **T** (_true_) node output -- only
+   series created after 2009 are being retrieved.
 
    ![](images/filter.png)
 
@@ -148,9 +150,9 @@ We will go through each node.
 
 4. **Filter** tool. Follow the same procedure as above.
 
-5. **Join** tool. Add joining by `tags.category` field. Some fields are exсluded from
-   the join results. The `value` fields for `inflation.cpi.categories.price` and
-   `inflation.cpi.categories.weight` are renamed to `price` and `weight` respectively.
+5. **Join** tool. Add joining by `tags.category` field. Deselect fields as shown
+   on the image. Rename `value` fields for `inflation.cpi.categories.price` and
+   `inflation.cpi.categories.weight` to `price` and `weight` respectively.
 
    ![](images/join.png)
 
@@ -171,8 +173,7 @@ We will go through each node.
    ![](images/formula.png)
 
 7. **Summarize** tool. Select fields from above to get the actions list as shown
-   below on the image. **Output Field Name** for the computed field
-   must be `value` here.
+   below on the image. Input `value` into  **Output Field Name**.
 
    ![](images/summarize.png)
 
@@ -198,7 +199,7 @@ We will go through each node.
 11. **Browse** tool. For convenience, to quickly view the final result.
 
 Press **Run Workflow**.
-The data will be fetched, processed, and the new data will be stored. See the
-final result by clicking over to the **Browse** node.
+The data will be fetched, processed, and the new data will be stored. Click
+**Browse** node.
 
    ![](images/calc_results.png)
