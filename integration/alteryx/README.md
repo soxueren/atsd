@@ -63,7 +63,8 @@ One of the ways to load dataset into ATSD is to send these commands with
   ![](images/dsn_list.png)
 
 > **Note:**
-> In this example, `tables=inflation.*`
+> Further we use `tables=inflation.*` for
+> demonstrations
 
 ## Building SQL query to database
 
