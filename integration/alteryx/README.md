@@ -56,7 +56,7 @@ these commands on the **Metrics > Data Entry** page.
 
 > Refer to the [JDBC driver](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) documentation for additional details.
 
-- Uncheck the **Strip Quote** flag and press **OK**.
+- Make sure the **Strip Quote** option is checked, press **OK**.
 
   ![](images/odbc_quotes.png)
 
