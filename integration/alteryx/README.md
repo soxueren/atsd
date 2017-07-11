@@ -53,7 +53,7 @@ One of the ways to load dataset into ATSD is to send these commands with
   host with `atsd_host` name.
   Read more about the `table` property in the [JDBC driver](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) documentation.
 
-- Check the **Strip Quote** flag in the same dialog and press **OK**.
+- Check the **Strip Quote** flag and press **OK**.
 
   ![](images/odbc_quotes.png)
 
