@@ -78,7 +78,7 @@ Example:
 - `custom.metric*` for metrics whose name starts with `custom.metric`
 - `*2017` for metrics whose name ends with `2017`
 
-> At the current moment Database Explorer can not display tables that include dots in their name
+> At the  moment the Database Explorer can not display tables with dots in their name.
 
 ### Connect to the MatLab Command Window
 
