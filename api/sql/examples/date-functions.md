@@ -1,4 +1,4 @@
-# Datetime Functions
+# Date Utility Functions
 
 ## `CURRENT_TIMESTAMP`
 

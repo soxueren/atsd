@@ -2837,7 +2837,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [Escape Quotes](examples/select-escape-quote.md)
 - [atsd_series Table](examples/select-atsd_series.md)
 - [Datetime Format](examples/datetime-format.md)
-- [Date Functions](examples/date-functions.md)
+- [Date Utility Functions](examples/date-functions.md)
 - [Limit Row Count](examples/limit.md)
 - [Limit by Partition](examples/limit-partition.md)
 
