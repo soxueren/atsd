@@ -30,34 +30,40 @@ One of the ways to load dataset into ATSD is to send these commands with
 
   ![](images/input_data.png)
 
-- Choose **Other Databases→ODBC...** in the Input Data configuration, you will see the
-  **ODBC Connection** dialog.
+- Choose **Other Databases→ODBC...** in the Input Data configuration,
+  you will see the **ODBC Connection** dialog.
 
   ![](images/choose_odbc.png)
 
   ![](images/no_dsn.png)
 
-- Configure [ODBC Data Source](../odbc/README.md#configure-odbc-data-source). To do this,
-  you must open the **ODBC Data Source Administrator** window by pressing the **ODBC
-  Admin** button in the **ODBC Connection** dialog. It is highly recommended to use
-  `tables` property in the DSN URL. It allows you choose a table from the metrics list that satisfies some pattern. For example, if we use this URL:
+- Install [ODBJ-JDBC gateway](../odbc/README.md).
+
+- Open the **ODBC Data Source Administrator**
+  window by pressing the **ODBC Admin** button in the **ODBC Connection** dialog.
+
+- Add `tables` property into the DSN URL of the dialog. It allows you choose a
+  table from the metrics list that satisfies some pattern. For example this URL:
   ```text
   jdbc:axibase:atsd:atsd_host:8088;secure=false;tables=*
   ```
-  then we will be able to view all the metrics available in a given ATSD instance at the
+  allows to view all the metrics available in a given ATSD instance at the
   host with `atsd_host` name.
   Read more about the `table` property in the [JDBC driver](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) documentation.
-  Also you need to check the **Strip Quote** flag in the DSN Setup dialog.
+
+- Check the **Strip Quote** flag in the same dialog and press **OK**.
 
   ![](images/odbc_quotes.png)
 
-- Choose the name you specified for DSN during bridge configuration from the **Data Source
-  Name** list and press **OK**.
+- Choose the name you specified for DSN during bridge configuration from the **Data
+  Source Name** list and press **OK**.
+
+  ![](images/dsn_list.png)
 
 > **Note:**
 > In this example, `tables=inflation.*`
 
-## Build SQL query to database
+## Building SQL query to database
 
 After creating a connection you will see the **Choose Table or Specify Query** dialog.
 
@@ -74,7 +80,7 @@ its text manually.
 
 - In the **Visual Query Tab**, you can select the columns that you need, or add initial
   sorting and grouping, etc. It might be useful to prepare your
-  data before processing it in workflow. Below a builder configuration
+  data before processing it in workflow. Below is a builder configuration
   that corresponds to an SQL query is shown
 
   ```sql
@@ -103,7 +109,7 @@ Press **OK** when query is built.
 
 ### Check query result
 
-To see the result of the query press **Run Workflow**.
+Press **Run Workflow**, to see the result of the query .
 
 ![](images/run_workflow.png)
 
@@ -120,7 +126,7 @@ The final arrangement of the tools in the workflow will be:
 
 ![](images/workflow.png)
 
-We will go through each node, in order we add them into workflow
+We will go through each node.
 
 1. **Input Data** tool.
    Repeat the steps in the previous section for this tool, choose
@@ -157,15 +163,15 @@ We will go through each node, in order we add them into workflow
 
 6. **Formula** tool. Connect its input to the **J** (_inner join_)
    output of the 3rd node. Next, create a new column to store result.
-   Name it `value`. Fill in the expression to calculate it, and do not
-   forget to specify the correct resultant data type.
+   Name it `value`. Fill in the expression to calculate it, and specify
+   the correct resultant data type.
 
    ![](images/add_column.png)
 
    ![](images/formula.png)
 
 7. **Summarize** tool. Select fields from above to get the actions list as shown
-   below on the image. Be careful, **Output Field Name** for the computed field
+   below on the image. **Output Field Name** for the computed field
    must be `value` here.
 
    ![](images/summarize.png)
@@ -174,26 +180,25 @@ We will go through each node, in order we add them into workflow
 
    ![](images/sort.png)
 
-9. **Formula** tool. To store new series to ATSD you must add an `entity`
-   column with the **Formula** tool. Name it `bls.gov`. The default data type `V_WString`
-   is not supported yet, use `String` or `WString` (for Unicode) instead.
+9. **Formula** tool. Add an `entity` column with the **Formula** tool. Name it
+   `bls.gov`. The default data type `V_WString` is not supported yet,
+   use `String` or `WString` (for Unicode) instead.
 
    ![](images/entity.png)
 
 10. **Output Data** tool. Choose ODBC Connection as before and enter a name for
-    the _existing_ metric, where we will store the result, in this case
-    `inflation.cpi.composite.price`, and edit **Output Options** and
-    **Table/FieldName SQL Style** options in the configuration dialog.
+    the _existing_ metric, in this case `inflation.cpi.composite.price`.
+    Edit **Output Options** and **Table/FieldName SQL Style** options in the
+    configuration dialog.
 
     ![](images/metric_name.png)
 
     ![](images/output.png)
 
-11. **Browse** tool. Added for convenience, to quickly view the final result.
+11. **Browse** tool. For convenience, to quickly view the final result.
 
-When your workflow is finished, press **Run Workflow**.
-The data will be fetched, processed, and the new data will be stored. As stated
-before, you can see the output of any node, or see the final result by clicking
-over to the **Browse** node.
+Press **Run Workflow**.
+The data will be fetched, processed, and the new data will be stored. See the
+final result by clicking over to the **Browse** node.
 
    ![](images/calc_results.png)
