@@ -10,7 +10,7 @@ calculating derived time series in Alteryx and storing the results back in ATSD.
 
 ## Sample Dataset
 
-For these instructions we will use [sample series commands](resources/commands.txt).
+For the purpose of instructions below we will use [sample series commands](resources/commands.txt).
 The series contain the Consumer Price Index (CPI) for each category
 of items in a consumer's basket as well as a weight for each category in the CPI
 basket. The weights are stored as fractions of 1000. The CPI is tracked from 2013 to
@@ -24,16 +24,18 @@ these commands on the **Metrics > Data Entry** page.
 
 ## Prerequisites
 
-- Install Alteryx Designer
+- Install [Alteryx Designer](https://www.alteryx.com/products/alteryx-designer), version 11.x.
 - Install [ODBC-JDBC gateway](../odbc/README.md).
 
 ## Create Database Connection
+
+- Create a new Alteryx Designer workflow.
 
 - Add the **Input Data** tool to your workflow.
 
   ![](images/input_data.png)
 
-- Choose **Other Databases > ODBC...** in the Input Data configuration window.
+- Choose **Other Databases > ODBC...** in the 'Input Data' configuration window.
 - Open **ODBC Connection** dialog.
 
   ![](images/choose_odbc.png)
@@ -44,15 +46,15 @@ these commands on the **Metrics > Data Entry** page.
 
 - Configure the datasource as described [here](../odbc/README.md#configure-odbc-data-source).
 
-- Add `tables` property into the DSN URL to filter metrics by name in the Query
-  Builder. For example, `tables=*` exposes all metrics whereas `tables=infla*`
-  shows all metrics that start with 'infla' substring.
+- Append `tables` property to the DSN URL to filter metrics by name in the Query
+  Builder. For example, `tables=*` displays all ATSD metrics as tables whereas `tables=infla*`
+  shows only metrics that start with 'infla' characters.
 
   ```text
   jdbc:axibase:atsd:ATSD_HOST:8443;tables=*
   ```
 
-> Read more about the `table` property in the [JDBC driver](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) documentation.
+> Refer to the [JDBC driver](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) documentation for additional details.
 
 - Uncheck the **Strip Quote** flag and press **OK**.
 
@@ -69,7 +71,7 @@ After creating a connection you will see the **Choose Table or Specify Query** d
 
 ![](images/choose_table.png)
 
-It allows you build the query by choosing a table with columns or entering query
+It allows you build a query by choosing a table or entering query
 text manually.
 
 - Table names visible in the **Tables** tab satisfy the `tables` pattern
@@ -78,17 +80,17 @@ text manually.
 
   ![](images/metrics_list.png)
 
-- In the **Visual Query Tab**, you can specify particular columns and add optional
-  sorting and grouping to preview and prepare your
-  data before processing it in workflow. Below is a SQL query and a corresponding
+- In the **Visual Query Tab**, you can specify particular columns in the `SELECT` expression as well as add optional
+  sorting and grouping to prepare your
+  data before processing it in the workflow. Below is a SQL query and a corresponding
   configuration.
 
   ```sql
    SELECT datetime, sum(value) AS sum_value
-       FROM inflation.cpi.categories.price
-       GROUP BY datetime
-       HAVING sum_value > 1010
-       ORDER BY datetime
+     FROM 'inflation.cpi.categories.price'
+   GROUP BY datetime
+     HAVING sum_value > 1010
+   ORDER BY datetime
   ```
 
   ![](images/visual_builder.png)
@@ -96,7 +98,7 @@ text manually.
 - The **SQL Editor** allows you to review and modify pre-built queries or write
   your own queries.
 
-- The **Test Query** button truncates the query and sends only the remaining
+- The **Test Query** button truncates the query after the `FROM` clause and sends only the remaining
   `SELECT ... FROM ...` expression to the database for validation.
 
   ![](images/sql_editor.png)
@@ -113,14 +115,16 @@ Press **Run Workflow**, to see the result of the query.
 
 ## Calculate and Store Derived Series
 
-This section demonstrates how to create an Alteryx Designer workflow that uses existing
-data in ATSD to produce new series and then store these series back in ATSD.
+This section describes how to create a workflow that retrieves existing
+data from ATSD to produce new series in Designer and then store these series back in ATSD.
 To calculate a weighted inflation index we multiply the CPI of each category by
 its weight divided by 1000 and sum the products.
 
 The resulting workflow will be implemented as follows:
 
 ![](images/workflow.png)
+
+You can download [this workflow](resources/atsd-workflow.yxmd) for review in your own Alterix Designer installation.
 
 The workflow consists of the following steps (nodes):
 
@@ -193,7 +197,9 @@ The workflow consists of the following steps (nodes):
 
 Press **Run Workflow**.
 
-The data will be retrieved from the database, processed in Designer by the workflow
-with new series stored back in the database. Click **Browse** node.
+The data will be retrieved from the database and processed in Designer by the workflow
+with new series stored back in the database. 
+
+Click **Browse** node to view the results.
 
    ![](images/calc_results.png)
