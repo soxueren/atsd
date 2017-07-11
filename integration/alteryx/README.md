@@ -41,8 +41,8 @@ One of the ways to load dataset into ATSD is to send these commands with
 
 - Open the **ODBC Data Source Administrator**
   window by pressing the **ODBC Admin** button in the **ODBC Connection** dialog.
-  Fill in the fields DSN, User Name, Password, Driver Class, Class Path and
-  URL as described [here](../odbc/README.md#configure-odbc-data-source).
+  Fill in the fields as described
+  [here](../odbc/README.md#configure-odbc-data-source).
 
 - Add `tables` property into the DSN URL of the dialog. It allows you choose a
   table from the metrics list that satisfies some pattern. For example this URL
