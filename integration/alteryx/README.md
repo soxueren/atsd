@@ -200,6 +200,6 @@ Press **Run Workflow**.
 The data will be retrieved from the database and processed in Designer by the workflow
 with the new series stored back in the database. 
 
-Click to the **Browse** node to view the results.
+Click on the **Browse** node to view the results.
 
    ![](images/calc_results.png)
