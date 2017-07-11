@@ -26,7 +26,7 @@ One of the ways to load dataset into ATSD is to send these commands with
 
 ## Create database connection
 
-- Add the **Input Data** tool to your workflow
+- Add the **Input Data** tool to your workflow.
 
   ![](images/input_data.png)
 
@@ -64,7 +64,7 @@ One of the ways to load dataset into ATSD is to send these commands with
 
 > **Note:**
 > Further we use `tables=inflation.*` for
-> demonstrations
+> demonstrations.
 
 ## Building SQL query to database
 
@@ -84,7 +84,7 @@ its text manually.
 - In the **Visual Query Tab**, you can select the columns that you need, or add initial
   sorting and grouping, etc. It might be useful to prepare your
   data before processing it in workflow. Below is a builder configuration
-  that corresponds to an SQL query is shown
+  that corresponds to an SQL query is shown.
 
   ```sql
    Select
@@ -99,7 +99,7 @@ its text manually.
   ![](images/visual_builder.png)
 
 - In **SQL Editor** you can review and edit the query that was built or write
-  your own query. To check the connection press **Test Query**
+  your own query. To check the connection press **Test Query**.
 
   > **Note:**
   > Don't use **Test Query** to validate the query since it only checks the `SELECT`
@@ -112,7 +112,7 @@ Press **OK** when query is built.
 
 ### Check query result
 
-Press **Run Workflow**, to see the result of the query .
+Press **Run Workflow**, to see the result of the query.
 
 ![](images/run_workflow.png)
 
