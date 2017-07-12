@@ -22,6 +22,8 @@ these commands on the **Metrics > Data Entry** page.
 
 ![](images/metrics_entry.png)
 
+Also you can download ready [stream file](resources/Stream.str) for review in your own IBM SPSS Modeler installation.
+
 ## Prerequisites
 
 - Install [IBM SPSS Modeler](http://www-01.ibm.com/support/docview.wss?uid=swg24039399), version 18
@@ -33,7 +35,7 @@ these commands on the **Metrics > Data Entry** page.
 
   ![](images/modeler_1.png)
 
-- Add the **Database** source to your model
+- Add the **Database** source to your stream
 
   ![](images/modeler_2.png)
 
@@ -97,7 +99,7 @@ First 10 rows should be shown in preview table
 ## Join two tables
 
 - In the bottom panel of IBM SPSS Modeler select **Record Ops** tab, choose **Merge** node and
-add it to model
+add it to stream
 
   ![](images/modeler_16.png)
   
@@ -137,7 +139,7 @@ in `inflation.cpi.categories.weight` to `weight`
 ## Calculate weighted price for every row
 
 - In the bottom panel of IBM SPSS Modeler select **Field Ops** tab, choose **Derive** node and
-add it to model
+add it to stream
 
   ![](images/modeler_24.png)
   
@@ -159,7 +161,7 @@ add it to model
 ## Calculate weighted inflation index for each year
 
 - In the bottom panel of IBM SPSS Modeler select **Record Ops** tab, choose **Aggregate** node and
-add it to model
+add it to stream
 
   ![](images/modeler_28.png)
   
@@ -189,7 +191,7 @@ and disable **Include record count in field** checkbox.
 ## Add constant entity field
 
 - In the bottom panel of IBM SPSS Modeler select **Field Ops** tab, choose **Derive** node and
-add it to model
+add it to stream
 
   ![](images/modeler_34.png)
   
@@ -213,7 +215,47 @@ add it to model
 - Log in ATSD web interface, go to **Metrics > Data Entry** page and execute command
 
 ```
-metric m:inflation.cpi.categories.price.housing
+metric m:inflation.cpi.composite.price
 ```
 
 ![](images/metric_creation.png)
+
+## Export result to ATSD
+
+- In the bottom panel of IBM SPSS Modeler select **Export** tab, choose **Database** node and
+add it to stream
+
+  ![](images/modeler_38.png)
+  
+- Connect **Derive** (entity) and **Database** nodes
+
+  ![](images/modeler_39.png)
+  
+- Right click on the **Database** node and select **Edit...**. Choose **Data source**, select
+**Insert into table** option. Click **Select...** and choose `inflation.cpi.composite.price` table.
+Also set **Quote table and column names** to **Never**
+
+  ![](images/modeler_40.png)
+  
+- Click **Advanced...** button
+
+  ![](images/modeler_41.png)
+  
+- In Advanced Options window set **Use bulk loading** to **Via ODBC** and **Use binding** to
+**Row-wise**. Click **OK** to save and exit.
+
+  ![](images/modeler_42.png)
+  
+- Click **Run** to export data to ATSD
+
+  ![](images/modeler_43.png)
+
+- To check that data is successfully exported to ATSD go to ATSD web interface, click **SQL** and execute
+following query
+
+```sql
+SELECT entity, datetime, value 
+FROM 'inflation.cpi.composite.price'
+```
+
+  ![](images/atsd_query_result.png)
