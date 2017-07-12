@@ -47,7 +47,7 @@ Also you can download ready [stream file](resources/Stream.str) for review in yo
 
   ![](images/modeler_4.png)
   
-- Choose ATSD ODBC data source. If there are no data sources - create it as described [here](../odbc/README.md#configure-odbc-data-source) and click **Refresh**
+- Choose ATSD ODBC data source. If there are no data sources - create it as described [here](../../odbc/README.md#configure-odbc-data-source) and click **Refresh**
 
   ![](images/modeler_5.png)
   
