@@ -22,8 +22,6 @@ these commands on the **Metrics > Data Entry** page.
 
 ![](images/metrics_entry.png)
 
-Also you can download ready [stream file](resources/Stream.str) for review in your own IBM SPSS Modeler installation.
-
 ## Prerequisites
 
 - Install [IBM SPSS Modeler](http://www-01.ibm.com/support/docview.wss?uid=swg24039399), version 18
@@ -215,16 +213,6 @@ add it to stream
   
 - Save changes and close the editor
 
-## Create export metric in ATSD
-
-- Log in ATSD web interface, go to **Metrics > Data Entry** page and execute command
-
-```
-metric m:inflation.cpi.composite.price
-```
-
-![](images/metric_creation.png)
-
 ## Export result to ATSD
 
 - In the bottom panel of IBM SPSS Modeler select **Export** tab, choose **Database** node and
@@ -239,7 +227,7 @@ add it to stream
 - Right click on the **Database** node and select **Edit...**
   - Choose **Data source**
   - Select **Insert into table** option
-  - Click **Select...** and choose `inflation.cpi.composite.price` table
+  - Type `inflation.cpi.composite.price` in **Table name**
   - Set **Quote table and column names** to **Never**
 
   ![](images/modeler_40.png)
@@ -266,3 +254,7 @@ FROM 'inflation.cpi.composite.price'
 ```
 
   ![](images/atsd_query_result.png)
+  
+## Ready stream file
+
+You can download ready [stream file](resources/Stream.str) for review in your own IBM SPSS Modeler installation.
