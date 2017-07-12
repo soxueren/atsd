@@ -6,7 +6,7 @@
 IBM SPSS Modeler is a predictive analytics platform that helps you build accurate predictive 
 models quickly and deliver predictive intelligence to individuals, groups, systems and the enterprise.
 The following guide includes examples of loading time series data from the Axibase Time Series Database (ATSD),
-filtering them and storing the results back in ATSD.
+calculating derived time series in IBM SPSS Modeler and storing the results back in ATSD.
 
 ## Sample Dataset
 
@@ -147,8 +147,10 @@ add it to stream
 
   ![](images/modeler_25.png)
   
-- Right click on the **Derive** node and select **Edit...**. Set **Derive field** to 
-**weighted_price**, field type to **Continuous** and add formula **price * weight / 1000**
+- Right click on the **Derive** node and select **Edit...**
+  - Set **Derive field** to **weighted_price**
+  - Set field type to **Continuous**
+  - Add formula **price * weight / 1000**
   
   ![](images/modeler_26.png)
   
@@ -169,8 +171,9 @@ add it to stream
 
   ![](images/modeler_29.png)
   
-- Right click on the **Aggregate** node and select **Edit...**. Add `datetime` in **Key fields**
-and disable **Include record count in field** checkbox. 
+- Right click on the **Aggregate** node and select **Edit...**
+  - Add `datetime` in **Key fields**
+  - Disable **Include record count in field** checkbox. 
 
   ![](images/modeler_30.png)
   
@@ -199,8 +202,10 @@ add it to stream
 
   ![](images/modeler_35.png)
   
-- Right click on the **Derive** node and select **Edit...**. Set **Derive field** to 
-**entity**, field type to **Categorical** and add formula **"bls.gov"**
+- Right click on the **Derive** node and select **Edit...**
+  - Set **Derive field** to **entity**
+  - Set field type to **Categorical**
+  - Add formula **"bls.gov"**
 
   ![](images/modeler_36.png)
   
@@ -231,9 +236,11 @@ add it to stream
 
   ![](images/modeler_39.png)
   
-- Right click on the **Database** node and select **Edit...**. Choose **Data source**, select
-**Insert into table** option. Click **Select...** and choose `inflation.cpi.composite.price` table.
-Also set **Quote table and column names** to **Never**
+- Right click on the **Database** node and select **Edit...**
+  - Choose **Data source**
+  - Select **Insert into table** option
+  - Click **Select...** and choose `inflation.cpi.composite.price` table
+  - Set **Quote table and column names** to **Never**
 
   ![](images/modeler_40.png)
   
