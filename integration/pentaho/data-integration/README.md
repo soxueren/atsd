@@ -281,8 +281,7 @@ Complete diagram:
 Log in to ATSD and execute the following query in the SQL tab to verify the results:
 
 ```sql
-SELECT * 
-  FROM 'inflation.cpi.composite.price' 
+SELECT entity, datetime, value FROM 'inflation.cpi.composite.price'
 ```
 
 ```ls
@@ -295,13 +294,14 @@ SELECT *
 | bls.gov | 2017-01-01T00:00:00.000Z | 100.12572021999999 |
 ```
 
-### PDI transformation file
+## Transformation File
 
-- [Link to file](resources/transformation.krt) that should be obtained after all the steps
+- [Link to the `krt` file](resources/transformation.krt) containing this transformation.
 
 ## Reference
 
-Used Data Integration modules:
+PDI tools applied in this transformation:
+
 - [Join Rows (cartesian product)](http://wiki.pentaho.com/display/EAI/Join+Rows+%28Cartesian+product%29)
 - [Merge Join](http://wiki.pentaho.com/display/EAI/Merge+Join)
 - [Calculator](http://wiki.pentaho.com/display/EAI/Calculator)
