@@ -55,164 +55,165 @@ these commands on the **Metrics > Data Entry** page.
   
 - New connection should appear in **Connections** table
 
-- Open the **ODBC Data Source Administrator** window by pressing the **ODBC Admin** button in the **ODBC Connection** dialog.
+  ![](images/modeler_7.png)
+  
+- Click **OK**. After wizard close choose your new data source
 
-- Configure the datasource as described [here](../odbc/README.md#configure-odbc-data-source).
+  ![](images/modeler_8.png)
+  
+- Click **Select...**
 
-- Append `tables` property to the DSN URL to filter metrics by name in the Query
-  Builder. For example, `tables=*` displays all ATSD metrics as tables whereas `tables=infla*`
-  shows only metrics that start with the characters 'infla'. 
+  ![](images/modeler_9.png)
+  
+- Select `inflation.cpi.categories.price` metric and click **OK**
 
-  ```text
-  jdbc:axibase:atsd:ATSD_HOST:8443;tables=*
-  ```
+  ![](images/modeler_10.png)
+  
+If you don't find your metric, update ODBC data source as described [here](no-tables-fix.md), delete your connection in SPSS Modeler and 
+create it again.
 
-> Refer to the [JDBC driver](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) documentation for additional details.
+- Check **Never** in **Quote table and column names** 
 
-- Uncheck the **Strip Quote** flag and press **OK**.
+  ![](images/modeler_11.png)
+  
+- Go to **Filter** tab and disable `time`, `text` and `metric` fields
 
-  ![](images/odbc_quotes.png)
+  ![](images/modeler_12.png)
+  
+- Database source setup is finished. To check database source click **Preview**
 
-- Select the name you specified for DSN during bridge configuration from the **Data
-  Source Name** list and press **OK**.
+  ![](images/modeler_13.png)
+  
+First 10 rows should be shown in preview table
 
-  ![](images/dsn_list.png)
+  ![](images/modeler_14.png)
+  
+- Close preview table and click **OK** in database source settings window to save changes
 
-## Building Queries
+- Repeat these steps to create another data source for metric `inflation.cpi.categories.weight` 
+  
+  ![](images/modeler_15.png)
+  
+## Join two tables
 
-After creating a connection you will see the **Choose Table or Specify Query** dialog.
+- In the bottom panel of IBM SPSS Modeler select **Record Ops** tab, choose **Merge** node and
+add it to model
 
-![](images/choose_table.png)
+  ![](images/modeler_16.png)
+  
+- Right click on any database source node and select **Connect...**
 
-This allows you build a query by choosing a table or entering query
-text manually.
+  ![](images/modeler_17.png)
 
-- Table names visible in the **Tables** tab satisfy the `tables` pattern
-  specified in the DSN URL. Click the **Refresh** button to reload the list, if
-  necessary.
+- Select **Merge** node. A link should appear between two nodes
 
-  ![](images/metrics_list.png)
+  ![](images/modeler_18.png)
+  
+- Connect other database source with **Merge** node
 
-- In the **Visual Query Tab**, you can specify particular columns in the `SELECT` expression as well as add optional
-  sorting and grouping to prepare your
-  data before processing it in the workflow. Below is an SQL query and corresponding
-  configuration.
+  ![](images/modeler_19.png)
+  
+- Right click on the **Merge** node and select **Edit...**. Set **Merge method** to **Keys**
+and add `tags` field to **Keys for merge** field
 
-  ```sql
-   SELECT datetime, sum(value) AS sum_value
-     FROM 'inflation.cpi.categories.price'
-   GROUP BY datetime
-     HAVING sum_value > 1010
-   ORDER BY datetime
-  ```
+  ![](images/modeler_20.png)
+  
+- Go to **Filter** tab and disable (click on arrow in Filter column) both entity fields and
+datetime field for `inflation.cpi.categories.weight` table
 
-  ![](images/visual_builder.png)
+  ![](images/modeler_21.png)
+  
+- Rename `value` field in `inflation.cpi.categories.price` table to `price` and `value` field
+in `inflation.cpi.categories.weight` to `weight`
 
-- The **SQL Editor** allows you to review and modify pre-built queries or write
-  your own.
+  ![](images/modeler_22.png)
+  
+- Click **Preview** button to check result
 
-- The **Test Query** button truncates the query after the `FROM` clause and sends only the remaining
-  `SELECT ... FROM ...` expression to the database for validation.
+  ![](images/modeler_23.png)
+  
+- Save changes and close the editor
 
-  ![](images/sql_editor.png)
+## Calculate weighted price for every row
 
-Press **OK** when the query is ready for processing.
+- In the bottom panel of IBM SPSS Modeler select **Field Ops** tab, choose **Derive** node and
+add it to model
 
-### Check Query Results
+  ![](images/modeler_24.png)
+  
+- Connect **Merge** and **Derive** nodes
 
-Press **Run Workflow**, to see the result of the query.
+  ![](images/modeler_25.png)
+  
+- Right click on the **Derive** node and select **Edit...**. Set **Derive field** to 
+**weighted_price**, field type to **Continuous** and add formula **price * weight / 1000**
+  
+  ![](images/modeler_26.png)
+  
+- Click **Preview** button to check result. **weighted_price** column should be added.
 
-![](images/run_workflow.png)
+  ![](images/modeler_27.png)
+  
+- Save changes and close the editor
 
-![](images/results.png)
+## Calculate weighted inflation index for each year
 
-## Calculate and Store Derived Series
+- In the bottom panel of IBM SPSS Modeler select **Record Ops** tab, choose **Aggregate** node and
+add it to model
 
-This section describes how to create a workflow that retrieves existing
-data from ATSD to produce new series in Designer and then store these series back in ATSD.
-To calculate a weighted inflation index, we multiply the CPI of each category by
-its weight divided by 1000 and sum the products.
+  ![](images/modeler_28.png)
+  
+- Connect **Derive** (weighted_price) and **Aggregate** nodes
 
-The resulting workflow will be implemented as follows:
+  ![](images/modeler_29.png)
+  
+- Right click on the **Aggregate** node and select **Edit...**. Add `datetime` in **Key fields**
+and disable **Include record count in field** checkbox. 
 
-![](images/workflow.png)
+  ![](images/modeler_30.png)
+  
+- In **Aggregate expressions** table enter field name `value` and click **Launch expression builder**
 
-You can download [this workflow](resources/atsd-workflow.yxmd) for review in your own Alterix Designer installation.
+  ![](images/modeler_31.png)
+  
+- In Expression Builder window enter formula `SUM('weighted_price')` and click **OK**
 
-The workflow consists of the following steps (nodes):
+  ![](images/modeler_32.png)
+  
+- Click **Preview** button to check result
 
-1. **Input Data** tool.
-   Repeat the steps in the previous section for this tool, choose
-   `inflation.cpi.categories.price` table. Select `datetime`,
-   `value` columns and manually add `tags.category` as shown below.
+  ![](images/modeler_33.png)
 
-   ![](images/select_columns.png)
+- Save changes and close the editor
 
-2. **Input Data** tool. Follow the same procedure as above for the
-   `inflation.cpi.categories.weight` table.
+## Add constant entity field
 
-3. **Filter** tool. Specify the condition `>= January 1st, 2010`
-   and use the **T** (_true_) node output to retrieve the series created after 2009 only.
+- In the bottom panel of IBM SPSS Modeler select **Field Ops** tab, choose **Derive** node and
+add it to model
 
-   ![](images/filter.png)
+  ![](images/modeler_34.png)
+  
+- Connect **Aggregate** and **Derive** nodes
 
-   ![](images/true_output.png)
+  ![](images/modeler_35.png)
+  
+- Right click on the **Derive** node and select **Edit...**. Set **Derive field** to 
+**entity**, field type to **Categorical** and add formula **"bls.gov"**
 
-4. **Filter** tool. Follow the same procedure as above.
+  ![](images/modeler_36.png)
+  
+- Click **Preview** button to check result. **entity** column should be added.
 
-5. **Join** tool. Join prices and weights by `tags.category` field. Deselect
-   fields as shown on the image. Rename `value` fields for
-   `inflation.cpi.categories.price` and `inflation.cpi.categories.weight` to
-   `price` and `weight` respectively.
+  ![](images/modeler_37.png)
+  
+- Save changes and close the editor
 
-   ![](images/join.png)
+## Create export metric in ATSD
 
-   > **Note**
-   >
-   > To check input or output of any node, _run the workflow_ and click its
-   > input/output.
-   >
-   > ![](images/join_output.png)
+- Log in ATSD web interface, go to **Metrics > Data Entry** page and execute command
 
-6. **Formula** tool. Connect its input to the **J** (_inner join_)
-   output of the **Join** node. Next, create a new column named `value` to
-   store the result. Fill in the expression to calculate it, and specify the
-   correct data type.
+```
+metric m:inflation.cpi.categories.price.housing
+```
 
-   ![](images/add_column.png)
-
-   ![](images/formula.png)
-
-7. **Summarize** tool. Select fields from above to get the actions list as shown
-   below on the image. Input `value` into  **Output Field Name**.
-
-   ![](images/summarize.png)
-
-8. **Sort** tool. Apply it to sort records by date.
-
-   ![](images/sort.png)
-
-9. **Formula** tool. Add an `entity` column with the **Formula** tool. Name it
-   `bls.gov`. The default data type `V_WString` is not supported yet by the ATSD JDBC driver,
-   use `String` or `WString` (for Unicode) instead.
-
-   ![](images/entity.png)
-
-10. **Output Data** tool. Choose ODBC Connection as before and enter a name for
-    the new metric, in this case `inflation.cpi.composite.price`.
-    Edit **Output Options** in the configuration dialog.
-
-    ![](images/metric_name.png)
-
-    ![](images/output.png)
-
-11. **Browse** tool. View the final result.
-
-Press **Run Workflow**.
-
-The data will be retrieved from the database and processed in Designer by the workflow
-with the new series stored back in the database. 
-
-Click on the **Browse** node to view the results.
-
-   ![](images/calc_results.png)
+![](images/metric_creation.png)
