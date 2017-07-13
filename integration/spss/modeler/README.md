@@ -3,19 +3,19 @@
 
 ## Overview
 
-IBM SPSS Modeler provides a set of tools to build data transformations and analysis models for users without programming experience. The following guide includes examples of loading time series data from the Axibase Time Series Database (ATSD),
-calculating derived time series in IBM SPSS Modeler and storing the results back in ATSD.
+The IBM SPSS Modeler provides a set of tools to build data transformations and analysis models for users without programming experience. The following guide includes examples of loading time series data from the Axibase Time Series Database (ATSD),
+calculating derived time series in the IBM SPSS Modeler interface and storing the results back in ATSD.
 
 ## Sample Dataset
 
-For the purpose of instruction, we will use [sample series commands](resources/commands.txt).
+For the purpose of instruction, we will use the following [sample series commands](resources/commands.txt).
 The series contain the Consumer Price Index (CPI) for each category
 of items in a consumer's basket as well as a weight for each category in the CPI
 basket. The weights are stored as fractions of 1000. The CPI is tracked from 2013 to
 2017 and uses Year 2016 values as the baseline. Weight values are available only for
 year 2017.
 
-To load the data into ATSD, login into the database web interface and submit
+To load the data into ATSD, log in to the database web interface and submit
 these commands on the **Metrics > Data Entry** page.
 
 ![](images/metrics_entry.png)
@@ -27,13 +27,13 @@ these commands on the **Metrics > Data Entry** page.
 
 ## Create Data Source
 
-- Create a new stream. Stream is a configuration that includes all the steps to load and analyze the data in SPSS Modeler. 
+- Create a new stream. A stream is a configuration that includes all the steps to load and analyze the data in the SPSS Modeler. 
 
-- Select **Sources** tab in the bottom panel and choose **Database** 
+- Select the **Sources** tab from the bottom panel and choose **Database** 
 
   ![](images/modeler_1.png)
 
-- Add the **Database** source to the stream by drag-and-dropping into the stream workspace.
+- Add the **Database** source to the stream by dragging-and-dropping it into the stream workspace.
 
   ![](images/modeler_2.png)
 
@@ -41,19 +41,19 @@ these commands on the **Metrics > Data Entry** page.
 
   ![](images/modeler_3.png)
 
-- Expand **Data source** and choose **Add new database connection**
+- Expand the **Data source** menu and choose **Add new database connection**
 
   ![](images/modeler_4.png)
   
-- Choose ATSD ODBC data source. If there are no data sources - create an ODBC-bridged connection to ATSD as described [here](../../odbc/README.md#configure-odbc-data-source) and click **Refresh**
+- Choose ATSD ODBC as the data source. If there are no data sources visibile - create an ODBC-bridged connection to ATSD as described [here](../../odbc/README.md#configure-odbc-data-source) and click **Refresh**
 
   ![](images/modeler_5.png)
   
-- Enter username and password and click **Connect**
+- Enter your username and password and click **Connect**
 
   ![](images/modeler_6.png)
   
-- New connection should appear in the **Connections** table
+- The connection should be visible in the **Connections** table
 
   ![](images/modeler_7.png)
   
@@ -65,7 +65,7 @@ these commands on the **Metrics > Data Entry** page.
 
   ![](images/modeler_9.png)
   
-- Disable **Show table owner** checkbox, select `inflation.cpi.categories.price` table and click **OK**
+- Uncheck the **Show table owner** box shown below, select `inflation.cpi.categories.price` table and click **OK**
 
   ![](images/modeler_10.png)
   
@@ -73,11 +73,11 @@ these commands on the **Metrics > Data Entry** page.
 
   ![](images/modeler_11.png)
   
-- Go to **Filter** tab and click on arrow in the Filter column to disable `time`, `text` and `metric` columns.
+- Go to **Filter** tab and click on the respective arrows in the Filter column to disable the `time`, `text` and `metric` columns.
 
   ![](images/modeler_12.png)
   
-- Database source setup is finished. Click **Preview** to verify the results by reviewing the first 10 rows in the the table.
+- Database source setup is finished. Click **Preview** to verify the results by reviewing the first 10 rows in the table.
 
   ![](images/modeler_13.png)
 
@@ -91,7 +91,7 @@ these commands on the **Metrics > Data Entry** page.
   
 ## Join Tables
 
-- Select **Record Ops** tab in the bottom panel, choose **Merge** node and add it to the stream
+- Select the **Record Ops** tab in the bottom panel, choose the **Merge** node and add it to the stream
 
   ![](images/modeler_16.png)
   
@@ -103,12 +103,12 @@ these commands on the **Metrics > Data Entry** page.
 
   ![](images/modeler_18.png)
   
-- Connect the other source with the **Merge** shape using a similar technique.
+- Connect the other source with the **Merge** shape using the same technique.
 
   ![](images/modeler_19.png)
   
 - Right click on the **Merge** shape and select **Edit...**. Set **Merge method** to **Keys**
-and add `tags` field to **Keys for merge** field
+and add the `tags` field to **Keys for merge** field
 
   ![](images/modeler_20.png)
   
@@ -116,12 +116,12 @@ and add `tags` field to **Keys for merge** field
 
   ![](images/modeler_21.png)
   
-- Rename `value` field in `inflation.cpi.categories.price` table to `price` and `value` field
+- Rename the `value` field in the `inflation.cpi.categories.price` table to `price` and the `value` field
 in `inflation.cpi.categories.weight` to `weight`
 
   ![](images/modeler_22.png)
   
-- Click **Preview** button to check results
+- Click **Preview** button to check the results
 
   ![](images/modeler_23.png)
   
@@ -129,23 +129,23 @@ in `inflation.cpi.categories.weight` to `weight`
 
 ## Calculate Weighted Price
 
-- Select **Field Ops** tab in the bottom panel, choose **Derive** shape and
-add it to the stream
+- Select the **Field Ops** tab in the bottom panel, choose the **Derive** shape and
+add it to the stream.
 
   ![](images/modeler_24.png)
   
-- Connect **Merge** and **Derive** shapes
+- Connect the **Merge** and **Derive** shapes
 
   ![](images/modeler_25.png)
   
 - Right click on the **Derive** shape and select **Edit...**
   - Set **Derive field** to **weighted_price**
   - Set field type to **Continuous**
-  - Add formula **price * weight / 1000**
+  - Add the formula **price * weight / 1000**
   
   ![](images/modeler_26.png)
   
-- Click **Preview** button to check results. You should be able to see the **weighted_price** column.
+- Click **Preview** button to check results. You should see the **weighted_price** column.
 
   ![](images/modeler_27.png)
   
@@ -153,53 +153,53 @@ add it to the stream
 
 ## Calculate Weighted Inflation per Year
 
-- Select **Record Ops** tab, choose **Aggregate** shape and add it to the stream
+- Select the **Record Ops** tab, choose the **Aggregate** shape and add it to the stream.
 
   ![](images/modeler_28.png)
   
-- Connect **Derive** (weighted_price) and **Aggregate** shapes
+- Connect the **Derive** (weighted_price) and **Aggregate** shapes
 
   ![](images/modeler_29.png)
   
 - Right click on the **Aggregate** shape and select **Edit...**
   - Add `datetime` in **Key fields**
-  - Disable **Include record count in field** checkbox. 
+  - Uncheck the **Include record count in field** box. 
 
   ![](images/modeler_30.png)
   
-- In **Aggregate expressions** table, enter field name `value` and click **Launch expression builder**
+- In the **Aggregate expressions** table, enter the field name `value` and click **Launch expression builder**
 
   ![](images/modeler_31.png)
   
-- In Expression Builder window, enter formula `SUM('weighted_price')` and click **OK**
+- In the Expression Builder window, enter the formula `SUM('weighted_price')` and click **OK**
 
   ![](images/modeler_32.png)
   
-- Click **Preview** button to check results
+- Click the **Preview** button to check the results
 
   ![](images/modeler_33.png)
 
-- Close the preview table and click **OK** to save changes.
+- Close the preview table and click **OK** to save the changes.
 
 ## Add Entity Field
 
-- Select **Field Ops** tab, choose **Derive** shape and
+- Select the **Field Ops** tab, choose the **Derive** shape and
 add it to the stream
 
   ![](images/modeler_34.png)
   
-- Connect **Aggregate** and **Derive** shapes
+- Connect the **Aggregate** and **Derive** shapes
 
   ![](images/modeler_35.png)
   
 - Right click on the **Derive** shape and select **Edit...**
-  - Set **Derive field** to **entity**
+  - Set the **Derive field** to **entity**
   - Set field type to **Categorical**
   - Add formula **"bls.gov"**
 
   ![](images/modeler_36.png)
   
-- Click **Preview** button to check results. **entity** column should be added.
+- Click the **Preview** button to check the results. The**entity** column should have been added.
 
   ![](images/modeler_37.png)
   
@@ -207,28 +207,28 @@ add it to the stream
 
 ## Export Results
 
-- Select **Export** tab, choose **Database** shape and
+- Select the **Export** tab, choose the **Database** shape and
 add it to the stream
 
   ![](images/modeler_38.png)
   
-- Connect **Derive** (entity) and **Database** shapes
+- Connect the **Derive** (entity) and **Database** shapes
 
   ![](images/modeler_39.png)
   
 - Right click on the **Database** shape and select **Edit...**
   - Choose **Data source**
-  - Type `inflation.cpi.composite.price` in **Table name**. This would be the name of the new metric inserted into ATSD.
-  - Select **Insert into table** option
+  - Type `inflation.cpi.composite.price` in **Table name**. This will be the name of the new metric inserted into ATSD.
+  - Select the **Insert into table** option
   - Set **Quote table and column names** to **Never**
 
   ![](images/modeler_40.png)
   
-- Click **Advanced...** button
+- Click the **Advanced...** button
 
   ![](images/modeler_41.png)
   
-- In Advanced Options window set **Use bulk loading** to **Via ODBC** and **Use binding** to
+- In the Advanced Options window set **Use bulk loading** to **Via ODBC** and **Use binding** to
 **Row-wise**. Click **OK** to save and exit.
 
   ![](images/modeler_42.png)
@@ -239,7 +239,7 @@ add it to the stream
 
 ## Verify Insertion
 
-To check that data is successfully exported to ATSD go to ATSD web interface, click **SQL** and execute
+To check that data is successfully exported to ATSD go to the ATSD web interface, click **SQL** and execute the
 following query
 
 ```sql
