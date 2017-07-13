@@ -52,10 +52,20 @@ Save data in the `weights.sav`.
 * Skip the next step again and write this query:
 
 ```sql
-SELECT T0."datetime", T0."value", T0."tags", T1."datetime" AS datetime1, T1."value" AS value1, T1."tags" AS tags1 
-  FROM "inflation.cpi.categories.price" T0 OUTER JOIN "inflation.cpi.categories.weight" T1 
-WHERE T0.datetime BETWEEN '2013-01-01T00:00:00Z' AND '2017-01-01T00:00:00Z'
-  WITH INTERPOLATE (1 YEAR, PREVIOUS, INNER, EXTEND)
+SELECT 
+    T0."datetime", 
+    T0."value", 
+    T0."tags", 
+    T1."datetime" 
+    AS datetime1, 
+    T1."value" AS value1, 
+    T1."tags" AS tags1 
+  FROM "inflation.cpi.categories.price" T0 
+  OUTER JOIN "inflation.cpi.categories.weight" T1 
+WHERE 
+    T0.datetime BETWEEN '2013-01-01T00:00:00Z' 
+    AND '2017-01-01T00:00:00Z'
+WITH INTERPOLATE (1 YEAR, PREVIOUS, INNER, EXTEND)
 ```
 
 ![](resources/merged_import/step3.png)
