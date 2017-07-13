@@ -26,19 +26,17 @@ You can import ATSD data into SPSS by configuring an ODBC data source on the Win
 
 * Configure an [ODBC-JDBC bridge]((https://github.com/axibase/atsd/tree/master/integration/odbc)) for ATSD.
 * Open **File -> Import Data -> Database -> New query...**.
-* Select table and columns you need. For our example, select all columns from the table with CPI prices `inflation.cpi.categories.price`.
+* Select table and columns you need. For our example, select `datetime`, `value` and `tags` columns from the table with CPI prices `inflation.cpi.categories.price`.
 * If you don't need data aggregation or data limit, click `Finish` button, otherwise, click `Next` step.
 * Save imported data to the `prices.sav` file.
 
-![](resources/select_columns.png)
+![](resources/select_prices.png)
 
 Then make the steps described above for the weights table `inflation.cpi.categories.weight`. 
 
-Before saving data in the `weights.sav` file, click `Variable View` tab to rename columns `datetime` and `value` as `timedate` and `weight`. Note during the merge operation SPSS uses matching of column names.
- 
-![](resources/variable_view.png)
+![](resources/select_weights.png)
 
-Also you may remove unnecessary variables here.
+Save data in the `weights.sav`.
 
 ### Import from CSV Files
 
@@ -64,6 +62,16 @@ Analyze | Apply statistical functions to the dataset.
 
 
 ## Merge Datasets
+
+### Change Names of Columns
+
+SPSS merges datasets using matching column names, similar to the `SELF JOIN` command in SQL syntax. 
+
+To prevent the `datetime` and `value` columns from being merged, their names are changed in the `weights.sav` dataset using `Variable View` tab, otherwise the merged dataset produced by SPSS will only contain data for 2017.
+
+![](resources/variable_view.png)
+
+### Merge
 
 Merge the two datasets by adding the `weight` column from the `weights.sav` dataset to the `prices.sav` dataset.
 
@@ -167,16 +175,9 @@ Export query results into `prices.csv`.
 Obtain weight data by executing the following query: 
 
 ```sql
-SELECT entity, datetime as timedate, value as weight, tags.category 
+SELECT entity, datetime, value, tags.category 
   FROM inflation.cpi.categories.weight 
 ORDER BY tags.category, datetime
 ```
 
 Export query results into `weights.csv`.
-
-### Column Aliases
-
-SPSS merges datasets using matching column names, similar to the `SELF JOIN` command in SQL syntax. 
-
-To prevent the `datetime` and `value` columns from being merged, their names are changed in the **Weight** query using column aliases, otherwise the merged dataset produced by SPSS will only contain data for 2017.
-
