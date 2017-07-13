@@ -59,7 +59,7 @@ Save data in the `weights.sav`.
 ![](resources/merged_import/step7.png)
 ![](resources/merged_import/step8.png)
 
-If you have ended all operations successfully, go to the [Analyze Dataset](#analyze_ataset) section.
+If you have ended all operations successfully, go to the [Analyze Dataset](#analyze_dataset) section.
  
 ### Import from CSV Files
 
