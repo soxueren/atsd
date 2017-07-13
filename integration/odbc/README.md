@@ -1,21 +1,21 @@
-## ODBC-JDBC Gateway
+## ODBC-JDBC Bridge
 
 ### Overview
 
-This document describes how to install an ODBC JDBC gateway on a Windows machine. The purpose of the gateway is to serve as a data link between the Axibase Time Series Database and Windows applications that do not support [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/overview/) driver technology.
+This document describes how to install an ODBC-JDBC bridge on a Windows machine. The purpose of the bridge is to serve as a data link between the Axibase Time Series Database and Windows applications that do not support [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/overview/) driver technology.
 
-The gateway intercepts SQL queries from the client applications via the Microsoft [ODBC](https://docs.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc) protocol and transmits the queries into ATSD using the [ATSD JDBC driver](https://github.com/axibase/atsd-jdbc).
+The bridge intercepts SQL queries from the client applications via the Microsoft [ODBC](https://docs.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc) protocol and transmits the queries into ATSD using the [ATSD JDBC driver](https://github.com/axibase/atsd-jdbc).
 
 ### Downloads and Pre-requisites
 
-1. Download and install Java Runtime Environment 7 for the Windows Operating System. Note that Java 8 is not fully supported by the ODBC-JDBC Gateway vendor.
-2. [Register](http://www.easysoft.com/cgi-bin/account/register.cgi) an account with the ODBC-JDBC Gateway vendor. The account is required for trial license activation.
-3. [Download](http://www.easysoft.com/products/data_access/odbc_jdbc_gateway/#section=tab-1) the trial version of the ODBC-JDBC Gateway.
+1. Download and install Java Runtime Environment 7 for the Windows Operating System. Note that Java 8 is not fully supported by the ODBC-JDBC Bridge vendor.
+2. [Register](http://www.easysoft.com/cgi-bin/account/register.cgi) an account with the ODBC-JDBC Bridge vendor. The account is required for trial license activation.
+3. [Download](http://www.easysoft.com/products/data_access/odbc_jdbc_gateway/#section=tab-1) the trial version of the ODBC-JDBC Bridge.
 4. [Download](https://github.com/axibase/atsd-jdbc/releases) ATSD JDBC driver with dependencies.
 
-### Gateway Installation
+### Bridge Installation
 
-Install and activate the gateway as follows:
+Install and activate the bridge as follows:
 
   Run the installer under an Administrator account
 
