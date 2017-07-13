@@ -26,10 +26,13 @@ You can import ATSD data into SPSS by configuring an ODBC data source on the Win
 
 * Configure an [ODBC-JDBC bridge]((https://github.com/axibase/atsd/tree/master/integration/odbc)) for ATSD.
 * Open **File -> Import Data -> Database -> New query...**.
-* Select table and columns you need.
+* Select table and columns you need. For our example, select all columns from the table with CPI prices `inflation.cpi.categories.price`.
 * If you don't need data aggregation or data limit, click `Finish` button, otherwise, click `Next` step.
+* Save imported data to the `prices.sav` file.
 
 ![](resources/select_columns.png)
+
+Then make the steps described above for the weights table `inflation.cpi.categories.weight` and save dataset in the `weights.sav` file.
 
 ### Import from CSV Files
 
