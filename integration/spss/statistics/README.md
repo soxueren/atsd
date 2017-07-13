@@ -4,7 +4,18 @@
 
 The [IBM Statistical Package for the Social Sciences](https://www.ibm.com/analytics/us/en/technology/spss/) (SPSS) is an advanced statistical analysis tool. This guide describes the process of loading data from the Axibase Time Series Database into SPSS and demonstrates how to calculate the value of a derived series, using Weighted Consumer Price Indices as an example.
 
-SPSS provides several options for loading datasets from external data sources, such as Excel files or other databases. To complete this exercise, sample data must be available in your instance of ATSD.
+SPSS provides several options for loading datasets from external data sources, such as Excel files or remote databases. To complete this exercise, sample data must be available in your instance of ATSD.
+
+## SPSS User Interface
+
+**Menu Item** | **Description**
+--------- | -----------
+File | Import data from files, create and save datasets, connect to databases.
+Data | Prepare datasets: select rows, aggregate, merge, split.
+Transform | Transform data:  calculate new variables, convert dataset into time series or other data structure.
+Analyze | Apply statistical functions to the dataset.
+
+![](resources/ibm_spss_gui.png)
 
 ## Load Sample Data into ATSD
 
@@ -22,62 +33,54 @@ To calculate a weighted inflation index we need to multiply the CPI of each cate
 
 You can import ATSD data into SPSS by configuring an ODBC data source on the Windows machine and retrieving the records with an SQL query. Alternatively, you can run the queries in the ATSD web-based SQL console, export query results into CSV files, and manually load them into SPSS from the local file system.
 
-### Import from ODBC Data Source
+### Import Data from Database
 
-Common steps:
+#### Prerequisites
 
-* Configure an [ODBC-JDBC bridge]((https://github.com/axibase/atsd/tree/master/integration/odbc)) for ATSD.
-* Open **File -> Import Data -> Database -> New query...**.
+* Configure an [ODBC-JDBC bridge](https://github.com/axibase/atsd/tree/master/integration/odbc) for ATSD.
 
-#### Import both files from Database
+#### Option 1: Load Prices and Weights As Separate Datasets
 
-* Select table and columns you need. For our example, select `datetime`, `value` and `tags` columns from the table with CPI prices `inflation.cpi.categories.price`.
-* If you don't need data aggregation or data limit, click `Finish` button, otherwise, click `Next` step.
-* Save imported data to the `prices.sav` file.
+* Open **File > Import Data > Database > New query...**.
+* Select `inflation.cpi.categories.price` table, drag-and-drop `datetime`, `value` and `tags` into the list of selected columns.
+* Click **Finish**.
+* Save the imported data into the `prices.sav` file.
 
 ![](resources/select_prices.png)
 
-Then make the steps described above for the weights table `inflation.cpi.categories.weight`. 
+* Open **File > Import Data > Database > New query...**.
+* Select `inflation.cpi.categories.weight` table, drag-and-drop `datetime`, `value` and `tags` into the list of selected columns.
+* Click **Finish**.
+* Save the imported data into the `weights.sav` file.
 
 ![](resources/select_weights.png)
 
-Save data in the `weights.sav`.
+#### Option 2: Loaded Merged Prices and Weights Dataset
 
-#### Import merged dataset from Database
-
-* Select columns with the same name from two different tables
+* Select `datetime` column from both the `inflation.cpi.categories.price` and `inflation.cpi.categories.weight` tables.
 ![](resources/merged_import/step1.png)
-* Skip the next step with join
-![](resources/merged_import/step2.png)
-* Skip the next step again and write this query:
+* Skip the next steps until a query editor is displayed. 
+* Enter the following query which executes a FULL OUTER JOIN with interpolation for the missing weight records:
 
 ```sql
-SELECT 
-    T0."datetime", 
-    T0."value", 
-    T0."tags", 
-    T1."datetime" 
-    AS datetime1, 
-    T1."value" AS value1, 
-    T1."tags" AS tags1 
-  FROM "inflation.cpi.categories.price" T0 
+SELECT T0."datetime", T0."value", T0."tags", 
+  T1."datetime" AS datetime1, T1."value" AS value1, T1."tags" AS tags1 
+FROM "inflation.cpi.categories.price" T0 
   OUTER JOIN "inflation.cpi.categories.weight" T1 
-WHERE 
-    T0.datetime BETWEEN '2013-01-01T00:00:00Z' 
-    AND '2017-01-01T00:00:00Z'
-WITH INTERPOLATE (1 YEAR, PREVIOUS, INNER, EXTEND)
+WHERE T0.datetime BETWEEN '2013-01-01T00:00:00Z' AND '2017-01-01T00:00:00Z'
+  WITH INTERPOLATE (1 YEAR, PREVIOUS, INNER, EXTEND)
 ```
 
 ![](resources/merged_import/step3.png)
-* Save the obtained dataset as `merged.sav`.
+* Save the dataset as `merged.sav`.
 ![](resources/merged_import/step4.png)
-* Click `Variable View` tab, change column name for `value1` into `weight` and remove extra columns: `datetime1` and `tags1`.
+* Click `Variable View` tab, rename column `value1` into `weight` and remove columns `datetime1` and `tags1`.
 ![](resources/merged_import/step5.png)
 ![](resources/merged_import/step6.png)
 ![](resources/merged_import/step7.png)
 ![](resources/merged_import/step8.png)
 
-If you have ended all operations successfully, go to the `Analyze Dataset` section.
+* Proceed to the [Analyze Dataset](#analyze-dataset) section below.
  
 ### Import from CSV Files
 
@@ -87,20 +90,7 @@ If you have ended all operations successfully, go to the `Analyze Dataset` secti
 
 ![](resources/import_dataset.png)
 
-Data from the CSV files are now available as SPSS datasets `prices.sav` and `weights.sav`.
-
-
-## SPSS User Interface
-
-**Menu Item** | **Description**
---------- | -----------
-File | Import data from files, create and save datasets, connect to databases.
-Data | Prepare datasets: select rows, aggregate, merge, split.
-Transform | Transform data:  calculate new variables, convert dataset into time series or other data structure.
-Analyze | Apply statistical functions to the dataset.
-
-![](resources/ibm_spss_gui.png)
-
+Data from the CSV files are now available as SPSS datasets `prices.sav` and `weights.sav`. Proceed to merge datasets.
 
 ## Merge Datasets
 
@@ -154,7 +144,7 @@ The `categ_ind` column is now available in the dataset.
 
 ### Calculate Annual CPI
 
-SPSS also provides two alternatives to aggregate data by period.
+SPSS provides two alternatives to aggregate data by period.
   
 #### Aggregation using the Analyze Menu
     
@@ -189,7 +179,7 @@ SPSS also provides two alternatives to aggregate data by period.
     
 ---
 
-## Exporting Data from ATSD
+## Exporting Data from ATSD into CSV Files
 
 ATSD provides a web-based SQL console to export query results into various data formats including Excel, CSV, and JSON, with optional metadata composed according to the [W3C Model for Tabular Data](https://github.com/axibase/atsd/blob/master/api/sql/api.md#metadata).
 
