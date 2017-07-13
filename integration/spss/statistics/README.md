@@ -49,7 +49,15 @@ Save data in the `weights.sav`.
 ![](resources/merged_import/step1.png)
 * Skip the next step with join
 ![](resources/merged_import/step2.png)
-* Skip the next step again and write this query
+* Skip the next step again and write this query:
+
+```sql
+SELECT T0."datetime", T0."value", T0."tags", T1."datetime" AS datetime1, T1."value" AS value1, T1."tags" AS tags1 
+  FROM "inflation.cpi.categories.price" T0 OUTER JOIN "inflation.cpi.categories.weight" T1 
+WHERE T0.datetime BETWEEN '2013-01-01T00:00:00Z' AND '2017-01-01T00:00:00Z'
+  WITH INTERPOLATE (1 YEAR, PREVIOUS, INNER, EXTEND)
+```
+
 ![](resources/merged_import/step3.png)
 * Save the obtained dataset as `merged.sav`.
 ![](resources/merged_import/step4.png)
@@ -59,7 +67,7 @@ Save data in the `weights.sav`.
 ![](resources/merged_import/step7.png)
 ![](resources/merged_import/step8.png)
 
-If you have ended all operations successfully, go to the [Analyze Dataset](#analyze_dataset) section.
+If you have ended all operations successfully, go to the `Analyze Dataset` section.
  
 ### Import from CSV Files
 
