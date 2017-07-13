@@ -6,7 +6,7 @@ The [IBM Statistical Package for the Social Sciences](https://www.ibm.com/analyt
 
 SPSS provides several options for loading datasets from external data sources, such as Excel files or other databases. To complete this exercise, sample data must be available in your instance of ATSD.
 
-## Load Data
+## Load Sample Data into ATSD
 
 1. Log into the ATSD web interface
 2. Open **Metrics -> Data Entry**, select the 'Commands' tab.
@@ -18,45 +18,29 @@ The commands contain the Consumer Price Index (CPI) for each category of items i
 
 To calculate a weighted inflation index we need to multiply the CPI of each category by its weight divided by 1000 and sum the products.
 
-## Export Data
+## Import Data into SPSS
 
-ATSD includes a web-based SQL console that allows for the export of query results into various data formats including Excel, CSV, and JSON, with optional metadata composed according to the [W3C Model for Tabular Data](https://github.com/axibase/atsd/blob/master/api/sql/api.md#metadata).
+You can import ATSD data into SPSS by configuring an ODBC data source on the Windows machine and retrieving the records with an SQL query. Alternatively, you can run the queries in the ATSD web-based SQL console, export query results into CSV files, and manually load them into SPSS from the local file system.
 
-> If you don't have an ATSD instance available, [weights.csv](resources/weights.csv) and [prices.csv](resources/prices.csv) are provided for your convenience. These files contain the output of the SQL queries discussed below.
+### Import from ODBC Data Source
 
-### Prices
+* Configure an [ODBC-JDBC bridge]((https://github.com/axibase/atsd/tree/master/integration/odbc)) for ATSD.
+* Open **File -> Import Data -> Database -> New query...**.
+* Select table and columns you need.
+* If you don't need data aggregation or data limit, click `Finish` button, otherwise, click `Next` step.
 
-Obtain CPI price data by executing the following query: 
+![](resources/select_columns.png)
 
-```sql
-SELECT entity, datetime, value, tags.category 
-  FROM inflation.cpi.categories.price 
-ORDER BY tags.category, datetime
-```
+### Import from CSV Files
 
-![](resources/sql_run.png)
+* Export data from ATSD into CSV files as described in the **Exporting Data from ATSD** section at the end of this article.
+* Open **File -> Import Data -> CSV Data...**.
+* Select CSV files and click Open to import the `prices.sav` and `weights.sav` files.
 
-Export query results into `prices.csv`.
+![](resources/import_dataset.png)
 
-![](resources/sql_export.png)
+Data from the CSV files are now available as SPSS datasets `prices.sav` and `weights.sav`.
 
-### Weight
-
-Obtain weight data by executing the following query: 
-
-```sql
-SELECT entity, datetime as timedate, value as weight, tags.category 
-  FROM inflation.cpi.categories.weight 
-ORDER BY tags.category, datetime
-```
-
-Export query results into `weights.csv`.
-
-### Column Aliases
-
-SPSS merges datasets using matching column names, similar to the `SELF JOIN` command in SQL syntax. 
-
-To prevent the `datetime` and `value` columns from being merged, their names are changed in the **Weight** query using column aliases, otherwise the merged dataset produced by SPSS will only contain data for 2017.
 
 ## SPSS User Interface
 
@@ -69,25 +53,6 @@ Analyze | Apply statistical functions to the dataset.
 
 ![](resources/ibm_spss_gui.png)
 
-## Import CSV Data
-
-* Open **File -> Import Data -> CSV Data...**.
-* Select CSV files and click Open to import the `prices.sav` and `weights.sav` files.
-
-![](resources/import_dataset.png)
-
-Data from the CSV files are now available as SPSS datasets `prices.sav` and `weights.sav`.
-
-## Import Data with Database connection
-
-Alternative way of data importing is creating of the Database connection with query.
-
-* Open **File -> Import Data -> Database -> New query...**.
-* Select ODBC JDBC bridge for ATSD. If you haven't bridge yet, you should create it with [this tutorial](https://github.com/axibase/atsd/tree/master/integration/odbc).
-* Select table and columns you need.
-* If you don't need data aggregation or data limit, click `Finish` button, otherwise, click `Next` step.
-
-![](resources/select_columns.png)
 
 ## Merge Datasets
 
@@ -163,3 +128,46 @@ SPSS also provides two alternatives to aggregate data by period.
 * Create a new dataset with final columns `datetime` and `CPI`.
 
     ![](resources/aggr_data_new_column.png)
+    
+---
+
+## Exporting Data from ATSD
+
+ATSD provides a web-based SQL console to export query results into various data formats including Excel, CSV, and JSON, with optional metadata composed according to the [W3C Model for Tabular Data](https://github.com/axibase/atsd/blob/master/api/sql/api.md#metadata).
+
+> If you don't have an ATSD instance available, [weights.csv](resources/weights.csv) and [prices.csv](resources/prices.csv) are provided for your convenience. These files contain the output of the SQL queries listed below.
+
+### Prices
+
+Obtain CPI price data by executing the following query: 
+
+```sql
+SELECT entity, datetime, value, tags.category 
+  FROM inflation.cpi.categories.price 
+ORDER BY tags.category, datetime
+```
+
+![](resources/sql_run.png)
+
+Export query results into `prices.csv`.
+
+![](resources/sql_export.png)
+
+### Weight
+
+Obtain weight data by executing the following query: 
+
+```sql
+SELECT entity, datetime as timedate, value as weight, tags.category 
+  FROM inflation.cpi.categories.weight 
+ORDER BY tags.category, datetime
+```
+
+Export query results into `weights.csv`.
+
+### Column Aliases
+
+SPSS merges datasets using matching column names, similar to the `SELF JOIN` command in SQL syntax. 
+
+To prevent the `datetime` and `value` columns from being merged, their names are changed in the **Weight** query using column aliases, otherwise the merged dataset produced by SPSS will only contain data for 2017.
+
