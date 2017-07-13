@@ -3,10 +3,8 @@
 
 ## Overview
 
-IBM SPSS Modeler is a predictive analytics platform that helps you build accurate predictive 
-models quickly and deliver predictive intelligence to individuals, groups, systems and the enterprise.
-The following guide includes examples of loading time series data from the Axibase Time Series Database (ATSD),
-filtering them and storing the results back in ATSD.
+IBM SPSS Modeler provides a set of tools to build data transformations and analysis models for users without programming experience. The following guide includes examples of loading time series data from the Axibase Time Series Database (ATSD),
+calculating derived time series in IBM SPSS Modeler and storing the results back in ATSD.
 
 ## Sample Dataset
 
@@ -25,19 +23,21 @@ these commands on the **Metrics > Data Entry** page.
 ## Prerequisites
 
 - Install [IBM SPSS Modeler](http://www-01.ibm.com/support/docview.wss?uid=swg24039399), version 18
-- Install [ODBC-JDBC gateway](../../odbc/README.md).
+- Install [ODBC-JDBC bridge](../../odbc/README.md).
 
-## Create Database data source
+## Create Data Source
 
-- In the bottom panel of IBM SPSS Modeler select **Sources** tab and choose **Database**
+- Create a new stream. Stream is a configuration that includes all the steps to load and analyze the data in SPSS Modeler. 
+
+- Select **Sources** tab in the bottom panel and choose **Database** 
 
   ![](images/modeler_1.png)
 
-- Add the **Database** source to your model
+- Add the **Database** source to the stream by drag-and-dropping into the stream workspace.
 
   ![](images/modeler_2.png)
 
-- Right click on this source and select **Edit...**
+- Right click on the source and click **Edit...**
 
   ![](images/modeler_3.png)
 
@@ -45,7 +45,7 @@ these commands on the **Metrics > Data Entry** page.
 
   ![](images/modeler_4.png)
   
-- Choose ATSD ODBC data source. If there are no data sources - create it as described [here](../odbc/README.md#configure-odbc-data-source) and click **Refresh**
+- Choose ATSD ODBC data source. If there are no data sources - create an ODBC-bridged connection to ATSD as described [here](../../odbc/README.md#configure-odbc-data-source) and click **Refresh**
 
   ![](images/modeler_5.png)
   
@@ -53,73 +53,66 @@ these commands on the **Metrics > Data Entry** page.
 
   ![](images/modeler_6.png)
   
-- New connection should appear in **Connections** table
+- New connection should appear in the **Connections** table
 
   ![](images/modeler_7.png)
   
-- Click **OK**. After wizard close choose your new data source
+- Click **OK**. Select the newly created ATSD data source.
 
   ![](images/modeler_8.png)
   
-- Click **Select...**
+- Click **Select...** to view the list of available ATSD tables. The list of tables is based on the `tables=` property specified in the JDBC URL. If you don't see the desired table in the list, update ODBC data source as described [here](../../odbc/table-config.md), delete your connection in SPSS Modeler and create it again. Specify `tables=*` to view all tables in ATSD.
 
   ![](images/modeler_9.png)
   
-- Select `inflation.cpi.categories.price` metric and click **OK**
+- Disable **Show table owner** checkbox, select `inflation.cpi.categories.price` table and click **OK**
 
   ![](images/modeler_10.png)
   
-If you don't find your metric, update ODBC data source as described [here](no-tables-fix.md), delete your connection in SPSS Modeler and 
-create it again.
-
 - Check **Never** in **Quote table and column names** 
 
   ![](images/modeler_11.png)
   
-- Go to **Filter** tab and disable `time`, `text` and `metric` fields
+- Go to **Filter** tab and click on arrow in the Filter column to disable `time`, `text` and `metric` columns.
 
   ![](images/modeler_12.png)
   
-- Database source setup is finished. To check database source click **Preview**
+- Database source setup is finished. Click **Preview** to verify the results by reviewing the first 10 rows in the the table.
 
   ![](images/modeler_13.png)
-  
-First 10 rows should be shown in preview table
 
   ![](images/modeler_14.png)
   
-- Close preview table and click **OK** in database source settings window to save changes
+- Close the preview table and click **OK** in database source settings window to save changes.
 
-- Repeat these steps to create another data source for metric `inflation.cpi.categories.weight` 
+- Repeat these steps to create another data source for table `inflation.cpi.categories.weight` 
   
   ![](images/modeler_15.png)
   
-## Join two tables
+## Join Tables
 
-- In the bottom panel of IBM SPSS Modeler select **Record Ops** tab, choose **Merge** node and
-add it to model
+- Select **Record Ops** tab in the bottom panel, choose **Merge** node and add it to the stream
 
   ![](images/modeler_16.png)
   
-- Right click on any database source node and select **Connect...**
+- Right click on one of the database source shapes and select **Connect...**
 
   ![](images/modeler_17.png)
 
-- Select **Merge** node. A link should appear between two nodes
+- Select **Merge** shape. A link should appear between the source and the **Merge** shapes.
 
   ![](images/modeler_18.png)
   
-- Connect other database source with **Merge** node
+- Connect the other source with the **Merge** shape using a similar technique.
 
   ![](images/modeler_19.png)
   
-- Right click on the **Merge** node and select **Edit...**. Set **Merge method** to **Keys**
+- Right click on the **Merge** shape and select **Edit...**. Set **Merge method** to **Keys**
 and add `tags` field to **Keys for merge** field
 
   ![](images/modeler_20.png)
   
-- Go to **Filter** tab and disable (click on arrow in Filter column) both entity fields and
-datetime field for `inflation.cpi.categories.weight` table
+- Open the **Filter** tab and disable both entity fields and the datetime field for the `inflation.cpi.categories.weight` table.
 
   ![](images/modeler_21.png)
   
@@ -128,92 +121,134 @@ in `inflation.cpi.categories.weight` to `weight`
 
   ![](images/modeler_22.png)
   
-- Click **Preview** button to check result
+- Click **Preview** button to check results
 
   ![](images/modeler_23.png)
   
-- Save changes and close the editor
+- Close the **Preview** window and click **Ok** to save changes.
 
-## Calculate weighted price for every row
+## Calculate Weighted Price
 
-- In the bottom panel of IBM SPSS Modeler select **Field Ops** tab, choose **Derive** node and
-add it to model
+- Select **Field Ops** tab in the bottom panel, choose **Derive** shape and
+add it to the stream
 
   ![](images/modeler_24.png)
   
-- Connect **Merge** and **Derive** nodes
+- Connect **Merge** and **Derive** shapes
 
   ![](images/modeler_25.png)
   
-- Right click on the **Derive** node and select **Edit...**. Set **Derive field** to 
-**weighted_price**, field type to **Continuous** and add formula **price * weight / 1000**
+- Right click on the **Derive** shape and select **Edit...**
+  - Set **Derive field** to **weighted_price**
+  - Set field type to **Continuous**
+  - Add formula **price * weight / 1000**
   
   ![](images/modeler_26.png)
   
-- Click **Preview** button to check result. **weighted_price** column should be added.
+- Click **Preview** button to check results. You should be able to see the **weighted_price** column.
 
   ![](images/modeler_27.png)
   
-- Save changes and close the editor
+- Close the **Preview** window and click **Ok** to save changes.
 
-## Calculate weighted inflation index for each year
+## Calculate Weighted Inflation per Year
 
-- In the bottom panel of IBM SPSS Modeler select **Record Ops** tab, choose **Aggregate** node and
-add it to model
+- Select **Record Ops** tab, choose **Aggregate** shape and add it to the stream
 
   ![](images/modeler_28.png)
   
-- Connect **Derive** (weighted_price) and **Aggregate** nodes
+- Connect **Derive** (weighted_price) and **Aggregate** shapes
 
   ![](images/modeler_29.png)
   
-- Right click on the **Aggregate** node and select **Edit...**. Add `datetime` in **Key fields**
-and disable **Include record count in field** checkbox. 
+- Right click on the **Aggregate** shape and select **Edit...**
+  - Add `datetime` in **Key fields**
+  - Disable **Include record count in field** checkbox. 
 
   ![](images/modeler_30.png)
   
-- In **Aggregate expressions** table enter field name `value` and click **Launch expression builder**
+- In **Aggregate expressions** table, enter field name `value` and click **Launch expression builder**
 
   ![](images/modeler_31.png)
   
-- In Expression Builder window enter formula `SUM('weighted_price')` and click **OK**
+- In Expression Builder window, enter formula `SUM('weighted_price')` and click **OK**
 
   ![](images/modeler_32.png)
   
-- Click **Preview** button to check result
+- Click **Preview** button to check results
 
   ![](images/modeler_33.png)
 
-- Save changes and close the editor
+- Close the preview table and click **OK** to save changes.
 
-## Add constant entity field
+## Add Entity Field
 
-- In the bottom panel of IBM SPSS Modeler select **Field Ops** tab, choose **Derive** node and
-add it to model
+- Select **Field Ops** tab, choose **Derive** shape and
+add it to the stream
 
   ![](images/modeler_34.png)
   
-- Connect **Aggregate** and **Derive** nodes
+- Connect **Aggregate** and **Derive** shapes
 
   ![](images/modeler_35.png)
   
-- Right click on the **Derive** node and select **Edit...**. Set **Derive field** to 
-**entity**, field type to **Categorical** and add formula **"bls.gov"**
+- Right click on the **Derive** shape and select **Edit...**
+  - Set **Derive field** to **entity**
+  - Set field type to **Categorical**
+  - Add formula **"bls.gov"**
 
   ![](images/modeler_36.png)
   
-- Click **Preview** button to check result. **entity** column should be added.
+- Click **Preview** button to check results. **entity** column should be added.
 
   ![](images/modeler_37.png)
   
-- Save changes and close the editor
+- Close the preview table and click **OK** to save changes.
 
-## Create export metric in ATSD
+## Export Results
 
-- Log in ATSD web interface, go to **Metrics > Data Entry** page and execute command
+- Select **Export** tab, choose **Database** shape and
+add it to the stream
 
+  ![](images/modeler_38.png)
+  
+- Connect **Derive** (entity) and **Database** shapes
+
+  ![](images/modeler_39.png)
+  
+- Right click on the **Database** shape and select **Edit...**
+  - Choose **Data source**
+  - Type `inflation.cpi.composite.price` in **Table name**. This would be the name of the new metric inserted into ATSD.
+  - Select **Insert into table** option
+  - Set **Quote table and column names** to **Never**
+
+  ![](images/modeler_40.png)
+  
+- Click **Advanced...** button
+
+  ![](images/modeler_41.png)
+  
+- In Advanced Options window set **Use bulk loading** to **Via ODBC** and **Use binding** to
+**Row-wise**. Click **OK** to save and exit.
+
+  ![](images/modeler_42.png)
+  
+- Click **Run** to export data into ATSD
+
+  ![](images/modeler_43.png)
+
+## Verify Insertion
+
+To check that data is successfully exported to ATSD go to ATSD web interface, click **SQL** and execute
+following query
+
+```sql
+SELECT entity, datetime, value 
+  FROM 'inflation.cpi.composite.price'
 ```
-metric m:inflation.cpi.categories.price.housing
-```
 
-![](images/metric_creation.png)
+  ![](images/atsd_query_result.png)
+  
+## Stream File
+
+Download the [stream file](resources/Stream.str) used for this guide for review in your own IBM SPSS Modeler installation.
