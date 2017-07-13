@@ -2,13 +2,13 @@
 
 ### Overview
 
-This document describes how to install an ODBC-JDBC bridge on a Windows machine. The purpose of the bridge is to serve as a data link between the Axibase Time Series Database and Windows applications that do not support [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/overview/) driver technology. 
+This document describes how to install an ODBC-JDBC bridge on a Windows machine. The purpose of the bridge is to serve as a data link between the Axibase Time Series Database and Windows applications that do not support [JDBC](https://docs.oracle.com/javase/tutorial/jdbc/overview/) driver technology.
 
-The bridge intercepts SQL queries from the client applications via the Microsoft [ODBC](https://docs.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc) protocol and transmits the queries into ATSD using the [ATSD JDBC driver](https://github.com/axibase/atsd-jdbc). 
+The bridge intercepts SQL queries from the client applications via the Microsoft [ODBC](https://docs.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc) protocol and transmits the queries into ATSD using the [ATSD JDBC driver](https://github.com/axibase/atsd-jdbc).
 
 ### Downloads and Pre-requisites
 
-1. Download and install Java Runtime Environment 8 for the Windows Operating System.
+1. Download and install Java Runtime Environment 7 for the Windows Operating System. Note that Java 8 is not fully supported by the ODBC-JDBC Bridge vendor.
 2. [Register](http://www.easysoft.com/cgi-bin/account/register.cgi) an account with the ODBC-JDBC Bridge vendor. The account is required for trial license activation.
 3. [Download](http://www.easysoft.com/products/data_access/odbc_jdbc_gateway/#section=tab-1) the trial version of the ODBC-JDBC Bridge.
 4. [Download](https://github.com/axibase/atsd-jdbc/releases) ATSD JDBC driver with dependencies.
@@ -63,7 +63,7 @@ A license manager window will appear after exiting from the installation wizard.
 
 ![](images/easysoft_activate_5.PNG)
 
-  Also a window with the new license will be displayed in the License Manager 
+  Also a window with the new license will be displayed in the License Manager
 
 ![](images/easysoft_activate_6.PNG)
 
@@ -84,12 +84,12 @@ Choose the **ODBC-JDBC Gateway**, click **Finish**
 Enter following settings in the DSN Setup window:
 
 ```
-DSN: ATSD
-User name: <atsd login>
-Password: <atsd password>
-Driver class: com.axibase.tsd.driver.jdbc.AtsdDriver
-Class Path: <path to ATSD JDBC Driver, for example C:\atsd-jdbc-1.2.22-SNAPSHOT-DEPS.jar>
-URL: <ATSD URL, for example jdbc:axibase:atsd:https://atsd_host:8443/api/sql;trustServerCertificate=true>
+DSN         :   ATSD
+User name   :   <atsd login>
+Password    :   <atsd password>
+Driver class:   com.axibase.tsd.driver.jdbc.AtsdDriver
+Class Path  :   <path to ATSD JDBC Driver, for example C:\JDBC_Driver\atsd-jdbc-1.3.1-DEPS.jar>
+URL         :   <ATSD URL, for example jdbc:axibase:atsd:atsd_host:8443>
 ```
 
 Refer to ATSD JDBC [documentation](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver)  for additional details about the URL format and the driver parameters.

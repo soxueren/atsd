@@ -1991,7 +1991,7 @@ date_parse(string datetime[, string time_format[, string time_zone]])
 * The default `time_format` is ISO 8601: `yyyy-MM-dd'T'HH:mm:ss.SSSZZ`. See supported pattern letters [here](time-pattern.md).
 * The default `time_zone` is the database time zone.
 
-```java
+```sql
 /* Parse date using the default ISO 8601 format.*/
 date_parse("2017-03-31T12:36:03.283Z")
 
@@ -2016,6 +2016,32 @@ date_parse("31.01.2017 12:36:03.283", "dd.MM.yyyy HH:mm:ss.SSS", "+01:00")
 /* If the time zone (offset) is specified in the datetime string,
 it should be exactly the same as provided by the third argument. */
 date_parse("31.01.2017 12:36:03.283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss.SSS ZZZ", "Europe/Berlin")
+```
+
+### Date Utility Functions
+
+#### `CURRENT_TIMESTAMP`
+
+The `CURRENT_TIMESTAMP` function returns current database time in the ISO-8601 format. It is analogous to the `NOW` functions which returns current database time in Unix milliseconds.
+
+```sql
+SELECT CURRENT_TIMESTAMP
+```
+
+```sql
+SELECT entity, datetime, value
+  FROM mpstat.cpu_busy 
+-- same as   datetime > NOW - 1 * DAY
+WHERE datetime > CURRENT_TIME - 1 * DAY
+```
+
+#### `DBTIMEZONE`
+
+The `DBTIMEZONE` function returns current database timezone name or offset.
+
+```sql
+SELECT DBTIMEZONE
+-- returns GMT0
 ```
 
 ## Mathematical Functions
@@ -2811,6 +2837,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [Escape Quotes](examples/select-escape-quote.md)
 - [atsd_series Table](examples/select-atsd_series.md)
 - [Datetime Format](examples/datetime-format.md)
+- [Date Utility Functions](examples/date-functions.md)
 - [Limit Row Count](examples/limit.md)
 - [Limit by Partition](examples/limit-partition.md)
 
