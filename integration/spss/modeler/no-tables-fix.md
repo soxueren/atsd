@@ -1,6 +1,9 @@
-## How to configure ODBC data source to show tables
+## Re-configure ODBC Data Source
 
-- Go to **Start**, type `ODBC` and launch ODBC Data Source Manager under an Administrator account
+
+This document describes how to reconfigure the ODBC datasource if the list of tables displayed in a client application needs to be updated.
+
+- Click on **Start** button, type `ODBC` and launch ODBC Data Source Manager under an Administrator account
 
 ![](images/odbc_1.png)
 
@@ -8,12 +11,14 @@
 
 ![](images/odbc_2.png)
 
-- Append `tables` property to the DSN URL to filter metrics by name in the Query
+- Modify or append `tables` property to the DSN URL to filter metrics by name in the Query
   Builder. For example, `tables=*` displays all ATSD metrics as tables whereas `tables=infla*`
   shows only metrics that start with the characters 'infla'. 
 
   ```text
-  jdbc:atsd://ATSD_HOST:8443;tables=*
+    jdbc:atsd://ATSD_HOST:8443;tables=*
+    jdbc:atsd://ATSD_HOST:8443;tables=infla*
+    jdbc:atsd://ATSD_HOST:8443;tables=infla*,*finance*
   ```
   
 ![](images/odbc_3.png)
