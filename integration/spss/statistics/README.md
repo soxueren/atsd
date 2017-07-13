@@ -32,7 +32,13 @@ You can import ATSD data into SPSS by configuring an ODBC data source on the Win
 
 ![](resources/select_columns.png)
 
-Then make the steps described above for the weights table `inflation.cpi.categories.weight` and save dataset in the `weights.sav` file.
+Then make the steps described above for the weights table `inflation.cpi.categories.weight`. 
+
+Before saving data in the `weights.sav` file, click `Variable View` tab to rename columns `datetime` and `value` as `timedate` and `weight`. Note during the merge operation SPSS uses matching of column names.
+ 
+![](resources/variable_view.png)
+
+Also you may remove unnecessary variables here.
 
 ### Import from CSV Files
 
