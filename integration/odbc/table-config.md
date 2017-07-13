@@ -5,11 +5,11 @@ This document describes how to reconfigure the ODBC datasource if the list of ta
 
 - Click on **Start** button, type `ODBC` and launch ODBC Data Source Manager under an Administrator account
 
-![](images/odbc_1.png)
+![](images/table_config_1.png)
 
 - Open **System DSN** tab, select ATSD data source and click **Configure...**
 
-![](images/odbc_2.png)
+![](images/table_config_2.png)
 
 - Modify or append `tables` property to the DSN URL to filter metrics by name in the Query
   Builder. For example, `tables=*` displays all ATSD metrics as tables whereas `tables=infla*`
@@ -21,7 +21,7 @@ This document describes how to reconfigure the ODBC datasource if the list of ta
     jdbc:atsd://ATSD_HOST:8443;tables=infla*,*finance*
   ```
   
-![](images/odbc_3.png)
+![](images/table_config_3.png)
 
 > Refer to the [JDBC driver](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) documentation for additional details.
 
