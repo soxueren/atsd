@@ -69,7 +69,7 @@ Analyze | Apply statistical functions to the dataset.
 
 ![](resources/ibm_spss_gui.png)
 
-## Import Data
+## Import CSV Data
 
 * Open **File -> Import Data -> CSV Data...**.
 * Select CSV files and click Open to import the `prices.sav` and `weights.sav` files.
@@ -77,6 +77,17 @@ Analyze | Apply statistical functions to the dataset.
 ![](resources/import_dataset.png)
 
 Data from the CSV files are now available as SPSS datasets `prices.sav` and `weights.sav`.
+
+## Import Data with Database connection
+
+Alternative way of data importing is creating of the Database connection with query.
+
+* Open **File -> Import Data -> Database -> New query...**.
+* Select ODBC JDBC bridge for ATSD. If you haven't bridge yet, you should create it with [this tutorial](https://github.com/axibase/atsd/tree/master/integration/odbc).
+* Select table and columns you need.
+* If you don't need data aggregation or data limit, click `Finish` button, otherwise, click `Next` step.
+
+![](resources/select_columns.png)
 
 ## Merge Datasets
 
