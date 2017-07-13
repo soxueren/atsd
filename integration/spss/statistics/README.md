@@ -24,8 +24,13 @@ You can import ATSD data into SPSS by configuring an ODBC data source on the Win
 
 ### Import from ODBC Data Source
 
+Common steps:
+
 * Configure an [ODBC-JDBC bridge]((https://github.com/axibase/atsd/tree/master/integration/odbc)) for ATSD.
 * Open **File -> Import Data -> Database -> New query...**.
+
+#### Import both files from Database
+
 * Select table and columns you need. For our example, select `datetime`, `value` and `tags` columns from the table with CPI prices `inflation.cpi.categories.price`.
 * If you don't need data aggregation or data limit, click `Finish` button, otherwise, click `Next` step.
 * Save imported data to the `prices.sav` file.
@@ -38,6 +43,24 @@ Then make the steps described above for the weights table `inflation.cpi.categor
 
 Save data in the `weights.sav`.
 
+#### Import merged dataset from Database
+
+* Select columns with the same name from two different tables
+![](resources/merged_import/step1.png)
+* Skip the next step with join
+![](resources/merged_import/step2.png)
+* Skip the next step again and write this query
+![](resources/merged_import/step3.png)
+* Save the obtained dataset as `merged.sav`.
+![](resources/merged_import/step4.png)
+* Click `Variable View` tab, change column name for `value1` into `weight` and remove extra columns: `datetime1` and `tags1`.
+![](resources/merged_import/step5.png)
+![](resources/merged_import/step6.png)
+![](resources/merged_import/step7.png)
+![](resources/merged_import/step8.png)
+
+If you have ended all operations successfully, go to the [Analyze Dataset](#analyze_ataset) section.
+ 
 ### Import from CSV Files
 
 * Export data from ATSD into CSV files as described in the **Exporting Data from ATSD** section at the end of this article.
