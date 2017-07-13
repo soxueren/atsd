@@ -61,11 +61,11 @@ these commands on the **Metrics > Data Entry** page.
 
   ![](images/modeler_8.png)
   
-- Click **Select...**
+- Click **Select...** to view the list of ATSD tables
 
   ![](images/modeler_9.png)
   
-- Select `inflation.cpi.categories.price` metric and click **OK**
+- Disable **Show table owner** checkbox, select `inflation.cpi.categories.price` metric and click **OK**
 
   ![](images/modeler_10.png)
   
@@ -76,7 +76,7 @@ create it again.
 
   ![](images/modeler_11.png)
   
-- Go to **Filter** tab and disable `time`, `text` and `metric` fields
+- Go to **Filter** tab and disable (click on arrow in Filter column)  `time`, `text` and `metric` fields
 
   ![](images/modeler_12.png)
   
@@ -118,8 +118,7 @@ and add `tags` field to **Keys for merge** field
 
   ![](images/modeler_20.png)
   
-- Go to **Filter** tab and disable (click on arrow in Filter column) both entity fields and
-datetime field for `inflation.cpi.categories.weight` table
+- Go to **Filter** tab and disable both entity fields and datetime field for `inflation.cpi.categories.weight` table
 
   ![](images/modeler_21.png)
   
@@ -226,8 +225,8 @@ add it to stream
   
 - Right click on the **Database** node and select **Edit...**
   - Choose **Data source**
-  - Select **Insert into table** option
   - Type `inflation.cpi.composite.price` in **Table name**
+  - Select **Insert into table** option
   - Set **Quote table and column names** to **Never**
 
   ![](images/modeler_40.png)

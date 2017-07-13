@@ -13,7 +13,7 @@
   shows only metrics that start with the characters 'infla'. 
 
   ```text
-  jdbc:axibase:atsd:ATSD_HOST:8443;tables=*
+  jdbc:atsd://ATSD_HOST:8443;tables=*
   ```
   
 ![](images/odbc_3.png)
