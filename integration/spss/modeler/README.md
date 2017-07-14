@@ -228,8 +228,11 @@ add it to the stream
 
   ![](images/modeler_41.png)
   
-- In the Advanced Options window set **Use bulk loading** to **Via ODBC** and **Use binding** to
-**Row-wise**. Click **OK** to save and exit.
+- In the Advanced Options window
+  - Check **Use batch commit**
+  - Set batch size large enough to load all your export data in a single batch
+  - Set **Use bulk loading** to **Via ODBC**
+  - Click **OK** to save and exit.
 
   ![](images/modeler_42.png)
   
