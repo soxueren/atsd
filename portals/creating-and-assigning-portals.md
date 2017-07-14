@@ -1,4 +1,4 @@
-# Creating a New Portal
+# Creating Portals
 
 ## Overview
 
