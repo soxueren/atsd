@@ -2,7 +2,7 @@
 
 ## Overview
 
-The [IBM Statistical Package for the Social Sciences](https://www.ibm.com/analytics/us/en/technology/spss/) (SPSS) is an advanced statistical analysis tool. This guide describes the process of loading data from the Axibase Time Series Database into SPSS and demonstrates how to calculate the value of a derived series, using Weighted Consumer Price Indices as an example.
+The [IBM Statistical Package for the Social Sciences](https://www.ibm.com/analytics/us/en/technology/spss/) (SPSS) is an advanced statistical analysis tool. This guide describes the process of loading data from the Axibase Time Series Database into SPSS and demonstrates how to calculate the value of a derived series using Weighted Consumer Price Indices as an example.
 
 SPSS provides several options for loading datasets from external data sources, such as Excel files or remote databases. To complete this exercise, sample data must be available in your instance of ATSD.
 
@@ -27,11 +27,11 @@ Analyze | Apply statistical functions to the dataset.
 
 The commands contain the Consumer Price Index (CPI) for each category of items in a consumer's basket as well as a weight for each category in the CPI basket. The CPI is tracked from 2013 to 2017 and uses Year 2016 values as the baseline. Weight values are available for 2017. The underlying data is available in the following [Excel file](resources/eng_e02.xls).
 
-To calculate a weighted inflation index we need to multiply the CPI of each category by its weight divided by 1000 and sum the products.
+To calculate the weighted inflation index we need to multiply the CPI of each category by its weight divided by 1000 and sum the products.
 
 ## Import Data into SPSS
 
-You can import ATSD data into SPSS by configuring an ODBC data source on the Windows machine and retrieving the records with an SQL query. Alternatively, you can run the queries in the ATSD web-based SQL console, export query results into CSV files, and manually load them into SPSS from the local file system.
+You can import ATSD data into SPSS by configuring an ODBC data source on a Windows machine and retrieving the records with an SQL query. Alternatively, you can run the queries in the ATSD web-based SQL console, export query results into CSV files, and manually load them into SPSS from the local file system.
 
 ### Import Data from Database
 
@@ -57,7 +57,7 @@ You can import ATSD data into SPSS by configuring an ODBC data source on the Win
 
 #### Option 2: Loaded Merged Prices and Weights Dataset
 
-* Select `datetime` column from both the `inflation.cpi.categories.price` and `inflation.cpi.categories.weight` tables.
+* Select the `datetime` column from both the `inflation.cpi.categories.price` and `inflation.cpi.categories.weight` tables.
 ![](resources/merged_import/step1.png)
 * Skip the next steps until a query editor is displayed. 
 * Enter the following query which executes a FULL OUTER JOIN with interpolation for the missing weight records:
@@ -74,7 +74,7 @@ WHERE T0.datetime BETWEEN '2013-01-01T00:00:00Z' AND '2017-01-01T00:00:00Z'
 ![](resources/merged_import/step3.png)
 * Save the dataset as `merged.sav`.
 ![](resources/merged_import/step4.png)
-* Click `Variable View` tab, rename column `value1` into `weight` and remove columns `datetime1` and `tags1`.
+* Click the `Variable View` tab, rename the column `value1` as `weight` and remove the columns `datetime1` and `tags1`.
 ![](resources/merged_import/step5.png)
 ![](resources/merged_import/step6.png)
 ![](resources/merged_import/step7.png)
@@ -86,7 +86,7 @@ WHERE T0.datetime BETWEEN '2013-01-01T00:00:00Z' AND '2017-01-01T00:00:00Z'
 
 * Export data from ATSD into CSV files as described in the **Exporting Data from ATSD** section at the end of this article.
 * Open **File -> Import Data -> CSV Data...**.
-* Select CSV files and click Open to import the `prices.sav` and `weights.sav` files.
+* Select the desired CSV files and click Open to import the `prices.sav` and `weights.sav` files.
 
 ![](resources/import_dataset.png)
 
@@ -96,9 +96,9 @@ Data from the CSV files are now available as SPSS datasets `prices.sav` and `wei
 
 ### Change Names of Columns
 
-SPSS merges datasets using matching column names, similar to the `SELF JOIN` command in SQL syntax. 
+SPSS merges datasets using matching column names, similar to the `SELF JOIN` command in the SQL syntax. 
 
-To prevent the `datetime` and `value` columns from being merged, their names are changed in the `weights.sav` dataset using `Variable View` tab, otherwise the merged dataset produced by SPSS will only contain data for 2017.
+To prevent the `datetime` and `value` columns from being merged, their names must be changed in the `weights.sav` dataset using `Variable View` tab, otherwise the merged dataset produced by SPSS will only contain data for 2017.
 
 ![](resources/variable_view.png)
 
@@ -117,7 +117,7 @@ Merge the two datasets by adding the `weight` column from the `weights.sav` data
 ![](resources/merge_p1.png)
 ![](resources/merge_p2.png)
 
-> Since the two datasets have different row counts, make sure you select all the rows. The final dataset should have 27 rows.
+> Because the two datasets have different row counts, be sure you select all the rows. The final dataset should have 27 rows.
 
 Save the merged dataset as a new file `prices_merged.sav`.
 
