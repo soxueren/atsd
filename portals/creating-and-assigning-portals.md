@@ -67,6 +67,8 @@ The following example creates a grid containing 6 units, with 3 widgets placed i
 
 ![](resources/portal_config_ex_32.png)
 
+Review the following [guide](https://axibase.com/products/axibase-time-series-database/visualization/widgets/selecting-series/) describing the basic syntax required to load series data from ATSD.
+
 ### Reference
 
 * [Portal Settings](https://axibase.com/products/axibase-time-series-database/visualization/widgets/portal-settings/)
