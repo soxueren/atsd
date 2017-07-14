@@ -14,7 +14,7 @@ Portal is a collection of time-series [widgets](https://axibase.com/products/axi
 | Name | User-friendly portal name.|
 | Enabled | Portal status. Disabled portals are not visible to users. |
 | Template | Portal type: regular or template. See type descriptions below.  |
-| Display Index | Applicable to template portals. The order in which portals assigned to an entity are listed in the portals toolbar. |
+| Display Index | Applicable to template portals. The order in which portals are assigned to an entity are listed in the portals toolbar. |
 | Theme | Select a graphics style to render the widgets: Default or Black. Custom themes can be installed as described below.|
 | Content | Portal [configuration](portal-settings.md) text specified using the Charts syntax. |
 
@@ -38,9 +38,9 @@ The portal is configured using the Charts syntax which is a domain-specific lang
 
 ### Layout
 
-Widget are positioned on the portal page using a **grid** layout. The dimensions of the grid are specified under the `[configuration]` tag using `width-units` and `height-units` settings. Each widgets occupies 1 horizontal and 1 vertical unit by default.
+Widgets are positioned on the portal page using a **grid** layout. The dimensions of the grid are specified under the `[configuration]` tag using the `width-units` and `height-units` settings. Each widgets occupies 1 horizontal and 1 vertical unit by default.
 
-The following example creates a grid from containing 6 units, with 3 widgets placed in the first row and 2 widgets placed into the second row.
+The following example creates a grid containing 6 units, with 3 widgets placed in the first row and 2 placed in the second.
 
 ```ls
 [configuration]
@@ -106,7 +106,7 @@ The template portals exist so that the same generic portal can be accessed for a
 https://ATSD_HOSTNAME:8443/portal/111.xhtml?entity=nurswgvml013
 ```
 
-The above link passes `entity` parameter to a template portal which substitutes all `${entity}` placeholders in the portal configuration text. 
+The above link passes the `entity` parameter to a template portal which substitutes all `${entity}` placeholders in the portal configuration text. 
 
 ```ls
 [widget]
