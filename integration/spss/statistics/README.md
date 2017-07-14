@@ -55,6 +55,8 @@ You can import ATSD data into SPSS by configuring an ODBC data source on a Windo
 
 ![](resources/select_weights.png)
 
+> Alternatively, you can execute [SPSS scripts](data-source.md) to load records from a datasources automatically.
+
 #### Option 2: Loaded Merged Prices and Weights Dataset
 
 * Select the `datetime` column from both the `inflation.cpi.categories.price` and `inflation.cpi.categories.weight` tables.
