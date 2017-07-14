@@ -1,79 +1,157 @@
-## Creating a New Portal
+# Creating a New Portal
 
-You can create personalized portals directly in the ATSD web interface using the [Visualization](http://axibase.com/products/axibase-time-series-database/visualization/) and [Widgets](http://axibase.com/products/axibase-time-series-database/visualization/widgets/) guides.
+## Overview
 
-If you are creating a template portal, you will need to assign it to the necessary entities.
+Portal is a collection of time-series [widgets](https://axibase.com/products/axibase-time-series-database/visualization/widgets/) created usign the Charts syntax and presented in a [**grid** layout](portal-settings.md).
 
-To create a new portal:
+## Creating Portal
 
+- Open the **Configuration > Portals** page, click **Create**.
+- Specify new portal properties.
 
-1. Log into ATSD.
-2. From the top menu, click **Configuration > Portals**.
-3. Scroll down to the bottom of the Portals page and click Create.
-4. On the Portal Editor page, provide the following configuration and click Save.
-    
-    **Name**: provide a name for the new portal.
-    
-    **Enabled**: check the box to enable the portal (otherwise you will not be able to see the visualized data).
-    
-    **Template**: check the box if you want your new portal to be a template that you can later assign to various entities. Note that you will be able to change the portal type any time by checking or unchecking the box.
-    
-    **Display Index**: the index defines the order with which portals assigned to an entity are displayed. To view portals assigned to an entity:
-    
-      1. Click Entities from the top menu.
-      2. Click the Portals icon next to the necessary entity.
-      Each assigned portal will be displayed on a separate tab. The order of the tabs depends on the display index you specified.
-    
-    **Theme**: select one of the pre-configured themes for the new portal. The possible options are: Default and Black.
-    Click [here](resources/black_portal.png) to view a portal with the Black theme applied or click [here](resources/default_portal.png) to view a portal with the Default theme.
-    You can also create your own CSS and upload a folder with your personalized theme to `/opt/atsd/conf/portal/themes/`.
-    After you upload your custom theme, it will appear in the list of available themes. To apply your style, select it from the Theme list.
-    
-    **Content**: specify settings for the portal itself and for widgets you'd like to add to the portal. For more information, see [Portal Layout](portal-settings.md).
-    
-    ![](resources/portal_conf_edit_2.png)
+| **Property** | **Description** |
+|---|---|
+| Name | User-friendly portal name.|
+| Enabled | Portal status. Disabled portals are not visible to users. |
+| Template | Portal type: regular or template. See type descriptions below.  |
+| Display Index | Applicable to template portals. The order in which portals assigned to an entity are listed in the portals toolbar. |
+| Theme | Select a graphics style to render the widgets: Default or Black. Custom themes can be installed as described below.|
+| Content | Portal [configuration](portal-settings.md) text specified using the Charts syntax. |
 
-### Learn How To
+> SCREENSHOT from editor
 
-**[Build Portal Layout](http://axibase.com/products/axibase-time-series-database/visualization/widgets/portal-settings/)**
+## Portal Configuration  
 
-**[Create Generic Widgets](http://axibase.com/products/axibase-time-series-database/visualization/widgets/configuring-the-widgets/)**
+### Syntax
 
-**[Create Generic Tables](http://axibase.com/products/axibase-time-series-database/visualization/widgets/description-of-tables/)**
+The portal is configured using the Charts syntax which is a domain-specific language implemented in ATSD to assemble visualizations in a declarative manner. The basic components of the syntax are **sections** and **settings**.
 
-## Assigning the Portal to Entities
+* **Section** is enclosed in square brackets, for example, `[widget]`. The section may include the nested sections and settings. The section terminates when another section is specified.
+* **Setting** includes name and value, separated by equal sign, for example, `type = treemap`.
 
-You can assign a portal using one of the following options.
+```ls
+# this is a section named [widget]
+[widget]
+  # this is a setting that belongs to section [widget]
+  timespan = 1 hour
+```
 
-#### Option 1: assign manually in the web interface
+### Layout
 
-To assign a portal in the ATSD web interface:
+Widget are positioned on the portal page using a **grid** layout. The dimensions of the grid are specified under the `[configuration]` tag using `width-units` and `height-units` settings. Each widgets occupies 1 horizontal and 1 vertical unit by default.
 
-1. From the top menu, click Configuration and select Portals.
-2. Find the portal that you'd like to assign, and open its configuration.
-3. At the bottom of the screen, below the configuration, click the Assign button.
-4. Check the boxes next to the entity groups you'd like to assign the portal to.
-5. Click Save at the bottom of the page.
+The following example creates a grid from containing 6 units, with 3 widgets placed in the first row and 2 widgets placed into the second row.
 
+```ls
+[configuration]
+  width-units = 3
+  height-units = 2
+  # portal-level settings
+  # shared widget settings
+[group]
+  [widget]
+     # widget settings  
+     type = chart
+     [series]
+       # series settings
+       metric = view_count
+       entity = axibase.com
+       [tags]
+         page_name = index.htm
+  [widget]
+  [widget]
+[group]
+  [widget]
+  [widget]
+```
 
-![](resources/assign_portal_2.png)
+> SCREENSHOT for this type of 3x2 portal. Notice - only 2 widgets in second row.
 
-#### Option 2: assign a portal with a URL
+### Reference
 
+* [Portal Settings](https://axibase.com/products/axibase-time-series-database/visualization/widgets/portal-settings/)
 
-1. In the search bar of your browser, copy the link: [http://atsd_server:8088/portal/tabs?entity={entity}&id={id}](http://atsd_server:8088/portal/tabs?entity=%7bentity%7d&id=%7bid%7d).
-2. Replace the entity (entity={entity}) and portal ID (id={id}) placeholders with the necessary values.
-3. Press Enter.
+* [Generic Widget Settings](https://axibase.com/products/axibase-time-series-database/visualization/widgets/configuring-the-widgets/)
 
+* [Widgets](https://axibase.com/products/axibase-time-series-database/visualization/widgets/)
 
-##  Pre-Configured Single Entity and Metric Portals
+## Portal Types
 
-In ATSD, you can generate single-entry, single-metric portals.
+Two types of portals are supported:
 
-To load a portal, copy the following URL in the address bar. Replace the entry and metric placeholders with the necessary values.
+1. Regular portals. 
+2. Template portals. 
 
-[https://atsd.server.com:8088/portals/entity-and-metric?entity={entity}&metric={metric}](https://atsd.server.com:8088/portals/entity-and-metric?entity=%7bentity%7d&metric=%7bmetric%7d)
+### Regular Portals
 
-You can enable an *ad hoc* forecasting option by clicking **forecast** at the top right-hand corner of the pre-configured portal window.
+The regular portal doesn't depend on external parameters and can be rendered as is.
 
-![](resources/forecast6.png)
+* Sample Link for a Regular Portal
+
+```
+https://ATSD_HOSTNAME:8443/portal/4.xhtml
+```
+
+Regular portals are listed under the `[Portals]` tab in the top menu.
+
+> SCREENSHOT of open Portals link drop-down (e.g. from NUR)
+
+### Template Portals
+
+The template portals exist so that the same generic portal can be accessed for all entities of the same type. It requires an entity name to be passed as a request parameter.
+
+* Sample Link for a Template Portal
+
+```
+https://ATSD_HOSTNAME:8443/portal/111.xhtml?entity=nurswgvml013
+```
+
+The above link passes `entity` parameter to a template portal which substitutes all `${entity}` placeholders in the portal configuration text. 
+
+```ls
+[widget]
+  type = chart
+  [series]
+    metric = jmx.derby.hitcount
+    entity = ${entity}
+```
+
+The actual configuration displayed contains the specific entity name as follows:
+
+```ls
+[widget]
+  type = chart
+  [series]
+    metric = jmx.derby.hitcount
+    entity = nurswgvml013
+```
+
+To open a template portal directly in the browser address bar, substibute the `${portal_id}` below with Portal identifier displayed on the **Configuration > Portals** page and specify a valid entity name in the `${entity}` request parameter.
+
+```
+https://ATSD_HOSTNAME:8443/portal/${portal_id}.xhtml?entity=${entity}
+```
+
+Alternatively, assign an entity group to the template portal so that the link to this portal is available on the [Entities] tab for all entities that are members of the entity group.
+
+* Open **Configuration > Portals** page.
+* Locate the template portal that you'd like to assign.
+* Open the portal editor, click on the **Assign** link below.
+* Select entity groups to which the portal will be assigned.
+* Click **Save** at the bottom of the page.
+
+> SCREENSHOT
+
+* Open **Entities** tab
+* Select an entity group in the drop-down filter
+* Click on the 'portlals' icon for an entity and verify that the portal was assigned.
+
+> SCREENSHOT - highlight portal link
+
+## Portal Themes
+
+| Default Theme| Black Theme |
+|---|---|
+| > SMALL SCREENSHOT | > SMALL SCREENSHOT |
+
+You can install your own themes by modifying the default files and uploading theme css files to `/opt/atsd/conf/portal/themes/` directory. After you upload your custom theme, it will appear in the list of available themes in the portal editor.
