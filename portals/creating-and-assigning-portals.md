@@ -18,7 +18,7 @@ Portal is a collection of time-series [widgets](https://axibase.com/products/axi
 | Theme | Select a graphics style to render the widgets: Default or Black. Custom themes can be installed as described below.|
 | Content | Portal [configuration](portal-settings.md) text specified using the Charts syntax. |
 
-> SCREENSHOT from editor
+![](resources/config_portal.png)
 
 ## Portal Configuration  
 
@@ -65,7 +65,7 @@ The following example creates a grid from containing 6 units, with 3 widgets pla
   [widget]
 ```
 
-> SCREENSHOT for this type of 3x2 portal. Notice - only 2 widgets in second row.
+![](resources/portal_config_ex_32.png)
 
 ### Reference
 
@@ -94,7 +94,7 @@ https://ATSD_HOSTNAME:8443/portal/4.xhtml
 
 Regular portals are listed under the `[Portals]` tab in the top menu.
 
-> SCREENSHOT of open Portals link drop-down (e.g. from NUR)
+![](resources/portals_dropdown.1.png)
 
 ### Template Portals
 
@@ -140,18 +140,18 @@ Alternatively, assign an entity group to the template portal so that the link to
 * Select entity groups to which the portal will be assigned.
 * Click **Save** at the bottom of the page.
 
-> SCREENSHOT
+![](resources/portal_assign.png)
 
 * Open **Entities** tab
 * Select an entity group in the drop-down filter
-* Click on the 'portlals' icon for an entity and verify that the portal was assigned.
+* Click on the 'portals' icon for an entity and verify that the portal was assigned.
 
-> SCREENSHOT - highlight portal link
+![](resources/portals_icon.png)
 
 ## Portal Themes
 
 | Default Theme| Black Theme |
 |---|---|
-| > SMALL SCREENSHOT | > SMALL SCREENSHOT |
+| ![](resources/portal_theme_default.png) | ![](resources/portal_theme_dark.png) |
 
 You can install your own themes by modifying the default files and uploading theme css files to `/opt/atsd/conf/portal/themes/` directory. After you upload your custom theme, it will appear in the list of available themes in the portal editor.
