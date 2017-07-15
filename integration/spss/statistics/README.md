@@ -220,7 +220,7 @@ Export query results into `weights.csv`.
 - Create new metric. Open ATSD web interface, go to **Metrics** - **Data entry** and execute following command
 
 ```
-metric m:inflation.cpi.composite.price
+metric m:cpi_price
 ```
  
 ![](resources/atsd_export_1.png)
@@ -249,11 +249,11 @@ metric m:inflation.cpi.composite.price
 
 ![](resources/atsd_export_6.png)
 
-- Open **File** menu and select **Export** - **Database...**
+- Open **File** menu and select **Export** -> **Database...**
 
 ![](resources/atsd_export_7.png)
 
-- Select `ATSD` data source and click **Next**. If there are no data sources visibile - create an ODBC-bridged connection to ATSD as described [here](../../odbc/README.md#configure-odbc-data-source) and open export window again
+- Select `ATSD` data source and click **Next**. If there are no data sources visible - create an ODBC-bridged connection to ATSD as described [here](../../odbc/README.md#configure-odbc-data-source) and open export window again
 
 ![](resources/atsd_export_8.png)
 
@@ -261,3 +261,48 @@ metric m:inflation.cpi.composite.price
 
 ![](resources/atsd_export_9.png)
 
+- Choose `cpi_price` table and click **Next**. The list of tables is based on the `tables=` property specified in the JDBC URL. If you don't see the desired table in the list, update ODBC data source as described [here](../../odbc/table-config.md) and re-open export wizard.
+
+![](resources/atsd_export_10.png)
+
+- Associate table columns and metric fields
+
+![](resources/atsd_export_11.png)
+
+Result should be similar as shown on screenshot. Click **Next**
+ 
+![](resources/atsd_export_12.png)
+ 
+ - Select **ODBC** - **Row-wise binding**, select **Paste the syntax** and click **Finish**
+ 
+![](resources/atsd_export_13.png)
+
+- Paste following script to opened window
+
+```
+SAVE TRANSLATE /TYPE=ODBC
+  /BULKLOADING BATCHSIZE=10000 METHOD=ODBC BINDING=ROW 
+  /CONNECT='DSN=ATSD;'
+  /ENCRYPTED
+  /MISSING=IGNORE
+  /TABLE='cpi_price' /APPEND
+  /KEEP=datetime, value, entity.
+```
+
+![](resources/atsd_export_14.png)
+
+- Right click on script window and select **Run All** to export data into ATSD
+
+![](resources/atsd_export_15.png)
+
+## Verify Insertion
+
+To check that data is successfully exported to ATSD go to the ATSD web interface, click **SQL** and execute the
+following query
+
+```sql
+SELECT entity, datetime, value 
+  FROM 'cpi_price'
+```
+
+![](resources/atsd_query_result.png)
