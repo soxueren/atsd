@@ -178,7 +178,101 @@ SPSS provides two alternatives to aggregate data by period.
 * Create a new dataset with final columns `datetime` and `CPI`.
 
     ![](images/aggr_data_new_column.png)
-    
+ 
+
+## Export Derived Series into ATSD
+
+- Create a new metric in ATSD that will be used to store new series calculated in SPSS. 
+- Login into ATSD, open **Metrics** > **Data entry** page and execute the following command:
+
+```ls
+metric m:cpi_price
+```
+ 
+![](images/atsd_export_1.png)
+ 
+- Open the previously created dataset in SPSS.
+
+- Select **Transform** - **Compute Variable...**
+
+![](images/atsd_export_2.png)
+
+  - Enter `entity` in the **Target Variable** field.
+  - Enter `"bls.gov"` in the **Numeric Expression** field.
+
+![](images/atsd_export_3.png)
+
+- Click **Type & Label...** button.
+
+![](images/atsd_export_4.png)
+
+- Set **Type** to **String** and click **Continue**.
+
+![](images/atsd_export_5.png)
+
+- Click **OK** to apply the changes. Column `entity` should now appear in the dataset.
+
+![](images/atsd_export_6.png)
+
+- Open the **File** menu and select **Export** -> **Database...**.
+
+![](images/atsd_export_7.png)
+
+- Select `ATSD` data source, click **Next**.
+
+![](images/atsd_export_8.png)
+
+- Select **Append new records to an existing table** and click **Next**
+
+![](images/atsd_export_9.png)
+
+- Choose `cpi_price` table and click **Next**. The list of tables is based on the `tables=` driver property specified in the JDBC URL. If you don't see the desired table in the list, update ODBC data source as described [here](../../odbc/table-config.md) and re-open the export wizard.
+
+![](images/atsd_export_10.png)
+
+- Associate table columns with metric fields.
+
+![](images/atsd_export_11.png)
+
+The result should look as follows. Click **Next**
+ 
+![](images/atsd_export_12.png)
+ 
+ - Select **ODBC** - **Row-wise binding**, select **Paste the syntax** and click **Finish**
+ 
+![](images/atsd_export_13.png)
+
+- Paste the following script into the dialog window:
+
+```
+SAVE TRANSLATE /TYPE=ODBC
+  /BULKLOADING BATCHSIZE=10000 METHOD=ODBC BINDING=ROW 
+  /CONNECT='DSN=ATSD;'
+  /ENCRYPTED
+  /MISSING=IGNORE
+  /TABLE='cpi_price' /APPEND
+  /KEEP=datetime, value, entity.
+```
+
+![](images/atsd_export_14.png)
+
+- Right click on the script window and select **Run All** to export the data into ATSD.
+
+![](images/atsd_export_15.png)
+
+## Verify Insertion
+
+To check that data is successfully exported to ATSD, open the ATSD web interface.
+
+- Open the **SQL** tab and execute the following query:
+
+```sql
+SELECT entity, datetime, value 
+  FROM 'cpi_price'
+```
+
+![](images/atsd_query_result.png)
+
 ---
 
 ## Exporting Data from ATSD into CSV Files
@@ -214,95 +308,3 @@ ORDER BY tags.category, datetime
 ```
 
 Export query results into `weights.csv`.
-
-## Export to ATSD
-
-- Create new metric. Open ATSD web interface, go to **Metrics** - **Data entry** and execute following command
-
-```
-metric m:cpi_price
-```
- 
-![](images/atsd_export_1.png)
- 
-- In IBM SPSS Statistics open previously created dataset
-
-- Select **Transform** - **Compute Variable...**
-
-![](images/atsd_export_2.png)
-
-- In opened window 
-  - Enter `entity` in **Target Variable** field
-  - Enter `"bls.gov"` in **Numeric Expression** field
-
-![](images/atsd_export_3.png)
-
-- Click **Type & Label...** button
-
-![](images/atsd_export_4.png)
-
-- Set **Type** to **String** and click **Continue**
-
-![](images/atsd_export_5.png)
-
-- Click **OK** to apply changes and exit window. Column `entity` should appear in dataset
-
-![](images/atsd_export_6.png)
-
-- Open **File** menu and select **Export** -> **Database...**
-
-![](images/atsd_export_7.png)
-
-- Select `ATSD` data source and click **Next**. If there are no data sources visible - create an ODBC-bridged connection to ATSD as described [here](../../odbc/README.md#configure-odbc-data-source) and open export window again
-
-![](images/atsd_export_8.png)
-
-- Select **Append new records to an existing table** and click **Next**
-
-![](images/atsd_export_9.png)
-
-- Choose `cpi_price` table and click **Next**. The list of tables is based on the `tables=` property specified in the JDBC URL. If you don't see the desired table in the list, update ODBC data source as described [here](../../odbc/table-config.md) and re-open export wizard.
-
-![](images/atsd_export_10.png)
-
-- Associate table columns and metric fields
-
-![](images/atsd_export_11.png)
-
-Result should be similar as shown on screenshot. Click **Next**
- 
-![](images/atsd_export_12.png)
- 
- - Select **ODBC** - **Row-wise binding**, select **Paste the syntax** and click **Finish**
- 
-![](images/atsd_export_13.png)
-
-- Paste following script to opened window
-
-```
-SAVE TRANSLATE /TYPE=ODBC
-  /BULKLOADING BATCHSIZE=10000 METHOD=ODBC BINDING=ROW 
-  /CONNECT='DSN=ATSD;'
-  /ENCRYPTED
-  /MISSING=IGNORE
-  /TABLE='cpi_price' /APPEND
-  /KEEP=datetime, value, entity.
-```
-
-![](images/atsd_export_14.png)
-
-- Right click on script window and select **Run All** to export data into ATSD
-
-![](images/atsd_export_15.png)
-
-## Verify Insertion
-
-To check that data is successfully exported to ATSD go to the ATSD web interface, click **SQL** and execute the
-following query
-
-```sql
-SELECT entity, datetime, value 
-  FROM 'cpi_price'
-```
-
-![](images/atsd_query_result.png)
