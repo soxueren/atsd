@@ -1,6 +1,6 @@
 # Portals
 
-A portal is a collection of graphical information composed of various Axibase **Charts** - a declarative charting library designed for time-series visualization. 
+A portal is a collection of graphs created with Axibase **Charts** - a declarative charting library designed for time-series visualization. 
 
 The **Charts** library provides a simple yet powerful syntax, closely integrated with the ATSD [data model](https://axibase.com/products/axibase-time-series-database/data-model/), so that even a user with no programming experience can build and deploy real-time dashboards with minimal effort.
 
