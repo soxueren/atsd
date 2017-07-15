@@ -214,3 +214,50 @@ ORDER BY tags.category, datetime
 ```
 
 Export query results into `weights.csv`.
+
+## Export to ATSD
+
+- Create new metric. Open ATSD web interface, go to **Metrics** - **Data entry** and execute following command
+
+```
+metric m:inflation.cpi.composite.price
+```
+ 
+![](resources/atsd_export_1.png)
+ 
+- In IBM SPSS Statistics open previously created dataset
+
+- Select **Transform** - **Compute Variable...**
+
+![](resources/atsd_export_2.png)
+
+- In opened window 
+  - Enter `entity` in **Target Variable** field
+  - Enter `"bls.gov"` in **Numeric Expression** field
+
+![](resources/atsd_export_3.png)
+
+- Click **Type & Label...** button
+
+![](resources/atsd_export_4.png)
+
+- Set **Type** to **String** and click **Continue**
+
+![](resources/atsd_export_5.png)
+
+- Click **OK** to apply changes and exit window. Column `entity` should appear in dataset
+
+![](resources/atsd_export_6.png)
+
+- Open **File** menu and select **Export** - **Database...**
+
+![](resources/atsd_export_7.png)
+
+- Select `ATSD` data source and click **Next**. If there are no data sources visibile - create an ODBC-bridged connection to ATSD as described [here](../../odbc/README.md#configure-odbc-data-source) and open export window again
+
+![](resources/atsd_export_8.png)
+
+- Select **Append new records to an existing table** and click **Next**
+
+![](resources/atsd_export_9.png)
+
