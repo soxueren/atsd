@@ -22,7 +22,7 @@
 
 ## Start Container
 
-It is often convenient to initialize the database with a shared [collector account](../administration/collector-account.md) with write-only permissions for clients and tools such as agents, scripts, or storage drivers that will be inserting data into the database.
+It is recommended that the database is seeded with a shared write-only [account](../administration/collector-account.md) for data collecting agents, scripts, and storage drivers.
 
 Choose one of the options below for starting the ATSD container.
 
