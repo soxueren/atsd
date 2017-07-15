@@ -22,7 +22,7 @@
 
 ## Start Container
 
-It is often convenient to initialize the database with a shared [collector account](../administration/collector-account.md) with write-only permissions for clients and tools such as agents, scripts, storage drivers that will be inserting data into the database.
+It is often convenient to initialize the database with a shared [collector account](../administration/collector-account.md) with write-only permissions for clients and tools such as agents, scripts, or storage drivers that will be inserting data into the database.
 
 Choose one of the options below for starting the ATSD container.
 
@@ -120,7 +120,7 @@ You should see an _ATSD start completed_ message at the end of the `start.log` f
  * [ATSD] ATSD start completed.
 ```
 
-ATSD web interface is accessible on port 8088/http and 8443/https.
+The ATSD web interface is accessible on port 8088/http and 8443/https.
 
 ## Launch Parameters
 
