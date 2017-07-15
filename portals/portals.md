@@ -1,15 +1,15 @@
 # Portals
 
-Portal is a collection of graphs created with Axibase **Charts** - a declarative charting library designed for time-series visualization. 
+A portal is a collection of graphs created with Axibase **Charts** - a declarative charting library designed for time-series visualization. 
 
-The **Charts** library provides a simple yet powerful syntax, closely integrated with the ATSD [data model](https://axibase.com/products/axibase-time-series-database/data-model/), so that even users without any programming experience can build and deploy real-time dashboards with minimal effort.
+The **Charts** library provides a simple yet powerful syntax, closely integrated with the ATSD [data model](https://axibase.com/products/axibase-time-series-database/data-model/), so that even a user with no programming experience can build and deploy real-time dashboards with minimal effort.
 
 Syntax Examples:
 
 * [70 lines](https://apps.axibase.com/chartlab/3230deb6/8/)
 * [200 lines](https://apps.axibase.com/chartlab/2ef08f32)
 
-The power users, on the other hand, can leverage [inheritance](https://axibase.com/products/axibase-time-series-database/visualization/widgets/inheritance), [wildcards](https://axibase.com/products/axibase-time-series-database/visualization/widgets/wildcards/), [control structures](https://axibase.com/products/axibase-time-series-database/visualization/widgets/control-structures), [computed series](https://axibase.com/products/axibase-time-series-database/visualization/widgets/computed-metrics), [display filters](https://axibase.com/products/axibase-time-series-database/visualization/widgets/display-filters), and other [advanced features](https://axibase.com/products/axibase-time-series-database/visualization/) to create data-driven applications such as [data sliders](http://apps.axibase.com/slider/energinet-2017/?slide=1), [cross-filters](http://apps.axibase.com/cross-filter/?table=Linux%20Performance), [statistic viewers](https://apps.axibase.com/chartlab/cde99874/2/#fullscreen) etc.
+The power user, on the other hand, can leverage [inheritance](https://axibase.com/products/axibase-time-series-database/visualization/widgets/inheritance), [wildcards](https://axibase.com/products/axibase-time-series-database/visualization/widgets/wildcards/), [control structures](https://axibase.com/products/axibase-time-series-database/visualization/widgets/control-structures), [computed series](https://axibase.com/products/axibase-time-series-database/visualization/widgets/computed-metrics), [display filters](https://axibase.com/products/axibase-time-series-database/visualization/widgets/display-filters), and other [advanced features](https://axibase.com/products/axibase-time-series-database/visualization/) to create data-driven applications such as [data sliders](http://apps.axibase.com/slider/energinet-2017/?slide=1), [cross-filters](http://apps.axibase.com/cross-filter/?table=Linux%20Performance), [statistic viewers](https://apps.axibase.com/chartlab/cde99874/2/#fullscreen) etc.
 
 ## Custom Portals
 
