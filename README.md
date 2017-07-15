@@ -46,6 +46,18 @@
 ## Drivers
 
   * [JDBC](https://github.com/axibase/atsd-jdbc)
+  * [ODBC](integration/odbc/README.md)
+  
+## Integrations
+
+  * [Alteryx Designer](integration/alteryx/README.md)
+  * [IBM SPSS Modeler](integration/spss/modeler/README.md)
+  * [IBM SPSS Statistics](integration/spss/statistics/README.md)
+  * [Pentaho Data Integration](integration/pentaho/data-integration/README.md)
+  * [Pentaho Report Designer](integration/pentaho/report-designer/README.md)  
+  * [MatLab](integration/matlab/README.md)
+  * Stata
+  * Tableau
 
 ## Rule Engine
 
