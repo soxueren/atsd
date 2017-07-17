@@ -2,7 +2,7 @@
 
 Network API provides a set of plain text commands for inserting numeric time series, key=value properties, and tagged messages into the Axibase Time Series Database (ATSD) via **TCP** and **UDP** network protocols.
 
-You can use `netcat`, `telnet`, `UNIX pipes`, or any programming language such as [Java](examples/AtsdTcpClient.java) that lets you connect to the ATSD server via TCP/UDP protocol.
+You can use `netcat`, `telnet`, `Bash built-in files`, or any programming language such as [Java](examples/AtsdTcpClient.java) that lets you connect to the ATSD server via TCP/UDP protocol.
 
 ## Supported Commands
 
@@ -68,7 +68,7 @@ echo -e "series e:station_1 m:temperature=32.2 m:humidity=81.4 d:2016-05-15T00:1
 printf 'series e:station_2 m:temperature=32.2 m:humidity=81.4 s:1463271035' | nc atsd_host 8081
 ```
 
-* UNIX pipe
+* Bash built-in file
 
 ```ls
 echo -e "series e:station_3 m:temperature=32.2 m:humidity=81.4" > /dev/tcp/atsd_host/8081
@@ -201,13 +201,13 @@ Multiple commands with the same timestamp and key fields may override each other
 
 If such commands are submitted at approximately the same time, there is no guarantee that they will be processed in the order they were received.
 
-* Duplicate example: same key, same current time  
+* Duplicate example: same key, same current time
 
 ```ls
 echo -e "series e:station_1 m:temperature=32.2\nseries e:station_1 m:temperature=42.1" | nc atsd_host 8081
 ```
 
-* Duplicate example: same key, same time  
+* Duplicate example: same key, same time
 
 ```ls
 echo -e "series e:station_1 m:temperature=32.2 d:2016-05-15T00:10:00Z\nseries e:station_1 m:temperature=42.1  d:2016-05-15T00:10:00Z" | nc atsd_host 8081
