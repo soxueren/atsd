@@ -14,11 +14,11 @@ Retrieve a list of metrics matching the specified filter conditions.
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-| expression |string|Include metrics that match an [expression](../../../api/meta/expression.md) filter. Use the `name` variable for metric name. The wildcard `*` is supported.|
+| expression |string|Include metrics that match an [expression](../../../api/meta/expression.md) filter. Use the `name` variable for metric name. Supported wildcards: `*` and `?`.|
 | minInsertDate |string|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or using [endtime](../../../end-time-syntax.md) syntax.|
 | maxInsertDate |string|Include metrics with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](../../../end-time-syntax.md) syntax.|
 | limit |integer|Maximum number of metrics to retrieve, ordered by name.|
-| tags |string|Comma-separated list of metric tag names to be displayed in the response.<br>For example, `tags=OS,location`<br>Specify `tags=*` to print all metric tags.|
+| tags |string|Comma-separated list of metric tag names to be displayed in the response.<br>For example, `tags=OS,location`<br>Specify `tags=*` to request all metric tags.|
 
 ## Response
 
@@ -195,6 +195,7 @@ curl https://atsd_host:8443/api/v1/metrics?expression=versioning=true%20and%20re
 ## Additional Examples
 
 * [List metrics by name](examples/list-metrics-by-name.md)
+* [List metrics by name using wildcards](list-metrics-by-name-wildcards.md)
 * [List metrics by name and tag](examples/list-metrics-by-name-and-tag.md)
 * [List metrics with tag `table`](examples/list-metrics-with-tag-table.md)
 * [List metrics by maxInsertDate](examples/list-metrics-by-maxinsertdate.md)
