@@ -12,7 +12,7 @@ A keyword without a colon is considered a metric name filter, a keyword containi
 name-filter [tag-name-1:tag-value-2] [tag-name-2:tag-value-2]
 ```
 
-The `*` wildcard is automatically appended to the `name-filter`, thereby including every applicable tag.
+The `*` wildcard is automatically appended to the `name-filter`, thereby including all metrics **starting** with the specified name.
 
 If the search expression contains a tag name, such tags are displayed in the results table.
 
