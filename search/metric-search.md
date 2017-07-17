@@ -2,61 +2,61 @@
 
 ## Overview
 
-The metric search interface allows finding metrics by name as well as by specific metric tag values.
+The metric search interface can find metrics by name or specific metric tag values.
 
 ## Syntax
 
-Keyword without colon is considered metric name filter, whereas keywords containing colon are treated as tag conditions.
+A keyword without a colon is considered a metric name filter, a keyword containing a colon is treated as a tag name.
 
 ```ls
 name-filter [tag-name-1:tag-value-2] [tag-name-2:tag-value-2]
 ```
 
-The `*` wildcard is automatically appended to `name-filter` for convenience.
+The `*` wildcard is automatically appended to the `name-filter`, thereby including every applicable tag.
 
-If the search expression contains tag conditions such tags are displayed in the results table.
+If the search expression contains a tag name, such tags are displayed in the results table.
 
 
 ## Wildcards
 
 * `*` matches any number of characters.
-* `?` matches one characher.
+* `?` matches any one characher.
 
 ## Examples
 
-* Find metrics starting with text 'cpu'
+* Find metrics starting with 'cpu'
 
 ```ls
 cpu
 ```
 
-* Find metrics starting with text 'cpu' (wildcard alternative)
+* Find metrics starting with 'cpu' (wildcard alternative)
 
 ```ls
 cpu*
 ```
 
-* Find metrics containing text 'cpu'
+* Find metrics containing 'cpu'
 
 ```ls
 *cpu*
 ```
 
-* Find metrics with tag 'hello' set to 'World'
+* Find metrics with the tag 'hello' set to 'World'
 
 
 ```ls
 hello:World
 ```
 
-* Find metrics with any value for tag 'hello'
+* Find metrics with any value for the tag 'hello'
 
 
 ```ls
 hello:*
 ```
 
-* Find metrics starting with text 'cpu' and tag 'unit' set to 'percent'
+* Find metrics starting with 'cpu' and the tag 'unit' set to 'percent'
 
 
 ```ls
