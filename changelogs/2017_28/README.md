@@ -9,7 +9,7 @@ Weekly Change Log: July 10, 2017 - July 16, 2017
 | [4375](#Issue-4375) | sql | Feature | Added support for [`CURRENT_TIMESTAMP`](https://github.com/axibase/atsd/tree/master/api/sql#current_timestamp) and [`DBTIMEZONE`](https://github.com/axibase/atsd/tree/master/api/sql#dbtimezone) functions. |
 | [4360](#Issue-4360) | forecast | Feature | Added support for additional aggregation functions in [forecast](https://axibase.com/products/axibase-time-series-database/forecasts/) settings: `AVG`, `MIN`, `MAX`, `SUM`, `COUNT`.  |
 
-### ATSD
+### ATSD  
 
 ##### Issue 4375
 
