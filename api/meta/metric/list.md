@@ -126,7 +126,7 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
     "invalidAction": "NONE",
     "lastInsertDate": "2016-05-19T00:15:02.000Z",
     "versioned": true,
-	"interpolate":"LINEAR"
+    "interpolate":"LINEAR"
   },
   {
     "name": "temperature",
@@ -138,8 +138,8 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
     "invalidAction": "NONE",
     "lastInsertDate": "2016-05-18T00:35:12.000Z",
     "versioned": false,
-	"interpolate":"LINEAR",
-	"timeZone":"America/New_York"
+    "interpolate":"LINEAR",
+    "timeZone":"America/New_York"
   }
 ]
 ```
@@ -180,7 +180,6 @@ curl https://atsd_host:8443/api/v1/metrics?expression=versioning=true%20and%20re
     "name": "metric",
     "enabled": true,
     "dataType": "FLOAT",
-    "counter": false,
     "persistent": true,
     "timePrecision": "MILLISECONDS",
     "retentionDays": 3,
