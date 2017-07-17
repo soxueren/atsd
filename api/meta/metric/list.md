@@ -195,7 +195,7 @@ curl https://atsd_host:8443/api/v1/metrics?expression=versioning=true%20and%20re
 ## Additional Examples
 
 * [List metrics by name](examples/list-metrics-by-name.md)
-* [List metrics by name using wildcards](list-metrics-by-name-wildcards.md)
+* [List metrics by name using wildcards](examples/list-metrics-by-name-wildcards.md)
 * [List metrics by name and tag](examples/list-metrics-by-name-and-tag.md)
 * [List metrics with tag `table`](examples/list-metrics-with-tag-table.md)
 * [List metrics by maxInsertDate](examples/list-metrics-by-maxinsertdate.md)
