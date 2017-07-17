@@ -4,22 +4,23 @@
 
 The metric search interface allows finding metrics by name as well as by specific metric tag values.
 
-## Wildcards
-
-`*` matches any number of characters.
-`.` matches one characher.
-
-`*` wildcard is automatically appended to search queries for convenience of the most common use case.
-
 ## Syntax
 
-Keyword without colon is considered metric name expression, whereas keywords containing colon are treated as tag conditions.
+Keyword without colon is considered metric name filter, whereas keywords containing colon are treated as tag conditions.
 
 ```ls
 name-filter [tag-name-1:tag-value-2] [tag-name-2:tag-value-2]
 ```
 
+The `*` wildcard is automatically appended to `name-filter` for convenience.
+
 If the search expression contains tag conditions such tags are displayed in the results table.
+
+
+## Wildcards
+
+* `*` matches any number of characters.
+* `?` matches one characher.
 
 ## Examples
 
