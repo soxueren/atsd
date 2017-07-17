@@ -290,7 +290,6 @@ Virtual tables have the same pre-defined columns since all the the underlying da
 |`metric.minValue`| double | Minimum value for [Invalid Action](../meta/metric/list.md#invalid-actions) trigger.|
 |`metric.maxValue`| double | Maximum value for [Invalid Action](../meta/metric/list.md#invalid-actions) trigger.|
 |`metric.invalidValueAction` | string | [Invalid Action](../meta/metric/list.md#invalid-actions) type.|
-|`metric.counter` | boolean | Defines the metric as an always incrementing measurement with possible resets to 0.|
 
 #### Entity Columns
 
