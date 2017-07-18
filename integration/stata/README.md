@@ -98,6 +98,8 @@ odbc load, exec("SELECT value as price, tags.category as category, datetime FROM
 save prices
 ```
 
+> We need to save dataset to use it later
+
 `prices` preview:
 
 ![](resources/prices_preview.png)
@@ -116,6 +118,8 @@ save datetimes
 
 ### Load weights dataset and cross join with datetimes
 
+Since the `Weights` are available for only one year, we will assume that the category weights are constant through the timespan and therefore can be repeated for each year from 2013 to 2017.
+
 ```
 clear
 odbc load, exec("SELECT tags.category as category, value as weight FROM 'inflation.cpi.categories.weight' ORDER BY datetime, category") dsn("ODBC_JDBC_SAMPLE")
@@ -128,6 +132,8 @@ Crossed dataset preview:
 
 ### Merge current dataset with prices dataset
 
+In this step we will append two tables to perform calculations inside one table. This table will have a unique row identifier (pair `datetime - category`) so we can join them with the INNER JOIN operation.
+
 ```
 merge 1:1 category datetime using prices
 drop category _merge
@@ -138,6 +144,8 @@ Merged dataset preview:
 ![](resources/merge_preview.png)
 
 ### Generate new variable
+
+Multiply two columns element-wise:
 
 ```
 generate inflation = weight * price / 1000
@@ -150,6 +158,8 @@ Dataset with generated variable:
 
 ### Group by datetime and aggregate SUM
 
+Group rows by `datetime` and sum weighted price values for each year.
+
 ```
 bysort datetime : egen value = total(inflation)
 sort datetime value
@@ -158,15 +168,21 @@ drop if dup>1
 drop dup inflation
 ```
 
+> The operation will group records by datetime and calculate the sum of `inflation` values for each group.
+
 Dataset after grouping:
 
 ![](resources/group_by_preview.png)
 
 ### Add entity constant
 
+The entity column is required to store computed metrics back in ATSD.
+
 ```
 generate entity = "bls.gov"
 ```
+
+> This operation will add a new column `entity` that has the value `bls.gov` in each row.
 
 Dataset after constant addition:
 
