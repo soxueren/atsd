@@ -17,7 +17,7 @@
 
 - Install [ODBC-JDBC Gateway](../odbc/README.md)
 
-Remember to choose some table (specify a JDBC URL like jdbc:atsd://ATSD_HOSTNAME:8443;tables=TABLE_NAME_FILTER).
+Remember to choose some table (specify a JDBC URL `TABLE_NAME_FILTER` parameter).
 > `TABLE_NAME_FILTER` is a list of comma-separated metrics or metric expressions to be displayed as tables.
 > `TABLE_NAME_FILTER` examples:
 >  - `*java*` for metrics that contains word `java`
