@@ -1,7 +1,7 @@
 ﻿Overview
 ==============================================
 
-The Axibase Time Series Database supports a Structured Query Language (SQL) for retrieving time series data.
+The Axibase Time Series Database supports Structured Query Language (SQL) for retrieving time series records from the database.
 
 SQL statements can be executed interactively via the SQL Console as well as on a [schedule](#scheduler).
 
@@ -116,7 +116,7 @@ WHERE metric = 'mpstat.cpu_busy'
 
 ### WHERE Clause
 
-The `WHERE` clause is a condition which must satisfied in order to be included in results.
+The `WHERE` clause is a condition which must be satisfied in order to be included in results.
 
 Columns referenced in the `WHERE` clause are replaced by their value for the given row. The condition is then evaluated for each row, and if the result is `TRUE`, the row is included in the result set.
 
@@ -666,13 +666,13 @@ SELECT AVG(metric1.value*2), SUM(metric1.value + metric2.value)
 WHERE metric1.datetime >= NOW - 10*MINUTE
 ```
 
-The modulo operator `%` returns the rounded quotient of one number divided by another, for instance `14 % 3` (= 2).
+The modulo operator `%` returns the remainder of one number divided by another, for instance `14 % 3` (= 2).
 
 ## Match Expressions
 
 ### LIKE Expression
 
-The `LIKE` expression supports `?` and `*` wildcards which can be escaped with backslash `\`, if the symbol occurs in the metric name.
+The `LIKE` expression supports `?` and `*` wildcards which can be escaped with backslash `\`, if the symbol occurs in the matched value.
 
 The comparison is case-sensitive, even for entity and metric names.
 
@@ -800,7 +800,7 @@ Converting a date to milliseconds and comparing it to the time column is more ef
 
 ### Multiple Intervals
 
-Multiple time intervalscan be selected using the `OR` operator.
+Multiple time intervals can be selected using the `OR` operator.
 
 ```sql
 SELECT datetime, value
@@ -2051,7 +2051,7 @@ SELECT DBTIMEZONE
 | `CEIL(num)` | Smallest integer that is greater than or equal to the specified number. |
 | `FLOOR(num)` | Largest integer that is less than or equal to the specified number. |
 | `ROUND(num [,m])` | Number rounded to `m` decimal places. |
-| `MOD(num, m)` | Rounded quotient of the first numerical argument divided by `m`.|
+| `MOD(num, m)` | Remainder of the first numerical argument divided by `m`.|
 | `POWER(num, m)`  | Number raised to the power `m`. |
 | `EXP(num)` | `e` (2.71828183) raised to the power of the specified number. |
 | `LN(num)` | Natural logarithm of the specified number. |
