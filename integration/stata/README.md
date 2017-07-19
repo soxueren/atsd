@@ -11,14 +11,15 @@
 - Install [Stata](http://www.stata.com/order/) 15
 - Install [ODBC-JDBC Bridge](../odbc/openlink.md)
 
-If your ATSD installation has too many metrics (more than 10000), add a `table={filter}` parameter to the [JDBC URL](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) to filter the list of tables visible in Stata.
+> If your ATSD installation has too many metrics (more than 10000), add a `tables={filter}` parameter to the [JDBC URL](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) to filter the list of tables visible in Stata.
 
 ## Loading Data
 
-Execute in Stata Console this command: `set odbcdriver ansi`
-> ODBC should be set into ANSI mode, otherwise strings will be truncated
+Execute the following command in the Stata console: `set odbcdriver ansi`
 
-### Load Data via Import Wizard
+This confugurea Stata to interface with ODBC in ANSI mode to prevent string values from being truncated.
+
+### Load Data using Import Wizard
 
 - Click on **File > Import > ODBC** data source
 - Select the ATSD connection in **ODBC data sources**
@@ -28,7 +29,7 @@ Execute in Stata Console this command: `set odbcdriver ansi`
 
 ![](resources/import_wizard.png)
 
-### Load Data via Stata Console
+### Load Data with Stata Console
 
 - Type [`odbc list`](https://stata.com/manuals13/dodbc.pdf) in the Stata Console.
 - Click on the ATSD Data Source Name (DSN) that you have configured in the ODBC-JDBC Bridge
@@ -42,7 +43,7 @@ Execute in Stata Console this command: `set odbcdriver ansi`
 - Click on `load` to load the entire table as a dataset in memory.
 - Click on `query` to re-load the list of tables.
 
-## Load Data for SQL Query
+## Load Data with SQL Query
 
 - Execute [`odbc load`](https://www.stata.com/manuals13/dodbc.pdf) to load results for a custom SQL query results into memory:
 
@@ -52,18 +53,18 @@ odbc load, exec("SELECT value, tags.name FROM 'java_method_invoke_last' ORDER BY
 
 ## Exporting Data
 
-### Export Data via Export Wizard
+### Export Data using Export Wizard
 
-- Click on File -> Export -> ODBC data source
-- Click on the ATSD connection in `ODBC data sources`
-- Type table name into `Tables` field. This will be the metric name holding the exported data
-- Choose variables to export in the `Variables` drop-down list
-- Type column names from the target metric according to variables selected in the previous step
-- Choose `Append data into existing table` in `Insertion options`
-- Check `Use block inserts` option
-- Click `OK` to export the selected variables into ATSD
+- Click on **File > Export > ODBC** data source.
+- Click on the ATSD connection in `ODBC data sources`.
+- Type table name into `Tables` field. This will be the metric name holding the exported data.
+- Choose variables to export in the `Variables` drop-down list.
+- Type column names from the target metric according to variables selected in the previous step.
+- Choose `Append data into existing table` in `Insertion options`.
+- Check `Use block inserts` option.
+- Click `OK` to export the selected variables into ATSD.
 
-### Export Data via Stata Console
+### Export Data using Stata Console
 
 Use [`odbc insert`](https://www.stata.com/manuals13/dodbc.pdf) command to write data from Stata memory into ATSD.
 
@@ -71,13 +72,15 @@ Use [`odbc insert`](https://www.stata.com/manuals13/dodbc.pdf) command to write 
 odbc insert var1 var2 var3, as("entity datetime value") dsn("ATSD") table("target_metric_name") block
 ```
 
+> Make sure `block` flag is set, otherwise not all records may be inserted into ATSD.
+
 Syntax:
 
-- `var1 var2 var3` is a list of variables from im-memory dataset in Stata
-- `as("entity datetime value")` is a list of columns in ATSD metric. That list should be sorted according to list of variables
-- `dsn("ATSD")` is a name of ODBC connection to ATSD
-- `table("metric_name")` is a name of metric which will contain exported dataset
-- `block` is a parameter to force using block inserts
+- `var1 var2 var3` is a list of variables from im-memory dataset in Stata.
+- `as("entity datetime value")` is a list of columns in ATSD metric. That list should be sorted according to list of variables.
+- `dsn("ATSD")` is a name of ODBC connection to ATSD.
+- `table("metric_name")` is a name of metric which will contain exported dataset.
+- `block` is a parameter to force using block inserts.
 
 ## Calculating Derived Series
 
@@ -108,7 +111,7 @@ odbc load, exec("SELECT datetime FROM 'inflation.cpi.categories.price' GROUP BY 
 save datetimes
 ```
 
-Preview `datetimes`:
+Preview `datetimes` dataset:
 
 ![](resources/datetimes_preview.png)
 
