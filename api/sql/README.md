@@ -1,9 +1,9 @@
 ﻿Overview
 ==============================================
 
-Axibase Time Series Database supports SQL query language for retrieving time series data.
+The Axibase Time Series Database supports Structured Query Language (SQL) for retrieving time series records from the database.
 
-The SQL statements can be executed interactively via the SQL console as well as on [schedule](#scheduler).
+SQL statements can be executed interactively via the SQL Console as well as on a [schedule](#scheduler).
 
 * [Syntax](#syntax)
   * [SELECT Expression](#select-expression)
@@ -76,7 +76,7 @@ The statement may be terminated with a semicolon character.
 
 ### SELECT expression
 
-The SELECT expression consists of one or multiple columns and expressions applied to query results.
+The SELECT expression consists of one or multiple columns and expressions applied to the query results.
 
 ### Query
 
@@ -92,7 +92,7 @@ SELECT datetime, entity, value
 WHERE datetime >= '2017-06-15T00:00:00Z'
 ```
 
-In the example above, "mpstat.cpu_busy" table contains records for the `mpstat.cpu_busy` metric.
+In the example above, the "mpstat.cpu_busy" table contains records for the `mpstat.cpu_busy` metric.
 
 Metric names in the `FROM` clause that contain reserved keywords, identifiers or special characters such as `-`,`*`,`,` should be enclosed in quotes or double quotes, for example, `FROM 'disk-io'`, `FROM "select"`, `FROM 'cpu.avg.percent'`.
 
@@ -112,11 +112,11 @@ WHERE metric = 'mpstat.cpu_busy'
   AND datetime >= '2017-06-15T00:00:00Z'
 ```
 
-> The number of metrics retrieved with `metric LIKE (expr)` condition is limited to 50.
+> The number of metrics retrieved with the `metric LIKE (expr)` condition is limited to 50.
 
 ### WHERE Clause
 
-The `WHERE` clause is a condition which rows must satisfy in order to be included in results.
+The `WHERE` clause is a condition which must be satisfied in order to be included in results.
 
 Columns referenced in the `WHERE` clause are replaced by their value for the given row. The condition is then evaluated for each row, and if the result is `TRUE`, the row is included in the result set.
 
@@ -127,9 +127,9 @@ The clause can be built from multiple conditions, each comparing values using op
 * Numeric operators: `<, >, <=, >=, =, <>, !=`.
 * String operators: `<, >, <=, >=, =, <>, !=, LIKE, REGEX, IS`.
 
-> Operators `!=` and `<>` cannot be applied to columns `time` and `datetime`.
+> The operators `!=` and `<>` cannot be applied to columns `time` and `datetime`.
 
-> Operators `<, >, <=, >=` applied to string values, such as series/entity/metric tag values, perform [lexicographical comparison](examples/filter-operators-string.md).
+> The operators `<, >, <=, >=` applied to string values, such as series/entity/metric tag values, perform [lexicographical comparisons](examples/filter-operators-string.md).
 
 The result of evaluating a condition is a boolean value. Multiple conditions can be combined using the logical operators `AND`, `OR`, and `NOT`.
 
@@ -182,10 +182,10 @@ Operators with the same precedence level within an expression are processed from
 
 ### Functions
 
-* **ROW_NUMBER** returns row index within each [partition](#partitioning).
-* **INTERPOLATE** fills the gaps in [irregular](#regularization) series.
-* **INTERVAL_NUMBER** returns interval index when multiple intervals are selected with [Interval Condition](#interval-condition).
-* **LAST_TIME** returns [last insert](#last_time-syntax) time in millisecond for each series.
+* **ROW_NUMBER** returns the row index within each [partition](#partitioning).
+* **INTERPOLATE** fills the gaps in an [irregular](#regularization) series.
+* **INTERVAL_NUMBER** returns the interval index when multiple intervals are selected with [Interval Condition](#interval-condition).
+* **LAST_TIME** returns [last insert](#last_time-syntax) time in milliseconds for each series.
 
 ### Data Types
 
@@ -260,7 +260,7 @@ Virtual tables have the same pre-defined columns since all the the underlying da
 |`entity`         |string   | Entity name.|
 |`value`          |number   | Series numeric value.|
 |`text`           |string   | Series text value.|
-|`tags.{name}`    |string   | Series tag value. Returns `NULL` if the specified tag doesn't exist for this series.|
+|`tags.{name}`    |string   | Series tag value. Returns `NULL` if the specified tag does not exist for this series.|
 |`tags`           |string   | All series tags, concatenated to `name1=value;name2=value` format.|
 |`tags.*`         |string   | Expands to multiple columns, each column containing a separate series tag.|
 |`datetime`       |datetime | Sample time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY PERIOD` queries, the datetime column returns period start time in ISO format, same as `date_format(PERIOD(...))`.|
@@ -302,7 +302,7 @@ Virtual tables have the same pre-defined columns since all the the underlying da
 |`entity.tags`    |string   | All entity tags, concatenated to `name1=value;name2=value` format.|
 |`entity.groups`  |string   | List of entity groups, to which the entity belongs, separated by semi-colon `;`.|
 
-The `{name}` part in tag columns `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}` must be enclosed in quotes or double quotes, if `{name}` equals a reserved column or [keyword](#keywords), an SQL identifier or contains special characters such as `-`,`*`,`,`.
+The `{name}` in tag columns `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}` must be enclosed in quotes or double quotes if `{name}` equals a reserved column or [keyword](#keywords), an SQL identifier, or contains special characters such as `-`,`*`,`,`.
 
 ```java
 # enquote reserved column name
@@ -324,7 +324,7 @@ SELECT t1.datetime, t1.entity, t1.value + t2.value AS cpu_sysusr
 WHERE t1.datetime >= '2017-06-15T00:00:00Z'
 ```
 
-The list of all predefined columns may be requested with the `SELECT *` syntax, except for aggregation queries with the `GROUP BY` clause.
+The list of all predefined columns can be requested with the `SELECT *` syntax, except for aggregation queries with the `GROUP BY` clause.
 
 ```sql
 SELECT * FROM "mpstat.cpu_busy" WHERE datetime > current_minute LIMIT 1
@@ -336,7 +336,7 @@ SELECT * FROM "mpstat.cpu_busy" WHERE datetime > current_minute LIMIT 1
 | 1499177532000 | 2017-07-04T14:12:12Z | 5     | null | cpu_busy | nurswgvml007 | null |
 ```
 
-`JOIN` queries with asterisk return columns for all tables referenced in the query.
+`JOIN` queries with an asterisk return columns for all tables referenced in the query.
 
 ```sql
 SELECT * 
@@ -370,7 +370,7 @@ WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
 | null                 | null              | 1497618021000 | 2017-06-16T13:00:21Z | 76980    | null    | memfree   | nurswgvml006 | null    | 
 ```
 
-The `time` and `datetime` columns are interchangeable and can be used as equivalents, for instance in the `GROUP BY` clause and the `SELECT` expression.
+The `time` and `datetime` columns are interchangeable and can be used equivalently, for instance in the `GROUP BY` clause and the `SELECT` expression.
 
 ```sql
 SELECT datetime, entity, count(*)
@@ -379,7 +379,7 @@ WHERE datetime BETWEEN '2017-06-15T21:02:00Z' AND '2017-06-15T21:02:15Z'
   GROUP BY time, entity
 ```
 
-The `SELECT` expression in `JOIN` queries can include both fully qualified column names such as {table}.datetime as well as short names `datetime` and `time` containing row timestamp calculated as `COALESCE(t1.datetime, t2.datetime, ...)`.
+The `SELECT` expression in `JOIN` queries can include both fully qualified column names such as `{table}.datetime` and short names `datetime` and `time` containing row timestamp calculated as `COALESCE(t1.datetime, t2.datetime, ...)`.
 
 ```sql
 SELECT datetime, t1.datetime, t2.datetime
@@ -399,7 +399,7 @@ WHERE t1.datetime BETWEEN '2017-06-15T13:00:00Z' AND '2017-06-15T13:10:00Z'
 
 ### Series Value Columns
 
-Each series sample can contain:
+Each series sample can contain a:
 
 * Numeric value, accessible with the `value` column.
 * String value, accessible with the `text` column.
@@ -459,7 +459,7 @@ WHERE entity = 'nurswgvml010'
 
 To filter records with or without specified series tags, use the `IS NOT NULL` or `IS NULL` operators.
 
-`tags` and `tags.{tag-name}` syntax can also be used for `WHERE`, `ORDER`, `GROUP BY` and other clauses.
+The `tags` and `tags.{tag-name}` syntaxes can also be used in `WHERE`, `ORDER`, `GROUP BY` and other clauses.
 
 ```sql
 SELECT entity, count(value), tags.*
@@ -503,7 +503,7 @@ WHERE datetime >= CURRENT_HOUR
 | nurswgvml502 | null           | null                  | 16.3       |
 ```
 
-To filter records with or without specified entity tags, use the `IS NOT NULL` or `IS NULL` operators:
+To filter records with or without a specified entity tag, use the `IS NOT NULL` or `IS NULL` operators:
 
 ```sql
 SELECT entity, entity.tags.os, entity.tags.app, AVG(value)
@@ -522,7 +522,7 @@ GROUP BY entity
 
 ### Metric Tag Columns
 
-Metric tag values can be included in a `SELECT` expression by specifying `metric.tags.*`, `metric.tags`, or `metric.tags.{tag-name}` as the column name.
+Metric tag values can be included in `SELECT` expressions by specifying `metric.tags.*`, `metric.tags`, or `metric.tags.{tag-name}` as the column name.
 
 `metric.tags` is a map object whose properties can be accessed with the `{tag-name}` key.
 
@@ -672,7 +672,7 @@ The modulo operator `%` returns the remainder of one number divided by another, 
 
 ### LIKE Expression
 
-The `LIKE` expression supports `?` and `*` wildcards which can be escaped with backslash `\`, if necessary.
+The `LIKE` expression supports `?` and `*` wildcards which can be escaped with backslash `\`, if the symbol occurs in the matched value.
 
 The comparison is case-sensitive, even for entity and metric names.
 
@@ -718,7 +718,7 @@ Special constructs such as `(?i)` can be applied to enable a [case-insensitive m
 
 ## Interval Condition
 
-An interval condition determines the selection interval and is specified in the `WHERE` clause using `time` or `datetime` columns.
+An interval condition determines the selection interval and is specified in the `WHERE` clause using the `time` or `datetime` columns.
 
 The `time` column accepts Unix milliseconds, whereas the `datetime` column accepts literal dates in ISO 8601 format with optional millisecond precision.
 
@@ -732,7 +732,7 @@ WHERE datetime BETWEEN '2016-12-10T14:00:15Z' AND '2016-12-10T15:30:00.077Z'
 
 > Equality operators `!=` and `<>`  **cannot** be applied to `time` and `datetime` columns.
 
-Avoid the [`date_format`](#date-formatting-functions) function in the `WHERE` condition as it will cause the database to perform a full scan and compare literal strings. Instead, filter the dates using the indexed `datetime` column.
+Avoid using the [`date_format`](#date-formatting-functions) function in the `WHERE` condition as it will cause the database to perform a full scan comparing literal strings. Instead, filter dates using the indexed `datetime` column.
 
 ```sql
 WHERE date_format(time, 'yyyy') > '2014' -- Anti-pattern: Full scan with string comparison.
@@ -800,7 +800,7 @@ Converting a date to milliseconds and comparing it to the time column is more ef
 
 ### Multiple Intervals
 
-The query may select multiple intervals using the `OR` operator.
+Multiple time intervals can be selected using the `OR` operator.
 
 ```sql
 SELECT datetime, value
@@ -828,7 +828,7 @@ In particular, the values between such intervals are not interpolated.
 
 ### Interval Subqueries
 
-As an alternative to specifying lower and upper boundary manually, the `BETWEEN` operator allows retrieving the time range with a [subquery](examples/filter-by-date.md#query-using-between-subquery).
+As an alternative to specifying the lower and upper boundaries manually, the `BETWEEN` operator retrieves the time range with a [subquery](examples/filter-by-date.md#query-using-between-subquery).
 
 ```sql
 SELECT datetime, value
@@ -852,7 +852,7 @@ ORDER BY datetime)
 
 ## Period
 
-Period is a repeating time interval used to group values occurred within each interval into buckets in order to apply aggregation functions.
+Period is a repeating time interval used to group values occurring within each interval into buckets in order to apply aggregation functions.
 
 Period syntax:
 
@@ -867,7 +867,7 @@ PERIOD({count} {unit} [, option])
 * `align` = START_TIME, END_TIME, FIRST_VALUE_TIME, CALENDAR
 * `timezone` = [Time Zone ID](../../api/network/timezone-list.md), enclosed in double quotes.
 
-The options are separated by comma and can be specified in any order.
+The options are separated by a comma and can be specified in any order.
 
 ```sql
 PERIOD(5 MINUTE)
@@ -881,8 +881,8 @@ PERIOD(1 DAY, "US/Eastern")
 |:---|:---|
 | count | [**Required**] Number of time units contained in the period. |
 | unit | [**Required**] [Time unit](../../api/data/series/time-unit.md) such as `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, `YEAR`. |
-| interpolate | Apply [interpolation function](#interpolation), such as `LINEAR` or `VALUE 0`, to add missing periods.|
-| extend | Add missing periods at the beginning and end of the selection interval using `VALUE {n}` or `NEXT` and `PREVIOUS` interpolation functions.|
+| interpolate | Apply an [interpolation function](#interpolation), such as `LINEAR` or `VALUE 0`, to add missing periods.|
+| extend | Add missing periods at the beginning and end of the selection interval using `VALUE {n}` or the `PREVIOUS` and `NEXT` interpolation functions.|
 | align | Align the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
 | timezone | Time zone for aligning periods in `CALENDAR` mode, such as `"US/Eastern"` or `"UTC"`.<br>Default value: current database timezone.|
 
@@ -939,7 +939,7 @@ GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 
 The `CALENDAR` alignment calculates the initial period according to the rules below and creates subsequent periods by incrementing the duration specified by the `PERIOD` function. The inital period is defined as the earliest period that intersects with the selection interval.
 
-* Start time of the selection interval is rounded to calculate the _base time_ using the rule table below.
+* The start time of a selection interval is rounded to calculate the _base time_ using the rule table below.
 * If the period starting with the _base time_ intersects with the selection interval, it becomes the initial period.
 * Otherwise, the period starting with _base time_ is incremented (decremented if _base time_ exceeds start time) to find the earliest period intersecting with the selection interval. This period becomes the initial period.
 
@@ -980,7 +980,7 @@ Examples:
 | 1 WEEK     | 2016-06-01 00:00  | 2016-06-02 00:00  | 2016-06-06 00:00  | 2016-05-30 00:00  | -                 | -                |
 ```
 
-For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units the start of the day is determined according to the **database timezone**, unless a user-defined timezone is specified as an option, for example `GROUP BY entity, PERIOD(1 MONTH, "UTC")`.
+For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units, the start of the day is determined according to the **database timezone**, unless a user-defined timezone is specified as an option, for example `GROUP BY entity, PERIOD(1 MONTH, "UTC")`.
 
 #### `END_TIME` Alignment
 
@@ -1040,7 +1040,7 @@ GROUP BY entity, PERIOD(10 MINUTE, START_TIME)
 
 ## Interpolation
 
-By default, if a period specified in the `GROUP BY` clause doesn't contain any detailed values, it will be excluded from the results.
+By default, if a period specified in the `GROUP BY` clause does not contain any detailed values, it will be excluded from the results.
 
 The behavior can be changed by referencing an interpolation function as part of the `PERIOD` function.
 
@@ -1062,7 +1062,7 @@ GROUP BY entity, period(5 MINUTE, LINEAR)
 
 Include an optional `EXTEND` parameter to the `PERIOD` function to append missing periods at the beginning and the end of the selection interval.
 
-Leading and trailing period values are set with the `VALUE {n}` function if such function is specified.
+Leading and trailing period values are set with the `VALUE {n}` function if such a function is specified.
 
 ```sql
 period(5 MINUTE, VALUE 0, EXTEND)
@@ -1085,7 +1085,7 @@ GROUP BY entity, period(5 MINUTE, LINEAR, EXTEND)
 
 ## Regularization
 
-The `WITH INTERPOLATE` clause provides a way to transform unevenly spaced time series into regular series.
+The `WITH INTERPOLATE` clause provides a way to transform unevenly spaced time series into a regular series.
 
 The underlying transformation applies a linear interpolation or step function to calculate values at regular intervals.
 
@@ -1140,7 +1140,7 @@ WITH INTERPOLATE (1 MINUTE, LINEAR, OUTER, NAN, START_TIME)
 
 ### Interpolation Period
 
-The interpolation period is specified as `count unit`, for example `5 MINUTE`, or `DETAIL`.
+The interpolation period is specified as a `count unit`, for example `5 MINUTE`, or `DETAIL`.
 
 | **Name** | **Description** |
 |:---|:---|
@@ -1229,7 +1229,7 @@ GROUP BY period(5 MINUTE)
 
 ### HAVING filter
 
-The `HAVING` clause enables filtering of grouped rows. It eliminates grouped rows that do not match the specified condition which may contain one or multiple aggregation functions.
+The `HAVING` clause filters grouped rows. It eliminates grouped rows that do not match the specified condition which may contain one or multiple aggregation functions.
 
 ```sql
 HAVING aggregation_function operator value
@@ -1281,8 +1281,8 @@ For example, a result set partitioned by entity and ordered by time would have t
 ROW_NUMBER({partitioning columns} ORDER BY {ordering columns [direction]})
 ```
 
-* {partitioning columns} can be `entity`, `tags`, or `entity, tags`
-* {ordering columns [direction]} can be any columns of the `FROM` clause with an optional `ASC/DESC` direction.
+* `{partitioning columns}` can be `entity`, `tags`, or `entity, tags`
+* `{ordering columns [direction]}` can be any columns of the `FROM` clause with an optional `ASC/DESC` direction.
 
 Examples:
 
@@ -1338,7 +1338,7 @@ GROUP BY entity
 | nurswgvml502 | 3.9        |
 ```
 
-The `ROW_NUMBER` function can be included after the `WHERE` clause, as well as after the `GROUP BY` clause, in which case it is be applied to grouped rows.
+The `ROW_NUMBER` function can be included after the `WHERE` clause, as well as after the `GROUP BY` clause, in which case it is applied to grouped rows.
 
 ```sql
 SELECT entity, tags, MAX(value) -  MIN(value) AS 'Diff'
@@ -1407,8 +1407,8 @@ WITH last_time_expression comparision_operator time
 ```
 
 * `time` is the pre-defined time column which represents the timestamp of the sample.
-* `comparision_operator` is one of the following operators: `>`, `>=`, `<`, `<=`, `=`.
-* `last_time_expression` consists of the `last_time` keyword and an optional `endtime` expression.
+* A `comparision_operator` is one of the following operators: `>`, `>=`, `<`, `<=`, `=`.
+* A `last_time_expression` consists of the `last_time` keyword and an optional `endtime` expression.
 
 ```sql
 WITH time >= last_time - 1*MINUTE
@@ -1455,7 +1455,7 @@ GROUP BY entity
   ORDER BY 2 DESC, 1
 ```
 
-In combination with `LIMIT`, ordering can be used to execute **Top-N** queries.
+In combination with `LIMIT`, ordering can be used to execute the **Top-N** queries.
 
 ```sql
 SELECT entity, AVG(value) FROM "mpstat.cpu_busy"
@@ -1515,7 +1515,7 @@ GROUP BY entity
 LIMIT 1
 ```
 
-The above query would scan all samples for 'm-1' metric in the database, even though it would return only 1 record as instructed by the `LIMIT 1` clause.
+The above query would read all samples contained in the 'm-1' metric in the database, even though it would return only 1 record as instructed by the `LIMIT 1` clause.
 
 ## Joins
 
@@ -1536,7 +1536,7 @@ Because join queries combine rows from multiple virtual tables with the same col
 
 ### JOIN
 
-The `JOIN` clause allows merging records for multiple metrics collected by the same entity into one result set, even if underlying series are not synchronized on time.
+The `JOIN` clause allows merging records for multiple metrics collected by the same entity into one result set, even if underlying series are not chronologically synchronized.
 
 The default `JOIN` condition includes entity, time, and series tags. The condition can be modified with the `USING entity` clause in which case series tags are ignored, and records are joined on entity and time instead.
 
@@ -1549,7 +1549,7 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
   AND t1.entity = 'nurswgvml006'
 ```
 
-In this particular case, since timestamps for each of these metrics are identical and being collected by the same script, `JOIN` produces merged rows for all the detailed records. This is typically the case when multiple metrics are inserted with one command or when time is controlled externally. 
+In this case, since timestamps for each of these metrics are identical and being collected by the same script, `JOIN` produces merged rows for all the detailed records. This is typically the case when multiple metrics are inserted with one command or when time is controlled externally. 
 
 ```ls
 | datetime             | entity       | t1.value | t2.value | t3.value |
@@ -1559,7 +1559,7 @@ In this particular case, since timestamps for each of these metrics are identica
 | 2016-06-16T13:00:33Z | nurswgvml006 | 0.0      | 1.0      | 0.0      |
 ```
 
-As in the example above, 'cpu_system', 'cpu_user', 'cpu_iowait' measurements are obtained by invoking `mpstat` command and are timestamped by the collecting script with the same time.
+As in the example above, 'cpu_system', 'cpu_user', 'cpu_iowait' measurements are obtained by invoking the `mpstat` command and are timestamped by the collecting script with the same time.
 
 However, when merging records for irregular metrics collected by independent sources, `JOIN` results may contain only a subset of rows with identical times.
 
@@ -1602,7 +1602,7 @@ WHERE t1.datetime BETWEEN '2017-04-08T07:01:00Z' AND '2017-04-08T07:02:00Z'
 | nurswgvml006 | 2017-04-08T07:02:00Z | 10.9     | nurswgvml006 | 2017-04-08T07:02:00Z | 75928.0  |
 ```
 
-Series with tags can be joined without the need to enumerate all possible tag names in the `JOIN` condition.
+Series with tags can be joined without enumerating all possible tag names in the `JOIN` condition.
 
 ```sql
 SELECT t1.datetime, t1.entity, t1.value, t2.value, t1.tags.*
@@ -1660,7 +1660,7 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
   AND t1.entity = 'nurswgvml006'
 ```
 
-`OUTER JOIN` on detailed records, without period aggregation, produces rows with `NULL` columns for series that didn't record any value at the specified time.
+`OUTER JOIN` on detailed records, without period aggregation, produces rows with `NULL` columns for series that did not record any value at the specified time.
 
 ```ls
 | t1.datetime          | t1.entity    | cpu  | t2.datetime          | t2.entity    | mem   | 
@@ -1671,7 +1671,7 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 | null                 | null         | null | 2016-06-16T13:00:27Z | nurswgvml006 | 73620 | 
 ```
 
-In addition to qualified column names such as t1.datetime, the JOIN queries expose `datetime` and `time` columns containing row timestamp calculated as `COALESCE(t1.datetime, t2.datetime, ...)`.
+In addition to qualified column names such as `t1.datetime`, the JOIN queries expose `datetime` and `time` columns containing a row timestamp calculated as `COALESCE(t1.datetime, t2.datetime, ...)`.
 
 ```sql
 SELECT datetime, isnull(t1.entity, t2.entity) AS server,
@@ -1716,7 +1716,7 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 
 * Aggregation
 
-The `PERIOD()` column (without the preceding table name) calculates the start of the period based on the row `datetime` column.
+The `PERIOD()` column (without the preceding table name) calculates the start of the period based on the `datetime` column.
 
 ```sql
 SELECT datetime, ISNULL(t1.entity, t2.entity) AS server, 
@@ -1737,11 +1737,11 @@ GROUP BY PERIOD(1 MINUTE), server
 | 2016-06-16T13:01:00Z | nurswgvml007 | 3.5     | 252451.0 | 
 ```
 
->  Note that records returned by a `JOIN USING entity` condition include series with last insert date greater than start date specified in the query.
+>  Note that records returned by a `JOIN USING entity` condition include series with a last insert date greater than the start date specified in the query.
 
 ### JOIN with `atsd_series` table
 
-When metrics selected from `atsd_series` table are joined with metrics referenced in the query, each `atsd_series` metric is joined with a referenced metric separately.
+When metrics selected from the `atsd_series` table are joined with metrics referenced in the query, each `atsd_series` metric is joined with a referenced metric separately.
 
 ```sql
 SELECT base.entity, base.metric, base.datetime, base.value, t1.value AS 'cpu_sys'
@@ -1797,7 +1797,7 @@ The following functions aggregate values in a column by producing a single value
 |----------------|----------------|----------------|----------------|
 ```
 
-The functions accept `value` column or a numeric expression as an argument, for example  `AVG(value)` or `AVG(t1.value + t2.value)`.
+The functions accept the `value` column or a numeric expression as an argument, for example  `AVG(value)` or `AVG(t1.value + t2.value)`.
 
 * All functions, except `MIN_VALUE_TIME` and `MAX_VALUE_TIME`, return DOUBLE datatype.
 * Functions `MIN_VALUE_TIME` and `MAX_VALUE_TIME` return LONG datatype.
@@ -1831,11 +1831,11 @@ The `PERCENTILE` function accepts `percentile` parameter (0 to 100) and a numeri
 
 ### FIRST
 
-The `FIRST` function returns value of the first sample (or value of expression `expr` for the first row) in the set which is ordered by datetime in ascending order.
+The `FIRST` function returns the value of the first sample (or the value of expression `expr` for the first row) in the set which is ordered by datetime in ascending order.
 
 ### LAST
 
-The `LAST` function returns value of the last sample (or value of expression `expr` for the last row) in the set which is ordered by datetime in ascending order.
+The `LAST` function returns the value of the last sample (or the value of expression `expr` for the last row) in the set which is ordered by datetime in ascending order.
 
 ### MIN_VALUE_TIME
 
@@ -1847,9 +1847,9 @@ The `MAX_VALUE_TIME` function returns the Unix time in milliseconds (LONG dataty
 
 ### CORREL
 
-The `CORREL` correlation function accepts two numeric expression as arguments (or two value columns in a `JOIN` query) and calculates the [Pearson correllation](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/stat/correlation/PearsonsCorrelation.html) coefficient between these two variables.
+The `CORREL` correlation function accepts two numeric expressions as arguments (or two value columns in a `JOIN` query) and calculates the [Pearson correlation](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/stat/correlation/PearsonsCorrelation.html) coefficient between them.
 
-> If one if the variables is constant (its standard deviation is 0), the `CORREL` function returns `NaN`.
+> If one of the variables is constant (its standard deviation is 0), the `CORREL` function returns `NaN`.
 
 ```sql
 SELECT tu.entity,
@@ -1886,9 +1886,9 @@ date_format(long milliseconds[, string time_format[, string time_zone]])
 
 If the `time_format` argument is not provided, ISO 8601 format is applied.
 
-The `time_zone` parameter accepts GTM offset in the format of `GMT-hh:mm` or a [time zone name](../../api/network/timezone-abnf.md) and allows formatting dates in a time zone, different from the database time zone.
+The `time_zone` parameter accepts GTM offset in the format of `GMT-hh:mm` or a [time zone name](../../api/network/timezone-abnf.md) and can format dates in a time zone other than the database time zone.
 
-In addition, the `time_zone` parameter can be specified as `AUTO` in which case the date is formatted with entity-specific time zone. If the entity-specific time zone is not defined, metric-specific time zone is used instead. If neither entity- nor metric-specific time zone is specified, the database timezone is applied.
+In addition, the `time_zone` parameter can be specified as `AUTO` in which case the date is formatted with an entity-specific time zone. If an entity-specific time zone is not defined, a metric-specific time zone is used instead. If neither an entity-specific nor metric-specific time zone is specified, the database timezone is applied.
 
 Examples:
 
@@ -1937,7 +1937,7 @@ FROM mpstat.cpu_busy
 | date_format(time,'yyyy-MM-dd HH:mm:ssZZ','PST')        | 2016-07-13 05:07:55-07:00   |
 ```
 
-The `date_format` function can also be used to print out period start and end times:
+The `date_format` function can also be used to print period start and end times:
 
 ```sql
 SELECT datetime AS period_start, date_format(time+60*60000) AS period_end, AVG(value)
@@ -1955,7 +1955,7 @@ GROUP BY PERIOD(1 HOUR)
 | 2016-08-25T02:00:00.000Z | 2016-08-25T03:00:00.000Z | 6.7        |
 ```
 
-In addition to formatting, the `date_format` function can be used in the `WHERE`, `GROUP BY`, and `HAVING` clauses to filter and group dates by month name, day name, or hour number.
+In addition to formatting, the `date_format` function can be used in the `WHERE`, `GROUP BY`, and `HAVING` clauses to filter and group dates by month, day, or hour.
 
 ```sql
 SELECT date_format(time, 'EEE'), AVG(value)
@@ -2021,7 +2021,7 @@ date_parse("31.01.2017 12:36:03.283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss.SSS ZZZ
 
 #### `CURRENT_TIMESTAMP`
 
-The `CURRENT_TIMESTAMP` function returns current database time in the ISO-8601 format. It is analogous to the `NOW` functions which returns current database time in Unix milliseconds.
+The `CURRENT_TIMESTAMP` function returns current database time in ISO-8601 format. It is analogous to the `NOW` functions which returns current database time in Unix milliseconds.
 
 ```sql
 SELECT CURRENT_TIMESTAMP
@@ -2036,7 +2036,7 @@ WHERE datetime > CURRENT_TIME - 1 * DAY
 
 #### `DBTIMEZONE`
 
-The `DBTIMEZONE` function returns current database timezone name or offset.
+The `DBTIMEZONE` function returns the current database timezone name or offset.
 
 ```sql
 SELECT DBTIMEZONE
@@ -2051,11 +2051,11 @@ SELECT DBTIMEZONE
 | `CEIL(num)` | Smallest integer that is greater than or equal to the specified number. |
 | `FLOOR(num)` | Largest integer that is less than or equal to the specified number. |
 | `ROUND(num [,m])` | Number rounded to `m` decimal places. |
-| `MOD(num, m)` | Remainder of the first number divided by `m`.|
+| `MOD(num, m)` | Remainder of the first numerical argument divided by `m`.|
 | `POWER(num, m)`  | Number raised to the power `m`. |
 | `EXP(num)` | `e` (2.71828183) raised to the power of the specified number. |
 | `LN(num)` | Natural logarithm of the specified number. |
-| `LOG(num, m)`  | Base-`num` logarithm of the second number `m`. |
+| `LOG(num, m)`  | Base-`num` logarithm of the numerical argument `m`. |
 | `SQRT(num)` | Square root of the specified number. |
 
 ```sql
@@ -2082,7 +2082,7 @@ WHERE datetime >= NOW - 1*MINUTE
 | `REPLACE(s-1, s-2, s-3)` | Replaces all occurrences of `s-2` with `s-3` in a specified string `s-1`.<br>If `s-2` is not found, the function returns the original string `s-1`.|
 | `LENGTH(s)` | Number of characters in a specified string. |
 | `CONCAT(s-1, s-2 [, s-N] )` | Concatenates multiple strings into one string. <br>`NULL` and `NaN` values are concatenated as empty strings.<br>The function also accepts numeric values which are converted to strings using `#.##` pattern. |
-| `LOCATE(s-1, s-2 [, start])` | Searches for **first** string `s-1` in the second string `s-2`.<br>Returns the position at which `s-1` is found in `s-2`, after optional `start` position. <br>The first character has a position of 1. The function returns 0 if string `s-1` is not found. |
+| `LOCATE(s-1, s-2 [, start])` | Searches for the **first** string `s-1` in the second string `s-2`.<br>Returns the position at which `s-1` is found in `s-2`, after the optional `start` position. <br>The first character has a position of 1. The function returns 0 if string `s-1` is not found. |
 | `SUBSTR(str, start[, length])` | Substring of `str` starting at `start` position with maximum length of `length`. <br>The first character has a position of 1. <br>`start` position of 0 is processed similarly to position 1.<br>If `length` is not specified or is 0, the function returns the substring beginning with `start` position.|
 
 ```sql
@@ -2105,7 +2105,7 @@ AND LOWER(tags.file_system) LIKE '*root'
 
 ### ISNULL
 
-The `ISNULL` function returns `arg2` if the `arg1` is `NULL` or `NaN` (Non-A-Number) in case of numeric expressions.
+The `ISNULL` function returns `arg2` if `arg1` is `NULL` or `NaN` (Non-A-Number) in the case of numeric expressions.
 
 ```sql
 ISNULL(arg1, arg2)
@@ -2131,7 +2131,7 @@ The function accepts arguments with different data types, for example numbers an
 
 ### LAG
 
-The `LAG` function lets you access the previous row within the same result set. If the previous row doesn't exist, the function returns `NULL`.
+The `LAG` function lets you access the previous row of the same result set. If the previous row doesn't exist, the function returns `NULL`.
 
 ```sql
 LAG(columnName)
@@ -2215,7 +2215,7 @@ WHERE entity = 'nurswgvml007'
 
 ### LEAD
 
-The `LEAD` function lets you access the next row within the same result set. If the next row doesn't exist, the function returns `NULL`.
+The `LEAD` function lets you access the next row of the same result set. If the next row doesn't exist, the function returns `NULL`.
 
 ```sql
 LEAD(columnName)
@@ -2313,7 +2313,7 @@ The `LOOKUP` function translates the key into a corresponding value using the sp
 LOOKUP(replacementTable, key)
 ```
 
-If the key is numeric, such as in `LOOKUP('table-1', value)` case, the number is formatted with `#.##` pattern to remove fractional `.0` part from integer values stored as decimals.
+If the key is numeric, such as in the `LOOKUP('table-1', value)` case, the number is formatted with `#.##` pattern to remove fractional `.0` parts from integer values stored as decimals.
 
 * Dictionary
 
@@ -2326,7 +2326,7 @@ WHERE datetime >= NOW - 5*MINUTE
   AND LOOKUP('tcp-status-codes', value) NOT LIKE '*success*'
 ```
 
-If the looked up key is a number provided by the `value` column or an arithmetic expression, it is formatted into a string with a `#.##` pattern.
+If the searched key is a number provided by the `value` column or an arithmetic expression, it is formatted into a string with a `#.##` pattern.
 
 ```
 1.0     -> 1
@@ -2497,7 +2497,7 @@ END AS 'Tax Day'
 
 ## Interval Number
 
-The `INTERVAL_NUMBER()` function can be referenced in the `SELECT` expression. It returns an index, starting with 1, of the current time interval in queries selecting [multiple intervals](#interval-condition) using datetime `OR` condition or datetime subquery.
+The `INTERVAL_NUMBER()` function can be referenced in the `SELECT` expression. It returns an index, starting with 1, of the current time interval in queries selecting [multiple intervals](#interval-condition) using a datetime `OR` condition or datetime subquery.
 
 ```sql
 SELECT datetime, count(*), INTERVAL_NUMBER()
@@ -2565,7 +2565,7 @@ Since the `WHERE` clause selects only rows that evaluate to `true`, conditions s
 
 `NULL` and `NaN` values are ignored by aggregate functions.
 
-Logical expressions treat `NaN` as `NULL`. Refer to truth tables above for more details on how `NULL` is evaluated by logical operators.
+Logical expressions treat `NaN` as `NULL`. Refer to the truth tables above for more details on how `NULL` is evaluated by logical operators.
 
 ## Not a Number (NaN)
 
@@ -2577,7 +2577,7 @@ The returned values follow [IEEE 754-2008](https://standards.ieee.org/findstds/s
 * NaN for illegal values
 * Signed Infinity for x/0 where x != 0
 
-Since long/bigint datatype does not have a reserved `Infinity` value, the returned Double `Infinity` value, when cast to long, is set to `Long.MAX_VALUE`/`Long.MIN_VALUE` value.
+Since the `long/bigint` data type does not have a reserved `Infinity` value, the returned Double `Infinity` value, when cast to `long`, is set to the `Long.MAX_VALUE`/`Long.MIN_VALUE` value.
 
 ```sql
 SELECT value, SQRT(value-1), value/0, 1/0, -1/0, 1/0-1/0
@@ -2634,7 +2634,7 @@ If `{n}` is zero or negative, the results are processed using the local file sys
 
 This clause overrides the conditional allocation of shared memory established with the **Admin:Server Properties**:`sql.tmp.storage.max_rows_in_memory` setting which is set to `50*1024` rows by default.
 
-The `sql.tmp.storage.max_rows_in_memory` limit is shared by concurrently executing queries. If a query selects more rows than remaining in the shared memory, it will be processed using the local file system which may result in increased response times during heavy read activity.
+The `sql.tmp.storage.max_rows_in_memory` limit is shared by concurrently executing queries. If a query selects more rows than remain in the shared memory, it will be processed using the local file system which may result in increased response times during heavy read activity.
 
 > The row count threshold is applied to the number of rows selected from the underlying table, and not the number rows returned to the client.
 
@@ -2644,7 +2644,7 @@ The `sql.tmp.storage.max_rows_in_memory` limit is shared by concurrently executi
 
 ## API Endpoint
 
-API SQL endpoint is located at `/api/sql` path.
+The API SQL endpoint is located at the `/api/sql` path.
 
 ### Specification
 
@@ -2667,7 +2667,7 @@ This query can be utilized as a validation query in database connection pool imp
 
 ## Scheduler
 
-The SQL statements can be executed interactively via the SQL console as well as on [schedule](scheduled-sql.md).
+SQL statements can be executed interactively via the SQL console as well as on a [schedule](scheduled-sql.md).
 
 Scheduled execution allows for generated report files to be distributed to email subscribers or stored on a local file system.
 
@@ -2721,7 +2721,7 @@ Query Detail Fields:
 
 ### Cancelling Queries
 
-A running query can be cancelled at any time, for example if it is executing longer than expected.
+A running query can be cancelled at any time, for example if its is execution time is longer than expected.
 
 When a query is cancelled results are not returned to the client and the query is terminated with an error.
 
@@ -2769,14 +2769,14 @@ Query execution speed can be improved by adopting the following guidelines for t
 
 ## Optimizing
 
-Given the amount of data stored in ATSD, it is easy to build a query that may cause performance issues for the database.
+Given the massive amount of data stored in ATSD, it is possible to build a query that may cause performance issues for the database.
 
 Consider the following recommendations when developing queries:
 
-- Pre-test queries on a smaller dataset in ATSD-development instance.
-- Avoid queries without any conditions. Apply LIMIT to reduce the number of rows returned.
+- Pre-test queries on a smaller dataset in an ATSD-development instance.
+- Avoid queries without any conditions. Apply `LIMIT` to reduce the number of rows returned.
 - Add the `WHERE` clause. Include as many conditions to the `WHERE` clause as possible, in particular add entity and [interval conditions](#interval-condition).
-- Make `WHERE` conditions narrow and specific, for example, specify a smaller time interval.
+- Make `WHERE` conditions narrow and specific, for example, specify a small time interval.
 - Avoid the `ORDER BY` clause since it may cause a full scan and a copy of data to a temporary table.
 - Add the `LIMIT 1` clause to reduce the number of rows returned. Note that `LIMIT` will not prevent expensive queries with `ORDER BY` and `GROUP BY` clauses because `LIMIT` is applied to final results and not to the number of rows read from the database.
 - Develop a simple query first. Adjust conditions gradually as you inspect the results. Add grouping, partitioning, and ordering to finalize the query.
@@ -2805,9 +2805,9 @@ SELECT * FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' ORDER BY datetime DE
 
 While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabilities.md#database-capabilities) between SQL dialect implemented in ATSD and SQL specification standards are numerous, the following exceptions to widely used constructs are worth mentioning:
 
-* Wildcard symbol is `*`/`?` instead of `%`/`_`.
+* Wildcard symbols are `*`/`?` instead of `%`/`_`.
 * Self-joins are not supported.
-* Subqueries are not supported with the exception of `BETWEEN` subquery.
+* Subqueries are not supported with the exception of the `BETWEEN` subquery.
 * `UNION`, `EXCEPT` and `INTERSECT` operators are not supported. Refer to [atsd_series table](examples/select-atsd_series.md) queries for a `UNION ALL` alternative.
 * In case of computational errors such as division by zero, the database returns special values such as `NaN` according to the IEEE 754-2008 standard.
 * The `WITH` operator is supported only in the following clauses: `WITH ROW_NUMBER`, `WITH INTERPOLATE`.
