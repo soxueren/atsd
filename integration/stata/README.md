@@ -224,7 +224,7 @@ SELECT entity, datetime, value FROM 'inflation.cpi.composite.price'
 
 ## Reference
 
-STATA commands used in this example:
+Stata commands used in this example:
 
 - [adbc](http://www.stata.com/manuals13/dodbc.pdf)
 - [save](http://www.stata.com/manuals13/dsave.pdf)
