@@ -6,34 +6,32 @@ This document describes how to install an ODBC-JDBC bridge on a Windows machine.
 
 The bridge intercepts SQL queries from the client applications via the Microsoft [ODBC](https://docs.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc) protocol and transmits the queries into ATSD using the [ATSD JDBC driver](https://github.com/axibase/atsd-jdbc).
 
-### Downloads and Pre-requisites
+### Downloads and Prerequisites
 
-- Download and install Java Runtime Environment 8 for the Windows Operating System.
+- Download and install Java Runtime Environment 7 for the Windows Operating System.
 - [Download](https://github.com/axibase/atsd-jdbc/releases) ATSD JDBC driver with dependencies.
-- Add path to ATSD JDBC driver as a Windows Environment variable `Classpath`.
+- Add Windows Environment variable `Classpath` containing the path to the ATSD JDBC driver 'jar' file.
 - [Register](https://shop.openlinksw.com/license_generator/login.vsp) an account with the ODBC-JDBC Bridge vendor. The account is required for trial license activation.
-- [Generate license](https://shop.openlinksw.com/license_generator/) for product as showed in screenshot:
+- [Generate license](https://shop.openlinksw.com/license_generator/) for the bridge program as displayed:
 
 ![](images/openlink_license.png)
 
-> Choose your OS version
+- Choose the desired OS version
+- Receive the installation link and license files via email.
 
-- Download installation and license files from e-mail.
-
-### Bridge Installation
+### Install Bridge
 
 Install and activate the bridge as follows:
 
-- Skip the welcome page
-- Accept the license agreement
-- Choose folder where you downloaded the license file
-- Select **Complete** option
-- Confirm the installation
-- Finish the installation
+- Skip the welcome page.
+- Accept the license agreement.
+- Choose the directory containing the downloaded license file.
+- Select the **Complete** option.
+- Confirm and finish the installation.
 
 ### Configure ODBC Data Source
 
-Go to **Start**, type `ODBC` and launch ODBC Data Source Manager under an Administrator account
+Open **Start**, type `ODBC` and launch ODBC Data Source Manager under an Administrator account
 
 ![](images/ODBC_1.PNG)
 
@@ -41,13 +39,13 @@ Open **System DSN** tab, click **Add...**
 
 ![](images/openlink_ODBC_1.png)
 
-Choose the **OpenLink Lite for JDK 1.5 (Unicode)**, click **Finish**
+Choose the **OpenLink Lite for JDK 1.5 (Unicode)** option, click **Finish**
 
 ![](images/openlink_ODBC_2.png)
 
-Type your new connection name into `Name` field and click `Next`.
+Enter a new connection name into the `Name` field and click **Next**.
 
-Enter following settings in the DSN Configuration window:
+Enter the following settings in the DSN Configuration window:
 
 ```
 JDBC driver:   com.axibase.tsd.driver.jdbc.AtsdDriver
@@ -56,9 +54,8 @@ Login ID   :   <atsd login>
 Password   :   <atsd password>
 ```
 
-Refer to ATSD JDBC [documentation](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver)  for additional details about the URL format and the driver parameters.
+Refer to ATSD JDBC [documentation](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver)  for additional details about the URL format and the driver properties.
 
 ![](images/openlink_ODBC_4.png)
 
-Skip other steps clicking at `Next`.
-
+Click **Next** to skip the remaining configuration steps.
