@@ -17,7 +17,7 @@
 
 Execute the following command in the Stata console: `set odbcdriver ansi`
 
-This confugurea Stata to interface with ODBC in ANSI mode to prevent string values from being truncated.
+This confugures Stata to interface with ODBC in ANSI mode to prevent string values from being truncated.
 
 ### Load Data using Import Wizard
 
