@@ -1,4 +1,4 @@
-# The `series` Command
+# `series` Command
 
 ## Description
 
