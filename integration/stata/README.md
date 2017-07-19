@@ -15,6 +15,9 @@ If your ATSD installation has too many metrics (more than 10000), add a `table={
 
 ## Loading Data
 
+Execute in Stata Console this command: `set odbcdriver ansi`
+> ODBC should be set into ANSI mode, otherwise strings will be truncated
+
 ### Load Data via Import Wizard
 
 - Click on **File > Import > ODBC** data source
