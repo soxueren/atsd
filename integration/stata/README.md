@@ -93,6 +93,10 @@ Preview `prices`:
 
 ![](resources/prices_preview.png)
 
+`prices` dataset description:
+
+![](resources/prices_desc.png)
+
 ### Load and Save Datetimes
 
 ```
@@ -183,6 +187,10 @@ Preview the dataset:
 ![](resources/entity_preview.png)
 
 ### Insert Data into ATSD
+
+Resultset description:
+
+![](resources/resultset_desc.png)
 
 #### datetime as NUMBER
 
