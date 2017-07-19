@@ -89,7 +89,7 @@ save prices
 
 > We're saving the dataset to access it later
 
-Peeview `prices`:
+Preview `prices`:
 
 ![](resources/prices_preview.png)
 
