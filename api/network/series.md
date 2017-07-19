@@ -2,7 +2,7 @@
 
 ## Description
 
-Use the `series`command to insert a timestamped value (number or text) into a specified time series, uniquely identified by a composite primary key consisting of an entity, metric, and optional `key=value` tag(s).
+Use the `series` command to insert a timestamped value (number or text) into a specified time series, uniquely identified by a composite primary key consisting of an entity, metric, and optional `key=value` tag(s).
 
 ## Syntax
 
@@ -133,7 +133,7 @@ series d:2016-10-13T08:45:00Z e:sensor-1 m:temperature=NaN
 ## Number Representation
 
 * A numeric value can be a real number or `NaN` (Not a Number).
-* The string representation of an inserted number can consist of additional optional signs, '+' ('\u002B') or '-' ('\u002D'), followed by a sequence of zero or more decimal digits ("the integer"), optionally followed by a fraction, optionally followed by an exponent.
+* The string representation of a real number can consist of optional signs, '+' ('\u002B') or '-' ('\u002D'), followed by a sequence of zero or more decimal digits ("the integer"), optionally followed by a fraction, optionally followed by an exponent.
 * The exponent consists of the character 'e' ('\u0065') or 'E' ('\u0045') followed by an optional sign, '+' ('\u002B') or '-' ('\u002D'), followed by one or more decimal digits. The value of the exponent must lie between -2147483647 and 2147483647, and is inclusive.
 * The fraction consists of a decimal point followed by zero or more decimal digits. The string must contain at least one digit in either the integer or the fraction.
 * The number formed by the sign, the integer, and the fraction is referred to as the [**significand**](https://en.wikipedia.org/wiki/Significand).
@@ -141,20 +141,20 @@ series d:2016-10-13T08:45:00Z e:sensor-1 m:temperature=NaN
 
 ## Series Tags, Text Value, Messages
 
-Text values inserted with the `x:` field tag are converted to unique identifiers when stored, which differentiates them from series tags inserted with the `m:` field tag
+Text inserted with the `x:` field annotates the accompanying numeric value and is not part of the series composite key.
 
-Series tags are part of each series' composite primary key, whereas text values are not.
+Series tags, on the other hand, are part of each series' composite primary key.
 
-Since the total number of unique tag value identifiers is [limited](README.md#schema) to `16,777,215`, series tag values are not well suited for values with high cardinality such as random values or continuously incrementing values (time, counters).
+Since the total number of unique tag value identifiers is [limited](README.md#schema) to `16,777,215`, series tags are not recommended for high cardinality fields such as random values or continuously incrementing values (time, counters).
 
-A text value, on the other hand, is stored `as is`, without converting it to an identifier. A text value can be used to annotate a numeric observation without changing the series' primary key.
+A text value, on the other hand, is stored as an annotation, without converting it to an identifier.
 
 ```ls
 series d:2016-10-13T08:00:00Z e:sensor-1 m:temperature=20.3
 series d:2016-10-13T08:15:00Z e:sensor-1 m:temperature=24.4 x:temperature="Provisional"
 ```
 
-In this example, the temperature reading at `2016-10-13T08:15:00Z` is characterized as `Provisional`.
+In this example, the temperature reading at `2016-10-13T08:15:00Z` is annotated as `Provisional`.
 
 A text value can also be used to record observations for series that contain only text values, in which case their numeric values are set to `NaN`.
 
