@@ -42,7 +42,7 @@ For correct Unicode handling, specify the charset `Content-Type: application/jso
 
 ## URI Encoding
 
-When requesting parameter values and parameterized path segments, such as [`/api/v1/properties/{entity}/types`](../../api/meta/entity/property-types.md), should be [URL encoded](https://tools.ietf.org/html/rfc3986#section-2.1) to translate special characters, such as `: / ? # [ ] @`, into a percent format that can be transmitted safely as part of the request URI.
+Request parameters and path segments, such as [`/api/v1/properties/{entity}/types`](../../api/meta/entity/property-types.md), should be [URL encoded](https://tools.ietf.org/html/rfc3986#section-2.1) to translate special characters, such as `: / ? # [ ] @`, into a percent format that can be transmitted safely as part of the request URI.
 
 | **Input** | **Encoded Value** | **URI** |
 |:---|:---|:---|
@@ -117,7 +117,7 @@ Processing errors are returned in JSON format:
 ## Authorization
 
 * The user must have the [**API_DATA_READ**/**API_DATA_WRITE**](../../administration/user-authorization.md#available-api-roles) role.
-* The user must have read/write [**entity permission**](../../administration/user-authorization.md#entity-permissions) for the specific entity to be modifed or all entities.
+* The user must have read/write [**entity permission**](../../administration/user-authorization.md#entity-permissions) for the entities specified in the request and/or returned in the results.
  
 ## Cross-Domain Requests
 
