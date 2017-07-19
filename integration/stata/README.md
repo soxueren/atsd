@@ -218,6 +218,10 @@ SELECT entity, datetime, value FROM 'inflation.cpi.composite.price'
 | bls.gov | 2017-01-01T00:00:00.000Z | 100.12572021999999 |
 ```
 
+## Script File
+
+- [Link to the `do` file](resources/script.do) that contains all the steps.
+
 ## Reference
 
 STATA commands used in this example:
