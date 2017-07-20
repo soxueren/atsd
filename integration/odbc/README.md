@@ -99,6 +99,8 @@ Refer to ATSD JDBC [documentation](https://github.com/axibase/atsd-jdbc#jdbc-con
 
 Click Test to verify the settings. Check 'Strip Quotes' option. If result is correct, save the settings. 
 
+> In case of 'Unable to create JVM' error, run a Repair task in Windows Program for the bridge program.
+
 The System DSN tab should now display the new data source.
 
 ![](images/ODBC_5.PNG)
