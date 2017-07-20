@@ -9,7 +9,7 @@
 ## Prerequisites
 
 - Install [Stata](http://www.stata.com/order/) 15
-- Install [ODBC-JDBC Bridge](../odbc/openlink.md)
+- Install [ODBC-JDBC Bridge](../odbc/README.md)
 
 > If your ATSD installation has too many metrics (more than 10000), add a `tables={filter}` parameter to the [JDBC URL](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) to filter the list of tables visible in Stata.
 
@@ -50,6 +50,10 @@ This confugures Stata to interface with ODBC in ANSI mode to prevent string valu
 ```
 odbc load, exec("SELECT value, tags.name FROM 'java_method_invoke_last' ORDER BY datetime")
 ```
+
+Description of resultset:
+
+![](resources/describe_example.png)
 
 ## Exporting Data
 
