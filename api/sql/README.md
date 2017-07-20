@@ -49,8 +49,8 @@ The `SELECT` statement consists of a `SELECT` expression, a `FROM` query, a `WHE
 
 ```sql
 SELECT { * | { expr [ .* | [ AS ] alias ] } }
-  FROM metric [[ AS ] alias ]
-    [ [OUTER] JOIN metric [[ AS ] alias ] [USING entity] ]
+  FROM table [[ AS ] alias ]
+    [ { INNER | [ FULL ] OUTER } JOIN table [[ AS ] alias ] [ ON joinExpr | USING ENTITY ] ]
 [ WHERE expr(boolean) ]
   [ WITH ROW_NUMBER expr ]
 [ GROUP BY expr [, ...] ]
@@ -174,7 +174,7 @@ Operators with the same precedence level within an expression are processed from
 
 ### Other Clauses
 
-* **JOIN / OUTER JOIN**
+* **JOIN**
 * **GROUP BY**
 * **HAVING**
 * **ORDER BY**
@@ -341,7 +341,7 @@ SELECT * FROM "mpstat.cpu_busy" WHERE datetime > current_minute LIMIT 1
 ```sql
 SELECT * 
   FROM "mpstat.cpu_busy" t1
-  OUTER JOIN "meminfo.memfree" t2
+  FULL OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
@@ -358,7 +358,7 @@ In the case of a `JOIN` query, the `SELECT *` syntax can be applied to each tabl
 ```sql
 SELECT t1.datetime, t1.value, t2.*
   FROM "mpstat.cpu_busy" t1
-  OUTER JOIN "meminfo.memfree" t2
+  FULL OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
@@ -384,7 +384,7 @@ The `SELECT` expression in `JOIN` queries can include both fully qualified colum
 ```sql
 SELECT datetime, t1.datetime, t2.datetime
   FROM "mpstat.cpu_busy" t1
-  OUTER JOIN "meminfo.memfree" t2
+  FULL OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime BETWEEN '2017-06-15T13:00:00Z' AND '2017-06-15T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
@@ -1147,7 +1147,7 @@ The interpolation period is specified as a `count unit`, for example `5 MINUTE`,
 | count | [**Required**] Number of time units contained in the period. |
 | unit | [**Required**] [Time unit](../../api/data/series/time-unit.md) such as `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, `YEAR`. |
 
-The `DETAIL` mode can be used to fill missing values in `OUTER JOIN` queries while retaining the original timestamps of the merged series. 
+The `DETAIL` mode can be used to fill missing values in `FULL OUTER JOIN` queries while retaining the original timestamps of the merged series. 
 
 ### Interpolation Function
 
@@ -1519,20 +1519,22 @@ The above query would read all samples contained in the 'm-1' metric in the data
 
 ## Joins
 
-Data for multiple virtual tables (metrics) can be merged with the `JOIN` and `OUTER JOIN` clauses.
+Data for multiple virtual tables (metrics) can be merged with the `JOIN` and `FULL OUTER JOIN` clauses.
 
 The syntax follows the SQL-92 notation using the `JOIN` clause as opposed to enumerating columns in the `WHERE` clause according to ANSI-89.
 
-Since joined tables always contain the same predefined columns, a `JOIN` condition doesn't have to be specified explicitly, similar to NATURAL JOIN in standard SQL:
+Since joined tables in ATSD always contain the same predefined columns, an `ON` condition does not have to be specified explicitly and can be omitted:
 
-| **ATSD SQL** | **Standard SQL Equivalent** |
+| **Concise Syntax** | **Standard Syntax** |
 |:---|---|
-| JOIN | JOIN ON t1.time AND t2.time AND t1.entity = t2.entity AND t1.tags = t2.tags |
-| JOIN USING entity | JOIN ON t1.time AND t2.time AND t1.entity = t2.entity |
-| OUTER JOIN | FULL OUTER JOIN ON t1.time AND t2.time AND t1.entity = t2.entity AND t1.tags = t2.tags |
-| OUTER JOIN USING entity | FULL OUTER JOIN ON t1.time AND t2.time AND t1.entity = t2.entity |
+| `... JOIN 'cpu_busy' t2` | JOIN 'cpu_busy' t2 ON t1.time AND t2.time AND t1.entity = t2.entity AND t1.tags = t2.tags |
+| `... JOIN 'cpu_busy' t2 USING ENTITY` | JOIN 'cpu_busy' t2 ON t1.time AND t2.time AND t1.entity = t2.entity |
+| `... FULL OUTER JOIN 'cpu_busy' t2` | FULL OUTER JOIN 'cpu_busy' t2 ON t1.time AND t2.time AND t1.entity = t2.entity AND t1.tags = t2.tags |
+| `... FULL OUTER JOIN 'cpu_busy' t2 USING ENTITY` | FULL OUTER JOIN 'cpu_busy' t2 ON t1.time AND t2.time AND t1.entity = t2.entity |
 
-Because join queries combine rows from multiple virtual tables with the same columns, it is necessary to disambiguate references to these columns in the `SELECT` expression by prepending the table name followed by **dot** in front of the column name.
+The `ON` condition, if specified, can refer only to `entity`, `time/datetime`, and `tags` columns.
+
+Because `JOIN` queries combine rows from multiple tables with the same columns, it is necessary to disambiguate references to these columns in the `SELECT` expression by prepending the table name followed by `.` before the column name.
 
 ### JOIN
 
@@ -1647,20 +1649,22 @@ GROUP BY t1.entity, t1.tags, t2.tags, t1.PERIOD(5 MINUTE)
 | nurswgvml007 | 2016-06-18T10:03:00Z | 100.0         | 8686400.0     | /                          | /dev/mapper/vg_nurswgvml007-lv_root |
 ```
 
-### OUTER JOIN
+### FULL OUTER JOIN
 
-To combine all records from joined tables, use `OUTER JOIN`, which returns rows with equal time, entity, and tags as well as rows from one table for which no rows from the other satisfy the join condition.
+To combine all records from joined tables, use `FULL OUTER JOIN` (synonyms `OUTER JOIN` or `FULL JOIN` are also allowed), which returns rows with equal time, entity, and tags as well as rows from one table for which no rows from the other table satisfy the join condition.
 
 ```sql
 SELECT t1.datetime, t1.entity, t1.value AS cpu, 
        t2.datetime, t2.entity, t2.value AS mem
   FROM "mpstat.cpu_busy" t1
-  OUTER JOIN "meminfo.memfree" t2
+  FULL OUTER JOIN "meminfo.memfree" t2
+  -- FULL JOIN "meminfo.memfree" t2
+  -- OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
 
-`OUTER JOIN` on detailed records, without period aggregation, produces rows with `NULL` columns for series that did not record any value at the specified time.
+`FULL OUTER JOIN` on detailed records, without period aggregation, produces rows with `NULL` columns for series that did not record any value at the specified time.
 
 ```ls
 | t1.datetime          | t1.entity    | cpu  | t2.datetime          | t2.entity    | mem   | 
@@ -1678,7 +1682,7 @@ SELECT datetime, isnull(t1.entity, t2.entity) AS server,
   t1.datetime, t1.entity, t1.value AS cpu, 
   t2.datetime, t2.entity, t2.value AS mem
   FROM "mpstat.cpu_busy" t1
-  OUTER JOIN "meminfo.memfree" t2
+  FULL OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
@@ -1700,7 +1704,7 @@ To regularize the merged series in join queries, apply interpolation or period a
 SELECT t1.datetime, t1.entity, t1.value AS cpu, 
        t2.datetime, t2.entity, t2.value AS mem
   FROM "mpstat.cpu_busy" t1
-  OUTER JOIN "meminfo.memfree" t2
+  FULL OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:00Z'
   AND t1.entity = 'nurswgvml006'
   WITH INTERPOLATE(15 SECOND, LINEAR, OUTER)
@@ -1722,7 +1726,7 @@ The `PERIOD()` column (without the preceding table name) calculates the start of
 SELECT datetime, ISNULL(t1.entity, t2.entity) AS server, 
   AVG(t1.value) AS avg_cpu, AVG(t2.value) AS avg_mem
 FROM "mpstat.cpu_busy" t1
-  OUTER JOIN "meminfo.memfree" t2
+  FULL OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:00Z'
 GROUP BY PERIOD(1 MINUTE), server
   ORDER BY datetime
@@ -2807,11 +2811,12 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 
 * Wildcard symbols are `*`/`?` instead of `%`/`_`.
 * Self-joins are not supported.
-* Subqueries are not supported with the exception of the `BETWEEN` subquery.
-* `UNION`, `EXCEPT` and `INTERSECT` operators are not supported. Refer to [atsd_series table](examples/select-atsd_series.md) queries for a `UNION ALL` alternative.
-* In case of computational errors such as division by zero, the database returns special values such as `NaN` according to the IEEE 754-2008 standard.
+* `LEFT OUTER JOIN` and `RIGHT OUTER JOIN` operations are not supported.
+* Subqueries are supported only by the `BETWEEN` operator applied to time|datetime column.
+* `UNION`, `EXCEPT` and `INTERSECT` operators are not supported. Query [atsd_series](examples/select-atsd_series.md) table as a `UNION ALL` alternative.
+* In case of division by zero, the database returns `NaN` according to the IEEE 754-2008 standard instead of terminating processing with a computational error.
 * The `WITH` operator is supported only in the following clauses: `WITH ROW_NUMBER`, `WITH INTERPOLATE`.
-* The `DISTINCT` operator is not supported and can be emulated with the `GROUP BY` clause in some cases.
+* The `DISTINCT` operator is not supported and can be emulated with the `GROUP BY` clause in specific cases.
 
 ## Examples
 

@@ -14,18 +14,18 @@ The default grid dimensions are 6×4. The default widget size is 1×1 and can be
 
 To display multiple widgets on one row, group them using the `[group]` tag.
 
-```
+```ls
 [configuration]
   width-units = 3
   height-units = 2
  
-#1st line
+# 1st widget row
 [group]
   [widget]
   [widget]
   [widget]
  
-#2nd line
+# 2nd widget row
 [group]
   [widget]
   [widget]
@@ -34,7 +34,7 @@ To display multiple widgets on one row, group them using the `[group]` tag.
 
 As an alternative to creating groups for each row, add the `widgets-per-row` setting under the `[group]` tag.
 
-```
+```ls
 [configuration]
   width-units = 3
   height-units = 2
@@ -88,7 +88,7 @@ Freemarker expressions are supported when creating portals. [Learn how to use fr
 
 #### Configuration Example:
 
-```
+```ls
 [configuration]
 title = Title
 width-units = 6
@@ -103,7 +103,7 @@ url-parameters = db=12&adapter=7
 
 Single line comment starts with `#`. Text after `#` will be ignored.
 
-```
+```ls
 [widget]
         type = chart   
         #metric field will be inherited by all series in the widget
@@ -112,7 +112,7 @@ Single line comment starts with `#`. Text after `#` will be ignored.
 
 Hash symbol in the middle of the line (preceded by any character other than tab or whitespace) is escaped and treated as regular text.
 
-```
+```ls
 [widget]
         type = chart   
         #next line does not contain any comments because hash is preceded by characters other than tab or whitespace.
@@ -125,7 +125,7 @@ Multi-line comments start with /* and end with */.
 
 Any text between /* and */ will be ignored.
 
-```
+```ls
 [widget]
         type = chart
     /*   
@@ -139,7 +139,7 @@ Any text between /* and */ will be ignored.
 
 You can insert placeholders into the configuration text to populate it with values of the request parameters. Placeholders have the `{placeholderName}` format. The value of the placeholder is parsed from the query string from any parameter starting with `p_`, i.e. `p_placeholderName`.
 
-```
+```ls
 [series]
 entity = {id}
 metric = cpu_busy
@@ -147,7 +147,7 @@ metric = cpu_busy
 
 Invoked with `?p_id=nurswgvml002`, the above configuration is converted into the following text:
 
-```
+```ls
 [series]
 entity = nurswgvml002
 metric = cpu_busy
@@ -159,18 +159,18 @@ Script parameter can be used for a variety of purposes. It is recommended for ad
 
 Adding styles to a class:
 
-```
+```ls
 script = d3.select('head').append('style').html('.axi-chart-series-alert{ stroke: red; stroke-width: 1.5; }')
 ```
 
 To display no more than 5 elements for the control of all Time Charts, open the dialog box:
 
-```
+```ls
 defaultDialogChart.script = widget.chart.panels.expand(5)
 ```
 
 To hide the Stack button for all Bar Charts, which are not open in the dialog box:
 
-```
+```ls
 defaultBarConfig.script = if (!dialog) widget.panels[0].destroy()
 ```
