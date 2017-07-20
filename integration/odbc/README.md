@@ -97,6 +97,8 @@ Refer to ATSD JDBC [documentation](https://github.com/axibase/atsd-jdbc#jdbc-con
 
 ![](images/ODBC_4.PNG)
 
-Click Test to verify the settings. If result is correct, save the settings. The System DSN tab should now display the new data source.
+Click Test to verify the settings. Check 'Strip Quotes' option. If result is correct, save the settings. 
+
+The System DSN tab should now display the new data source.
 
 ![](images/ODBC_5.PNG)
