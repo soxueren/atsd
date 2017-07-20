@@ -11,6 +11,12 @@ The bridge intercepts SQL queries from the client applications via the Microsoft
 - Download and install Java Runtime Environment 7 for the Windows Operating System.
 - [Download](https://github.com/axibase/atsd-jdbc/releases) ATSD JDBC driver with dependencies.
 - Add Windows Environment variable `Classpath` containing the path to the ATSD JDBC driver 'jar' file.
+It can be done using **System Settings** -> **Advanced system settings** -> **Advanced** tab -> **Environment variables**.
+Then click **New** button under **System variables** list.
+Type `Classpath` as **Variable name** and path to the ATSD JDBC driver 'jar' file as **Variable value**.
+
+![](images/system_properties.png)
+
 - [Register](https://shop.openlinksw.com/license_generator/login.vsp) an account with the ODBC-JDBC Bridge vendor. The account is required for trial license activation.
 - [Generate license](https://shop.openlinksw.com/license_generator/) for the bridge program as displayed:
 
