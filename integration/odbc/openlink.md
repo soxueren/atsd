@@ -64,4 +64,8 @@ Refer to ATSD JDBC [documentation](https://github.com/axibase/atsd-jdbc#jdbc-con
 
 ![](images/openlink_ODBC_4.png)
 
-Click **Next** to skip the remaining configuration steps.
+Click **Next** until last page to skip the remaining configuration steps.
+
+Click **Test Data Source** button to verify connection
+
+![](images/openlink_test_connection.png)
