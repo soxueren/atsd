@@ -66,13 +66,14 @@ As an alternative to creating groups for each row, add the `widgets-per-row` set
 |  width-units   |  `width-units = 2`  |  Amount of horizontal blocks (9 by default).  |  [View](http://apps.axibase.com/chartlab/808e5846)  | 
 |  height-units  |  `height-units = 2`  |  	Amount of vertical blocks (4 by default).  |  [View](http://apps.axibase.com/chartlab/808e5846/2/)  | 
 |  offset-right  |  `offset-right = 50`  |  Determines the margin on the portal.<br>`offset-` can be used with: top, right, bottom, left.<br>Values specified in px.  |  [View](http://apps.axibase.com/chartlab/808e5846/10/)  | 
-|  url  |  `url = http://hostname:port`  |  Link to ATSD server.  |  | 
+|  url  |  `url = http://hostname:port`  |  Link to the ATSD server.  |  | 
 |  url-parameters  |  `url-parameters = db=12&adapter=7`  |  Extra connection configurations.  |  | 
-|  path  |  `path =`  |  Default path is `api/v1/series`.  |  | 
-|  update-interval  |  `update-interval = 5 minute`  |  Polling interval at which new data is requested from the server by all widgets on the portal.<br>For example `update-interval = 5 minute`.<br>The default value is 1 minute.<br>The setting can be overridden for each widget separately.  |  [View](http://apps.axibase.com/chartlab/808e5846/3/)  | 
-|  batch-update  |  `batch-update = true`  |  Sending series to the server in packets (false by default).<br>If equal to true, then the series, if during the last request to the server there was an error, will be sent one by one.  |  [View](http://apps.axibase.com/chartlab/808e5846/4/)  | 
-|  batch-size  |  `batch-size = 1`  |  Maximum amount of series in one request to the server (8 by default).<br>If 0 is indicated, then the limit for the amount is not set.<br>Only accepted when the batch-update is equal to true.  |  [View](http://apps.axibase.com/chartlab/808e5846/5/)  | 
-|  timespan  |  `timespan = 2 hour`  |  Allows to adjust the time-span that the whole portal displays, i.e. 1 hour, 1 day, all etc.<br>This can be set for the whole portal or for every widget individually.  |  [View](http://apps.axibase.com/chartlab/808e5846/6/)  | 
+|  context-path  |  `context-path =`  |  Default path is `api/v1/series`.  |  | 
+| method-path | `method-path = /series/query` | Default method path is specific for data type. <br>/series/query <br>/properties/query <br>/messages/query <br>/alerts/query <br>See the context-path description above.
+|  update-interval  |  `update-interval = 5 minute`  |  Polling interval at which new data is requested from the server by widgets on the portal.<br>For example `update-interval = 5 minute`.<br>The default value is 1 minute.<br>The setting can be overridden for each widget separately.<br>Chart updates are disabled if the endtime parameter for the portal or the widget is set to a fixed date. For example: endtime = 2016-06-27T00:00:00Z.  |  [View](http://apps.axibase.com/chartlab/808e5846/3/)  | 
+|  batch-update  |  `batch-update = true`  |  Sending series to the server in packets (false by default).<br>If true, then the series will be sent one line at a time, if during the last request to the server there was an error.  |  [View](http://apps.axibase.com/chartlab/808e5846/4/)  | 
+|  batch-size  |  `batch-size = 1`  |  Maximum amount of series in one request to the server (8 by default).<br>If 0 is indicated, then the limit for the amount is not set.<br>Only accepted when `batch-update = true`.  |  [View](http://apps.axibase.com/chartlab/808e5846/5/)  | 
+|  timespan  |  `timespan = 2 hour`  |  Adjusts the time-span that the whole portal displays, i.e. 1 hour, 1 day, all etc.<br>This can be set for the whole portal or for every widget individually.  |  [View](http://apps.axibase.com/chartlab/808e5846/6/)  | 
 |  starttime  |  `starttime = 2015-04-01`  |  Specifies the date and time from which the values for the series are loaded.<br>This can be set for the whole portal or for every widget individually.<br>Syntax is shared with `endtime`.<br>NOTE: `starttime` is inclusive and `endtime` is exclusive.<br>This means that `startime = 2015-09-14 10:00:00` will include data points that occurred exactly at `10:00:00` and later.<br>`Endtime = 2015-09-14 11:00:00` will include data points that occurred up to `10:59:59`, excluding points that occurred at `11:00:00` and later.<br>Possible values described on the [End Time](https://axibase.com/products/axibase-time-series-database/visualization/end-time/) page.  |  [View](http://apps.axibase.com/chartlab/ca5669c8)  | 
 |  endtime  |  `endtime = previous_working_day`  |  Specifies the date and time until which the values for the series are loaded.<br>This can be set for the whole portal or for every widget individually.<br>NOTE: `starttime` is inclusive and `endtime` is exclusive.<br>Meaning that `startime = 2015-09-14 10:00:00` will include data points that occurred exactly at `10:00:00` and later.<br>`Endtime = 2015-09-14 11:00:00` will include data points that occurred up to `10:59:59`, excluding points that occurred at `11:00:00` and later.<br>Possible values described on the [End Time](../products/axibase-time-series-database/visualization/end-time/) page.  |  [View](http://apps.axibase.com/chartlab/808e5846/7/)  | 
 |  timezone  |  `timezone = UTC`  |  Set the timezone for the data being loaded into the portal.<br>If UTC is not set, then the portal is displayed in the local time zone.<br>Possible values: UTC.  |  [View](http://apps.axibase.com/chartlab/808e5846/8/)  | 
@@ -110,7 +111,7 @@ Single line comment starts with `#`. Text after `#` will be ignored.
 	metric = nmon.cpu_total.busy%
 ```
 
-Hash symbol in the middle of the line (preceded by any character other than tab or whitespace) is escaped and treated as regular text.
+A hash symbol in the middle of a line (preceded by any character other than tab or whitespace) is escaped and treated as regular text.
 
 ```ls
 [widget]
