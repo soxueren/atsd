@@ -21,7 +21,7 @@ This configures Stata to interface with ODBC in ANSI mode to prevent string valu
 
 ### Load Data using Import Wizard
 
-- Click on **File > Import > ODBC** data source
+- Click on **File > Import > ODBC data sources**
 - Select the ATSD connection in **ODBC data sources**
 - Select a table in the 'Tables' list
 - Choose one or multiple columns from the `Columns` list
@@ -40,7 +40,7 @@ This configures Stata to interface with ODBC in ANSI mode to prevent string valu
 
 ![](resources/table_description.png)
 
-- Click on `load` to load the entire table as a dataset in to memory.
+- Click on `load` to load the entire table as a dataset into memory.
 - Click on `query` to re-load the list of tables.
 
 ## Load Data with SQL Query
@@ -62,7 +62,7 @@ Description of resultset:
 - Follow the path **File > Export > ODBC** data source.
 - Click on the ATSD connection in `ODBC data sources`.
 - Type the table name into `Tables` field. This will be the metric name holding the exported data.
-- Choose the variables to export in the `Variables` dropdown list.
+- Choose the variables to export in the `Variables` drop-down list.
 - Type column names from the target metric according to variables selected in the previous step.
 - Choose `Append data into existing table` in `Insertion options`.
 - Check `Use block inserts` option.
