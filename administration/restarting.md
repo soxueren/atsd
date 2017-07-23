@@ -1,6 +1,6 @@
 # Restarting
 
-ATSD provides scripts to control ATSD and its components.
+ATSD provides scripts to control the database and its components.
 
 Use these scripts to gracefully restart ATSD and to resolve startup issues.
 
@@ -54,7 +54,7 @@ docker exec -it atsd tail -f /opt/atsd/atsd/logs/atsd.log
 
 ## Processes
 
-Switch to `axibase` user and run the `jps` utility to display Java processes running under the current user.
+Switch to the`axibase` user and run the `jps` utility to display Java processes running under the current user.
 
 ```java
 27392 Jps
@@ -150,7 +150,7 @@ If any HBase process fails to stop after that and is still visible in `jps`, con
 
 ### Start Services
 
-Start HDFS, HBase and ATSD in the reverse order.
+Start HDFS, HBase, and ATSD in that order, opposite to the order they were shut down.
 
 #### Start HDFS
 
@@ -170,7 +170,7 @@ Start HBase, if `jps` shows that no HBase processes are running:
 
 #### Start ATSD
 
-Start ATSD, if `jps` shows that no ATSD process is running:
+Start ATSD, if `jps` shows that no ATSD processes are running:
 
 ```sh
 /opt/atsd/bin/atsd-tsd.sh start
@@ -212,7 +212,7 @@ If `jps` output is incomplete, the `atsd-all.sh` script aborts the startup proce
 nurswgvml007 atsdService: * [ATSD] DataNode is not running.
 ```
 
-* Solution: Stop all ATSD services. Remove `/tmp/hsperfdata_axibase` directory.
+* Solution: Stop all ATSD services. Remove the `/tmp/hsperfdata_axibase` directory.
 
 ### Temporary Files
 
@@ -226,7 +226,7 @@ chown -R axibase:axibase /tmp/atsd
 
 ### `/opt/atsd` directory
 
-ATSD uses `/opt/atsd` directory to store log files, backup files, and other files. If this directory is owned by root, ATSD cannot function properly.
+ATSD uses the `/opt/atsd` directory to store log files, backup files, and other files. If this directory is owned by root, ATSD cannot function properly.
 
 * Solution: Stop all ATSD services. Grant ownership to `/opt/atsd` directory to the 'axibase' user.
 
