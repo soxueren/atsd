@@ -6,7 +6,7 @@ Insert a timestamped array of numbers for a given series identified by metric, e
 
 * Entity name, metric name, and tag names can contain only printable characters. Names are case-insensitive and are converted to lower case when stored.
 * Tag values are **case-sensitive** and are stored as submitted.
-* The number of series tags cannot exceed 1024.ß
+* The number of series tags cannot exceed 1024.
 * New entities, metrics, and tag names are created automatically.
 * New metrics are initialized with the `float` data type by default.
 * If an insert for a new metric contains `version` in the first [Sample](#sample-object), the metric will be created as versioned.
