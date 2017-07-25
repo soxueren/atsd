@@ -16,7 +16,7 @@ Refer to [expression reference](../../../search/README.md) for syntax, available
 
 | **Parameter** | **Type** | **Description**                                                                                   |
 | :------------ | :------- | :------------- |
-| query  | string   | **[Required]** Search query according to [expression reference](../../../search/README.md) |
+| query  | string   | **[Required]** Search query according to [expression reference](../../../search/README.md). |
 | limit  | number   | Maximum number of records to be returned by the server. Default: 0 (no limit). |
 | offset | number   | Number of records to skip before beginning to return data. |
 
@@ -28,8 +28,8 @@ Refer to [expression reference](../../../search/README.md) for syntax, available
 | :-------------- | :------- | :------------------------------------------- |
 | recordsTotal    | number   | Total number of series in the database as of last index update.  |
 | recordsFiltered | number   | Total number of series that matched the specified expression. |
-| time            | number   | Query execution time, in milliseconds . |
-| data            | array    | Array of [series records](#series%20record)) |
+| time            | number   | Query execution time, in milliseconds. |
+| data            | array    | Array of [series records](#series-record). |
 
 ### Series Record
 
@@ -41,7 +41,7 @@ The record contains series identifier as well as entity and metric fields in the
 |   2 | object   | Metric tags: key-value pairs                           |
 |   3 | string   | Entity name                                            |
 |   4 | object   | Entity tags: key-value pairs                           |
-|   5 | object   | series tags: key-value pairs                           |
+|   5 | object   | Series tags: key-value pairs                           |
 |   6 | number   | Relevance score                                        |
 |   7 | string   | Entity label                                           |
 |   8 | string   | Metric label                                           |
