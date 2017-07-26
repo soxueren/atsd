@@ -19,10 +19,10 @@ Refer to [expression reference](../../../search/README.md) for syntax, available
 | query  | string   | **[Required]** Search query according to [expression reference](../../../search/README.md). |
 | limit  | number   | Maximum number of records to be returned by the server. Default: 100. <br> Specity `limit=0` to return all matching records. |
 | offset | number   | Number of records to skip before beginning to return data. |
-| metricTags | string   | Comma-separated list of metric tag names to be included in the response.<br>For example, `metricTags=OS,location`. <br>Specify `metricTags=*` to include all metric tags. <br>Specify `metricTags=` to return no tags.  <br>Default value: `metricTags=*` (include all). |
-| metricFields | string   | Comma-separated list of [metric field names](../metric/list.md#fields) to be included in the response.<br>For example, `metricFields=dataType,units`. <br>Specify `metricFields=*` to include all metric fields. <br>Specify `metricFields=` to return no fields.  <br>Default value: `metricFields=*` (include all). |
-| entityTags | string   | Comma-separated list of entity tag names to be included in the response.<br>For example, `entityTags=OS,location`. <br>Specify `entityTags=*` to include all entity tags. <br>Specify `entityTags=` to return no tags.  <br>Default value: `entityTags=*` (include all). |
-| entityFields | string   | Comma-separated list of [entity field names](../entity/list.md#fields) to be included in the response.<br>For example, `entityFields=timeZone,interpolate`. <br>Specify `entityFields=*` to include all entity fields. <br>Specify `entityFields=` to return no fields.  <br>Default value: `entityFields=*` (include all). |
+| metricTags | string   | Comma-separated list of metric tag names to be included in the response.<br>For example, `metricTags=OS,location`. <br>Specify `metricTags=*` to include all metric tags. |
+| metricFields | string   | Comma-separated list of [metric field names](../metric/list.md#fields) to be included in the response.<br>For example, `metricFields=dataType,units`. <br>Specify `metricFields=*` to include all metric fields. |
+| entityTags | string   | Comma-separated list of entity tag names to be included in the response.<br>For example, `entityTags=OS,location`. <br>Specify `entityTags=*` to include all entity tags. |
+| entityFields | string   | Comma-separated list of [entity field names](../entity/list.md#fields) to be included in the response.<br>For example, `entityFields=timeZone,interpolate`. <br>Specify `entityFields=*` to include all entity fields. |
 
 ## Response
 
@@ -52,6 +52,8 @@ The record contains series identifier as well as entity and metric fields in the
 |   9 | object   | Series tags: key-value pairs                           |
 |  10 | number   | Relevance score                                        |
 
+> Tags and fields without a value are not included in the response, even if they are specified in the request.
+
 ## Example
 
 Find series records, matching `inflation*`. Return 2 records at most.
@@ -61,7 +63,7 @@ Find series records, matching `inflation*`. Return 2 records at most.
 #### URI
 
 ```elm
-GET /api/v1/search?query=inflation*&limit=2&metricFields=units,dataType&entityFields=timeZone
+GET /api/v1/search?query=inflation*&limit=2&metricTags=*&metricFields=units,dataType&entityTags=*&entityFields=timeZone
 ```
 
 #### Payload
@@ -71,7 +73,7 @@ None.
 #### curl
 
 ```elm
-curl 'https://atsd_host:8443/api/v1/search?query=inflation*&limit=2&metricFields=units,dataType&entityFields=timeZone' \
+curl 'https://atsd_host:8443/api/v1/search?query=inflation*&limit=2&metricTags=*&metricFields=units,dataType&entityTags=*&entityFields=timeZone' \
   --insecure --verbose --user {username}:{password} \
   --request GET
 ```
