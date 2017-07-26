@@ -19,6 +19,10 @@ Refer to [expression reference](../../../search/README.md) for syntax, available
 | query  | string   | **[Required]** Search query according to [expression reference](../../../search/README.md). |
 | limit  | number   | Maximum number of records to be returned by the server. Default: 0 (no limit). |
 | offset | number   | Number of records to skip before beginning to return data. |
+| metricTags | string   | Comma-separated list of metric tag names to be included in the response.<br>For example, `metricTags=OS,location`. <br>Specify `metricTags=*` to include all metric tags. <br>Specify `metricTags=` to return no tags.  <br>Default value: `metricTags=*` (include all). |
+| metricFields | string   | Comma-separated list of [metric field names](../metric/list.md#fields) to be included in the response.<br>For example, `metricFields=dataType,units`. <br>Specify `metricFields=*` to include all metric fields. <br>Specify `metricFields=` to return no fields.  <br>Default value: `metricFields=*` (include all). |
+| entityTags | string   | Comma-separated list of entity tag names to be included in the response.<br>For example, `entityTags=OS,location`. <br>Specify `entityTags=*` to include all entity tags. <br>Specify `entityTags=` to return no tags.  <br>Default value: `entityTags=*` (include all). |
+| entityFields | string   | Comma-separated list of [entity field names](../entity/list.md#fields) to be included in the response.<br>For example, `entityFields=timeZone,interpolate`. <br>Specify `entityFields=*` to include all entity fields. <br>Specify `entityFields=` to return no fields.  <br>Default value: `entityFields=*` (include all). |
 
 ## Response
 
@@ -38,24 +42,26 @@ The record contains series identifier as well as entity and metric fields in the
 |   # | **Type** | **Description**                                        |
 | --: | :------- | :----------------------------------------------------- |
 |   1 | string   | Metric name                                            |
-|   2 | object   | Metric tags: key-value pairs                           |
-|   3 | string   | Entity name                                            |
-|   4 | object   | Entity tags: key-value pairs                           |
-|   5 | object   | Series tags: key-value pairs                           |
-|   6 | number   | Relevance score                                        |
-|   7 | string   | Entity label                                           |
-|   8 | string   | Metric label                                           |
+|   2 | string   | Metric label                                           |
+|   3 | object   | Metric fields: key-value pairs                         |
+|   4 | object   | Metric tags: key-value pairs                           |
+|   5 | string   | Entity name                                            |
+|   6 | string   | Entity label                                           |
+|   7 | object   | Entity fields: key-value pairs                         |
+|   8 | object   | Entity tags: key-value pairs                           |
+|   9 | object   | Series tags: key-value pairs                           |
+|  10 | number   | Relevance score                                        |
 
 ## Example
 
-Find series records, matching `inflation*`. Return 10 records at most.
+Find series records, matching `inflation*`. Return 2 records at most.
 
 ### Request
 
 #### URI
 
 ```elm
-GET /api/v1/search?query=inflation*&limit=10
+GET /api/v1/search?query=inflation*&limit=2&metricFields=units,dataType&entityFields=timeZone
 ```
 
 #### Payload
@@ -65,7 +71,7 @@ None.
 #### curl
 
 ```elm
-curl 'https://atsd_host:8443/api/v1/search?query=inflation*&limit=10' \
+curl 'https://atsd_host:8443/api/v1/search?query=inflation*&limit=2&metricFields=units,dataType&entityFields=timeZone' \
   --insecure --verbose --user {username}:{password} \
   --request GET
 ```
@@ -74,33 +80,110 @@ curl 'https://atsd_host:8443/api/v1/search?query=inflation*&limit=10' \
 
 ```json
 {
-	"recordsTotal": 496621,
-	"recordsFiltered": 20,
-	"time": 136,
-	"query": "contents:inflation.cpi.categories*",
-	"data": [
-		["inflation.cpi.categories.price", {
-			"pricebase": "Current prices",
-			"seasonaladjustment": "Seasonally Adjusted",
-			"source": "CBS"
-		}, "fed", {}, {
-			"category": "Health"
-		}, 1.5, "FRED", "CPI - Non-negotiable"],
-		["inflation.cpi.categories.price", {
-			"pricebase": "Current prices",
-			"seasonaladjustment": "Seasonally Adjusted",
-			"source": "CBS"
-		}, "fed", {}, {
-			"category": "Miscellaneous"
-		}, 1.2, "FRED", "CPI - Non-negotiable"],
-		["inflation.cpi.categories.price", {
-			"pricebase": "Current prices",
-			"process": "Bank of Israel - Research",
-			"seasonaladjustment": "Seasonally Adjusted",
-			"source": "CBS"
-		}, "fed", {}, {
-			"category": "Food (excl. fruit & veg.)"
-		}, 1.0, "FRED", "CPI - Non-negotiable"]
-	]
+  "query": "contents:inflation.cpi.categories*",
+  "recordsTotal": 496621,	
+  "recordsFiltered": 20,
+  "time": 136,
+  "data": [
+    [
+      "inflation.cpi.categories.price",
+      "CPI - Non-negotiable",
+      {
+        "units": "million",
+        "dataType": "LONG"
+      },			
+      {
+        "pricebase": "Current prices",
+        "seasonaladjustment": "Seasonally Adjusted",
+        "source": "CBS"
+      },
+      "fed",
+      "U.S. FED",
+      {
+        "timeZone": "US/Eastern"
+      },				
+      {
+        "source": "FRED"
+      },
+      {
+        "category": "Health"
+      },
+      1.5
+    ],
+    [
+      "inflation.cpi.categories.price",
+      "CPI - Non-negotiable",
+      {
+        "units": "million",
+        "dataType": "LONG"
+      },			
+      {
+        "pricebase": "Current prices",
+        "seasonaladjustment": "Seasonally Adjusted",
+        "source": "CBS"
+      },
+      "fed",
+      "U.S. FED",
+      {
+        "timeZone": "US/Eastern"
+      },				
+      {
+        "source": "FRED"
+      },
+      {
+        "category": "Energy"
+      },
+      1.5
+    ]
+  ]
 }
+```
+
+* Series object description:
+
+```js
+    [
+      // metric name
+      "inflation.cpi.categories.price",
+      
+      // metric label
+      "CPI - Non-negotiable",
+      
+      // metric fields
+      {
+        "units": "million",
+        "dataType": "LONG"
+      },
+      
+      // metric tags
+      {
+        "pricebase": "Current prices",
+        "seasonaladjustment": "Seasonally Adjusted",
+        "source": "CBS"
+      },
+      
+      // entity name
+      "fed",
+      
+      // entity label
+      "U.S. FED",
+      
+      // entity fields
+      {
+        "timeZone": "US/Eastern"
+      },
+      
+      // entity tags
+      {
+        "source": "FRED"
+      },
+      
+      // series tags
+      {
+        "category": "Health"
+      },
+      
+      // relevance score
+      1.5
+    ]
 ```
