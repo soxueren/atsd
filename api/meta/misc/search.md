@@ -17,7 +17,7 @@ Refer to [expression reference](../../../search/README.md) for syntax, available
 | **Parameter** | **Type** | **Description**                                                                                   |
 | :------------ | :------- | :------------- |
 | query  | string   | **[Required]** Search query according to [expression reference](../../../search/README.md). |
-| limit  | number   | Maximum number of records to be returned by the server. Default: 0 (no limit). |
+| limit  | number   | Maximum number of records to be returned by the server. Default: 100. <br> Specity `limit=0` to return all matching records. |
 | offset | number   | Number of records to skip before beginning to return data. |
 | metricTags | string   | Comma-separated list of metric tag names to be included in the response.<br>For example, `metricTags=OS,location`. <br>Specify `metricTags=*` to include all metric tags. <br>Specify `metricTags=` to return no tags.  <br>Default value: `metricTags=*` (include all). |
 | metricFields | string   | Comma-separated list of [metric field names](../metric/list.md#fields) to be included in the response.<br>For example, `metricFields=dataType,units`. <br>Specify `metricFields=*` to include all metric fields. <br>Specify `metricFields=` to return no fields.  <br>Default value: `metricFields=*` (include all). |
