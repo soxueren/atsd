@@ -2,15 +2,16 @@
 
 ## Overview
 
-ATSD can be installed by importing an `.ova` image in VirtualBox. This
-method automatically creates a virtual machine running Ubuntu 14.04
+ATSD can be installed by importing an `.ova` image in [Oracle VirtualBox](https://www.virtualbox.org/). This
+method creates a virtual machine running Ubuntu 14.04
 64bit LTS with ATSD and dependencies pre-installed and fully configured.
 The process takes a few minutes with minimal input required from the
-user. This is the easiest and fastest way to install ATSD.
+user. 
 
 ## Download
 
-* [https://axibase.com/public/atsd_ce.ova](https://axibase.com/public/atsd_ce.ova)
+* Download the latest version of [Oracle VirtualBox](https://www.virtualbox.org/wiki/Downloads), if necessary.
+* Download the latest OVA image from [https://axibase.com/public/atsd_ce.ova](https://axibase.com/public/atsd_ce.ova)
 
 ## Prerequisites
 
@@ -25,60 +26,54 @@ following resources available:
 -   At least 4 GB of RAM on the host machine and at least 1 GB of RAM
     allocated to the virtual machine.
 
-[Download the latest version of VirtualBox
-here.](https://www.virtualbox.org/wiki/Downloads)
-
 ## Installing ATSD in Oracle VirtualBox
 
-​1. Open Oracle VirtualBox.
+1. Open Oracle VirtualBox.
 
-![](images/open-vbox.png "open vbox")
-
-​2. Navigate to ##File –\> Import Appliance##.
+2. Open **File > Import Appliance**.
 
 ![](images/navigate-to.png "navigate to")
 
-​3. Open the ATSD `.ova` file and click next, for example `atsd_ce_8760.ova`.
+3. Select the downloaded ATSD `atsd_ce_*.ova` file and click **Next**.
 
 ![](images/open-ova1.png "open ova")
 
-​4. Confirm the Appliance settings by clicking Import. Read the Software
-License Agreement in the pop-up window. Select Agree to continue.
+4. Confirm the Appliance settings by clicking Import. Read the 
+License Agreement in the pop-up window. Click **Agree** to continue.
 
 ![](images/import-ova1.png "import ova")
 
-​5. Wait for the Appliance to be imported.
+5. Wait for the Appliance to be imported.
 
 ![](images/importing-ova.png "importing ova")
 
-​6. Navigate to ##Settings –\> System## to allocate at least 1 GB of RAM to
-the virtual machine. Under the Processor tab allocate at least 1 CPU to
+6. Open **Settings > System** and allocate at least 1 GB of RAM and 1 virtual CPU to
 the virtual machine.
 
 ![](images/ram.png "ram")
 
-​7. Navigate to ##Settings –\> Network##. Set Attached to: Bridged Adapter.
-If the virtual machine does not start with this setting, then change
-this setting to Host-only Adapter. Click on Generate new MAC Address to
+7. Open **Settings > Network**. Set Attached to: **Bridged Adapter**.
+If the virtual machine does not start with this setting, click on 'Generate new MAC Address'/'Reinitialize MAC Address' to
 generate a new MAC address for the virtual machine.
 
 ![](images/network-e1428917172451.png "network")
 
-​8. Start the virtual machine. Wait for ATSD and components to start.
+8. Start the virtual machine. Wait for ATSD to start.
 
 ![](images/atsd-start.png "atsd start")
 
-​9. Login to the virtual machine:
+9. Login to the virtual machine console:
 
-**username = `axibase`**
+  ```
+  username = axibase
+  password = axibase
+  ```
 
-**password = `axibase`**
-
-**`axibase` user is a sudoer.**
+    > `axibase` user is a sudoer.
 
 ![](images/atsd-login.png "atsd login")
 
-​10. Check the IP address of the virtual machine:
+10. Check the IP address of the virtual machine:
 
 ```sh
  ip addr                                                                  
@@ -86,11 +81,12 @@ generate a new MAC address for the virtual machine.
 
 ![](images/screenshot_280415_15-22-59.png "screenshot_280415_15-22-59")
 
-​11. Use your browser to navigate to `atsd_hostname:8088`. For example:
-`192.168.1.191:8088`. Login to ATSD, username = axibase and password =
-axibase.
+11. Use your browser to navigate to `https://atsd_ip_address:8443`. For example:
+`https://192.168.1.191:8443`.
 
 ![](images/login-atsd.png "login atsd")
+
+12. Create an administrative account and re-login into ATSD web interface using these credentials.
 
 
 ## Validation
