@@ -10,10 +10,17 @@ Report showing the differences between two metrics on separate graphs.
 
 ## Steps
 
-- Specify at least time/datetime and entity in INNER/FULL OUTER join
-- Drag-and-drop _Datetime_ in to the column field
-- Drag-and-drop both _Value_ in to the rows field
-- Change _Automatic_ to _Bar_ in the dropdown at the _All_ section on Marks Card
+- Drag-and-drop both tables to Canvas area
+- Select _Inner Join_, specify _Time_ and _Entity_ as equal fields:
+
+![](../images/join_inner.png)
+
+- Press **Sheet 1**
+- Press **OK** to acknowledge the warning about limitations
+- Drag-and-drop _Datetime_ onto the column field
+- Drag-and-drop both _Value_ onto the rows field
+- Select _Bar_ in the dropdown at the _All_ section on Marks Card
+- Optionally add [drop lines](comparision_of_two_metrics_at_one_bar_graph.md#drop-lines)
 
 ## Results
 
