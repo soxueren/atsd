@@ -57,7 +57,7 @@
   * [Pentaho Data Integration](integration/pentaho/data-integration/README.md)
   * [Pentaho Report Designer](integration/pentaho/report-designer/README.md)  
   * [Stata](integration/stata/README.md)
-  * Tableau
+  * [Tableau](integration/tableau/README.md)
 
 ## Rule Engine
 
