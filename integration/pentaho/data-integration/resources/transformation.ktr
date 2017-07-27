@@ -454,7 +454,7 @@
       </attribute>
       <attribute>
         <code>CUSTOM_URL</code>
-        <attribute>jdbc:axibase:atsd:127.0.0.1:8443;catalog=atsd;tables=inflation*</attribute>
+        <attribute>jdbc:atsd:127.0.0.1:8443;catalog=atsd;tables=inflation*</attribute>
       </attribute>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>

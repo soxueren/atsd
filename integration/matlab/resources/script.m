@@ -1,5 +1,5 @@
 driver = 'com.axibase.tsd.driver.jdbc.AtsdDriver';
-url = 'jdbc:axibase:atsd:127.0.0.1:8443';
+url = 'jdbc:atsd:ATSD_HOSTNAME:8443';
 username = 'axibase';
 password = 'axibase';
 conn_atsd = database('', username, password, driver, url);

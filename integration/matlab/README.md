@@ -60,7 +60,7 @@ Example:
 - Click 'New - JDB'.
 - Select 'Vendor - OTHER'.
 - Set the Driver field to `com.axibase.tsd.driver.jdbc.AtsdDriver`.
-- Specify a JDBC URL like `jdbc:axibase:atsd:ATSD_HOSTNAME:8443;tables=TABLE_NAME_FILTER;expandTags=true`
+- Specify a JDBC URL like `jdbc:atsd:ATSD_HOSTNAME:8443;expandTags=true`
 [Information about ATSD JDBC URL parameters](https://github.com/axibase/atsd-jdbc/blob/master/README.md)
 - Leave the Username and Password fields empty.
 - Now connect to ATSD using the "Data Source Name" button and log in on the Database Browser window.
@@ -71,13 +71,6 @@ Example:
 
 `ATSD_HOSTNAME` is the hostname address of the ATSD instance you want to connect to.
 
-`TABLE_NAME_FILTER` is a list of comma-separated metrics or metric expressions to be displayed as tables in the MatLab Database Browser.
-
-`TABLE_NAME_FILTER` examples:
-- `*java*` for metrics that contains word `java`
-- `custom.metric*` for metrics whose name starts with `custom.metric`
-- `*2017` for metrics whose name ends with `2017`
-
 > At the  moment the Database Explorer can not display tables with dots in their name.
 
 ### Connect to the MatLab Command Window
@@ -86,7 +79,7 @@ Example of https connection to ATSD:
 
 ```matlab
 driver = 'com.axibase.tsd.driver.jdbc.AtsdDriver';
-url = 'jdbc:axibase:atsd:ATSD_HOSTNAME:8443';
+url = 'jdbc:atsd:ATSD_HOSTNAME:8443';
 username = 'USERNAME';
 password = 'PASSWORD';
 conn_atsd = database('', username, password, driver, url);
@@ -156,7 +149,7 @@ insert(conn_atsd, 'METRIC_NAME', colnames, data);
 
 ```matlab
 driver = 'com.axibase.tsd.driver.jdbc.AtsdDriver';
-url = 'jdbc:axibase:atsd:ATSD_HOSTNAME:8443';
+url = 'jdbc:atsd:ATSD_HOSTNAME:8443';
 username = 'USERNAME';
 password = 'PASSWORD';
 conn_atsd = database('', username, password, driver, url);
