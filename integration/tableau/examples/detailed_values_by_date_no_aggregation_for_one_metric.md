@@ -1,8 +1,8 @@
-# Detailed values by date (no aggregation) for one metric
+# Monthly Exports
 
 ## Overview
 
-There is an example of visualization export statistics for several years.
+Display a history of export volume over a period of time.
  
 ## Data Source
 
