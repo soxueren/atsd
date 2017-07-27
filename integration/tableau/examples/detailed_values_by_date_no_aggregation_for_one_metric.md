@@ -6,7 +6,7 @@ Display a history of export volume over a period of time.
  
 ## Data Source
 
-* Table: `bi.im_net1.m`
+* Table: `bi.ex_net1.m`
 
 ## Steps
 
