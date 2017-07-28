@@ -48,12 +48,28 @@ This configures Stata to interface with ODBC in ANSI mode to prevent string valu
 - Execute [`odbc load`](https://www.stata.com/manuals13/dodbc.pdf) to load results for a custom SQL query results into memory:
 
 ```
-odbc load, exec("SELECT value, tags.name FROM 'java_method_invoke_last' ORDER BY datetime")
+odbc load, exec("SELECT time, value, tags.name FROM 'java_method_invoke_last' ORDER BY datetime LIMIT 100") bigintasdouble
+```
+
+Syntax:
+
+- `exec("SqlStmt")` allows to issue an SQL SELECT statement to generate a table to be read into Stata.
+- `bigintasdouble` specifies that data stored in 64-bit integer (BIGINT) database columns be converted to Stata doubles.
+
+Description of resultset:
+
+![](resources/describe_example_1.png)
+
+### Convert the UNIX Epoch milliseconds to the Stata milliseconds:
+
+```
+generate double datetime = time + tC(01jan1970 00:00:00)
+format %tcCCYY-NN-DD!THH:MM:SS.sss!Z datetime
 ```
 
 Description of resultset:
 
-![](resources/describe_example.png)
+![](resources/describe_example_2.png)
 
 ## Exporting Data
 
