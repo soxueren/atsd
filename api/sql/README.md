@@ -1882,7 +1882,7 @@ GROUP BY tu.entity
 
 ## Date Functions
 
-### Date Formatting Functions
+### DATE_FORMAT
 
 The `date_format` function formats Unix millisecond time to a string in user-defined date format and optional time zone. See supported time pattern letters [here](time-pattern.md).
 
@@ -1985,7 +1985,7 @@ GROUP BY date_format(time, 'EEE')
 
 Refer to [diurnal](examples/diurnal.md) query examples.
 
-### Date Parsing Functions
+### DATE_PARSE
 
 The `date_parse` function parses the datetime string into Unix milliseconds.
 
@@ -2023,9 +2023,104 @@ it should be exactly the same as provided by the third argument. */
 date_parse("31.01.2017 12:36:03.283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss.SSS ZZZ", "Europe/Berlin")
 ```
 
-### Date Utility Functions
+### EXTRACT
 
-#### `CURRENT_TIMESTAMP`
+The `extract` function returns an integer value corresponding to the specified part (component) of the provided date.
+
+```sql
+EXTRACT(datepart FROM datetime | time | datetime expression)
+```
+
+`datepart` can be YEAR, QUARTER, MONTH, DAY, HOUR, MINUTE, or SECOND.
+
+The evaluation is based on the server time zone. The date argument can refer to the `time` or `datetime` columns including support for the endtime syntax.
+
+```sql
+SELECT datetime, 
+  EXTRACT(year FROM datetime) AS 'year',
+  EXTRACT(quarter FROM datetime) AS 'quarter',
+  EXTRACT(month FROM datetime) AS 'month',
+  EXTRACT(day FROM datetime) AS 'day',
+  EXTRACT(hour FROM datetime) AS 'hour',
+  EXTRACT(minute FROM datetime) AS 'minute',
+  EXTRACT(second FROM datetime) AS 'second',
+  EXTRACT(day FROM now - 1*DAY) AS 'prev_day',
+  EXTRACT(month FROM now + 1*MONTH) AS 'next_month'
+FROM mpstat.cpu_busy 
+  WHERE datetime > current_hour
+```
+
+```ls
+| datetime             | year | quarter | month | day | hour | minute | second | prev_day | next_month | 
+|----------------------|------|---------|-------|-----|------|--------|--------|----------|------------| 
+| 2017-07-29T21:00:12Z | 2017 | 3       | 7     | 29  | 21   | 0      | 12     | 28       | 8          | 
+```
+
+### SECOND
+
+The `second` function returns the current seconds in the provided date.
+
+```sql
+SECOND (datetime | time | datetime expression)
+```
+
+### MINUTE
+
+The `minute` function returns the current minutes in the provided date.
+
+```sql
+MINUTE (datetime | time | datetime expression)
+```
+
+### HOUR
+
+The `hour` function returns the current hour of the day (0 - 23) in the provided date.
+
+```sql
+HOUR (datetime | time | datetime expression)
+```
+
+### DAY
+
+The `day` function returns the current day of month in the provided date.
+
+```sql
+DAY (datetime | time | datetime expression)
+```
+
+### DAYOFWEEK
+
+The `dayofweek` function returns the current day of week (1-7, starting with Monday) in the provided date.
+
+```sql
+DAYOFWEEK (datetime | time | datetime expression)
+```
+
+### MONTH
+
+The `month` function returns the current month (1-12) in the provided date.
+
+```sql
+MONTH (datetime | time | datetime expression)
+```
+
+### QUARTER
+
+The `quarter` function returns the current quarter of the year in the provided date.
+
+```sql
+QUARTER (datetime | time | datetime expression)
+```
+
+### YEAR
+
+The `year` function returns the current year in the provided date.
+
+```sql
+YEAR (datetime | time | datetime expression)
+```
+
+### CURRENT_TIMESTAMP
 
 The `CURRENT_TIMESTAMP` function returns current database time in ISO-8601 format. It is analogous to the `NOW` functions which returns current database time in Unix milliseconds.
 
@@ -2040,7 +2135,7 @@ SELECT entity, datetime, value
 WHERE datetime > CURRENT_TIME - 1 * DAY
 ```
 
-#### `DBTIMEZONE`
+### DBTIMEZONE
 
 The `DBTIMEZONE` function returns the current database timezone name or offset.
 
@@ -2843,6 +2938,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [Escape Quotes](examples/select-escape-quote.md)
 - [atsd_series Table](examples/select-atsd_series.md)
 - [Datetime Format](examples/datetime-format.md)
+- [Date Extract Functions](examples/date-extract.md)
 - [Date Utility Functions](examples/date-functions.md)
 - [Limit Row Count](examples/limit.md)
 - [Limit by Partition](examples/limit-partition.md)
