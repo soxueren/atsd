@@ -73,7 +73,7 @@ FROM mpstat.cpu_busy
 ```sql
 SELECT HOUR(datetime) AS 'hour',
   AVG(value)
-FROM cpu_busy 
+FROM mpstat.cpu_busy 
   WHERE datetime > previous_day 
   AND HOUR(datetime) BETWEEN 5 and 9
 GROUP BY 'hour'

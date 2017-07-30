@@ -720,14 +720,31 @@ Special constructs such as `(?i)` can be applied to enable a [case-insensitive m
 
 ## Interval Condition
 
-An interval condition determines the selection interval and is specified in the `WHERE` clause using the `time` or `datetime` columns.
+An interval condition determines the selection interval and is specified in the `WHERE` clause using the `datetime` or `time` columns.
 
-The `time` column accepts Unix milliseconds, whereas the `datetime` column accepts literal dates in ISO 8601 format with optional millisecond precision.
+* The `datetime` column accepts literal dates in one of the following formats:
+
+| **Name** | **Pattern** | **Examples** | 
+|---|---|---|
+| ISO-8601 | `yyyy-MM-dd'T'HH:mm:ss[.NNN]'Z'` | 2016-12-10T15:30:00.077Z<br>2016-12-10T15:30:00Z |
+| Local | `yyyy-MM-dd HH:mm:ss[.NNNNNNNNN]` | 2016-12-10 15:30:00.077<br>2016-12-10 15:30:00 |
 
 ```sql
 SELECT datetime, entity, value
   FROM mpstat.cpu_busy
-WHERE datetime BETWEEN '2016-12-10T14:00:15Z' AND '2016-12-10T15:30:00.077Z'
+WHERE datetime BETWEEN '2016-12-10T14:00:15Z' AND '2016-12-10T14:30:00.077Z'
+-- WHERE datetime BETWEEN '2016-12-10 14:00:15' AND '2016-12-11 14:30:00.077'
+```
+
+The dates in the Local format are evaluated based on the server time zone.
+
+* The `time` column accepts Unix milliseconds:
+
+```sql
+SELECT time, entity, value
+  FROM mpstat.cpu_busy
+WHERE time >= 1500300000000
+-- 1500300000000 is equal to 2017-07-17 14:00:00 UTC
 ```
 
 > Note that the `BETWEEN` operator is inclusive: `time BETWEEN 'a' AND 'b'` is equivalent to `time >= 'a' and time <= 'b'`.
