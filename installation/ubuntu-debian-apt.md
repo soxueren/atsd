@@ -79,6 +79,8 @@ You should see an **ATSD start completed** message at the end of the `start.log`
 
 Web interface is accessible on port 8088 (http) and 8443 (https).
 
+> Add [firewall](firewall.md) rules if the above ports are not reachable.
+
 ## Troubleshooting
 
 * Review [troubleshooting guide](troubleshooting.md).
