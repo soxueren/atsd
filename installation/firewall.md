@@ -2,10 +2,10 @@
 
 ## Allow Access
 
-Allow access to particular ports on the target ATSD server:
+Allow access to particular ports on the target ATSD server.
 
-* Login into the ATSD server
-* Add allow rules for target ATSD ports:
+* Login into the ATSD server.
+* Add 'allow' rules for specific ATSD ports.
 
 ```sh
 iptables -I INPUT -p tcp --dport 8081 -j ACCEPT
@@ -14,7 +14,7 @@ iptables -I INPUT -p tcp --dport 8088 -j ACCEPT
 iptables -I INPUT -p tcp --dport 8443 -j ACCEPT
 ```
 
-## Make Rules Persistent
+## Persisting Firewall Rules
 
 ### Ubuntu/Debian
 
@@ -26,61 +26,27 @@ apt-get install iptables-persistent
 
 During the install process you will be asked to save existing rules.
 
-Rules will be saved to ```/etc/iptables/rules.v4``` and ```/etc/iptables/rules.v6``` for ipv4 and ipv6, respectively.
+Rules will be saved to `/etc/iptables/rules.v4` and `/etc/iptables/rules.v6` for IPv4 and IPv6, respectively.
 
-The saved rules can be updated by either:
+The saved rules can be updated:
 
-* running ```dpkg-reconfigure iptables-persistent``` 
+* By running `dpkg-reconfigure iptables-persistent`, or
 
-* executing the following commands:
+* By executing the `iptables-save` commands:
 
 ```
 iptables-save > /etc/iptables/rules.v4
 ip6tables-save > /etc/iptables/rules.v6
 ```
 
-
-
-#### Installing the following script
-
-
-```sh
-iptblload="/etc/network/if-pre-up.d/iptablesload"
-iptblsave="/etc/network/if-post-down.d/iptablessave"
-# "Creating scripts to save and load current iptables settings on reboot"
-if [ -f $iptblload ]; then
-	mv $iptblload ${iptblload}.backup
-fi
-if [ -f $iptblsave ]; then
-	mv $iptblsave ${iptblsave}.backup
-fi
-
-cat > $iptblload <<EOFF
-#!/bin/bash
-/sbin/iptables-restore < /etc/iptables.rules
-exit 0
-EOFF
-
-cat > $iptblsave <<EOFF
-#!/bin/bash
-/sbin/iptables-save -c > /etc/iptables.rules
-if [ -f /etc/iptables.downrules ]; then
-/sbin/iptables-restore < /etc/iptables.downrules
-fi
-exit 0
-EOFF
-
-chmod +x $iptblload
-chmod +x $iptblsave
-```
-
 ### RHEL / Centos
 
-```
+```sh
 sed -i "s/IPTABLES_SAVE_ON_STOP=\"no\"/IPTABLES_SAVE_ON_STOP=\"yes\"/g" /etc/sysconfig/iptables-config
 sed -i "s/IPTABLES_SAVE_ON_RESTART=\"no\"/IPTABLES_SAVE_ON_RESTART=\"yes\"/g" /etc/sysconfig/iptables-config
 /etc/init.d/iptables save
 ```
+
 ### SUSE
 
 ```
