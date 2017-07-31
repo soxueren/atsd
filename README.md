@@ -59,6 +59,7 @@
   * [Pentaho Report Designer](integration/pentaho/report-designer/README.md)  
   * [Stata](integration/stata/README.md)
   * [Tableau](integration/tableau/README.md)
+  * Generic [ODBC](integration/odbc/README.md)
 
 ## Rule Engine
 
