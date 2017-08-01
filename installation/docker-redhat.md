@@ -4,6 +4,8 @@
 
 * Docker Engine 1.12+.
 
+Install Docker:
+
 ```sh
 yum install docker device-mapper-libs device-mapper-event-libs
 systemctl start docker.service
