@@ -1,19 +1,31 @@
-# Installation on Docker
+# Installation from RedHat Certified Image
 
 ## Host Requirements
 
-* [Docker Engine](https://docs.docker.com/engine/installation/) 1.7+.
+* Docker Engine 1.12+.
 
-## Images
+```sh
+yum install docker device-mapper-libs device-mapper-event-libs
+systemctl start docker.service
+systemctl enable docker.service
+```
 
-* Image name: `axibase/atsd:latest`
-* Base: ubuntu:14.04
-* [Dockerfile](https://github.com/axibase/dockers/blob/master/Dockerfile)
-* [Docker Hub](https://hub.docker.com/r/axibase/atsd/)
+## RedHat Container Catalog
+
+* [Axibase Time Series Database](https://access.redhat.com/containers/?tab=overview#/registry.connect.redhat.com/axibase/atsd)
+	- Image name: `registry.connect.redhat.com/axibase/atsd`
+	- Base: atsd:latest
+	- [Dockerfile](https://github.com/axibase/dockers/blob/atsd-rhel7/Dockerfile)
+
+
+* [Axibase Collector](https://access.redhat.com/containers/?tab=overview#/registry.connect.redhat.com/axibase/collector)
+	- Image name: `registry.connect.redhat.com/axibase/collector`
+	- Base: atsd:collector
+	- [Dockerfile](https://github.com/axibase/docker-axibase-collector/blob/rhel7/Dockerfile)
 
 ## Start Container
 
-It is recommended that the database is seeded with a shared write-only [account](../administration/collector-account.md) for data collecting agents, scripts, and storage drivers.
+It is recommended that the ATSD database is seeded with a shared write-only [account](../administration/collector-account.md) for data collecting agents, scripts, and storage drivers.
 
 Choose one of the options below for starting the ATSD container.
 
@@ -34,7 +46,7 @@ docker run \
   --publish 8082:8082/udp \
   --env COLLECTOR_USER_NAME=clr-user \
   --env COLLECTOR_USER_PASSWORD=clr-password \
-  axibase/atsd:latest
+  registry.connect.redhat.com/axibase/atsd:latest
 ```
 
 ### Option 2: Configure Collector Account Manually
@@ -50,7 +62,7 @@ docker run \
   --publish 8443:8443 \
   --publish 8081:8081 \
   --publish 8082:8082/udp \
-  axibase/atsd:latest
+  registry.connect.redhat.com/axibase/atsd:latest
 ```
 
 ## Start Container
@@ -68,7 +80,7 @@ axibase@nurswghbs002 ~]# docker run \
 >   --publish 8082:8082/udp \
 >   --env COLLECTOR_USER_NAME=data-agent \
 >   --env COLLECTOR_USER_PASSWORD=Pwd78_ \
->   axibase/atsd:latest
+>   registry.connect.redhat.com/axibase/atsd:latest
 Unable to find image 'axibase/atsd:latest' locally
 latest: Pulling from axibase/atsd
 bf5d46315322: Pull complete
@@ -151,25 +163,12 @@ docker run \
   --publish 9443:8443 \
   --publish 9081:8081 \
   --publish 9082:8082/udp \
-  axibase/atsd:latest
+  registry.connect.redhat.com/axibase/atsd:latest
 ```
 
 ## Troubleshooting
 
 * Review [Troubleshooting Guide](troubleshooting.md).
-* Kernel Incompatibility
-
-Verify that your Docker host runs on a supported kernel level if the container fails to start or the installation script stalls.
-
-```
-uname -a
-```
-
-* 3.13.0-79.123+
-* 3.19.0-51.57+
-* 4.2.0-30.35+
-
-See "Workarounds" in [#18180](https://github.com/docker/docker/issues/18180#issuecomment-193708192)
 
 ## Validation
 

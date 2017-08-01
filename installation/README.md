@@ -7,19 +7,32 @@
 
 ## Installation Guides
 
+#### Packages
+
 | **Distribution** | **Format** | **Installation Guide** |
 | :--- | --- | :---: |
 | Ubuntu/Debian | apt | [View](ubuntu-debian-apt.md)|
 | Ubuntu/Debian  | [deb](https://axibase.com/public/atsd_ce_deb_latest.htm) | [View](ubuntu-debian-deb.md) |
-| Docker | image | [View](docker.md)|
 | RedHat/CentOS| yum | [View](redhat-centos-yum.md)|
 | RedHat/CentOS| [rpm](https://axibase.com/public/atsd_ce_rpm_latest.htm) | [View](redhat-centos-rpm.md)|
 | SUSE Linux Enterprise Server | [rpm](https://axibase.com/public/atsd_ce_rpm_latest.htm)   | [View](sles-rpm.md)|
-| VMware VM  | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](vmware-esxi-server-vsphere.md)|
-| Oracle VirtualBox VM | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](virtualbox.md)|
 | Other (including ARM) | [tar.gz](https://axibase.com/public/atsd_ce_distrib_latest.htm) | [View](other-distributions.md)|
 
-## Installation on Cluster
+#### Container Images
+
+| **Distribution** | **Format** | **Installation Guide** |
+| :--- | --- | :---: |
+| Docker | image | [View](docker.md)|
+| RedHat Docker | certified image | [View](docker-redhat.md)|
+
+#### Virtual Machines
+
+| **Host** | **Format** | **Installation Guide** |
+| :--- | --- | :---: |
+| VMware  | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](vmware-esxi-server-vsphere.md)|
+| Oracle VirtualBox | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](virtualbox.md)|
+
+#### Hadoop Cluster
 
 | **Hadoop Distribution** | **Installation Guide** |
 | :--- | :--- |
@@ -29,9 +42,7 @@
 
 ## Technical Support
 
-Email us at support-atsd@axibase.com in case of installation issues.
-
-See additional support options [here](https://axibase.com/customer-support/).
+Email us at **support-atsd@axibase.com** in case of installation questions.
 
 ## License
 
