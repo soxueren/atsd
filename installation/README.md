@@ -7,7 +7,7 @@
 
 ## Installation Guides
 
-#### Packages
+### Packages
 
 | **Distribution** | **Format** | **Installation Guide** |
 | :--- | --- | :---: |
@@ -18,21 +18,21 @@
 | SUSE Linux Enterprise Server | [rpm](https://axibase.com/public/atsd_ce_rpm_latest.htm)   | [View](sles-rpm.md)|
 | Other (including ARM) | [tar.gz](https://axibase.com/public/atsd_ce_distrib_latest.htm) | [View](other-distributions.md)|
 
-#### Container Images
+### Container Images
 
 | **Distribution** | **Format** | **Installation Guide** |
 | :--- | --- | :---: |
 | Docker | image | [View](docker.md)|
 | RedHat Docker | certified image | [View](docker-redhat.md)|
 
-#### Virtual Machines
+### Virtual Machines
 
 | **Host** | **Format** | **Installation Guide** |
 | :--- | --- | :---: |
 | VMware  | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](vmware-esxi-server-vsphere.md)|
 | Oracle VirtualBox | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](virtualbox.md)|
 
-#### Hadoop Cluster
+### Hadoop Cluster
 
 | **Hadoop Distribution** | **Installation Guide** |
 | :--- | :--- |
