@@ -524,24 +524,6 @@ Table 'atsd_metric' successfully disabled.
 Table 'atsd_metric' successfully deleted.
 ```
 
-Check that the above backup tables are present in the HBase table list.
-
-```sh
-/opt/atsd/hbase/bin/hbase shell
-```
-
-```
-hbase(main):001:0> list '.*backup'
-  TABLE
-    atsd_d_backup
-    atsd_delete_task_backup
-    atsd_forecast_backup
-    atsd_li_backup                                          
-    atsd_metric_backup           
-  5 row(s) in 0.0020 seconds
-hbase(main):002:0> exit
-```
-
 ### Migrate Records from Backup Tables
 
 1. Migrate data from the `'atsd_delete_task_backup'` table by launching the task and confirming its execution.
@@ -619,7 +601,7 @@ Delete the diagnostics folder:
 ...
 ```
 
-The `atsd_d` table migration may take a long time to complete. You can monitor the job progress in the Yarn web interface at http://ATSD_HOSTNAME:8050/.
+The `DataMigrator` job may take a long time to complete. You can monitor the job progress in the Yarn web interface at http://ATSD_HOSTNAME:8050/. The Yarn interface will be automatically terminated once the `DataMigrator` is finished.
 
 6. Migration is now complete.
 
