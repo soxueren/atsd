@@ -3,7 +3,9 @@
 
 These instructions describe how to migrate an Axibase Time Series Database instance running on **HBase-0.94** to a version running on the updated **HBase-1.2.5**.
 
-The instructions apply only to single-node ATSD installations running in pseudo-distributed mode. Upgrades on clusters and Docker containers are not covered in this document.
+The instructions apply only to single-node ATSD installations running in pseudo-distributed mode.
+
+ATSD upgrades on [Docker containers](container.md) and [Hadoop clusters](cluster.md) are covered in their respective documents.
 
 ## Versioning
 
@@ -25,7 +27,7 @@ The instructions apply only to single-node ATSD installations running in pseudo-
 
 ### Disk Space
 
-The migration procedure requires up to 30% of the reported `/opt/atsd` size to store migrated records before old data can be deleted. 
+The migration procedure requires up to 30% of the reported `/opt/atsd` size to store migrated records before old data can be deleted.
 
 Determine the size of the ATSD installation directory.
 
@@ -72,107 +74,10 @@ SELECT COUNT(*) FROM mymetric
 
 The number of records should match the results after the migration.
 
-## Prepare ATSD For Upgrade
-
-Switch to 'axibase' user if necessary. Execute the remaining steps as the 'axibase' user.
-
-```sh
-su axibase
-```
-
-Stop ATSD.
-
-```sh
-/opt/atsd/bin/atsd-tsd.sh stop
-```
-  
-Execute the `jps` command. Verify that the `Server` process is **not present** in the `jps` output.
-
-> If the `Server` process continues running, follow the [safe ATSD shutdown](../restarting.md#stop-atsd) procedure.
-
-Edit configuration file `/opt/atsd/atsd/conf/hadoop.properties`.
-
-  - Remove the `hbase.regionserver.lease.period` setting, if present.
-
-  - Add the `hbase.client.scanner.timeout.period` setting, if missing:
-
-    ```properties
-    hbase.zookeeper.quorum = localhost
-    hbase.rpc.timeout = 120000
-    hbase.client.scanner.timeout.period = 120000
-    ```
-
-Save the `hadoop.properties` file.  
-
-## Check HBase Status
-
-Check HBase for consistency.
-
-  ```sh
-  /opt/atsd/hbase/bin/hbase hbck
-  ```
-
-  The expected message is:
-  
-  ```
-  ...
-  0 inconsistencies detected.
-  Status: OK
-  ```
-
-> Follow [recovery](../corrupted-file-recovery.md#repair-hbase) procedures if inconsistencies are reported.
-
-Stop HBase.
-
-  ```sh
-  /opt/atsd/bin/atsd-hbase.sh stop
-  ```
-
-Execute the `jps` command and verify that the `HMaster`, `HRegionServer`, and `HQuorumPeer` processes are **not present** in the `jps` command output. 
-
-```sh
-jps
-1200 DataNode
-1308 SecondaryNameNode
-5324 Jps
-1092 NameNode
-```
-
-> If one of the above processes continues running, follow the [safe HBase shutdown](../restarting.md#stop-hbase) procedure.
-
-## Check HDFS Status
-
-Check HDFS for consistency.
-
-  ```sh
-  /opt/atsd/hadoop/bin/hadoop fsck /hbase/
-  ```
-
-  The expected message is:
-  
-  ```
-  The filesystem under path '/hbase/' is HEALTHY.
-  ```
-  
-> If corrupted files are reported, follow the [recovery](../corrupted-file-recovery.md#repair-hbase) procedure.
-
-Stop HDFS.
-
-  ```sh
-  /opt/atsd/bin/atsd-dfs.sh stop
-  ```
-
-Execute the `jps` command and verify that the the `NameNode`, `SecondaryNameNode`, and `DataNode` processes are **not  present** in the `jps` command output.
-
-## Backup
-
-Copy the ATSD installation directory to a backup directory:
-
-```sh
-cp -R /opt/atsd /home/axibase/atsd-backup
-```
 
 ## Install Java 8 on the ATSD server.
+
+Switch to root or execute the below steps under a user with sudo privileges.
 
 ### Option 1. OpenJDK Installation From Repository
 
@@ -230,6 +135,108 @@ Verify that Java 8 is set as the default executable.
 ```sh
 java -version
 javac -version
+```
+
+Switch back to the 'axibase' user.
+
+```sh
+su axibase
+```
+
+Execute the remaining steps as the 'axibase' user.
+
+## Prepare ATSD For Upgrade
+
+Stop ATSD.
+
+```sh
+/opt/atsd/bin/atsd-tsd.sh stop
+```
+
+Execute the `jps` command. Verify that the `Server` process is **not present** in the `jps` output.
+
+> If the `Server` process continues running, follow the [safe ATSD shutdown](../restarting.md#stop-atsd) procedure.
+
+Edit configuration file `/opt/atsd/atsd/conf/hadoop.properties`.
+
+  - Remove the `hbase.regionserver.lease.period` setting, if present.
+
+  - Add the `hbase.client.scanner.timeout.period` setting, if missing:
+
+    ```properties
+    hbase.zookeeper.quorum = localhost
+    hbase.rpc.timeout = 120000
+    hbase.client.scanner.timeout.period = 120000
+    ```
+
+Save the `hadoop.properties` file.  
+
+## Check HBase Status
+
+Check HBase for consistency.
+
+  ```sh
+  /opt/atsd/hbase/bin/hbase hbck
+  ```
+
+  The expected message is:
+
+  ```
+  ...
+  0 inconsistencies detected.
+  Status: OK
+  ```
+
+> Follow [recovery](../corrupted-file-recovery.md#repair-hbase) procedures if inconsistencies are reported.
+
+Stop HBase.
+
+  ```sh
+  /opt/atsd/bin/atsd-hbase.sh stop
+  ```
+
+Execute the `jps` command and verify that the `HMaster`, `HRegionServer`, and `HQuorumPeer` processes are **not present** in the `jps` command output.
+
+```sh
+jps
+1200 DataNode
+1308 SecondaryNameNode
+5324 Jps
+1092 NameNode
+```
+
+> If one of the above processes continues running, follow the [safe HBase shutdown](../restarting.md#stop-hbase) procedure.
+
+## Check HDFS Status
+
+Check HDFS for consistency.
+
+  ```sh
+  /opt/atsd/hadoop/bin/hadoop fsck /hbase/
+  ```
+
+  The expected message is:
+
+  ```
+  The filesystem under path '/hbase/' is HEALTHY.
+  ```
+
+> If corrupted files are reported, follow the [recovery](../corrupted-file-recovery.md#repair-hbase) procedure.
+
+Stop HDFS.
+
+  ```sh
+  /opt/atsd/bin/atsd-dfs.sh stop
+  ```
+
+Execute the `jps` command and verify that the the `NameNode`, `SecondaryNameNode`, and `DataNode` processes are **not  present** in the `jps` command output.
+
+## Backup
+
+Copy the ATSD installation directory to a backup directory:
+
+```sh
+cp -R /opt/atsd /home/axibase/atsd-backup
 ```
 
 ## Upgrade Hadoop
@@ -305,7 +312,7 @@ Finalize HDFS upgrade.
 /opt/atsd/hadoop/bin/hdfs dfsadmin -finalizeUpgrade
 ```
 
-The command should display the following message `Finalize upgrade successful`. 
+The command should display the following message `Finalize upgrade successful`.
 
 The `jps` command output should report `NameNode`, `SecondaryNameNode`, and `DataNode` processes as running.
 
@@ -404,7 +411,7 @@ Start all HBase services.
 
 Verify that the `jps` command output contains `HMaster`, `HRegionServer`, and `HQuorumPeer` processes.
 
-Check that ATSD tables are available in HBase using HBase console. 
+Check that ATSD tables are available in HBase using HBase console.
 
 ```sh
 /opt/atsd/hbase/bin/hbase shell
@@ -415,7 +422,7 @@ hbase(main):001:0> list
   TABLE                  
   atsd_calendar                                           
   atsd_collection                                         
-  atsd_config 
+  atsd_config
   ...
 ```
 
@@ -655,7 +662,7 @@ Log in to the ATSD web interface.
 
 Open the **SQL** tab.
 
-Execute the query and compare the row count. 
+Execute the query and compare the row count.
 
 ```sql
 SELECT COUNT(*) FROM mymetric

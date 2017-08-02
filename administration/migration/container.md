@@ -3,7 +3,7 @@
 
 These instructions describe how to migrate an Axibase Time Series Database instance running on **HBase-0.94** to a version running on the updated **HBase-1.2.5**.
 
-The instructions apply only to ATSD Docker containers.
+The instructions apply only to ATSD installed in a Docker container. For host-base installations, refer to the following [migration guide](README.md).
 
 ## Versioning
 
@@ -22,10 +22,15 @@ The instructions apply only to ATSD Docker containers.
 ### Security
 
 * Java 8 installation requires root privileges.
+* Login into the container as root:
+
+```sh
+docker start -it -u root atsd bash
+```
 
 ### Disk Space
 
-The migration procedure requires up to 30% of the reported `/opt/atsd` size to store migrated records before old data can be deleted. 
+The migration procedure requires up to 30% of the reported `/opt/atsd` size to store migrated records before old data can be deleted.
 
 Determine the size of the ATSD installation directory.
 
@@ -58,29 +63,23 @@ Calculate disk space requirements.
 
 Allocate additional disk space, if necessary.
 
+## Check Record Count for Testing
+
+Log in to the ATSD web interface.
+
+Open the **SQL** tab.
+
+Execute the following query to count rows for one of the key metrics in the ATSD server.
+
+```sql
+SELECT COUNT(*) FROM mymetric
+```
+
+The number of records should match the results after the migration.
+
 ## Install Java 8 on the ATSD server.
 
-Login in container as `root` or run java installation commands with `sudo`.
-
-### Option 1. OpenJDK Installation From Repository
-
-* Ubuntu, Debian
-
-```sh
-apt-get install openjdk-8-jdk
-```
-
-In case of error `'Unable to locate package openjdk-8-jdk'`, install Java using Option 2.
-
-* Red Hat Enterprise Linux, SLES, Centos, Oracle Linux
-
-```sh
-yum install java-1.8.0-openjdk-devel
-```
-
-In case of error `'No package java-1.8.0-openjdk-devel available.'`, install Java using Option 2.
-
-### Option 2. Oracle JDK Installation From Archive
+These steps must be executed with root privileges.
 
 Open the [Oracle Java 8 JDK Download](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) page.
 
@@ -120,34 +119,22 @@ java -version
 javac -version
 ```
 
-## Check Record Count for Testing
-
-Log in to the ATSD web interface.
-
-Open the **SQL** tab.
-
-Execute the following query to count rows for one of the key metrics in the ATSD server.
-
-```sql
-SELECT COUNT(*) FROM mymetric
-```
-
-The number of records should match the results after the migration.
-
-## Prepare ATSD For Upgrade
-
-Switch to 'axibase' user if necessary. Execute the remaining steps as the 'axibase' user.
+Switch to the 'axibase' user.
 
 ```sh
 su axibase
 ```
+
+Execute the remaining steps as the 'axibase' user.
+
+## Prepare ATSD For Upgrade
 
 Stop ATSD.
 
 ```sh
 /opt/atsd/bin/atsd-tsd.sh stop
 ```
-  
+
 Execute the `jps` command. Verify that the `Server` process is **not present** in the `jps` output.
 
 > If the `Server` process continues running, follow the [safe ATSD shutdown](../restarting.md#stop-atsd) procedure.
@@ -174,10 +161,9 @@ Check HBase for consistency.
   /opt/atsd/hbase/bin/hbase hbck
   ```
 
-  The expected message is:
-  
+The expected message is:
+
   ```
-  ...
   0 inconsistencies detected.
   Status: OK
   ```
@@ -190,7 +176,7 @@ Stop HBase.
   /opt/atsd/bin/atsd-hbase.sh stop
   ```
 
-Execute the `jps` command and verify that the `HMaster` process is **not present** in the `jps` command output. 
+Execute the `jps` command and verify that the `HMaster` process is **not present** in the output.
 
 ```sh
 jps
@@ -210,12 +196,12 @@ Check HDFS for consistency.
   /opt/atsd/hadoop/bin/hadoop fsck /hbase/
   ```
 
-  The expected message is:
-  
+The expected message is:
+
   ```
   The filesystem under path '/hbase/' is HEALTHY.
   ```
-  
+
 > If corrupted files are reported, follow the [recovery](../corrupted-file-recovery.md#repair-hbase) procedure.
 
 Stop HDFS.
@@ -307,7 +293,7 @@ Finalize HDFS upgrade.
 /opt/atsd/hadoop/bin/hdfs dfsadmin -finalizeUpgrade
 ```
 
-The command should display the following message `Finalize upgrade successful`. 
+The command should display the following message `Finalize upgrade successful`.
 
 The `jps` command output should report `NameNode`, `SecondaryNameNode`, and `DataNode` processes as running.
 
@@ -413,7 +399,7 @@ Start HBase.
 
 Verify that the `jps` command output contains `HMaster` process.
 
-Check that ATSD tables are available in HBase using HBase console. 
+Check that ATSD tables are available in HBase using HBase console.
 
 ```sh
 /opt/atsd/hbase/bin/hbase shell
@@ -424,7 +410,7 @@ hbase(main):001:0> list
   TABLE                  
   atsd_calendar                                           
   atsd_collection                                         
-  atsd_config 
+  atsd_config
   ...
 ```
 
@@ -662,7 +648,7 @@ Log in to the ATSD web interface.
 
 Open the **SQL** tab.
 
-Execute the query and compare the row count. 
+Execute the query and compare the row count.
 
 ```sql
 SELECT COUNT(*) FROM mymetric
