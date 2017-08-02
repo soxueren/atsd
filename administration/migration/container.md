@@ -129,6 +129,12 @@ Execute the remaining steps as the 'axibase' user.
 
 ## Prepare ATSD For Upgrade
 
+Change to ATSD installation directory.
+
+```sh
+cd /opt/atsd
+```
+
 Stop ATSD.
 
 ```sh
