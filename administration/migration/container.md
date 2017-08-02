@@ -25,7 +25,7 @@ The instructions apply only to ATSD installed in a Docker container. For host-ba
 * Login into the container as root:
 
 ```sh
-docker start -it -u root atsd bash
+docker exec -it -u root atsd bash
 ```
 
 ### Disk Space
