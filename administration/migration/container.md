@@ -139,27 +139,19 @@ Execute the `jps` command. Verify that the `Server` process is **not present** i
 
 > If the `Server` process continues running, follow the [safe ATSD shutdown](../restarting.md#stop-atsd) procedure.
 
-Edit configuration file `/opt/atsd/atsd/conf/hadoop.properties`.
+Remove deprecated settings.
 
-  - Remove the `hbase.regionserver.lease.period` setting, if present.
-
-  - Add the `hbase.client.scanner.timeout.period` setting, if missing:
-
-    ```properties
-    hbase.zookeeper.quorum = localhost
-    hbase.rpc.timeout = 120000
-    hbase.client.scanner.timeout.period = 120000
-    ```
-
-Save the `hadoop.properties` file.  
+```
+sed -i '/^hbase.regionserver.lease.period/d' /opt/atsd/atsd/conf/hadoop.properties
+```
 
 ## Check HBase Status
 
 Check HBase for consistency.
 
-  ```sh
-  /opt/atsd/hbase/bin/hbase hbck
-  ```
+```sh
+/opt/atsd/hbase/bin/hbase hbck
+```
 
 The expected message is:
 
