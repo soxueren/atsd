@@ -223,7 +223,7 @@ rm -rf /opt/atsd/hadoop
 Download a pre-configured Hadoop-2.6.4 archive and unpack it in the ATSD installation directory.
 
 ```sh
-curl -O -o /opt/atsd https://axibase.com/public/atsd-125-migration/hadoop.tar.gz
+curl -o /opt/atsd/hadoop.tar.gz https://axibase.com/public/atsd-125-migration/hadoop.tar.gz
 tar -xf /opt/atsd/hadoop.tar.gz -C /opt/atsd/
 ```
 
@@ -300,7 +300,7 @@ rm -rf /opt/atsd/hbase
 Download a pre-configured version of HBase-1.2.5  and unarchive it into ATSD installation directory:
 
 ```sh
-curl -O -o /opt/atsd https://axibase.com/public/atsd-125-migration/hbase.tar.gz
+curl -o /opt/atsd/hbase.tar.gz https://axibase.com/public/atsd-125-migration/hbase.tar.gz
 tar -xf /opt/atsd/hbase.tar.gz -C /opt/atsd/
 ```
 
@@ -454,7 +454,7 @@ Run the `jps` command to check that the following processes are running:
 Download the `migration.jar` file to the `/opt/atsd` directory.
 
 ```sh
-curl -O -o /opt/atsd https://axibase.com/public/atsd-125-migration/migration.tar.gz
+curl -o /opt/atsd/migration.tar.gz https://axibase.com/public/atsd-125-migration/migration.tar.gz
 ```
 
 Update the `JAVA_HOME` environment variable to Java 8.
@@ -612,7 +612,7 @@ Download ATSD application files.
 
 ```sh
 curl -o /opt/atsd/atsd/bin/atsd.16855.jar https://axibase.com/public/atsd-125-migration/atsd.16855.jar
-curl -O -o /opt/atsd https://axibase.com/public/atsd-125-migration/scripts.tar.gz
+curl -o /opt/atsd/scripts.tar.gz https://axibase.com/public/atsd-125-migration/scripts.tar.gz
 ```
 
 Replace old script files.
