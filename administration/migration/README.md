@@ -84,7 +84,7 @@ Switch to root or execute the below steps under a user with sudo privileges.
 * Ubuntu, Debian
 
 ```sh
-sudo apt-get install openjdk-8-jdk
+apt-get install openjdk-8-jdk
 ```
 
 In case of error `'Unable to locate package openjdk-8-jdk'`, install Java using Option 2.
@@ -92,7 +92,7 @@ In case of error `'Unable to locate package openjdk-8-jdk'`, install Java using 
 * Red Hat Enterprise Linux, SLES, Centos, Oracle Linux
 
 ```sh
-sudo yum install java-1.8.0-openjdk-devel
+yum install java-1.8.0-openjdk-devel
 ```
 
 In case of error `'No package java-1.8.0-openjdk-devel available.'`, install Java using Option 2.
@@ -103,31 +103,31 @@ Open the [Oracle Java 8 JDK Download](http://www.oracle.com/technetwork/java/jav
 
 Accept the license and copy the link to the latest file with the Java SE Development Kit for Linux x64, for example the `jdk-8u144-linux-x64.tar.gz` file.
 
-Copy the download URL into the `wget` command and download the `tar.gz` file.
+Copy the download URL into the `curl` command and download the `tar.gz` file.
 
 ```sh
-wget -c --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz
+curl -L -O -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz
 ```
 
 Expand the archive into the `/opt/jdk` directory.
 
 ```sh
-sudo mkdir /opt/jdk
-sudo tar -xzf jdk-8u144-linux-x64.tar.gz -C /opt/jdk
+mkdir /opt/jdk
+tar -xzf jdk-8u144-linux-x64.tar.gz -C /opt/jdk
 ```
 
 Remove prior Java versions from alternatives
 
 ```sh
-sudo update-alternatives --remove-all java
-sudo update-alternatives --remove-all javac
+update-alternatives --remove-all java
+update-alternatives --remove-all javac
 ```
 
 Add Java 8 to alternatives
 
 ```sh
-sudo update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.8.0_144/bin/java 100
-sudo update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.8.0_144/bin/javac 100
+update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.8.0_144/bin/java 100
+update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.8.0_144/bin/javac 100
 ```
 
 Verify that Java 8 is set as the default executable.
@@ -147,6 +147,12 @@ Execute the remaining steps as the 'axibase' user.
 
 ## Prepare ATSD For Upgrade
 
+Change to ATSD installation directory.
+
+```sh
+cd /opt/atsd
+```
+
 Stop ATSD.
 
 ```sh
@@ -157,43 +163,34 @@ Execute the `jps` command. Verify that the `Server` process is **not present** i
 
 > If the `Server` process continues running, follow the [safe ATSD shutdown](../restarting.md#stop-atsd) procedure.
 
-Edit configuration file `/opt/atsd/atsd/conf/hadoop.properties`.
+Remove deprecated settings.
 
-  - Remove the `hbase.regionserver.lease.period` setting, if present.
-
-  - Add the `hbase.client.scanner.timeout.period` setting, if missing:
-
-    ```properties
-    hbase.zookeeper.quorum = localhost
-    hbase.rpc.timeout = 120000
-    hbase.client.scanner.timeout.period = 120000
-    ```
-
-Save the `hadoop.properties` file.  
+```
+sed -i '/^hbase.regionserver.lease.period/d' /opt/atsd/atsd/conf/hadoop.properties
+```
 
 ## Check HBase Status
 
 Check HBase for consistency.
 
-  ```sh
-  /opt/atsd/hbase/bin/hbase hbck
-  ```
+```sh
+/opt/atsd/hbase/bin/hbase hbck
+```
 
-  The expected message is:
+The expected message is:
 
-  ```
-  ...
-  0 inconsistencies detected.
-  Status: OK
-  ```
+```
+0 inconsistencies detected.
+Status: OK
+```
 
 > Follow [recovery](../corrupted-file-recovery.md#repair-hbase) procedures if inconsistencies are reported.
 
 Stop HBase.
 
-  ```sh
-  /opt/atsd/bin/atsd-hbase.sh stop
-  ```
+```sh
+/opt/atsd/bin/atsd-hbase.sh stop
+```
 
 Execute the `jps` command and verify that the `HMaster`, `HRegionServer`, and `HQuorumPeer` processes are **not present** in the `jps` command output.
 
@@ -211,11 +208,11 @@ jps
 
 Check HDFS for consistency.
 
-  ```sh
-  /opt/atsd/hadoop/bin/hadoop fsck /hbase/
-  ```
+```sh
+/opt/atsd/hadoop/bin/hadoop fsck /hbase/
+```
 
-  The expected message is:
+The expected message is:
 
   ```
   The filesystem under path '/hbase/' is HEALTHY.
@@ -225,9 +222,9 @@ Check HDFS for consistency.
 
 Stop HDFS.
 
-  ```sh
-  /opt/atsd/bin/atsd-dfs.sh stop
-  ```
+```sh
+/opt/atsd/bin/atsd-dfs.sh stop
+```
 
 Execute the `jps` command and verify that the the `NameNode`, `SecondaryNameNode`, and `DataNode` processes are **not  present** in the `jps` command output.
 
@@ -250,7 +247,7 @@ rm -rf /opt/atsd/hadoop
 Download a pre-configured Hadoop-2.6.4 archive and unpack it in the ATSD installation directory.
 
 ```sh
-wget -P /opt/atsd https://axibase.com/public/atsd-125-migration/hadoop.tar.gz
+curl -o /opt/atsd/hadoop.tar.gz https://axibase.com/public/atsd-125-migration/hadoop.tar.gz
 tar -xf /opt/atsd/hadoop.tar.gz -C /opt/atsd/
 ```
 
@@ -327,7 +324,7 @@ rm -rf /opt/atsd/hbase
 Download a pre-configured version of HBase-1.2.5  and unarchive it into ATSD installation directory:
 
 ```sh
-wget -P /opt/atsd https://axibase.com/public/atsd-125-migration/hbase.tar.gz
+curl -o /opt/atsd/hbase.tar.gz https://axibase.com/public/atsd-125-migration/hbase.tar.gz
 tar -xf /opt/atsd/hbase.tar.gz -C /opt/atsd/
 ```
 
@@ -476,7 +473,7 @@ Run the `jps` command to check that the following processes are running:
 Download the `migration.jar` file to the `/opt/atsd` directory.
 
 ```sh
-wget -P /opt/atsd https://axibase.com/public/atsd-125-migration/migration.jar
+curl -o /opt/atsd/migration.jar https://axibase.com/public/atsd-125-migration/migration.jar
 ```
 
 Update the `JAVA_HOME` environment variable to Java 8.
@@ -633,8 +630,8 @@ rm -rf /opt/atsd/atsd/bin/atsd*.jar
 Download ATSD application files.
 
 ```sh
-wget -P /opt/atsd/atsd/bin https://axibase.com/public/atsd-125-migration/atsd.16855.jar
-wget -P /opt/atsd https://axibase.com/public/atsd-125-migration/scripts.tar.gz
+curl -o /opt/atsd/atsd/bin/atsd.16855.jar https://axibase.com/public/atsd-125-migration/atsd.16855.jar
+curl -o /opt/atsd/scripts.tar.gz https://axibase.com/public/atsd-125-migration/scripts.tar.gz
 ```
 
 Replace old script files.
