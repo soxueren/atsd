@@ -295,22 +295,19 @@ If the memory is greater than 4 gigabytes, increase HBase JVM heap size to 50% o
 export HBASE_HEAPSIZE=4096
 ```
 
-Change properties `hbase.cluster.distributed` to `false` in `/opt/atsd/hbase/conf/hbase-site.xml` file.
+Disable distributed mode in the `/opt/atsd/hbase/conf/hbase-site.xml` file.
 
 ```sh
-  <property>
-      <name>hbase.cluster.distributed</name>
-      <value>false</value>
-  </property>
+sed -i '/.*hbase.cluster.distributed.*/{n;s/.*/   <value>false<\/value>/}' /opt/atsd/hbase/conf/hbase-site.xml
 ```
 
-Upgrade HBase.
+Perform HBase upgrade.
 
 ```sh
 /opt/atsd/hbase/bin/hbase upgrade -check
 ```
 
-Review the hbase.log file:
+Review the hbase.log file.
 
 ```sh
 tail /opt/atsd/hbase/logs/hbase.log
