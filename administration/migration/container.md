@@ -77,47 +77,9 @@ SELECT COUNT(*) FROM mymetric
 
 The number of records should match the results after the migration.
 
-## Install Java 8 on the ATSD server.
+## Install Java 8
 
-These steps must be executed with root privileges.
-
-Open the [Oracle Java 8 JDK Download](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) page.
-
-Accept the license and copy the link to the latest file with the Java SE Development Kit for Linux x64, for example the `jdk-8u144-linux-x64.tar.gz` file.
-
-Copy the download URL into the `curl` command and download the `tar.gz` file.
-
-```sh
-curl -L -O -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz
-```
-
-Expand the archive into the `/opt/jdk` directory.
-
-```sh
-mkdir /opt/jdk
-tar -xzf jdk-8u144-linux-x64.tar.gz -C /opt/jdk
-```
-
-Remove prior Java versions from alternatives
-
-```sh
-update-alternatives --remove-all java
-update-alternatives --remove-all javac
-```
-
-Add Java 8 to alternatives
-
-```sh
-update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.8.0_144/bin/java 100
-update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.8.0_144/bin/javac 100
-```
-
-Verify that Java 8 is set as the default executable.
-
-```sh
-java -version
-javac -version
-```
+[Install Oracle JDK 8](install-java-8.md#oracle-jdk) on the ATSD server as described.
 
 Switch to the 'axibase' user.
 
