@@ -3,7 +3,7 @@
 
 The Axibase Time Series Database supports Structured Query Language (SQL) for retrieving time series records from the database.
 
-SQL statements can be executed interactively via the SQL Console as well as on a [schedule](#scheduler).
+SQL statements can be executed interactively via the web-based console, on [schedule](#scheduler), and using the [JDBC](https://github.com/axibase/atsd-jdbc) driver.
 
 * [Syntax](#syntax)
   * [SELECT Expression](#select-expression)
@@ -2715,7 +2715,7 @@ The result of comparing NaN with another number is indeterminate (NULL).
 
 The database filters returned records based on [entity read permissions](../../administration/user-authorization.md#entity-permissions) of the user executing the query.
 
-This means that the same query executed by different users may produce different result sets.
+As a result, the same query executed by different users may produce [different result sets](permissions.md).
 
 Scheduled SQL queries are executed with [All Entities: Read](../../administration/user-authorization.md#all-entities-permissions) permission and are not filtered.
 
@@ -3027,6 +3027,12 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [Outer Join With Aggregation](examples/outer-join-with-aggregation.md)
 - [Outer Join](examples/outer-join.md)
 
+### Security
+
+- [Permissions](permissions.md)
+
 ### Consolidated
 
 - [PI Compatibility](examples/pi.md)
+
+
