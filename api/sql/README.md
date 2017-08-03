@@ -55,7 +55,7 @@ SELECT { * | { expr [ .* | [ AS ] alias ] } }
   [ WITH ROW_NUMBER expr ]
 [ GROUP BY expr [, ...] ]
   [ HAVING expr(boolean) ]
-  [ WITH ROW_NUMBER expr ] 
+  [ WITH ROW_NUMBER expr ]
 [ WITH LAST_TIME expr ]
 [ WITH INTERPOLATE expr ]  
 [ ORDER BY expr [{ ASC | DESC }] [, ...] ]
@@ -215,9 +215,9 @@ LIMIT 1
 ```
 
 ```ls
-| datetime             | value | Is_Positive | 
-|----------------------|-------|-------------| 
-| 2017-04-17T07:29:04Z | 0     | false       | 
+| datetime             | value | Is_Positive |
+|----------------------|-------|-------------|
+| 2017-04-17T07:29:04Z | 0     | false       |
 ```
 
 ### Comments
@@ -333,15 +333,15 @@ SELECT * FROM "mpstat.cpu_busy" WHERE datetime > current_minute LIMIT 1
 ```
 
 ```ls
-| time          | datetime             | value | text | metric   | entity       | tags | 
-|---------------|----------------------|-------|------|----------|--------------|------| 
+| time          | datetime             | value | text | metric   | entity       | tags |
+|---------------|----------------------|-------|------|----------|--------------|------|
 | 1499177532000 | 2017-07-04T14:12:12Z | 5     | null | cpu_busy | nurswgvml007 | null |
 ```
 
 `JOIN` queries with an asterisk return columns for all tables referenced in the query.
 
 ```sql
-SELECT * 
+SELECT *
   FROM "mpstat.cpu_busy" t1
   FULL OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
@@ -349,10 +349,10 @@ WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
 ```
 
 ```ls
-| t1.time       | t1.datetime          | t1.value          | t1.text | t1.metric | t1.entity    | t1.tags | t2.time       | t2.datetime          | t2.value | t2.text | t2.metric | t2.entity    | t2.tags | 
-|---------------|----------------------|-------------------|---------|-----------|--------------|---------|---------------|----------------------|----------|---------|-----------|--------------|---------| 
-| 1497618006000 | 2017-06-16T13:00:06Z | 5.050000190734863 | null    | cpu_busy  | nurswgvml006 | null    | 1497618006000 | 2017-06-16T13:00:06Z | 78328    | null    | memfree   | nurswgvml006 | null    | 
-| null          | null                 | null              | null    | null      | null         | null    | 1497618021000 | 2017-06-16T13:00:21Z | 76980    | null    | memfree   | nurswgvml006 | null    | 
+| t1.time       | t1.datetime          | t1.value          | t1.text | t1.metric | t1.entity    | t1.tags | t2.time       | t2.datetime          | t2.value | t2.text | t2.metric | t2.entity    | t2.tags |
+|---------------|----------------------|-------------------|---------|-----------|--------------|---------|---------------|----------------------|----------|---------|-----------|--------------|---------|
+| 1497618006000 | 2017-06-16T13:00:06Z | 5.050000190734863 | null    | cpu_busy  | nurswgvml006 | null    | 1497618006000 | 2017-06-16T13:00:06Z | 78328    | null    | memfree   | nurswgvml006 | null    |
+| null          | null                 | null              | null    | null      | null         | null    | 1497618021000 | 2017-06-16T13:00:21Z | 76980    | null    | memfree   | nurswgvml006 | null    |
 ```
 
 In the case of a `JOIN` query, the `SELECT *` syntax can be applied to each table separately.
@@ -366,10 +366,10 @@ WHERE t1.datetime BETWEEN '2017-06-16T13:00:00Z' AND '2017-06-16T13:10:00Z'
 ```
 
 ```ls
-| t1.datetime          | t1.value          | t2.time       | t2.datetime          | t2.value | t2.text | t2.metric | t2.entity    | t2.tags | 
-|----------------------|-------------------|---------------|----------------------|----------|---------|-----------|--------------|---------| 
-| 2017-06-16T13:00:06Z | 5.050000190734863 | 1497618006000 | 2017-06-16T13:00:06Z | 78328    | null    | memfree   | nurswgvml006 | null    | 
-| null                 | null              | 1497618021000 | 2017-06-16T13:00:21Z | 76980    | null    | memfree   | nurswgvml006 | null    | 
+| t1.datetime          | t1.value          | t2.time       | t2.datetime          | t2.value | t2.text | t2.metric | t2.entity    | t2.tags |
+|----------------------|-------------------|---------------|----------------------|----------|---------|-----------|--------------|---------|
+| 2017-06-16T13:00:06Z | 5.050000190734863 | 1497618006000 | 2017-06-16T13:00:06Z | 78328    | null    | memfree   | nurswgvml006 | null    |
+| null                 | null              | 1497618021000 | 2017-06-16T13:00:21Z | 76980    | null    | memfree   | nurswgvml006 | null    |
 ```
 
 The `time` and `datetime` columns are interchangeable and can be used equivalently, for instance in the `GROUP BY` clause and the `SELECT` expression.
@@ -392,11 +392,11 @@ WHERE t1.datetime BETWEEN '2017-06-15T13:00:00Z' AND '2017-06-15T13:10:00Z'
 ```
 
 ```ls
-| datetime             | t1.datetime          | t2.datetime          | 
-|----------------------|----------------------|----------------------| 
-| 2017-06-15T13:00:01Z | 2017-06-15T13:00:01Z | null                 | 
-| 2017-06-15T13:00:12Z | null                 | 2017-06-15T13:00:12Z | 
-| 2017-06-15T13:00:17Z | 2017-06-15T13:00:17Z | null                 | 
+| datetime             | t1.datetime          | t2.datetime          |
+|----------------------|----------------------|----------------------|
+| 2017-06-15T13:00:01Z | 2017-06-15T13:00:01Z | null                 |
+| 2017-06-15T13:00:12Z | null                 | 2017-06-15T13:00:12Z |
+| 2017-06-15T13:00:17Z | 2017-06-15T13:00:17Z | null                 |
 ```
 
 ### Series Value Columns
@@ -447,16 +447,16 @@ If the property is not present, the `tags.{tag-name}` expression returns `NULL`.
 ```sql
 SELECT datetime, entity, value, tags.*, tags, tags.mount_point, tags.file_system
   FROM "df.disk_used"
-WHERE entity = 'nurswgvml010' 
+WHERE entity = 'nurswgvml010'
   AND datetime >= '2017-06-15T00:00:00Z'
   ORDER BY datetime
 ```
 
 ```ls
-| datetime             | entity       | value         | tags.file_system | tags.mount_point | tags                                   | tags.mount_point | tags.file_system | 
-|----------------------|--------------|---------------|------------------|------------------|----------------------------------------|------------------|------------------| 
-| 2017-06-15T00:00:09Z | nurswgvml010 | 8348272.0000  | /dev/sda1        | /                | file_system=/dev/sda1;mount_point=/    | /                | /dev/sda1        | 
-| 2017-06-15T00:00:09Z | nurswgvml010 | 31899136.0000 | /dev/sdb1        | /app             | file_system=/dev/sdb1;mount_point=/app | /app             | /dev/sdb1        | 
+| datetime             | entity       | value         | tags.file_system | tags.mount_point | tags                                   | tags.mount_point | tags.file_system |
+|----------------------|--------------|---------------|------------------|------------------|----------------------------------------|------------------|------------------|
+| 2017-06-15T00:00:09Z | nurswgvml010 | 8348272.0000  | /dev/sda1        | /                | file_system=/dev/sda1;mount_point=/    | /                | /dev/sda1        |
+| 2017-06-15T00:00:09Z | nurswgvml010 | 31899136.0000 | /dev/sdb1        | /app             | file_system=/dev/sdb1;mount_point=/app | /app             | /dev/sdb1        |
 ```
 
 To filter records with or without specified series tags, use the `IS NOT NULL` or `IS NULL` operators.
@@ -724,7 +724,7 @@ An interval condition determines the selection interval and is specified in the 
 
 * The `datetime` column accepts literal dates in one of the following formats:
 
-| **Name** | **Pattern** | **Examples** | 
+| **Name** | **Pattern** | **Examples** |
 |---|---|---|
 | ISO-8601 | `yyyy-MM-dd'T'HH:mm:ss[.NNN]'Z'` | 2016-12-10T15:30:00.077Z<br>2016-12-10T15:30:00Z |
 | Local | `yyyy-MM-dd HH:mm:ss[.NNNNNNNNN]` | 2016-12-10 15:30:00.077<br>2016-12-10 15:30:00 |
@@ -765,14 +765,14 @@ The `time` and `datetime` columns support [endtime](../../end-time-syntax.md) sy
 ```sql
 SELECT datetime, entity, value
   FROM mpstat.cpu_busy
-WHERE time >= NOW - 15 * MINUTE 
+WHERE time >= NOW - 15 * MINUTE
   AND datetime < CURRENT_MINUTE
 ```
 
 The `endtime` expressions are evaluated according to the server [time zone](../../api/network/timezone-list.md) which can be customized using the [`endtime()`](#endtime) function.
 
 ```sql
-SELECT value, datetime, 
+SELECT value, datetime,
   date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'UTC') AS 'UTC_datetime',
   date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'US/Pacific') AS 'PST_datetime'
 FROM mpstat.cpu_busy
@@ -782,13 +782,13 @@ AND datetime BETWEEN endtime(YESTERDAY, 'US/Pacific') AND endtime(CURRENT_DAY, '
 ```
 
 ```ls
-| value | datetime             | UTC_datetime           | PST_datetime           | 
-|-------|----------------------|------------------------|------------------------| 
-| 6.86  | 2017-06-16T07:00:05Z | 2017-06-16T07:00:05UTC | 2017-06-16T00:00:05PDT | 
-| 6.06  | 2017-06-16T07:00:21Z | 2017-06-16T07:00:21UTC | 2017-06-16T00:00:21PDT | 
+| value | datetime             | UTC_datetime           | PST_datetime           |
+|-------|----------------------|------------------------|------------------------|
+| 6.86  | 2017-06-16T07:00:05Z | 2017-06-16T07:00:05UTC | 2017-06-16T00:00:05PDT |
+| 6.06  | 2017-06-16T07:00:21Z | 2017-06-16T07:00:21UTC | 2017-06-16T00:00:21PDT |
   ....
-| 3.03  | 2017-06-17T06:59:29Z | 2017-06-17T06:59:29UTC | 2017-06-16T23:59:29PDT | 
-| 2.97  | 2017-06-17T06:59:45Z | 2017-06-17T06:59:45UTC | 2017-06-16T23:59:45PDT | 
+| 3.03  | 2017-06-17T06:59:29Z | 2017-06-17T06:59:29UTC | 2017-06-16T23:59:29PDT |
+| 2.97  | 2017-06-17T06:59:45Z | 2017-06-17T06:59:45UTC | 2017-06-16T23:59:45PDT |
 ```
 
 ### Local Time Bounderies
@@ -796,25 +796,25 @@ AND datetime BETWEEN endtime(YESTERDAY, 'US/Pacific') AND endtime(CURRENT_DAY, '
 To specify the interval range in local time, use the `date_parse` function to convert the string datetime into Unix milliseconds.
 
 ```sql
-SELECT datetime as utc_time, date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') AS local_datetime, value 
+SELECT datetime as utc_time, date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') AS local_datetime, value
   FROM mpstat.cpu_busy
   WHERE entity = 'nurswgvml007'
-    AND time >= date_parse('2017-06-15 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') 
+    AND time >= date_parse('2017-06-15 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna')
     AND  time < date_parse('2017-06-18 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna')
 ```
 
 ```ls
-| utc_time            | local_datetime      | value  | 
-|---------------------|---------------------|--------| 
-| 2017-06-15 10:00:15 | 2017-06-15 12:00:15 | 4.9500 | 
-| 2017-06-15 10:00:31 | 2017-06-15 12:00:31 | 3.0000 | 
-| 2017-06-15 10:00:47 | 2017-06-15 12:00:47 | 3.0900 | 
+| utc_time            | local_datetime      | value  |
+|---------------------|---------------------|--------|
+| 2017-06-15 10:00:15 | 2017-06-15 12:00:15 | 4.9500 |
+| 2017-06-15 10:00:31 | 2017-06-15 12:00:31 | 3.0000 |
+| 2017-06-15 10:00:47 | 2017-06-15 12:00:47 | 3.0900 |
 ```
 
 Converting a date to milliseconds and comparing it to the time column is more efficient than comparing formatted strings:
 
 ```sql
-  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') >= '2017-05-01 12:00:00' 
+  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') >= '2017-05-01 12:00:00'
 ```
 
 ### Multiple Intervals
@@ -1006,7 +1006,7 @@ For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units, the start of the day is
 * If the end time in the query is inclusive, 1 millisecond is added to the period end time since the period end time must be exclusive.
 
 ```sql
-SELECT entity, datetime, COUNT(value) 
+SELECT entity, datetime, COUNT(value)
   FROM mpstat.cpu_busy
 WHERE datetime >= '2016-06-18T10:02:00Z' AND datetime < '2016-06-18T10:32:00Z'
   AND entity = 'nurswgvml007'
@@ -1022,7 +1022,7 @@ GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
 ```
 
 ```sql
-SELECT entity, datetime, COUNT(value) 
+SELECT entity, datetime, COUNT(value)
   FROM mpstat.cpu_busy
 WHERE datetime >= '2016-06-18T10:02:00Z' AND datetime <= '2016-06-18T10:32:00Z'
   AND entity = 'nurswgvml007'
@@ -1042,7 +1042,7 @@ GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
 1 millisecond is added to the period start if the start time in the query is exclusive.
 
 ```sql
-SELECT entity, datetime, COUNT(value) 
+SELECT entity, datetime, COUNT(value)
   FROM mpstat.cpu_busy
 WHERE datetime > '2016-06-18T10:02:00Z' AND datetime < '2016-06-18T10:32:00Z'
   AND entity = 'nurswgvml007'
@@ -1131,7 +1131,7 @@ WITH INTERPOLATE(30 SECOND)
 WITH INTERPOLATE (period [, inter_func[, boundary[, fill [, alignment]]]])
 ```
 
-The `WITH INTERPOLATE` clause is included prior to the `ORDER BY` and `LIMIT` clauses. 
+The `WITH INTERPOLATE` clause is included prior to the `ORDER BY` and `LIMIT` clauses.
 
 If the query retrieves multiple series, the interpolation is applied to each series separately.
 
@@ -1166,7 +1166,7 @@ The interpolation period is specified as a `count unit`, for example `5 MINUTE`,
 | count | [**Required**] Number of time units contained in the period. |
 | unit | [**Required**] [Time unit](../../api/data/series/time-unit.md) such as `HOUR`, `DAY`, `WEEK`, `MONTH`, `QUARTER`, `YEAR`. |
 
-The `DETAIL` mode can be used to fill missing values in `FULL OUTER JOIN` queries while retaining the original timestamps of the merged series. 
+The `DETAIL` mode can be used to fill missing values in `FULL OUTER JOIN` queries while retaining the original timestamps of the merged series.
 
 ### Interpolation Function
 
@@ -1406,14 +1406,14 @@ ORDER BY row_number() DESC
 ```
 
 ```ls
-| datetime             | entity       | value | row_number() | 
-|----------------------|--------------|-------|--------------| 
-| 2017-05-30T09:04:42Z | nurswgvml007 | 1.0   | 2            | 
-| 2017-05-30T09:04:40Z | nurswgvml006 | 1.0   | 2            | 
-| 2017-05-30T09:04:38Z | nurswgvml010 | 0.2   | 2            | 
-| 2017-05-30T09:04:58Z | nurswgvml007 | 14.1  | 1            | 
-| 2017-05-30T09:04:56Z | nurswgvml006 | 1.0   | 1            | 
-| 2017-05-30T09:04:54Z | nurswgvml010 | 0.0   | 1            | 
+| datetime             | entity       | value | row_number() |
+|----------------------|--------------|-------|--------------|
+| 2017-05-30T09:04:42Z | nurswgvml007 | 1.0   | 2            |
+| 2017-05-30T09:04:40Z | nurswgvml006 | 1.0   | 2            |
+| 2017-05-30T09:04:38Z | nurswgvml010 | 0.2   | 2            |
+| 2017-05-30T09:04:58Z | nurswgvml007 | 14.1  | 1            |
+| 2017-05-30T09:04:56Z | nurswgvml006 | 1.0   | 1            |
+| 2017-05-30T09:04:54Z | nurswgvml010 | 0.0   | 1            |
 ```
 
 ### LAST_TIME Syntax
@@ -1570,7 +1570,7 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
   AND t1.entity = 'nurswgvml006'
 ```
 
-In this case, since timestamps for each of these metrics are identical and being collected by the same script, `JOIN` produces merged rows for all the detailed records. This is typically the case when multiple metrics are inserted with one command or when time is controlled externally. 
+In this case, since timestamps for each of these metrics are identical and being collected by the same script, `JOIN` produces merged rows for all the detailed records. This is typically the case when multiple metrics are inserted with one command or when time is controlled externally.
 
 ```ls
 | datetime             | entity       | t1.value | t2.value | t3.value |
@@ -1673,7 +1673,7 @@ GROUP BY t1.entity, t1.tags, t2.tags, t1.PERIOD(5 MINUTE)
 To combine all records from joined tables, use `FULL OUTER JOIN` (synonyms `OUTER JOIN` or `FULL JOIN` are also allowed), which returns rows with equal time, entity, and tags as well as rows from one table for which no rows from the other table satisfy the join condition.
 
 ```sql
-SELECT t1.datetime, t1.entity, t1.value AS cpu, 
+SELECT t1.datetime, t1.entity, t1.value AS cpu,
        t2.datetime, t2.entity, t2.value AS mem
   FROM "mpstat.cpu_busy" t1
   FULL OUTER JOIN "meminfo.memfree" t2
@@ -1686,19 +1686,19 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 `FULL OUTER JOIN` on detailed records, without period aggregation, produces rows with `NULL` columns for series that did not record any value at the specified time.
 
 ```ls
-| t1.datetime          | t1.entity    | cpu  | t2.datetime          | t2.entity    | mem   | 
-|----------------------|--------------|------|----------------------|--------------|-------| 
-| 2016-06-16T13:00:01Z | nurswgvml006 | 37   | null                 | null         | null  | 
-| null                 | null         | null | 2016-06-16T13:00:12Z | nurswgvml006 | 67932 | 
-| 2016-06-16T13:00:17Z | nurswgvml006 | 16   | null                 | null         | null  | 
-| null                 | null         | null | 2016-06-16T13:00:27Z | nurswgvml006 | 73620 | 
+| t1.datetime          | t1.entity    | cpu  | t2.datetime          | t2.entity    | mem   |
+|----------------------|--------------|------|----------------------|--------------|-------|
+| 2016-06-16T13:00:01Z | nurswgvml006 | 37   | null                 | null         | null  |
+| null                 | null         | null | 2016-06-16T13:00:12Z | nurswgvml006 | 67932 |
+| 2016-06-16T13:00:17Z | nurswgvml006 | 16   | null                 | null         | null  |
+| null                 | null         | null | 2016-06-16T13:00:27Z | nurswgvml006 | 73620 |
 ```
 
 In addition to qualified column names such as `t1.datetime`, the JOIN queries expose `datetime` and `time` columns containing a row timestamp calculated as `COALESCE(t1.datetime, t2.datetime, ...)`.
 
 ```sql
 SELECT datetime, isnull(t1.entity, t2.entity) AS server,
-  t1.datetime, t1.entity, t1.value AS cpu, 
+  t1.datetime, t1.entity, t1.value AS cpu,
   t2.datetime, t2.entity, t2.value AS mem
   FROM "mpstat.cpu_busy" t1
   FULL OUTER JOIN "meminfo.memfree" t2
@@ -1707,12 +1707,12 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 ```
 
 ```ls
-| datetime             | server       | t1.datetime          | t1.entity    | cpu  | t2.datetime          | t2.entity    | mem     | 
-|----------------------|--------------|----------------------|--------------|------|----------------------|--------------|---------| 
-| 2016-06-16T13:00:01Z | nurswgvml006 | 2016-06-16T13:00:01Z | nurswgvml006 | 37.1 | null                 | null         | null    | 
-| 2016-06-16T13:00:12Z | nurswgvml006 | null                 | null         | null | 2016-06-16T13:00:12Z | nurswgvml006 | 67932.0 | 
-| 2016-06-16T13:00:17Z | nurswgvml006 | 2016-06-16T13:00:17Z | nurswgvml006 | 16.0 | null                 | null         | null    | 
-| 2016-06-16T13:00:27Z | nurswgvml006 | null                 | null         | null | 2016-06-16T13:00:27Z | nurswgvml006 | 73620.0 | 
+| datetime             | server       | t1.datetime          | t1.entity    | cpu  | t2.datetime          | t2.entity    | mem     |
+|----------------------|--------------|----------------------|--------------|------|----------------------|--------------|---------|
+| 2016-06-16T13:00:01Z | nurswgvml006 | 2016-06-16T13:00:01Z | nurswgvml006 | 37.1 | null                 | null         | null    |
+| 2016-06-16T13:00:12Z | nurswgvml006 | null                 | null         | null | 2016-06-16T13:00:12Z | nurswgvml006 | 67932.0 |
+| 2016-06-16T13:00:17Z | nurswgvml006 | 2016-06-16T13:00:17Z | nurswgvml006 | 16.0 | null                 | null         | null    |
+| 2016-06-16T13:00:27Z | nurswgvml006 | null                 | null         | null | 2016-06-16T13:00:27Z | nurswgvml006 | 73620.0 |
 ```
 
 To regularize the merged series in join queries, apply interpolation or period aggregation using a statistical function.
@@ -1720,7 +1720,7 @@ To regularize the merged series in join queries, apply interpolation or period a
 * Interpolation
 
 ```sql
-SELECT t1.datetime, t1.entity, t1.value AS cpu, 
+SELECT t1.datetime, t1.entity, t1.value AS cpu,
        t2.datetime, t2.entity, t2.value AS mem
   FROM "mpstat.cpu_busy" t1
   FULL OUTER JOIN "meminfo.memfree" t2
@@ -1730,11 +1730,11 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 ```
 
 ```ls
-| t1.datetime          | t1.entity    | cpu  | t2.datetime          | t2.entity    | mem     | 
-|----------------------|--------------|------|----------------------|--------------|---------| 
-| 2016-06-16T13:00:00Z | nurswgvml006 | 34.9 | 2016-06-16T13:00:00Z | nurswgvml006 | 69903.2 | 
-| 2016-06-16T13:00:15Z | nurswgvml006 | 18.6 | 2016-06-16T13:00:15Z | nurswgvml006 | 69069.6 | 
-| 2016-06-16T13:00:30Z | nurswgvml006 | 3.8  | 2016-06-16T13:00:30Z | nurswgvml006 | 74041.6 | 
+| t1.datetime          | t1.entity    | cpu  | t2.datetime          | t2.entity    | mem     |
+|----------------------|--------------|------|----------------------|--------------|---------|
+| 2016-06-16T13:00:00Z | nurswgvml006 | 34.9 | 2016-06-16T13:00:00Z | nurswgvml006 | 69903.2 |
+| 2016-06-16T13:00:15Z | nurswgvml006 | 18.6 | 2016-06-16T13:00:15Z | nurswgvml006 | 69069.6 |
+| 2016-06-16T13:00:30Z | nurswgvml006 | 3.8  | 2016-06-16T13:00:30Z | nurswgvml006 | 74041.6 |
 ```
 
 * Aggregation
@@ -1742,7 +1742,7 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 The `PERIOD()` column (without the preceding table name) calculates the start of the period based on the `datetime` column.
 
 ```sql
-SELECT datetime, ISNULL(t1.entity, t2.entity) AS server, 
+SELECT datetime, ISNULL(t1.entity, t2.entity) AS server,
   AVG(t1.value) AS avg_cpu, AVG(t2.value) AS avg_mem
 FROM "mpstat.cpu_busy" t1
   FULL OUTER JOIN "meminfo.memfree" t2
@@ -1752,12 +1752,12 @@ GROUP BY PERIOD(1 MINUTE), server
 ```
 
 ```ls
-| datetime             | server       | avg_cpu | avg_mem  | 
-|----------------------|--------------|---------|----------| 
-| 2016-06-16T13:00:00Z | nurswgvml006 | 15.8    | 73147.0  | 
-| 2016-06-16T13:00:00Z | nurswgvml007 | 9.8     | 259757.0 | 
-| 2016-06-16T13:01:00Z | nurswgvml006 | 2.8     | 69925.0  | 
-| 2016-06-16T13:01:00Z | nurswgvml007 | 3.5     | 252451.0 | 
+| datetime             | server       | avg_cpu | avg_mem  |
+|----------------------|--------------|---------|----------|
+| 2016-06-16T13:00:00Z | nurswgvml006 | 15.8    | 73147.0  |
+| 2016-06-16T13:00:00Z | nurswgvml007 | 9.8     | 259757.0 |
+| 2016-06-16T13:01:00Z | nurswgvml006 | 2.8     | 69925.0  |
+| 2016-06-16T13:01:00Z | nurswgvml007 | 3.5     | 252451.0 |
 ```
 
 >  Note that records returned by a `JOIN USING entity` condition include series with a last insert date greater than the start date specified in the query.
@@ -2053,7 +2053,7 @@ EXTRACT(datepart FROM datetime | time | datetime expression)
 The evaluation is based on the server time zone. The date argument can refer to the `time` or `datetime` columns including support for the endtime syntax.
 
 ```sql
-SELECT datetime, 
+SELECT datetime,
   EXTRACT(year FROM datetime) AS 'year',
   EXTRACT(quarter FROM datetime) AS 'quarter',
   EXTRACT(month FROM datetime) AS 'month',
@@ -2063,14 +2063,14 @@ SELECT datetime,
   EXTRACT(second FROM datetime) AS 'second',
   EXTRACT(day FROM now - 1*DAY) AS 'prev_day',
   EXTRACT(month FROM now + 1*MONTH) AS 'next_month'
-FROM mpstat.cpu_busy 
+FROM mpstat.cpu_busy
   WHERE datetime > current_hour
 ```
 
 ```ls
-| datetime             | year | quarter | month | day | hour | minute | second | prev_day | next_month | 
-|----------------------|------|---------|-------|-----|------|--------|--------|----------|------------| 
-| 2017-07-29T21:00:12Z | 2017 | 3       | 7     | 29  | 21   | 0      | 12     | 28       | 8          | 
+| datetime             | year | quarter | month | day | hour | minute | second | prev_day | next_month |
+|----------------------|------|---------|-------|-----|------|--------|--------|----------|------------|
+| 2017-07-29T21:00:12Z | 2017 | 3       | 7     | 29  | 21   | 0      | 12     | 28       | 8          |
 ```
 
 ### SECOND
@@ -2147,7 +2147,7 @@ SELECT CURRENT_TIMESTAMP
 
 ```sql
 SELECT entity, datetime, value
-  FROM mpstat.cpu_busy 
+  FROM mpstat.cpu_busy
 -- same as   datetime > NOW - 1 * DAY
 WHERE datetime > CURRENT_TIME - 1 * DAY
 ```
@@ -2400,10 +2400,16 @@ ORDER BY datetime
 
 ### endtime()
 
-The `endtime()` function enables specifying a user-defined [time zone](../../api/network/timezone-list.md) when evaluating [endtime](../../end-time-syntax.md#keywords) keywords and expressions.
+The `endtime()` function evaluates the specified [endtime](../../end-time-syntax.md#keywords) expression in the user-defined [time zone](../../api/network/timezone-list.md).
 
 ```sql
-SELECT value, datetime, 
+ENDTIME(endtimeExpression, string timeZone)
+```
+
+The function can be used to perform calendar arithmetic in a time zone different from the server time zone.
+
+```sql
+SELECT value, datetime,
   date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'UTC') AS 'UTC_datetime',
   date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'US/Pacific') AS 'PST_datetime'
 FROM mpstat.cpu_busy
@@ -2414,13 +2420,13 @@ AND datetime BETWEEN endtime(YESTERDAY, 'US/Pacific') AND endtime(CURRENT_DAY, '
 ```
 
 ```ls
-| value | datetime             | UTC_datetime           | PST_datetime           | 
-|-------|----------------------|------------------------|------------------------| 
-| 6.86  | 2017-06-16T07:00:05Z | 2017-06-16T07:00:05UTC | 2017-06-16T00:00:05PDT | 
-| 6.06  | 2017-06-16T07:00:21Z | 2017-06-16T07:00:21UTC | 2017-06-16T00:00:21PDT | 
+| value | datetime             | UTC_datetime           | PST_datetime           |
+|-------|----------------------|------------------------|------------------------|
+| 6.86  | 2017-06-16T07:00:05Z | 2017-06-16T07:00:05UTC | 2017-06-16T00:00:05PDT |
+| 6.06  | 2017-06-16T07:00:21Z | 2017-06-16T07:00:21UTC | 2017-06-16T00:00:21PDT |
   ....
-| 3.03  | 2017-06-17T06:59:29Z | 2017-06-17T06:59:29UTC | 2017-06-16T23:59:29PDT | 
-| 2.97  | 2017-06-17T06:59:45Z | 2017-06-17T06:59:45UTC | 2017-06-16T23:59:45PDT | 
+| 3.03  | 2017-06-17T06:59:29Z | 2017-06-17T06:59:29UTC | 2017-06-16T23:59:29PDT |
+| 2.97  | 2017-06-17T06:59:45Z | 2017-06-17T06:59:45UTC | 2017-06-16T23:59:45PDT |
 ```
 
 ### LOOKUP
@@ -2428,7 +2434,7 @@ AND datetime BETWEEN endtime(YESTERDAY, 'US/Pacific') AND endtime(CURRENT_DAY, '
 The `LOOKUP` function translates the key into a corresponding value using the specified replacement table. The function returns a string if the replacement table exists and the key is found, and returns `NULL` otherwise. The key comparison is case-sensitive.
 
 ```sql
-LOOKUP(replacementTable, key)
+LOOKUP(string replacementTable, string key)
 ```
 
 If the key is numeric, such as in the `LOOKUP('table-1', value)` case, the number is formatted with `#.##` pattern to remove fractional `.0` parts from integer values stored as decimals.
@@ -2619,18 +2625,18 @@ The `INTERVAL_NUMBER()` function can be referenced in the `SELECT` expression. I
 
 ```sql
 SELECT datetime, count(*), INTERVAL_NUMBER()
-  FROM mpstat.cpu_busy 
+  FROM mpstat.cpu_busy
 WHERE entity = 'nurswgvml007'
-  AND (datetime BETWEEN current_day AND next_day 
+  AND (datetime BETWEEN current_day AND next_day
     OR datetime BETWEEN current_day-1*WEEK AND next_day-1*WEEK)
 GROUP BY PERIOD(1 DAY)
 ```
 
 ```ls
-| datetime             | count(*) | interval_number() | 
-|----------------------|----------|-------------------| 
-| 2017-04-09T00:00:00Z | 5393     | 1                 | 
-| 2017-04-16T00:00:00Z | 5191     | 2                 | 
+| datetime             | count(*) | interval_number() |
+|----------------------|----------|-------------------|
+| 2017-04-09T00:00:00Z | 5393     | 1                 |
+| 2017-04-16T00:00:00Z | 5191     | 2                 |
 ```
 
 ## Case Sensitivity
@@ -3034,5 +3040,3 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 ### Consolidated
 
 - [PI Compatibility](examples/pi.md)
-
-
