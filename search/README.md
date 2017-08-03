@@ -2,7 +2,11 @@
 
 ## Overview
 
-The search interface allows finding series records by matching keywords against metadata fields including:
+![](images/search.png)
+
+The search interface allows finding series by matching search keywords against series fields.
+
+## Available Series Fields
 
 * Entity name
 * Entity label
@@ -15,10 +19,6 @@ The search interface allows finding series records by matching keywords against 
 * Metric tag names
 * Metric tag values
 * Last Insert Date
-
-## Example
-
-![](resources/search-results.png)
 
 ## Syntax
 
@@ -33,7 +33,6 @@ Multiple terms can be combined together using boolean operators to form a more c
 A keyword may be prefixed with a field name to narrow the scope of the search to a particular series property, for example `entity:nurswgvml007`.
 
 If the field is not specified, the search is performed in all fields.
-
 
 ### Fields
 
