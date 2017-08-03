@@ -75,67 +75,9 @@ SELECT COUNT(*) FROM mymetric
 The number of records should match the results after the migration.
 
 
-## Install Java 8 on the ATSD server.
+## Install Java 8
 
-Switch to root or execute the below steps under a user with sudo privileges.
-
-### Option 1. OpenJDK Installation From Repository
-
-* Ubuntu, Debian
-
-```sh
-apt-get install openjdk-8-jdk
-```
-
-In case of error `'Unable to locate package openjdk-8-jdk'`, install Java using Option 2.
-
-* Red Hat Enterprise Linux, SLES, Centos, Oracle Linux
-
-```sh
-yum install java-1.8.0-openjdk-devel
-```
-
-In case of error `'No package java-1.8.0-openjdk-devel available.'`, install Java using Option 2.
-
-### Option 2. Oracle JDK Installation From Archive
-
-Open the [Oracle Java 8 JDK Download](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) page.
-
-Accept the license and copy the link to the latest file with the Java SE Development Kit for Linux x64, for example the `jdk-8u144-linux-x64.tar.gz` file.
-
-Copy the download URL into the `curl` command and download the `tar.gz` file.
-
-```sh
-curl -L -O -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz
-```
-
-Expand the archive into the `/opt/jdk` directory.
-
-```sh
-mkdir /opt/jdk
-tar -xzf jdk-8u144-linux-x64.tar.gz -C /opt/jdk
-```
-
-Remove prior Java versions from alternatives
-
-```sh
-update-alternatives --remove-all java
-update-alternatives --remove-all javac
-```
-
-Add Java 8 to alternatives
-
-```sh
-update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.8.0_144/bin/java 100
-update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.8.0_144/bin/javac 100
-```
-
-Verify that Java 8 is set as the default executable.
-
-```sh
-java -version
-javac -version
-```
+[Install Java 8](install-java-8.md) on the ATSD server as described.
 
 Switch back to the 'axibase' user.
 
