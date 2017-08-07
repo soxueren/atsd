@@ -33,7 +33,7 @@ An array of query objects containing the following filtering fields:
 * The `tagExpression` field can refer to series tags by name using `tags.{name}` syntax.
 * The series record must satisfy both the `tags` object and the `tagExpression` in order to be included in the results.
 * Supported operands: `LIKE`, `NOT LIKE`, `=`, `!=`, `>=`, `>`, `<=`, `<`.
-* Supported functions: `LOWER`, `UPPER`.
+* Supported functions: `LOWER`.
 * Supported wildcards: `?` and `*`.
 
 ```javascript
