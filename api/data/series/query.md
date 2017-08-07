@@ -25,7 +25,20 @@ An array of query objects containing the following filtering fields:
 | type | string | Type of underlying data: `HISTORY`, `FORECAST`, `FORECAST_DEVIATION`. Default: `HISTORY` |
 | metric | string | [**Required**] Metric name |
 | tags | object  | Object with `name=value` fields. <br>Matches series with tags that contain the same fields but may also include other fields. <br>Tag field values support `?` and `*` wildcards. |
+| tagExpression | string | An expression to include series that match the specified tag condition. |
 | exactMatch | boolean | `tags` match operator. _Exact_ match if true, _partial_ match if false. Default: **false**.<br>_Exact_ match selects series with exactly the same `tags` as requested.<br>_Partial_ match selects series with tags that contain requested tags but may also include other tags.|
+
+##### Tag Expression Filter
+
+* The `tagExpression` field can refer to series tags by name using `tags.{name}` syntax.
+* The series record must satisfy both the `tags` object and the `tagExpression` in order to be included in the results.
+* Supported operands: `LIKE`, `NOT LIKE`, `=`, `!=`, `>=`, `>`, `<=`, `<`.
+* Supported functions: `LOWER`, `UPPER`.
+* Supported wildcards: `?` and `*`.
+
+```javascript
+tags.location LIKE 'nur*'
+```
 
 #### Entity Filter Fields
 
@@ -188,6 +201,7 @@ curl http://localhost:8088/api/v1/series/query \
 * [Wildcard: Expression](examples/query-tags-wildcard-expression.md)
 * [Exact Tag Match](examples/query-tags-exact-match.md)
 * [Unknown Tag](examples/query-tags-unknown.md)
+* [Tag Expression](examples/query-tag-expression.md)
 
 ### Entity Filter
 
