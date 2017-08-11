@@ -14,52 +14,58 @@ The DataTableReporter is implemented as Map-Reduce job.
 
 ## Running Reporter
 
-Executed the below steps on the Yarn ResourceManager server.
+Executed the below steps on the server running the Axibase Time Series Database instance connected to the target cluster.
 
 ### Check Services
 
-* Login into the Yarn ResourceManager server.
-* Check that ResourceManager, NodeManagers and HistoryServer are launched. 
-* Check that `yarn.log-aggregation-enable` property is set to `true` in the `yarn-site.xml` file.
+* Login into Cloudera Manager.
+* Open **Hosts > Roles** and verify that ResourceManager, NodeManagers and HistoryServer services are running. 
+* Open **Settings** and check  in the `yarn-site.xml` file that `yarn.log-aggregation-enable` property is set to `true`.
 
 ### Prepare Map-Reduce Job
+
+Login into ATSD server.
 
 Download the DataTableReporter jar file.
 
 ```sh
-curl -o /opt/atsd/reporter/reporter.jar https://axibase.com/public/atsd-125-migration/reporter.jar
+curl -o /home/axibase/reporter/reporter.jar https://axibase.com/public/atsd-125-migration/reporter.jar
 ```
 
 Set `HADOOP_CLASSPATH` setting.
 
 ```sh
-export HADOOP_CLASSPATH=/usr/lib/hbase/conf:$(hbase mapredcp):/opt/atsd/reporter/reporter.jar
+export HADOOP_CLASSPATH=/opt/atsd/hbase/conf:$(/opt/atsd/hbase/bin/hbase mapredcp):/home/axibase/reporter/reporter.jar
 ```
 
-Run `echo $HADOOP_CLASSPATH` and check that HBase classes are present in output.
+Check that HBase classes are present in output.
+
+```
+
+```
 
 ### Initiate Kerberos Session
 
-Initiate a Kerberos session if Kerberos authentication is enabled.
+Initiate a Kerberos session.
 
-Use the `axibase.keytab` file [generated](../../installation/cloudera.md#generate-keytab-file-for-axibase-principal) for the `axibase` principal.
+> Use the `axibase.keytab` file [generated](../../installation/cloudera.md#generate-keytab-file-for-axibase-principal) for the `axibase` principal.
 
 ```sh
-kinit -k -t axibase.keytab axibase
+kinit -k -t /opt/atsd/atsd/conf/axibase.keytab axibase
 ```
 
 ## Run Map-Reduce Job
 
-The reporter can take a while to complete. Launch in with `nohup` command and save output to a file.
+The reporter can take a while to complete. Launch it with the `nohup` command and save output to a file.
 
 ```sh
-nohup yarn com.axibase.reporter.mapreduce.DataTableReporter &> /opt/atsd/reporter/reporter.log &
+nohup /opt/atsd/hadoop/bin/yarn com.axibase.reporter.mapreduce.DataTableReporter &> :/home/axibase/reporter/reporter.log &
 ```
 
 View the log file in order to monitor the job progress. 
 
 ```sh
-tail -F /opt/atsd/reporter/reporter.log
+tail -F /home/axibase/reporter/reporter.log
 ``` 
 
 When the job is comleted, the log will display a summary as follows:
@@ -120,11 +126,11 @@ The last two lines of the log file identify two files: `summary`, and `maximum-p
 Copy these files from HDFS to the local file system.
 
 ```sh
-hdfs dfs -copyToLocal hdfs://nurswgvml303.axibase.com:8020/user/axibase/data_table_report/000009/summary /opt/atsd/reporter/
-hdfs dfs -copyToLocal hdfs://nurswgvml303.axibase.com:8020/user/axibase/data_table_report/000009/maximum-per-region /opt/atsd/reporter/
+hdfs dfs -copyToLocal hdfs://nurswgvml303.axibase.com:8020/user/axibase/data_table_report/000009/summary.log /home/axibase/reporter/
+hdfs dfs -copyToLocal hdfs://nurswgvml303.axibase.com:8020/user/axibase/data_table_report/000009/maximum-per-region.log /home/axibase/reporter/
 ```
 
-Email `maximum-per-region`, `summary`, and `reporter.log` files to `support-atsd@axibase.com` for analysis and calculation of minimum resources required for migration.
+Email `reporter.log`, `summary.log`, and `maximum-per-region.log` files to `support-atsd@axibase.com` for review and calculation of resources required for the subsequent migration.
 
 ### Report Result Files
 
