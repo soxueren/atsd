@@ -81,7 +81,7 @@ java -version
 Add `migration.jar`, HBase configuration files, and HBase classes used by the Map-Reduce job to Java and Hadoop classpaths.
 
 ```sh
-export CLASSPATH=$CLASSPATH:/usr/lib/hbase/conf:$(hbase mapredcp):/tmp/migration/migration.jar
+export CLASSPATH=$CLASSPATH:$(hbase classpath:/tmp/migration/migration.jar
 export HADOOP_CLASSPATH=/usr/lib/hbase/conf:$(hbase mapredcp):/tmp/migration/migration.jar
 ```
 
