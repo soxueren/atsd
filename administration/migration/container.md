@@ -613,11 +613,10 @@ The number of records should match the results prior to migration.
 1. Delete backup tables in HBase.
 
 ```sh
-echo "disable_all '.*_backup'" | /opt/atsd/hbase/bin/hbase shell
-```
-
-```sh
-echo "drop_all '.*_backup'" | /opt/atsd/hbase/bin/hbase shell
+/opt/atsd/hbase/bin/hbase shell
+  hbase(main):001:0> disable 'atsd_d_backup'
+  hbase(main):002:0> drop 'atsd_d_backup'
+  hbase(main):003:0> exit
 ```
 
 2. Delete the backup directory.
