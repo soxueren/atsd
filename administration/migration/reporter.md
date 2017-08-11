@@ -59,7 +59,7 @@ kinit -k -t /opt/atsd/atsd/conf/axibase.keytab axibase
 The reporter can take a while to complete. Launch it with the `nohup` command and save output to a file.
 
 ```sh
-nohup /opt/atsd/hadoop/bin/yarn com.axibase.reporter.mapreduce.DataTableReporter &> :/home/axibase/reporter/reporter.log &
+nohup /opt/atsd/hadoop/bin/yarn com.axibase.reporter.mapreduce.DataTableReporter &> /home/axibase/reporter/reporter.log &
 ```
 
 View the log file in order to monitor the job progress. 
