@@ -22,7 +22,7 @@ If one of the compared values is `NULL`, the expression returns `NULL` and such 
 ```sql
 SELECT datetime, value, tags.tag2
   FROM "m-metric1"
-WHERE datetime >= "2016-06-19T11:00:00.000Z"
+WHERE datetime >= '2016-06-19T11:00:00.000Z'
   AND tags.tag2 > 'val2'
 ```
 
@@ -41,7 +41,7 @@ Note that a series without a `tag2` series tag, which is the same as a `NULL` va
 ```sql
 SELECT datetime, value, tags.tag2
   FROM "m-metric1"
-WHERE datetime >= "2016-06-19T11:00:00.000Z"
+WHERE datetime >= '2016-06-19T11:00:00.000Z'
   AND tags.tag2 <= 'val2'
 ```
 
@@ -99,8 +99,8 @@ Strings are compared based on the Unicode value of their characters.
 ### Query: >= to Filter by Character Unicode Value
 
 ```sql
-SELECT tags.'tag-1', tags.'tag-unicode-1' as 'unicode-1'
-  FROM 'm-order'
+SELECT tags.'tag-1', tags.'tag-unicode-1' AS "unicode-1"
+  FROM "m-order"
 WHERE entity = 'e-1'
   AND tags.'tag-1' >= 'ä'
 ORDER BY tags.'tag-1' ASC
@@ -126,8 +126,8 @@ ORDER BY tags.'tag-1' ASC
 ### Query: Numbers by Character Unicode Value if One of the Values is a Character
 
 ```sql
-SELECT tags.'tag-1', tags.'tag-unicode-1' as 'unicode-1'
-  FROM 'm-order'
+SELECT tags.'tag-1', tags.'tag-unicode-1' AS "unicode-1"
+  FROM "m-order"
 WHERE entity = 'e-1'
   AND tags.'tag-1' >= '0' AND tags.'tag-1' <= '3'
 ORDER BY tags.'tag-1' ASC
@@ -167,8 +167,8 @@ If all series tag values are guaranteed to be numeric or null, the values can be
 ```
 
 ```sql
-SELECT tags.'tag-1', tags.'tag-unicode-1' as 'unicode-1'
-  FROM 'm-order'
+SELECT tags.'tag-1', tags.'tag-unicode-1' AS "unicode-1"
+  FROM "m-order"
 WHERE entity = 'e-3'
   AND tags.'tag-1' > 1 AND tags.'tag-1' <= 20
 ORDER BY tags.'tag-1' ASC

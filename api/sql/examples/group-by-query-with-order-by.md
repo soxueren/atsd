@@ -4,7 +4,7 @@
 
 ```sql
 SELECT entity, avg(value) 
-  FROM mpstat.cpu_busy 
+  FROM "mpstat.cpu_busy" 
 WHERE datetime > now - 1*hour 
   GROUP BY entity 
   ORDER BY avg(value) DESC

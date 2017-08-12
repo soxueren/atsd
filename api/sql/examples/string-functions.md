@@ -8,7 +8,7 @@ String functions are supported in the `SELECT` expression and within `WHERE`, `G
 SELECT datetime, entity,
   concat(tags.disk, ':') AS drive, 
   value/POWER(2, 30) as used_gb
-  FROM win.disk.fs.space_used 
+  FROM "win.disk.fs.space_used" 
 WHERE datetime > current_minute
   AND LENGTH(tags.disk) = 1
 ```
@@ -28,7 +28,7 @@ WHERE datetime > current_minute
 
 ```sql
 SELECT datetime, entity, concat('nfs:', tags.file_system, '/') AS drive, value/POWER(2, 20) as used_gb
-  FROM df.disk_used 
+  FROM "df.disk_used" 
 WHERE datetime > current_hour
   AND LOCATE('.com', tags.file_system) > 0 AND LOCATE('.com', tags.file_system) < LOCATE('/', tags.file_system, 3)
   ORDER BY datetime 
@@ -48,7 +48,7 @@ WHERE datetime > current_hour
 
 ```sql
 SELECT entity, datetime, value, tags.*, concat(entity.tags.app, '@', entity.tags.environment) AS appl
-  FROM df.disk_used
+  FROM "df.disk_used"
 WHERE datetime > previous_minute
 AND REPLACE(entity.tags.environment, 'production', 'prod') = 'prod'
   WITH ROW_NUMBER(entity ORDER BY time DESC) <= 1
@@ -68,7 +68,7 @@ AND REPLACE(entity.tags.environment, 'production', 'prod') = 'prod'
 
 ```sql
 SELECT datetime, avg(value), ISNULL(entity.tags.environment, 'other') as environment
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= previous_hour
   GROUP BY PERIOD(1 hour), ISNULL(entity.tags.environment, 'other')
   ORDER BY datetime
@@ -89,7 +89,7 @@ WHERE datetime >= previous_hour
 
 ```sql
 SELECT entity, datetime, value, tags.*, concat(entity.tags.app, '@', entity.tags.environment) AS appl
-  FROM df.disk_used
+  FROM "df.disk_used"
 WHERE datetime > previous_minute
 AND REPLACE(entity.tags.environment, 'production', 'prod') = 'prod'
   WITH ROW_NUMBER(entity ORDER BY time DESC) <= 1
@@ -109,7 +109,7 @@ AND REPLACE(entity.tags.environment, 'production', 'prod') = 'prod'
 
 ```sql
 SELECT entity, datetime, value, tags.file_system, LOCATE('/', tags.file_system, 2), SUBSTR(tags.file_system, LOCATE('/', tags.file_system, 2))
-  FROM disk_used
+  FROM "df.disk_used"
 WHERE datetime > current_minute
   AND LOCATE('//', tags.file_system) != 1
 ORDER BY datetime

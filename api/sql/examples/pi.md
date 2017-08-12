@@ -77,13 +77,13 @@ WITH INTERPOLATE(5 MINUTE)
 ```sql
 SELECT t1.entity, t1.metric, t1.datetime,
   t1.value,
-  t2.text AS 'Elapsed Time',
-  t3.text AS 'Unit Batch Id',
-  t4.text AS 'Unit Procedure'
+  t2.text AS "Elapsed Time",
+  t3.text AS "Unit Batch Id",
+  t4.text AS "Unit Procedure"
 FROM atsd_series t1
-  JOIN 'TV6.Elapsed_Time' t2
-  JOIN 'TV6.Unit_BatchID' t3
-  JOIN 'TV6.Unit_Procedure' t4
+  JOIN "TV6.Elapsed_Time" t2
+  JOIN "TV6.Unit_BatchID" t3
+  JOIN "TV6.Unit_Procedure" t4
 WHERE t1.metric LIKE 'tv6.pack*'
   AND t1.datetime BETWEEN '2016-10-04T00:00:00Z' AND '2016-10-05T00:00:00Z'
   AND t1.entity = 'br-1211'
@@ -118,7 +118,7 @@ WITH INTERPOLATE(1 MINUTE, LINEAR, INNER, NONE, START_TIME)
 
 ```sql
 SELECT datetime, text, LAG(text)
-  FROM 'TV6.Unit_BatchID'
+  FROM "TV6.Unit_BatchID"
 WHERE entity = 'br-1211' AND (text = '800' OR LAG(text) = '800')
 ```
 
@@ -141,17 +141,17 @@ WHERE entity = 'br-1211' AND (text = '800' OR LAG(text) = '800')
 ```sql
 SELECT t1.entity, t1.metric, t1.datetime,
   t1.value,
-  t2.text AS 'Elapsed Time',
-  t3.text AS 'Unit Batch Id',
-  t4.text AS 'Unit Procedure'
+  t2.text AS "Elapsed Time",
+  t3.text AS "Unit Batch Id",
+  t4.text AS "Unit Procedure"
 FROM atsd_series t1
-  JOIN 'TV6.Elapsed_Time' t2
-  JOIN 'TV6.Unit_BatchID' t3
-  JOIN 'TV6.Unit_Procedure' t4
+  JOIN "TV6.Elapsed_Time" t2
+  JOIN "TV6.Unit_BatchID" t3
+  JOIN "TV6.Unit_Procedure" t4
 WHERE t1.metric LIKE 'tv6.pack*'
   -- subquery in the datatime condition
   AND t1.datetime BETWEEN (
-    SELECT datetime FROM 'TV6.Unit_BatchID'
+    SELECT datetime FROM "TV6.Unit_BatchID"
     WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800')
   )
   AND t1.entity = 'br-1211'
@@ -189,20 +189,20 @@ WITH INTERPOLATE(1 MINUTE, LINEAR, OUTER, EXTEND, START_TIME)
 ```sql
 SELECT t1.entity, t1.metric, t1.datetime,
   t1.value,
-  t2.text AS 'Elapsed Time',
-  t3.text AS 'Unit Batch Id',
-  t4.text AS 'Unit Procedure',
+  t2.text AS "Elapsed Time",
+  t3.text AS "Unit Batch Id",
+  t4.text AS "Unit Procedure",
 CASE interval_number()
   WHEN 0 THEN t3.text
   ELSE CONCAT(t3.text, '.', interval_number())
-END AS 'Unit Batch.#'
+END AS "Unit Batch.#"
 FROM atsd_series t1
-  JOIN 'TV6.Elapsed_Time' t2
-  JOIN 'TV6.Unit_BatchID' t3
-  JOIN 'TV6.Unit_Procedure' t4
+  JOIN "TV6.Elapsed_Time" t2
+  JOIN "TV6.Unit_BatchID" t3
+  JOIN "TV6.Unit_Procedure" t4
 WHERE t1.metric LIKE 'tv6.pack*'
   AND t1.datetime BETWEEN (
-      SELECT datetime FROM 'TV6.Unit_BatchID'
+      SELECT datetime FROM "TV6.Unit_BatchID"
       WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800')
   )
   AND t1.entity = 'br-1211'
@@ -238,7 +238,7 @@ WITH INTERPOLATE(1 MINUTE, LINEAR, OUTER, EXTEND, START_TIME)
 * The PERIOD aggregation supports user-defined timezones.
 
 ```sql
-SELECT datetime, date_format(time, "yyyy-MM-dd HH:mm:ss z", "US/Eastern") AS 'Local Date',
+SELECT datetime, date_format(time, 'yyyy-MM-dd HH:mm:ss z', "US/Eastern") AS "Local Date",
   max(value), min(value)
   FROM atsd_series
 WHERE metric LIKE 'tv6.p*'
@@ -257,15 +257,15 @@ WHERE metric LIKE 'tv6.p*'
 
 ```sql
 SELECT t1.metric,
-  t4.text AS 'Unit Procedure',
+  t4.text AS "Unit Procedure",
   min(t1.value), avg(t1.value), max(t1.value)
 FROM atsd_series t1
-  JOIN 'TV6.Elapsed_Time' t2
-  JOIN 'TV6.Unit_BatchID' t3
-  JOIN 'TV6.Unit_Procedure' t4
+  JOIN "TV6.Elapsed_Time" t2
+  JOIN "TV6.Unit_BatchID" t3
+  JOIN "TV6.Unit_Procedure" t4
 WHERE t1.metric LIKE 'tv6.pack*'
   AND t1.datetime BETWEEN (
-    SELECT datetime FROM 'TV6.Unit_BatchID'
+    SELECT datetime FROM "TV6.Unit_BatchID"
     WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800')
   )
   AND t1.entity = 'br-1211'

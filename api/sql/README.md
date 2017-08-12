@@ -94,8 +94,6 @@ WHERE datetime >= '2017-06-15T00:00:00Z'
 
 In the example above, the "mpstat.cpu_busy" table contains records for the `mpstat.cpu_busy` metric.
 
-Metric names in the `FROM` clause that contain reserved keywords, identifiers or special characters such as `-`,`*`,`,` should be enclosed in quotes or double quotes, for example, `FROM 'disk-io'`, `FROM "select"`, `FROM 'cpu.avg.percent'`.
-
 > Virtual tables are currently supported only for series. Access to properties, messages, and alerts is currently not available.
 
 #### `atsd_series` Table
@@ -210,7 +208,7 @@ The `BOOLEAN` type is produced by including boolean comparisons in the `SELECT` 
 
 ```sql
 SELECT datetime, value, value > 0 AS Is_Positive
- FROM mpstat.cpu_busy
+ FROM "mpstat.cpu_busy"
 LIMIT 1
 ```
 
@@ -304,18 +302,6 @@ Virtual tables have the same pre-defined columns since all the the underlying da
 |`entity.groups`  |string   | List of entity groups, to which the entity belongs, separated by semi-colon `;`.|
 |`entity.enabled` |boolean  | Enabled status. Incoming data is discarded for disabled entity.|
 
-The `{name}` in tag columns `tags.{name}`, `entity.tags.{name}`, and `metric.tags.{name}` must be enclosed in quotes or double quotes if `{name}` equals a reserved column or [keyword](#keywords), an SQL identifier, or contains special characters such as `-`,`*`,`,`.
-
-```java
-# enquote reserved column name
-tags.'value'
-# enquote SQL identifier
-tags.'select'
-# enquote tag name containing special character
-entity.tags.'file-system'
-```
-
-Quotes and double quotes in column names can be escaped by doubling the quote symbol. For example, if the tag name is `hello"world`, the column name can be referred to as follows: `tags."hello""world"`.
 
 New columns can be created by applying functions and arithmetic expressions to existing columns. The computed columns can be included both in the `SELECT` expression, as well as in the `WHERE`, `HAVING`, and `ORDER BY` clauses.
 
@@ -323,7 +309,8 @@ New columns can be created by applying functions and arithmetic expressions to e
 SELECT t1.datetime, t1.entity, t1.value + t2.value AS cpu_sysusr
   FROM "mpstat.cpu_system" t1
   JOIN "mpstat.cpu_user" t2
-WHERE t1.datetime >= '2017-06-15T00:00:00Z'
+WHERE t1.datetime >= '2017-06-15T00:00:00Z' 
+  AND cpu_sysusr > 10
 ```
 
 The list of all predefined columns can be requested with the `SELECT *` syntax, except for aggregation queries with the `GROUP BY` clause.
@@ -580,7 +567,7 @@ entity.groups NOT IN ('group-1', 'group-1') -- entity does NOT belong to any of 
 'group-1' NOT IN entity.groups -- entity does NOT belong to the specified group
 ```
 
-Entity Group names are case-sensitive.
+Entity group names are case-sensitive.
 
 ```sql
 SELECT datetime, entity, value, entity.groups
@@ -614,18 +601,53 @@ Columns referenced in the `SELECT` expression must be included in the `GROUP BY`
 
 Versioning columns (`version_status`, `version_source`, `version_time`, `version_datetime`) are currently not supported.
 
+## Quoting Identifiers
+
+Use **double quotation marks** to enquote a table name, column name, and alias if it contains a reserved column name, a [keyword](#keywords), an SQL identifier, a function name, or a special character including whitespace, `.`,`+`,`-`,`*`,`/`,`,`,`"`,`'`.
+
+
+```sql
+-- Special character
+SELECT entity.tags."file-system" FROM "disk.io" 
+
+-- Reserved column name
+SELECT value*5 AS "value"
+
+-- SQL identifier
+SELECT tags.action AS "select"
+
+-- Function name: avg
+SELECT * FROM "avg"
+```
+
+## Escaping
+
+Quotes and double quotes can be escaped by doubling the quote symbol.
+
+```sql
+-- Alias: The "main" entity
+SELECT entity AS "The ""main"" entity"
+
+-- Tag: hello"world
+SELECT tags."hello""world"
+
+-- Literal: yyyy-mm-dd'T'HH:mm:ss'Z'
+SELECT date_format(time, 'yyyy-mm-dd''T''HH:mm:ss''Z''')
+```
+
 ## Aliases
 
-Table and column aliases can be unquoted or enclosed in quotes or double-quotes.
+Table and column aliases can be unquoted or enclosed in double quotation marks.
 
 Unquoted alias should start with letter `[a-zA-Z]`, followed by a letter, digit or underscore.
 
 The `AS` keyword is optional.
 
 ```sql
-SELECT tbl.value*100 AS "cpu_percent", tbl.datetime 'sample-date'
+SELECT tbl.value*100 AS "cpu_percent", tbl.datetime "sample-date"
   FROM "mpstat.cpu_busy" tbl
 WHERE datetime >= NOW - 1*MINUTE
+  ORDER BY "sample-date"
 ```
 
 For aliased columns, the underlying column and table names, or expression text, are included in table schema section of the metadata.
@@ -731,7 +753,7 @@ An interval condition determines the selection interval and is specified in the 
 
 ```sql
 SELECT datetime, entity, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime BETWEEN '2016-12-10T14:00:15Z' AND '2016-12-10T14:30:00.077Z'
 -- WHERE datetime BETWEEN '2016-12-10 14:00:15' AND '2016-12-11 14:30:00.077'
 ```
@@ -742,7 +764,7 @@ The dates in the Local format are evaluated based on the server time zone.
 
 ```sql
 SELECT time, entity, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE time >= 1500300000000
 -- 1500300000000 is equal to 2017-07-17 14:00:00 UTC
 ```
@@ -771,7 +793,7 @@ The `time` and `datetime` columns support [endtime](../../end-time-syntax.md) sy
 
 ```sql
 SELECT datetime, entity, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE time >= NOW - 15 * MINUTE
   AND datetime < CURRENT_MINUTE
 ```
@@ -780,9 +802,9 @@ The `endtime` expressions are evaluated according to the server [time zone](../.
 
 ```sql
 SELECT value, datetime,
-  date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'UTC') AS 'UTC_datetime',
-  date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'US/Pacific') AS 'PST_datetime'
-FROM mpstat.cpu_busy
+  date_format(time, 'yyyy-MM-dd''T''HH:mm:ssz', 'UTC') AS "UTC_datetime",
+  date_format(time, 'yyyy-MM-dd''T''HH:mm:ssz', 'US/Pacific') AS "PST_datetime"
+FROM "mpstat.cpu_busy"
   WHERE entity = 'nurswgvml007'
 AND datetime BETWEEN endtime(YESTERDAY, 'US/Pacific') AND endtime(CURRENT_DAY, 'US/Pacific')
   ORDER BY datetime
@@ -804,7 +826,7 @@ To specify the interval range in local time, use the `date_parse` function to co
 
 ```sql
 SELECT datetime as utc_time, date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') AS local_datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
   WHERE entity = 'nurswgvml007'
     AND time >= date_parse('2017-06-15 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna')
     AND  time < date_parse('2017-06-18 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna')
@@ -830,7 +852,7 @@ Multiple time intervals can be selected using the `OR` operator.
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND (datetime BETWEEN '2017-04-02T14:00:00Z' AND '2017-04-02T14:01:00Z'
     OR datetime BETWEEN '2017-04-04T16:00:00Z' AND '2017-04-04T16:01:00Z')
@@ -858,9 +880,9 @@ As an alternative to specifying the lower and upper boundaries manually, the `BE
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
-  AND datetime BETWEEN (SELECT datetime FROM 'maintenance-rfc'
+  AND datetime BETWEEN (SELECT datetime FROM "maintenance-rfc"
   WHERE entity = 'nurswgvml007'
 ORDER BY datetime)
 ```
@@ -915,7 +937,7 @@ PERIOD(1 DAY, "US/Eastern")
 
 ```sql
 SELECT entity, date_format(PERIOD(5 MINUTE, END_TIME)), AVG(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= CURRENT_HOUR AND datetime < NEXT_HOUR
   GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 ```
@@ -924,7 +946,7 @@ The period specified in the `GROUP BY` clause can be entered without option fiel
 
 ```sql
 SELECT entity, PERIOD(5 MINUTE), AVG(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= CURRENT_HOUR AND datetime < NEXT_HOUR
   GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 ```
@@ -933,7 +955,7 @@ In grouping queries, the `time` column returns the same value as `PERIOD()`, and
 
 ```sql
 SELECT entity, datetime, AVG(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= CURRENT_HOUR AND datetime < NEXT_HOUR
   GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
 ```
@@ -955,7 +977,7 @@ For example, `period(1 HOUR)` initializes 1-hour long periods starting at `0` mi
 
 ```sql
 SELECT entity, datetime, COUNT(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= now-1*HOUR AND datetime < now
   AND entity = 'nurswgvml006'
 GROUP BY entity, PERIOD(5 MINUTE, END_TIME)
@@ -1014,7 +1036,7 @@ For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units, the start of the day is
 
 ```sql
 SELECT entity, datetime, COUNT(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-18T10:02:00Z' AND datetime < '2016-06-18T10:32:00Z'
   AND entity = 'nurswgvml007'
 GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
@@ -1030,7 +1052,7 @@ GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
 
 ```sql
 SELECT entity, datetime, COUNT(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-18T10:02:00Z' AND datetime <= '2016-06-18T10:32:00Z'
   AND entity = 'nurswgvml007'
 GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
@@ -1050,7 +1072,7 @@ GROUP BY entity, PERIOD(10 MINUTE, END_TIME)
 
 ```sql
 SELECT entity, datetime, COUNT(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime > '2016-06-18T10:02:00Z' AND datetime < '2016-06-18T10:32:00Z'
   AND entity = 'nurswgvml007'
 GROUP BY entity, PERIOD(10 MINUTE, START_TIME)
@@ -1079,7 +1101,7 @@ The behavior can be changed by referencing an interpolation function as part of 
 
 ```sql
 SELECT entity, period(5 MINUTE), AVG(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
   WHERE datetime >= CURRENT_HOUR
 GROUP BY entity, period(5 MINUTE, LINEAR)
 ```
@@ -1117,7 +1139,7 @@ The underlying transformation applies a linear interpolation or step function to
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND datetime >= '2016-09-17T08:00:00Z' AND datetime < '2016-09-17T08:02:00Z'
 WITH INTERPOLATE(30 SECOND)
@@ -1326,7 +1348,7 @@ The assigned row numbers can be used to filter rows within each partition for th
 
 ```sql
 SELECT entity, datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-18T12:00:00Z' AND datetime < '2016-06-18T12:00:30Z'
   WITH ROW_NUMBER(entity ORDER BY time) <= 1
 ORDER BY entity, datetime
@@ -1348,7 +1370,7 @@ ORDER BY entity, datetime
 ```sql
 SELECT entity,
     AVG(value) --average is calculated for top-10 rows in each partition
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= CURRENT_HOUR
   WITH ROW_NUMBER(entity ORDER BY time DESC) <= 10
 GROUP BY entity
@@ -1367,8 +1389,8 @@ GROUP BY entity
 The `ROW_NUMBER` function can be included after the `WHERE` clause, as well as after the `GROUP BY` clause, in which case it is applied to grouped rows.
 
 ```sql
-SELECT entity, tags, MAX(value) -  MIN(value) AS 'Diff'
-  FROM df.disk_used
+SELECT entity, tags, MAX(value) -  MIN(value) AS "Diff"
+  FROM "df.disk_used"
 WHERE datetime >= CURRENT_DAY
   -- fetch last 100 records for each series
   WITH ROW_NUMBER(entity, tags ORDER BY time DESC) <= 100
@@ -1383,7 +1405,7 @@ If the `GROUP BY` clause contains a `PERIOD` column, the `ROW_NUMBER` function a
 
 ```sql
 SELECT  entity, tags.*, datetime, avg(value), count(value), first(value), last(value)
-  FROM df.disk_used
+  FROM "df.disk_used"
 WHERE datetime >= '2017-01-09T00:00:00Z' AND datetime < '2017-01-09T02:00:00Z'
   -- group by series (entity+tags) and 15-minute period
   GROUP BY entity, tags, period(15 minute)
@@ -1406,7 +1428,7 @@ The `row_number()` column, without arguments, can be included in the `SELECT` ex
 
 ```sql
 SELECT datetime, entity, value, row_number()
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime BETWEEN '2017-05-30T09:00:00Z' AND '2017-05-30T09:05:00Z'
   WITH ROW_NUMBER(entity ORDER BY datetime DESC) <= 2
 ORDER BY row_number() DESC
@@ -1444,7 +1466,7 @@ Calculate the `average` for the most recent hour for each series that received d
 
 ```sql
 SELECT entity, AVG(value), date_format(MAX(time)) AS Last_Date
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= CURRENT_MONTH
   GROUP BY entity
 WITH time >= last_time - 1*HOUR
@@ -1535,7 +1557,7 @@ The limit applies to the number of rows returned by the database, not the number
 
 ```sql
 SELECT entity, AVG(value)
-  FROM 'm-1'
+  FROM "m-1"
 GROUP BY entity
   ORDER BY AVG(value) DESC
 LIMIT 1
@@ -1551,12 +1573,12 @@ The syntax follows the SQL-92 notation using the `JOIN` clause as opposed to enu
 
 Since joined tables in ATSD always contain the same predefined columns, an `ON` condition does not have to be specified explicitly and can be omitted:
 
-| **Concise Syntax** | **Standard Syntax** |
+| **Compact Syntax** | **Standard Syntax** |
 |:---|---|
-| `... JOIN 'cpu_busy' t2` | JOIN 'cpu_busy' t2 ON t1.time AND t2.time AND t1.entity = t2.entity AND t1.tags = t2.tags |
-| `... JOIN 'cpu_busy' t2 USING ENTITY` | JOIN 'cpu_busy' t2 ON t1.time AND t2.time AND t1.entity = t2.entity |
-| `... FULL OUTER JOIN 'cpu_busy' t2` | FULL OUTER JOIN 'cpu_busy' t2 ON t1.time AND t2.time AND t1.entity = t2.entity AND t1.tags = t2.tags |
-| `... FULL OUTER JOIN 'cpu_busy' t2 USING ENTITY` | FULL OUTER JOIN 'cpu_busy' t2 ON t1.time AND t2.time AND t1.entity = t2.entity |
+| `... JOIN speed t2` | JOIN speed t2 ON t1.time AND t2.time AND t1.entity = t2.entity AND t1.tags = t2.tags |
+| `... JOIN speed t2 USING ENTITY` | JOIN speed t2 ON t1.time AND t2.time AND t1.entity = t2.entity |
+| `... FULL OUTER JOIN speed t2` | FULL OUTER JOIN speed t2 ON t1.time AND t2.time AND t1.entity = t2.entity AND t1.tags = t2.tags |
+| `... FULL OUTER JOIN speed t2 USING ENTITY` | FULL OUTER JOIN speed t2 ON t1.time AND t2.time AND t1.entity = t2.entity |
 
 The `ON` condition, if specified, can refer only to `entity`, `time/datetime`, and `tags` columns.
 
@@ -1566,7 +1588,7 @@ Because `JOIN` queries combine rows from multiple tables with the same columns, 
 
 The `JOIN` clause allows merging records for multiple metrics collected by the same entity into one result set, even if underlying series are not chronologically synchronized.
 
-The default `JOIN` condition includes entity, time, and series tags. The condition can be modified with the `USING entity` clause in which case series tags are ignored, and records are joined on entity and time instead.
+The default `JOIN` condition includes entity, time, and series tags. The condition can be modified with the `USING ENTITY` clause in which case series tags are ignored, and records are joined on entity and time instead.
 
 ```sql
 SELECT t1.datetime, t1.entity, t1.value, t2.value, t3.value
@@ -1613,8 +1635,8 @@ To join irregular series use `GROUP BY PERIOD` or `WITH INTERPOLATE` clauses to 
 ```sql
 SELECT t1.entity, t1.datetime, t1.value,
        t2.entity, t2.datetime, t2.value
-FROM mpstat.cpu_busy t1
-  JOIN meminfo.memfree t2
+FROM "mpstat.cpu_busy" t1
+  JOIN "meminfo.memfree" t2
 WHERE t1.datetime BETWEEN '2017-04-08T07:01:00Z' AND '2017-04-08T07:02:00Z'
   AND t1.entity = 'nurswgvml006'
   WITH INTERPOLATE(15 SECOND, PREVIOUS, OUTER)
@@ -1649,20 +1671,20 @@ WHERE t1.datetime >= '2016-06-16T13:00:00Z' AND t1.datetime < '2016-06-16T13:10:
 | 2016-06-16T13:00:59Z | nurswgvml006 | 1743057408.0 | 83.1     | //u113452.nurstr003/backup      | /mnt/u113452        |
 ```
 
-### JOIN with USING entity
+### JOIN with USING ENTITY
 
-`USING entity` modifies the default `JOIN` condition.
+The `USING ENTITY` clause modifies the default `JOIN` condition.
 
-When `USING entity` is specified, rows are joined by entity and time instead of entity, time, and series tags.
+When `USING ENTITY` is specified, rows are joined by entity and time instead of entity, time, and series tags.
 
-This allows merging of virtual tables with different tag columns, including merging a series without tag columns with a series containing multiple tag columns.
+This allows merging of tables with different tag columns, including merging a series without tag columns with a series containing multiple tag columns.
 
-`USING entity` is supported in both inner and outer `JOIN` queries.
+`USING ENTITY` is supported in both inner and outer `JOIN` queries.
 
 ```sql
 SELECT t1.entity, t1.datetime, AVG(t1.value), AVG(t2.value), t1.tags.*, t2.tags.*
-  FROM mpstat.cpu_busy t1
-  JOIN USING entity df.disk_used t2
+  FROM "mpstat.cpu_busy" t1
+  JOIN USING ENTITY "df.disk_used" t2
 WHERE t1.datetime >= CURRENT_HOUR
   AND t1.entity = 'nurswgvml007'
 GROUP BY t1.entity, t1.tags, t2.tags, t1.PERIOD(5 MINUTE)
@@ -1767,16 +1789,16 @@ GROUP BY PERIOD(1 MINUTE), server
 | 2016-06-16T13:01:00Z | nurswgvml007 | 3.5     | 252451.0 |
 ```
 
->  Note that records returned by a `JOIN USING entity` condition include series with a last insert date greater than the start date specified in the query.
+>  Note that records returned by a `JOIN USING ENTITY` condition include series with a last insert date greater than the start date specified in the query.
 
 ### JOIN with `atsd_series` table
 
 When metrics selected from the `atsd_series` table are joined with metrics referenced in the query, each `atsd_series` metric is joined with a referenced metric separately.
 
 ```sql
-SELECT base.entity, base.metric, base.datetime, base.value, t1.value AS 'cpu_sys'
+SELECT base.entity, base.metric, base.datetime, base.value, t1.value AS "cpu_sys"
   FROM atsd_series base
-  JOIN mpstat.cpu_system t1
+  JOIN "mpstat.cpu_system" t1
 WHERE base.metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user')
   AND base.entity = 'nurswgvml007'
   AND base.datetime > PREVIOUS_MINUTE
@@ -1838,7 +1860,7 @@ The functions accept the `value` column or a numeric expression as an argument, 
 
 ```sql
 SELECT entity, AVG(value), MAX(value), COUNT(*), PERCENTILE(80, value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime > current_hour
   GROUP BY entity
 ```
@@ -1883,13 +1905,13 @@ The `CORREL` correlation function accepts two numeric expressions as arguments (
 
 ```sql
 SELECT tu.entity,
-  CORREL(tu.value, ts.value) AS 'CORR-user-sys',
-  CORREL(tu.value, tw.value) AS 'CORR-user-iowait',
-  CORREL(ts.value, tw.value) AS 'CORR-sys-iowait',
+  CORREL(tu.value, ts.value) AS "CORR-user-sys",
+  CORREL(tu.value, tw.value) AS "CORR-user-iowait",
+  CORREL(ts.value, tw.value) AS "CORR-sys-iowait",
   stddev(tu.value),
   stddev(ts.value),
   stddev(tw.value)
-FROM mpstat.cpu_user tu JOIN mpstat.cpu_system ts JOIN mpstat.cpu_iowait tw
+FROM "mpstat.cpu_user" tu JOIN "mpstat.cpu_system" ts JOIN "mpstat.cpu_iowait" tw
   WHERE tu.datetime >= NOW - 5 * MINUTE
 GROUP BY tu.entity
 ```
@@ -1929,19 +1951,19 @@ Examples:
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00')`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss ZZ', 'PDT')`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss', AUTO)`
-* `CEIL(CAST(date_format(time, 'M') AS NUMBER)/3) AS 'Quarter'`
+* `CEIL(CAST(date_format(time, 'M') AS NUMBER)/3) AS "Quarter"`
 
 ```sql
-SELECT entity, datetime, metric.timeZone AS 'Metric TZ', entity.timeZone AS 'Entity TZ',
-  date_format(time) AS 'default',
-  date_format(time, "yyyy-MM-dd'T'HH:mm:ssZZ") AS 'ISO 8601',
-  date_format(time, 'yyyy-MM-dd HH:mm:ss') AS 'Local Database',
-  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00') AS 'GMT Offset',  
-  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PDT') AS 'PDT',
-  date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', 'PDT') AS ' PDT t/z',
-  date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', AUTO) AS 'AUTO: CST', -- nurswgvml006 is in CST
-  CEIL(CAST(date_format(time, 'M') AS NUMBER)/3) AS 'Quarter'
-FROM mpstat.cpu_busy
+SELECT entity, datetime, metric.timeZone AS "Metric TZ", entity.timeZone AS "Entity TZ",
+  date_format(time) AS "default",
+  date_format(time, 'yyyy-MM-dd''T''HH:mm:ssZZ') AS "ISO 8601",
+  date_format(time, 'yyyy-MM-dd HH:mm:ss') AS "Local Database",
+  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00') AS "GMT Offset",  
+  date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PDT') AS "PDT",
+  date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', 'PDT') AS " PDT t/z",
+  date_format(time, 'yyyy-MM-dd HH:mm:ssZZ', AUTO) AS "AUTO: CST", -- nurswgvml006 is in CST
+  CEIL(CAST(date_format(time, 'M') AS NUMBER)/3) AS "Quarter"
+FROM "mpstat.cpu_busy"
   WHERE datetime >= NOW - 5*MINUTE
   AND entity = 'nurswgvml006'
   LIMIT 1
@@ -1954,24 +1976,24 @@ FROM mpstat.cpu_busy
 ```
 
 ```ls
-| format                                                 | date_format value          |
-|--------------------------------------------------------|----------------------------|
-| time                                                   | 1468411675000              |
-| date_format(time)                                      | 2016-07-13T12:07:55.000Z   |
-| date_format(time+60000)                                | 2016-07-13T12:08:55.000Z   |
-| date_format(time,'yyyy-MM-dd'T'HH:mm:ss.SSS'Z'','UTC') | 2016-07-13T12:07:55.000Z   |
-| date_format(time,'yyyy-MM-dd HH:mm:ss')                | 2016-07-13 12:07:55        |
-| date_format(time,'yyyy-MM-dd HH:mm:ss','PST')          | 2016-07-13 05:07:55        |
-| date_format(time,'yyyy-MM-dd HH:mm:ss','GMT-08:00')    | 2016-07-13 04:07:55        |
-| date_format(time,'yyyy-MM-dd HH:mm:ssZ','PST')         | 2016-07-13 05:07:55-0700    |
-| date_format(time,'yyyy-MM-dd HH:mm:ssZZ','PST')        | 2016-07-13 05:07:55-07:00   |
+| format                                                    | date_format value          |
+|-----------------------------------------------------------|----------------------------|
+| time                                                      | 1468411675000              |
+| date_format(time)                                         | 2016-07-13T12:07:55.000Z   |
+| date_format(time+60000)                                   | 2016-07-13T12:08:55.000Z   |
+| date_format(time,'yyyy-MM-dd''T''HH:mm:ss.SSS''Z'','UTC') | 2016-07-13T12:07:55.000Z   |
+| date_format(time,'yyyy-MM-dd HH:mm:ss')                   | 2016-07-13 12:07:55        |
+| date_format(time,'yyyy-MM-dd HH:mm:ss','PST')             | 2016-07-13 05:07:55        |
+| date_format(time,'yyyy-MM-dd HH:mm:ss','GMT-08:00')       | 2016-07-13 04:07:55        |
+| date_format(time,'yyyy-MM-dd HH:mm:ssZ','PST')            | 2016-07-13 05:07:55-0700   |
+| date_format(time,'yyyy-MM-dd HH:mm:ssZZ','PST')           | 2016-07-13 05:07:55-07:00  |
 ```
 
 The `date_format` function can also be used to print period start and end times:
 
 ```sql
 SELECT datetime AS period_start, date_format(time+60*60000) AS period_end, AVG(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND datetime >= CURRENT_DAY
 GROUP BY PERIOD(1 HOUR)
@@ -1989,7 +2011,7 @@ In addition to formatting, the `date_format` function can be used in the `WHERE`
 
 ```sql
 SELECT date_format(time, 'EEE'), AVG(value)
-FROM mpstat.cpu_busy
+FROM "mpstat.cpu_busy"
   WHERE datetime >= CURRENT_MONTH
 GROUP BY date_format(time, 'EEE')
   ORDER BY 2 DESC
@@ -2022,29 +2044,29 @@ date_parse(string datetime[, string time_format[, string time_zone]])
 
 ```sql
 /* Parse date using the default ISO 8601 format.*/
-date_parse("2017-03-31T12:36:03.283Z")
+date_parse('2017-03-31T12:36:03.283Z')
 
 /* Parse date using the ISO 8601 format, without milliseconds */
-date_parse("2017-03-31T12:36:03Z", "yyyy-MM-dd'T'HH:mm:ssZZ")
+date_parse('2017-03-31T12:36:03Z', 'yyyy-MM-dd''T''HH:mm:ssZZ')
 
 /* Parse date using the database time zone. */
-date_parse("31.03.2017 12:36:03.283", "dd.MM.yyyy HH:mm:ss.SSS")
+date_parse('31.03.2017 12:36:03.283', 'dd.MM.yyyy HH:mm:ss.SSS')
 
 /* Parse date using the offset specified in the datetime string. */
-date_parse("31.03.2017 12:36:03.283 -08:00", "dd.MM.yyyy HH:mm:ss.SSS ZZ")
+date_parse('31.03.2017 12:36:03.283 -08:00', 'dd.MM.yyyy HH:mm:ss.SSS ZZ')
 
 /* Parse date using the time zone specified in the datetime string. */
-date_parse("31.03.2017 12:36:03.283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss.SSS ZZZ")
+date_parse('31.03.2017 12:36:03.283 Europe/Berlin', 'dd.MM.yyyy HH:mm:ss.SSS ZZZ')
 
 /* Parse date using the time zone provided as the third argument. */
-date_parse("31.01.2017 12:36:03.283", "dd.MM.yyyy HH:mm:ss.SSS", "Europe/Berlin")
+date_parse('31.01.2017 12:36:03.283', 'dd.MM.yyyy HH:mm:ss.SSS', 'Europe/Berlin')
 
 /* Parse date using the UTC offset provided as the third argument. */
-date_parse("31.01.2017 12:36:03.283", "dd.MM.yyyy HH:mm:ss.SSS", "+01:00")
+date_parse('31.01.2017 12:36:03.283', 'dd.MM.yyyy HH:mm:ss.SSS', '+01:00')
 
 /* If the time zone (offset) is specified in the datetime string,
 it should be exactly the same as provided by the third argument. */
-date_parse("31.01.2017 12:36:03.283 Europe/Berlin", "dd.MM.yyyy HH:mm:ss.SSS ZZZ", "Europe/Berlin")
+date_parse('31.01.2017 12:36:03.283 Europe/Berlin', 'dd.MM.yyyy HH:mm:ss.SSS ZZZ', 'Europe/Berlin')
 ```
 
 ### EXTRACT
@@ -2061,16 +2083,16 @@ The evaluation is based on the server time zone. The date argument can refer to 
 
 ```sql
 SELECT datetime,
-  EXTRACT(year FROM datetime) AS 'year',
-  EXTRACT(quarter FROM datetime) AS 'quarter',
-  EXTRACT(month FROM datetime) AS 'month',
-  EXTRACT(day FROM datetime) AS 'day',
-  EXTRACT(hour FROM datetime) AS 'hour',
-  EXTRACT(minute FROM datetime) AS 'minute',
-  EXTRACT(second FROM datetime) AS 'second',
-  EXTRACT(day FROM now - 1*DAY) AS 'prev_day',
-  EXTRACT(month FROM now + 1*MONTH) AS 'next_month'
-FROM mpstat.cpu_busy
+  EXTRACT(year FROM datetime) AS "year",
+  EXTRACT(quarter FROM datetime) AS "quarter",
+  EXTRACT(month FROM datetime) AS "month",
+  EXTRACT(day FROM datetime) AS "day",
+  EXTRACT(hour FROM datetime) AS "hour",
+  EXTRACT(minute FROM datetime) AS "minute",
+  EXTRACT(second FROM datetime) AS "second",
+  EXTRACT(day FROM now - 1*DAY) AS "prev_day",
+  EXTRACT(month FROM now + 1*MONTH) AS "next_month"
+FROM "mpstat.cpu_busy"
   WHERE datetime > current_hour
 ```
 
@@ -2154,7 +2176,7 @@ SELECT CURRENT_TIMESTAMP
 
 ```sql
 SELECT entity, datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 -- same as   datetime > NOW - 1 * DAY
 WHERE datetime > CURRENT_TIME - 1 * DAY
 ```
@@ -2186,7 +2208,7 @@ SELECT DBTIMEZONE
 ```sql
 SELECT value, ABS(value), CEIL(value), FLOOR(value), ROUND(value), MOD(value, 3),
   POWER(value, 2), EXP(value), LN(value), LOG(10, value), SQRT(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= NOW - 1*MINUTE
   AND entity = 'nurswgvml007'
 ```
@@ -2211,9 +2233,9 @@ WHERE datetime >= NOW - 1*MINUTE
 | `SUBSTR(str, start[, length])` | Substring of `str` starting at `start` position with maximum length of `length`. <br>The first character has a position of 1. <br>`start` position of 0 is processed similarly to position 1.<br>If `length` is not specified or is 0, the function returns the substring beginning with `start` position.|
 
 ```sql
-SELECT datetime, UPPER(REPLACE(entity, 'nurswg', '')) AS 'entity', value,
+SELECT datetime, UPPER(REPLACE(entity, 'nurswg', '')) AS "entity", value,
   SUBSTR(tags.file_system, LOCATE('vg', tags.file_system)) AS fs
-FROM disk_used
+FROM "df.disk_used"
   WHERE datetime >= NOW - 1*MINUTE
 AND LOWER(tags.file_system) LIKE '*root'
   ORDER BY datetime
@@ -2263,12 +2285,12 @@ LAG(columnName)
 ```
 
 ```sql
-SELECT date_format(datetime, 'yyyy') AS 'Date',
-  SUM(value) AS 'Current Period',
-  LAG(SUM(value)) AS 'Previous Period',
-  SUM(value)-LAG(SUM(value)) AS 'Change',
-  round(100*(SUM(value)/LAG(SUM(value))-1),1) AS 'Change, %'
-FROM 'cc.cases-by-primary-type'
+SELECT date_format(datetime, 'yyyy') AS "Date",
+  SUM(value) AS "Current Period",
+  LAG(SUM(value)) AS "Previous Period",
+  SUM(value)-LAG(SUM(value)) AS "Change",
+  round(100*(SUM(value)/LAG(SUM(value))-1),1) AS "Change, %"
+FROM "cc.cases-by-primary-type"
   WHERE tags.etype = 'OUTAGE'
 GROUP BY entity, tags.etype, period(1 year)
 ```
@@ -2285,7 +2307,7 @@ The function can be referenced in the `WHERE` clause to filter rows based on pre
 
 ```sql
 SELECT datetime, text, LAG(text)
-  FROM 'Unit_BatchID'
+  FROM "Unit_BatchID"
 WHERE entity = 'qz-1211'
  AND text = '800' OR LAG(text) = '800'
 ```
@@ -2307,7 +2329,7 @@ The `LAG` function in the `SELECT` expression is applied to the filtered result 
 
 ```sql
 SELECT datetime, LAG(value), value, LEAD(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND datetime BETWEEN '2017-04-02T14:19:15Z' AND '2017-04-02T14:21:15Z'
   --AND value > LAG(value) AND value < LEAD(value)
@@ -2360,8 +2382,8 @@ The returned number can be used in arithmetic expressions, whereas the returned 
 
 ```sql
 SELECT datetime, value, entity, tags,
-  value/CAST(LOOKUP('disk-size', CONCAT(entity, ',', tags.file_system, ',', tags.mount_point)) AS number) AS 'pct_used'
-FROM disk.stats.used
+  value/CAST(LOOKUP('disk-size', CONCAT(entity, ',', tags.file_system, ',', tags.mount_point)) AS number) AS "pct_used"
+FROM "disk.stats.used"
   WHERE datetime >= CURRENT_HOUR
 ```
 
@@ -2417,9 +2439,9 @@ The function can be used to perform calendar arithmetic in a time zone different
 
 ```sql
 SELECT value, datetime,
-  date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'UTC') AS 'UTC_datetime',
-  date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'US/Pacific') AS 'PST_datetime'
-FROM mpstat.cpu_busy
+  date_format(time, 'yyyy-MM-dd''T''HH:mm:ssz', 'UTC') AS "UTC_datetime",
+  date_format(time, 'yyyy-MM-dd''T''HH:mm:ssz', 'US/Pacific') AS "PST_datetime"
+FROM "mpstat.cpu_busy"
   WHERE entity = 'nurswgvml007'
   -- select data between 0h:0m:0s of the previous day and 0h:0m:0s of the current day according to PST timezone
 AND datetime BETWEEN endtime(YESTERDAY, 'US/Pacific') AND endtime(CURRENT_DAY, 'US/Pacific')
@@ -2452,7 +2474,7 @@ The primary purpose of a replacement table is to act as a dictionary for decodin
 
 ```sql
 SELECT datetime, entity, ISNULL(LOOKUP('tcp-status-codes', value), value)
-  FROM 'docker.tcp-connect-status'
+  FROM "docker.tcp-connect-status"
 WHERE datetime >= NOW - 5*MINUTE
   AND LOOKUP('tcp-status-codes', value) NOT LIKE '*success*'
 ```
@@ -2498,11 +2520,11 @@ Albuquerque,NM=559121
 ```
 
 ```sql
-SELECT date_format(time, 'yyyy-MM-dd') AS 'date', value, tags.city, tags.state,
-  LOOKUP('us-region', tags.region) AS 'region',
-  LOOKUP('city-size', CONCAT(tags.city, ',', tags.state)) AS 'population',
-  value/CAST(LOOKUP('city-size', CONCAT(tags.city, ',', tags.state)) AS Number)*1000 AS 'cases_per_pop'
-FROM cdc.pneumonia_cases
+SELECT date_format(time, 'yyyy-MM-dd') AS "date", value, tags.city, tags.state,
+  LOOKUP('us-region', tags.region) AS "region",
+  LOOKUP('city-size', CONCAT(tags.city, ',', tags.state)) AS "population",
+  value/CAST(LOOKUP('city-size', CONCAT(tags.city, ',', tags.state)) AS Number)*1000 AS "cases_per_pop"
+FROM "cdc.pneumonia_cases"
   WHERE tags.city = 'Boston'
 ORDER BY datetime DESC
   LIMIT 1
@@ -2543,8 +2565,8 @@ SELECT entity, tags.*, value,
   CASE
     WHEN LOCATE('//', tags.file_system) = 1 THEN 'nfs'
     ELSE 'local'
-  END AS 'FS_Type'
-  FROM df.disk_used
+  END AS "FS_Type"
+  FROM "df.disk_used"
 WHERE datetime >= CURRENT_HOUR
   WITH ROW_NUMBER(entity, tags ORDER BY time DESC) <= 1
 ```
@@ -2565,8 +2587,8 @@ SELECT entity, AVG(value),
       WHEN AVG(value) < 20 THEN 'under-utilized'
       WHEN AVG(value) > 80 THEN 'over-utilized'
       ELSE 'right-sized'
-    END AS 'Utilization'
-  FROM mpstat.cpu_busy
+    END AS "Utilization"
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= CURRENT_HOUR
   GROUP BY entity
 ```
@@ -2606,8 +2628,8 @@ SELECT entity, datetime, value,
     WHEN 'nurswgvml006' THEN 'NUR-1'
     WHEN 'nurswgvml301' OR 'nurswgvml302' THEN 'NUR-3'
     ELSE 'Unknown'
-  END AS 'location'
-FROM 'mpstat.cpu_busy'
+  END AS "location"
+FROM "mpstat.cpu_busy"
   WHERE datetime >= PREVIOUS_MINUTE
 ```
 
@@ -2623,7 +2645,7 @@ CASE date_format(time, 'yyyy')
     WHEN '2017' THEN '18'
     WHEN '2018' THEN '17'      
     ELSE '15'
-END AS 'Tax Day'
+END AS "Tax Day"
 ```
 
 ## Interval Number
@@ -2632,7 +2654,7 @@ The `INTERVAL_NUMBER()` function can be referenced in the `SELECT` expression. I
 
 ```sql
 SELECT datetime, count(*), INTERVAL_NUMBER()
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND (datetime BETWEEN current_day AND next_day
     OR datetime BETWEEN current_day-1*WEEK AND next_day-1*WEEK)
@@ -2655,7 +2677,7 @@ GROUP BY PERIOD(1 DAY)
 
 ```sql
 SELECT metric, entity, datetime, value, tags.*
-  FROM df.disk_used
+  FROM "df.disk_used"
 WHERE datetime >= NOW - 5*MINUTE
   AND entity = 'NurSwgvml007' -- case-INSENSITIVE entity value
   AND tags.file_system = '/dev/mapper/vg_nurswgvml007-lv_root' -- case-sensitive tag value
@@ -2712,7 +2734,7 @@ Since the `long/bigint` data type does not have a reserved `Infinity` value, the
 
 ```sql
 SELECT value, SQRT(value-1), value/0, 1/0, -1/0, 1/0-1/0
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 LIMIT 1
 ```
 
@@ -2754,7 +2776,7 @@ Example:
 
 ```sql
 SELECT entity, datetime, AVG(value), tags
-  FROM df.disk_used
+  FROM "df.disk_used"
 WHERE datetime >= CURRENT_DAY
   GROUP BY entity, tags, PERIOD(2 HOUR)
 ORDER BY entity, tags.file_system, datetime
@@ -2865,12 +2887,12 @@ Queries executed by the database are recorded in the main application log `atsd.
 Each query is assigned a unique identifier for correlating starting and closing events.
 
 ```
-2016-08-15 18:44:01,183;INFO;qtp1878912978-182;com.axibase.tsd.service.sql.SqlQueryServiceImpl;Starting sql query execution. [uid=218], user: user003, source: scheduled, sql: SELECT entity, AVG(value) AS 'Average', median(value), MAX(value), count(*),
-   percentile(50, value), percentile(75, value), percentile(90, value),  percentile(99, value) FROM mpstat.cpu_busy
+2016-08-15 18:44:01,183;INFO;qtp1878912978-182;com.axibase.tsd.service.sql.SqlQueryServiceImpl;Starting sql query execution. [uid=218], user: user003, source: scheduled, sql: SELECT entity, AVG(value) AS "Average", median(value), MAX(value), count(*),
+   percentile(50, value), percentile(75, value), percentile(90, value),  percentile(99, value) FROM "mpstat.cpu_busy"
   WHERE time BETWEEN PREVIOUS_DAY and CURRENT_DAY GROUP BY entity ORDER BY AVG(value) DESC
 
-2016-08-15 18:44:02,369;INFO;qtp1878912978-182;com.axibase.tsd.service.sql.SqlQueryServiceImpl;Sql query execution took 1.19 s, rows returned 7. [uid=218], user: user003, sql: SELECT entity, AVG(value) AS 'Average', median(value), MAX(value), count(*),
-   percentile(50, value), percentile(75, value), percentile(90, value),  percentile(99, value) FROM mpstat.cpu_busy
+2016-08-15 18:44:02,369;INFO;qtp1878912978-182;com.axibase.tsd.service.sql.SqlQueryServiceImpl;Sql query execution took 1.19 s, rows returned 7. [uid=218], user: user003, sql: SELECT entity, AVG(value) AS "Average", median(value), MAX(value), count(*),
+   percentile(50, value), percentile(75, value), percentile(90, value),  percentile(99, value) FROM "mpstat.cpu_busy"
   WHERE time BETWEEN PREVIOUS_DAY and CURRENT_DAY GROUP BY entity ORDER BY AVG(value) DESC
 ```
 
@@ -2917,18 +2939,18 @@ To assist in inspecting query results, the following `LIMIT 1` queries have been
 Ascending order:
 
 ```sql
-SELECT * FROM mpstat.cpu_busy LIMIT 1
-SELECT * FROM mpstat.cpu_busy ORDER BY datetime LIMIT 1
-SELECT * FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' ORDER BY datetime LIMIT 1
+SELECT * FROM "mpstat.cpu_busy" LIMIT 1
+SELECT * FROM "mpstat.cpu_busy" ORDER BY datetime LIMIT 1
+SELECT * FROM "mpstat.cpu_busy" WHERE entity = 'nurswgvml007' ORDER BY datetime LIMIT 1
 ```
 
 Descending order:
 
 ```sql
-SELECT * FROM mpstat.cpu_busy ORDER BY time DESC LIMIT 1
-SELECT * FROM mpstat.cpu_busy ORDER BY datetime DESC LIMIT 1
-SELECT * FROM mpstat.cpu_busy WHERE datetime >= CURRENT_DAY ORDER BY time DESC LIMIT 1
-SELECT * FROM mpstat.cpu_busy WHERE entity = 'nurswgvml007' ORDER BY datetime DESC LIMIT 1
+SELECT * FROM "mpstat.cpu_busy" ORDER BY time DESC LIMIT 1
+SELECT * FROM "mpstat.cpu_busy" ORDER BY datetime DESC LIMIT 1
+SELECT * FROM "mpstat.cpu_busy" WHERE datetime >= CURRENT_DAY ORDER BY time DESC LIMIT 1
+SELECT * FROM "mpstat.cpu_busy" WHERE entity = 'nurswgvml007' ORDER BY datetime DESC LIMIT 1
 ```
 
 
@@ -3023,7 +3045,7 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [Fill](examples/regularize.md#fill-nan)
 - [Alignment](examples/regularize.md#alignment)
 - [Comparison with GROUP BY](examples/regularize.md#group-by-period-compared-to-with-interpolate)
-- [JOIN regularized series](examples/regularize.md#join-example)
+- [Join regularized series](examples/regularize.md#join-example)
 - [Interpolated Value Filter](examples/regularize.md#value-filter)
 
 ### Partitioning

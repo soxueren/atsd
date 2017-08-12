@@ -4,7 +4,7 @@
 
 ```sql
 SELECT datetime, value 
-  FROM mpstat.cpu_busy 
+  FROM "mpstat.cpu_busy" 
 WHERE entity = 'nurswgvml007' 
   AND datetime BETWEEN now - 1 * hour AND now 
   ORDER BY datetime

@@ -57,8 +57,8 @@ As an alternative, the query can be submitted with Content-Type `text/plain` as 
 
 ```java
   statement.setMaxRows(5);
-	statement.executeQuery("SELECT datetime, value FROM mpstat.cpu_busy LIMIT 3");
-	//results will be limited to 3 records
+  statement.executeQuery("SELECT datetime, value FROM \"mpstat.cpu_busy\" LIMIT 3");
+  //results will be limited to 3 records
 ```
 
 ### Cancelling the Query
@@ -106,7 +106,7 @@ Sample metadata:
 		}
 	},
 	"dc:title": "SQL Query",
-	"rdfs:comment": "SELECT tbl.value*100 AS \"cpu_percent\", tbl.datetime 'sample-date'\n FROM \"cpu_busy\" tbl \n WHERE datetime > now - 1*MINUTE",
+	"rdfs:comment": "SELECT tbl.value*100 AS \"cpu_percent\", tbl.datetime 'sample-date'\n FROM \"mpstat.cpu_busy\" tbl \n WHERE datetime > now - 1*MINUTE",
 	"@type": "Table",
 	"url": "sql.csv",
 	"tableSchema": {
@@ -169,7 +169,7 @@ The `metadataFormat` parameter controls how to incorporate metadata into the CSV
 curl https://atsd_server:8443/api/sql  \
   --insecure  --verbose --user {username}:{password} \
   --request POST \
-  --data 'q=SELECT entity, value FROM mpstat.cpu_busy WHERE datetime > now - 1*MINUTE'
+  --data 'q=SELECT entity, value FROM "mpstat.cpu_busy" WHERE datetime > now - 1*MINUTE'
 ```
 
 ### Bash Client Example
@@ -183,7 +183,7 @@ Execute query specified in a `query.sql` file and write CSV results to `/tmp/rep
 Execute query specified inline and store results in `/tmp/report-2.csv`.
 
 ```ls
-./sql.sh --output /tmp/report-2.csv --query "SELECT entity, value FROM mpstat.cpu_busy WHERE datetime > now - 1*minute LIMIT 3"
+./sql.sh --output /tmp/report-2.csv --query "SELECT entity, value FROM \"mpstat.cpu_busy\" WHERE datetime > now - 1*minute LIMIT 3"
 ```
 
 Bash client [parameters](client/README.md).

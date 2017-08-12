@@ -130,11 +130,11 @@ Since results produced by the task must be included in one file, it is not possi
 Instead, when enabled, metadata is included in the output file as part of the header with the hash symbol (`#`) used as a comment symbol.
 
 ```
-#publisher,Axibase Time Series Database,https://nur.axibase.com
+#publisher,Axibase Time Series Database,https://atsd.axibase.com
 #created,2016-06-12T15:56:39.106Z
 #title,SQL Query
-#comment,"SELECT entity, avg(value) AS 'Average', median(value), max(value), count(*)
-#FROM cpu_busy
+#comment,"SELECT entity, avg(value) AS "Average", median(value), max(value), count(*)
+#FROM "mpstat.cpu_busy"
 #  WHERE time BETWEEN previous_day and current_day
 #  GROUP BY entity
 #  ORDER BY avg(value) DESC"
@@ -173,13 +173,13 @@ Table schema object provides the following information about the columns in the 
 			"@type": "xsd:date"
 		},
 		"dc:publisher": {
-			"schema:name": "Axibase Time-Series Database",
+			"schema:name": "Axibase Time Series Database",
 			"schema:url": {
-				"@id": "https://nur.axibase.com"
+				"@id": "https://atsd.axibase.com"
 			}
 		},
 		"dc:title": "SQL Query",
-		"rdfs:comment": "SELECT entity, datetime, avg(value) AS 'Average' FROM cpu_busy  WHERE datetime > current_minute  GROUP BY entity, period(1 minute) ORDER BY avg(value) DESC",
+		"rdfs:comment": "SELECT entity, datetime, avg(value) AS \"Average\" FROM \"mpstat.cpu_busy\" WHERE datetime > current_minute GROUP BY entity, period(1 minute) ORDER BY avg(value) DESC",
 		"@type": "Table",
 		"url": "sql.csv",
 		"tableSchema": {
@@ -188,14 +188,14 @@ Table schema object provides the following information about the columns in the 
 				"name": "entity",
 				"titles": "entity",
 				"datatype": "string",
-				"table": "cpu_busy",
+				"table": "mpstat.cpu_busy",
 				"propertyUrl": "atsd:entity"
 			}, {
 				"columnIndex": 2,
 				"name": "datetime",
 				"titles": "datetime",
 				"datatype": "xsd:dateTimeStamp",
-				"table": "cpu_busy",
+				"table": "mpstat.cpu_busy",
 				"propertyUrl": "atsd:datetime",
 				"dc:description": "Sample time in ISO8601 format"
 			}, {
@@ -203,7 +203,7 @@ Table schema object provides the following information about the columns in the 
 				"name": "avg(value)",
 				"titles": "Average",
 				"datatype": "double",
-				"table": "cpu_busy",
+				"table": "mpstat.cpu_busy",
 				"propertyUrl": "atsd:avg"
 			}]
 		}

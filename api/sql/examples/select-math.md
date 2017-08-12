@@ -8,7 +8,7 @@ Math functions are supported in the `SELECT` expression and within `WHERE`, `HAV
 SELECT value, ABS(value), CEIL(value), FLOOR(value), ROUND(value), MOD(value, 3),
   POWER(value, 2), EXP(value), LN(value), LOG(10, value), SQRT(value),
   LN(value*2), MOD(CEIL(value)*2, 4)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= now - 5 * minute
   AND entity = 'nurswgvml007'
   AND FLOOR(value) > 10

@@ -415,7 +415,7 @@ Series **t1**. This metric will be interpolated with the `PREVIOUS` function.
 
 ```sql
 SELECT t1.entity, t1.datetime, t1.value
-  FROM meminfo.memfree t1
+  FROM "meminfo.memfree" t1
 WHERE t1.datetime >= '2016-09-18T14:00:00.000Z' AND t1.datetime < '2016-09-18T14:01:00.000Z'
   AND t1.entity = 'nurswgvml006'
 ```
@@ -433,7 +433,7 @@ Series **t2**. This metric will be interpolated with the `LINEAR` function.
 
 ```sql
 SELECT t2.entity, t2.datetime, t2.value
-  FROM mpstat.cpu_busy t2
+  FROM "mpstat.cpu_busy" t2
 WHERE t2.datetime >= '2016-09-18T14:00:00.000Z' AND t2.datetime < '2016-09-18T14:01:00.000Z'
   AND t2.entity = 'nurswgvml006'
 ```
@@ -450,9 +450,9 @@ WHERE t2.datetime >= '2016-09-18T14:00:00.000Z' AND t2.datetime < '2016-09-18T14
 JOINed series:
 
 ```sql
-SELECT t1.entity AS 'entity', t1.datetime AS 'datetime', t1.value as 'cpu', t2.value as 'mem'
-  FROM meminfo.memfree t1
-  JOIN mpstat.cpu_busy t2
+SELECT t1.entity AS "entity", t1.datetime AS "datetime", t1.value AS "cpu", t2.value AS "mem"
+  FROM "meminfo.memfree" t1
+  JOIN "mpstat.cpu_busy" t2
 WHERE t1.datetime >= '2016-09-18T14:00:00.000Z' AND t1.datetime < '2016-09-18T14:01:00.000Z'
 AND t1.entity = 'nurswgvml006'
   WITH INTERPOLATE(15 SECOND, AUTO)
@@ -476,7 +476,7 @@ If the `WITH INTERPOLATE` clause is included in the query, the value condition c
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-09-18T14:03:30.000Z' AND datetime <= '2016-09-18T14:04:30.000Z'
   AND entity = 'nurswgvml006'
 ```
@@ -496,7 +496,7 @@ Without the `WITH INTERPOLATE` clause, the `WHERE` clause filters raw values.
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-09-18T14:03:30.000Z' AND datetime <= '2016-09-18T14:04:30.000Z'
   AND entity = 'nurswgvml006'
   AND value < 100
@@ -517,7 +517,7 @@ The following queries produce the same result because `value < 100` is no longer
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-09-18T14:03:30.000Z' AND datetime <= '2016-09-18T14:04:30.000Z'
   AND entity = 'nurswgvml006'
   WITH INTERPOLATE(15 SECOND, LINEAR)
@@ -525,7 +525,7 @@ WHERE datetime >= '2016-09-18T14:03:30.000Z' AND datetime <= '2016-09-18T14:04:3
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-09-18T14:03:30.000Z' AND datetime <= '2016-09-18T14:04:30.000Z'
   AND entity = 'nurswgvml006'
 AND value < 100
@@ -549,7 +549,7 @@ The values between those intervals are **NOT** interpolated.
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml006'
   AND (datetime BETWEEN '2016-09-18T14:00:00Z' AND '2016-09-18T14:01:00Z'
     OR datetime BETWEEN '2016-09-18T14:04:00Z' AND '2016-09-18T14:05:00Z')

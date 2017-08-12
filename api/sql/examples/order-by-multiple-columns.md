@@ -8,7 +8,7 @@ SELECT entity, tags.file_system, tags.mount_point,
   max(value), 
   max(value) - min(value) AS range, 
   delta(value)
- FROM df.disk_used
+ FROM "df.disk_used"
 WHERE datetime >= now - 1 * HOUR
  GROUP BY entity, tags
 ORDER BY tags.mount_point, delta(value) DESC
@@ -44,7 +44,7 @@ SELECT entity,       -- column 1
   max(value),        -- column 5
   max(value) - min(value) AS range, -- column 6
   delta(value)       -- column 7
- FROM df.disk_used
+ FROM "df.disk_used"
 WHERE datetime >= now - 1 * HOUR
  GROUP BY entity, tags
 ORDER BY 3, 7 DESC

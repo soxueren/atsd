@@ -10,8 +10,8 @@ SELECT entity, avg(value),
       WHEN avg(value) < 20 THEN 'under-utilized'
       WHEN avg(value) > 80 THEN 'over-utilized'
       ELSE 'right-sized'
-    END AS 'Utilization'
-  FROM mpstat.cpu_busy
+    END AS "Utilization"
+  FROM "mpstat.cpu_busy"
 WHERE datetime > current_day
   GROUP BY entity
 ```
@@ -35,8 +35,8 @@ SELECT entity, tags.*, value,
   CASE
     WHEN LOCATE('//', tags.file_system) = 1 THEN 'nfs'
     ELSE 'local'
-  END AS 'fs_type'
-  FROM df.disk_used
+  END AS "fs_type"
+  FROM "df.disk_used"
 WHERE datetime > current_hour
   WITH ROW_NUMBER(entity, tags ORDER BY time DESC) <= 1
 ```
@@ -68,8 +68,8 @@ SELECT entity, tags.*, value,
   CASE
     WHEN LOCATE('//', tags.file_system) = 1 THEN 1
     ELSE 0
-  END AS 'fs_type'
-  FROM df.disk_used
+  END AS "fs_type"
+  FROM "df.disk_used"
 WHERE datetime > current_hour
   WITH ROW_NUMBER(entity, tags ORDER BY time DESC) <= 1
 ```
@@ -152,8 +152,8 @@ SELECT entity, avg(value),
     CASE avg(value) > 50
       WHEN true THEN 'High'
       ELSE 'Low'
-    END AS 'Utilization'
-FROM cpu_busy
+    END AS "Utilization"
+FROM "mpstat.cpu_busy"
   WHERE datetime >= previous_minute
 GROUP BY entity
 ```
@@ -180,8 +180,8 @@ SELECT date_format(time, 'yyyy'),
       WHEN '2012' OR '2018' THEN 17
       WHEN '2016' OR '2017' THEN 18
       ELSE 15
-    END AS 'Tax Day', value   
-  FROM 'income-returns-received'
+    END AS "Tax Day", value   
+  FROM "income-returns-received"
 WHERE datetime BETWEEN '2010-01-01T00:00:00Z' AND '2019-01-01T00:00:00Z'
 ```
 
@@ -204,8 +204,8 @@ SELECT entity, avg(value),
         ELSE 'High'
       END
     ELSE 'Low'
-  END AS 'Utilization'
-FROM cpu_busy
+  END AS "Utilization"
+FROM "mpstat.cpu_busy"
   WHERE datetime >= previous_minute
 GROUP BY entity
 ```

@@ -16,10 +16,10 @@ For additional patterns, refer to Java [SimpleDateFormat](https://docs.oracle.co
 In this example we calculate the totals for the month of January over a 7 year period in order to determine a range of pneumonia deaths recorded in East-North-Central US. To retain only samples recorded in January, we use the `date_format(time, 'MMM') = 'Jan'` condition.
 
 ```sql
-SELECT date_format(time, 'yyyy MMM') as 'date',
-  LOOKUP('us-region', tags.region) AS 'region',
-  sum(value) as 'pneumonia_influenza_deaths'
-FROM cdc.pneumonia_and_influenza_deaths
+SELECT date_format(time, 'yyyy MMM') AS "date",
+  LOOKUP('us-region', tags.region) AS "region",
+  sum(value) AS "pneumonia_influenza_deaths"
+FROM "cdc.pneumonia_and_influenza_deaths"
   WHERE entity = 'mr8w-325u' AND tags.region = '3'
   AND datetime >= '2010-01-01T00:00:00Z'
   AND date_format(time, 'MMM') = 'Jan'
@@ -48,7 +48,7 @@ The `EEE` pattern returns short day name for each sample: Mon, Tue, Wed, Thu, Fr
 
 ```sql
 SELECT date_format(time, 'u') AS day_of_week, avg(value) AS average
-FROM mpstat.cpu_busy
+FROM "mpstat.cpu_busy"
   WHERE datetime >= previous_week
 GROUP BY date_format(time, 'u')
   ORDER BY date_format(time, 'u')
@@ -56,7 +56,7 @@ GROUP BY date_format(time, 'u')
 
 ```sql
 SELECT substr(date_format(time, 'u-EEE'), 3) AS day_of_week, avg(value) AS average
-FROM mpstat.cpu_busy
+FROM "mpstat.cpu_busy"
   WHERE datetime >= previous_week
 GROUP BY date_format(time, 'u-EEE')
   ORDER BY date_format(time, 'u-EEE')
@@ -79,9 +79,9 @@ GROUP BY date_format(time, 'u-EEE')
 By grouping samples by hour of the day (regardless which day it is) it's possible to create diurnal charts which show changes in activity throughout the day.
 
 ```sql
-SELECT date_format(time, 'HH') AS 'hour_in_day',
+SELECT date_format(time, 'HH') AS "hour_in_day",
   avg(value)
-FROM mpstat.cpu_busy
+FROM "mpstat.cpu_busy"
   WHERE datetime >= current_month
 GROUP BY date_format(time, 'HH')
   ORDER BY 1
@@ -123,9 +123,9 @@ GROUP BY date_format(time, 'HH')
 The weekly diurnal charts take day of week into account and can be used, for example, to calculate both weekly seasonality, as well as weekly highs and lows using different columns in the ORDER clause.
 
 ```sql
-SELECT concat(date_format(time, 'EEEEE, HH'), ':00') AS 'day, hour',
+SELECT concat(date_format(time, 'EEEEE, HH'), ':00') AS "day, hour",
   avg(value)
-FROM mpstat.cpu_busy
+FROM "mpstat.cpu_busy"
   WHERE datetime >= current_week
   AND date_format(time, 'HH') >= '09' AND date_format(time, 'HH') < '18'
 GROUP BY date_format(time, 'EEEEE HH')
@@ -153,9 +153,9 @@ The above example relies on the lexicographical comparison of 2-digit hours stri
 The following alternative utilizes the `CAST` function to convert the `date_format` output to numbers in order to filter parts of the day.
 
 ```sql
-SELECT date_format(time, 'EEE HH') AS 'hour_in_day',
+SELECT date_format(time, 'EEE HH') AS "hour_in_day",
   percentile(75, value)
-FROM mpstat.cpu_busy
+FROM "mpstat.cpu_busy"
   WHERE datetime >= previous_week
   AND CAST(date_format(time, 'H') AS number) >= 9 AND CAST(date_format(time, 'H') AS number) < 18
 GROUP BY date_format(time, 'EEE HH')

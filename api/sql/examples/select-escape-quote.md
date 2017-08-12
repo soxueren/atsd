@@ -1,9 +1,8 @@
 # Select: Escape Quotes in Column Names
 
-Inner quotes contained in column names can be escaped by repeating the escape symbol:
+Inner double quotes contained in column names and aliases can be escaped by repeating the quotes:
 
 * double"quote -> "double""quote"
-* single'quote -> 'single''quote'
 
 ## Data
 
@@ -42,34 +41,34 @@ WHERE datetime > '2016-07-27T22:40:00.000Z'
 ## Query with Escaped Column Names
 
 ```sql
-SELECT tags."double""quote", tags.'double"quote',
-       tags."single'quote", tags.'single''quote',
-       tags."both'quo""tes", tags.'both''quo"tes'
+SELECT tags."double""quote",
+       tags."single'quote",
+       tags."both'quo""tes"
   FROM "m-eq-1"
 WHERE datetime > '2016-07-27T22:40:00.000Z' 
 ```
 
 ```ls
-| tags.double"quote | tags.double"quote | tags.single'quote | tags.single'quote | tags.both'quo"tes | tags.both'quo"tes | 
-|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------| 
-| tv1               | tv1               | tv2               | tv2               | tv3               | tv3               |
+| tags.double"quote | tags.single'quote | tags.both'quo"tes | 
+|-------------------|-------------------|-------------------| 
+| tv1               | tv2               | tv3               | 
 ```
 
 ## Query with Escaped Column Names in `WHERE` and `ORDER BY` Clauses
 
 ```sql
-SELECT tags."double""quote", tags.'double"quote',
-       tags."single'quote", tags.'single''quote',
-       tags."both'quo""tes", tags.'both''quo"tes'
+SELECT tags."double""quote",
+       tags."single'quote",
+       tags."both'quo""tes"
   FROM "m-eq-1"
 WHERE tags."double""quote" = 'tv1'  
-  AND tags.'both''quo"tes' IS NOT NULL
-  AND tags.'single''quote' LIKE '*2'
+  AND tags."both'quo""tes" IS NOT NULL
+  AND tags."single'quote" LIKE '*2'
 ORDER BY tags."single'quote"
 ```
 
 ```ls
-| tags.double"quote | tags.double"quote | tags.single'quote | tags.single'quote | tags.both'quo"tes | tags.both'quo"tes | 
-|-------------------|-------------------|-------------------|-------------------|-------------------|-------------------| 
-| tv1               | tv1               | tv2               | tv2               | tv3               | tv3               |
+| tags.double"quote | tags.single'quote | tags.both'quo"tes | 
+|-------------------|-------------------|-------------------| 
+| tv1               | tv2               | tv3               | 
 ```

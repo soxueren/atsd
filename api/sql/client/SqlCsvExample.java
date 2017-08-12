@@ -13,7 +13,7 @@ public class SqlCsvExample {
         String databaseUrl = "http://10.102.0.6:8088";
         String userName = "axibase";
         String password = "********";
-        String query = "SELECT * FROM cpu_busy WHERE datetime > current_hour LIMIT 5";
+        String query = "SELECT * FROM \"mpstat.cpu_busy\" WHERE datetime > current_hour LIMIT 5";
 
         System.out.println("Execute query: " + query);
 

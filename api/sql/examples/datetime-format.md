@@ -6,7 +6,7 @@ A `datetime` column returns time in ISO format.
 
 ```sql
 SELECT datetime, time, value
-  FROM mpstat.cpu_busy 
+  FROM "mpstat.cpu_busy" 
 WHERE entity = 'nurswgvml007'
   AND datetime BETWEEN '2016-04-09T14:00:00Z' AND '2016-04-09T14:05:00Z'
 ```
@@ -36,7 +36,7 @@ The `date_format` function can print out the `time` column as well as any numeri
 ```sql
 SELECT time, 
   date_format(time), 
-  date_format(time, "yyyy-MM-dd'T'HH:mm:ssZ"),
+  date_format(time, 'yyyy-MM-dd''T''HH:mm:ss''Z'''),
   date_format(time, 'yyyy-MM-dd HH:mm:ss'),
   date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PST'),
   date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00'),
@@ -48,22 +48,22 @@ FROM "mpstat.cpu_busy"
 ```
 
 ```ls
-| time          | date_format(time)        | date_format(time,'yyyy-MM-dd'T'HH:mm:ssZ') | date_format(time,'yyyy-MM-dd HH:mm:ss') | date_format(time,'yyyy-MM-dd HH:mm:ss','PST') | date_format(time,'yyyy-MM-dd HH:mm:ss','GMT-08:00') | date_format(time,'yyyy-MM-dd HH:mm:ss ZZ','PST') | date_format(time,'yyyy-MM-dd HH:mm:ss ZZ','PST') | 
+| time          | date_format(time)        | date_format(time,'yyyy-MM-dd''T''HH:mm:ss''Z''') | date_format(time,'yyyy-MM-dd HH:mm:ss') | date_format(time,'yyyy-MM-dd HH:mm:ss','PST') | date_format(time,'yyyy-MM-dd HH:mm:ss','GMT-08:00') | date_format(time,'yyyy-MM-dd HH:mm:ss ZZ','PST') | date_format(time,'yyyy-MM-dd HH:mm:ss ZZ','PST') | 
 |---------------|--------------------------|--------------------------------------------|-----------------------------------------|-----------------------------------------------|-----------------------------------------------------|--------------------------------------------------|--------------------------------------------------| 
 | 1468581897000 | 2016-07-15T11:24:57.000Z | 2016-07-15T11:24:57+0000                   | 2016-07-15 11:24:57                     | 2016-07-15 04:24:57                           | 2016-07-15 03:24:57                                 | 2016-07-15 04:24:57 -07:00                       | 2016-07-15 04:24:57 -07:00                       | 
 ```
 
 ```ls
-| format                                                 | date_format value          | 
-|--------------------------------------------------------|----------------------------| 
-| time                                                   | 1468411675000              | 
-| date_format(time)                                      | 2016-07-13T12:07:55.000Z   | 
-| date_format(time,'yyyy-MM-dd'T'HH:mm:ss.SSS'Z'','UTC') | 2016-07-13T12:07:55.000Z   | 
-| date_format(time,'yyyy-MM-dd HH:mm:ss')                | 2016-07-13 12:07:55        | 
-| date_format(time,'yyyy-MM-dd HH:mm:ss','PST')          | 2016-07-13 05:07:55        | 
-| date_format(time,'yyyy-MM-dd HH:mm:ss','GMT-08:00')    | 2016-07-13 04:07:55        | 
-| date_format(time,'yyyy-MM-dd HH:mm:ssZ','PST')        | 2016-07-13 05:07:55-0700    | 
-| date_format(time,'yyyy-MM-dd HH:mm:ssZZ','PST')       | 2016-07-13 05:07:55-07:00   | 
+| format                                                         | date_format value          | 
+|----------------------------------------------------------------|----------------------------| 
+| time                                                           | 1468411675000              | 
+| date_format(time)                                              | 2016-07-13T12:07:55.000Z   | 
+| date_format(time,'yyyy-MM-dd''T''HH:mm:ss.SSS''Z'','UTC')      | 2016-07-13T12:07:55.000Z   | 
+| date_format(time,'yyyy-MM-dd HH:mm:ss')                        | 2016-07-13 12:07:55        | 
+| date_format(time,'yyyy-MM-dd HH:mm:ss','PST')                  | 2016-07-13 05:07:55        | 
+| date_format(time,'yyyy-MM-dd HH:mm:ss','GMT-08:00')            | 2016-07-13 04:07:55        | 
+| date_format(time,'yyyy-MM-dd HH:mm:ssZ','PST')                 | 2016-07-13 05:07:55-0700    | 
+| date_format(time,'yyyy-MM-dd HH:mm:ssZZ','PST')                | 2016-07-13 05:07:55-07:00   | 
 ```
 
 ## `AUTO` timezone
@@ -102,16 +102,16 @@ UTC
 Metric and entity timezone can be included in the `SELECT` expression using `metric.timezone` and `entity.timezone` columns.
 
 ```sql
-SELECT t1.entity, t1.value AS 'busy', t2.value as 'sys', t3.value as 'usr', 
-  t1.metric.timezone AS 'busy.tz', t2.metric.timezone AS 'sys.tz', t3.metric.timezone AS 'usr.tz',
-  t1.entity.timezone AS 'entity.tz',
-  t1.datetime as 'datetime'
-  ,date_format(t1.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS 'busy.auto_time'
-  ,date_format(t2.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS 'sys.auto_time'
-  ,date_format(t3.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS 'usr.auto_time'
-  FROM mpstat.cpu_busy t1
-  JOIN mpstat.cpu_system t2
-  JOIN mpstat.cpu_user t3
+SELECT t1.entity, t1.value AS "busy", t2.value AS "sys", t3.value AS "usr", 
+  t1.metric.timezone AS "busy.tz", t2.metric.timezone AS "sys.tz", t3.metric.timezone AS "usr.tz",
+  t1.entity.timezone AS "entity.tz",
+  t1.datetime AS "datetime"
+  ,date_format(t1.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS "busy.auto_time"
+  ,date_format(t2.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS "sys.auto_time"
+  ,date_format(t3.time, 'yyyy-MM-dd HH:mm:ss z', AUTO) AS "usr.auto_time"
+  FROM "mpstat.cpu_busy" t1
+  JOIN "mpstat.cpu_system" t2
+  JOIN "mpstat.cpu_user" t3
 WHERE t1.entity LIKE 'nurswgvml0*'
 AND t1.datetime >= '2016-10-10T10:00:00.000Z' and t1.datetime < '2016-10-10T10:01:00.000Z'
   WITH INTERPOLATE(60 SECOND, AUTO, OUTER)

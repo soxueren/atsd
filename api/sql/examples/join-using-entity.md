@@ -1,13 +1,13 @@
 # Join Using Entity
 
-`USING entity` modifies the default `JOIN` condition. It uses only the entity and timestamp columns to join rows from merged tables instead of the default entity, timestamp, and tags columns.
+The `USING ENTITY` clause modifies the default `JOIN` condition. It uses only the entity and timestamp columns to join rows from merged tables instead of the default entity, timestamp, and tags columns.
 
-## Join without `USING entity`
+## Join without `USING ENTITY`
 
 ```sql
 SELECT t1.entity, t1.datetime, AVG(t1.value), AVG(t2.value), t2.tags.*
-  FROM mpstat.cpu_busy t1
-JOIN df.disk_used t2
+  FROM "mpstat.cpu_busy" t1
+JOIN "df.disk_used" t2
   WHERE t1.datetime > current_hour
   AND t1.entity = 'nurswgvml007'
 GROUP BY t1.entity, t2.tags, t1.period(15 minute)
@@ -20,12 +20,12 @@ No records.
 
 The query produced no records because no series among the joined had the same tags.
 
-## Join with `USING entity`
+## Join with `USING ENTITY`
 
 ```sql
 SELECT t1.entity, t1.datetime, AVG(t1.value), AVG(t2.value), t2.tags.*
-  FROM mpstat.cpu_busy t1
-JOIN USING entity df.disk_used t2
+  FROM "mpstat.cpu_busy" t1
+JOIN USING ENTITY "df.disk_used" t2
   WHERE t1.datetime > current_hour
   AND t1.entity = 'nurswgvml007'
 GROUP BY t1.entity, t2.tags, t1.period(15 minute)
@@ -41,13 +41,13 @@ GROUP BY t1.entity, t2.tags, t1.period(15 minute)
 | nurswgvml007 | 2016-06-18T10:00:00.000Z | 39.7                | 8699302.7            | /                          | /dev/mapper/vg_nurswgvml007-lv_root |
 ```
 
-## OUTER JOIN without `USING entity`
+## OUTER JOIN without `USING ENTITY`
 
 ```sql
 SELECT datetime, ISNULL(t1.entity, t2.entity) AS server,
   AVG(t1.value), AVG(t2.value), t2.tags.*
-FROM mpstat.cpu_busy t1
-  OUTER JOIN df.disk_used t2
+FROM "mpstat.cpu_busy" t1
+  OUTER JOIN "df.disk_used" t2
 WHERE t1.datetime >= '2017-05-30T09:00:00Z' AND t1.datetime < '2017-05-30T09:30:00Z'
   AND t1.entity = 'nurswgvml007'
 GROUP BY PERIOD(15 minute), server, t2.tags
@@ -67,13 +67,13 @@ GROUP BY PERIOD(15 minute), server, t2.tags
 | 2017-05-30T09:15:00Z | nurswgvml007 | NaN           | 1491273399.0  | //u113452.nurstr003/backup          | /mnt/u113452        |
 ```
 
-## OUTER JOIN with `USING entity`
+## OUTER JOIN with `USING ENTITY`
 
 ```sql
 SELECT datetime, ISNULL(t1.entity, t2.entity) AS server,
   AVG(t1.value), AVG(t2.value), t2.tags.*
-FROM mpstat.cpu_busy t1
-  OUTER JOIN USING entity df.disk_used t2
+FROM "mpstat.cpu_busy" t1
+  OUTER JOIN USING ENTITY "df.disk_used" t2
 WHERE t1.datetime >= '2017-05-30T09:00:00Z' AND t1.datetime < '2017-05-30T09:30:00Z'
   AND t1.entity = 'nurswgvml007'
 GROUP BY PERIOD(15 minute), server, t2.tags

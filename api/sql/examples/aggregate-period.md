@@ -6,7 +6,7 @@ Split selection into periods and calculate statistics per period with aggregatio
 
 ```sql
 SELECT datetime, avg(value), max(value), last(value), count(*)
- FROM mpstat.cpu_busy
+ FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
  AND datetime >= current_day
  GROUP BY PERIOD(1 HOUR)
@@ -39,7 +39,7 @@ Display the period start and end time using the `date_format` function.
 
 ```sql
 SELECT datetime AS period_start, date_format(time+60*60000) AS period_end, avg(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND datetime >= current_day
 GROUP BY PERIOD(1 HOUR)
@@ -61,7 +61,7 @@ The server timezone is "Europe/Berlin".
 * Default time zone. The day periods are aligned to 0:00 server time zone which is 2 hours ahead of UTC.
 
 ```sql
-SELECT datetime, date_format(time, "yyyy-MM-dd'T'HH:mm:ssZZ") AS local_datetime,
+SELECT datetime, date_format(time, 'yyyy-MM-dd''T''HH:mm:ssZZ') AS local_datetime,
   MIN(value), MAX(value), COUNT(value), FIRST(value), LAST(value)
 FROM m1
   GROUP BY PERIOD(1 DAY)
@@ -78,7 +78,7 @@ FROM m1
 * User-defined time zone. The day periods are aligned to 0:00 UTC time.
 
 ```sql
-SELECT datetime, date_format(time, "yyyy-MM-dd'T'HH:mm:ssZZ") AS local_datetime,
+SELECT datetime, date_format(time, 'yyyy-MM-dd''T''HH:mm:ssZZ') AS local_datetime,
   MIN(value), MAX(value), COUNT(value), FIRST(value), LAST(value)
 FROM m1
   GROUP BY PERIOD(1 DAY, "UTC")

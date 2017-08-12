@@ -16,7 +16,7 @@ SELECT datetime, value, tags,
   entity.label, -- entity field 'label'
   entity.timeZone, -- entity field 'timeZone'
   entity.groups -- list of groups of which the entity is member, concatenated into one string
-FROM df.disk_used
+FROM "df.disk_used"
   WHERE entity IN ('nurswgvml007', 'nurswgvml006')
 AND tags.mount_point = '/'
 AND datetime > now - 5*MINUTE

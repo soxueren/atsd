@@ -6,7 +6,7 @@
 
 ```sql
 SELECT entity, avg(value), max(value), last(value), count(*)
- FROM mpstat.cpu_busy
+ FROM "mpstat.cpu_busy"
 WHERE datetime >= now - 1 * HOUR
  GROUP BY entity
 ```
@@ -31,7 +31,7 @@ WHERE datetime >= now - 1 * HOUR
 
 ```sql
 SELECT entity, tags, avg(value), max(value), last(value), count(*)
- FROM disk_used
+ FROM "df.disk_used"
 WHERE datetime >= now - 1 * HOUR
  GROUP BY entity, tags
 ```

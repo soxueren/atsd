@@ -6,8 +6,8 @@ The last record in each partition can be retrieved by reverse ordering rows with
 
 ```sql
 SELECT entity, datetime, value
-  FROM mpstat.cpu_busy
-WHERE datetime >= "2016-06-18T12:00:00.000Z" AND datetime < "2016-06-18T12:00:30.000Z"
+  FROM "mpstat.cpu_busy"
+WHERE datetime >= '2016-06-18T12:00:00.000Z' AND datetime < '2016-06-18T12:00:30.000Z'
   WITH ROW_NUMBER(entity ORDER BY time DESC) <= 1
   ORDER BY entity, time
 ```

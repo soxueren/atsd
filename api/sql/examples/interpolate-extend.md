@@ -9,7 +9,7 @@
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-03T09:25:00.000Z' AND datetime < '2016-06-03T09:40:00.000Z'
   AND entity = 'nurswgvml006'
 ```
@@ -40,7 +40,7 @@ If the query selects 2-minute periods for the 09:30 - 09:40 interval, the first 
 
 ```sql
 SELECT datetime, count(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-03T09:30:00.000Z' AND datetime < '2016-06-03T09:40:00.000Z'
   AND entity = 'nurswgvml006'
 GROUP BY PERIOD(1 MINUTE)
@@ -59,7 +59,7 @@ Query with `EXTEND` adds missing periods at the beginning of the interval by app
 
 ```sql
 SELECT datetime, avg(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-03T09:30:00.000Z' AND datetime < '2016-06-03T09:40:00.000Z'
   AND entity = 'nurswgvml006'
 GROUP BY PERIOD(1 MINUTE, EXTEND)
@@ -84,7 +84,7 @@ GROUP BY PERIOD(1 MINUTE, EXTEND)
 
 ```sql
 SELECT datetime, avg(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-03T09:37:00.000Z' AND datetime < '2016-06-03T09:40:00.000Z'
   AND entity = 'nurswgvml006'
 GROUP BY PERIOD(10 second, LINEAR)
@@ -110,7 +110,7 @@ To apply interpolation both to inner periods as well as to leading/trailing peri
 
 ```sql
 SELECT datetime, avg(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-03T09:37:00.000Z' AND datetime < '2016-06-03T09:40:00.000Z'
   AND entity = 'nurswgvml006'
 GROUP BY PERIOD(10 second, LINEAR, EXTEND)
@@ -145,7 +145,7 @@ The `VALUE {n}` interpolation function applies both to inner and leading/trailin
 
 ```sql
 SELECT datetime, avg(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-03T09:37:00.000Z' AND datetime < '2016-06-03T09:40:00.000Z'
   AND entity = 'nurswgvml006'
 GROUP BY PERIOD(10 second, VALUE -10, EXTEND)

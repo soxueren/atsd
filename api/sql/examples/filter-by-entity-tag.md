@@ -6,7 +6,7 @@
 
 ```sql
 SELECT datetime, entity, value, entity.tags.app
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity.tags.app IS NOT NULL
   AND datetime > current_hour
 ORDER BY datetime 
@@ -32,7 +32,7 @@ ORDER BY datetime
 
 ```sql
 SELECT datetime, entity, value, entity.tags.app
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity.tags.app LIKE 'H*'
   AND datetime > current_hour
 ORDER BY datetime 
@@ -53,7 +53,7 @@ ORDER BY datetime
 
 ```sql
 SELECT datetime, entity, value, entity.tags.app
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity.tags.app >= 'Ro'
   AND datetime > now - 1*MINUTE
 ORDER BY datetime 

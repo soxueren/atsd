@@ -17,7 +17,7 @@ Entity Group names are case-sensitive.
 
 ```sql
 SELECT datetime, entity, value
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE 'nur-collectors' IN entity.groups
   AND datetime > current_hour
 ORDER BY datetime 
@@ -41,7 +41,7 @@ ORDER BY datetime
 
 ```sql
 SELECT datetime, entity, value, entity.groups
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE 'nur-collectors' IN entity.groups
   AND datetime > current_hour
 ORDER BY datetime 

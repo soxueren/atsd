@@ -63,7 +63,7 @@ series e:default d:2016-08-24T22:28:30Z m:CDEP158=43
 
 ```sql
 SELECT entity, metric AS pitag, datetime, value, ISNULL(text, '') AS svalue,
-  ISNULL(tags._index, '1') AS '_index', ISNULL(tags.status, '0') AS status, ISNULL(tags.status_text, 'Good') AS status_text,
+  ISNULL(tags._index, '1') AS "_index", ISNULL(tags.status, '0') AS status, ISNULL(tags.status_text, 'Good') AS status_text,
   ISNULL(tags.questionable, 'false') AS questionable, ISNULL(tags.substituted, 'false') AS substituted, ISNULL(tags.annotated, 'false') AS annotated,
   ISNULL(tags.annotations, '') AS annotations
 FROM atsd_series
@@ -101,7 +101,7 @@ When interpolated with the `WITH INTERPOLATE` clause, the text value is interpol
 
 ```sql
 SELECT datetime, text
-FROM 'BA:ACTIVE.1'
+FROM "BA:ACTIVE.1"
 WHERE entity = 'default'
   AND datetime >= '2016-08-24T14:45:00Z' AND datetime <= '2016-08-24T16:45:00Z'
   AND tags.status IS NULL
@@ -193,12 +193,12 @@ series d:2016-10-04T02:09:09Z e:br-1470 x:SV6.Unit_Procedure="1415-Proc1"
 
 ```sql
 SELECT t1.datetime, t1.entity, t1.value, t2.value, t3.value, t4.value, t5.value, t5.text, t6.text
-  FROM 'SV6.PACK:R01' t1
-  JOIN 'SV6.PACK:R03' t2
-  JOIN 'SV6.PACK:R04' t3
-  JOIN 'SV6.Elapsed_Time' t4
-  JOIN 'SV6.Unit_BatchID' t5
-  JOIN 'SV6.Unit_Procedure' t6
+  FROM "SV6.PACK:R01" t1
+  JOIN "SV6.PACK:R03" t2
+  JOIN "SV6.PACK:R04" t3
+  JOIN "SV6.Elapsed_Time" t4
+  JOIN "SV6.Unit_BatchID" t5
+  JOIN "SV6.Unit_Procedure" t6
 WHERE t1.datetime >= '2016-10-04T02:00:00Z' AND t2.datetime <= '2016-10-04T02:10:00Z'
   AND entity = 'br-1470'
 WITH INTERPOLATE(60 SECOND, AUTO, OUTER, EXTEND, START_TIME)
@@ -228,12 +228,12 @@ The query may refer to the `text` column in the `WHERE` clause in order to filte
 
 ```sql
 SELECT t1.datetime, t1.entity, t1.value, t2.value, t3.value, t4.value, t5.value, t5.text, t6.text
-  FROM 'SV6.PACK:R01' t1
-  JOIN 'SV6.PACK:R03' t2
-  JOIN 'SV6.PACK:R04' t3
-  JOIN 'SV6.Elapsed_Time' t4
-  JOIN 'SV6.Unit_BatchID' t5
-  JOIN 'SV6.Unit_Procedure' t6
+  FROM "SV6.PACK:R01" t1
+  JOIN "SV6.PACK:R03" t2
+  JOIN "SV6.PACK:R04" t3
+  JOIN "SV6.Elapsed_Time" t4
+  JOIN "SV6.Unit_BatchID" t5
+  JOIN "SV6.Unit_Procedure" t6
 WHERE t1.datetime >= '2016-10-04T02:00:00Z' AND t2.datetime <= '2016-10-04T02:10:00Z'
   AND entity = 'br-1470'
   AND t5.text = '1414'

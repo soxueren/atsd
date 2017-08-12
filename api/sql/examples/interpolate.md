@@ -4,7 +4,7 @@
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute)), COUNT(value)
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-03T09:20:00.000Z' AND datetime < '2016-06-03T09:50:00.000Z'
   AND entity = 'nurswgvml006'
 GROUP BY entity, PERIOD(5 minute)
@@ -27,7 +27,7 @@ Value for period **2016-06-03T09:30:00.000Z** is missing.
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute)), COUNT(value)
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-03T09:20:00.000Z' AND datetime < '2016-06-03T09:50:00.000Z'
   AND entity = 'nurswgvml006'
 GROUP BY entity, PERIOD(5 minute, VALUE 0)
@@ -48,7 +48,7 @@ GROUP BY entity, PERIOD(5 minute, VALUE 0)
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute)), COUNT(value)
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-03T09:20:00.000Z' AND datetime < '2016-06-03T09:50:00.000Z'
   AND entity = 'nurswgvml006'
 GROUP BY entity, PERIOD(5 minute, PREVIOUS)
@@ -69,7 +69,7 @@ GROUP BY entity, PERIOD(5 minute, PREVIOUS)
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute)), COUNT(value)
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-03T09:20:00.000Z' AND datetime < '2016-06-03T09:50:00.000Z'
   AND entity = 'nurswgvml006'
 GROUP BY entity, PERIOD(5 minute, LINEAR)
@@ -90,7 +90,7 @@ GROUP BY entity, PERIOD(5 minute, LINEAR)
 
 ```sql
 SELECT entity, date_format(PERIOD(1 minute)), COUNT(value)
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-03T09:20:00.000Z' AND datetime < '2016-06-03T09:50:00.000Z'
   AND entity = 'nurswgvml006'
 GROUP BY entity, PERIOD(1 minute, LINEAR)
@@ -122,7 +122,7 @@ Note that interpolation is applied before the rows are filtered with the `HAVING
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute)), COUNT(value)
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= '2016-06-03T09:20:00.000Z' AND datetime < '2016-06-03T09:50:00.000Z'
   AND entity = 'nurswgvml006'
 GROUP BY entity, PERIOD(5 minute, VALUE 0)

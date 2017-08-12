@@ -45,7 +45,7 @@ The `ROW_NUMBER()` column, without arguments, is available in the `SELECT` expre
 
 ```sql
 SELECT datetime, entity, value, row_number()
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= current_hour
   AND entity = 'nurswgvml007'
   WITH ROW_NUMBER(entity ORDER BY value DESC) <= 3
@@ -60,8 +60,8 @@ The input data for the specified interval contains 11 rows: 2 rows for 5 entitie
 
 ```sql
 SELECT entity, datetime, value
-  FROM mpstat.cpu_busy
-WHERE datetime >= "2016-06-18T12:00:00Z" AND datetime < "2016-06-18T12:00:30Z"
+  FROM "mpstat.cpu_busy"
+WHERE datetime >= '2016-06-18T12:00:00Z' AND datetime < '2016-06-18T12:00:30Z'
   ORDER BY entity, datetime
 ```
 
@@ -87,8 +87,8 @@ WHERE datetime >= "2016-06-18T12:00:00Z" AND datetime < "2016-06-18T12:00:30Z"
 
 ```sql
 SELECT entity, datetime, value, row_number() AS RN
-  FROM mpstat.cpu_busy
-WHERE datetime >= "2016-06-18T12:00:00Z" AND datetime < "2016-06-18T12:00:30Z"
+  FROM "mpstat.cpu_busy"
+WHERE datetime >= '2016-06-18T12:00:00Z' AND datetime < '2016-06-18T12:00:30Z'
   WITH ROW_NUMBER(entity ORDER BY datetime) <= 100
   ORDER BY entity, datetime
 ```
@@ -117,8 +117,8 @@ WHERE datetime >= "2016-06-18T12:00:00Z" AND datetime < "2016-06-18T12:00:30Z"
 
 ```sql
 SELECT entity, datetime, value
-  FROM mpstat.cpu_busy
-WHERE datetime >= "2016-06-18T12:00:00Z" AND datetime < "2016-06-18T12:00:30Z"
+  FROM "mpstat.cpu_busy"
+WHERE datetime >= '2016-06-18T12:00:00Z' AND datetime < '2016-06-18T12:00:30Z'
   WITH ROW_NUMBER(entity ORDER BY datetime) <= 1
   ORDER BY entity, datetime
 ```
@@ -144,8 +144,8 @@ Reverse ordering is accomplished with the `ORDER BY datetime DESC` condition in 
 
 ```sql
 SELECT entity, datetime, value
-  FROM mpstat.cpu_busy
-WHERE datetime >= "2016-06-18T12:00:00Z" AND datetime < "2016-06-18T12:00:30Z"
+  FROM "mpstat.cpu_busy"
+WHERE datetime >= '2016-06-18T12:00:00Z' AND datetime < '2016-06-18T12:00:30Z'
   WITH ROW_NUMBER(entity ORDER BY datetime DESC) <= 1
   ORDER BY entity, datetime
 ```
@@ -171,8 +171,8 @@ The maximum value for each partition can be queried with the `ORDER BY value des
 
 ```sql
 SELECT entity, datetime, value
-  FROM mpstat.cpu_busy
-WHERE datetime >= "2016-06-18T12:00:00Z" AND datetime < "2016-06-18T12:00:30Z"
+  FROM "mpstat.cpu_busy"
+WHERE datetime >= '2016-06-18T12:00:00Z' AND datetime < '2016-06-18T12:00:30Z'
   WITH ROW_NUMBER(entity ORDER BY value DESC) <= 1
   ORDER BY entity, time
 ```
@@ -196,8 +196,8 @@ WHERE datetime >= "2016-06-18T12:00:00Z" AND datetime < "2016-06-18T12:00:30Z"
 
 ```sql
 SELECT entity, datetime, value, row_number()
-  FROM mpstat.cpu_busy
-WHERE datetime >= "2016-06-18T12:00:00Z" AND datetime < "2016-06-18T13:00:00Z"
+  FROM "mpstat.cpu_busy"
+WHERE datetime >= '2016-06-18T12:00:00Z' AND datetime < '2016-06-18T13:00:00Z'
   WITH ROW_NUMBER(entity ORDER BY value DESC) <= 2
   ORDER BY entity, datetime
 ```

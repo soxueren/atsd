@@ -22,7 +22,7 @@ SELECT CURRENT_TIMESTAMP
 
 ```sql
 SELECT entity, datetime, value 
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime > CURRENT_TIMESTAMP - 1*DAY 
   LIMIT 1
 ```

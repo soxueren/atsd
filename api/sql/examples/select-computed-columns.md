@@ -7,7 +7,7 @@ The computed columns can be used both in the `SELECT` expression as well as in `
 ## Query with Join
 
 ```sql
-SELECT t1.datetime AS 'datetime', t1.entity AS 'entity', t1.value, t2.value, t1.value + t2.value AS total_cpu
+SELECT t1.datetime AS "datetime", t1.entity AS "entity", t1.value, t2.value, t1.value + t2.value AS total_cpu
     FROM "mpstat.cpu_system" t1
     JOIN "mpstat.cpu_user" t2
 WHERE t1.datetime > now - 1*MINUTE AND t2.datetime > now - 1*MINUTE
@@ -47,7 +47,7 @@ GROUP BY t1.entity, t1.datetime
 
 ```sql
 SELECT entity, tags.file_system, tags.mount_point, min(value), max(value), max(value) - min(value) AS range
- FROM disk_used
+ FROM "df.disk_used"
 WHERE datetime >= now - 1 * HOUR
  GROUP BY entity, tags
  ORDER BY max(value) - min(value) DESC
@@ -69,7 +69,7 @@ WHERE datetime >= now - 1 * HOUR
 
 ```sql
 SELECT entity, min(value), max(value), max(value) - min(value)
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= now - 1 * minute
   GROUP BY entity
 HAVING max(value) - min(value) > 10
