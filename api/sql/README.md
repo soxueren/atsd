@@ -601,9 +601,34 @@ Columns referenced in the `SELECT` expression must be included in the `GROUP BY`
 
 Versioning columns (`version_status`, `version_source`, `version_time`, `version_datetime`) are currently not supported.
 
-## Quoting Identifiers
+## Literals
 
-Use **double quotation marks** to enquote a table name, column name, and alias if it contains a reserved column name, a [keyword](#keywords), an SQL identifier, a function name, or a special character including whitespace, `.`,`+`,`-`,`*`,`/`,`,`,`"`,`'`.
+The literal is a constant value specified in the query, such as `'nurswvml007'`, `75`, or `'2017-08-15T00:00:00Z'`. The database supports literals for string, datetime, and number data types.
+
+```sql
+-- string literal
+WHERE entity = 'nurswgvml007'
+
+-- datetime literal
+WHERE datetime >= '2017-08-15T00:00:00Z'
+
+-- number literal
+WHERE value < 75
+```
+
+The string and datetime literals must be enclosed in **single quotation marks**.
+
+A literal value containing single quotes can be escaped by doubling the quote symbol.
+
+```
+-- string literal: yyyy-mm-dd'T'HH:mm:ss'Z'
+SELECT date_format(time, 'yyyy-mm-dd''T''HH:mm:ss''Z''')
+```
+
+
+## Identifiers
+
+Use **double quotation marks** to enquote a table name, column name, and alias if it contains a reserved column name, a [keyword](#keywords), a function name, or a special character including whitespace, `.`,`+`,`-`,`*`,`/`,`,`,`"`,`'`.
 
 
 ```sql
@@ -620,19 +645,14 @@ SELECT tags.action AS "select"
 SELECT * FROM "avg"
 ```
 
-## Escaping
-
-Quotes and double quotes can be escaped by doubling the quote symbol.
+Double quotes in identifiers can be escaped by doubling the quote symbol.
 
 ```sql
--- Alias: The "main" entity
+-- column alias: The "main" entity
 SELECT entity AS "The ""main"" entity"
 
--- Tag: hello"world
+-- series tag: hello"world
 SELECT tags."hello""world"
-
--- Literal: yyyy-mm-dd'T'HH:mm:ss'Z'
-SELECT date_format(time, 'yyyy-mm-dd''T''HH:mm:ss''Z''')
 ```
 
 ## Aliases
