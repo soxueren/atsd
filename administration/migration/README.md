@@ -575,7 +575,7 @@ tar -xf /opt/atsd/scripts.tar.gz -C /opt/atsd/
 Set `JAVA_HOME` in `/opt/atsd/atsd/bin/start-atsd.sh` file:
 
 ```sh
-jp=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"`; sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$jp,g" /opt/atsd/atsd/atsd/bin/start-atsd.sh
+jp=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"`; sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$jp,g" /opt/atsd/atsd/bin/start-atsd.sh
 ```
 
 Start ATSD.
