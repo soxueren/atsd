@@ -164,7 +164,7 @@ curl -o /opt/atsd/hbase/lib/atsd-hbase.16944.jar https://axibase.com/public/atsd
 Set `JAVA_HOME` in the `start-atsd.sh` file:
 
 ```sh
-jp=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"`; sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$jp,g" /opt/atsd/atsd/atsd/bin/start-atsd.sh
+jp=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"`; sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$jp,g" /opt/atsd/atsd/bin/start-atsd.sh
 ```
 
 ## Deploy ATSD Coprocessors
