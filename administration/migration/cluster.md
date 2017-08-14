@@ -155,7 +155,7 @@ Upgrade jar files and startup scripts.
 rm -f /opt/atsd/atsd/bin/*
 curl -o /opt/atsd/atsd/bin/atsd.17039.jar https://axibase.com/public/atsd-125-migration/atsd.17039.jar
 curl -o /opt/atsd/scripts.tar.gz https://axibase.com/public/atsd-125-migration/scripts.tar.gz
-tar -xf /opt/atsd/scripts.tar.gz -C /opt/atsd/  atsd/bin
+tar -xf /opt/atsd/scripts.tar.gz -C /opt/atsd/  atsd
 rm /opt/atsd/scripts.tar.gz
 rm -f /opt/atsd/hbase/lib/*
 curl -o /opt/atsd/hbase/lib/atsd-hbase.17039.jar https://axibase.com/public/atsd-125-migration/atsd-hbase.17039.jar
@@ -167,13 +167,20 @@ Set `JAVA_HOME` in the `start-atsd.sh` file:
 jp=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"`; sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$jp,g" /opt/atsd/atsd/bin/start-atsd.sh
 ```
 
+Set custom `JAVA_OPTS` in the `/opt/atsd/atsd/conf/atsd-env.sh` file:
+
+```bash
+JAVA_OPTS="-server -Xmx1024M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="$atsd_home"/logs"
+```
 ## Deploy ATSD Coprocessors
 
 ### Copy Comprocessors into HBase
 
 Copy `/opt/atsd/hbase/lib/atsd.jar` to the `/usr/lib/hbase/lib/` directory on each HBase Region Server.
 
-### Enable ATSD Coprocessors
+### Remove Coprocessor Definitions
+
+ATSD coprocessors that were added to HBase CoprocessorRegion Classes are now loaded automatically and therefore must be removed from the HBase settings. 
 
 Open Cloudera Manager.
 
@@ -181,12 +188,7 @@ Select the **Clusters > Cluster > HBase-2**, and open the **Configuration** tab.
 
 Search for the `hbase.coprocessor.region.classes` setting.
 
-Delete `com.axibase.tsd.hbase.coprocessor.CompactRawDataEndpoint` coprocessor.
-
-Check that following ATSD coprocessors are added to HBase CoprocessorRegion Classes.
-
-* com.axibase.tsd.hbase.coprocessor.DeleteDataEndpoint
-* com.axibase.tsd.hbase.coprocessor.MessagesStatsEndpoint
+Remove all ATSD coprocessors and save settings:
 
 ![](./images/atsd-coprocessors.png)
 
