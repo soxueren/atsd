@@ -153,18 +153,18 @@ Upgrade jar files and startup scripts.
 
 ```sh
 rm -f /opt/atsd/atsd/bin/*
-curl -o /opt/atsd/atsd/bin/atsd.16944.jar https://axibase.com/public/atsd-125-migration/atsd.16944.jar
+curl -o /opt/atsd/atsd/bin/atsd.17039.jar https://axibase.com/public/atsd-125-migration/atsd.17039.jar
 curl -o /opt/atsd/scripts.tar.gz https://axibase.com/public/atsd-125-migration/scripts.tar.gz
-tar -xf /opt/atsd/scripts.tar.gz -C /opt/atsd/bin
+tar -xf /opt/atsd/scripts.tar.gz -C /opt/atsd/  atsd/bin
 rm /opt/atsd/scripts.tar.gz
 rm -f /opt/atsd/hbase/lib/*
-curl -o /opt/atsd/hbase/lib/atsd-hbase.16944.jar https://axibase.com/public/atsd-125-migration/atsd-hbase.16944.jar
+curl -o /opt/atsd/hbase/lib/atsd-hbase.17039.jar https://axibase.com/public/atsd-125-migration/atsd-hbase.17039.jar
 ```
 
 Set `JAVA_HOME` in the `start-atsd.sh` file:
 
 ```sh
-jp=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"`; sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$jp,g" /opt/atsd/atsd/atsd/bin/start-atsd.sh
+jp=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"`; sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$jp,g" /opt/atsd/atsd/bin/start-atsd.sh
 ```
 
 ## Deploy ATSD Coprocessors
