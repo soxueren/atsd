@@ -10,7 +10,7 @@ The reporter makes no changes to the data.
 
 ## Running Reporter
 
-Execute the below steps on the server running YARN Resourse Manager on the target cluster.
+Execute the below steps on the machine which has Hadoop job client and HDFS shell of the target cluster.
 
 ### Check Services
 
@@ -22,7 +22,7 @@ Execute the below steps on the server running YARN Resourse Manager on the targe
 
 ### Prepare Map-Reduce Job
 
-Log in to the server where YARN ResourceManager is running.
+Log in to the machine where Hadoop job client and HDFS shell are available.
 
 Create a temporary directory and download the DataTableReporter jar file.
 
@@ -42,15 +42,13 @@ Check that HBase classes are present in the output.
 ```sh
 echo $HADOOP_CLASSPATH
 ```
-echo $HADOOP_CLASSPATH
-/usr/lib/hbase/conf:/usr/lib/hbase/lib/hbase-hadoop-compat-1.2.5.jar:/usr/lib/hbase/lib/hbase-server-1.2.5.jar:/usr/lib/hbase/lib/guava-12.0.1.jar:/usr/lib/hbase/lib/hbase-prefix-tree-1.2.5.jar:/usr/lib/hbase/lib/hbase-client-1.2.5.jar:/usr/lib/hbase/lib/hbase-common-1.2.5.jar:/usr/lib/hbase/lib/netty-all-4.0.23.Final.jar:/usr/lib/hbase/lib/hbase-protocol-1.2.5.jar:/usr/lib/hbase/lib/protobuf-java-2.5.0.jar:/usr/lib/hbase/lib/zookeeper-3.4.6.jar:/usr/lib/hbase/lib/metrics-core-2.2.0.jar:/usr/lib/hbase/lib/htrace-core-3.1.0-incubating.jar:/tmp/reporter/reporter.jar
 ```
 /usr/lib/hbase/conf:/usr/lib/hbase/lib/htrace-core-3.2.0-incubating.jar:/usr/lib/hbase/lib/hbase-client-1.0.0-cdh5.5.2.jar:/usr/lib/zookeeper/zookeeper-3.4.5-cdh5.5.2.jar:/usr/lib/hbase/lib/hbase-server-1.0.0-cdh5.5.2.jar:/usr/lib/hbase/lib/hbase-protocol-1.0.0-cdh5.5.2.jar:/usr/lib/hbase/lib/netty-3.6.6.Final.jar:/usr/lib/hbase/lib/hbase-common-1.0.0-cdh5.5.2.jar:/usr/lib/hbase/lib/hbase-hadoop-compat-1.0.0-cdh5.5.2.jar:/usr/lib/hbase/lib/protobuf-java-2.5.0.jar:/usr/lib/hbase/lib/guava-12.0.1.jar:/tmp/reporter/reporter.jar
 ```
 
 ### Initiate Kerberos Session
 
-Copy the `/opt/atsd/atsd/conf/axibase.keytab` file [generated](../../installation/cloudera.md#generate-keytab-file-for-axibase-principal) for the `axibase` principal from the ATSD server to the `/tmp/reporter/` directory on the YARN ResourceManager server.
+Copy the `/opt/atsd/atsd/conf/axibase.keytab` file [generated](../../installation/cloudera.md#generate-keytab-file-for-axibase-principal) for the `axibase` principal from the ATSD server to the `/tmp/reporter/` directory.
 
 Initiate a Kerberos session.
 
