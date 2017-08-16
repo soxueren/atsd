@@ -59,7 +59,9 @@
   * [Pentaho Report Designer](integration/pentaho/report-designer/README.md)  
   * [Stata](integration/stata/README.md)
   * [Tableau](integration/tableau/README.md)
-  * Generic [ODBC](integration/odbc/README.md)
+  * [ODBC](integration/odbc/README.md)
+  * [Grafana](https://github.com/axibase/grafana-data-source)
+  * [Graphite](https://github.com/axibase/atsd/tree/master/integration/graphite)
 
 ## Rule Engine
 
@@ -85,7 +87,7 @@
     * [Oracle VirtualBox VM](installation/virtualbox.md)
     * [Other](installation/other-distributions.md)
   * Cluster Distributions
-    * [Cloudera Hadoop Distribution](installation/cloudera.md)  	
+    * [Cloudera Hadoop Distribution (CDH)](installation/cloudera.md)  	
     * [Ambari](installation/ambari.md)	  
     * [HBase Cluster](installation/hbase-cluster.md)
   * [Uninstalling](administration/uninstalling.md)

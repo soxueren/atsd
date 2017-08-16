@@ -22,7 +22,7 @@ The CSV header should include a leading time column and one or multiple numeric 
 ### Payload
 
 * Payload is plain text in CSV format containing a header line and data rows.
-* The last time in the file must be terminated with a line feed.
+* The last line in the file must be terminated with a line feed.
 * The header must begin with a `time` or `date` column, followed by at least one metric column containing numeric values.
 * Entity and Metric names containing space characters will be normalized by replacing the space character with an underscore.
 * Time must be specified in Unix milliseconds if the `time` column is used, and in ISO format if the `date` column is used.

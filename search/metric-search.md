@@ -12,7 +12,7 @@ A keyword without a colon is considered a metric name filter, a keyword containi
 name-filter [tag-name-1:tag-value-2] [tag-name-2:tag-value-2]
 ```
 
-The `*` wildcard is automatically appended to the `name-filter`, thereby including all metrics **starting** with the specified name.
+The `*` wildcard is automatically appended to the `name-filter`, thereby including metrics with a name **starting** with the specified text.
 
 If the search expression contains a tag name, such tags are displayed in the results table.
 
@@ -42,23 +42,23 @@ cpu*
 *cpu*
 ```
 
-* Find metrics with the tag 'hello' set to 'World'
+* Find metrics with the tag 'frequency' set to 'Daily'
 
 
 ```ls
-hello:World
+frequency:Daily
 ```
 
-* Find metrics with any value for the tag 'hello'
+* Find metrics with any value for the tag 'frequency'
 
 
 ```ls
-hello:*
+frequency:*
 ```
 
-* Find metrics starting with 'cpu' and the tag 'unit' set to 'percent'
+* Find metrics starting with 'cpu' **and** the tag 'frequency' set to 'Daily'
 
 
 ```ls
-cpu hello:* unit:percent
+cpu frequency:Daily
 ```
