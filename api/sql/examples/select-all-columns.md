@@ -12,7 +12,7 @@ The list of available columns includes time, datetime, value, text, metric, enti
 
 ```sql
 SELECT *
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml006'
   AND datetime > now - 5 * minute
 ```
@@ -31,7 +31,7 @@ WHERE entity = 'nurswgvml006'
 
 ```sql
 SELECT *
-  FROM df.disk_used
+  FROM "df.disk_used"
 WHERE entity = 'nurswgvml006'
   AND datetime > now - 5 * minute
 ORDER BY datetime
@@ -55,8 +55,8 @@ In case of `JOIN`, column names are fully qualified and include both table name 
 
 ```sql
 SELECT *
-  FROM df.disk_used
-  JOIN USING entity mpstat.cpu_busy
+  FROM "df.disk_used"
+  JOIN USING ENTITY "mpstat.cpu_busy"
 WHERE mpstat.cpu_busy.entity = 'nurswgvml006'
   AND df.disk_used.datetime > now - 5 * minute
 ```

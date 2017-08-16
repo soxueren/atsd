@@ -18,7 +18,7 @@ SELECT percentile(25, value) AS "p25",
   percentile(99.5, value) AS "p99.5",
   percentile(99.9, value) AS "p99.9",
   percentile(99.99, value) AS "p99.99"
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007' 
  AND datetime >= current_day
 ```

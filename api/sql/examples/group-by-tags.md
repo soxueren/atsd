@@ -4,7 +4,7 @@
 
 ```sql
 SELECT entity, datetime, tags.file_system, tags.mount_point, AVG(value)
-  FROM df.disk_used
+  FROM "df.disk_used"
 WHERE datetime > now-2*hour
   AND entity LIKE 'nurswgvml00*' AND tags.mount_point != '/'
   GROUP BY entity, tags.file_system, tags.mount_point, PERIOD(1 HOUR)
@@ -18,7 +18,7 @@ Using columns `tags` and `tags.*` (in the `SELECT` expression) provides an optio
 
 ```sql
 SELECT entity, datetime, tags.*, AVG(value)
-  FROM df.disk_used
+  FROM "df.disk_used"
 WHERE datetime > now-2*hour
   AND entity LIKE 'nurswgvml00*' AND tags.mount_point != '/'
   GROUP BY entity, tags, PERIOD(1 HOUR)

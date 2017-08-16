@@ -24,7 +24,7 @@ series e:e-agr-3 m:m-agr=90  d:2017-07-03T09:00:00Z <- first numeric value withi
 ```sql
 SELECT datetime, count(value), count(*),
   first(value), last(value)
-FROM 'm-agr'
+FROM "m-agr"
   GROUP BY PERIOD(1 DAY)
 ```
 
@@ -43,7 +43,7 @@ FROM 'm-agr'
 ```sql
 SELECT entity, count(value), count(*),
   first(value), last(value)
-FROM 'm-agr'
+FROM "m-agr"
   GROUP BY entity
 ```
 

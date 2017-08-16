@@ -44,13 +44,13 @@ password=********
 Execute inline query and print results to stdout.
 
 ```ls
-./sql.sh -q "SELECT * FROM mpstat.cpu_busy WHERE datetime > now - 1*minute LIMIT 3"
+./sql.sh -q "SELECT * FROM \"mpstat.cpu_busy\" WHERE datetime > now - 1*minute LIMIT 3"
 ```
 
 Execute inline query and store results in `/tmp/report-2.csv`.
 
 ```ls
-./sql.sh --output /tmp/report-2.csv --query "SELECT entity, value FROM mpstat.cpu_busy WHERE datetime > now - 1*minute LIMIT 3"
+./sql.sh --output /tmp/report-2.csv --query "SELECT entity, value FROM \"mpstat.cpu_busy\" WHERE datetime > now - 1*minute LIMIT 3"
 ```
 
 Execute query specified in the `query.sql` file and write CSV results to `/tmp/report-1.csv`.
@@ -62,7 +62,7 @@ Execute query specified in the `query.sql` file and write CSV results to `/tmp/r
 Execute inline query and redirect output to a file.
 
 ```
-./sql.sh -q "SELECT * FROM mpstat.cpu_busy WHERE datetime > now-1*hour LIMIT 2" > /tmp/test.csv
+./sql.sh -q "SELECT * FROM \"mpstat.cpu_busy\" WHERE datetime > now-1*hour LIMIT 2" > /tmp/test.csv
 ```
 
 Execute inline query with escaped double quotes.
@@ -74,6 +74,6 @@ Execute inline query with escaped double quotes.
 Execute a multi-line query.
 
 ```
-./sql.sh -q "SELECT * FROM mpstat.cpu_busy 
-             WHERE datetime > now-1*hour LIMIT 5"
+./sql.sh -q "SELECT * FROM \"mpstat.cpu_busy\" WHERE 
+               datetime > now-1*hour LIMIT 5"
 ```

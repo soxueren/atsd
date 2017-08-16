@@ -33,8 +33,8 @@ If the key argument is numeric, such as in `LOOKUP('table-1', value)`, the numbe
 ### Query
 
 ```sql
-SELECT value AS 'code', ISNULL(LOOKUP('tcp-status-codes', value), value) AS 'name', COUNT(value)
-  FROM 'docker.tcp-connect-status'
+SELECT value AS "code", ISNULL(LOOKUP('tcp-status-codes', value), value) AS "name", COUNT(value)
+  FROM "docker.tcp-connect-status"
 WHERE datetime > now - 15 * MINUTE
   GROUP BY value
 ```
@@ -77,9 +77,9 @@ This query translates numeric values into string codes for PI Tag digital tags.
 ### Query
 
 ```sql
-SELECT datetime, metric.label, metric.tags.point_data_type AS 'pi tag type',
+SELECT datetime, metric.label, metric.tags.point_data_type AS "pi tag type",
   value, LOOKUP('pi-pids', value)
-FROM 'ba:phase.1'
+FROM "ba:phase.1"
   LIMIT 10
 ```
 
@@ -110,7 +110,7 @@ The query below converts numeric values into string codes using a replacement ta
 SELECT datetime, metric, metric.tags.digital_set, value
   ,LOOKUP('BatchAct', value) AS DIGSTR1
   ,LOOKUP(metric.tags.digital_set, value) AS DIGSTR2
-FROM 'ba:active.1'
+FROM "ba:active.1"
   LIMIT 2
 ```
 

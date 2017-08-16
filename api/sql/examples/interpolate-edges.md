@@ -4,8 +4,8 @@
 
 ```sql
 SELECT entity, datetime, value
-  FROM mpstat.cpu_busy
-WHERE datetime >= "2016-06-19T09:10:00Z" AND datetime < "2016-06-19T09:40:00Z"
+  FROM "mpstat.cpu_busy"
+WHERE datetime >= '2016-06-19T09:10:00Z' AND datetime < '2016-06-19T09:40:00Z'
   AND entity = 'nurswgvml006'
 ```
 
@@ -25,8 +25,8 @@ WHERE datetime >= "2016-06-19T09:10:00Z" AND datetime < "2016-06-19T09:40:00Z"
 
 ```sql
 SELECT entity, datetime, value
-  FROM mpstat.cpu_busy
-WHERE datetime >= "2016-06-19T09:20:00Z" AND datetime < "2016-06-19T09:30:00Z"
+  FROM "mpstat.cpu_busy"
+WHERE datetime >= '2016-06-19T09:20:00Z' AND datetime < '2016-06-19T09:30:00Z'
   AND entity = 'nurswgvml006'
 ```
 
@@ -43,8 +43,8 @@ WHERE datetime >= "2016-06-19T09:20:00Z" AND datetime < "2016-06-19T09:30:00Z"
 
 ```sql
 SELECT entity, datetime, MAX(value)
-  FROM mpstat.cpu_busy
-WHERE datetime >= "2016-06-19T09:20:00Z" AND datetime < "2016-06-19T09:30:00Z"
+  FROM "mpstat.cpu_busy"
+WHERE datetime >= '2016-06-19T09:20:00Z' AND datetime < '2016-06-19T09:30:00Z'
   AND entity = 'nurswgvml006'
   GROUP BY entity, PERIOD(1 MINUTE)
 ```
@@ -62,7 +62,7 @@ WHERE datetime >= "2016-06-19T09:20:00Z" AND datetime < "2016-06-19T09:30:00Z"
 
 ```sql
 SELECT entity, date_format(PERIOD(5 minute)), COUNT(value) 
-  FROM mpstat.cpu_busy 
+  FROM "mpstat.cpu_busy" 
 WHERE datetime >= '2016-06-03T09:20:00.000Z' AND datetime < '2016-06-03T09:50:00.000Z'
   AND entity = 'nurswgvml006'
 GROUP BY entity, PERIOD(5 minute, PREVIOUS)

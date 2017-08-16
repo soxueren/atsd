@@ -4,7 +4,7 @@
 
 ```sql
 SELECT time, datetime, value, text, metric, entity, tags, metric.tags, entity.tags, entity.groups
-  FROM df.disk_used
+  FROM "df.disk_used"
 WHERE entity = 'nurswgvml006' 
   AND datetime > now - 5 * minute
 ORDER BY datetime

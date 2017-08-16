@@ -8,7 +8,7 @@ An unquoted `alias` should start with a letter [a-zA-Z], followed by a letter, d
 
 ```sql
 SELECT datetime, value, entity "server", metric AS "measurement" 
-  FROM mpstat.cpu_busy 
+  FROM "mpstat.cpu_busy" 
 WHERE entity = 'nurswgvml006' 
   AND datetime BETWEEN now - 5 * minute AND now
 ```

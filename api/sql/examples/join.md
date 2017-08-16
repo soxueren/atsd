@@ -7,8 +7,8 @@ The `JOIN` operation merges rows with the same timestamp, entity, and tags. Rows
 
 ```sql
 SELECT t1.entity, t1.datetime, t1.value, t2.value
-  FROM mpstat.cpu_busy t1
-JOIN mpstat.cpu_idle t2
+  FROM "mpstat.cpu_busy" t1
+JOIN "mpstat.cpu_idle" t2
   WHERE t1.datetime > NOW - 1 * HOUR
   AND t1.entity = 'nurswgvml006'
 ```
@@ -33,8 +33,8 @@ The series have to be collected at the same time for the timestamps to be equal 
 ```sql
 SELECT t1.entity, t1.datetime, t1.value,
        t2.entity, t2.datetime, t2.value
-FROM mpstat.cpu_busy t1
-  JOIN meminfo.memfree t2
+FROM "mpstat.cpu_busy" t1
+  JOIN "meminfo.memfree" t2
 WHERE t1.datetime BETWEEN '2017-04-08T07:01:00Z' AND '2017-04-08T07:02:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
@@ -52,8 +52,8 @@ Rows with different timestamps can be included with `OUTER JOIN`. Missing values
 ```sql
 SELECT t1.entity, t1.datetime, t1.value,
        t2.entity, t2.datetime, t2.value
-FROM mpstat.cpu_busy t1
-  OUTER JOIN meminfo.memfree t2
+FROM "mpstat.cpu_busy" t1
+  OUTER JOIN "meminfo.memfree" t2
 WHERE t1.datetime BETWEEN '2017-04-08T07:01:00Z' AND '2017-04-08T07:02:00Z'
   AND t1.entity = 'nurswgvml006'
 ```
@@ -77,8 +77,8 @@ The merged series can be regularized using `WITH INTERPOLATE` option to fill mis
 ```sql
 SELECT t1.entity, t1.datetime, t1.value,
        t2.entity, t2.datetime, t2.value
-FROM mpstat.cpu_busy t1
-  JOIN meminfo.memfree t2
+FROM "mpstat.cpu_busy" t1
+  JOIN "meminfo.memfree" t2
 WHERE t1.datetime BETWEEN '2017-04-08T07:01:00Z' AND '2017-04-08T07:02:00Z'
   AND t1.entity = 'nurswgvml006'
   WITH INTERPOLATE(15 SECOND, PREVIOUS, OUTER)
@@ -99,8 +99,8 @@ WHERE t1.datetime BETWEEN '2017-04-08T07:01:00Z' AND '2017-04-08T07:02:00Z'
 ```sql
 SELECT t1.entity, t1.datetime, t1.value,
        t2.entity, t2.datetime, t2.value
-  FROM mpstat.cpu_busy t1
-  JOIN meminfo.memfree t2
+  FROM "mpstat.cpu_busy" t1
+  JOIN "meminfo.memfree" t2
 WHERE t1.datetime BETWEEN '2017-04-08T07:01:00Z' AND '2017-04-08T07:02:00Z'
   AND t1.entity = 'nurswgvml006'
   WITH INTERPOLATE(DETAIL, LINEAR, OUTER)

@@ -10,7 +10,7 @@ Similar to series tags, metric tags can be selected with:
 
 ```sql
 SELECT entity, datetime, value, metric, metric.tags, metric.tags.*, metric.tags.source 
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml006'
   AND datetime > now - 5 * MINUTE
 ```
@@ -29,8 +29,8 @@ WHERE entity = 'nurswgvml006'
 
 ```sql
 SELECT t1.entity, t1.datetime, t1.value, t2.value, t2.tags, t1.metric.tags, t2.metric.tags
-  FROM df.disk_used t1
-  JOIN USING entity mpstat.cpu_busy t2
+  FROM "df.disk_used" t1
+  JOIN USING ENTITY "mpstat.cpu_busy" t2
 WHERE t1.entity = 'nurswgvml006' 
   AND t1.datetime > now - 5 * minute
 ```

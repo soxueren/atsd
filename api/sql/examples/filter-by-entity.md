@@ -6,7 +6,7 @@
 
 ```sql
 SELECT datetime, entity, value
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND datetime > current_hour
 ```
@@ -27,7 +27,7 @@ WHERE entity = 'nurswgvml007'
 
 ```sql
 SELECT datetime, entity, value
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity != 'nurswgvml007'
   AND datetime > current_hour
 ORDER BY datetime
@@ -52,7 +52,7 @@ ORDER BY datetime
 
 ```sql
 SELECT datetime, entity, value
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity IN ('nurswgvml006', 'nurswgvml007')
   AND datetime > current_hour
 ORDER BY datetime  
@@ -77,7 +77,7 @@ ORDER BY datetime
 
 ```sql
 SELECT datetime, entity, value
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity NOT IN ('nurswgvml006', 'nurswgvml007')
   AND datetime > current_hour
 ORDER BY datetime  
@@ -102,7 +102,7 @@ ORDER BY datetime
 
 ```sql
 SELECT datetime, entity, value
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity LIKE 'nurswgvml00*'
   AND datetime > current_hour
 ORDER BY datetime  

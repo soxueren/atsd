@@ -6,7 +6,7 @@ Average value for one metric, one entity.
 
 ```sql
 SELECT avg(value)
- FROM mpstat.cpu_busy 
+ FROM "mpstat.cpu_busy" 
 WHERE entity = 'nurswgvml007' 
  AND datetime >= current_day
 ```
@@ -25,7 +25,7 @@ Multiple functions.
 
 ```sql
 SELECT avg(value), max(value), last(value), count(*)
- FROM mpstat.cpu_busy 
+ FROM "mpstat.cpu_busy" 
 WHERE entity = 'nurswgvml007' 
  AND datetime >= current_day
 ```

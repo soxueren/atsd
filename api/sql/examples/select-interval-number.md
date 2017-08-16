@@ -6,16 +6,16 @@ The `INTERVAL_NUMBER` function can be referenced only in the `SELECT` expression
 
 ```sql
 SELECT t1.entity, t1.metric, t1.datetime,
-  t1.value, t5.text AS 'Unit Batch Id', t6.text AS 'Unit Procedure',
+  t1.value, t5.text AS "Unit Batch Id", t6.text AS "Unit Procedure",
 CASE INTERVAL_NUMBER()
   WHEN 1 THEN t5.text
   ELSE CONCAT(t5.text, '.', INTERVAL_NUMBER())
-END AS 'Unit Batch Number'
+END AS "Unit Batch Number"
   FROM atsd_series t1
-    JOIN 'TV6.Unit_BatchID' t5
-    JOIN 'TV6.Unit_Procedure' t6
+    JOIN "TV6.Unit_BatchID" t5
+    JOIN "TV6.Unit_Procedure" t6
 WHERE t1.metric = 'tv6.pack:r01'
-  AND t1.datetime BETWEEN (SELECT datetime FROM 'TV6.Unit_BatchID' WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800'))
+  AND t1.datetime BETWEEN (SELECT datetime FROM "TV6.Unit_BatchID" WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800'))
   AND t1.entity = 'br-1211'
 WITH INTERPOLATE(60 SECOND, AUTO, OUTER, EXTEND, START_TIME)
   ORDER BY t1.datetime
@@ -39,7 +39,9 @@ WITH INTERPOLATE(60 SECOND, AUTO, OUTER, EXTEND, START_TIME)
 The subquery returns two intervals.
 
 ```sql
-SELECT datetime, text FROM 'TV6.Unit_BatchID' WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800')
+SELECT datetime, text 
+  FROM "TV6.Unit_BatchID" 
+WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800')
 ```
 
 ```ls

@@ -4,7 +4,7 @@
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND datetime >= '2016-06-18T20:00:00Z' AND datetime < '2016-06-18T21:00:00.000Z'
 ```
@@ -21,7 +21,7 @@ WHERE entity = 'nurswgvml007'
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND datetime >= '2016-06-18 20:00:00' AND datetime < '2016-06-18 21:00:00.000'
 ```
@@ -38,7 +38,7 @@ WHERE entity = 'nurswgvml007'
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND datetime >= '2017-04-04T17:07:00Z'
 LIMIT 5
@@ -58,7 +58,7 @@ LIMIT 5
 
 ```sql
 SELECT time, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND time >= 1466100000000 AND time < 1466200000000
 ```
@@ -77,7 +77,7 @@ Both `time` and `datetime` columns support [endtime](../../../end-time-syntax.md
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND datetime >= PREVIOUS_HOUR
 ```
@@ -97,7 +97,7 @@ WHERE entity = 'nurswgvml007'
 If the server's time zone is `Europe/Berlin`, for example, the `current_day` keyword in the below query is evaluated to `2017-04-15T00:00:00+02:00` local time or `2017-04-14T22:00:00Z` UTC time.
 
 ```sql
-SELECT datetime, date_format(time, "yyyy-MM-dd'T'HH:mm:ssZZ") AS local_datetime, value
+SELECT datetime, date_format(time, 'yyyy-MM-dd''T''HH:mm:ssZZ') AS local_datetime, value
   FROM m1
 WHERE datetime >= current_day
 ```
@@ -129,9 +129,9 @@ The following example selects data between 0h:0m:0s of the previous day and 0h:0
 
 ```sql
 SELECT value, datetime,
-  date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'UTC') AS 'UTC_datetime',
-  date_format(time, "yyyy-MM-dd'T'HH:mm:ssz", 'US/Pacific') AS 'PST_datetime'
-FROM mpstat.cpu_busy
+  date_format(time, 'yyyy-MM-dd''T''HH:mm:ssz', 'UTC') AS "UTC_datetime",
+  date_format(time, 'yyyy-MM-dd''T''HH:mm:ssz', 'US/Pacific') AS "PST_datetime"
+FROM "mpstat.cpu_busy"
   WHERE entity = 'nurswgvml007'
 AND datetime BETWEEN endtime(YESTERDAY, 'US/Pacific') AND endtime(CURRENT_DAY, 'US/Pacific')
   ORDER BY datetime
@@ -151,7 +151,7 @@ AND datetime BETWEEN endtime(YESTERDAY, 'US/Pacific') AND endtime(CURRENT_DAY, '
 
 ```sql
 SELECT datetime as utc_time, date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') AS local_datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
   WHERE entity = 'nurswgvml007'
     AND time >= date_parse('2017-05-01 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna')
     AND  time < date_parse('2017-05-03 12:00:00', 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna')
@@ -175,15 +175,15 @@ To emulate a half-open `[)` interval subtract 1 millisecond from an `AND` value.
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
-  AND datetime BETWEEN "2016-06-18T20:00:00.000Z" AND "2016-06-18T20:59:59.999Z"
+  AND datetime BETWEEN '2016-06-18T20:00:00.000Z' AND '2016-06-18T20:59:59.999Z'
 ```
 
 The above condition is equivalent to:
 
 ```sql
-  datetime >= "2016-06-18T20:00:00.000Z" AND datetime < "2016-06-18T21:00:00.000Z"
+  datetime >= '2016-06-18T20:00:00.000Z' AND datetime < '2016-06-18T21:00:00.000Z'
 ```
 
 ```ls
@@ -212,9 +212,9 @@ series d:2017-04-03T01:15:00Z e:nurswgvml007 x:maintenance-rfc=RFC12-stop
 
 ```sql
 SELECT datetime, value
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
-  AND datetime BETWEEN (SELECT datetime FROM 'maintenance-rfc'
+  AND datetime BETWEEN (SELECT datetime FROM "maintenance-rfc"
   WHERE entity = 'nurswgvml007'
 ORDER BY datetime)
 ```
@@ -232,9 +232,9 @@ ORDER BY datetime)
 
 ```sql
 SELECT datetime, value
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
-  AND datetime BETWEEN (SELECT datetime FROM 'maintenance-rfc'
+  AND datetime BETWEEN (SELECT datetime FROM "maintenance-rfc"
   WHERE entity = 'nurswgvml007'
 ORDER BY datetime)
 ```
@@ -249,7 +249,7 @@ ORDER BY datetime)
 
 ```sql
 -- outer query
-WHERE t1.datetime BETWEEN (SELECT datetime FROM 'TV6.Unit_BatchID' WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800'))
+WHERE t1.datetime BETWEEN (SELECT datetime FROM "TV6.Unit_BatchID" WHERE entity = 'br-1211' AND (text = '800' OR LAG(text)='800'))
 ```
 
 ```ls
@@ -264,8 +264,8 @@ WHERE t1.datetime BETWEEN (SELECT datetime FROM 'TV6.Unit_BatchID' WHERE entity 
 The above subquert result is equivalent to:
 
 ```sql
-WHERE t1.datetime BETWEEN `2016-10-04T02:01:20Z` AND `2016-10-04T02:03:05Z`
-   OR t1.datetime BETWEEN `2016-10-04T02:03:10Z` AND `2016-10-04T02:07:05Z`
+WHERE t1.datetime BETWEEN '2016-10-04T02:01:20Z' AND '2016-10-04T02:03:05Z'
+   OR t1.datetime BETWEEN '2016-10-04T02:03:10Z' AND '2016-10-04T02:07:05Z'
 ```
 
 ## Query Multiple Intervals with `OR`
@@ -274,7 +274,7 @@ The query may select multiple intervals using the `OR` operator.
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND (datetime BETWEEN '2017-04-02T14:00:00Z' AND '2017-04-02T14:01:00Z'
     OR datetime BETWEEN '2017-04-04T16:00:00Z' AND '2017-04-04T16:01:00Z')
@@ -301,7 +301,7 @@ Each interval opens with the first sample for which the date filter returned `tr
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND datetime > PREVIOUS_HOUR
   AND date_format(time, 'mm:ss') BETWEEN '00:00' AND '00:30'
@@ -325,7 +325,7 @@ In particular, the values between such intervals are not interpolated and not re
 
 ```sql
 SELECT datetime, value
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND (datetime BETWEEN '2017-04-02T14:00:00Z' AND '2017-04-02T14:01:00Z'
     OR datetime BETWEEN '2017-04-04T16:00:00Z' AND '2017-04-04T16:01:00Z')
@@ -350,7 +350,7 @@ WHERE entity = 'nurswgvml007'
 
 ```sql
 SELECT datetime, AVG(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE entity = 'nurswgvml007'
   AND (datetime BETWEEN '2017-04-02T14:00:00Z' AND '2017-04-02T14:01:00Z'
     OR datetime BETWEEN '2017-04-04T16:00:00Z' AND '2017-04-04T16:01:00Z')

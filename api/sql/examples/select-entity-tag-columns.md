@@ -4,7 +4,7 @@
 
 ```sql
 SELECT entity, entity.tags.os AS os, entity.tags.ip AS ip, avg(value), tags.* 
-  FROM df.disk_used 
+  FROM "df.disk_used" 
 WHERE time > now - 1*HOUR 
   GROUP BY entity, tags
 ORDER BY time

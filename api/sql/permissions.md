@@ -81,7 +81,7 @@ The **'john.doe'** user is a member of the **'users-aws'** user group that is al
 
 ```sql
 SELECT entity, avg(value)
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime >= current_day
   GROUP BY entity
 ORDER BY entity

@@ -18,36 +18,45 @@ space equal to half of the physical memory amount.
 For staging/test systems (small amount of RAM), we recommend setting swap
 space at least equal to the physical memory amount.
 
+Create swap file.
+
 ```sh
- sudo dd if=/dev/zero of=/swapfile bs=1024 count=1024000 //make swap-file 
+sudo dd if=/dev/zero of=/swapfile bs=1024 count=1024000
+```
+
+Configure the swap file.
+
+```sh
+sudo chmod 0600 /swapfile                                                
 ```
 
 ```sh
- sudo chmod 0600 /swapfile                                                
+sudo mkswap /swapfile                             
 ```
 
+Enable swap.
+
 ```sh
- sudo mkswap /swapfile //setup the swap-file                              
+ sudo swapon /swapfile                              
 ```
 
+Enable swap on boot.
+
 ```sh
- sudo swapon /swapfile //enable swap-file                                 
+sudo echo "/swapfile swap swap defaults 0 0" >> /etc/fstab              
 ```
 
+Verify that the swap is enabled.
+
 ```sh
- sudo echo "/swapfile swap swap defaults 0 0" >> /etc/fstab //setup swap  
- on boot                                                                  
+free                                                                     
 ```
 
-Verify that the swap is enabled:
+The output should contain a row with Swap total not equal to zero.
 
-```sh
- free                                                                     
 ```
-
-The output should contain a swap row with total and free columns not equal
-to zero:
-
-```sh
- Swap:       1024000          0     1024000                               
+             total       used       free     shared    buffers     cached
+Mem:       7697000    6104904    1592096         32      86628    3062424
+-/+ buffers/cache:    2955852    4741148
+Swap:      1023996          0    1023996                          
 ```

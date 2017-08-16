@@ -13,7 +13,7 @@ As a result, values returned by the `last_time` function may be lagging behind b
 Returns data for the most recent 30 second interval for each series.
 
 ```sql
-SELECT * FROM mpstat.cpu_busy
+SELECT * FROM "mpstat.cpu_busy"
   WHERE datetime > current_day
 AND entity LIKE 'n*00*'
   WITH time > last_time - 30*SECOND
@@ -36,7 +36,7 @@ Returns avg() for the most recent hour for each series.
 
 ```sql
 SELECT entity, AVG(cpu_busy.value)
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime > previous_month
   GROUP BY entity
 WITH time > last_time - 1 * HOUR
@@ -63,7 +63,7 @@ Same as above, grouped by period.
 
 ```sql
 SELECT entity, datetime, AVG(cpu_busy.value)
-  FROM cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime > previous_month
   GROUP BY entity, period(1 HOUR)
 WITH time > last_time - 1 * HOUR

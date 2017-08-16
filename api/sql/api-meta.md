@@ -48,7 +48,7 @@ ATSD JSON-LD schema is published [here](https://www.axibase.com/schemas/2017/07/
 		}
 	},
 	"dc:title": "SQL Query",
-	"rdfs:comment": "SELECT tbl.value*100 AS \"cpu_percent\", tbl.datetime 'sample-date'\n FROM \"cpu_busy\" tbl \n WHERE datetime > now - 1*MINUTE",
+	"rdfs:comment": "SELECT tbl.value*100 AS \"cpu_percent\", tbl.datetime 'sample-date'\n FROM \"mpstat.cpu_busy\" tbl \n WHERE datetime > now - 1*MINUTE",
 	"@type": "Table",
 	"url": "sql.csv",
 	"tableSchema": {
@@ -57,14 +57,14 @@ ATSD JSON-LD schema is published [here](https://www.axibase.com/schemas/2017/07/
 			"name": "tbl.value * 100",
 			"titles": "cpu_percent",
 			"datatype": "double",
-			"table": "cpu_busy",
+			"table": "mpstat.cpu_busy",
 			"propertyUrl": "atsd:value"
 		}, {
 			"columnIndex": 2,
 			"name": "tbl.datetime",
 			"titles": "sample-date",
 			"datatype": "xsd:dateTimeStamp",
-			"table": "cpu_busy",
+			"table": "mpstat.cpu_busy",
 			"propertyUrl": "atsd:datetime",
 			"dc:description": "Sample time in ISO8601 format"
 		}]
@@ -97,7 +97,7 @@ ATSD JSON-LD schema is published [here](https://www.axibase.com/schemas/2017/07/
 curl https://atsd_server:8443/api/sql/meta  \
   --insecure  --verbose --user {username}:{password} \
   --request POST \
-  --data 'q=SELECT entity, value FROM mpstat.cpu_busy WHERE datetime > now - 1*MINUTE'
+  --data 'q=SELECT entity, value FROM "mpstat.cpu_busy" WHERE datetime > now - 1*MINUTE'
 ```
 
 ```json
@@ -116,7 +116,7 @@ curl https://atsd_server:8443/api/sql/meta  \
 		}
 	},
 	"dc:title": "SQL Query",
-	"rdfs:comment": "SELECT entity, value FROM mpstat.cpu_busy WHERE datetime > now - 1*MINUTE",
+	"rdfs:comment": "SELECT entity, value FROM \"mpstat.cpu_busy\" WHERE datetime > now - 1*MINUTE",
 	"@type": "Table",
 	"url": "sql.csv",
 	"tableSchema": {

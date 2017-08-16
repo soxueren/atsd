@@ -8,8 +8,8 @@ In this example the "not equal" operator `!=` is used to exclude grouped rows wi
 SELECT t1.entity, t2.tags.mount_point AS mp, t2.tags.file_system AS FS,
   MIN(t2.value), MAX(t2.value),  FIRST(t2.value), LAST(t2.value),
   DELTA(t2.value), COUNT(t2.value),  AVG(t1.value)
-FROM mpstat.cpu_busy t1
-  JOIN USING ENTITY df.disk_used t2
+FROM "mpstat.cpu_busy" t1
+  JOIN USING ENTITY "df.disk_used" t2
 WHERE t1.datetime > now - 1*HOUR
   GROUP BY entity, t2.tags.mount_point, t2.tags.file_system
 HAVING DELTA(t2.value) != 0

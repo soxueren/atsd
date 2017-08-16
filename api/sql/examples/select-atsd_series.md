@@ -15,7 +15,7 @@ WHERE metric = 'mpstat.cpu_busy'
 
 ```sql
 SELECT entity, metric, datetime, value
-  FROM 'mpstat.cpu_busy'
+  FROM "mpstat.cpu_busy"
 WHERE datetime > current_hour
 ```
 
@@ -170,9 +170,9 @@ ORDER BY datetime
 When metrics selected from `atsd_series` table are joined with metrics referenced in the query, each `atsd_series` metric is joined with a referenced metric separately.
 
 ```sql
-SELECT base.entity, base.metric, base.datetime, base.value, t1.value AS 'cpu_sys'
+SELECT base.entity, base.metric, base.datetime, base.value, t1.value AS "cpu_sys"
   FROM atsd_series base
-  JOIN mpstat.cpu_system t1
+  JOIN "mpstat.cpu_system" t1
 WHERE base.metric IN ('mpstat.cpu_busy', 'mpstat.cpu_user')
   AND base.entity = 'nurswgvml007'
   AND base.datetime > PREVIOUS_MINUTE
@@ -200,11 +200,11 @@ ORDER BY base.datetime
 
 ```sql
 SELECT t1.entity, t1.metric, t1.datetime,
-  t1.value, t4.value AS 'Elapsed Time', t5.text AS 'Unit Batch Id', t6.text AS 'Unit Procedure'
+  t1.value, t4.value AS "Elapsed Time", t5.text AS "Unit Batch Id", t6.text AS "Unit Procedure"
   FROM atsd_series t1
-    JOIN 'SV6.Elapsed_Time' t4
-    JOIN 'SV6.Unit_BatchID' t5
-    JOIN 'SV6.Unit_Procedure' t6
+    JOIN "SV6.Elapsed_Time" t4
+    JOIN "SV6.Unit_BatchID" t5
+    JOIN "SV6.Unit_Procedure" t6
 WHERE t1.metric IN metrics('br-1470')
   AND t1.metric NOT LIKE 'sv7*'
   AND t1.datetime BETWEEN '2016-10-04T02:00:00Z' AND '2016-10-04T02:10:00Z'

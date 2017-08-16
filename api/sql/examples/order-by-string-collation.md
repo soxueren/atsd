@@ -7,8 +7,8 @@ Ordering of strings is based on their Unicode value, with `NULL` having the lowe
 `NULL` is listed at the beginning of the result set.
 
 ```sql
-SELECT tags.'tag-1' AS 'Tag Value', tags.'tag-unicode-1' AS 'unicode-1', tags.'tag-unicode-2' AS 'unicode-2', tags.'tag-unicode-7' AS 'unicode-7'
-  FROM 'm-order'
+SELECT tags.'tag-1' AS "Tag Value", tags.'tag-unicode-1' AS "unicode-1", tags.'tag-unicode-2' AS "unicode-2", tags.'tag-unicode-7' AS "unicode-7"
+  FROM "m-order"
 WHERE entity = 'e-1'
   ORDER BY tags.'tag-1' ASC
 ```
@@ -57,8 +57,8 @@ WHERE entity = 'e-1'
 `NULL` is listed at the end of the result set.
 
 ```sql
-SELECT tags.'tag-1' AS 'Tag Value', tags.'tag-unicode-1' AS 'unicode-1', tags.'tag-unicode-2' AS 'unicode-2', tags.'tag-unicode-7' AS 'unicode-7'
-  FROM 'm-order'
+SELECT tags.'tag-1' AS "Tag Value", tags.'tag-unicode-1' AS "unicode-1", tags.'tag-unicode-2' AS "unicode-2", tags.'tag-unicode-7' AS "unicode-7"
+  FROM "m-order"
 WHERE entity = 'e-1'
   ORDER BY tags.'tag-1' DESC 
 LIMIT 10

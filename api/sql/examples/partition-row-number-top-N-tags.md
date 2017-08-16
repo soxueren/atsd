@@ -6,7 +6,7 @@ Retrieve top-3 15-minute periods with maximum average disk usage, for each disk 
 
 ```sql
 SELECT entity, tags.*, datetime, avg(value)
-  FROM df.disk_used
+  FROM "df.disk_used"
 WHERE datetime BETWEEN '2017-05-30T00:00:00Z' AND '2017-05-31T00:00:00Z'
   AND tags.file_system LIKE '/dev/*'
   AND entity LIKE '*00*'
@@ -34,7 +34,7 @@ GROUP BY entity, tags, period(15 minute)
 
 ```sql
 SELECT entity, datetime, avg(value), row_number()
-  FROM mpstat.cpu_busy
+  FROM "mpstat.cpu_busy"
 WHERE datetime BETWEEN '2017-05-30T00:00:00Z' AND '2017-05-31T00:00:00Z'
   AND entity LIKE '*00*'
 GROUP BY entity, period(15 minute)
