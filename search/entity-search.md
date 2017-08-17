@@ -21,6 +21,10 @@ If the search expression contains a tag name, such tags are displayed in the res
 * `*` matches any number of characters.
 * `?` matches any one characher.
 
+## Match
+
+Entity names, tag names and tag values are matched in case-insensitive manner.
+
 ## Examples
 
 * Find entities starting with 'nur'
