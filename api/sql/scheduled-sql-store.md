@@ -47,24 +47,26 @@ series e:dc-1 d:2017-08-02T00:00:00Z m:temperature_daily_avg=22.20 m:temperature
 The columns are mapped to command fields based on the column name and the data type.
 Column aliases can be defined to ensure that the query results meet the following requirements.
 
-* Required Columns
+#### Required Columns
 
 | **Name** | **Data Type** | **Occurrence** | **Description** |
 |---|---|---|---|
-| datetime | string | `1` | The date of the record in the ISO-8601 format. |
-| entity | string | `1` | Name of the entity under which the series will be stored. |
-| - any - | numeric | `1-*` | Metric name for the stored series. |
+| datetime | string | `0-1` | The date of the record in the ISO-8601 format (1).|
+| time | long | `0-1` | The date of the record in UNIX milliseconds (1). |
+| entity | string | `1` | Name of the entity under which the new series will be stored. |
+| - any - | numeric | `1-*` | Metric name for the stored series (2). |
 
-> The column is classified as 'metric' if it has a numeric datatype and does not match the names for the other columns.
+* (1) Only one of the date columns, `datetime` or `time`, must be present in the results.
+* (2) The column is classified as 'metric' if it has a numeric datatype and does not match the rules applicable to the other column types.
 
-* Optional Series Tag Columns
+#### Optional Series Tag Columns
 
 | **Name** | **Data Type** | **Occurrence** | **Description** |
 |---|---|---|---|
 | tags.{name} | string | `0-*` | Series tag for the stored series. <br>Column name contains tag name after `tags.`. Cell value contains tag value.|
 | tags | string | `0-*` | Series tags for the stored series, serialized as key=value separated by semi-colon. <br>Cell value contains tag names and values.|
 
-* Optional Metadata Tag Columns
+#### Optional Metadata Tag Columns
 
 | **Name** | **Data Type** | **Occurrence** | **Description** |
 |---|---|---|---|
