@@ -74,14 +74,13 @@ FROM m1
 | 2017-04-14T22:00:00Z | 2017-04-15T00:00:00+02:00 | 0          | 23         | 6            | 22           | 3           |
 ```
 
-
 * User-defined time zone. The day periods are aligned to 0:00 UTC time.
 
 ```sql
 SELECT datetime, date_format(time, 'yyyy-MM-dd''T''HH:mm:ssZZ') AS local_datetime,
   MIN(value), MAX(value), COUNT(value), FIRST(value), LAST(value)
 FROM m1
-  GROUP BY PERIOD(1 DAY, "UTC")
+  GROUP BY PERIOD(1 DAY, 'UTC')
 ```
 
 ```ls
@@ -102,3 +101,52 @@ series e:e1 d:2017-04-15T01:00:00Z m:m1=1
 series e:e1 d:2017-04-15T02:00:00Z m:m1=2
 series e:e1 d:2017-04-15T03:00:00Z m:m1=3
 ```
+
+## Period Aligned to Custom Timezone
+
+```sql
+SELECT datetime, date_format(time, 'yyyy-MM-dd HH:mm:ss z', 'US/Pacific') AS local_datetime,
+  MIN(value), MAX(value), COUNT(value), FIRST(value), LAST(value)
+FROM tmz1
+  GROUP BY PERIOD(1 DAY, 'US/Pacific')
+```
+
+```
+| datetime            | local_datetime          | min(value) | max(value) | count(value) | first(value) | last(value) | 
+|---------------------|-------------------------|------------|------------|--------------|--------------|-------------| 
+| 2017-04-14 07:00:00 | 2017-04-14 00:00:00 PDT | 0.0        | 23.0       | 7            | 21.0         | 3.0         | 
+```
+
+* Data
+
+```ls
+series e:e1 d:2017-04-14T21:00:00Z m:tmz1=21
+series e:e1 d:2017-04-14T22:00:00Z m:tmz1=22
+series e:e1 d:2017-04-14T23:00:00Z m:tmz1=23
+series e:e1 d:2017-04-15T00:00:00Z m:tmz1=0
+series e:e1 d:2017-04-15T01:00:00Z m:tmz1=1
+series e:e1 d:2017-04-15T02:00:00Z m:tmz1=2
+series e:e1 d:2017-04-15T03:00:00Z m:tmz1=3
+```
+
+## Period Aligned to Entity Timezone
+
+```sql
+SELECT entity, entity.timeZone,
+  AVG(value),
+  date_format(time, 'yyyy-MM-dd HH:mm z', 'UTC') AS "Period Start: UTC datetime", 
+  date_format(time, 'yyyy-MM-dd HH:mm z', entity.timeZone) AS "Period Start: Local datetime"
+FROM "mpstat.cpu_busy"
+  WHERE datetime >= ENDTIME(PREVIOUS_DAY, entity.timeZone) 
+    AND datetime < ENDTIME(CURRENT_DAY, entity.timeZone)
+GROUP BY entity, PERIOD(1 DAY, entity.timeZone)
+```
+
+```
+| entity       | entity.timeZone | avg(value) | Period Start: UTC datetime | Period Start: Local datetime | 
+|--------------|-----------------|------------|----------------------------|------------------------------| 
+| nurswgvml007 | PST             | 12.3       | 2017-08-17 07:00 UTC       | 2017-08-17 00:00 PDT         | 
+| nurswgvml006 | US/Mountain     | 9.2        | 2017-08-17 06:00 UTC       | 2017-08-17 00:00 MDT         | 
+| nurswgvml010 | null            | 5.8        | 2017-08-17 00:00 UTC       | 2017-08-17 00:00 GMT         | 
+```
+
