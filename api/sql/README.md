@@ -953,7 +953,7 @@ PERIOD({count} {unit} [, option])
 * `interpolate` = PREVIOUS | NEXT | LINEAR | VALUE {number}
 * `extend` = EXTEND
 * `align` = START_TIME, END_TIME, FIRST_VALUE_TIME, CALENDAR
-* `timezone` = [Time Zone ID](../../api/network/timezone-list.md), enclosed in double quotes.
+* `timezone` = [Time Zone ID](../../api/network/timezone-list.md) as literal string, or `entity.timeZone`/`metric.timeZone` column.
 
 The options are separated by a comma and can be specified in any order.
 
@@ -963,6 +963,7 @@ PERIOD(5 MINUTE, END_TIME)
 PERIOD(5 MINUTE, CALENDAR, VALUE 0)
 PERIOD(1 HOUR, LINEAR, EXTEND)
 PERIOD(1 DAY, "US/Eastern")
+PERIOD(1 DAY, entity.timeZone)
 ```
 
 | **Name** | **Description** |
@@ -972,7 +973,7 @@ PERIOD(1 DAY, "US/Eastern")
 | interpolate | Apply an [interpolation function](#interpolation), such as `LINEAR` or `VALUE 0`, to add missing periods.|
 | extend | Add missing periods at the beginning and end of the selection interval using `VALUE {n}` or the `PREVIOUS` and `NEXT` interpolation functions.|
 | align | Align the period's start/end. Default: `CALENDAR`. <br>Possible values: `START_TIME`, `END_TIME`, `FIRST_VALUE_TIME`, `CALENDAR`.<br>Refer to [period alignment](#period-alignment).|
-| timezone | Time zone for aligning periods in `CALENDAR` mode, such as `"US/Eastern"` or `"UTC"`.<br>Default value: current database timezone.|
+| timezone | Time zone for aligning periods in `CALENDAR` mode, such as `'US/Eastern'`, `'UTC'`, or `entity.timeZone`.<br>Default value: current database timezone.|
 
 
 ```sql
@@ -1068,7 +1069,7 @@ Examples:
 | 1 WEEK     | 2016-06-01 00:00  | 2016-06-02 00:00  | 2016-06-06 00:00  | 2016-05-30 00:00  | -                 | -                |
 ```
 
-For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units, the start of the day is determined according to the **database timezone**, unless a user-defined timezone is specified as an option, for example `GROUP BY entity, PERIOD(1 MONTH, "UTC")`.
+For `DAY`, `WEEK`, `MONTH`, `QUARTER`, and `YEAR` units, the start of the day is determined according to the **database timezone**, unless a user-defined timezone is specified as an option, for example `GROUP BY entity, PERIOD(1 MONTH, 'UTC')`.
 
 #### `END_TIME` Alignment
 
@@ -1999,6 +2000,7 @@ Examples:
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss', 'PST')`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss', 'GMT-08:00')`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss ZZ', 'PDT')`
+* `date_format(time, 'yyyy-MM-dd HH:mm:ss', entity.timeZone)`
 * `date_format(time, 'yyyy-MM-dd HH:mm:ss', AUTO)`
 * `CEIL(CAST(date_format(time, 'M') AS NUMBER)/3) AS "Quarter"`
 
