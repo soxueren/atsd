@@ -19,8 +19,11 @@ Each row in the result set is converted into one or multiple derived series base
 After entity, datetime, and tag columns are mapped based on names, the remaining numeric columns are classified as metric name columns.
 
 ```sql
-SELECT datetime, 'DC-1' AS "entity",  AVG(value) AS "temperature_daily_avg", PERCENTILE(90, value) AS "temperature_daily_perc_90"
-  -- mapped to datetime, entity, metric with name = temperature_daily_avg, metric with name = temperature_daily_perc_90
+SELECT datetime, 
+  'DC-1' AS "entity",  
+  AVG(value) AS "temp_daily_avg", 
+  PERCENTILE(90, value) AS "temp_daily_perc_90"
+  -- mapped to datetime, entity, for metric with name = temp_daily_avg and for metric with name = temp_daily_perc_90
   FROM temperature
 WHERE datetime >= CURRENT_MONTH
   GROUP BY PERIOD(1 DAY)
@@ -29,17 +32,17 @@ WHERE datetime >= CURRENT_MONTH
 Rows containing multiple numeric columns produce a corresponding number of series commands.
 
 ```ls
-| datetime             | entity | temperature_daily_avg | temperature_daily_perc_90 |
-|----------------------|--------|-----------------------|---------------------------|
-| 2017-08-01T00:00:00Z | DC-1   | 21.01                 | 27.17                     |
-| 2017-08-02T00:00:00Z | DC-1   | 22.20                 | 28.24                     |
+| datetime             | entity | temp_daily_avg | temp_daily_perc_90 |
+|----------------------|--------|----------------|--------------------|
+| 2017-08-01T00:00:00Z | DC-1   | 21.01          | 27.17              |
+| 2017-08-02T00:00:00Z | DC-1   | 22.20          | 28.24              |
 ```
 
 The result set is converted into series commands and stored in the database:
 
 ```ls
-series e:dc-1 d:2017-08-01T00:00:00Z m:temperature_daily_avg=21.01 m:temperature_daily_perc_90=27.17
-series e:dc-1 d:2017-08-02T00:00:00Z m:temperature_daily_avg=22.20 m:temperature_daily_perc_90=28.24
+series e:dc-1 d:2017-08-01T00:00:00Z m:temp_daily_avg=21.01 m:temp_daily_perc_90=27.17
+series e:dc-1 d:2017-08-02T00:00:00Z m:temp_daily_avg=22.20 m:temp_daily_perc_90=28.24
 ```
 
 ### Column Requirements
@@ -56,25 +59,33 @@ Column aliases can be defined to ensure that the query results meet the followin
 | entity | string | `1` | Name of the entity under which the new series will be stored. |
 | - any - | numeric | `1-*` | Metric name for the stored series (2). |
 
-* (1) Only one of the date columns, `datetime` or `time`, must be present in the results.
-* (2) The column is classified as 'metric' if it has a numeric datatype and does not match the rules applicable to the other column types.
+* (1) Only one of the date columns, `datetime` or `time`, must be included in the results.
+* (2) The column is classified as 'metric' if it has a numeric datatype and does not match the rules applicable to other column types.
 
 #### Optional Series Tag Columns
 
 | **Name** | **Data Type** | **Occurrence** | **Description** |
 |---|---|---|---|
-| tags.{name} | string | `0-*` | Series tag for the stored series. <br>Column name contains tag name after `tags.`. Cell value contains tag value.|
-| tags | string | `0-*` | Series tags for the stored series, serialized as key=value separated by semi-colon. <br>Cell value contains tag names and values.|
+| tags.{name} | string | `0-*` | Series tag for the stored series.<br>Tag name set by discarding `tags.` prefix.<br>Cell value contains tag value.|
+| tags | string | `0-*` | Series tags for the stored series, encoded as key=value separated by semi-colon.<br>Cell value contains tag names and values.|
 
 #### Optional Metadata Tag Columns
 
 | **Name** | **Data Type** | **Occurrence** | **Description** |
 |---|---|---|---|
-| metric.tags.{name} | string | `0-*` | Metric tag for each of the metrics in the row. <br>Column name contains metric tag name after `tags.`. Cell value contains metric tag value.|
-| metric.tags | string | `0-*` | Metric tags for each of the metrics in the row, serialized as key=value separated by semi-colon. <br>Cell value contains metric tag names and values.|
-| entity.tags.{name} | string | `0-*` | Entity tag for the entity in the row. <br>Column name contains entity tag name after `tags.`. Cell value contains entity tag value.|
-| entity.tags | string | `0-*` | Entity tags for the entity in the row, serialized as key=value separated by semi-colon. <br>Cell value contains entity tag names and values.|
+| metric.tags.{name} | string | `0-*` | Metric tag for each metric in the row. <br>Tag name set by discarding `metric.tags.` prefix.<br>Cell value contains metric tag value.|
+| metric.tags | string | `0-*` | Metric tags for each metric in the row, encoded as `key=value` separated by semi-colon. <br>Cell value contains metric tag names and values.|
+| entity.tags.{name} | string | `0-*` | Entity tag for the entity in the row. <br>Tag name set by discarding `entity.tags.` prefix.<br>Cell value contains entity tag value.|
+| entity.tags | string | `0-*` | Entity tags for the entity in the row, encoded as `key=value` separated by semi-colon. <br>Cell value contains entity tag names and values.|
 
+#### Optional Metadata Field Columns
+
+| **Name** | **Data Type** | **Occurrence** | **Description** |
+|---|---|---|---|
+| metric.{field-name} | string | `0-*` | [Metric field](README.MD#metric-columns) for each metric in the row.<br>Field name set by discarding `metric.` prefix.<br>Cell value contains metric field value.|
+| entity.{field-name} | string | `0-*` | [Entity field](README.MD#entity-columns) for the entity in the row.<br>Field name set by discarding `entity.` prefix.<br>Cell value contains entity field value.|
+
+* The following metadata fields are read-only and can be not be set: 'metric.name', 'metric.lastInsertTime', 'entity. groups'.
 
 ### Table Names
 
@@ -89,30 +100,35 @@ SELECT entity ... FROM "my-table"
 
 ### Metadata Commands
 
-Columns with starting with 'entity.tags.' and 'metric.tags.' generate corresponding metadata commands `entity` and `metric`.
+Columns starting with 'entity.tags.', 'metric.tags.', or 'metric.{field-name}' prefixes generate [`entity`](../../network/entity.md) and [`metric`](../../network/metric.md) metadata commands.
 
 
 ```sql
-SELECT datetime, 'dc-1' AS "entity",  'SVL' as "entity.tags.location", AVG(value) AS "temperature_daily_avg"
-  -- mapped to datetime, entity, entity.tag with name = location, metric with name = temperature_daily_avg
+SELECT datetime, 
+  'dc-1' AS "entity",  
+  'SVL' as "entity.tags.location", 
+  'Celcius' AS "metric.units", 
+  AVG(value) AS "temp_daily_avg"
+  -- mapped to datetime, entity, entity.tag with name = location, metric field units, for metric with name = temp_daily_avg
   FROM temperature
 WHERE datetime >= CURRENT_MONTH
   GROUP BY PERIOD(1 DAY)
 ```
 
 ```ls
-| datetime             | entity | entity.tags.location | temperature_daily_perc_90 |
-|----------------------|--------|----------------------|---------------------------|
-| 2017-08-01T00:00:00Z | DC-1   | SVL                  | 27.17                     |
-| 2017-08-02T00:00:00Z | DC-1   | SVL                  | 28.24                     |
+| datetime             | entity | entity.tags.location | metric.units | temp_daily_perc_90 |
+|----------------------|--------|----------------------|--------------|--------------------|
+| 2017-08-01T00:00:00Z | DC-1   | SVL                  | Celcius      | 27.17              |
+| 2017-08-02T00:00:00Z | DC-1   | SVL                  | Celcius      | 28.24              |
 ```
 
 Produced commands:
 
 ```ls
 entity e:dc-1 t:location=SVL
-series e:dc-1 d:2017-08-01T00:00:00Z m:temperature_daily_perc_90=27.17
-series e:dc-1 d:2017-08-02T00:00:00Z m:temperature_daily_perc_90=28.24
+metric m:temperature_daily_perc_90 u:Celcius
+series e:dc-1 d:2017-08-01T00:00:00Z m:temp_daily_perc_90=27.17
+series e:dc-1 d:2017-08-02T00:00:00Z m:temp_daily_perc_90=28.24
 ```
 
 ### Duplicates
@@ -123,9 +139,15 @@ If **Check Last Time** is enabled, the series command is inserted if its datetim
 
 ### Validation
 
-To create and test a query that complies with [requirements](#column-requirements), execute the query in the SQL console and click the **Store** button. Click **Test** to review the produced commands and to resolve any errors.
+To test a query that complies with [requirements](#column-requirements), execute the query in the SQL console and click on the **Store** button. 
+
+Click **Test** to review the produced commands and to resolve any errors.
 
 ![SQL Store Test](images/sql-store-test.png)
+
+Click **Store** to persist the new derived series in the database.
+
+Click **Schedule** to created a scheduled SQL job to persist new records for derived series continously.
 
 ### Monitoring
 
