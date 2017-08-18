@@ -6,9 +6,9 @@ The underlying transformation calculates values at regular intervals using linea
 
 Unlike the `GROUP BY PERIOD` clause with the `LINEAR` option, which interpolates missing periods, the `WITH INTERPOLATE` clause operates using raw values. Here is an example in [Chartlab](https://apps.axibase.com/chartlab/471a2a40) that illustrates the difference between interpolating raw and aggregated values.
 
-The regularized series can be used in `JOIN` queries, `WHERE` conditions, `ORDER BY` and `GROUP BY` clauses, just as with the original series.
+Similar to the original series, the regularized series can be used in `JOIN` queries, `WHERE` condition, `ORDER BY` and `GROUP BY` clauses.
 
-The regular times can be aligned to the server calendar or to begin with the start of the selection interval.
+The regularized timestamps can be aligned to the calendar or to begin with the start of the selection interval.
 
 If the `WHERE` condition includes multiple selection intervals, the interpolation is performed for each interval separately.
 
@@ -540,6 +540,54 @@ The above queries return the same result:
 | 2016-09-18T14:03:45.000Z | 3.6   |
 | 2016-09-18T14:04:00.000Z | 4.6   |
 | 2016-09-18T14:04:15.000Z | 36.2  |
+```
+
+## Time Zone
+
+In CALENDAR alignment and if the period specified is equal or greater than 1 DAY, the interpolated timestamps are set to 00:00 of each day based on the database time zone.
+The default time zone can be customized by specifying a [time zone identifier](../../../api/network/timezone-list.md) or `entity.timeZone` and `metric.timeZone` columns.
+
+* Custom Time Zone
+
+```
+SELECT entity, value,
+  date_format(time, 'yyyy-MM-dd HH:mm z', 'UTC') AS "UTC datetime", 
+  date_format(time, 'yyyy-MM-dd HH:mm z', 'US/Pacific') AS "Local datetime"
+FROM "mpstat.cpu_busy"
+  WHERE datetime >= NOW - 2*DAY
+WITH INTERPOLATE(1 DAY, LINEAR, INNER, NONE, CALENDAR, 'US/Pacific')
+```
+
+```ls
+| entity       | value | UTC datetime         | Local datetime       | 
+|--------------|-------|----------------------|----------------------| 
+| nurswgvml007 | 65.5  | 2017-08-17 07:00 UTC | 2017-08-17 00:00 PDT | 
+| nurswgvml007 | 38.5  | 2017-08-18 07:00 UTC | 2017-08-18 00:00 PDT | 
+| nurswgvml006 | 33.2  | 2017-08-17 07:00 UTC | 2017-08-17 00:00 PDT | 
+| nurswgvml006 | 33.3  | 2017-08-18 07:00 UTC | 2017-08-18 00:00 PDT | 
+```
+
+* Entity or Metric Time Zone
+
+```sql
+SELECT entity, entity.timeZone,
+  value,
+  date_format(time, 'yyyy-MM-dd HH:mm z', 'UTC') AS "UTC datetime", 
+  date_format(time, 'yyyy-MM-dd HH:mm z', entity.timeZone) AS "Local datetime"
+FROM "mpstat.cpu_busy"
+  WHERE datetime >= NOW - 2*DAY
+WITH INTERPOLATE(1 DAY, LINEAR, INNER, NONE, CALENDAR, entity.timeZone)
+```
+
+```ls
+| entity       | entity.timeZone | value | UTC datetime         | Local datetime       | 
+|--------------|-----------------|-------|----------------------|----------------------| 
+| nurswgvml007 | PST             | 65.5  | 2017-08-17 07:00 UTC | 2017-08-17 00:00 PDT | 
+| nurswgvml007 | PST             | 38.5  | 2017-08-18 07:00 UTC | 2017-08-18 00:00 PDT | 
+| nurswgvml006 | US/Mountain     | 31.1  | 2017-08-17 06:00 UTC | 2017-08-17 00:00 MDT | 
+| nurswgvml006 | US/Mountain     | 3.0   | 2017-08-18 06:00 UTC | 2017-08-18 00:00 MDT | 
+| nurswgvml010 | null            | 0.4   | 2017-08-17 00:00 UTC | 2017-08-17 00:00 GMT | 
+| nurswgvml010 | null            | 22.5  | 2017-08-18 00:00 UTC | 2017-08-18 00:00 GMT | 
 ```
 
 ## Multiple Intervals

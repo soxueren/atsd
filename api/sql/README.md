@@ -263,22 +263,21 @@ Virtual tables have the same pre-defined columns since all the the underlying da
 |`tags.{name}`    |string   | Series tag value. Returns `NULL` if the specified tag does not exist for this series.|
 |`tags`           |string   | All series tags, concatenated to `name1=value;name2=value` format.|
 |`tags.*`         |string   | Expands to multiple columns, each column containing a separate series tag.|
-|`datetime`       |datetime | Sample time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY PERIOD` queries, the datetime column returns period start time in ISO format, same as `date_format(PERIOD(...))`.|
-|`time`           |long     | Sample time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY PERIOD` queries, the time column returns period start time.|
-|`period`         |long     | Period start time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>This column is accessible in `GROUP BY PERIOD` query.|
+|`datetime`       |datetime | Sample time in ISO 8601 format, for example `2016-06-10T14:00:15.020Z`.<br>In `GROUP BY PERIOD` queries, the `datetime` column returns the period's **start** time in ISO format, same as `date_format(PERIOD(...))`.|
+|`time`           |long     | Sample time in Unix milliseconds since 1970-01-01T00:00:00Z, for example `1408007200000`.<br>In `GROUP BY PERIOD` queries, the `time` column returns the period's **start** time.|
 
 #### Metric Columns
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
+|`metric.name`    |string   | Metric name.|
 |`metric.label`   |string   | Metric label.|
+|`metric.description` |string| Metric description.|
 |`metric.timeZone`|string   | Metric time zone.|
 |`metric.interpolate` |string| Metric interpolation setting.|
 |`metric.tags.{name}` |string| Metric tag value. Returns `NULL` if the specified tag doesn't exist for this metric.|
 |`metric.tags`    |string   | All metric tags, concatenated to `name1=value;name2=value` format.|
 |`metric.tags.*`  |string   | Expands to multiple columns, each column containing a separate metric tag.|
-|`metric.name`    |string   | Metric name.|
-|`metric.description` |string| Metric description.|
 |`metric.dataType`|string   | [Data Type](../meta/metric/list.md#data-types).|
 |`metric.timePrecision`|string| Time precision: SECONDS or MILLISECONDS.|
 |`metric.enabled` |boolean  | Enabled status. Incoming data is discarded for disabled metrics.|
@@ -588,7 +587,7 @@ ORDER BY datetime
 
 ### Group By Columns
 
-In a `GROUP BY` query, `datetime` and `PERIOD()` columns return the same value (the period's start time) in ISO format. In this case, `date_format(PERIOD(5 MINUTE))` can be omitted.
+In a `GROUP BY` query, `datetime` and `PERIOD()` columns return the same value (the period's start time) in ISO format. In this case, `date_format(PERIOD(5 MINUTE))` can be replaced with `datetime` in the `SELECT` expression.
 
 ```sql
 SELECT entity, datetime, date_format(PERIOD(5 MINUTE)), AVG(value)
@@ -598,10 +597,6 @@ WHERE time >= CURRENT_HOUR AND time < NEXT_HOUR
 ```
 
 Columns referenced in the `SELECT` expression must be included in the `GROUP BY` clause.
-
-### Versioning Columns
-
-Versioning columns (`version_status`, `version_source`, `version_time`, `version_datetime`) are currently not supported.
 
 ## Literals
 
@@ -620,7 +615,7 @@ WHERE value < 75
 
 The string and datetime literals must be enclosed in **single quotation marks**.
 
-A literal value containing single quotes can be escaped by doubling the quote symbol.
+A literal value containing single quotes can be escaped by doubling the single quote symbol.
 
 ```
 -- string literal: yyyy-mm-dd'T'HH:mm:ss'Z'
@@ -797,16 +792,16 @@ WHERE time >= 1500300000000
 
 ### Optimizing Interval Queries
 
-Avoid using the [`date_format`](#date-formatting-functions) and [`EXTRACT`](#extract) functions in the `WHERE` condition and the `GROUP BY` clause as it will cause the database to perform a full scan comparing literal strings or numbers. Instead, filter dates using the indexed `time`/`datetime` columns and apply the `PERIOD` function to aggregate records by time.
+Using the [`date_format`](#date-formatting-functions) and [`EXTRACT`](#extract) functions in the `WHERE` condition and the `GROUP BY` clause may not be efficient as it causes the database to perform a full scan while comparing literal strings or numbers. Instead, filter dates using the indexed `time` or `datetime` column and apply the `PERIOD` function to aggregate records by interval.
 
 ```sql
-WHERE date_format(time, 'yyyy') > '2014' -- Anti-pattern: Full scan with string comparison.
-WHERE YEAR(time) > 2014                  -- Anti-pattern: Full scan with number comparison.
-WHERE datetime >= '2015-01-01T00:00:00Z' -- Recommended:  Range scan on an indexed column.
+WHERE date_format(time, 'yyyy') > '2014'   -- Inefficient: Full scan with string comparison.
+WHERE YEAR(time) > 2014                    -- Inefficient: Full scan with number comparison.
+WHERE datetime >= '2015-01-01T00:00:00Z'  -- Recommended:  Date range scan using an indexed column.
 
-GROUP BY date_format(time, 'yyyy')       -- Anti-pattern.
-GROUP BY YEAR(time)                      -- Anti-pattern.
-GROUP BY PERIOD(1 YEAR)                  -- Recommended.
+GROUP BY date_format(time, 'yyyy')         -- Inefficient.
+GROUP BY YEAR(time)                        -- Inefficient.
+GROUP BY PERIOD(1 YEAR)                    -- Recommended.
 ```
 
 ### Endtime Syntax
@@ -866,6 +861,29 @@ Converting a date to milliseconds and comparing it to the time column is more ef
 
 ```sql
   date_format(time, 'yyyy-MM-dd HH:mm:ss', 'Europe/Vienna') >= '2017-05-01 12:00:00'
+```
+
+### Entity Time Zone
+
+To select rows for a date range based on each entity's local time zone, supply `entity.timeZone` column as an argument to the `endtime` function.
+
+```sql
+SELECT entity, entity.timeZone,
+  AVG(value),
+  date_format(time, 'yyyy-MM-dd HH:mm z', 'UTC') AS "Period Start: UTC datetime", 
+  date_format(time, 'yyyy-MM-dd HH:mm z', entity.timeZone) AS "Period Start: Local datetime"
+FROM "mpstat.cpu_busy"
+  WHERE datetime >= ENDTIME(PREVIOUS_DAY, entity.timeZone) 
+    AND datetime < ENDTIME(CURRENT_DAY, entity.timeZone)
+GROUP BY entity, PERIOD(1 DAY, entity.timeZone)
+```
+
+```ls
+| entity       | entity.timeZone | avg(value) | Period Start: UTC datetime | Period Start: Local datetime | 
+|--------------|-----------------|------------|----------------------------|------------------------------| 
+| nurswgvml007 | PST             | 12.3       | 2017-08-17 07:00 UTC       | 2017-08-17 00:00 PDT         | 
+| nurswgvml006 | US/Mountain     | 9.2        | 2017-08-17 06:00 UTC       | 2017-08-17 00:00 MDT         | 
+| nurswgvml010 | null            | 5.8        | 2017-08-17 00:00 UTC       | 2017-08-17 00:00 GMT         | 
 ```
 
 ### Multiple Intervals
@@ -1179,7 +1197,7 @@ WITH INTERPOLATE(30 SECOND)
 ### Syntax
 
 ```ls
-WITH INTERPOLATE (period [, inter_func[, boundary[, fill [, alignment]]]])
+WITH INTERPOLATE (period [, inter_func[, boundary[, fill [, alignment[, timezone]]]]])
 ```
 
 The `WITH INTERPOLATE` clause is included prior to the `ORDER BY` and `LIMIT` clauses.
@@ -1203,6 +1221,7 @@ WITH INTERPOLATE (1 MINUTE, LINEAR, OUTER, NAN, START_TIME)
 | `boundary` | Retrieval of raw values outside of the selection interval to interpolate leading and trailing values. Default: `INNER`. |
 | `fill` | Method for filling missing values at the beginning and the end of the selection interval. Default: `NONE`. |
 | `alignment` | Aligns regular timestamps based on calendar or start time. Default: `CALENDAR`. |
+| `timezone` | Time zone applied in `CALENDAR` alignment to periods equal or greater than 1 day. |
 
 [![](images/chartlab.png)](https://apps.axibase.com/chartlab/712f37cb)
 
@@ -1251,8 +1270,16 @@ The `DETAIL` mode can be used to fill missing values in `FULL OUTER JOIN` querie
 
 | **Name** | **Description**|
 |:---|:---|
-| `CALENDAR` | [**Default**] Aligns regular timestamps according to the database time zone. |
+| `CALENDAR` | [**Default**] Aligns regular timestamps according to the specified time zone. If time zone is not specified, the interval is split into periods based on the database time zone. |
 | `START_TIME` | Starts regular timestamps at the start time of the selection interval.<br>This option requires that both start and end time are specified in the query. |
+
+### Interpolation Time Zone
+
+| **Name** | **Description**|
+|:---|:---|
+| `null` | [**Default**] The database time zone is used tp split the selection interval into perios greater than 1 day. |
+| `timezone id` | The literal string with the time zone [identifier](../../api/network/timezone-list.md). |
+| `entity.timeZone` or<br>`metric.timeZone` | The time zone of the entity or metric. |
 
 ### Regularization Examples
 
