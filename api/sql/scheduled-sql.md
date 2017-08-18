@@ -34,6 +34,7 @@ CSV files can be optionally archived with zip or gzip compression.
 * [sql-report.json](examples/sql-report.json)
 * [sql-report.xlsx](examples/sql-report.xlsx)
 
+
 ## Decimal Precision
 
 To round numeric values, set decimal precision to the desired number of fractional digits.
@@ -95,7 +96,10 @@ https://atsd_host:8443.co/sqlr/85/cpu-busy-total-query.csv?refresh=true
 
 To make links accessible to unauthenticated users, enable the `Guest Access` option. Additional download links for non-authenticated users will be displayed.
 
-
 ## Metadata
 
 Exported files can optionally include [metadata fields](scheduled-sql-metadata.md) describing the data in the report.
+
+## Store Results
+
+The **Store** option in the query configuration allows [storing results](scheduled-sql-store.md) of the query back into the database as new series.
