@@ -51,9 +51,9 @@ Column aliases can be defined to ensure that the query results meet the followin
 
 | **Name** | **Data Type** | **Occurrence** | **Description** |
 |---|---|---|---|
-| datetime | string | 1 | The date of the record in the ISO-8601 format. |
-| entity | string | 1 | Name of the entity under which the series will be stored. |
-| - any - | numeric | 1-* | Metric name for the stored series. |
+| datetime | string | `1` | The date of the record in the ISO-8601 format. |
+| entity | string | `1` | Name of the entity under which the series will be stored. |
+| - any - | numeric | `1-*` | Metric name for the stored series. |
 
 > The column is classified as 'metric' if it has a numeric datatype and does not match the names for the other columns.
 
@@ -61,17 +61,17 @@ Column aliases can be defined to ensure that the query results meet the followin
 
 | **Name** | **Data Type** | **Occurrence** | **Description** |
 |---|---|---|---|
-| tags.{name} | string | 0-* | Series tag for the stored series. <br>Column name contains tag name after `tags.`. Cell value contains tag value.|
-| tags | string | 0-* | Series tags for the stored series, serialized as key=value separated by semi-colon. <br>Cell value contains tag names and values.|
+| tags.{name} | string | `0-*` | Series tag for the stored series. <br>Column name contains tag name after `tags.`. Cell value contains tag value.|
+| tags | string | `0-*` | Series tags for the stored series, serialized as key=value separated by semi-colon. <br>Cell value contains tag names and values.|
 
 * Optional Metadata Tag Columns
 
 | **Name** | **Data Type** | **Occurrence** | **Description** |
 |---|---|---|---|
-| metric.tags.{name} | string | No | 0-* | Metric tag for each of the metrics in the row. <br>Column name contains metric tag name after `tags.`. Cell value contains metric tag value.|
-| metric.tags | string | 0-* | Metric tags for each of the metrics in the row, serialized as key=value separated by semi-colon. <br>Cell value contains metric tag names and values.|
-| entity.tags.{name} | string | No | 0-* | Entity tag for the entity in the row. <br>Column name contains entity tag name after `tags.`. Cell value contains entity tag value.|
-| entity.tags | string | 0-* | Entity tags for the entity in the row, serialized as key=value separated by semi-colon. <br>Cell value contains entity tag names and values.|
+| metric.tags.{name} | string | `0-*` | Metric tag for each of the metrics in the row. <br>Column name contains metric tag name after `tags.`. Cell value contains metric tag value.|
+| metric.tags | string | `0-*` | Metric tags for each of the metrics in the row, serialized as key=value separated by semi-colon. <br>Cell value contains metric tag names and values.|
+| entity.tags.{name} | string | `0-*` | Entity tag for the entity in the row. <br>Column name contains entity tag name after `tags.`. Cell value contains entity tag value.|
+| entity.tags | string | `0-*` | Entity tags for the entity in the row, serialized as key=value separated by semi-colon. <br>Cell value contains entity tag names and values.|
 
 
 ### Table Names
@@ -123,4 +123,10 @@ If **Check Last Time** is enabled, the series command is inserted if its datetim
 
 To create and test a query that complies with [requirements](#column-requirements), execute the query in the SQL console and click the **Store** button. Click **Test** to review the produced commands and to resolve any errors.
 
-![SQL Store Test](images/sql-scheduled.png)
+![SQL Store Test](images/sql-store-test.png)
+
+### Monitoring
+
+The results of scheduled SQL jobs with the **Store** option can be monitored by processing messages with `type=Application`, `source=atsd_export` and `report_type=sql`.
+
+![SQL Store Messages](images/sql-store-messages.png)

@@ -37,6 +37,8 @@ SQL statements can be executed interactively via the web-based console, on [sche
 * [Authorization](#authorization)
 * [API Endpoint](#api-endpoint)
 * [Scheduler](#scheduler)
+  * [Send Reports](scheduled-sql.md)
+  * [Store Results](scheduled-sql-store.md)
 * [Monitoring](#monitoring)
 * [Performance](#query-performance)
 * [Optimizing](#optimizing)
@@ -2851,6 +2853,8 @@ The data returned by SQL statements can be exported in the following formats:
 |API  |CSV, JSON|
 |Web Console  |CSV, JSON, HTML|
 |Scheduler|CSV, JSON, Excel|
+
+The [**Store** option](sql-scheduled-store.md) allows for query results to be stored back in the database as new derived series.
 
 ## Monitoring
 
