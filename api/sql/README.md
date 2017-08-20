@@ -32,6 +32,7 @@ SQL statements can be executed interactively via the web-based console, on [sche
 * [Partitioning](#partitioning)
 * [Ordering](#ordering)
 * [Limiting](#limiting)
+* [Inline Views](#inline-views)
 * [Joins](#joins)
 * [Options](#options)
 * [Authorization](#authorization)
@@ -1615,6 +1616,61 @@ LIMIT 1
 
 The above query would read all samples contained in the 'm-1' metric in the database, even though it would return only 1 record as instructed by the `LIMIT 1` clause.
 
+## Inline Views
+
+Inline view is a subquery specified in the `FROM` clause instead of the actual table. It defines a virtual table to be operated on by a containing (parent) query. The inline view provides a way to implement multi-stage processing. For example, a subquery can first calculate hourly maximums from which the parent query will compute an average hourly maximum for the days in the week.
+ 
+```sql
+SELECT datetime, AVG(value) AS "daily_average" 
+  FROM -- actual table replaced with subquery
+  (
+    SELECT datetime, MAX(value) AS "value"
+      FROM "mpstat.cpu_busy" WHERE datetime >= CURRENT_WEEK
+    GROUP BY PERIOD(1 HOUR)
+  )
+GROUP BY PERIOD(1 DAY)
+```
+
+```ls
+| datetime            | daily_average | 
+|---------------------|---------------| 
+| 2017-08-14 00:00:00 | 96.1          | 
+| 2017-08-15 00:00:00 | 96.6          | 
+| 2017-08-16 00:00:00 | 98.8          | 
+| 2017-08-17 00:00:00 | 95.4          | 
+| 2017-08-18 00:00:00 | 98.3          | 
+| 2017-08-19 00:00:00 | 96.1          | 
+| 2017-08-20 00:00:00 | 93.8          | 
+```
+
+Subquery can contain only columns with [predefined](#predefined-columns) names such as 'metric', 'entity', 'value', 'datetime', etc.
+If the subquery column is based on an expression or function, use aliases to rename it to be one of the predefined names.
+
+```sql
+MAX(value) AS "value"
+```
+
+A subquery can include another, nested, subquery. 
+
+```sql
+SELECT MAX(value) FROM (
+  SELECT datetime, AVG(value) AS "value" FROM (
+    SELECT datetime, MAX(value) AS "value"
+      FROM "mpstat.cpu_busy" WHERE datetime >= CURRENT_WEEK
+    GROUP BY PERIOD(1 HOUR)
+  )
+  GROUP BY PERIOD(1 DAY)
+)
+```
+
+The number of nested subqueries in the inline view is not limited. 
+
+```ls
+| max(value) |
+|------------|
+| 98.8       |
+```
+
 ## Joins
 
 Data for multiple virtual tables (metrics) can be merged with the `JOIN` and `FULL OUTER JOIN` clauses.
@@ -3106,6 +3162,10 @@ While the [differences](https://github.com/axibase/atsd-jdbc/blob/master/capabil
 - [Partitioning using Row Number Function](examples/partition-row-number.md)
 - [Top-N Query using Row Number Function](examples/partition-row-number-top-N-tags.md)
 - [Last Time](examples/last-time.md)
+
+### Subqueries
+
+- [Inline Views](examples/inline-view.md)
 
 ### Joins
 
