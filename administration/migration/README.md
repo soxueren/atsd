@@ -11,8 +11,8 @@ ATSD upgrades on [Docker containers](container.md) and [Hadoop clusters](cluster
 
 | **Code** | **ATSD Revision Number** | **Java Version** | **HBase Version** | **HDFS Version** |
 |---|---|---|---|---|
-| Old | 16854 and earlier | 1.7 | 0.94.29 | 1.0.3 |
-| New | 16855 and later | 1.8 | 1.2.5 | 2.6.4 |
+| Old | 17000 and earlier | 1.7 | 0.94.29 | 1.0.3 |
+| New | 17000 and later | 1.8 | 1.2.5 | 2.6.4 |
 
 ## Requirements
 
@@ -562,7 +562,7 @@ rm -rf /opt/atsd/atsd/bin/atsd*.jar
 Download ATSD application files.
 
 ```sh
-curl -o /opt/atsd/atsd/bin/atsd.16855.jar https://axibase.com/public/atsd-125-migration/atsd.16855.jar
+curl -o /opt/atsd/atsd/bin/atsd.17140.jar https://axibase.com/public/atsd-125-migration/atsd.17140.jar
 curl -o /opt/atsd/scripts.tar.gz https://axibase.com/public/atsd-125-migration/scripts.tar.gz
 ```
 
