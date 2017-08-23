@@ -8,7 +8,7 @@ For non-distributed installations, refer to the following [migration guide](READ
 
 | **Code** | **ATSD Revision Number** | **Java Version** | **Cloudera Manager Version**| **CDH Version** |
 |---|---|---|---|---|
-| Old | 17000 and earlier | 1.7 | 5.1 - 5.11| 5.1 - 5.9 |
+| Old | 16999 and earlier | 1.7 | 5.1 - 5.11| 5.1 - 5.9 |
 | New | 17000 and later   | 1.8 | 5.12     | 5.10    |
 
 ## Requirements
