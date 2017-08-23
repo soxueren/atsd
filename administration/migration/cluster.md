@@ -1,41 +1,43 @@
 # ATSD Cluster Migration
 
-These instructions describe how to upgrade an Axibase Time Series Database instance running on the Cloudera cluster. For non-distributed installations, refer to the following [migration guide](README.md).
+These instructions describe how to upgrade an Axibase Time Series Database instance running on the Cloudera CDH cluster.
+
+For non-distributed installations, refer to the following [migration guide](README.md).
 
 ## Versioning
 
 | **Code** | **ATSD Revision Number** | **Java Version** | **Cloudera Manager Version**| **CDH Version** |
 |---|---|---|---|---|
-| Old | 16854 and earlier | 1.7 | 5.1 - 5.11| 5.1 - 5.9 |
-| New | 16855 and later   | 1.8 | 5.12     | 5.10    |
+| Old | 17000 and earlier | 1.7 | 5.1 - 5.11| 5.1 - 5.9 |
+| New | 17000 and later   | 1.8 | 5.12     | 5.10    |
 
 ## Requirements
 
 ### Disk Space
 
-The migration procedure requires 30% of the currently used disk space in ATSD tables to store migrated records before old data can be deleted.
+The migration procedure requires up to 30% of the current `atsd_d` table size to store new records before old data can be deleted.
 
-Make sure that enough disk space is available in HDFS. To review HDFS usage login into Cloudera Manager and open 
+Open **Clusters > Cluster > HDFS > Status** page in Clouder Manager.
 
-**Clusters > Cluster > HDFS > Status**.
+Make sure that enough disk space is available in HDFS.
 
 ![](./images/hdfs-status.png)
 
 ### Memory
 
-The migration job requires at least 4 GB of RAM available on each data node.
+The migration task is implemented as a Map-Reduce job and requires at least 4 GB of RAM available on each HBase region server.
 
 ## Check Record Count for Testing
 
 Login into ATSD and open the **SQL** tab.
 
-Execute the following query to count rows for one of the key metrics in the ATSD server.
+Execute the following query to count rows for one of the key metrics.
 
 ```sql
 SELECT COUNT(*) FROM mymetric
 ```
 
-The number of records should match the results after the migration.
+The number should match the results after the migration.
 
 ## Prepare ATSD For Upgrade
 
@@ -45,13 +47,11 @@ Stop ATSD.
 /opt/atsd/atsd/bin/stop-atsd.sh
 ```
 
+Take note of the table prefix specified in the `/opt/atsd/atsd/conf/server.properties` file. It will be required in subsequent steps.
+
 ## Install Java 8
 
 [Install Java 8](install-java-8.md) on the ATSD server.
-
-## Backup
-
-Backup ATSD tables in HBase prior to migration by copying `/hbase` directory in HDFS.
 
 ## Upgrade Cloudera Cluster
 
@@ -86,7 +86,7 @@ Obtain the fully qualified hostname of the YARN ResourceManager server.
 hostname -f
 ```
 
-Authenticate with Kerberos using the `yarn.keytab` file and YARN ResourceManager full hostname.
+Authenticate with Kerberos using the `yarn.keytab` file and the full hostname of the YARN ResourceManager.
 
 ```bash
 kinit -k -t /run/cloudera-scm-agent/process/7947-yarn-RESOURCEMANAGER/yarn.keytab yarn/{yarn_rm_full_hostname}
@@ -105,7 +105,7 @@ Check that current Java version is 8.
 java -version
 ```
 
-Add `migration.jar`, HBase configuration files, and HBase classes used by the Map-Reduce job to Java and Hadoop classpaths.
+Add `migration.jar`, HBase configuration files, and HBase classes used by the migration job to Java and Hadoop classpaths.
 
 ```sh
 export CLASSPATH=$CLASSPATH:$(hbase classpath):/tmp/migration/migration.jar
@@ -116,9 +116,9 @@ Modify Map-Reduce [settings](mr-settings.md) using parameters recommended by Axi
 
 ## Run Migration Map-Reduce Job
 
-Run the job on the YARN ResourseManager server.
+Log in to the YARN ResourceManager server.
 
-### Rename `atsd_d` Table
+### Backup `atsd_d` Table
 
 Run the `TableCloner` task to rename `atsd_d` table into `atsd_d_backup` table.
 
@@ -126,29 +126,100 @@ Run the `TableCloner` task to rename `atsd_d` table into `atsd_d_backup` table.
 java com.axibase.migration.admin.TableCloner --table_name=atsd_d
 ```
 
+If a custom table prefix is specifed in the `server.properties` file, for example it's set to 'atsd_custom_', change the `table_name` parameter accordingly:
+
+```sh
+java com.axibase.migration.admin.TableCloner --table_name=atsd_custom_d
+```
+
 ### Migrate Records
 
-Start the Map-Reduce job.
-The job can take some time to complete. 
-Launch it with the `nohup` command and save the output to a file to serve as a log.
+Launch the migration job with the `nohup` command.
 
 ```sh
 nohup yarn com.axibase.migration.mapreduce.DataMigrator --forced --source=atsd_d_backup --destination=atsd_d &> /tmp/migration/migration.log &
 ```
 
-The job will create an empty `atsd_d` table, convert data from the old `atsd_d_backup` table to the new format, and store converted data in the `atsd_d` table.
+If the table prefix has been customized, adjust the above command accordingly:
 
-The `DataMigrator` job may take a long time to complete. 
+```sh
+nohup yarn com.axibase.migration.mapreduce.DataMigrator --forced --source=atsd_custom_d_backup --destination=atsd_custom_d &> /tmp/migration/migration.log &
+```
 
-Monitor the job progress in the ResourseManager web interface available in Cloudera Manager in **Clusters > Cluster > YARN > Web UI > ResourseManager Web UI**.
+The job will create a new data table, convert data from the backup table to the new format, and store it in the new table.
 
-The Yarn interface will stop automatically once the `DataMigrator` job is finished.
+The job may take several hours to complete. 
+
+Open **Clusters > Cluster > YARN > Web UI > ResourseManager Web UI** in Cloudera Manager.
+
+Monitor the job progress.
+
+```
+tail -f /tmp/migration/migration.log
+```
+
+Note that Yarn interface will be stopped automatically once the job is finished.
 
 Once the job is complete, the `migration.log` file should contain the following line:
 
 ```
 17/08/01 10:44:31 INFO mapreduce.DataMigrator: HFiles loaded, data table migration job completed, elapsedTime: 45 minutes.
 ```
+
+## Deploy ATSD Coprocessors
+
+### Copy New Coprocessors into HDFS
+
+Login into HDFS NameNode server or another server with the DFS client.
+ 
+Switch to the 'hbase' user.
+
+```sh
+sudo su hbase
+```
+
+Copy `atsd-hbase.17140.jar` to the HDFS `hbase.dynamic.jars.dir` directory.
+The path to this directory is set to `${hbase.rootdir}/lib` by default in HBase.
+
+```
+hadoop fs -ls /hbase/lib/       #   check existence
+hadoop fs -mkdir /hbase/lib/    #   if not exists
+curl -O https://axibase.com/public/atsd-125-migration/atsd-hbase.17140.jar
+hadoop fs -put -f atsd-hbase.17140.jar /hbase/lib/atsd-hbase.jar
+hadoop fs -ls /hbase/lib
+    Found 1 items
+    -rw-r--r--   3 hbase hbase     547320 2017-08-23 13:03 /hbase/lib/atsd-hbase.jar
+```
+
+Note that this path should match the `coprocessors.jar` setting specified in the `/opt/atsd/atsd/conf/server.properties` file as outlined below.
+
+### Remove Old Coprocessors
+
+ATSD coprocessors that were added to HBase CoprocessorRegion Classes are now loaded automatically and therefore must be removed from HBase settings in Cloudera Manager. The old jar should be removed from HBase Region Server local file systems.
+
+#### Remove Coprocessor Settings
+
+Open the **Clusters > Cluster > HBase-2** in Cloudera Manager.
+
+Open the **Configuration** tab.
+
+Search for the `hbase.coprocessor.region.classes` setting.
+
+Remove all ATSD coprocessors and save settings:
+
+![](./images/atsd-coprocessors.png)
+
+#### Remove Coprocessor jar Files
+
+Find ATSD coprocessors jar files on each Region Server:
+
+```bash
+sudo find /opt/cloudera/parcels/CDH-5.10.0-1.cdh5.10.0.p0.41/ -name "atsd*.jar"
+```
+
+Remove the found files.
+
+Restart HBase.
 
 ## Configure ATSD
 
@@ -157,7 +228,7 @@ Login into ATSD Server.
 Switch to the 'axibase' user.
 
 ```sh
-su axibase
+sudo su axibase
 ```
 
 Remove deprecated settings.
@@ -166,12 +237,11 @@ Remove deprecated settings.
 sed -i '/^hbase.regionserver.lease.period/d' /opt/atsd/atsd/conf/hadoop.properties
 ```
 
-Set current HDFS path to coprocessors `/hbase/lib/atsd-hbase.jar` in `/opt/atsd/atsd/conf/server.properties` file.
+Add path to coprocessor jar file.
 
 ```bash
 echo "coprocessors.jar=hdfs:///hbase/lib/atsd-hbase.jar" >> /opt/atsd/atsd/conf/server.properties
 ```
-
 
 Upgrade jar files and startup scripts.
 
@@ -185,80 +255,16 @@ rm -rf /opt/atsd/hbase
 rm -rf /opt/atsd/collectors
 ```
 
-Set `JAVA_HOME` in the `start-atsd.sh` file:
+Update `JAVA_HOME` in the `start-atsd.sh` file:
 
 ```sh
 jp=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"`; sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$jp,g" /opt/atsd/atsd/bin/start-atsd.sh
 ```
 
-Set custom `JAVA_OPTS` in the `/opt/atsd/atsd/conf/atsd-env.sh` file:
+Increase 'Xmx' memory to 50% of available RAM memory in the ATSD server in the `/opt/atsd/atsd/conf/atsd-env.sh` file:
 
 ```bash
-JAVA_OPTS="-server -Xmx1024M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="$atsd_home"/logs"
-```
-
-## Deploy ATSD Coprocessors
-
-### Put Coprocessors into HDFS
-
-Login into NameNode Server.
- 
-Switch to the 'hbase' user.
-
-```sh
-sudo su hbase
-```
-
-Put `atsd-hbase.17140.jar` to the HDFS `hbase.dynamic.jars.dir`. 
-It is set to `${hbase.rootdir}/lib` by default in HBase.
-
-```
-hadoop fs -ls /hbase/lib/       #   check existence
-hadoop fs -mkdir /hbase/lib/    #   if not exists
-curl -O https://axibase.com/public/atsd-125-migration/atsd-hbase.17140.jar
-hadoop fs -put -f atsd-hbase.17140.jar /hbase/lib/atsd-hbase.jar
-hadoop fs -ls /hbase/lib
-    Found 1 items
-    -rw-r--r--   3 hbase hbase     547320 2017-08-23 13:03 /hbase/lib/atsd-hbase.jar
-```
-
-### Remove Coprocessor Definitions
-
-ATSD coprocessors that were added to HBase CoprocessorRegion Classes are now loaded automatically and therefore must be removed from 
-
-   1. HBase settings 
-   2. Each Region Server  
-
-#### Remove Coprocessor from HBase settings
-
-Open Cloudera Manager.
-
-Select the **Clusters > Cluster > HBase-2**, and open the **Configuration** tab.
-
-Search for the `hbase.coprocessor.region.classes` setting.
-
-Remove all ATSD coprocessors and save settings:
-
-![](./images/atsd-coprocessors.png)
-
-#### Remove Coprocessor from Each Region Server
-
-In order to locate ATSD coprocessors jar file execute on each Region Server:
-
-```bash
-sudo find /opt/cloudera/parcels/CDH-5.10.0-1.cdh5.10.0.p0.41/ -name "atsd*.jar"
-```
-
-Remove found files and restart HBase.
-
-## Start ATSD
-
-Login into ATSD Server.
-
-Switch to the 'axibase' user.
-
-```sh
-su axibase
+JAVA_OPTS="-server -Xmx4096M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="$atsd_home"/logs"
 ```
 
 Start ATSD.
@@ -277,9 +283,9 @@ You should see a **ATSD start completed** message at the end of the `start.log`.
 
 ## Check Migration Results
 
-Login into ATSD, open the **SQL** tab.
+Open the **SQL** tab in ATSD.
 
-Execute the query and compare the row count.
+Execute the following query and compare the row count.
 
 ```sql
 SELECT COUNT(*) FROM mymetric
@@ -288,6 +294,10 @@ SELECT COUNT(*) FROM mymetric
 The number of records should match the results prior to migration.
 
 ## Delete the `atsd_d_backup` Table
+
+Login into HBase shell.
+
+Drop `atsd_d_backup` table. Replace the table name if a custom prefix is specified in the `server.properties` file.
 
 ```sh
 /usr/lib/hbase/bin/hbase shell
