@@ -19,7 +19,7 @@ The migration procedure requires up to 30% of the current `atsd_d` table size to
 
 Open **Clusters > Cluster > HDFS > Status** page in Clouder Manager.
 
-Make sure that enough disk space is available in HDFS.
+Make sure that enough configured capacity is available in HDFS.
 
 ![](./images/hdfs-status.png)
 
@@ -47,7 +47,13 @@ Stop ATSD.
 /opt/atsd/atsd/bin/stop-atsd.sh
 ```
 
-Take note of the table prefix specified in the `/opt/atsd/atsd/conf/server.properties` file. It will be required in subsequent steps.
+Take note of the **table prefix** specified in the `/opt/atsd/atsd/conf/server.properties` file. 
+
+```sh
+cat /opt/atsd/atsd/conf/server.properties | grep "hbase.table.prefix"
+```
+
+The prefix will be required in subsequent steps.
 
 ## Install Java 8
 
@@ -63,7 +69,7 @@ Take note of the table prefix specified in the `/opt/atsd/atsd/conf/server.prope
 
 ## Configure Migration Map-Reduce Job
 
-Log in to the server where YARN ResourceManager is running.
+Login into the server where YARN ResourceManager is running.
 
 Switch to the 'yarn' user.
 
@@ -116,7 +122,7 @@ Modify Map-Reduce [settings](mr-settings.md) using parameters recommended by Axi
 
 ## Run Migration Map-Reduce Job
 
-Log in to the YARN ResourceManager server.
+Execute the below steps under the 'yarn' user on the YARN ResourceManager server.
 
 ### Backup `atsd_d` Table
 
@@ -172,10 +178,10 @@ Once the job is complete, the `migration.log` file should contain the following 
 
 Login into HDFS NameNode server or another server with the DFS client.
  
-Switch to the 'hbase' user.
+Switch to the 'hdfs' user.
 
 ```sh
-sudo su hbase
+sudo su hdfs
 ```
 
 Copy `atsd-hbase.17140.jar` to the HDFS `hbase.dynamic.jars.dir` directory.
@@ -191,11 +197,13 @@ hadoop fs -ls /hbase/lib
     -rw-r--r--   3 hbase hbase     547320 2017-08-23 13:03 /hbase/lib/atsd-hbase.jar
 ```
 
-Note that this path should match the `coprocessors.jar` setting specified in the `/opt/atsd/atsd/conf/server.properties` file as outlined below.
+Note that this path should match the `coprocessors.jar` setting specified in the `/opt/atsd/atsd/conf/server.properties` file in ATSD server as outlined below.
 
 ### Remove Old Coprocessors
 
-ATSD coprocessors that were added to HBase CoprocessorRegion Classes are now loaded automatically and therefore must be removed from HBase settings in Cloudera Manager. The old jar should be removed from HBase Region Server local file systems.
+ATSD coprocessors that were added to HBase CoprocessorRegion Classes are now loaded automatically and therefore must be removed from HBase settings in Cloudera Manager. 
+
+The old jar files should be removed from the local file system on each HBase Region Server.
 
 #### Remove Coprocessor Settings
 
@@ -261,7 +269,9 @@ Update `JAVA_HOME` in the `start-atsd.sh` file:
 jp=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"`; sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$jp,g" /opt/atsd/atsd/bin/start-atsd.sh
 ```
 
-Increase 'Xmx' memory to 50% of available RAM memory in the ATSD server in the `/opt/atsd/atsd/conf/atsd-env.sh` file:
+Edit the `/opt/atsd/atsd/conf/atsd-env.sh` file. 
+
+Increase 'Xmx' memory to 50% of available RAM memory on the ATSD server:
 
 ```bash
 JAVA_OPTS="-server -Xmx4096M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="$atsd_home"/logs"
@@ -293,11 +303,11 @@ SELECT COUNT(*) FROM mymetric
 
 The number of records should match the results prior to migration.
 
-## Delete the `atsd_d_backup` Table
+## Delete Backup Table
 
 Login into HBase shell.
 
-Drop `atsd_d_backup` table. Replace the table name if a custom prefix is specified in the `server.properties` file.
+Drop `atsd_d_backup` table. Adjust the table name if a custom prefix is specified in the `server.properties` file.
 
 ```sh
 /usr/lib/hbase/bin/hbase shell
