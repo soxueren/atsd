@@ -29,7 +29,7 @@ Accept the license.
 Copy the 'Linux 64: *tar.gz' download link for 'Java SE Development Kit 8u144' into the `curl` command below.
 
 ```sh
-curl -L -O -H "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz
+curl -k -L -O -H "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz
 ```
 
 Download the archive.
