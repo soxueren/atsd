@@ -193,7 +193,7 @@ curl -o /opt/atsd/hadoop.tar.gz https://axibase.com/public/atsd-125-migration/ha
 tar -xf /opt/atsd/hadoop.tar.gz -C /opt/atsd/
 ```
 
-Get path to the Java 8 home.
+Verify path to the Java 8 home.
 
 ```sh
 dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"
