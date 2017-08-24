@@ -132,7 +132,7 @@ Run the `TableCloner` task to rename `atsd_d` table into `atsd_d_backup` table.
 java com.axibase.migration.admin.TableCloner --table_name=atsd_d
 ```
 
-If a custom table prefix is specifed in the `server.properties` file, for example it's set to 'atsd_custom_', change the `table_name` parameter accordingly:
+If a custom table prefix is specifed in the `server.properties` file, for example it is set to 'atsd_custom_', change the `table_name` parameter accordingly:
 
 ```sh
 java com.axibase.migration.admin.TableCloner --table_name=atsd_custom_d
@@ -142,17 +142,23 @@ java com.axibase.migration.admin.TableCloner --table_name=atsd_custom_d
 
 Launch the migration job with the `nohup` command.
 
-```sh
-nohup yarn com.axibase.migration.mapreduce.DataMigrator --forced --source=atsd_d_backup --destination=atsd_d &> /tmp/migration/migration.log &
-```
-
-If the table prefix has been customized, adjust the above command accordingly:
-
-```sh
-nohup yarn com.axibase.migration.mapreduce.DataMigrator --forced --source=atsd_custom_d_backup --destination=atsd_custom_d &> /tmp/migration/migration.log &
-```
-
 The job will create a new data table, convert data from the backup table to the new format, and store it in the new table.
+
+The optional `drop-annotations` flag discards duplicate series annotations when copying the data.
+
+#### Custom Table Prefix
+
+```sh
+nohup yarn com.axibase.migration.mapreduce.DataMigrator --forced --drop_annotations --source=atsd_custom_d_backup --destination=atsd_custom_d &> /tmp/migration/migration.log &
+```
+
+#### Default Table Prefix
+
+```sh
+nohup yarn com.axibase.migration.mapreduce.DataMigrator --forced --drop_annotations --source=atsd_d_backup --destination=atsd_d &> /tmp/migration/migration.log &
+```
+
+#### Monitoring Job Progress
 
 The job may take several hours to complete. 
 
@@ -164,7 +170,7 @@ Monitor the job progress.
 tail -f /tmp/migration/migration.log
 ```
 
-Note that Yarn interface will be stopped automatically once the job is finished.
+Note that the Yarn interface will be stopped automatically once the job is finished.
 
 Once the job is complete, the `migration.log` file should contain the following line:
 
