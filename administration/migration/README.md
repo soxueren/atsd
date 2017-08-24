@@ -465,7 +465,7 @@ Table 'atsd_metric' successfully deleted.
 1. Migrate data from the `'atsd_delete_task_backup'` table by launching the task and confirming its execution.
 
 ```sh
-/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.DeleteTaskMigration
+/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.DeleteTaskMigration -m 2
 ```
 
 ```
@@ -493,13 +493,13 @@ In case of other errors, review job logs for the application ID displayed above:
 2. Migrate data from the 'atsd_forecast' table.
 
 ```sh
-/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.ForecastMigration
+/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.ForecastMigration -m 2
 ```
 
 3. Migrate data from the 'atsd_li' table.
 
 ```sh
-/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.LastInsertMigration
+/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.LastInsertMigration -m 2
 ```
 
 This migration task will write intermediate results into a temporary directory for diagnostics.
@@ -522,13 +522,13 @@ Delete the diagnostics folder:
 4. Migrate data to the 'atsd_metric' table.
 
 ```sh
-/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.MetricMigration
+/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.MetricMigration -m 2
 ```
 
 5. Migrate data to the 'atsd_d' table.
 
 ```sh
-/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.DataMigrator
+/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.DataMigrator -m 2
 ```
 
 ```
