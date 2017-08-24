@@ -398,6 +398,12 @@ Start Yarn servers:
 /opt/atsd/hadoop/sbin/start-yarn.sh
 ```
 
+Ensure that `USER` environment setting is set:
+
+```sh
+export USER=axibase
+```
+
 Start Job History server:
 
 ```sh
