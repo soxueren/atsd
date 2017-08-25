@@ -2,10 +2,10 @@
 
 ## Supported Versions
 
-- Ubuntu 14.04
 - Ubuntu 16.04
-- Debian 6.x
+- Ubuntu 14.04
 - Debian 7.x
+- Debian 6.x
 
 ## Requirements
 
@@ -16,7 +16,7 @@
 
 #### Add openjdk Repository
 
-This step is required **only on Ubuntu 16.04** (Xenial Xerus).
+This step is required **only on Ubuntu 14.04**.
 
 ```sh
 sudo add-apt-repository ppa:openjdk-r/ppa
@@ -40,7 +40,7 @@ sudo sh -c 'echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./"
 >> /etc/apt/sources.list.d/axibase.list'
 ```
 
-#### Update Repositories and Follow the Prompts to Install ATSD
+#### Update Repositories and Install ATSD
 
 ```sh
 sudo apt-get update && sudo apt-get install atsd
