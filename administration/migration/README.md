@@ -604,9 +604,18 @@ The number of records should match the results prior to migration.
 
 ```sh
 /opt/atsd/hbase/bin/hbase shell
-  hbase(main):001:0> disable 'atsd_d_backup'
-  hbase(main):002:0> drop 'atsd_d_backup'
-  hbase(main):003:0> exit
+```
+
+```sh
+disable_all '.*_backup'
+```
+
+```sh
+drop_all '.*_backup'
+```
+
+```sh
+exit
 ```
 
 2. Delete the backup directory.
