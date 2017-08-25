@@ -5,6 +5,10 @@
 * Linux 64-bit
 * OS and hardware [requirements](../administration/requirements.md)
 
+## Status
+
+* _August 25_: We are upgrading ATSD installation packages to Java 8/HBase 1.2.5. As a result, some of the installation options listed below may be temporarily unavailable. 
+
 ## Installation Guides
 
 ### Packages
