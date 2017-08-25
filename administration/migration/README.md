@@ -193,7 +193,7 @@ curl -o /opt/atsd/hadoop.tar.gz https://axibase.com/public/atsd-125-migration/ha
 tar -xf /opt/atsd/hadoop.tar.gz -C /opt/atsd/
 ```
 
-Get path to the Java 8 home.
+Verify path to the Java 8 home.
 
 ```sh
 dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"
@@ -411,7 +411,7 @@ Run the `jps` command to check that the following processes are running:
 Download the `migration.jar` file to the `/opt/atsd` directory.
 
 ```sh
-curl -o /opt/atsd/migration.jar https://axibase.com/public/atsd-125-migration/migration.jar
+curl -o /opt/atsd/migration.jar https://axibase.com/public/atsd-125-migration/migration-hbase-1.2.5.jar
 ```
 
 Check that current Java version is 8.
@@ -465,7 +465,7 @@ Table 'atsd_metric' successfully deleted.
 1. Migrate data from the `'atsd_delete_task_backup'` table by launching the task and confirming its execution.
 
 ```sh
-/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.DeleteTaskMigration
+/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.DeleteTaskMigration -m 2
 ```
 
 ```
@@ -493,13 +493,13 @@ In case of other errors, review job logs for the application ID displayed above:
 2. Migrate data from the 'atsd_forecast' table.
 
 ```sh
-/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.ForecastMigration
+/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.ForecastMigration -m 2
 ```
 
 3. Migrate data from the 'atsd_li' table.
 
 ```sh
-/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.LastInsertMigration
+/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.LastInsertMigration -m 2
 ```
 
 This migration task will write intermediate results into a temporary directory for diagnostics.
@@ -522,13 +522,13 @@ Delete the diagnostics folder:
 4. Migrate data to the 'atsd_metric' table.
 
 ```sh
-/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.MetricMigration
+/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.MetricMigration -m 2
 ```
 
 5. Migrate data to the 'atsd_d' table.
 
 ```sh
-/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.DataMigrator
+/opt/atsd/hadoop/bin/yarn com.axibase.migration.mapreduce.DataMigrator -m 2
 ```
 
 ```
@@ -604,9 +604,18 @@ The number of records should match the results prior to migration.
 
 ```sh
 /opt/atsd/hbase/bin/hbase shell
-  hbase(main):001:0> disable 'atsd_d_backup'
-  hbase(main):002:0> drop 'atsd_d_backup'
-  hbase(main):003:0> exit
+```
+
+```sh
+disable_all '.*_backup'
+```
+
+```sh
+drop_all '.*_backup'
+```
+
+```sh
+exit
 ```
 
 2. Delete the backup directory.
