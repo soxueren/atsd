@@ -25,12 +25,14 @@
 | Docker | official image | [View](docker.md)|
 | RedHat Docker | certified image | [View](docker-redhat.md)|
 
+<!--
 ### Virtual Machines
 
 | **Host** | **Format** | **Installation Guide** |
 | :--- | --- | :---: |
 | VMware  | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](vmware-esxi-server-vsphere.md)|
 | Oracle VirtualBox | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](virtualbox.md)|
+-->
 
 ### Cloud
 
