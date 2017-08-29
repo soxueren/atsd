@@ -84,6 +84,7 @@
 
 | **Name** | **Description** |
 | :--- | :--- |
+| `IN` | Returns true if collection contains the specified string. <br>`tags.location IN ('NUR', 'SVL')`|
 | `contains(S)` | Returns true if collection contains the specified string. <br>`properties['command'].toString().contains('java')`|
 | `isEmpty()` | Returns true if collection has no elements. <br>`entity.tags.isEmpty()`|
 | `size()` | Returns number of elements in the collection. <br>`entity.tags.size() > 1`|
