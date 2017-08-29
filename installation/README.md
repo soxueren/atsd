@@ -26,7 +26,7 @@
 
 | **Distribution** | **Format** | **Installation Guide** |
 | :--- | --- | :---: |
-| Docker | image | [View](docker.md)|
+| Docker | official image | [View](docker.md)|
 | RedHat Docker | certified image | [View](docker-redhat.md)|
 
 ### Virtual Machines
@@ -36,13 +36,17 @@
 | VMware  | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](vmware-esxi-server-vsphere.md)|
 | Oracle VirtualBox | [ova](https://axibase.com/public/atsd_ce.ova)  | [View](virtualbox.md)|
 
+### Cloud
+
+| **Hadoop Distribution** | **Installation Guide** |
+| :--- | :--- |
+| AWS EMR / s3  | - coming soon - |
+
 ### Hadoop Cluster
 
 | **Hadoop Distribution** | **Installation Guide** |
 | :--- | :--- |
 | Cloudera Distribution Hadoop (CDH)  | [View](cloudera.md) |
-| Ambari  | [View](ambari.md) |
-| HBase Cluster | [View](hbase-cluster.md)|
 
 ## Technical Support
 
