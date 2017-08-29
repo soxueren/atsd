@@ -1669,6 +1669,19 @@ SELECT MAX(value) FROM (
 | 98.8       |
 ```
 
+An inline view may contain subqueries that join multiple tables.
+
+```sql
+SELECT datetime, MAX(value) AS "5-min Peak" FROM (
+  SELECT datetime, AVG(t1.value * t2.value) AS "value"
+    FROM "cpu_allocated_units" t1
+    JOIN "cpu_used_percent" t2 
+    WHERE datetime >= PREVIOUS_HOUR
+    GROUP BY PERIOD(5 MINUTE)
+)
+GROUP BY PERIOD (1 HOUR)
+```
+
 ## Joins
 
 Data for multiple virtual tables (metrics) can be merged with the `JOIN` and `FULL OUTER JOIN` clauses.
