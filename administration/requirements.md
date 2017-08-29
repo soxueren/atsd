@@ -13,7 +13,7 @@
 ## Disk Space
 
 - Application files: 5 GB
-- Data files: depends on the amount of collected data.
+- Data Files: depends on the amount of collected data, compression settings, replication factor and the underlying file system type.
 
 ## Architecture
 
@@ -21,13 +21,12 @@
 
 ## Operating Systems
 
--   Ubuntu 14.04, 16.04 (with Oracle JDK)
+-   Ubuntu 14.04, 16.04
 -   RedHat Enterprise Linux 6.x, 7.x
 -   SUSE Linux Enterprise Server 11 SP3, 12.x
 -   Debian 6.x, 7.x
 -   CentOS 6.x, 7.x
--   Oracle Linux 6, 7
--   Oracle UEK 2, 3
+-   Other RPM and Debian based systems (Amazon Linux, Oracle Linux)
 
 ## Hostname
 
