@@ -114,7 +114,6 @@
   * [Entity Lookup](administration/entity-lookup.md)
   * [Logging](administration/logging.md)
   * [Metric Persistence Filter](administration/metric-persistence-filter.md)
-  * [Upgrading Java](administration/upgrade-java.md)
   * [Monitoring](administration/monitoring.md)
   * [Replication](administration/replication.md)
   * [Restarting](administration/restarting.md)
