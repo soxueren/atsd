@@ -2,7 +2,6 @@
 
 ## Supported Versions
 
-- SUSE Linux Enterprise Server 11 SP3
 - SUSE Linux Enterprise Server 12.x
 
 ## Requirements

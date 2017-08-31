@@ -7,7 +7,6 @@ and copying them to the target machine with similar characteristics for offline 
 
 ## Supported Versions
 
-- SUSE Linux Enterprise Server 11 SP3
 - SUSE Linux Enterprise Server 12.x
 
 ## Requirements
@@ -20,7 +19,7 @@ and copying them to the target machine with similar characteristics for offline 
 ### Option 1: Install Dependencies from Local Repositories.
 
 ```sh
-sudo zypper -n install java-1_7_0-openjdk-devel sysstat which net-tools iproute
+sudo zypper -n install java-1_8_0-openjdk-devel sysstat which net-tools iproute
 ```
 
 ### Option 2: Copy Dependencies from a Connected Machine.
@@ -42,7 +41,7 @@ nano dep-download.sh
 #!/bin/sh
 SCRIPT=$(readlink -f $0)
 DIR=$(dirname $SCRIPT)
-list="java-1_7_0-openjdk-devel sysstat which net-tools iproute"
+list="java-1_8_0-openjdk-devel sysstat which net-tools iproute"
 zypper -n install -df $list
 for package in $list; do
     find /var/cache/zypp/packages -name $package*.rpm -exec cp {} $DIR \;

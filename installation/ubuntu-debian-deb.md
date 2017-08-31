@@ -3,9 +3,7 @@
 ## Supported Versions
 
 - Ubuntu 16.04
-- Ubuntu 14.04
 - Debian 7.x
-- Debian 6.x
 
 ## Requirements
 
@@ -25,14 +23,6 @@ Download deb package to the target server:
 * [https://axibase.com/public/atsd_deb_latest.htm](https://axibase.com/public/atsd_deb_latest.htm)
 
 ## Installation Steps
-
-#### Add `openjdk` Repository
-
-This step is required **only on Ubuntu 14.04**.
-
-```sh
-sudo add-apt-repository ppa:openjdk-r/ppa
-```
 
 #### Update Repositories and Install Dependencies
 

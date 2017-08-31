@@ -7,11 +7,8 @@ and copying them to the target machine with similar characteristics for offline 
 
 ## Supported Versions
 
-- RedHat Enterprise Linux 6.x
 - RedHat Enterprise Linux 7.x
-- CentOS 6.x
 - CentOS 7.x
-- Amazon Linux 6.x
 - Amazon Linux 7.x
 
 ## Requirements
