@@ -15,7 +15,7 @@
 | Ubuntu/Debian | [deb](https://axibase.com/public/atsd_deb_latest.htm) | [View](ubuntu-debian-deb.md) |
 | RedHat/CentOS| yum | [View](redhat-centos-yum.md)|
 | RedHat/CentOS| [rpm](https://axibase.com/public/atsd_rpm_latest.htm) | [View](redhat-centos-rpm.md)|
-| SLES| [rpm](https://axibase.com/public/atsd_rpm_latest.htm)   | [View](sles-rpm.md)|
+| SLES| [rpm](https://axibase.com/public/atsd_rpm_sles_latest.htm)   | [View](sles-rpm.md)|
 | Other | [tar.gz](https://axibase.com/public/atsd_distrib_latest.htm) | [View](other-distributions.md)|
 
 ### Container Images
@@ -38,7 +38,7 @@
 
 | **Hadoop Distribution** | **Installation Guide** |
 | :--- | :--- |
-| AWS EMR / s3  | **- coming soon -** |
+| HBase on AWS S3  | [View](aws-emr-s3.md)|
 
 ### Hadoop Cluster
 

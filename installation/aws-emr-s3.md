@@ -1,18 +1,19 @@
-# Installation on AWS EMR S3
+# Installation on AWS HBase S3
 
 ## Overview
 
-Axibase Time Series Database can be installed on top of HBase using AWS EMRFS on s3 as the underlying file system.
-This option enables scaling the database cluster based on compute demands as opposed to storage requirements.
+Axibase Time Series Database can be deployed on HBase using [AWS S3](http://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-hbase-s3.html) as the underlying file system.
 
-## Requirements
+This installation option simplifies backup and recovery as well as allows right-sizing the HBase cluster based on CPU and memory demands as opposed to storage requirements.
 
-* The system can be installed on a minumum of 2 EC2 instances with ATSD co-installed on the HMaster node.
+## Mini-cluster
 
+The smallest cluster size for testing and development is two EC2 instances one of which can be shared by HBase Master and ATSD.
 
 ## Create Cluster Configuration File
 
-The configuration specifies the HBase root directory, the storage mode (s3), and the consistency mode. 
+The configuration enables S3 storage mode with [consistency](http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-consistent-view.html) view, and specifies full path to the HBase root directory in S3.
+
 
 ```sh
 nano emr-atsd.json
@@ -20,12 +21,6 @@ nano emr-atsd.json
 
 ```json
 [
-   {
-     "Classification": "hbase-site",
-     "Properties": {
-       "hbase.rootdir": "s3://atsd/hbase-root"
-     }
-   },
    {
      "Classification": "hbase",
      "Properties": {
@@ -37,76 +32,104 @@ nano emr-atsd.json
      "Properties": {
        "fs.s3.consistent": "true"
      }
-   }
+   },
+   {
+     "Classification": "hbase-site",
+     "Properties": {
+       "hbase.rootdir": "s3://atsd/hbase-root"
+     }
+   }   
 ]
 ```
 
+## Create S3 Bucket
 
-## Create s3 Bucket
-
-The bucket, in this case named `atsd`, will contain the HBase root directory.
+The S3 bucket must be created prior to installation.  The bucket, named `atsd` in the example below, will store the HBase root directory including metadata and data files.
 
 ```sh
 aws s3 mb s3://atsd
 ```
 
-If the bucket already exists, check its contents:
+The HBase root directory will be created if necessary when the cluster is started for the first time. It will be not deleted when the cluster is stopped or terminated.
+
+If the HBase root directory already exists, you can list the files for verification.
 
 ```sh
 aws s3 ls --summarize --human-readable --recursive s3://atsd
 ```
 
-## Copy ATSD Co-processor Jar File to s3
-
-Download the ATSD co-processor and filter library for HBase.
+## Download Distribution Files
 
 ```sh
-curl -o atsd-hbase.17180.jar https://axibase.com/public/atsd-hbase.17180.jar
+curl -o atsd-cluster.tar.gz https://axibase.com/public/atsd-cluster.tar.gz
 ```
-
-Copy the file to s3.
 
 ```sh
-aws s3 cp atsd-hbase.17180.jar s3://atsd/hbase-root/lib/atsd-hbase.jar
+tar -xvf atsd-cluster.tar.gz atsd/atsd-hbase*jar
 ```
 
-The file will be placed into the `hbase.rootdir/lib` directory based on the `emr-atsd.json` file. 
+## Upload ATSD Co-processor File to S3
 
-This is the same directory as `hbase.dynamic.jars.dir` configured in HBase.
+The `atsd-hbase.$REVISION.jar` file contains ATSD co-processors and filters.
 
-This type of deployment allows HBase region servers to automatically load ATSD filter and co-processor classes when they're started.
+By storing the jar file in S3, one makes Java classes in this file automatically available to all region servers when they are started.
 
-Note that the revision should be removed from the file name so that co-processor definitions in HBase table descriptors are valid when the jar file is replaced with a newer version.
+```sh
+aws s3 cp atsd/atsd-hbase.*.jar s3://atsd/hbase-root/lib/atsd-hbase.jar
+```
 
-Check the the file is in s3:
+Verify that the jar file is stored in S3:
+
+```sh
+aws s3 ls --summarize --human-readable --recursive s3://atsd/hbase-root/lib
+```
 
 ```
-aws s3 ls --summarize --human-readable --recursive s3://atsd
-...
-2017-08-26 01:39:01  534.8 KiB hbase-root/lib/atsd-hbase.jar
-Total Objects: 1
-   Total Size: 534.8 KiB
+  2017-08-31 21:43:24  555.1 KiB hbase-root/lib/atsd-hbase.jar
+
+  Total Objects: 1
+    Total Size: 555.1 KiB
 ```
+
+The `atsd-hbase.jar` should be stored in a directory identified with `hbase.dynamic.jars.dir` setting in HBase. By default this directory resolves to `hbase.rootdir/lib`.
+
+> When uploading the jar file to `hbase.rootdir/lib` directory, the revision is removed to avoid changing `coprocessor.jar` setting in ATSD when the jar file is replaced.
 
 ## Launch Cluster
 
-Replace `<key-name>`, `<subnet>`, `<masterSg>`, `<slaveSg>` parameters accordingly.
+Copy the launch command into an editor.
 
 ```sh
-export CLUSTER_ID=$(                                                           \
-aws emr create-cluster                                                         \
---name "ATSD HBase"                                                            \
---applications Name=HBase                                                      \
---release-label emr-5.3.1                                                      \
---output text                                                                  \
---use-default-roles                                                            \
---ec2-attributes KeyName=<key-name>,SubnetId=<subnet>,EmrManagedMasterSecurityGroup=sg-<masterSg>,EmrManagedSlaveSecurityGroup=sg-<slaveSg>  \
---instance-groups                                                              \
-  Name=Master,InstanceCount=1,InstanceGroupType=MASTER,InstanceType=m4.large   \
-  Name=RegionServers,InstanceCount=1,InstanceGroupType=CORE,InstanceType=m4.large   \
---configurations file://some-path/emr-atsd.json                                \
+export CLUSTER_ID=$(            \
+aws emr create-cluster          \
+--name "ATSD HBase"             \
+--applications Name=HBase       \
+--release-label emr-5.3.1       \
+--output text                   \
+--use-default-roles             \
+--ec2-attributes KeyName=<key-name>,SubnetId=<subnet>  \
+--instance-groups               \
+  Name=Master,InstanceCount=1,InstanceGroupType=MASTER,InstanceType=m4.large        \
+  Name=RegionServers,InstanceCount=3,InstanceGroupType=CORE,InstanceType=m4.large   \
+--configurations file://emr-atsd.json         \
 )
 ```
+
+Replace `<key-name>` and `<subnet>` parameters.
+
+The `<key-name>` parameter corresponds to the name of the private key used to login into cluster nodes.
+
+The `<subnet>` parameter is required when launching particular instance types. To find out the correct subnet for your account, you can launch a sample cluster manually in the AWS EMR console and lookup the settings using AWS CLI export.
+
+![](images/aws-cli-export.png "AWS CLI export")
+
+Adjust EC2 instance types and the total instance count for the `RegionServers` group as appropriate. Review [AWS documentation](http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-gs-launch-sample-cluster.html) for additional commands.
+
+Execute the launch command.
+
+## Verify HBase Status
+
+### Login into Master Node
 
 Monitor the cluster status until the bootstrapping process is complete.
 
@@ -114,87 +137,151 @@ Monitor the cluster status until the bootstrapping process is complete.
 watch 'aws emr describe-cluster --cluster-id $CLUSTER_ID | grep MasterPublic | cut -d "\"" -f 4'
 ```
 
-Determine the public IP address of the HMaster node.
+Determine the public IP address of the HBase Master node.
 
 ```
-export MASTER_IP=$(aws emr describe-cluster --cluster-id $CLUSTER_ID | grep MasterPublic | cut -d "\"" -f 4)
+export MASTER_IP=$(aws emr describe-cluster --cluster-id $CLUSTER_ID | grep MasterPublic | cut -d "\"" -f 4) ; echo $MASTER_IP
 ```
 
-Specify the path to provate ssh key and login into HMaster node.
+Specify the path to private ssh key and login into the node.
 
 ```sh
-ssh -i /path-to-key-for-<key-name> hadoop@$MASTER_IP
+ssh -i /path/to/<key-name>.pem hadoop@$MASTER_IP
 ```
 
-## Configure ATSD
-
-Create a setup file.
+Wait until HBase services are running on the HMaster node.
 
 ```sh
-nano atsd-setup.sh
+watch 'initctl list | grep hbase'
 ```
 
-The script will execute the following steps:
-
-* Download ATSD distribution files.
-* Unpack files in the `/mnt/atsd` directory.
-* Change default port numbers from 8xxx to 9xxx.
-* Set table copression to Gzip.
-
 ```
-curl -o atsd.tar.gz https://axibase.com/public/atsd_ee_distr.17180.tar.gz
-tar -xvf atsd.tar.gz -C /mnt
-rm atsd.tar.gz
-cd /mnt/atsd
-rm ./atsd/bin/atsd*.jar
-rm atsd-hbase*.jar
-curl -o ./atsd/bin/atsd.17180.jar  https://axibase.com/public/atsd.17180.jar
-JP=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"`; sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$JP,g" ./atsd/bin/start-atsd.sh
-cat ./atsd/bin/start-atsd.sh | grep "export JAVA_HOME"
-echo "coprocessors.jar=s3://atsd/hbase-root/lib/atsd-hbase.jar" >> ./atsd/conf/server.properties
-sed -i 's/80/90/g' ./atsd/conf/server.properties
-sed -i 's/8443/9443/g' ./atsd/conf/server.properties
-sed -i 's/hbase.compression.type = NONE/hbase.compression.type = gz/g' ./atsd/conf/server.properties
+  hbase-thrift start/running, process 8137
+  hbase-rest start/running, process 7842
+  hbase-master start/running, process 7987
 ```
 
-Execute the setup script:
+Verify HBase version (1.2.3+) and rerun the status command until the cluster becomes operational.
 
-```sh
-chmod a+x atsd-setup.sh ; ./atsd-setup.sh
-```
-
-## Start ATSD
-
-Verify that HBase services are running.
-
-```sh
-initctl list | grep hbase
-```
-
-Verify HBase version (must be 1.2.3+) and status.
 
 ```sh
 echo "status" | hbase shell
 ```
 
-Start ATSD process.
+Wait until the error `Server is not running yet` disappears.
+
+```
+
+```
+
+## Install ATSD
+
+Login into a server where ATSD will be installed (HMasted node in case of mini-cluster).
 
 ```sh
-/mnt/atsd/bin/start-atsd.sh
+ssh -i /path/to/<key-name>.pem ec2-user@$PUBLIC_IP
+```
+
+Change to a volume with at least 10GB of available disk space.
+
+```sh
+df -h
+```
+
+```sh
+cd /mnt
+```
+
+Download the ATSD distribution files.
+
+```sh
+curl -o atsd-cluster.tar.gz https://axibase.com/public/atsd-cluster.tar.gz
+```
+
+```sh
+tar -xvf atsd-cluster.tar.gz
+```
+
+Set Path to Java 8 in the ATSD start script.
+
+```sh
+JP=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"`; sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$JP,g" atsd/atsd/bin/start-atsd.sh ; echo $JP
+```
+
+Set Path to ATSD coprocessor file.
+
+```sh
+echo "coprocessors.jar=s3://atsd/hbase-root/lib/atsd-hbase.jar" >> atsd/atsd/conf/server.properties
+```
+
+If installing on a server such as HBase master where ports 8081, 8082, 8084, 8088, 8443 are taken, replace default ATSD port numbers to 9081, 9082, 9084, 9088, 9443 respectively.
+
+```sh
+sed -i 's/80/90/g' atsd/atsd/conf/server.properties
+sed -i 's/8443/9443/g' atsd/atsd/conf/server.properties
+```
+
+Check memory usage and increase ATSD JVM memory to 50% of total physical memory installed in the server, if available.
+
+```sh
+free
+```
+
+```sh
+nano atsd/atsd/conf/atsd-env.sh
+JAVA_OPTS="-server -Xmx4000M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="$atsd_home"/logs"
+```
+
+If the installation is performed on an instance other than HMaster Node, specify the HMaster private hostname with the `hbase.zookeeper.quorum` setting.
+
+```sh
+nano atsd/atsd/conf/hadoop.properties
+```
+
+```sh
+hbase.zookeeper.quorum = 10.50.0.102
+```
+
+Start ATSD.
+
+```sh
+./atsd/atsd/bin/start-atsd.sh
 ```
 
 Monitor the startup progress using the log file.
 
 ```
-tail -f /mnt/atsd/logs/atsd.log
+tail -f atsd/atsd/logs/atsd.log
 ```
 
-The startup process may take several minutes to complete. 
+The process may take several minutes to complete until ATSD is initialized:
 
-Login to https://master_ip_address:9443
+```
+ATSD start completed
+```
 
+Login to the ATSD web interface on https://atsd_hostname:8443 or https://atsd_hostname:9443 if port settings were previously changed.
 
+## Port Access
 
+Make sure that the EC2 Security Group associated with the ATSD EC2 instance allows access to the ATSD listening ports. 
 
+Edit security rules, if necessary, to open inbound access to these ports.
 
+When launching ATSD in a mini-cluster, you can specify a specific security group with ATSD ports open for the Master node in the launch command:
 
+```sh
+export CLUSTER_ID=$(            \
+aws emr create-cluster          \
+--name "ATSD HBase"             \
+--applications Name=HBase       \
+--release-label emr-5.3.1       \
+--output text                   \
+--use-default-roles             \
+--ec2-attributes KeyName=<key-name>,SubnetId=<subnet>,EmrManagedMasterSecurityGroup=<sg-master>,EmrManagedSlaveSecurityGroup=<sg-slave>  \
+--instance-groups               \
+  Name=Master,InstanceCount=1,InstanceGroupType=MASTER,InstanceType=m4.large        \
+  Name=RegionServers,InstanceCount=1,InstanceGroupType=CORE,InstanceType=m4.large   \
+--configurations file://emr-atsd.json         \
+)
+```
