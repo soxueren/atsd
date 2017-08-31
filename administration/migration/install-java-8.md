@@ -41,24 +41,38 @@ mkdir /opt/jdk
 tar -xzf jdk-8u144-linux-x64.tar.gz -C /opt/jdk
 ```
 
-Remove prior Java versions from alternatives.
+Add Oracle JDK to the java alternatives.
 
-```sh
-update-alternatives --remove-all java
-```
-
-```sh
-update-alternatives --remove-all javac
-```
-
-Add Java 8 executable and compiler to alternatives.
+* Ubuntu, Debian
 
 ```sh
 update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.8.0_144/bin/java 100
+update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.8.0_144/bin/javac 100
 ```
 
+* Red Hat Enterprise Linux, SLES, Centos, Oracle Linux
+
 ```sh
-update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.8.0_144/bin/javac 100
+alternatives --install /usr/bin/java java /opt/jdk/jdk1.8.0_144/bin/java 100
+alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.8.0_144/bin/javac 100
+```
+
+## Update Alternatives for Java Executables
+
+Review available Java installations and select Java 8 as the default option.
+
+* Ubuntu, Debian
+
+```sh
+update-alternatives --config java
+update-alternatives --config javac
+```
+
+* Red Hat Enterprise Linux, SLES, Centos, Oracle Linux
+
+```sh
+alternatives --config javac
+alternatives --config javac
 ```
 
 ## Verify Installation
