@@ -4,7 +4,7 @@
 
 - RedHat Enterprise Linux 7.x
 - CentOS 7.x
-- Amazon Linux 7.x
+- Amazon Linux 2014.09.x+
 
 ## Requirements
 

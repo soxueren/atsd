@@ -9,7 +9,6 @@ and copying them to the target machine with similar characteristics for offline 
 
 - RedHat Enterprise Linux 7.x
 - CentOS 7.x
-- Amazon Linux 7.x
 
 ## Requirements
 
