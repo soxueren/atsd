@@ -30,8 +30,6 @@ Download deb package to the target server:
 sudo apt-get update && sudo apt-get install -y openjdk-8-jdk curl hostname
 ```
 
-> If there are any issues with installing the dependencies, [check the repositories](modifying-ubuntu-debian-repositories.md) and retry the command.
-
 #### Install ATSD
 
 ```sh
