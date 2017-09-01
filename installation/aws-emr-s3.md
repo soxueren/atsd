@@ -190,6 +190,13 @@ ssh -i /path/to/<key-name>.pem ec2-user@$PUBLIC_IP
 
 > For testing and development, you can install ATSD on the the HMaster node.
 
+Verify that [JDK 8](../administration/migration/install-java-8.md) is installed on the server.
+
+```sh
+javac -version
+java version
+```
+
 Change to a volume with at least 10GB of available disk space.
 
 ```sh
