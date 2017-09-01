@@ -17,6 +17,12 @@ and copying them to the target machine for offline installation.
 
 ## Installation Steps
 
+Add jessie-backports repository. This command is required only for Debian 8.x (jessie)
+
+```sh
+sudo sh -c 'echo deb http://ftp.debian.org/debian jessie-backports main >> /etc/apt/sources.list.d/backports.list'
+```
+
 Enable the `axibase.com/public/repository/deb/` repository on the machine with Internet access:
 
 ```sh
@@ -67,10 +73,10 @@ zlib1g_1%3a1.2.8.dfsg-2+b1_amd64.deb
 
 Copy the `dependencies` directory to the target machine where ATSD will be installed.
 
-Install dependencies. 
+Install dependencies.
 
 ```sh
-dir dependencies/* | grep -v "atsd*" | xargs sudo dpkg -i 
+dir dependencies/* | grep -v "atsd*" | xargs sudo dpkg -i
 ```
 
 Sample output:
