@@ -63,7 +63,7 @@ The user is implicitly authorized to access an Entity View if it has read permis
 
 ## Portal Permissions
 
-The portal permissions define which portals the user is authorized to view. 
+The portal permissions define which portals the user is authorized to view.
 
 Permissions to view the portal are granted to User Groups.
 
@@ -71,9 +71,9 @@ The permissions are enforced both for template and regular portals.
 
 ### All Portals Permission
 
-A user group can be granted an 'All Portal' permission whereby its members are authorized to view all portals enabled in the system.
+A user group can be granted an `All Portal` permission whereby its members are authorized to view all portals enabled in the system.
 The permission to view all portals is automatically granted to users with an `ADMIN` role.
 
 ## Implementation Notes
 
--   The User's role, group membership, and entity permissions are cached while the user's session is active or until the session times out. The session is invalidated in case the user's authorization is changed by an administrator, in which case the user has to re-login.
+The User's role, group membership, and entity permissions are cached while the user's session is active. The session is invalidated in case the user's authorization is changed by an administrator, in which case the user has to re-login.
