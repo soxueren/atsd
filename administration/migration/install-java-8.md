@@ -71,7 +71,7 @@ update-alternatives --config javac
 * Red Hat Enterprise Linux, SLES, Centos, Oracle Linux
 
 ```sh
-alternatives --config javac
+alternatives --config java
 alternatives --config javac
 ```
 
