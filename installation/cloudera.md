@@ -253,17 +253,17 @@ Remove comments in the `/opt/atsd/atsd/conf/hbase-site.xml` file and replace the
 
 ### Debugging Kerberos
 
-Debugging for Kerberos authentication can be enabled by changing the ATSD start script `/opt/atsd/atsd/bin/start-atsd.sh`.
+Kerberos debugging can be enabled in the ATSD environment settings file `/opt/atsd/atsd/conf/atsd-env.sh`.
 
 ```ls
-#uncomment to enable kerberos debug
-DParams="$DParams -Dsun.security.krb5.debug=true"
+# Uncomment to enable Kerberos debug
+#export JAVA_PROPERTIES="-Dsun.security.krb5.debug=true"
 
-#uncomment to enable atsd output logging, comment out the default command
-"$java_command" -server  -Xmx512M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath="$atsd_home"/logs $DParams -classpath "$atsd_home"/conf:"$atsd_executable""${lib_jars}" com.axibase.tsd.Server >>${outLog} 2>>${errorLog} &
+# Uncomment to enable ATSD output logging
+#export outLog="${atsd_home}/logs/out.log"
 ```
 
-Kerberos client debug output will be redirected to the `${outLog}` file, which is set to `/opt/atsd/atsd/logs/out.log` by default.
+Kerberos debug output will be redirected to the `${outLog}` file, which is set to `/opt/atsd/atsd/logs/out.log` by default.
 
 ```
 5921 [main] INFO  com.axibase.tsd.hbase.KerberosBean - Setting up kerberos auth: login:axibase@HADOOP.AXIBASE.COM keytab:/opt/atsd/atsd/conf/axibase.keytab
