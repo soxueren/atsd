@@ -33,27 +33,32 @@ sudo sh -c 'echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./"
 >> /etc/apt/sources.list.d/axibase.list'
 ```
 
-Download the ATSD package, including its dependencies, to the `atsd_with_dependencies` directory.
+Download the ATSD package, including its dependencies, to the `dependencies` directory.
 
 ```
 sudo apt-get update
-mkdir atsd_with_dependencies
-cd atsd_with_dependencies
-apt-get --print-uris --yes install atsd | grep ^\' | cut -d\' -f2 | xargs wget
+mkdir ~/dependencies
+cd dependencies
+apt-get download $(apt-cache depends --recurse --no-recommends --no-suggests \
+  --no-conflicts --no-breaks --no-replaces --no-enhances \
+  --no-pre-depends atsd openjdk-8-jdk curl net-tools| grep "^\w")  
+mkdir ~/atsd
+mv atsd* ~/atsd
 ```
+It may take up a several minutes to download all required packages.
 
-Copy the `atsd_with_dependencies` directory to the target machine where ATSD will be installed.
+Copy the `dependencies` and `atsd` directories to the target machine where ATSD will be installed.
 
 Install dependencies:
 
 ```sh
-sudo dpkg -i atsd_with_dependencies/*
+sudo dpkg -i dependencies/*
 ```
 
 Follow the prompts to install ATSD:
 
 ```sh
-sudo dpkg -i atsd_with_dependencies/atsd*
+sudo dpkg -i atsd*
 ```
 
 It may take up to 5 minutes to initialize the database.
