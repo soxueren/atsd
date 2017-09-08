@@ -39,9 +39,9 @@ Download the ATSD package, including its dependencies, to the `dependencies` dir
 sudo apt-get update
 mkdir ~/dependencies
 cd dependencies
-apt-get download $(apt-cache depends --recurse --no-recommends --no-suggests \
+apt-get download atsd $(apt-cache depends --recurse --no-recommends --no-suggests \
   --no-conflicts --no-breaks --no-replaces --no-enhances \
-  --no-pre-depends atsd openjdk-8-jdk curl net-tools| grep "^\w")  
+  --no-pre-depends atsd| grep "Depends"| cut -d ":" -f2|  grep "^\ \w")  
 mkdir ~/atsd
 mv atsd* ~/atsd
 ```
