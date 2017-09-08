@@ -16,60 +16,51 @@ and copying them to the target machine with similar characteristics for offline 
 
 ## Install Dependencies
 
-### Option 1: Install Dependencies from Local Repositories.
+### Option 1: Install Dependencies from Local Repositories
 
 ```sh
-sudo zypper -n install java-1_8_0-openjdk-devel which net-tools iproute
+sudo zypper -n install java-1_8_0-openjdk-devel which net-tools iproute2
 ```
 
-### Option 2: Copy Dependencies from a Connected Machine.
+### Option 2: Copy Dependencies from a Connected Machine
 
 On a separate machine with internet access create a directory containing the dependencies:
 
 ```sh
-mkdir ./sles_dependencies
+mkdir ~/sles_dependencies
 cd sles_dependencies
 ```
 
-Copy the following script to the `dep-download.sh`file and execute it to download the dependencies:
+Create script `dep-download.sh` and execute it to download the dependencies:
 
 ```sh
-nano dep-download.sh
-```
-
-```sh
-#!/bin/sh
-SCRIPT=$(readlink -f $0)
-DIR=$(dirname $SCRIPT)
-list="java-1_8_0-openjdk-devel which net-tools iproute"
-zypper -n install -df $list
-for package in $list; do
-    find /var/cache/zypp/packages -name $package*.rpm -exec cp {} $DIR \;
-done
+echo -e '#!/bin/sh\nSCRIPT=$(readlink -f $0)\nDIR=$(dirname ${SCRIPT})\nlist="java-1_8_0-openjdk-devel which net-tools iproute2"\nzypper -n install -df ${list}\nfor package in ${list}; do\nfind /var/cache/zypp/packages -name ${package}*.rpm -exec cp {} $DIR \;\ndone'>dep-download.sh
 ```
 
 ```sh
 chmod a+x dep-download.sh
 sudo ./dep-download.sh
 ```
-
 Copy the folder containing the dependencies to the target machine and install them:
-
 ```sh
-sudo zypper -n install sles_dependencies/*.rpm
+sudo zypper -n install ~/sles_dependencies/*.rpm
 ```
 
 ## Install ATSD
 
-Download the ATSD rpm package to the target machine:
-
-* `curl -O https://axibase.com/public/atsd_amd64_sles.rpm`
-* [https://axibase.com/public/atsd_rpm_sles_latest.htm](https://axibase.com/public/atsd_rpm_sles_latest.htm)
-
-Follow the prompts to install ATSD:
+On a separate machine with internet access create a directory for `atsd_amd64_sles.rpm` and download it:
 
 ```sh
- sudo zypper -n install atsd_amd64_sles.rpm
+mkdir ~/atsd
+cd atsd
+curl -O https://axibase.com/public/atsd_amd64_sles.rpm
+```
+or [https://axibase.com/public/atsd_rpm_sles_latest.htm](https://axibase.com/public/atsd_rpm_sles_latest.htm)
+
+Copy the `atsd_amd64_sles.rpm` to the target machine, follow the prompts to install ATSD
+
+```sh
+ sudo zypper -n install ~/atsd_amd64_sles.rpm
 ```
 
 It may take up to 5 minutes to initialize the database.
