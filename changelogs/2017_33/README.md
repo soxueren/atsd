@@ -50,7 +50,7 @@ The Limit setting controls the number of samples contained in the resultset.
 
 #### Issue 4460
 
-![](Images/issue4460.jpg)
+![](Images/issue-4460.jpg)
 
 Query execution time highlighted above.
 
