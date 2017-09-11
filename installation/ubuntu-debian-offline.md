@@ -2,8 +2,8 @@
 
 ## Overview
 
-The installation process involves downloading dependencies to an intermediate machine with Internet access
-and copying them to the target machine with similar characteristics for offline installation.
+The installation process involves downloading dependencies (deb packages) to an intermediate machine with Internet access
+and copying them to the target machine for offline installation.
 
 ## Supported Versions
 
@@ -17,7 +17,7 @@ and copying them to the target machine with similar characteristics for offline 
 
 ## Installation Steps
 
-Enable the **axibase.com/public/repository/deb/** repository on the machine with Internet access:
+Enable the `axibase.com/public/repository/deb/` repository on the machine with Internet access:
 
 ```sh
 sudo apt-get update
@@ -33,32 +33,34 @@ sudo sh -c 'echo "deb [arch=amd64] http://axibase.com/public/repository/deb/ ./"
 >> /etc/apt/sources.list.d/axibase.list'
 ```
 
+Update the repository.
+
+```sh
+sudo apt-get update
+```
+
 Download the ATSD package, including its dependencies, to the `dependencies` directory.
 
-```
-sudo apt-get update
+```sh
 mkdir ~/dependencies
-cd dependencies
+cd ~/dependencies
 apt-get download atsd $(apt-cache depends --recurse --no-recommends --no-suggests \
   --no-conflicts --no-breaks --no-replaces --no-enhances \
-  --no-pre-depends atsd| grep "Depends"| cut -d ":" -f2|  grep "^\ \w")  
-mkdir ~/atsd
-mv atsd* ~/atsd
+  --no-pre-depends atsd| grep "Depends"| cut -d ":" -f2|  grep "^\ \w")
 ```
-It may take up a several minutes to download all required packages.
 
-Copy the `dependencies` and `atsd` directories to the target machine where ATSD will be installed.
+Copy the `dependencies` directory to the target machine where ATSD will be installed.
 
-Install dependencies:
+Install dependencies.
 
 ```sh
 sudo dpkg -i dependencies/*
 ```
 
-Follow the prompts to install ATSD:
+Install ATSD.
 
 ```sh
-sudo dpkg -i atsd*
+sudo dpkg -i dependencies/atsd*
 ```
 
 It may take up to 5 minutes to initialize the database.
