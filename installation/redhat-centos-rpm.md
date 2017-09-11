@@ -55,26 +55,6 @@ sudo rpm -Uvh --prefix=/mnt/atsd atsd_amd64.rpm
 
 > ATSD cannot be installed in a `/home/user` directory other than `/home/axibase` due to permission issues.
 
-### Docker Container Installation
-
-If the installation is performed in a Docker container, the `yum` command will exit with the following message:
-
-```
-Docker container installation. Initialization deferred.
-```
-
-Execute the following additional step to complete the installation:
-
-```sh
-/opt/atsd/install_user.sh
-```
-
-Start the database:
-
-```sh
-/opt/atsd/bin/atsd-all.sh start
-```
-
 ## Check Installation
 
 ```sh
