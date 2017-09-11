@@ -28,6 +28,10 @@ If the `period` is not specified, values are grouped at all unique timestamps in
 * PERCENTILE_50
 * MEDIAN
 * STANDARD_DEVIATION 
+* FIRST
+* LAST
+* MIN_VALUE_TIME
+* MAX_VALUE_TIME
 
 ## Interpolation
 
