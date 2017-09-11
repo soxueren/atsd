@@ -48,13 +48,40 @@ apt-get download atsd $(apt-cache depends --recurse --no-recommends --no-suggest
   --no-conflicts --no-breaks --no-replaces --no-enhances \
   --no-pre-depends atsd| grep "Depends"| cut -d ":" -f2|  grep "^\ \w")
 ```
+Make sure that the download directory isn't empty:
+
+```bash
+...
+libtinfo5_5.9+20140913-1+b1_amd64.deb
+lsb-base_4.1+Debian13+nmu1_all.deb
+mount_2.25.2-6_amd64.deb
+net-tools_1.60-26+b1_amd64.deb
+procps_2%3a3.3.9-9_amd64.deb
+sensible-utils_0.0.9_all.deb
+startpar_0.59-3_amd64.deb
+sysvinit-utils_2.88dsf-59_amd64.deb
+sysv-rc_2.88dsf-59_all.deb
+zlib1g_1%3a1.2.8.dfsg-2+b1_amd64.deb
+
+```
 
 Copy the `dependencies` directory to the target machine where ATSD will be installed.
 
-Install dependencies.
+Install dependencies. 
 
 ```sh
-sudo dpkg -i dependencies/*
+dir dependencies/* | grep -v "atsd*" | xargs sudo dpkg -i 
+```
+
+Sample output:
+
+```bash
+Processing triggers for man-db (2.7.5-1) ...
+Processing triggers for install-info (6.1.0.dfsg.1-5) ...
+Processing triggers for ureadahead (0.100.0-19) ...
+Processing triggers for systemd (229-4ubuntu19) ...
+Processing triggers for libc-bin (2.23-0ubuntu9) ...
+Processing triggers for mime-support (3.59ubuntu1) ...
 ```
 
 Install ATSD.
