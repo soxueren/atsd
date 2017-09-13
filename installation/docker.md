@@ -13,34 +13,6 @@
 
 ## Start Container
 
-It is recommended that the database is seeded with a shared write-only [account](../administration/collector-account.md) for data collecting agents, scripts, and storage drivers.
-
-Choose one of the options below for starting the ATSD container.
-
-### Option 1: Configure Collector Account Automatically
-
-Replace `clr-user` and `clr-password` in the command below. Minimum password length is **six** (6) characters and the password is subject to the following [requirements](../administration/user-authentication.md#password-requirements).
-
-If the user name or password contains a `$`, `&`, `#`, or `!` character, escape it with backslash `\`.
-
-```properties
-docker run \
-  --detach \
-  --name=atsd \
-  --restart=always \
-  --publish 8088:8088 \
-  --publish 8443:8443 \
-  --publish 8081:8081 \
-  --publish 8082:8082/udp \
-  --env COLLECTOR_USER_NAME=clr-user \
-  --env COLLECTOR_USER_PASSWORD=clr-password \
-  axibase/atsd:latest
-```
-
-### Option 2: Configure Collector Account Manually
-
-Start the database without built-in accounts and configure both administrator and [collector accounts](../administration/collector-account.md) on initial login.
-
 ```properties
 docker run \
   --detach \
@@ -52,6 +24,24 @@ docker run \
   --publish 8082:8082/udp \
   axibase/atsd:latest
 ```
+
+To automatically create an [account](../administration/collector-account.md) for data collection agents and storage drivers, replace `$USR` and `$PWD` credential variables in the command below.
+
+```properties
+docker run \
+  --detach \
+  --name=atsd \
+  --restart=always \
+  --publish 8088:8088 \
+  --publish 8443:8443 \
+  --publish 8081:8081 \
+  --publish 8082:8082/udp \
+  --env COLLECTOR_USER_NAME=$USR \
+  --env COLLECTOR_USER_PASSWORD=$PWD \
+  axibase/atsd:latest
+```
+
+The password is subject to the following [requirements](../administration/user-authentication.md#password-requirements). If the credentials contain special characters `$`, `&`, `#`, or `!`, escape them with backslash `\`.
 
 ## Start Container
 
@@ -66,8 +56,6 @@ axibase@nurswghbs002 ~]# docker run \
 >   --publish 8443:8443 \
 >   --publish 8081:8081 \
 >   --publish 8082:8082/udp \
->   --env COLLECTOR_USER_NAME=data-agent \
->   --env COLLECTOR_USER_PASSWORD=Pwd78_ \
 >   axibase/atsd:latest
 Unable to find image 'axibase/atsd:latest' locally
 latest: Pulling from axibase/atsd
@@ -92,7 +80,7 @@ It may take up to 5 minutes to initialize the database.
 docker logs -f atsd
 ```
 
-You should see an _ATSD start completed_ message at the end of the `start.log` file.
+You should see an **ATSD start completed** message at the end of the `start.log` file.
 
 
 ```
@@ -111,7 +99,7 @@ You should see an _ATSD start completed_ message at the end of the `start.log` f
  * [ATSD] ATSD start completed.
 ```
 
-The ATSD web interface is accessible on port 8088/http and 8443/https.
+The ATSD web interface is accessible on ports 8088/http and 8443/https.
 
 ## Launch Parameters
 

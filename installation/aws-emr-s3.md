@@ -4,13 +4,20 @@
 
 Axibase Time Series Database can be deployed on HBase using [AWS S3](http://docs.aws.amazon.com/emr/latest/ReleaseGuide/emr-hbase-s3.html) as the underlying file system.
 
-This installation option simplifies backup and recovery as well as allows right-sizing the cluster based on CPU and memory demands as opposed to storage requirements.
+## Operational Advantages
 
-The minimum cluster size for testing and development is two EC2 instances one of which can be shared by the HBase Master and ATSD.
+* Storage and compute layers can be scaled independently to address a variety of use cases, including **small cluster/large dataset** scenario.
+* The number of region servers can be dynamically adjusted based on auto-scaling rules.
+* Simplified backup and recovery.
+* Reduced storage footprint (no need for 3-x data replication and extra disk space required for HFile compactions).
+* Increased resilience based on AWS S3 reliability and durability.
+* Read-only cluster replicas.
+
+The minimum cluster size supported by this installation option is **two** EC2 instances one of which is shared by the HBase Master and ATSD.
 
 ## Create S3 Bucket
 
-The S3 bucket must be created prior to installation.  The bucket, named `atsd` in the example below, will store the HBase root directory including metadata and data files.
+The S3 bucket must be created prior to installation.  The bucket, named `atsd` in the example below, will store the HBase root directory containing both metadata and HFiles.
 
 ```sh
 aws s3 mb s3://atsd
@@ -18,7 +25,7 @@ aws s3 mb s3://atsd
 
 The HBase root directory will be created if necessary when the cluster is started for the first time. It will be not deleted when the cluster is stopped or terminated.
 
-If the HBase root directory already exists, you can list the files for verification.
+Check the contents of the bucket prior to launching the cluster.
 
 ```sh
 aws s3 ls --summarize --human-readable --recursive s3://atsd
@@ -57,7 +64,7 @@ aws s3 ls --summarize --human-readable --recursive s3://atsd/hbase-root/lib
     Total Size: 555.1 KiB
 ```
 
-The `atsd-hbase.jar` should be stored in a directory identified by the `hbase.dynamic.jars.dir` setting in HBase. By default this directory resolves to `hbase.rootdir/lib`.
+The `atsd-hbase.$REVISION.jar` should be stored in a directory identified by the `hbase.dynamic.jars.dir` setting in HBase. By default this directory resolves to `hbase.rootdir/lib`.
 
 > When uploading the jar file to `hbase.rootdir/lib` directory, the revision is removed to avoid changing `coprocessor.jar` setting in ATSD when the jar file is replaced.
 
@@ -116,9 +123,9 @@ The minimum number of nodes in each instance group is 1, therefore the smallest 
 
 ### Enable Consistent S3 View
 
-For long-running production clusters, consider enabling EMR [Consistent View](http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-consistent-view.html) for S3 which identifies inconsistencies between object listings returned by S3 and their metadata and attempts to resolve such inconsistencies using retries with expotential timeouts. When this option is enabled, the medatada from HBase files is stored in a [DynamoDB table](http://docs.aws.amazon.com/emr/latest/ManagementGuide/emrfs-metadata.html).
+For long-running production clusters, enable [EMR Consistent View](http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-consistent-view.html) which identifies inconsistencies in S3 object listings and resolves them using retries with expotential timeouts. When this option is enabled, the HBase medatada is also stored in a [DynamoDB](http://docs.aws.amazon.com/emr/latest/ManagementGuide/emrfs-metadata.html) table.
 
-The consistensy checks are enabled by adding the `Consistent` setting to the launch command. 
+The checks are enabled by adding the `Consistent` setting to the launch command.
 
 ```ls
 --emrfs Consistent=true,Args=[fs.s3.consistent.metadata.tableName=EmrFSMetadata]   \
@@ -145,7 +152,8 @@ watch 'aws emr describe-cluster --cluster-id $CLUSTER_ID | grep MasterPublic | c
 Determine public IP address of the HBase Master node.
 
 ```
-export MASTER_IP=$(aws emr describe-cluster --cluster-id $CLUSTER_ID | grep MasterPublic | cut -d "\"" -f 4) ; echo $MASTER_IP
+export MASTER_IP=$(aws emr describe-cluster --cluster-id $CLUSTER_ID | grep MasterPublic | cut -d "\"" -f 4) \
+&& echo $MASTER_IP
 ```
 
 Specify path to private ssh key and log in to the node.
@@ -220,19 +228,23 @@ tar -xvf atsd-cluster.tar.gz
 Set Path to Java 8 in the ATSD start script.
 
 ```sh
-JP=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"`; sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$JP,g" atsd/atsd/bin/start-atsd.sh ; echo $JP
+JP=`dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"` \
+&& sed -i "s,^export JAVA_HOME=.*,export JAVA_HOME=$JP,g" atsd/atsd/bin/start-atsd.sh \
+&& echo $JP
 ```
 
 Set Path to ATSD coprocessor file.
 
 ```sh
-echo "coprocessors.jar=s3://atsd/hbase-root/lib/atsd-hbase.jar" >> atsd/atsd/conf/server.properties ; grep atsd/atsd/conf/server.properties -e "coprocessors.jar"
+echo "coprocessors.jar=s3://atsd/hbase-root/lib/atsd-hbase.jar" >> atsd/atsd/conf/server.properties \
+&& grep atsd/atsd/conf/server.properties -e "coprocessors.jar"
 ```
 
 If installing ATSD on HMaster node where ports might be taken, replace the default ATSD port numbers to 9081, 9082, 9084, 9088, 9443, respectively.
 
 ```sh
-sed -i 's/=.*80/=90/g; s/=.*8443/=9443/g' atsd/atsd/conf/server.properties ; grep atsd/atsd/conf/server.properties -e "port"
+sed -i 's/=.*80/=90/g; s/=.*8443/=9443/g' atsd/atsd/conf/server.properties \
+&& grep atsd/atsd/conf/server.properties -e "port"
 ```
 
 Check memory usage and increase ATSD JVM memory to 50% of total physical memory installed in the server, if available.
@@ -287,15 +299,15 @@ Login to the ATSD web interface on https://atsd_hostname:8443. Modify the port t
 
 ### Port Access
 
-Make sure that the Security Group associated with the EC2 instance where ATSD is running allows access to ATSD listening ports. 
+Make sure that the Security Group associated with the EC2 instance where ATSD is running allows access to ATSD listening ports.
 
 If necessary, add security group rules to open inbound access to ports 8081, 8082/udp, 8084, 8088, 8443 or 9081, 9082/udp, 9084, 9088, 9443 respectively.
 
 ### ATSD Shutdown
 
-ATSD requires a license file when connected to an HBase cluster. 
+ATSD requires a license file when connected to an HBase cluster.
 
-Open **Admin > License** page and generate a license request. 
+Open **Admin > License** page and generate a license request.
 
 Once the license file is processed by Axibase, start ATSD, open **Admin > License** page and import the license.
 

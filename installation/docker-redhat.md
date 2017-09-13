@@ -27,34 +27,6 @@ systemctl enable docker.service
 
 ## Start Container
 
-It is recommended that the ATSD database is seeded with a shared write-only [account](../administration/collector-account.md) for data collecting agents, scripts, and storage drivers.
-
-Choose one of the options below for starting the ATSD container.
-
-### Option 1: Configure Collector Account Automatically
-
-Replace `clr-user` and `clr-password` in the command below. Minimum password length is **six** (6) characters and the password is subject to the following [requirements](../administration/user-authentication.md#password-requirements).
-
-If the user name or password contains a `$`, `&`, `#`, or `!` character, escape it with backslash `\`.
-
-```properties
-docker run \
-  --detach \
-  --name=atsd \
-  --restart=always \
-  --publish 8088:8088 \
-  --publish 8443:8443 \
-  --publish 8081:8081 \
-  --publish 8082:8082/udp \
-  --env COLLECTOR_USER_NAME=clr-user \
-  --env COLLECTOR_USER_PASSWORD=clr-password \
-  registry.connect.redhat.com/axibase/atsd:latest
-```
-
-### Option 2: Configure Collector Account Manually
-
-Start the database without built-in accounts and configure both administrator and [collector accounts](../administration/collector-account.md) on initial login.
-
 ```properties
 docker run \
   --detach \
@@ -66,6 +38,24 @@ docker run \
   --publish 8082:8082/udp \
   registry.connect.redhat.com/axibase/atsd:latest
 ```
+
+To automatically create an [account](../administration/collector-account.md) for data collection agents and storage drivers, replace `$USR` and `$PWD` credential variables in the command below.
+
+```properties
+docker run \
+  --detach \
+  --name=atsd \
+  --restart=always \
+  --publish 8088:8088 \
+  --publish 8443:8443 \
+  --publish 8081:8081 \
+  --publish 8082:8082/udp \
+  --env COLLECTOR_USER_NAME=$USR \
+  --env COLLECTOR_USER_PASSWORD=$PWD \
+  registry.connect.redhat.com/axibase/atsd:latest
+```
+
+The password is subject to the following [requirements](../administration/user-authentication.md#password-requirements). If the credentials contain special characters `$`, `&`, `#`, or `!`, escape them with backslash `\`.
 
 ## Start Container
 
@@ -80,8 +70,6 @@ axibase@nurswghbs002 ~]# docker run \
 >   --publish 8443:8443 \
 >   --publish 8081:8081 \
 >   --publish 8082:8082/udp \
->   --env COLLECTOR_USER_NAME=data-agent \
->   --env COLLECTOR_USER_PASSWORD=Pwd78_ \
 >   registry.connect.redhat.com/axibase/atsd:latest
 Unable to find image 'axibase/atsd:latest' locally
 latest: Pulling from axibase/atsd
