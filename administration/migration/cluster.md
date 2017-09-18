@@ -261,7 +261,7 @@ Upgrade jar files and start-up scripts.
 
 ```sh
 rm -f /opt/atsd/atsd/bin/*
-curl -o /opt/atsd/atsd/bin/atsd.17326.jar https://axibase.com/public/atsd-125-migration/atsd.17326.jar
+curl -o /opt/atsd/atsd/bin/atsd.17370.jar https://axibase.com/public/atsd-125-migration/atsd.17370.jar
 curl -o /opt/atsd/scripts.tar.gz https://axibase.com/public/atsd-125-migration/scripts.tar.gz
 tar -xf /opt/atsd/scripts.tar.gz -C /opt/atsd/  atsd
 rm /opt/atsd/scripts.tar.gz
