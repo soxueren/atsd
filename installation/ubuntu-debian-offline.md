@@ -52,7 +52,7 @@ mkdir ~/dependencies
 cd ~/dependencies
 apt-get download atsd $(apt-cache depends --recurse --no-recommends --no-suggests \
   --no-conflicts --no-breaks --no-replaces --no-enhances \
-  --no-pre-depends atsd| grep "Depends"| cut -d ":" -f2|  grep "^\ \w")
+  --no-pre-depends atsd | grep "Depends" | cut -d ":" -f2 |  grep "^\ \w")
 ```
 
 Download Java 8. This step is required only for Debian 8.x (jessie).
@@ -62,7 +62,7 @@ rm openj*
 
 apt-get -t jessie-backports download openjdk-8-jdk $(apt-cache depends --recurse --no-recommends --no-suggests \
   --no-conflicts --no-breaks --no-replaces --no-enhances \
-  --no-pre-depends openjdk-8-jdk| grep "Depends"| cut -d ":" -f2|  grep "^\ \w")
+  --no-pre-depends openjdk-8-jdk | grep "Depends" | cut -d ":" -f2 |  grep "^\ \w")
 ```
 Make sure that the download directory isn't empty:
 
