@@ -17,7 +17,7 @@ and copying them to the target machine for offline installation.
 
 ## Installation Steps
 
-Add jessie-backports repository. This command is required only for Debian 8.x (jessie)
+Add jessie-backports repository. This command is required only for Debian 8.x (jessie).
 
 ```sh
 sudo sh -c 'echo deb http://ftp.debian.org/debian jessie-backports main >> /etc/apt/sources.list.d/backports.list'
@@ -47,12 +47,22 @@ sudo apt-get update
 
 Download the ATSD package, including its dependencies, to the `dependencies` directory.
 
-```sh
+```bash
 mkdir ~/dependencies
 cd ~/dependencies
 apt-get download atsd $(apt-cache depends --recurse --no-recommends --no-suggests \
   --no-conflicts --no-breaks --no-replaces --no-enhances \
   --no-pre-depends atsd| grep "Depends"| cut -d ":" -f2|  grep "^\ \w")
+```
+
+Download Java 8. This step is required only for Debian 8.x (jessie).
+
+```bash
+rm openj* 
+
+apt-get -t jessie-backports download openjdk-8-jdk $(apt-cache depends --recurse --no-recommends --no-suggests \
+  --no-conflicts --no-breaks --no-replaces --no-enhances \
+  --no-pre-depends openjdk-8-jdk| grep "Depends"| cut -d ":" -f2|  grep "^\ \w")
 ```
 Make sure that the download directory isn't empty:
 
@@ -68,20 +78,20 @@ startpar_0.59-3_amd64.deb
 sysvinit-utils_2.88dsf-59_amd64.deb
 sysv-rc_2.88dsf-59_all.deb
 zlib1g_1%3a1.2.8.dfsg-2+b1_amd64.deb
-
 ```
 
 Copy the `dependencies` directory to the target machine where ATSD will be installed.
 
 Install dependencies.
 
-```sh
+```bash
 dir dependencies/* | grep -v "atsd*" | xargs sudo dpkg -i
 ```
 
 Sample output:
 
 ```bash
+...
 Processing triggers for man-db (2.7.5-1) ...
 Processing triggers for install-info (6.1.0.dfsg.1-5) ...
 Processing triggers for ureadahead (0.100.0-19) ...
@@ -92,7 +102,7 @@ Processing triggers for mime-support (3.59ubuntu1) ...
 
 Install ATSD.
 
-```sh
+```bash
 sudo dpkg -i dependencies/atsd*
 ```
 
