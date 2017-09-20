@@ -7,7 +7,7 @@ The following test calculates the amount of disk space required to store 10+ mil
 ## Results
 
 | **Schema** | **Compressed** | **Total Size** | **Row Count**  | **Sample Count** | **Bytes per Row** | **Bytes per Sample** |
-|---|---:|---:|---:|---:|---:|---:|---:|
+|---|---:|---:|---:|---:|---:|---:|
 | Universal Table | Yes | 1,960,2440 | 2,045,514 | 10,227,570 | 9.6 | 1.9 |
 
 ## Dataset
@@ -129,9 +129,7 @@ Execute the test script by specifying the ATSD container name.
 
 ### Results
 
-```ls
-============
-
+```
 Connecting to https://localhost:8443 as 'axibase'. Container: atsd_test
 
 ============
@@ -141,6 +139,7 @@ CSV parser imported
 ============
 
 Uploading data file IBM_adjusted.txt
+
 {"startTime":1505942746237,"endTime":1505942989383,"processed":2045514,"source":"172.17.0.1","parser":"stock-parser","errorMessage":null,"taskStatus":"COMPLETED","type":"upload","fileName":"csv-upload-5523224067655787056.csv","fileCount":1,"fileSize":100890306}
 
 Data file uploaded IBM_adjusted.txt
@@ -154,16 +153,20 @@ Compaction task in progress...
 Compaction task in progress...
 Compaction task in progress...
 Compaction task in progress...
+Compaction task in progress...
+Compaction task in progress...
+Compaction task in progress...
 Compaction task complete.
 
 ============
 
-Data size on disk, in bytes: 19602440
+Data size on disk, in bytes: 19590510
 
 ============
 
-Row count in the input file: 2045514
-'time:value' samples in the file: 10227570
+cat: IBM.1m.txt: No such file or directory
+Row count in the input file: 0
+'time:value' samples in the file: 0
 
 ============
 
@@ -172,8 +175,6 @@ Row count in the database: 2045514
 
 ============
 
-Disk used, bytes per 'time:value' sample.
-1.91662731225501267652
-
-============
+Disk used, bytes per sample: 1.91546085727108198721
+Disk used, bytes per row:    9.57730428635540993608
 ```
