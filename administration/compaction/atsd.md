@@ -164,9 +164,8 @@ Data size on disk, in bytes: 19590510
 
 ============
 
-cat: IBM.1m.txt: No such file or directory
-Row count in the input file: 0
-'time:value' samples in the file: 0
+Line count in the input file: 2045514
+'time:value' samples in the file: 10227570
 
 ============
 
