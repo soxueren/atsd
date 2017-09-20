@@ -39,7 +39,7 @@ fi
 echo -e $divider
 
 echo "Uploading data file $DATA_FILE"
-
+echo ""
 # upload data file in wait mode
 curl -u $USR:$PWD --insecure -X POST -T $DATA_FILE "https://$ATSD_HOST:$ATSD_PORT/api/v1/csv?config=stock-parser&wait=true"
 
@@ -83,10 +83,10 @@ echo "Data size on disk, in bytes: $disk_size_bytes"
 echo -e $divider
 
 # calculate row count in the data file 
-data_file_line_count=$(cat IBM.1m.txt | wc -l | sed "s/[^0-9]*//g")
+data_file_line_count=$(cat $DATA_FILE | wc -l | sed "s/[^0-9]*//g")
 
-echo "Row count in the input file: $data_file_line_count"
-echo "'time:value' samples in the file: $(($data_file_line_count*5))"
+echo "Line count in the input file: $data_file_line_count"
+echo "'time:value' samples in the input file: $(($data_file_line_count*5))"
 
 echo -e $divider
 
