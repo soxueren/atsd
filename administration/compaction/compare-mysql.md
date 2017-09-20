@@ -40,10 +40,10 @@ volume = 10031
 
 The tests are performed using two schema options: 
 
-* **Trade Table** schema uses named columns for each input metric.
-* **Universal Table** schema uses metric Id column for all input metrics.
+* **Trade Table** [schema](mysql-trade-table.sql) uses a named column for each input metric.
+* **Universal Table** [schema](mysql-universal-table.sql) uses a single metric Id column for all input metrics.
 
-The **Trade Table** schema requires less disk space however the underlying table can not be extended to store different sets of columns for different intrument types. As such, mutliple tables needs to be created to store data for various instrument types.
+The **Trade Table** schema requires less disk space however the underlying table can not be extended to store different sets of columns for different instrument types. As such, mutliple tables needs to be created to store data for various instrument types.
 
 The **Universal Table** schema allows adding new metrics without altering the tables. This can be done by inserting a new  record to the `Metrics` table (a dictionary) and using foreign keys when inserting data into the data table.
 
