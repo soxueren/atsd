@@ -6,12 +6,12 @@ The following tests calculate the amount of disk space required to store 10+ mil
 
 ## Results
 
-| **Schema** | **Compressed** | **Data Size** | **Index Size** | **Total Size** | **Bytes per Sample** |
-|---|---:|---:|---:|---:|---:|
-| Trade Table | No | 129,662,976 | 40,468,480 | 170,131,456 | 83.1 |
-| Trade Table | Yes | 63,266,816 | 20,234,240 | 83,501,056 | 40.8 |
-| Universal Table | No | 468,697,088 | 243,187,712 | 711,884,800 | 348.0 |
-| Universal Table | Yes | 228,589,568 | 121,602,048 | 350,191,616 | 171.2 |
+| **Schema** | **Compressed** | **Data Size** | **Index Size** | **Total Size** | **Row Count** | **Bytes per Row** | **Bytes per Sample** |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Trade Table | No | 129,662,976 | 40,468,480 | 170,131,456 | 2,045,514 | 83.2 | 16.6 |
+| Trade Table | Yes | 63,266,816 | 20,234,240 | 83,501,056 | 2,045,514 | 40.8 | 8.2 |
+| Universal Table | No | 468,697,088 | 243,187,712 | 711,884,800 | 10,227,570 | 69.6 | 69.6 |
+| Universal Table | Yes | 228,589,568 | 121,602,048 | 350,191,616 | 10,227,570 | 34.2 | 34.2 |
 
 ## Dataset
 
@@ -174,7 +174,6 @@ SELECT * FROM Metrics;
 +----+--------+
 ```
 
-
 ## Executing Tests
 
 ### Download Input Data
@@ -218,7 +217,7 @@ docker run --name mysql-axibase-storage-test \
 
 ```sh
 curl -o /tmp/test/mysql-trade-table-raw.sql \
- "https://raw.githubusercontent.com/axibase/atsd/administration/compaction/mysql-trade-table.sql"
+ "https://raw.githubusercontent.com/axibase/atsd/master/administration/compaction/mysql-trade-table.sql"
 ```
 
 ```sh
@@ -254,7 +253,7 @@ cat /tmp/test/mysql-trade-table.sql | \
 
 ```sh
 curl -o /tmp/test/mysql-universal-table.sql \
- "https://raw.githubusercontent.com/axibase/atsd/administration/compaction/mysql-universal-table.sql"
+ "https://raw.githubusercontent.com/axibase/atsd/master/administration/compaction/mysql-universal-table.sql"
 ```
 
 ```sh
