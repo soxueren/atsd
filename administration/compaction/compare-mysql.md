@@ -4,6 +4,15 @@
 
 The following tests calculate the amount of disk space required to store 10+ million `time:value` samples in a MySQL database, version 5.7. 
 
+## Results
+
+| **Schema** | **Compressed** | **Data Size** | **Index Size** | **Total Size** | **Bytes per Sample** |
+|---|---:|---:|---:|---:|---:|
+| Trade Table | No | 129,662,976 | 40,468,480 | 170,131,456 | 83.1 |
+| Trade Table | Yes | 63,266,816 | 20,234,240 | 83,501,056 | 40.8 |
+| Universal Table | No | 468,697,088 | 243,187,712 | 711,884,800 | 348.0 |
+| Universal Table | Yes | 228,589,568 | 121,602,048 | 350,191,616 | 171.2 |
+
 ## Dataset
 
 The dataset represents 20+ years of historical minute stock trade data available from [Kibot](http://www.kibot.com/buy.aspx) company.
@@ -165,14 +174,6 @@ SELECT * FROM Metrics;
 +----+--------+
 ```
 
-## Results
-
-| **Schema** | **Compression** | **Data Size** | **Index Size** | **Total Size** | **Bytes per Sample** |
-|---|---:|---:|---:|---:|---:|
-| Trade Table | Disabled | 129,662,976 | 40,468,480 | 170,131,456 | 83.17 |
-| Trade Table | Enabled | 63,266,816 | 20,234,240 | 83,501,056 | 40.82 |
-| Universal Table | Disabled | 468,697,088 | 243,187,712 | 711,884,800 | 348.02 |
-| Universal Table | Enabled | 228,589,568 | 121,602,048 | 350,191,616 | 171.20 |
 
 ## Executing Tests
 
