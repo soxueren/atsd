@@ -55,7 +55,7 @@ apt-get download atsd $(apt-cache depends --recurse --no-recommends --no-suggest
   --no-pre-depends atsd | grep "Depends" | cut -d ":" -f2 |  grep "^\ \w")
 ```
 
-Download Java 8. This step is required only for Debian 8.x (jessie).
+Download Java 8. This step is required only for Debian 8.x (jessie). Execute the following commands:
 
 ```bash
 rm openj* 
