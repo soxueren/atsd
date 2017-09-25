@@ -37,7 +37,7 @@ Rules inherited from [Base ABNF](base-abnf.md).
 ```properties
 command = "entity" MSP entity [MSP enabled] [MSP label] [MSP interpolate] [MSP timezone] 1*(MSP tag)
 entity = "e:" NAME
-enabled = "b:" ("true" / "false")
+enabled = "b:" BOOLEAN
 label  = "l:" VALUE
 interpolate = "i:" ("linear" / "previous" / DQUOTE DQUOTE)
 timezone = "z:" (TIMEZONE / DQUOTE DQUOTE)
