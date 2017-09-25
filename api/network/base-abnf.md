@@ -23,6 +23,8 @@ NAME_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE) DQUOTE
 
 VALUE_QUOTED = DQUOTE 1*(CHAR_SAFE / EQUAL / DQUOTE DQUOTE / SPACE / CR / LF / TB) DQUOTE
 
+BOOLEAN = "true" / "false" / DQUOTE ("true" / "false") DQUOTE
+
 MSP = 1*SP    ; multiple spaces
 SPACE = %x20  ; space
 DQUOTE = %x22 ; double-quote
