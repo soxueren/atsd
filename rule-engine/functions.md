@@ -1,6 +1,10 @@
 # Functions
 
-> For the purpose of this documentation, function arguments have the following data types: `D` - double, `L` - long, `I` - integer, `B` - boolean, `S` - string, `[S]` - array of strings. String literal arguments `S` must be enclosed in single quotes, for instance `diff('1 minute')` and `coalesce([tags.location, 'Unknown'])`. Function names are case-sensitive.
+> For the purpose of this reference, arguments have the following data types: `D` - double, `L` - long, `I` - integer, `B` - boolean, `S` - string, `[S]` - array of strings. 
+
+> String literal arguments `S` must be enclosed in single quotes, for instance `diff('1 minute')`.
+
+> Function names are **case-sensitive**.
 
 ## Statistical Functions
 
