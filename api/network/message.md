@@ -59,7 +59,7 @@ tag-source = "t:source=" VALUE
 tag-severity = "t:severity=" (%x30-37 / %i("UNDEFINED"/"UNKNOWN"/"NORMAL"/"WARNING"/"MINOR"/"MAJOR"/"CRITICAL"/"FATAL") )
 tag = "t:" NAME "=" VALUE
 message = "m:" VALUE
-persist = "p:" ("true" / "false")
+persist = "p:" BOOLEAN
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE_INTEGER
 time-second = "s:" POSITIVE_INTEGER

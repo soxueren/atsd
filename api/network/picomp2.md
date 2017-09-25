@@ -99,7 +99,7 @@ Rules inherited from [Base ABNF](base-abnf.md).
 ```properties
 command = "picomp2" MSP entity [MSP timezone] [MSP ignore-defaults] *(MSP tag)
 entity = "e:" NAME
-ignore-defaults = "i:" ("true" / "false")
+ignore-defaults = "i:" BOOLEAN
 timezone = "z:" TIMEZONE
 tag = "t:" NAME "=" VALUE
 ```

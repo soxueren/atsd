@@ -50,7 +50,7 @@ Rules inherited from [Base ABNF](base-abnf.md).
 ```properties
 command = "metric" MSP metric [MSP enabled] [MSP label] [MSP units] [MSP description] [MSP data-type] [MSP interpolate] [MSP filter] [MSP timezone] [MSP versioning] [MSP invalidAction] [MSP timePrecision] [MSP persistent] [MSP retentionIntervalDays] [MSP minValue] [MSP maxValue] *(MSP tag)
 metric = "m:" NAME
-enabled = "b:" ("true" / "false")
+enabled = "b:" BOOLEAN
 data-type = "p:" ("short" / "integer" / "long" / "float" / "double" / "decimal")
 interpolate = "i:" ("linear" / "previous")
 label = "l:" VALUE
@@ -58,10 +58,10 @@ units = "u:" VALUE
 description = "d:" VALUE
 filter = "f:" VALUE
 timezone = "z:" (TIMEZONE / DQUOTE DQUOTE)
-versioning = "v:" ("true" / "false")
+versioning = "v:" BOOLEAN
 invalidAction = "a:" ("none" / "transform" / "discard" / "raise_error", "set_version_status")
 timePrecision = "tp:" ("seconds" / "milliseconds")
-persistent = "pe:" ("true" / "false")
+persistent = "pe:" BOOLEAN
 retentionIntervalDays = "rd:" (POSITIVE_INTEGER / DQUOTE DQUOTE)
 minValue = "min:" (FRACTIONAL_NUMBER / REAL_NUMBER / DQUOTE DQUOTE)
 maxValue = "max:" (FRACTIONAL_NUMBER / REAL_NUMBER / DQUOTE DQUOTE)

@@ -46,7 +46,7 @@ entity = "e:" NAME
 metric-numeric = "m:" NAME "=" NUMBER
 metric-text    = "x:" NAME "=" VALUE
 tag = "t:" NAME "=" VALUE
-append = "a:" ("true" / "false")
+append = "a:" BOOLEAN
 time = time-millisecond / time-second / time-iso
 time-millisecond = "ms:" POSITIVE_INTEGER
 time-second = "s:" POSITIVE_INTEGER
