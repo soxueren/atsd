@@ -17,7 +17,6 @@
 docker run \
   --detach \
   --name=atsd \
-  --restart=always \
   --publish 8088:8088 \
   --publish 8443:8443 \
   --publish 8081:8081 \
@@ -25,13 +24,12 @@ docker run \
   axibase/atsd:latest
 ```
 
-To automatically create an [account](../administration/collector-account.md) for data collection agents and storage drivers, replace `$USR` and `$PWD` credential variables in the command below.
+To automatically create an [account](../administration/collector-account.md) for data collection agents, replace `$USR` and `$PWD` credential variables in the command below.
 
 ```properties
 docker run \
   --detach \
   --name=atsd \
-  --restart=always \
   --publish 8088:8088 \
   --publish 8443:8443 \
   --publish 8081:8081 \
@@ -51,7 +49,6 @@ Execute the command as described above.
 axibase@nurswghbs002 ~]# docker run \
 >   --detach \
 >   --name=atsd \
->   --restart=always \
 >   --publish 8088:8088 \
 >   --publish 8443:8443 \
 >   --publish 8081:8081 \
@@ -106,12 +103,12 @@ The ATSD web interface is accessible on ports 8088/http and 8443/https.
 | **Name** | **Required** | **Description** |
 |:---|:---|:---|
 |`--detach` | Yes | Run container in background and print container id. |
+|`--publish` | No | Publish a container's port to the host. |
 |`--hostname` | No | Assign hostname to the container. |
 |`--name` | No | Assign a unique name to the container. |
-|`--restart` | No | Auto-restart policy. _Not supported in all Docker Engine versions._ |
-|`--publish` | No | Publish a container's port to the host. |
+|`--restart` | No | Auto-restart policy, such as 'always'. |
 
-## Environmental Variables
+## Environment Variables
 
 | **Name** | **Required** | **Description** |
 |:---|:---|:---|
@@ -133,7 +130,7 @@ View additional launch examples [here](https://github.com/axibase/atsd-docs/blob
 
 ## Port Mappings
 
-Depending on your Docker host network configuration, you may need to change port mappings in case some of the published ports are already taken.
+In case of port allocation error, change port mappings in the launch command.
 
 ```sh
 Cannot start container <container_id>: failed to create endpoint atsd on network bridge:
