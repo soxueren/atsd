@@ -14,28 +14,16 @@
 ## Start Container
 
 ```properties
-docker run \
-  --detach \
-  --name=atsd \
-  --publish 8088:8088 \
-  --publish 8443:8443 \
-  --publish 8081:8081 \
-  --publish 8082:8082/udp \
+docker run -d --name=atsd -p 8088:8088 -p 8443:8443 -p 8081:8081 -p 8082:8082/udp \
   axibase/atsd:latest
 ```
 
-To automatically create an [account](../administration/collector-account.md) for data collection agents, replace `$USR` and `$PWD` credential variables in the command below.
+To automatically create an [account](../administration/collector-account.md) for data collection agents, replace `cuser` and `cpassword` credential variables in the command below.
 
 ```properties
-docker run \
-  --detach \
-  --name=atsd \
-  --publish 8088:8088 \
-  --publish 8443:8443 \
-  --publish 8081:8081 \
-  --publish 8082:8082/udp \
-  --env COLLECTOR_USER_NAME=$USR \
-  --env COLLECTOR_USER_PASSWORD=$PWD \
+docker run -d ---name=atsd -p 8088:8088 -p 8443:8443 -p 8081:8081 -p 8082:8082/udp \
+  --env COLLECTOR_USER_NAME=cuser \
+  --env COLLECTOR_USER_PASSWORD=cpassword \
   axibase/atsd:latest
 ```
 
@@ -43,57 +31,36 @@ The password is subject to the following [requirements](../administration/user-a
 
 ## Start Container
 
-Execute the command as described above.
+Execute the launch command as described above.
 
 ```sh
-axibase@nurswghbs002 ~]# docker run \
->   --detach \
->   --name=atsd \
->   --publish 8088:8088 \
->   --publish 8443:8443 \
->   --publish 8081:8081 \
->   --publish 8082:8082/udp \
->   axibase/atsd:latest
+$ docker run -d --name=atsd -p 8088:8088 -p 8443:8443 -p 8081:8081 -p 8082:8082/udp axibase/atsd:latest
 Unable to find image 'axibase/atsd:latest' locally
 latest: Pulling from axibase/atsd
-bf5d46315322: Pull complete
-9f13e0ac480c: Pull complete
-e8988b5b3097: Pull complete
-40af181810e7: Pull complete
-e6f7c7e5c03e: Pull complete
-ca48528e7708: Pull complete
-de225e971cf6: Pull complete
-6a3419ba188d: Pull complete
-Digest: sha256:f2c2957b1ffc8dbb24501495e98981899d2b018961a7742ff6adfd4f1e176429
+...
 Status: Downloaded newer image for axibase/atsd:latest
 14d1f27bf0c139027b5f69009c0c5007d35be92d61b16071dc142fbc75acb36a
 ```
 
-It may take up to 5 minutes to initialize the database.
-
-## Check Installation
+Check the installation progress.
 
 ```
 docker logs -f atsd
 ```
 
-You should see an **ATSD start completed** message at the end of the `start.log` file.
-
+You should see an **ATSD start completed** message once the database is ready.
 
 ```
 ...
- * [ATSD] Starting ATSD ...
- * [ATSD] ATSD not running.
+[ATSD] Starting ATSD ...
 ...
- * [ATSD] Waiting for ATSD to start. Checking ATSD web-interface port 8088 ...
- * [ATSD] Waiting for ATSD to bind to port 8088 ...( 1 of 20 )
+[ATSD] Waiting for ATSD to bind to port 8088 ...( 1 of 20 )
 ...
- * [ATSD] Waiting for ATSD to bind to port 8088 ...( 11 of 20 )
- * [ATSD] ATSD web interface:
-...
- * [ATSD] http://172.17.0.2:8088
- * [ATSD] https://172.17.0.2:8443
- * [ATSD] ATSD start completed.
+[ATSD] Waiting for ATSD to bind to port 8088 ...( 5 of 20 )
+[ATSD] ATSD web interface:
+[ATSD] http://172.17.0.2:8088
+[ATSD] https://172.17.0.2:8443
+[ATSD] ATSD start completed.
 ```
 
 The ATSD web interface is accessible on ports 8088/http and 8443/https.
@@ -102,9 +69,8 @@ The ATSD web interface is accessible on ports 8088/http and 8443/https.
 
 | **Name** | **Required** | **Description** |
 |:---|:---|:---|
-|`--detach` | Yes | Run container in background and print container id. |
-|`--publish` | No | Publish a container's port to the host. |
-|`--hostname` | No | Assign hostname to the container. |
+|`--detach` or `-d` | Yes | Run container in background and print container id. |
+|`--publish` or `-p` | No | Publish a container's port to the host. |
 |`--name` | No | Assign a unique name to the container. |
 |`--restart` | No | Auto-restart policy, such as 'always'. |
 
@@ -130,7 +96,7 @@ View additional launch examples [here](https://github.com/axibase/atsd-docs/blob
 
 ## Port Mappings
 
-In case of port allocation error, change port mappings in the launch command.
+Change port mappings in the launch command in case of port allocation error.
 
 ```sh
 Cannot start container <container_id>: failed to create endpoint atsd on network bridge:
@@ -138,10 +104,7 @@ Bind for 0.0.0.0:8088 failed: port is already allocated
 ```
 
 ```properties
-docker run \
-  --detach \
-  --name=atsd \
-  --restart=always \
+docker run -d --name=atsd \
   --publish 9088:8088 \
   --publish 9443:8443 \
   --publish 9081:8081 \
