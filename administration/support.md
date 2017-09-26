@@ -4,12 +4,11 @@ Provide the following artifacts as part of your support request related to a ser
 
 ## 1. ATSD Version Information
 
-* A. **Admin: Build Info** page: Revision Number and HBase Version.
+* A. **Admin > System Information** page. Select/copy rows to a text file.
    
-* B. **Admin: Server Properties** page. Select/copy rows to a text file.
+* B. **Admin > Server Properties** page. Select/copy rows to a text file.
    
-* C. **Admin: System Info** page. Select/copy rows to a text file.
-   
+  
 ## 2. Operating System Information
 
 * A. Output of system commands:
@@ -33,11 +32,11 @@ Provide the following artifacts as part of your support request related to a ser
    
 ## 5. Monitoring Statistics
 
-* A. Screenshot of the **Portals: ATSD** portal for the time period covering the issue.
+* A. Screenshot of the **Portals > ATSD** portal for the time period covering the issue.
    
-* B. Screenshot of the **Portals: ATSD Log Viewer** portal for the time period covering the issue.
+* B. Screenshot of the **Portals > ATSD Log Viewer** portal for the time period covering the issue.
    
-* C. Screenshots from the **Portals: ATSD Metric Viewer** portal for a subset of relevant metrics.
+* C. Screenshots from the **Portals > ATSD Metric Viewer** portal for a subset of relevant metrics.
    
 * D. CSV Export of the following query in the SQL console. Replace datetime to match the hour when the issue occurred.
    

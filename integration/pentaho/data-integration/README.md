@@ -46,7 +46,7 @@ To calculate a weighted inflation index we need to multiply the CPI of each cate
 
 - Enter JDBC URL into the `Custom Connection URL` field where `ATSD_HOSTNAME` is the hostname of the ATSD database instance:
 
-  `jdbc:atsd:ATSD_HOSTNAME:8443;tables=inflation*`
+  `jdbc:atsd:ATSD_HOSTNAME:8443;tables=inflation%'
 
 > `tables` is an optional metric name filter. Review ATSD JDBC [URL parameters](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) for additional details.
 
@@ -64,9 +64,9 @@ To calculate a weighted inflation index we need to multiply the CPI of each cate
 - Modify the `tables` parameter in the `Custom Connection URL` field. The parameter is a list of comma-separated metrics or metric expressions to be displayed as tables in the Database Browser.
 
 Filter examples:
-- `*java*` for metrics that contains `java` keyword
-- `custom.metric*` for metrics whose name starts with `custom.metric`
-- `*2017` for metrics whose name ends with `2017`
+- `%java%` for metrics that contains `java` keyword
+- `custom.metric%` for metrics whose name starts with `custom.metric`
+- `%2017` for metrics whose name ends with `2017`
 
 Click on the `Explore` button to view the schema:
 

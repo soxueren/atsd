@@ -20,7 +20,7 @@ Analyze | Apply statistical functions to the dataset.
 ## Load Sample Data into ATSD
 
 1. Log into the ATSD web interface
-2. Open **Metrics -> Data Entry**, select the 'Commands' tab.
+2. Open **Metrics > Data Entry**, select the 'Commands' tab.
 3. Copy the [series commands](resources/commands.txt) into the form and click Submit/Send.
 
 ![](resources/metrics_entry.png)
@@ -87,7 +87,7 @@ WHERE T0.datetime BETWEEN '2013-01-01T00:00:00Z' AND '2017-01-01T00:00:00Z'
 ### Import from CSV Files
 
 * Export data from ATSD into CSV files as described in the **Exporting Data from ATSD** section at the end of this article.
-* Open **File -> Import Data -> CSV Data...**.
+* Open **File > Import Data > CSV Data...**.
 * Select the desired CSV files and click Open to import the `prices.sav` and `weights.sav` files.
 
 ![](images/import_dataset.png)
@@ -108,7 +108,7 @@ To prevent the `datetime` and `value` columns from being merged, their names mus
 
 Merge the two datasets by adding the `weight` column from the `weights.sav` dataset to the `prices.sav` dataset.
 
-* Open **Data -> Merge Files... -> Add Variables...**
+* Open **Data > Merge Files... > Add Variables...**
 * Select `weights.sav` dataset.
 * Select the desired table you want to merge it with. 
 * Choose the "One-to-Many" option and open the 'Variables' tab in the dialog window.
@@ -133,7 +133,7 @@ To calculate the weighted CPI for each year, the CPI value for a given category 
 
 Open the `prices_merged.sav` dataset and create the new column `categ_ind`.
 
-* Open **Transform -> Compute Variable...**  
+* Open **Transform > Compute Variable...**  
 * Place the columns from the left into the expression editor and specify a formula. 
 * Select the `value` and `weight` columns, divide `weight` by 1000 and multiply `value` by the adjusted `weight`. 
 * Assign a name to the new column.
@@ -150,13 +150,13 @@ SPSS provides two alternatives to aggregate data by period.
   
 #### Aggregation using the Analyze Menu
     
-* Open **Analyze -> Reports -> Report Summaries in Columns...** 
+* Open **Analyze > Reports > Report Summaries in Columns...** 
 * Move the `categ_index` column to the 'Summary Variables' field and select the `SUM` aggregation function. 
 * Set the `datetime` column as the break variable, which is used to group the resulting data. You can format aggregation columns in the dialog window.
 
 ![](images/analysis_reports_summary_columns.png)
     
-* Publish the report by selecting **File -> Export As a Web Report** in the output window.
+* Publish the report by selecting **File > Export As a Web Report** in the output window.
 * The output contains the processing log in the results window.
     
     ![](images/htm_report_spss.png)
@@ -167,7 +167,7 @@ SPSS provides two alternatives to aggregate data by period.
 
 #### Aggregation using the Data Menu
     
-* Open **Data -> Aggregate...** 
+* Open **Data > Aggregate...** 
 * Set `categ_ind` as the summary variable and apply the `SUM` function
 * Set `datetime` as the break variable
 * Customize column formats and output options
@@ -193,7 +193,7 @@ metric m:cpi_price
  
 - Open the previously created dataset in SPSS.
 
-- Select **Transform** - **Compute Variable...**
+- Select **Transform > Compute Variable...**
 
 ![](images/atsd_export_2.png)
 
@@ -214,7 +214,7 @@ metric m:cpi_price
 
 ![](images/atsd_export_6.png)
 
-- Open the **File** menu and select **Export** -> **Database...**.
+- Open the **File** menu and select **Export > Database...**.
 
 ![](images/atsd_export_7.png)
 
