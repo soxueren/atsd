@@ -72,8 +72,6 @@ Example:
 
 `ATSD_HOSTNAME` is the hostname address of the ATSD instance you want to connect to.
 
-> At the  moment the Database Explorer can not display tables with dots in their name.
-
 ### Connect to the MatLab Command Window
 
 Example of https connection to ATSD:
@@ -109,7 +107,7 @@ Expected result:
 
 The _Database Browser_ would display a set of tables matching the expression:
 
-![](resources/database_browser.PNG)
+![](resources/database_browser.png)
 
 Select one or more columns to open the Data Preview window displaying the first N rows of the resultset (10 by default).
 
@@ -124,7 +122,7 @@ The complete resultset can be imported with the Import button, highlighted with 
 Execute the SQL query to import the resultset into a MatLab variable:
 
 ```matlab
-sqlquery = 'SELECT * FROM gc_time_percent LIMIT 50';
+sqlquery = "SELECT * FROM gc_time_percent LIMIT 50";
 curs = exec(conn_atsd, sqlquery);
 res = fetch(curs);
 data = res.Data;
