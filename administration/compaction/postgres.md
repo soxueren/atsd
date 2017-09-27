@@ -10,7 +10,6 @@ The following tests calculate the amount of disk space required to store 10+ mil
 |---|---:|---:|---:|---:|---:|---:|
 | Trade Table | 156,082,176 | 64,544,768 | 220,626,944 | 2,045,514 | 107.9 | 21.6 |
 | Universal Table | 533,659,648 | 322,625,536 | 856,285,184 | 10,227,570 | 83.7 | 83.7 |
-| [ATSD](atsd.md) | - | - | 19,590,510 | 10,227,570 | 1.9 | 1.9 |
 
 ## Dataset
 
