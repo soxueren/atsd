@@ -28,30 +28,17 @@ systemctl enable docker.service
 ## Start Container
 
 ```properties
-docker run \
-  --detach \
-  --name=atsd \
-  --restart=always \
-  --publish 8088:8088 \
-  --publish 8443:8443 \
-  --publish 8081:8081 \
-  --publish 8082:8082/udp \
+docker run -d  --name=atsd -p 8088:8088 -p 8443:8443 -p 8081:8081 -p 8082:8082/udp \
   registry.connect.redhat.com/axibase/atsd:latest
 ```
 
-To automatically create an [account](../administration/collector-account.md) for data collection agents and storage drivers, replace `$USR` and `$PWD` credential variables in the command below.
+To automatically create an [account](../administration/collector-account.md) for data collection agents and storage drivers, replace `cuser` and `cpassword` credential variables in the command below.
 
 ```properties
-docker run \
-  --detach \
-  --name=atsd \
-  --restart=always \
-  --publish 8088:8088 \
-  --publish 8443:8443 \
-  --publish 8081:8081 \
-  --publish 8082:8082/udp \
-  --env COLLECTOR_USER_NAME=$USR \
-  --env COLLECTOR_USER_PASSWORD=$PWD \
+docker run -d --name=atsd -p 8088:8088 -p 8443:8443 -p 8081:8081 -p 8082:8082/udp \
+  --env COLLECTOR_USER_NAME=cuser \
+  --env COLLECTOR_USER_PASSWORD=cpassword \
+  --env COLLECTOR_USER_TYPE=api-rw \
   registry.connect.redhat.com/axibase/atsd:latest
 ```
 
@@ -65,7 +52,6 @@ Execute the command as described above.
 axibase@nurswghbs002 ~]# docker run \
 >   --detach \
 >   --name=atsd \
->   --restart=always \
 >   --publish 8088:8088 \
 >   --publish 8443:8443 \
 >   --publish 8081:8081 \
@@ -107,7 +93,6 @@ You should see an _ATSD start completed_ message at the end of the `start.log` f
 ...
  * [ATSD] Waiting for ATSD to bind to port 8088 ...( 11 of 20 )
  * [ATSD] ATSD web interface:
-...
  * [ATSD] http://172.17.0.2:8088
  * [ATSD] https://172.17.0.2:8443
  * [ATSD] ATSD start completed.
@@ -155,10 +140,8 @@ Bind for 0.0.0.0:8088 failed: port is already allocated
 ```
 
 ```properties
-docker run \
-  --detach \
+docker run -d \
   --name=atsd \
-  --restart=always \
   --publish 9088:8088 \
   --publish 9443:8443 \
   --publish 9081:8081 \

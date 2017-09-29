@@ -24,6 +24,7 @@ To automatically create an [account](../administration/collector-account.md) for
 docker run -d ---name=atsd -p 8088:8088 -p 8443:8443 -p 8081:8081 -p 8082:8082/udp \
   --env COLLECTOR_USER_NAME=cuser \
   --env COLLECTOR_USER_PASSWORD=cpassword \
+  --env COLLECTOR_USER_TYPE=api-rw \
   axibase/atsd:latest
 ```
 
