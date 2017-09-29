@@ -268,7 +268,7 @@ To check that data is successfully exported to ATSD, open the ATSD web interface
 
 ```sql
 SELECT entity, datetime, value 
-  FROM 'cpi_price'
+  FROM cpi_price
 ```
 
 ![](images/atsd_query_result.png)

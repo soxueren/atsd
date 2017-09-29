@@ -102,8 +102,6 @@ Refer to ATSD JDBC [documentation](https://github.com/axibase/atsd-jdbc#jdbc-con
 
   ![](images/ODBC_4.PNG)
 
-* Check (enable) **'Strip Quote'** option to remove the quotes from table and column names.
-
 * Check (enable) **'Strip Escape'** option to remove [ODBC escape sequences](https://docs.microsoft.com/en-us/sql/odbc/reference/appendixes/odbc-escape-sequences). 
 
 * Click **Test** to verify the settings. If result is correct, save the settings. 

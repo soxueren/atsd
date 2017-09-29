@@ -21,7 +21,7 @@
 To complete this exercise, sample data must be available in your ATSD instance.
 
 1. Log into the ATSD web interface
-2. Open **Metrics -> Data Entry**, select the 'Commands' tab.
+2. Open **Metrics > Data Entry**, select the 'Commands' tab.
 3. Copy the [series commands](resources/commands.txt) into the form and click Submit/Send.
 
 ![](resources/metrics_entry.png)
@@ -46,7 +46,7 @@ To calculate a weighted inflation index we need to multiply the CPI of each cate
 
 - Enter JDBC URL into the `Custom Connection URL` field where `ATSD_HOSTNAME` is the hostname of the ATSD database instance:
 
-  `jdbc:atsd:ATSD_HOSTNAME:8443;tables=inflation%'
+  `jdbc:atsd://ATSD_HOSTNAME:8443;tables=inflation%`
 
 > `tables` is an optional metric name filter. Review ATSD JDBC [URL parameters](https://github.com/axibase/atsd-jdbc#jdbc-connection-properties-supported-by-driver) for additional details.
 
@@ -93,7 +93,7 @@ To calculate the category-weighted consumer price index (CPI) for each year, the
 
 ```sql
 SELECT value, tags.category, datetime
-  FROM 'inflation.cpi.categories.price'
+  FROM inflation.cpi.categories.price
 ORDER BY datetime, tags.category
 ```
 
@@ -101,7 +101,7 @@ ORDER BY datetime, tags.category
 
 ```sql
 SELECT datetime
-  FROM 'inflation.cpi.categories.price'
+  FROM inflation.cpi.categories.price
 GROUP BY datetime
   ORDER BY datetime
 ```
@@ -110,7 +110,7 @@ GROUP BY datetime
 
 ```sql
 SELECT tags.category, value
-  FROM 'inflation.cpi.categories.weight'
+  FROM inflation.cpi.categories.weight
 ORDER BY datetime, tags.category
 ```
 
@@ -281,7 +281,7 @@ Complete diagram:
 Log in to ATSD and execute the following query in the SQL tab to verify the results:
 
 ```sql
-SELECT entity, datetime, value FROM 'inflation.cpi.composite.price'
+SELECT entity, datetime, value FROM inflation.cpi.composite.price
 ```
 
 ```ls
