@@ -16,60 +16,79 @@ and copying them to the target machine with similar characteristics for offline 
 
 ## Install Dependencies
 
-### Option 1: Install Dependencies from Local Repositories.
+### Option 1: Install Dependencies from Local Repositories
 
-```sh
-sudo zypper -n install java-1_8_0-openjdk-devel which net-tools iproute
+```bash
+sudo zypper -n install java-1_8_0-openjdk-devel which net-tools iproute2
 ```
 
-### Option 2: Copy Dependencies from a Connected Machine.
+### Option 2: Copy Dependencies from a Connected Machine
 
-On a separate machine with internet access create a directory containing the dependencies:
+On a separate machine with internet access create a directory to download the RPM packages which are required by ATSD.
 
-```sh
+```bash
 mkdir ./sles_dependencies
 cd sles_dependencies
 ```
 
-Copy the following script to the `dep-download.sh`file and execute it to download the dependencies:
+Create `dep-download.sh` script file and execute it to download the packages: `java-1_8_0-openjdk-devel which net-tools iproute2`.
 
-```sh
+```bash
 nano dep-download.sh
 ```
 
-```sh
+```bash
 #!/bin/sh
 SCRIPT=$(readlink -f $0)
-DIR=$(dirname $SCRIPT)
-list="java-1_8_0-openjdk-devel which net-tools iproute"
-zypper -n install -df $list
-for package in $list; do
-    find /var/cache/zypp/packages -name $package*.rpm -exec cp {} $DIR \;
+DIR=$(dirname ${SCRIPT})
+list="java-1_8_0-openjdk-devel which net-tools iproute2"
+zypper -n install -df ${list}
+for package in ${list}; do
+find /var/cache/zypp/packages -name ${package}*.rpm -exec cp {} $DIR \;
 done
 ```
 
-```sh
+```bash
 chmod a+x dep-download.sh
 sudo ./dep-download.sh
 ```
 
-Copy the folder containing the dependencies to the target machine and install them:
+Make sure that the download directory contains the following packages:
 
-```sh
-sudo zypper -n install sles_dependencies/*.rpm
+```
+iproute2-4.4-14.7.x86_64.rpm
+java-1_8_0-openjdk-devel-1.8.0.101-14.3.x86_64.rpm
+net-tools-1.60-764.185.x86_64.rpm
+which-2.20-3.180.x86_64.rpm
+```
+
+Copy the RPM files in the download directory to the target machine and install the packages:
+
+```bash
+sudo zypper -n install ~/sles_dependencies/*.rpm
+```
+
+Sample output:
+
+```
+...
+update-alternatives: using /usr/lib64/jvm/java-1.8.0-openjdk/bin/javac to provide /usr/bin/javac (javac) in auto mode
+update-alternatives: using /usr/lib64/jvm/java-1.8.0-openjdk to provide /usr/lib64/jvm/java-opnejdk (java_sdk_openjdk) in auto mode
+update-alternatives: using /usr/lib64/jvm/java-1.8.0-openjdk to provide /usr/lib64/jvm/java-1.8.0 (java_sdk_1.8.0) in auto mode
 ```
 
 ## Install ATSD
 
-Download the ATSD rpm package to the target machine:
-
-* `curl -O https://axibase.com/public/atsd_amd64_sles.rpm`
-* [https://axibase.com/public/atsd_rpm_sles_latest.htm](https://axibase.com/public/atsd_rpm_sles_latest.htm)
-
-Follow the prompts to install ATSD:
+Download the [ATSD rpm package for SLES](https://axibase.com/public/atsd_rpm_sles_latest.htm) to the machine with internet access.
 
 ```sh
- sudo zypper -n install atsd_amd64_sles.rpm
+curl -O https://axibase.com/public/atsd_amd64_sles.rpm
+```
+
+Copy the `atsd_amd64_sles.rpm` file to the target machine and install ATSD.
+
+```sh
+sudo zypper -n install atsd_amd64_sles.rpm
 ```
 
 It may take up to 5 minutes to initialize the database.

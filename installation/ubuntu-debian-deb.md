@@ -24,21 +24,27 @@ Download deb package to the target server:
 
 ## Installation Steps
 
-#### Update Repositories and Install Dependencies
+#### Add backports repository
+
+This step is required only for Debian 8.x (jessie)
 
 ```sh
-sudo apt-get update && sudo apt-get install -y openjdk-8-jdk curl hostname 
+sudo sh -c 'echo deb http://ftp.debian.org/debian jessie-backports main >> /etc/apt/sources.list.d/backports.list'
 ```
 
-**Docker container installation:**
+#### Update Repositories and Install Dependencies
 
 ```sh
 sudo apt-get update && sudo apt-get install -y openjdk-8-jdk curl hostname net-tools iproute2 procps
 ```
 
-#### Install ATSD
+On Debian 8.x (jessie)
 
-Follow the prompts to install ATSD:
+```sh
+sudo apt-get update && sudo apt-get -t jessie-backports install -y openjdk-8-jdk curl hostname net-tools iproute2 procps
+```
+
+#### Install ATSD
 
 ```sh
 sudo dpkg -i atsd_amd64.deb
