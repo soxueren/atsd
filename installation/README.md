@@ -7,6 +7,13 @@
 
 ## Installation Guides
 
+### Container Images
+
+| **Distribution** | **Format** | **Installation Guide** |
+| :--- | --- | :---: |
+| Docker | official image | [View](docker.md)|
+| RedHat Docker | certified image | [View](docker-redhat.md)|
+
 ### Packages
 
 | **Distribution** | **Format** | **Installation Guide** |
@@ -17,13 +24,6 @@
 | RedHat/CentOS| [rpm](https://axibase.com/public/atsd_rpm_latest.htm) | [View](redhat-centos-rpm.md)|
 | SLES| [rpm](https://axibase.com/public/atsd_rpm_sles_latest.htm)   | [View](sles-rpm.md)|
 | Other | [tar.gz](https://axibase.com/public/atsd_distrib_latest.htm) | [View](other-distributions.md)|
-
-### Container Images
-
-| **Distribution** | **Format** | **Installation Guide** |
-| :--- | --- | :---: |
-| Docker | official image | [View](docker.md)|
-| RedHat Docker | certified image | [View](docker-redhat.md)|
 
 ### Cloud
 
