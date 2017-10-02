@@ -68,7 +68,8 @@ Default data type for new metrics, when auto-created, is **float**.
 |NONE|Retain value as is.|
 |DISCARD|Don't process the received value, discard it.|
 |TRANSFORM|Set value to `min_value` or `max_value`, if value is outside of range.|
-|RAISE_ERROR|Log ERROR event in the database log.|
+|RAISE_ERROR|Log an ERROR event in the database log.|
+|SET_VERION_STATUS|For versioned metrics, set status to 'Invalid'.|
 
 ### Interpolate
 
