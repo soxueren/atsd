@@ -137,6 +137,8 @@ Diagram example:
 
 ![](resources/join_preview.png)
 
+> Note to preview data right-click on step icon and select 'Preview' > 'Quick Launch'
+
 ### Merge Tables
 
 In this step we will append two tables to perform calculations inside one table. This table will have a unique row identifier (pair `datetime - tags.category`) so we can join them with the INNER JOIN operation.
@@ -296,7 +298,7 @@ SELECT entity, datetime, value FROM inflation.cpi.composite.price
 
 ## Transformation File
 
-- [Link to the `krt` file](resources/transformation.krt) containing this transformation.
+- [Link to the `ktr` file](resources/transformation.ktr) containing this transformation.
 
 ## Reference
 
