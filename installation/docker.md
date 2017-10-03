@@ -21,29 +21,16 @@ docker run -d --name=atsd -p 8088:8088 -p 8443:8443 -p 8081:8081 -p 8082:8082/ud
 To automatically create an [account](../administration/collector-account.md) for data collection agents, replace `cuser` and `cpassword` credential variables in the command below.
 
 ```properties
-docker run -d ---name=atsd -p 8088:8088 -p 8443:8443 -p 8081:8081 -p 8082:8082/udp \
+docker run -d --name=atsd -p 8088:8088 -p 8443:8443 -p 8081:8081 -p 8082:8082/udp \
   --env COLLECTOR_USER_NAME=cuser \
   --env COLLECTOR_USER_PASSWORD=cpassword \
   --env COLLECTOR_USER_TYPE=api-rw \
   axibase/atsd:latest
 ```
 
-The password is subject to the following [requirements](../administration/user-authentication.md#password-requirements). If the credentials contain special characters `$`, `&`, `#`, or `!`, escape them with backslash `\`.
+The password is subject to the following [requirements](../administration/user-authentication.md#password-requirements). If the password contains special characters `$`, `&`, `#`, or `!`, escape them with backslash `\`.
 
-## Start Container
-
-Execute the launch command as described above.
-
-```sh
-$ docker run -d --name=atsd -p 8088:8088 -p 8443:8443 -p 8081:8081 -p 8082:8082/udp axibase/atsd:latest
-Unable to find image 'axibase/atsd:latest' locally
-latest: Pulling from axibase/atsd
-...
-Status: Downloaded newer image for axibase/atsd:latest
-14d1f27bf0c139027b5f69009c0c5007d35be92d61b16071dc142fbc75acb36a
-```
-
-Check the installation progress.
+## Check Installation
 
 ```
 docker logs -f atsd
@@ -52,19 +39,14 @@ docker logs -f atsd
 You should see an **ATSD start completed** message once the database is ready.
 
 ```
-...
-[ATSD] Starting ATSD ...
-...
-[ATSD] Waiting for ATSD to bind to port 8088 ...( 1 of 20 )
-...
-[ATSD] Waiting for ATSD to bind to port 8088 ...( 5 of 20 )
-[ATSD] ATSD web interface:
+[ATSD] Waiting for ATSD to accept requests on port 8088 ... ( 4 / 60 )
+[ATSD] ATSD user interface:
 [ATSD] http://172.17.0.2:8088
 [ATSD] https://172.17.0.2:8443
-[ATSD] ATSD start completed.
+[ATSD] ATSD start completed. Time: 2017-10-03 19-50-16.
 ```
 
-The ATSD web interface is accessible on ports 8088/http and 8443/https.
+The ATSD user interface is accessible on port 8443/https.
 
 ## Launch Parameters
 
