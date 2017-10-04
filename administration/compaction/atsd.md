@@ -2,7 +2,7 @@
 
 ## Overview
 
-The following test calculates the amount of disk space required to store 10+ million `time:value` samples in Axibase Time Series Database, version 17380. 
+The following test calculates the amount of disk space required to store 10+ million `time:value` samples in Axibase Time Series Database, version 17380.
 
 ## Results
 
@@ -14,7 +14,7 @@ The following test calculates the amount of disk space required to store 10+ mil
 
 The dataset represents 20+ years of historical minute stock trade data available from the [Kibot](http://www.kibot.com/buy.aspx) company.
 
-The minutely trade statistics are available for IBM stock traded on the New York Stock Exchange. The recording starts on February 1st, 1998 and lasts until the last trading day. 
+The minutely trade statistics are available for IBM stock traded on the New York Stock Exchange. The recording starts on February 1st, 1998 and lasts until the last trading day.
 
 The data is provided in the commonly used OHLCV [format](http://www.kibot.com/support.aspx#data_format).
 
@@ -48,7 +48,7 @@ The database automatically manages schema for the inserted data.
 
 ## Compression Algorithms
 
-The storage efficiency in ATSD is a product of standard compressions algorithms such as GZIP or LZO and built-in codec. For the purpose of this test, the standard algorithm is set to GZIP (default value) and the ATSD codec is enabled.
+The storage efficiency in ATSD is a product of standard compressions algorithms such as GZIP or LZO and built-in codecs. For the purpose of this test, the compression algorithm is set to GZIP and the default ATSD codec is enabled.
 
 ## Executing Tests
 
@@ -119,7 +119,7 @@ chmod +x atsd-test.sh
 
 ### Start Test
 
-Execute the test script by specifying the ATSD container name. 
+Execute the test script by specifying the ATSD container name.
 
 > If the public port in the `docker run` command above is not 8443, change the `ATSD_PORT` variable in the script header.
 

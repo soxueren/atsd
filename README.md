@@ -25,12 +25,13 @@
 
 ## [API Clients](api#api-clients)
 
+  * [Python](https://github.com/axibase/atsd-api-python)
+  * [Java](https://github.com/axibase/atsd-api-java) 
+  * [NodeJS](https://github.com/axibase/atsd-api-nodejs)  
   * [R](https://github.com/axibase/atsd-api-r)
   * [PHP](https://github.com/axibase/atsd-api-php)
-  * [Java](https://github.com/axibase/atsd-api-java)
-  * [Python](https://github.com/axibase/atsd-api-python)
+  * [Go](https://github.com/axibase/atsd-api-go)  
   * [Ruby](https://github.com/axibase/atsd-api-ruby)
-  * [NodeJS](https://github.com/axibase/atsd-api-nodejs)
 
 ## [SQL](api/sql#overview)
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The following tests calculate the amount of disk space required to store 10+ million `time:value` samples in a Microsoft SQL Server 2017 (RTM) - 14.0.1000.169 database. 
+The following tests calculate the amount of disk space required to store 10+ million `time:value` samples in a Microsoft SQL Server 2017 (RTM) - 14.0.1000.169 database.
 
 ## Results
 
@@ -17,7 +17,7 @@ The following tests calculate the amount of disk space required to store 10+ mil
 
 The dataset represents 20+ years of historical minute stock trade data available from the [Kibot](http://www.kibot.com/buy.aspx) company.
 
-The one minute trade statistics are available for IBM stock traded on the New York Stock Exchange. The recording starts on February 1st, 1998 and lasts until the last trading day. 
+The one minute trade statistics are available for IBM stock traded on the New York Stock Exchange. The recording starts on February 1st, 1998 and lasts until the last trading day.
 
 The data is provided in the commonly used OHLCV [format](http://www.kibot.com/support.aspx#data_format).
 
@@ -47,28 +47,28 @@ volume = 10031
 
 ## Schema Alternatives
 
-The tests are performed using two schema options: 
+The tests are performed using two schema options:
 
 * **Trade Table** [schema](mssql-trade-table.sql) uses a named column for each input metric.
 * **Universal Table** [schema](mssql-universal-table.sql) uses a single metric ID column for all input metrics.
 
-The **Trade Table** schema requires less disk space however the underlying table can not be extended to store different sets of columns for different instrument types. As such, mutliple tables needs to be created to store data for various instrument types.
+The **Trade Table** schema requires less disk space however the underlying table can not be extended to store different sets of columns for different instrument types. As such, multiple tables need to be created to store data for various instrument types.
 
-The **Universal Table** schema allows adding new metrics without altering the tables. This can be done by inserting a new  record to the `Metrics` table (a dictionary) and using foreign keys when inserting data into the data table.
+The **Universal Table** schema allows adding new metrics without altering the tables. This can be done by inserting a new record into the `Metrics` table (a dictionary) and using foreign keys when inserting data into the data table.
 
 ### **Trade Table** Schema
 
 * TradeHistory Table
 
 ```sql
-SELECT 
-    COLUMN_NAME, 
-    IS_NULLABLE, 
-    DATA_TYPE, 
-    NUMERIC_PRECISION, 
-    NUMERIC_SCALE, 
-    DATETIME_PRECISION 
-FROM INFORMATION_SCHEMA.COLUMNS 
+SELECT
+    COLUMN_NAME,
+    IS_NULLABLE,
+    DATA_TYPE,
+    NUMERIC_PRECISION,
+    NUMERIC_SCALE,
+    DATETIME_PRECISION
+FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'TradeHistory';
 
 COLUMN_NAME          |IS_NULLABLE|DATA_TYPE            |NUMERIC_PRECISION|NUMERIC_SCALE|DATETIME_PRECISION
@@ -95,13 +95,13 @@ Instrument |Open     |High     |Low      |Close    |Volume     |Time
 * Instruments Table
 
 ```sql
-SELECT 
-    COLUMN_NAME, 
-    IS_NULLABLE, 
-    DATA_TYPE, 
-    NUMERIC_PRECISION, 
+SELECT
+    COLUMN_NAME,
+    IS_NULLABLE,
+    DATA_TYPE,
+    NUMERIC_PRECISION,
     NUMERIC_SCALE
-FROM INFORMATION_SCHEMA.COLUMNS 
+FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'Instruments';
 
 COLUMN_NAME          |IS_NULLABLE|DATA_TYPE            |NUMERIC_PRECISION|NUMERIC_SCALE
@@ -121,14 +121,14 @@ Id       |Name
 * UniversalHistory Table
 
 ```sql
-SELECT 
-    COLUMN_NAME, 
-    IS_NULLABLE, 
-    DATA_TYPE, 
-    NUMERIC_PRECISION, 
-    NUMERIC_SCALE, 
-    DATETIME_PRECISION 
-FROM INFORMATION_SCHEMA.COLUMNS 
+SELECT
+    COLUMN_NAME,
+    IS_NULLABLE,
+    DATA_TYPE,
+    NUMERIC_PRECISION,
+    NUMERIC_SCALE,
+    DATETIME_PRECISION
+FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'UniversalHistory';
 
 COLUMN_NAME          |IS_NULLABLE|DATA_TYPE            |NUMERIC_PRECISION|NUMERIC_SCALE|DATETIME_PRECISION
@@ -152,13 +152,13 @@ Instrument |Metric     |Value         |Time
 * Instruments Table
 
 ```sql
-SELECT 
-    COLUMN_NAME, 
-    IS_NULLABLE, 
-    DATA_TYPE, 
-    NUMERIC_PRECISION, 
+SELECT
+    COLUMN_NAME,
+    IS_NULLABLE,
+    DATA_TYPE,
+    NUMERIC_PRECISION,
     NUMERIC_SCALE
-FROM INFORMATION_SCHEMA.COLUMNS 
+FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'Instruments';
 
 COLUMN_NAME          |IS_NULLABLE|DATA_TYPE            |NUMERIC_PRECISION|NUMERIC_SCALE
@@ -176,13 +176,13 @@ Id       |Name
 * Metrics Table
 
 ```sql
-SELECT 
-    COLUMN_NAME, 
-    IS_NULLABLE, 
-    DATA_TYPE, 
-    NUMERIC_PRECISION, 
+SELECT
+    COLUMN_NAME,
+    IS_NULLABLE,
+    DATA_TYPE,
+    NUMERIC_PRECISION,
     NUMERIC_SCALE
-FROM INFORMATION_SCHEMA.COLUMNS 
+FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'Metrics';
 
 COLUMN_NAME          |IS_NULLABLE|DATA_TYPE            |NUMERIC_PRECISION|NUMERIC_SCALE
@@ -294,7 +294,7 @@ UniversalHistory     |NONE
 name                 |rows                |reserved          |data              |index_size        |unused            
 ---------------------|--------------------|------------------|------------------|------------------|------------------
 UniversalHistory     |10227570            |894096 KB         |464896 KB         |428816 KB         |384 KB
-            
+
 name                 |data_compression_desc
 ---------------------|---------------------
 UniversalHistory     |PAGE                

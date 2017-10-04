@@ -2,7 +2,7 @@
 
 ## Overview
 
-The following tests calculate the amount of disk space required to store 10+ million `time:value` samples in a PostgreSQL database, version 9.6. 
+The following tests calculate the amount of disk space required to store 10+ million `time:value` samples in a PostgreSQL database, version 9.6.
 
 ## Results
 
@@ -15,7 +15,7 @@ The following tests calculate the amount of disk space required to store 10+ mil
 
 The dataset represents 20+ years of historical minute stock trade data available from the [Kibot](http://www.kibot.com/buy.aspx) company.
 
-The one minute trade statistics are available for IBM stock traded on the New York Stock Exchange. The recording starts on February 1st, 1998 and lasts until the last trading day. 
+The one minute trade statistics are available for IBM stock traded on the New York Stock Exchange. The recording starts on February 1st, 1998 and lasts until the last trading day.
 
 The data is provided in the commonly used OHLCV [format](http://www.kibot.com/support.aspx#data_format).
 
@@ -45,14 +45,14 @@ volume = 10031
 
 ## Schema Alternatives
 
-The tests are performed using two schema options: 
+The tests are performed using two schema options:
 
 * **Trade Table** [schema](postgres-trade-table.sql) uses a named column for each input metric.
 * **Universal Table** [schema](postgres-universal-table.sql) uses a single metric ID column for all input metrics.
 
-The **Trade Table** schema requires less disk space however the underlying table can not be extended to store different sets of columns for different instrument types. As such, mutliple tables needs to be created to store data for various instrument types.
+The **Trade Table** schema requires less disk space however the underlying table can not be extended to store different sets of columns for different instrument types. As such, multiple tables need to be created to store data for various instrument types.
 
-The **Universal Table** schema allows adding new metrics without altering the tables. This can be done by inserting a new  record to the `Metrics` table (a dictionary) and using foreign keys when inserting data into the data table.
+The **Universal Table** schema allows adding new metrics without altering the tables. This can be done by inserting a new record into the `Metrics` table (a dictionary) and using foreign keys when inserting data into the data table.
 
 ### **Trade Table** Schema
 
