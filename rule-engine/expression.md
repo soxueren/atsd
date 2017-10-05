@@ -21,8 +21,10 @@ The condition can reference fields, apply [functions](functions.md) to them, and
 | `value` | Last data sample. |
 | `tags.tag_name` | Value of command tag 'tag_name', for example, `tags.file_system`. <br>Also, `tags['tag_name']`.|
 | `entity` | Entity name. |
+| `entity.label` | Entity label. |
 | `entity.tags.tag_name` | Entity tag value, for example, `entity.tags.location`. <br>Also, `entity.tags['tag_name']`. |
 | `metric` | Metric name. |
+| `metric.label` | Metric label. |
 | `metric.tags.tag_name` | Metric tag value, for example, `metric.tags.units`. <br>Also, `metric.tags['tag_name']`. |
 | `property(search)` | Property key/tag value based on property search syntax. Refer to [property functions](functions.md#property-functions). |
 
