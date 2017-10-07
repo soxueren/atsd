@@ -9,7 +9,7 @@ To retrieve entities without `lastInsertDate`, set maxInsertDate to `1970-01-01T
 ### URI
 
 ```elm
-GET https://atsd_host:8443/api/v1/entities?maxInsertDate=1970-01-01T00:00:00Z&limit3
+GET https://atsd_host:8443/api/v1/entities?maxInsertDate=1970-01-01T00:00:00Z&limit=3
 ```
 
 ## Response
