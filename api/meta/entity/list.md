@@ -15,8 +15,8 @@ Retrieve a list of entities matching the specified filter conditions.
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
 | expression |string|Include entities that match an [expression](../../../api/meta/expression.md) filter. Use the `name` variable for entity name. Supported wildcards: `*` and `?`.|
-| minInsertDate |string|Include entities with `lastInsertDate` equal or greater than specified time. <br>`minInsertDate` can be specified in ISO format or using [endtime](../../../end-time-syntax.md) syntax.|
-| maxInsertDate |string|Include entities with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](../../../end-time-syntax.md) syntax.|
+| minInsertDate |string|Include entities with `lastInsertDate` equal or greater than `minInsertDate`.<br>The parameter can be specified in ISO-8601 format or using [endtime](../../../end-time-syntax.md) syntax.|
+| maxInsertDate |string|Include entities with `lastInsertDate` less than `maxInsertDate`, including metrics without `lastInsertDate`.<br>The parameter can be specified in ISO format or using [endtime](../../../end-time-syntax.md) syntax.|
 | limit |integer|Maximum number of entities to retrieve, ordered by name.|
 | tags |string|Comma-separated list of entity tag names to be displayed in the response.<br>For example, `tags=OS,location`<br>Specify `tags=*` to print all entity tags.|
 
@@ -135,3 +135,5 @@ curl https://atsd_host:8443/api/v1/entities?expression=label!=%22%22%20and%20ena
 * [List entities by minInsertDate](./examples/list-entities-by-mininsertdate.md)
 * [List all tags for all entities starting with name](examples/list-all-tags-for-all-entities-with-name.md)
 * [List entities by name and tag](examples/list-entities-by-tag-containing-hbase.md)
+* [List entities for last insert range](examples/list-entities-for-last-insert-range.md)
+* [List entities without last insert date](examples/list-entities-without-last-insert-date.md)

@@ -15,8 +15,8 @@ Retrieve a list of metrics matching the specified filter conditions.
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
 | expression |string|Include metrics that match an [expression](../../../api/meta/expression.md) filter. Use the `name` variable for metric name. Supported wildcards: `*` and `?`.|
-| minInsertDate |string|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.<br>`minInsertDate` can be specified in ISO format or using [endtime](../../../end-time-syntax.md) syntax.|
-| maxInsertDate |string|Include metrics with `lastInsertDate` less than `maxInsertDate`.<br>`maxInsertDate` can be specified in ISO format or using [endtime](../../../end-time-syntax.md) syntax.|
+| minInsertDate |string|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.<br>The parameter can be specified in ISO-8601 format or using [endtime](../../../end-time-syntax.md) syntax.|
+| maxInsertDate |string|Include metrics with `lastInsertDate` less than `maxInsertDate`, including metrics without `lastInsertDate`.<br>The parameter can be specified in ISO format or using [endtime](../../../end-time-syntax.md) syntax.|
 | limit |integer|Maximum number of metrics to retrieve, ordered by name.|
 | tags |string|Comma-separated list of metric tag names to be displayed in the response.<br>For example, `tags=OS,location`<br>Specify `tags=*` to request all metric tags.|
 
@@ -38,7 +38,7 @@ Retrieve a list of metrics matching the specified filter conditions.
 |enabled| boolean | Enabled status. Incoming data is discarded for disabled metrics.|
 |persistent | boolean | Persistence status. Non-persistent metrics are not stored in the database and are only processed by the rule engine.|
 |filter | string | Persistence filter [expression](../../../api/meta/expression.md). Discards series that do not match this filter.|
-|lastInsertDate| string | Last time a value was received for this metric by any series. ISO date.|
+|lastInsertDate| string | Last time a value was received for this metric by any series in ISO-8601 format.|
 |retentionDays| integer | Number of days to store the values for this metric. Samples with insert date earlier than current time minus retention days are removed on schedule.|
 |seriesRetentionDays| integer | Number of days to retain series. Expired series with last insert date earlier than current time minus series retention days are removed on schedule.|
 |versioned| boolean | If set to true, enables versioning for the specified metric. <br>When metrics are versioned, the database retains the history of series value changes for the same timestamp along with `version_source` and `version_status`.|
@@ -84,13 +84,6 @@ Default data type for new metrics, when auto-created, is **float**.
 |:---|
 |MILLISECONDS|
 |SECONDS|
-
-### Errors
-
-|  Status Code  |  Description  |
-|:---------------|:---------------|
-| 500 |TypeMismatchException: <br>Failed to convert value of type 'java.lang.String' to required type 'com.axibase.tsd.model.TimeFormat';|
-| 500 |TypeMismatchException: <br>Failed to convert value of type 'java.lang.String' to required type 'int'|
 
 ## Example 1
 
@@ -151,7 +144,7 @@ curl https://atsd_host:8443/api/v1/metrics?limit=2 \
 Expression text:
 
 ```text
-name!="" or tags.keyName!="" or label!="" or description!="" or enabled=true or persistent=true or persistenceFilter!="" or retentionDays=0 or dataType="FLOAT" or timePrecision="MILLISECONDS" or versioning=false and invalidAction="NONE" or timeZone="" or interpolate="LINEAR"
+name != "" OR tags.keyName != "" OR label! = "" OR description != "" OR enabled = true OR persistent=true OR persistenceFilter != "" OR retentionDays=0 OR dataType="FLOAT" OR timePrecision="MILLISECONDS" OR versioning=false AND invalidAction="NONE" OR timeZone="" OR interpolate="LINEAR"
 ```
 
 ### Request
@@ -201,3 +194,5 @@ curl https://atsd_host:8443/api/v1/metrics?expression=versioning=true%20and%20re
 * [List metrics with tag `table`](examples/list-metrics-with-tag-table.md)
 * [List metrics by maxInsertDate](examples/list-metrics-by-maxinsertdate.md)
 * [List metrics by minInsertDate](examples/list-metrics-by-mininsertdate.md)
+* [List metrics for last insert range](examples/list-metrics-for-last-insert-range.md)
+* [List metrics without last insert date](examples/list-metrics-without-last-insert-date.md)
