@@ -2,7 +2,7 @@
 
 ## Description
 
-Retrieve a list of entities matching the specified filter conditions.
+Retrieve a list of entities matching the specified filters.
 
 ## Request
 
@@ -14,11 +14,28 @@ Retrieve a list of entities matching the specified filter conditions.
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-| expression |string|Include entities that match an [expression](../../../api/meta/expression.md) filter. Use the `name` variable for entity name. Supported wildcards: `*` and `?`.|
+| expression |string|Include entities that match a filter [expression](../../../api/meta/expression.md) consisting of fields and operators. Supported wildcards: `*` and `?`.|
 | minInsertDate |string|Include entities with `lastInsertDate` equal or greater than `minInsertDate`.<br>The parameter can be specified in ISO-8601 format or using [endtime](../../../end-time-syntax.md) syntax.|
 | maxInsertDate |string|Include entities with `lastInsertDate` less than `maxInsertDate`, including metrics without `lastInsertDate`.<br>The parameter can be specified in ISO format or using [endtime](../../../end-time-syntax.md) syntax.|
 | limit |integer|Maximum number of entities to retrieve, ordered by name.|
 | tags |string|Comma-separated list of entity tag names to be displayed in the response.<br>For example, `tags=OS,location`<br>Specify `tags=*` to print all entity tags.|
+
+#### Expression
+
+The expression can include all fields listed below except `lastInsertDate`. 
+
+Examples:
+
+```java
+name LIKE 'nur*'  
+
+name NOT LIKE 'aws*' AND lower(label) NOT LIKE 'aws*' AND createdDate > '2017-10-01T00:00:00Z'
+
+name LIKE '*db*' AND lower(tags.function) = 'database'
+```
+
+The `lastInsertDate` field should be filtered using `minInsertDate` and `maxInsertDate` parameters for performance reasons.
+
 
 ## Response
 

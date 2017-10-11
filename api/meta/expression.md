@@ -3,11 +3,12 @@
 
 ## Variables
 
-`name` - name of the record, such as entity name or metric name
+`name` - Entity or metric name.
+`label` - Entity or metric label.
+`{field-name}` - Entity or metric field by name, such as `createdDate` or `retentionDays`.
+`tags.{tag-name}` - Value of tag with name `tag-name`, for example, `tags.location` or `tags.table`.
 
-`tags.{tag-name}` - value of tag with name `tag-name`, for example, `tags.location` or `tags.table`
-
-* All the variables are string variables.
+* All the tags are string variables.
 * Tag names are case-insensitive, for example, `tags.location` and `tags.Location` are equal.
 * If the tag `tag-name` is not defined, the `tags.{tag-name}` variable returns an empty string.
 

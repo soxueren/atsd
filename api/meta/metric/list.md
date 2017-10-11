@@ -1,8 +1,8 @@
-# Metric: List
+# Metrics: List
 
 ## Description
 
-Retrieve a list of metrics matching the specified filter conditions.
+Retrieve a list of metrics matching the specified filters.
 
 ## Request
 
@@ -14,11 +14,27 @@ Retrieve a list of metrics matching the specified filter conditions.
 
 |**Name**|**Type**|**Description**|
 |:---|:---|:---|
-| expression |string|Include metrics that match an [expression](../../../api/meta/expression.md) filter. Use the `name` variable for metric name. Supported wildcards: `*` and `?`.|
+| expression |string|Include metrics that match a filter [expression](../../../api/meta/expression.md) consisting of fields and operators. Supported wildcards: `*` and `?`.|
 | minInsertDate |string|Include metrics with `lastInsertDate` equal or greater than `minInsertDate`.<br>The parameter can be specified in ISO-8601 format or using [endtime](../../../end-time-syntax.md) syntax.|
 | maxInsertDate |string|Include metrics with `lastInsertDate` less than `maxInsertDate`, including metrics without `lastInsertDate`.<br>The parameter can be specified in ISO format or using [endtime](../../../end-time-syntax.md) syntax.|
 | limit |integer|Maximum number of metrics to retrieve, ordered by name.|
 | tags |string|Comma-separated list of metric tag names to be displayed in the response.<br>For example, `tags=OS,location`<br>Specify `tags=*` to request all metric tags.|
+
+#### Expression
+
+The expression can include all fields listed below except `lastInsertDate`. 
+
+Examples:
+
+```java
+name LIKE 'meminfo.*'  
+
+name NOT LIKE 'cpu*' AND createdDate > '2017-10-01T00:00:00Z'
+
+retentionDays > 0 OR seriesRetentionDays > 0
+```
+
+The `lastInsertDate` field should be filtered using `minInsertDate` and `maxInsertDate` parameters for performance reasons.
 
 ## Response
 
@@ -31,7 +47,7 @@ Retrieve a list of metrics matching the specified filter conditions.
 |description | string | Metric description.|
 |tags| object | An object containing tags as names and values.<br>For example, `"tags": {"table": "axibase-collector"}`|
 |dataType| string | [Data Type](#data-types).|
-|interpolate| string | Interpolation mode: `LINEAR` or `PREVIOUS`. <br>Used in SQL `WITH INTERPOLATE` clause when interpolation mode is set to `AUTO`, for example, `WITH INTERPOLATE(1 MINUTE, AUTO)`. |ß
+|interpolate| string | Interpolation mode: `LINEAR` or `PREVIOUS`. <br>Used in SQL `WITH INTERPOLATE` clause when interpolation mode is set to `AUTO`, for example, `WITH INTERPOLATE(1 MINUTE, AUTO)`. |
 |units| string | Measurement units. |
 |timeZone| string | Time Zone ID, for example `America/New_York` or `EST`.<br>Refer to [Java Time Zone](../../../api/network/timezone-list.md) table for a list of supported Time Zone IDs.<br>The timezone is applied by date-formatting functions to return local time in metric-specific timezone.|
 |timePrecision| string | Time precision: SECONDS or MILLISECONDS.|
